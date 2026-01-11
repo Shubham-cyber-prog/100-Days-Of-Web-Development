@@ -1,0 +1,161 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: #e5e7eb;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #38bdf8;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.search-box input {
+  width: 300px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search-box button {
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #38bdf8;
+  color: #020617;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.search-box button:hover {
+  background: #0ea5e9;
+}
+
+
+.movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+
+.movie-card {
+  background: #020617;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.movie-card h3 {
+  font-size: 1.05rem;
+  margin: 10px;
+}
+
+.movie-card p {
+  margin: 0 10px 6px;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.movie-card span {
+  display: inline-block;
+  margin: 0 10px 14px;
+  font-size: 0.75rem;
+  background: #1e293b;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #38bdf8;
+}
+
+
+.details {
+  max-width: 1000px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 25px;
+  color: #38bdf8;
+  font-weight: 500;
+}
+
+.details-content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+}
+
+.details-content img {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.details-content h1 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.details-content p {
+  margin-bottom: 10px;
+  line-height: 1.6;
+  color: #cbd5f5;
+}
+
+@media (max-width: 768px) {
+  .details-content {
+    grid-template-columns: 1fr;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+}
