@@ -1,0 +1,165 @@
+:root{
+  --primary:#2563eb;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+.dark{
+  --bg:#020617;
+  --card:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
+
+/* NAV */
+nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:18px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+nav h1 span{color:var(--primary)}
+nav ul{list-style:none;display:flex;gap:22px;margin:0;padding:0}
+nav li{cursor:pointer}
+nav li.active{color:var(--primary)}
+#themeToggle{
+  width:40px;height:40px;border-radius:50%;
+  border:1.5px solid var(--border);
+  background:var(--card);
+  cursor:pointer;
+  transition:.3s;
+}
+#themeToggle:hover{background:var(--primary);color:#fff}
+
+/* LAYOUT */
+.container{max-width:1100px;margin:40px auto;padding:0 20px}
+.tab{display:none}
+.tab.active{display:block}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:30px;
+  margin-bottom:35px;
+}
+
+/* FEATURES */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+}
+.feature{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  text-align:center;
+  transition:.3s;
+}
+.feature:hover{transform:translateY(-6px);border-color:var(--primary)}
+.feature i{font-size:30px;color:var(--primary)}
+
+/* STEPS */
+.steps{display:grid;gap:18px}
+.step{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  border-left:5px solid var(--primary);
+  padding:16px 20px;
+  border-radius:12px;
+}
+
+/* FORM */
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+input,select,button{
+  padding:14px;border-radius:10px;border:1px solid var(--border)
+}
+button{background:var(--primary);color:#fff;border:none;cursor:pointer}
+
+/* FLIGHTS */
+.flights{display:grid;gap:20px}
+.flight{
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  display:flex;
+  justify-content:space-between;
+}
+.price{font-size:18px;font-weight:600}
+.book{background:var(--success)}
+
+/* BOOKINGS */
+.booking{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+}
+.actions{margin-top:14px;display:flex;gap:12px}
+.actions button{
+  padding:8px 16px;
+  border-radius:10px;
+  font-size:13px;
+  display:flex;
+  gap:6px;
+}
+.pdf{background:var(--success)}
+.delete{background:var(--danger)}
+
+/* PROFILE */
+.profile{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:30px;
+  align-items:center;
+}
+.profile img{
+  width:140px;height:140px;
+  border-radius:50%;
+  border:4px solid var(--primary);
+}
+
+/* CONTACT */
+.contact{display:grid;gap:14px}
+
+/* MODAL */
+.modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal-content{
+  background:#fff;
+  padding:30px;
+  border-radius:18px;
+  width:420px;
+  text-align:center;
+}
+
+/* TICKET */
+#ticket{display:none;padding:40px}
+.ticket-box{
+  border:6px solid var(--primary);
+  padding:40px;
+  text-align:center;
+}
+@media print{
+  body *{display:none}
+  #ticket,#ticket *{display:block}
+}
+
+footer{text-align:center;padding:25px;color:var(--muted)}

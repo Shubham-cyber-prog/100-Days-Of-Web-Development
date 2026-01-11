@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Booking System</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav>
+  <h1><span>Flight</span> Booking</h1>
+  <ul>
+    <li class="active" onclick="openTab('home',this)">Home</li>
+    <li onclick="openTab('search',this)">Search Flights</li>
+    <li onclick="openTab('bookingsTab',this)">My Bookings</li>
+    <li onclick="openTab('profileTab',this)">Profile</li>
+    <li onclick="openTab('contact',this)">Contact</li>
+  </ul>
+  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+</nav>
+
+<div class="container">
+
+  <!-- HOME -->
+  <div id="home" class="tab active">
+    <div class="card">
+      <h2>Welcome ✈️</h2>
+      <p>Book flights smarter with instant tickets and secure storage.</p>
+    </div>
+
+    <div class="card">
+      <h2>Why Choose Us?</h2>
+      <div class="features">
+        <div class="feature"><i class="fa-solid fa-magnifying-glass"></i><p>Smart Search</p></div>
+        <div class="feature"><i class="fa-solid fa-ticket"></i><p>Instant Booking</p></div>
+        <div class="feature"><i class="fa-solid fa-file-pdf"></i><p>PDF Tickets</p></div>
+        <div class="feature"><i class="fa-solid fa-lock"></i><p>Secure Storage</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>How It Works</h2>
+      <div class="steps">
+        <div class="step"><b>1</b> Search flights</div>
+        <div class="step"><b>2</b> Book instantly</div>
+        <div class="step"><b>3</b> Download ticket</div>
+        <div class="step"><b>4</b> Manage bookings</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div id="search" class="tab">
+    <div class="card">
+      <h2>Search Flights</h2>
+      <form id="searchForm">
+        <input id="from" placeholder="From" required>
+        <input id="to" placeholder="To" required>
+        <input id="date" type="date" required>
+        <select id="travelClass">
+          <option>Economy</option>
+          <option>Business</option>
+        </select>
+        <button>Search</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Available Flights</h2>
+      <div class="flights" id="flightList"></div>
+    </div>
+  </div>
+
+  <!-- BOOKINGS -->
+  <div id="bookingsTab" class="tab">
+    <div class="card">
+      <h2>My Bookings</h2>
+      <div id="bookings"></div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="profileTab" class="tab">
+    <div class="card">
+      <h2>My Profile</h2>
+      <div class="profile">
+        <img src="https://i.imgur.com/8Km9tLL.png">
+        <div class="profile-info">
+          <h3>Riya Kharade</h3>
+          <p>Email: riya@example.com</p>
+          <p>Phone: +91 98765 43210</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact" class="tab">
+    <div class="card">
+      <h2>Contact Us</h2>
+      <div class="contact">
+        <input placeholder="Your Name">
+        <input placeholder="Email">
+        <textarea rows="4" placeholder="Message"></textarea>
+        <button>Send Message</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>✈️ Booking Confirmed</h3>
+    <p>Your flight has been booked successfully.</p>
+    <button onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+<!-- TICKET -->
+<div id="ticket">
+  <div class="ticket-box">
+    <h1>Flight Ticket</h1>
+    <p id="ticketInfo"></p>
+    <button onclick="window.print()">Download Ticket (PDF)</button>
+  </div>
+</div>
+
+<footer>© 2026 Flight Booking System – Day 48</footer>
+
+<!-- JS -->
+<script src="script.js"></script>
+</body>
+</html>
