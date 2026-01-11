@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banking Dashboard</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --primary:#2563eb;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+.dark{
+  --bg:#020617;
+  --card:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
+
+/* HEADER */
+header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+header h1 span{color:var(--primary)}
+#themeToggle{
+  border:1px solid var(--border);
+  background:none;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 20px;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:22px;
+  margin-bottom:30px;
+}
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:26px;
+}
+.stat i{font-size:26px;color:var(--primary)}
+.stat h2{margin:10px 0}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:28px;
+}
+
+/* FORM */
+form{
+  display:grid;
+  gap:16px;
+}
+input,select{
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+button{
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+  color:white;
+}
+.deposit{background:var(--success)}
+.export{background:#0ea5e9;margin-top:14px;width:100%}
+
+/* FILTER */
+.filter{
+  margin-top:18px;
+}
+
+/* TRANSACTIONS */
+.transactions{margin-top:30px}
+.tx-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 20px;
+  margin-bottom:14px;
+}
+.tx-actions button{
+  margin-left:8px;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:13px;
+}
+.edit{background:#f59e0b}
+.delete{background:#dc2626}
+.credit{color:var(--success)}
+.debit{color:var(--danger)}
+
+/* CHART */
+canvas{
+  width:100%!important;
+  max-height:260px;
+  margin-top:25px;
+}
+
+/* FOOTER */
+footer{text-align:center;padding:25px;color:var(--muted)}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1><span>Banking</span> Dashboard</h1>
+  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+</header>
+
+<div class="container">
+
+<section class="stats">
+  <div class="stat"><i class="fa-solid fa-wallet"></i><h2 id="balance">₹0</h2><p>Total Balance</p></div>
+  <div class="stat"><i class="fa-solid fa-arrow-up"></i><h2 id="income">₹0</h2><p>Total Income</p></div>
+  <div class="stat"><i class="fa-solid fa-arrow-down"></i><h2 id="expense">₹0</h2><p>Total Expense</p></div>
+</section>
+
+<div class="card">
+
+<h3>Add / Edit Transaction</h3>
+<form id="form">
+  <input type="hidden" id="editIndex">
+  <input id="title" placeholder="Transaction title" required>
+  <input id="amount" type="number" placeholder="Amount" required>
+  <select id="type" required>
+    <option value="">Select type</option>
+    <option value="credit">Deposit</option>
+    <option value="debit">Withdraw</option>
+  </select>
+  <input id="date" type="date" required>
+  <button class="deposit">Save Transaction</button>
+</form>
+
+<div class="filter">
+  <label>Filter by Month:</label>
+  <input type="month" id="monthFilter">
+</div>
+
+<button class="export" onclick="exportCSV()">Export Transactions (CSV)</button>
+
+<div class="transactions">
+  <h3>Recent Transactions</h3>
+  <div id="list"></div>
+</div>
+
+<h3>Income vs Expense (Trend)</h3>
+<canvas id="chart"></canvas>
+
+</div>
+</div>
+
+<footer>© 2026 Banking Dashboard – Day 47</footer>
+
+<script>
+let transactions=JSON.parse(localStorage.getItem("bankTx"))||[];
+let editIndex=null;
+const ctx=document.getElementById("chart").getContext("2d");
+
+function save(){localStorage.setItem("bankTx",JSON.stringify(transactions))}
+
+function render(){
+  const list=document.getElementById("list");
+  const month=document.getElementById("monthFilter").value;
+  let income=0,expense=0;
+  list.innerHTML="";
+
+  transactions.forEach((t,i)=>{
+    if(month && !t.date.startsWith(month)) return;
+    t.type==="credit"?income+=t.amount:expense+=t.amount;
+
+    list.innerHTML+=`
+    <div class="tx-card">
+      <div>
+        <b>${t.title}</b><br>
+        <small>${t.date}</small>
+      </div>
+      <div class="${t.type}">
+        ${t.type==="credit"?"+":"-"}₹${t.amount}
+      </div>
+      <div class="tx-actions">
+        <button class="edit" onclick="editTx(${i})">Edit</button>
+        <button class="delete" onclick="delTx(${i})">Delete</button>
+      </div>
+    </div>`;
+  });
+
+  balance.textContent="₹"+(income-expense);
+  income.textContent="₹"+income;
+  expense.textContent="₹"+expense;
+  drawLineChart(income,expense);
+}
+
+function drawLineChart(income,expense){
+  ctx.clearRect(0,0,400,260);
+  ctx.strokeStyle="#2563eb";
+  ctx.beginPath();
+  ctx.moveTo(50,200-income/50);
+  ctx.lineTo(200,200-expense/50);
+  ctx.stroke();
+}
+
+form.onsubmit=e=>{
+  e.preventDefault();
+  const tx={title:title.value,amount:+amount.value,type:type.value,date:date.value};
+  editIndex===null?transactions.unshift(tx):transactions[editIndex]=tx;
+  editIndex=null;
+  save();render();form.reset();
+};
+
+function editTx(i){
+  const t=transactions[i];
+  title.value=t.title;amount.value=t.amount;type.value=t.type;date.value=t.date;
+  editIndex=i;
+}
+
+function delTx(i){
+  transactions.splice(i,1);
+  save();render();
+}
+
+function exportCSV(){
+  let csv="Title,Amount,Type,Date\n";
+  transactions.forEach(t=>csv+=`${t.title},${t.amount},${t.type},${t.date}\n`);
+  const blob=new Blob([csv],{type:"text/csv"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="transactions.csv";
+  a.click();
+}
+
+/* THEME */
+themeToggle.onclick=()=>{
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",document.body.classList.contains("dark")?"dark":"light");
+};
+if(localStorage.getItem("theme")==="dark")document.body.classList.add("dark");
+
+monthFilter.onchange=render;
+render();
+</script>
+
+</body>
+</html>
