@@ -1,0 +1,123 @@
+:root{
+  --primary:#2563eb;
+  --success:#22c55e;
+  --danger:#ef4444;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+.dark{
+  --bg:#020617;
+  --card:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
+
+/* NAV */
+nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:18px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+nav h1 span{color:var(--primary)}
+#themeToggle{
+  width:42px;height:42px;border-radius:50%;
+  border:2px solid var(--primary);
+  background:none;color:var(--primary);
+  cursor:pointer;
+}
+
+/* LAYOUT */
+.container{max-width:1200px;margin:40px auto;padding:0 20px}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:22px;
+}
+.game-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:18px;
+  padding:26px;
+  text-align:center;
+  cursor:pointer;
+  transition:.3s;
+}
+.game-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--primary);
+}
+.game-card i{
+  font-size:36px;
+  margin-bottom:12px;
+  color:var(--primary);
+}
+
+/* GAME AREA */
+.game{display:none;margin-top:30px}
+.game.active{display:block}
+
+button{
+  padding:12px 22px;
+  border-radius:10px;
+  border:none;
+  background:var(--primary);
+  color:white;
+  cursor:pointer;
+  margin-top:12px;
+}
+input{
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  margin-top:10px;
+}
+.score{margin-top:15px;font-weight:600}
+
+/* MEMORY */
+.memory{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+.mem{
+  height:80px;
+  background:var(--primary);
+  color:white;
+  font-size:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  cursor:pointer;
+}
+
+/* MCQ */
+#quizOpts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-top:16px;
+}
+.quiz-option{
+  background:#2563eb;
+  color:white;
+  padding:14px 18px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+}
+.quiz-option.correct{background:#22c55e}
+.quiz-option.wrong{background:#ef4444}
+
+footer{text-align:center;padding:25px;color:var(--muted)}
