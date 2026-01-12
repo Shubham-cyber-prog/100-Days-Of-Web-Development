@@ -1,61 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo list App</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="/logo.jpg" type="image/x-icon">
-    <link rel="icon" href="/logo.jpg" type="image/png">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <script defer src="script.js"></script>
+  <meta charset="UTF-8" />
+  <title>FlowBoard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="js/app.js"></script>
 </head>
+
 <body>
-    
-    <header>
-        <img src="/logo.jpg" alt="innoverse Logo" class="logo">
-        <div class="heading-text">
-            <h1>Day 2 of 100 days code Challenge</h1>
-            
-        </div>
-        <button id="theme-toggle" onclick="toggleTheme()">🌞</button>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <h1>FlowBoard</h1>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  🌙
+</button>
+
+  </div>
+</nav>
+
+<!-- TASK MODAL -->
+<div id="task-modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>New Task</h2>
+
+    <input
+      type="text"
+      id="task-title"
+      placeholder="Task title"
+      autocomplete="off"
+    />
+
+    <textarea
+      id="task-desc"
+      placeholder="Description"
+      rows="3"
+    ></textarea>
+
+    <select id="task-priority">
+      <option value="low">Low Priority</option>
+      <option value="medium" selected>Medium Priority</option>
+      <option value="high">High Priority</option>
+    </select>
+
+    <div class="modal-actions">
+      <button id="save-task" class="primary-btn">Add Task</button>
+      <button class="secondary-btn" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOARD -->
+<main class="board">
+
+  <section
+  class="column"
+  id="todo"
+  ondragover="allowDrop(event)"
+  ondrop="drop(event)"
+>
+
+    <header class="column-header">
+      <h2>To-Do</h2>
     </header>
-    
-    <h2 class="kanban-title">Task Board</h2>
-    
-    <div class="kanban-container">
-        <div class="column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2>To-Do</h2>
-            <div class="task-list"></div>
-            <button onclick="addTask('todo')">+ Add Task</button>
-        </div>
-        <div class="column" id="inprogress" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2>In Progress</h2>
-            <div class="task-list"></div>
-            <button onclick="addTask('inprogress')">+ Add Task</button>
-        </div>
-        <div class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2>Done</h2>
-            <div class="task-list"></div>
-            <button onclick="addTask('done')">+ Add Task</button>
-        </div>
-    </div>
-    
-    <div id="progress-container">
-        <div id="progress-bar">0%</div>
-    </div>
-    
-    
-    <div class="bottom-controls">
-        <button onclick="importTasks()">Import</button>
-        <button onclick="exportTasks()">Export</button>
-    </div>
-    <button id="scrollToTopBtn" aria-label="Scroll to top">
-    <i class="fa-solid fa-arrow-up"></i>
+
+    <div class="task-list"></div>
+
+    <button class="add-btn" onclick="openModal('todo')">
+      + Add Task
     </button>
-    <script src="script.js"></script>
+  </section>
+
+  <section class="column" id="progress" ondragover="allowDrop(event)" ondrop="drop(event)">
+    <header class="column-header">
+      <h2>In Progress</h2>
+    </header>
+
+    <div class="task-list"></div>
+
+    <button class="add-btn" onclick="openModal('progress')">
+      + Add Task
+    </button>
+  </section>
+
+  <section class="column" id="done" ondragover="allowDrop(event)" ondrop="drop(event)">
+    <header class="column-header">
+      <h2>Done</h2>
+    </header>
+
+    <div class="task-list"></div>
+
+    <button class="add-btn" onclick="openModal('done')">
+      + Add Task
+    </button>
+  </section>
+
+</main>
+
+<!-- FOOTER / PROGRESS -->
+<footer class="footer">
+  <p class="progress-label">Progress</p>
+  <div id="progress-bar">
+    <div id="progress-text">0%</div>
+  </div>
+</footer>
+
 </body>
 </html>

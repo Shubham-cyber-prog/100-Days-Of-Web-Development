@@ -1,240 +1,326 @@
-/* ===== Global Reset ===== */
+:root {
+  --bg: #0f172a;
+  --card: #0b1220;
+  --card-alt: #020617;
+  --text: #e5e7eb;
+  --text-muted: #94a3b8;
+  --primary: #6c63ff;
+  --shadow: rgba(0,0,0,0.35);
+}
+
+/* LIGHT THEME */
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --card-alt: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --primary: #6c63ff;
+  --shadow: rgba(0,0,0,0.12);
+}
+
+
+
+
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-/* ===== Body ===== */
+* {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+
 body {
-  font-family: 'Poppins', sans-serif;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: #fff;
-  text-align: center;
-  transition: background 0.4s ease, color 0.4s ease;
+  background: var(--bg);
+  color: var(--text);
 }
 
-body.dark-theme {
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #f5f5f5;
-}
 
-/* ===== Header ===== */
-header {
+
+/* ================= NAVBAR ================= */
+.navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 15px 25px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-  margin-bottom: 30px;
+  align-items: center;
+  padding: 16px 32px;
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
 
-body.dark-theme header {
-  background: rgba(0, 0, 0, 0.35);
+/* ================= BOARD ================= */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 32px;
+  max-width: 1200px;
+  margin: auto;
+  animation: fadeIn 0.4s ease;
 }
 
-.logo {
-  height: 90px;
-}
-
-/* ===== Heading ===== */
-.heading-text h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.heading-text p {
-  font-size: 1.2rem;
-  opacity: 0.9;
-}
-
-/* ===== Theme Toggle ===== */
-#theme-toggle {
-  font-size: 1.8rem;
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: inherit;
-  transition: transform 0.3s ease;
-}
-
-#theme-toggle:hover {
-  transform: rotate(20deg) scale(1.1);
-}
-
-/* ===== Kanban Title ===== */
-.kanban-title {
-  font-size: 2.4rem;
-  margin: 20px 0;
-  font-weight: 700;
-}
-
-/* ===== Kanban Container ===== */
-.kanban-container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-/* ===== Columns ===== */
+/* ================= COLUMN ================= */
 .column {
-  width: 320px;
-  padding: 15px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-  transition: transform 0.3s ease;
+  background: linear-gradient(
+  180deg,
+  var(--card),
+  var(--card-alt)
+);
+
+box-shadow: 0 10px 30px var(--shadow);
+
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  
 }
 
-.column:hover {
-  transform: translateY(-6px);
-}
-
-body.dark-theme .column {
-  background: rgba(0, 0, 0, 0.4);
-}
-
-/* ===== Column Titles ===== */
-.column h2 {
-  margin-bottom: 10px;
+.column-header h2 {
+  font-size: 1.2rem;
   font-weight: 600;
+  margin-bottom: 8px;
 }
 
-/* ===== Task Lists ===== */
+/* ================= TASK LIST ================= */
 .task-list {
-  min-height: 200px;
-  padding: 10px;
-  border-radius: 12px;
-  transition: background 0.3s ease;
+  flex: 1;
+  margin-bottom: 12px;
 }
 
-/* ===== Tasks ===== */
+/* EMPTY STATE */
+.task-list:empty::after {
+  content: "No tasks yet. Click + Add Task to get started.";
+  display: block;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 40px;
+  opacity: 0.8;
+}
+
+/* ================= TASK CARD ================= */
 .task {
-  background: rgba(255, 255, 255, 0.9);
-  color: #222;
+  background: var(--card-alt);
+  color: var(--text);
+  border-radius: 14px;
   padding: 12px;
   margin-bottom: 10px;
-  border-radius: 12px;
-  font-size: 0.95rem;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
   cursor: grab;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s ease;
 }
 
 .task:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transform: scale(1.02);
 }
 
-/* ===== Column Colors ===== */
-#todo .task-list {
-  background: linear-gradient(135deg, #ff6a6a, #ff3d3d);
+/* PRIORITY */
+.priority-low {
+  border-left: 4px solid #22c55e;
 }
 
-#inprogress .task-list {
-  background: linear-gradient(135deg, #ffe259, #ffa751);
+.priority-medium {
+  border-left: 4px solid #f59e0b;
 }
 
-#done .task-list {
-  background: linear-gradient(135deg, #56ab2f, #a8e063);
+.priority-high {
+  border-left: 4px solid #ef4444;
 }
 
-/* ===== Progress Bar ===== */
-#progress-container {
+.priority-tag {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+/* ================= ADD BUTTON ================= */
+.add-btn {
+  margin-top: 12px;
+  background: linear-gradient(135deg, var(--primary), #7c72ff);
+  border: none;
+  padding: 12px;
+  border-radius: 14px;
+  color: #ffffff; /* FORCE TEXT VISIBILITY */
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Light mode contrast boost */
+[data-theme="light"] .add-btn {
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(108, 99, 255, 0.35);
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(108,99,255,0.4);
+}
+
+/* ================= MODAL ================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #0b1220;
+  padding: 24px;
+  width: 340px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.modal-content h2 {
+  margin-bottom: 14px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
   width: 100%;
-  height: 18px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 10px;
-  margin-top: 20px;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+/* ================= MODAL BUTTONS ================= */
+.primary-btn {
+  background: #6c63ff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ================= FOOTER / PROGRESS ================= */
+.footer {
+  max-width: 1200px;
+  margin: 20px auto 40px;
+  padding: 0 32px;
+}
+
+.progress-label {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Progress track */
+#progress-bar {
+  height: 12px;
+  background: var(--card-alt);
+  border-radius: 8px;
   overflow: hidden;
 }
 
-#progress-bar {
+/* Progress fill */
+#progress-text {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #00c853, #b2ff59);
-  color: #000;
-  font-size: 0.8rem;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  color: #0f172a;
+  font-size: 0.7rem;
   font-weight: 600;
-  text-align: center;
-  transition: width 0.5s ease;
-}
-
-/* ===== Bottom Controls ===== */
-.bottom-controls {
-  margin-top: 30px;
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  transition: width 0.3s ease;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 900px) {
-  .kanban-container {
-    flex-direction: column;
-    align-items: center;
-  }
 
-  .column {
-    width: 90%;
+/* ================= ANIMATION ================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
-
-  .heading-text h1 {
-    font-size: 2.2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo {
-    height: 60px;
-  }
-
-  .heading-text h1 {
-    font-size: 1.8rem;
-  }
-
-  .task {
-    font-size: 0.85rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-#scrollToTopBtn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 12px 14px;
-  font-size: 18px;
-  background-color: #7262e8;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
+/* ================= DRAG UX ================= */
+
+/* Task while dragging */
+.task.dragging {
+  opacity: 0.5;
+  transform: scale(1.05);
+}
+
+/* Column highlight when dragging over */
+.column.drag-over {
+  outline: 2px dashed rgba(108, 99, 255, 0.6);
+  outline-offset: -6px;
+  background: linear-gradient(
+  180deg,
+  var(--card),
+  var(--card-alt)
+);
+
+box-shadow: 0 10px 30px var(--shadow);
+
+}
+
+/* Smooth placement animation */
+.task {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.theme-toggle {
+  background: var(--card-alt);
+  border: 1px solid rgba(0,0,0,0.1);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 1.1rem;
   cursor: pointer;
-  z-index: 1000;
-
-  /* animation */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
-#scrollToTopBtn.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+.theme-toggle:hover {
+  transform: scale(1.05);
 }
 
-#scrollToTopBtn:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
+/* Light mode polish */
+[data-theme="light"] .theme-toggle {
+  background: #ffffff;
 }
-
