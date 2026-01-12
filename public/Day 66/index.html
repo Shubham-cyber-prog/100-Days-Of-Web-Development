@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Trading Simulator</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<nav>
+  <h1><span>Stock</span> Trading Simulator</h1>
+  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+</nav>
+
+<div class="container">
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <p>Available Balance</p>
+      <h2 id="balance">₹100000</h2>
+    </div>
+    <div class="stat">
+      <p>Portfolio Value</p>
+      <h2 id="portfolioValue">₹0</h2>
+    </div>
+    <div class="stat">
+      <p>Total Profit / Loss</p>
+      <h2 id="pl" class="profit">₹0</h2>
+    </div>
+  </div>
+
+  <!-- MARKET -->
+  <div class="card">
+    <h2>Market Watch</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Stock</th>
+          <th>Live Price (₹)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="market"></tbody>
+    </table>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="card">
+    <h2>My Portfolio</h2>
+    <div id="portfolio">No holdings yet</div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="card">
+    <h2>Transaction History</h2>
+    <div id="history">No transactions yet</div>
+  </div>
+
+</div>
+
+<footer>© 2026 Stock Trading Simulator – Day 66</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

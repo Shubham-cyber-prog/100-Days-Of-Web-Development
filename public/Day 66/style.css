@@ -1,0 +1,107 @@
+:root{
+  --primary:#0ea5e9;
+  --success:#22c55e;
+  --danger:#ef4444;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+.dark{
+  --bg:#020617;
+  --card:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
+
+/* NAV */
+nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:18px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+nav h1 span{color:var(--primary)}
+
+#themeToggle{
+  width:42px;height:42px;
+  border-radius:50%;
+  border:2px solid var(--primary);
+  background:none;
+  color:var(--primary);
+  cursor:pointer;
+}
+#themeToggle:hover{
+  background:var(--primary);
+  color:white;
+}
+
+/* LAYOUT */
+.container{
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-bottom:30px;
+}
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px;
+  margin-bottom:30px;
+}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px;border-bottom:1px solid var(--border)}
+th{color:var(--muted)}
+
+button{
+  padding:10px 16px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  color:white;
+}
+.buy{background:var(--success)}
+.sell{background:var(--danger)}
+
+/* PORTFOLIO */
+.item{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:12px;
+}
+
+/* PROFIT */
+.profit{color:var(--success)}
+.loss{color:var(--danger)}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+}
