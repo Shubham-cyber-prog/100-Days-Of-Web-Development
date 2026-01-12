@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Portal | Hackathon 2026</title>
+    <link rel="stylesheet" href="styles/portal.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">HACK2026</div>
+            <div class="nav-links">
+                <a href="#" class="active" onclick="showView('home')">Home</a>
+                <a href="#" onclick="showView('register')">Register</a>
+                <a href="#" onclick="showView('teams')">Teams</a>
+                <a href="#" onclick="showView('admin')">Admin</a>
+            </div>
+        </nav>
+
+        <!-- Home View -->
+        <div id="home-view" class="view animate">
+            <div class="card" style="text-align: center; padding: 4rem 2rem;">
+                <h1 style="font-size: 3rem; margin-bottom: 1rem;">Code the Future.</h1>
+                <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2.5rem;">Join 500+ developers for
+                    48 hours of building, learning, and innovation. Prizes worth $50,000 up for grabs.</p>
+                <button class="btn" onclick="showView('register')">Register Now</button>
+            </div>
+        </div>
+
+        <!-- Register View -->
+        <div id="register-view" class="view animate" style="display: none;">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <h2 style="margin-bottom: 2rem;">Participant Registration</h2>
+                <form id="registration-form" onsubmit="handleRegistration(event)">
+                    <div class="card">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="reg-name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="reg-email" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Skill Level</label>
+                            <select id="reg-skill">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Bio / Profile Link</label>
+                            <textarea id="reg-bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Complete Registration</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Teams View -->
+        <div id="teams-view" class="view animate" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Teams</h2>
+                <button class="btn btn-outline" onclick="toggleTeamForm()">Create Team</button>
+            </div>
+
+            <div id="team-form" style="display: none; margin-bottom: 2rem;">
+                <div class="card">
+                    <h3>Create New Team</h3>
+                    <form onsubmit="handleTeamCreation(event)" style="margin-top: 1rem;">
+                        <div class="form-group">
+                            <label>Team Name</label>
+                            <input type="text" id="team-name" required placeholder="Team Alpha">
+                        </div>
+                        <button type="submit" class="btn">Create</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="grid" id="teams-grid">
+                <!-- Teams list dynamic -->
+            </div>
+        </div>
+
+        <!-- Admin View -->
+        <div id="admin-view" class="view animate" style="display: none;">
+            <h2>Admin Dashboard</h2>
+            <div class="card" style="margin-top: 1.5rem; overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Skill</th>
+                            <th>Registration Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body">
+                        <!-- Admin data dynamic -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/portal.js"></script>
+</body>
+
+</html>
