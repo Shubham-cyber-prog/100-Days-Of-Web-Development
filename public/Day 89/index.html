@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -293,11 +294,52 @@
             background: #e74c3c;
         }
 
+        /* Modal Add New Devices CSS*/
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-content input,
+        .modal-content select {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        body.dark-mode .modal-content {
+            background: #2c3e50;
+            color: white;
+        }
+
+
         @keyframes slideIn {
             from {
                 transform: translateX(400px);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -324,6 +366,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
@@ -338,6 +381,7 @@
             <button class="btn btn-primary" id="turnAllOff">Turn All OFF</button>
             <button class="btn btn-secondary" id="refreshBtn">🔄 Refresh Status</button>
             <button class="btn btn-theme" id="themeBtn">🌙 Dark Mode</button>
+            <button class="btn btn-secondary" id="addDeviceBtn">➕ Add Device</button>
         </div>
 
         <!-- Devices Grid -->
@@ -367,6 +411,28 @@
         </div>
     </div>
 
+    <!-- Add New Devices Model Form Dialog code -->
+    <div class="modal" id="addDeviceModal">
+        <div class="modal-content">
+            <h2>Add New Device</h2>
+
+            <input type="text" id="deviceName" placeholder="Device Name" />
+            <select id="deviceType">
+                <option value="Light">Light</option>
+                <option value="Fan">Fan</option>
+                <option value="Thermostat">Thermostat</option>
+                <option value="Security">Security</option>
+                <option value="Appliance">Appliance</option>
+            </select>
+            <input type="text" id="deviceRoom" placeholder="Room Name" />
+
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="saveDevice">Add</button>
+                <button class="btn btn-secondary" id="closeModal">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Device Data
         const devices = [
@@ -388,7 +454,7 @@
             devices.forEach(device => {
                 const card = document.createElement('div');
                 card.className = `device-card ${device.status ? 'active' : 'inactive'}`;
-                
+
                 let details = '';
                 if (device.type === 'Light') {
                     details = `<div class="detail-row"><span>Brightness:</span><span>${device.brightness}%</span></div>`;
@@ -496,6 +562,63 @@
 
         // Initial Render
         renderDevices();
+
+        //Add Script for add new Devices...
+        const addDeviceBtn = document.getElementById('addDeviceBtn');
+        const modal = document.getElementById('addDeviceModal');
+        const saveDeviceBtn = document.getElementById('saveDevice');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        addDeviceBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Save Device
+        saveDeviceBtn.addEventListener('click', () => {
+            const name = document.getElementById('deviceName').value.trim();
+            const type = document.getElementById('deviceType').value;
+            const room = document.getElementById('deviceRoom').value.trim();
+
+            if (!name || !room) {
+                showNotification('Please fill all fields', 'error');
+                return;
+            }
+
+            const icons = {
+                Light: '💡',
+                Fan: '🌀',
+                Thermostat: '🌡️',
+                Security: '🔒',
+                Appliance: '🔌'
+            };
+
+            const newDevice = {
+                id: Date.now(),
+                name,
+                type,
+                room,
+                icon: icons[type],
+                status: false,
+                brightness: type === 'Light' ? 50 : undefined,
+                temperature: type === 'Thermostat' ? 22 : undefined,
+                speed: type === 'Fan' ? 'Low' : undefined,
+                locked: type === 'Security'
+            };
+
+            devices.push(newDevice);
+            renderDevices();
+            modal.style.display = 'none';
+
+            document.getElementById('deviceName').value = '';
+            document.getElementById('deviceRoom').value = '';
+
+            showNotification(`${name} added successfully`);
+        });
+
     </script>
 </body>
 </html>
