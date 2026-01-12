@@ -95,7 +95,11 @@ body.light-mode .navbar {
 .nav-links a {
     color: var(--text-secondary);
     position: relative;
-    padding: 0.5rem 0;
+    /* slightly increase horizontal hit area and make element block-level for predictable hover */
+    padding: 0.5rem 0.4rem;
+    display: inline-block;
+    /* show default cursor until user hovers — pointer will be shown on :hover only */
+    cursor: default;
     transition: color var(--duration-fast) var(--ease-out);
 }
 
@@ -119,6 +123,8 @@ body.light-mode .navbar {
 .nav-links a:hover,
 .nav-links a.active {
     color: var(--text-primary);
+    /* show pointer only when hovered/active */
+    cursor: pointer;
 }
 
 /* Theme Toggle */
