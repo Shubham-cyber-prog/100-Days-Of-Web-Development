@@ -1,70 +1,112 @@
-# Day 56 – Form Validation with Password Strength Meter
+# Expense Splitter (Pure JavaScript)
 
-This project demonstrates how to build a **real-time form validation system** using only **HTML, CSS, and JavaScript**. It also includes a **password strength meter** that helps users create stronger passwords.
-
----
-
-## 🚀 Features
-
-- Real-time validation while typing
-- Required field validation
-- Email format checking
-- Password length validation
-- Password strength indicator (Weak, Medium, Strong, Very Strong)
-- Visual feedback for errors and success
-- Clean and responsive UI
-- No external libraries used
+A clean and interactive **frontend-only Expense Splitter** built using **HTML, CSS, and Vanilla JavaScript**.  
+It helps groups split expenses fairly, track balances, and settle debts efficiently — similar to Splitwise, but simpler.
 
 ---
 
-## 🛠 Tech Stack
+## Features
 
-- HTML5 – Structure
-- CSS3 – Styling and layout
-- JavaScript – Validation logic and interactivity
+- Add group members
+- Add expenses with:
+  - Description
+  - Amount
+  - Payer
+  - Selected participants
+- Automatic equal splitting
+- Live balance calculation (who owes / who gets)
+- Optimized settlement suggestions (minimum transactions)
+- Manual settlement recording
+- Persistent data using `localStorage`
+- Export & Import data (JSON)
+- Load sample data for testing
+- Clear all data
+- Responsive and user-friendly UI
 
 ---
 
-## 📌 Why This Project?
+## How It Works (Logic Overview)
 
-Forms are a core part of almost every website. This project helps beginners understand:
-- How client-side validation works
-- How to improve user experience
-- How to give instant feedback without backend code
+### Balance Calculation
+For each expense:
+- The **payer** gets credited with the full amount
+- Each participant is debited by their equal share
+
+Final balances are calculated as:
+balance = total_paid − total_owed
+
+- **Positive balance** → user should receive money  
+- **Negative balance** → user owes money  
+
+---
+
+### Settlement Optimization
+Instead of tracking individual debts, the app:
+- Computes **net balances**
+- Matches debtors to creditors
+- Generates **minimum number of transactions** to settle all balances
+
+This approach is:
+- Efficient
+- Scalable
+- Industry-standard (used by Splitwise)
+
+---
+
+## Tech Stack
+
+- **HTML5**
+- **CSS3**
+- **Vanilla JavaScript (ES6)**
+- **Font Awesome** (icons)
+- **LocalStorage** (data persistence)
 
 ---
 
 ## 📂 Project Structure
 
-Day-56-Form-Validation
- - index.html
- - style.css
- - script.js
- - README.md
+expense-splitter/
+│
+├── index.html
+├── style.css
+└── script.js
 
 
 ---
 
-## 🧪 How to Run the Project
+## Sample Scenario
 
-1. Clone or download the repository
-2. Open the project folder
-3. Double-click `index.html`  
-   **OR**
-4. Open with Live Server in VS Code for auto-refresh
+1. A & B go to lunch, A pays ₹500  
+2. A, B, C, D go next day, C pays ₹1000  
+3. A, B, C, D, E, F go next day, F pays ₹3000  
 
----
-
-## Output
-
-<img width="1230" height="868" alt="Screenshot 2026-01-05 221435" src="https://github.com/user-attachments/assets/b9fea822-67eb-4cf8-b416-b38d7fdeed30" />
-
+The app correctly:
+- Computes net balances
+- Suggests optimal settlements
+- Avoids unnecessary intermediate payments
 
 ---
 
-## 🙌 Contribution
+## Note
 
-This project is part of the daily frontend learning series.  
-Contributions and improvements are welcome!
+- This is a **frontend-only project**
+- No authentication or backend is involved
+- Designed for learning:
+  - DOM manipulation
+  - State management
+  - Real-world calculation logic
 
+---
 
+## 📌 Future Improvements (Optional)
+
+- Unequal split support
+- Per-expense payer selection UI
+- Charts for expense visualization
+
+---
+
+## Author
+
+Built as part of a **Day 56 frontend project challenge**  
+Focused on correctness, clarity, and real-world logic.
