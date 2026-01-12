@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Management System</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<nav>
+  <h1><span>Task</span> Manager</h1>
+  <ul>
+    <li class="active" onclick="openTab('home',this)">Home</li>
+    <li onclick="openTab('addTask',this)">Add Task</li>
+    <li onclick="openTab('tasksTab',this)">My Tasks</li>
+    <li onclick="openTab('profileTab',this)">Profile</li>
+    <li onclick="openTab('contact',this)">Contact</li>
+  </ul>
+  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+</nav>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home" class="tab active">
+  <div class="card">
+    <h2>Welcome 👋</h2>
+    <p>Manage your daily tasks efficiently and stay productive.</p>
+  </div>
+
+  <div class="card">
+    <h2>Features</h2>
+    <div class="features">
+      <div class="feature"><i class="fa-solid fa-plus"></i><p>Add Tasks</p></div>
+      <div class="feature"><i class="fa-solid fa-pen"></i><p>Edit Tasks</p></div>
+      <div class="feature"><i class="fa-solid fa-trash"></i><p>Delete Tasks</p></div>
+      <div class="feature"><i class="fa-solid fa-file-pdf"></i><p>PDF Export</p></div>
+    </div>
+  </div>
+
+  <!-- README DOWNLOAD -->
+  <a href="README.md" download class="download-btn">
+    <i class="fa-solid fa-download"></i> Download README
+  </a>
+</div>
+
+<!-- ADD TASK -->
+<div id="addTask" class="tab">
+  <div class="card">
+    <h2>Add Task</h2>
+    <form id="taskForm">
+      <input id="title" placeholder="Task Title" required>
+      <input id="due" type="date" required>
+      <select id="priority">
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+      </select>
+      <textarea id="desc" placeholder="Task Description"></textarea>
+      <button>Add Task</button>
+    </form>
+  </div>
+</div>
+
+<!-- TASKS -->
+<div id="tasksTab" class="tab">
+  <div class="card">
+    <h2>My Tasks</h2>
+    <div id="taskList"></div>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div id="profileTab" class="tab">
+  <div class="card">
+    <h2>Profile</h2>
+    <div class="profile">
+      <img src="https://i.imgur.com/8Km9tLL.png">
+      <div>
+        <p><b>Name:</b> Riya Kharade</p>
+        <p><b>Email:</b> riya@example.com</p>
+        <p><b>Role:</b> Student</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="tab">
+  <div class="card">
+    <h2>Contact</h2>
+    <div class="contact">
+      <input placeholder="Name">
+      <input placeholder="Email">
+      <textarea rows="4" placeholder="Message"></textarea>
+      <button>Send</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- PRINT -->
+<div id="printTask">
+  <div class="print-box">
+    <h1>Task Details</h1>
+    <p id="printContent"></p>
+  </div>
+</div>
+
+<footer>© 2026 Task Management System</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
