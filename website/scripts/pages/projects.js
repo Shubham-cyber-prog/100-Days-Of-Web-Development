@@ -26,7 +26,7 @@ const folderMap = {
     81: "Day 81", 82: "Day 82", 83: "Day 83", 84: "Day 84", 85: "Day 85",
     86: "Day 86", 87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
-    96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100"
+    96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101"
 };
 
 // Full 100-Day Project List
@@ -76,7 +76,7 @@ const allProjects = [
     { day: 99, title: "Music App using Next.js", tech: ["Next.js", "Spotify API"] }, { day: 100, title: "Survival Protocol", tech: ["Next.js", "TypeScript"] },
      
     //Extended Capstone Projects (Day 101-150) medium level HTML, CSS, JAVASCRIPT , TYPESCRIPT ,  FOR ECWoC26 Extended Program
-    { day: 101, title: "Advanced Portfolio Website", tech: ["HTML", "CSS", "JS"] }, { day: 102, title: "Interactive Storytelling Website", tech: ["HTML", "CSS", "JS"] },
+    { day: 101, title: "Canvas Image Particle Animation", folder: "Day 101", level: "Intedmediate", tech: ["HTML", "CSS", "JS", "HTML Canvas"] }, { day: 102, title: "Interactive Storytelling Website", tech: ["HTML", "CSS", "JS"] },
     { day: 103, title: "Readme Tool Kit", tech: ["HTML", "CSS", "JS"] }, { day: 104, title: "3D Model Viewer", tech: ["Three.js", "JS"] },
     { day: 105, title: "Advanced Form Builder", tech: ["HTML", "CSS", "JS"] }, { day: 106, title: "Smart Campus Life Dashboard", tech: ["D3.js", "JS"] },
     { day: 107, title: "Solar System", tech: ["Socket.io", "JS"] }, { day: 108, title: "AI-Powered Image Editor", tech: ["TensorFlow.js", "JS"] },
@@ -100,7 +100,7 @@ const allProjects = [
     { day: 143, title: "Advanced Recruitment Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 144, title: "AI-Powered Social Media Management Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 145, title: "Chess Game", tech: ["React", "Node.js"] }, { day: 146, title: "AI-Powered Customer Support Chatbot", tech: ["OpenAI API", "JS"] },
     { day: 147, title: "Advanced Financial Planning Tool", tech: ["Next.js", "Prisma"] }, { day: 148, title: "AI-Powered Document Summarization Tool", tech: ["OpenAI API", "Node.js"] },
-    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
+    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] }
 
 ];
 
