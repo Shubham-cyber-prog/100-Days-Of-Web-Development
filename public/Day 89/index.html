@@ -334,6 +334,43 @@
         }
 
 
+        /* 🔽 NEW: Edit / Delete buttons */
+        .device-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .action-btn {
+            border: none;
+            background: #ecf0f1;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: 0.2s;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .edit-btn {
+            background: #ffd93d;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        body.dark-mode .action-btn {
+            background: #2c3e50;
+            color: white;
+        }
+
+
         @keyframes slideIn {
             from {
                 transform: translateX(400px);
@@ -432,8 +469,28 @@
             </div>
         </div>
     </div>
+    <!-- 🔽 NEW: Delete Confirmation Modal -->
+    <div class="modal" id="deleteConfirmModal">
+        <div class="modal-content">
+            <h3>Confirm Delete</h3>
+            <p id="deleteMessage">Are you sure?</p>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelDelete">Cancel</button>
+                <button class="btn btn-primary" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+
 
     <script>
+        // 🔽 NEW: Track editing device
+        let editingDeviceId = null;
+
+        // 🔽 NEW: Store device ID to delete
+        let deleteDeviceId = null;
+
         // Device Data
         const devices = [
             { id: 1, name: 'Living Room Light', type: 'Light', icon: '💡', status: true, brightness: 80, room: 'Living Room' },
@@ -466,6 +523,14 @@
                     details = `<div class="detail-row"><span>Status:</span><span>${device.locked ? 'Locked' : 'Unlocked'}</span></div>`;
                 }
 
+                // 🔽 NEW: Action buttons (Edit / Delete)
+                const actions = `
+                    <div class="device-actions">
+                        <button class="action-btn edit-btn" data-id="${device.id}">✏️</button>
+                        <button class="action-btn delete-btn" data-id="${device.id}">🗑️</button>
+                    </div>
+                `;
+
                 card.innerHTML = `
                     <div class="device-header">
                         <div>
@@ -474,25 +539,70 @@
                             <div class="device-type">${device.type}</div>
                         </div>
                     </div>
-                    
+                    ${actions}
                     <span class="status-badge ${device.status ? 'status-on' : 'status-off'}">
                         ${device.status ? 'ON' : 'OFF'}
                     </span>
-                    
+
                     <button class="toggle-switch ${device.status ? 'on' : ''}" data-id="${device.id}"></button>
-                    
+
                     <div class="device-details">
                         <div class="detail-row"><span>Room:</span><span>${device.room}</span></div>
                         ${details}
                     </div>
                 `;
 
+                // 🔽 NEW: Edit button event
+                card.querySelector('.edit-btn').addEventListener('click', () => {
+                    openEditDevice(device);
+                });
+
+                // 🔽 NEW: Delete button event
+                card.querySelector('.delete-btn').addEventListener('click', () => {
+                    deleteDevice(device.id);
+
+                    // 🔽 NEW: Open delete confirmation modal
+                    function deleteDevice(id) {
+                        deleteDeviceId = id;
+
+                        const device = devices.find(d => d.id === id);
+                        document.getElementById('deleteMessage').textContent =
+                            `Are you sure you want to delete "${device.name}"?`;
+
+                        document.getElementById('deleteConfirmModal').style.display = 'flex';
+                    }
+                });
+
+                //Handle Confirm & Cancel Actions
+                const confirmDeleteBtn = document.getElementById('confirmDelete');
+                const cancelDeleteBtn = document.getElementById('cancelDelete');
+                const deleteModal = document.getElementById('deleteConfirmModal');
+
+                // 🔽 Confirm delete
+                confirmDeleteBtn.addEventListener('click', () => {
+                    const index = devices.findIndex(d => d.id === deleteDeviceId);
+                    if (index > -1) {
+                        showNotification(`${devices[index].name} deleted`);
+                        devices.splice(index, 1);
+                        renderDevices();
+                    }
+
+                    deleteDeviceId = null;
+                    deleteModal.style.display = 'none';
+                });
+
+                // 🔽 Cancel delete
+                cancelDeleteBtn.addEventListener('click', () => {
+                    deleteDeviceId = null;
+                    deleteModal.style.display = 'none';
+                });
+
                 card.querySelector('.toggle-switch').addEventListener('click', () => toggleDevice(device.id));
                 devicesGrid.appendChild(card);
             });
 
             updateStats();
-        }
+        };
 
         // Toggle Device
         function toggleDevice(id) {
@@ -570,6 +680,7 @@
         const closeModalBtn = document.getElementById('closeModal');
 
         addDeviceBtn.addEventListener('click', () => {
+            editingDeviceId = null; // NEW: Reset edit mode
             modal.style.display = 'flex';
         });
 
@@ -587,6 +698,69 @@
                 showNotification('Please fill all fields', 'error');
                 return;
             }
+
+            // 🔽 EDIT MODE
+            if (editingDeviceId) {
+                const device = devices.find(d => d.id === editingDeviceId);
+                device.name = name;
+                device.type = type;
+                device.room = room;
+
+                showNotification(`${name} updated successfully`);
+            }
+            // 🔽 ADD MODE
+            else {
+                const icons = {
+                    Light: '💡',
+                    Fan: '🌀',
+                    Thermostat: '🌡️',
+                    Security: '🔒',
+                    Appliance: '🔌'
+                };
+
+                devices.push({
+                    id: Date.now(),
+                    name,
+                    type,
+                    room,
+                    icon: icons[type],
+                    status: false
+                });
+
+                showNotification(`${name} added successfully`);
+            }
+
+            editingDeviceId = null;
+            modal.style.display = 'none';
+            renderDevices();
+
+            // Clear fields
+            document.getElementById('deviceName').value = '';
+            document.getElementById('deviceRoom').value = '';
+        });
+
+        // 🔽 NEW: Open modal with device data
+        function openEditDevice(device) {
+            editingDeviceId = device.id;
+
+            document.getElementById('deviceName').value = device.name;
+            document.getElementById('deviceType').value = device.type;
+            document.getElementById('deviceRoom').value = device.room;
+
+            modal.style.display = 'flex';
+        }
+
+        // 🔽 NEW: Delete device
+        function deleteDevice(id) {
+            const index = devices.findIndex(d => d.id === id);
+            if (index > -1) {
+                showNotification(`${devices[index].name} deleted`);
+                devices.splice(index, 1);
+                renderDevices();
+            }
+        }
+    </script>
+</body>
 
             const icons = {
                 Light: '💡',
