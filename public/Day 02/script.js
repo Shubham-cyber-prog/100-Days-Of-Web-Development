@@ -1,4 +1,5 @@
 
+
         // Mobile Navigation Toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navMenu = document.getElementById('navMenu');
@@ -83,4 +84,24 @@
                 }
             });
         });
-    
+
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.addEventListener("scroll", () => {
+        if (
+            document.documentElement.scrollHeight >
+            document.documentElement.clientHeight &&
+            window.scrollY > 10
+        ) {
+            scrollToTopBtn.classList.add("show");
+        } else {
+            scrollToTopBtn.classList.remove("show");
+        }
+        });
+
+        scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+        });
