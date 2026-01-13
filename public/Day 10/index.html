@@ -4,57 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recipe Book</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <header class="header">
-    <h1 class="logo">🍽️ Recipe Book</h1>
-    <nav class="nav">
-      <a href="#">Home</a>
-    </nav>
-  </header>
+<header class="header">
+  <div class="header-left">
+    <h1>🍽️ Recipe Book</h1>
+  </div>
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="favorites.html">❤️ Favorites</a>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </nav>
+</header>
 
-  <!-- ===== MAIN CONTENT ===== -->
-  <main class="container">
+<main class="container">
 
-    <!-- Search (UI only for now) -->
-    <section class="search-section">
-      <input 
-        type="text" 
-        placeholder="Search recipes..." 
-        aria-label="Search recipes"
-      />
-    </section>
+  <!-- CONTROLS -->
+  <div class="controls">
+    <input id="searchInput" type="text" placeholder="Search recipes..." />
+    <select id="categorySelect">
+      <option value="">All Categories</option>
+    </select>
+  </div>
 
-    <!-- Recipes Grid -->
-    <section class="recipes-grid" id="recipes-grid">
+  <!-- RECIPES -->
+  <section class="recipes-grid" id="recipes-grid">
+    <p class="loading">Loading recipes...</p>
+  </section>
 
-      <!-- Recipe Card (JS will generate these later) -->
-      <!-- Example structure:
-      <article class="recipe-card">
-        <img src="assets/images/recipe.jpg" alt="Recipe name" />
-        <div class="recipe-info">
-          <h2>Recipe Name</h2>
-          <p>Short description of the recipe.</p>
-          <a href="recipe.html?id=1" class="btn">View Recipe</a>
-        </div>
-      </article>
-      -->
+</main>
 
-    </section>
+<footer class="footer">
+  © 2026 Recipe Book. All rights reserved.
+</footer>
 
-  </main>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <p>© 2026 Recipe Book. All rights reserved.</p>
-  </footer>
-
-  <!-- JavaScript -->
-  <script src="js/script.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>

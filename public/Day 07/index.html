@@ -1,80 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Expense Tracker</title>
-  <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+  </head>
+  <body>
+    <!-- React mounts here -->
+    <div id="root"></div>
 
-<div class="expense-app">
-
-  <!-- Summary -->
-  <section class="summary-card">
-    <div class="ring">
-      <div class="ring-center">
-        <span>Expenses</span>
-        <h2 id="expense-amount">₹0</h2>
-      </div>
-    </div>
-
-    <div class="limit">
-      <p>Monthly limit</p>
-      <strong>₹<span id="limit-amount" class="editable-limit">5000</span></strong>
-      <p id="limit-warning" class="warning">⚠ Limit has been crossed</p>
-    </div>
-  </section>
-
-  <!-- Per-category totals -->
-  <section class="category-totals">
-    <div class="cat food">🍔 Food <span id="total-food">₹0</span></div>
-    <div class="cat shopping">🛍️ Shopping <span id="total-shopping">₹0</span></div>
-    <div class="cat travel">✈️ Travel <span id="total-travel">₹0</span></div>
-    <div class="cat health">💊 Health <span id="total-health">₹0</span></div>
-  </section>
-
-  <!-- Transactions -->
-  <section class="transactions">
-    <div class="transactions-header">
-      <h3>Transactions</h3>
-      <button type="button" class="add-expense-btn">+</button>
-    </div>
-
-    <div class="expense-list"></div>
-
-    <div class="total" id="total-expense">
-      Total Expense: ₹0.00
-    </div>
-  </section>
-
-</div>
-
-<!-- Add Expense Modal -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <h3>Add Expense</h3>
-
-    <input type="text" id="description" placeholder="Description"/>
-    
-    <select id="category">
-      <option value="food">Food</option>
-      <option value="shopping">Shopping</option>
-      <option value="travel">Travel</option>
-      <option value="health">Health</option>
-    </select>
-
-    <input type="number" id="amount" placeholder="Amount" min="0"/>
-
-    <input type="date" id="expense-date"/>
-
-    <div class="modal-actions">
-      <button type="button" id="cancelBtn">Cancel</button>
-      <button type="button" id="addBtn">Add</button>
-    </div>
-  </div>
-</div>
-
-<script src="script.js"></script>
-</body>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
