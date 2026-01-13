@@ -1,0 +1,105 @@
+// -----------------------------
+// Prisma Client Generator
+// -----------------------------
+generator client {
+  provider = "prisma-client-js"
+}
+
+// -----------------------------
+// Database Connection
+// -----------------------------
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------
+// Enums
+// -----------------------------
+enum Role {
+  ADMIN
+  MANAGER
+  SALES
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  LOST
+}
+
+enum ActivityType {
+  NOTE
+  CALL
+  MEETING
+  EMAIL
+}
+
+// -----------------------------
+// Models
+// -----------------------------
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(SALES)
+
+  leads     Lead[]       @relation("UserLeads")
+  customers Customer[]  @relation("UserCustomers")
+  activities Activity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  phone     String?
+  status    LeadStatus @default(NEW)
+  source    String?
+
+  ownerId  String
+  owner    User     @relation("UserLeads", fields: [ownerId], references: [id])
+
+  activities Activity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  phone     String?
+  company   String?
+
+  ownerId  String
+  owner    User     @relation("UserCustomers", fields: [ownerId], references: [id])
+
+  activities Activity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Activity {
+  id          String        @id @default(uuid())
+  type        ActivityType
+  description String?
+
+  userId     String
+  user       User       @relation(fields: [userId], references: [id])
+
+  leadId     String?
+  lead       Lead?      @relation(fields: [leadId], references: [id])
+
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
+
+  createdAt  DateTime @default(now())
+}
