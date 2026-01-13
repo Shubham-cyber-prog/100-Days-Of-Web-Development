@@ -163,6 +163,7 @@ function renderProjects() {
         const card = document.createElement('div');
         card.className = `project-card ${isCompleted ? 'completed' : ''}`;
         card.innerHTML = `
+            <a class="code-chip" href="${repoBaseUrl}${project.folder}" target="_blank" aria-label="View Code">&lt;/&gt;</a>
             <div class="card-header">
                 <label class="completion-checkbox">
                     <input type="checkbox" data-day="${project.day}" ${isCompleted ? 'checked' : ''}>
@@ -173,11 +174,21 @@ function renderProjects() {
             </div>
             <h3>${project.title}</h3>
             <p>${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}</p>
-            <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
-            </div>
         `;
+
+        const codeChip = card.querySelector('.code-chip');
+        codeChip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.open(`${repoBaseUrl}${project.folder}`, '_blank');
+        });
+
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.completion-checkbox') || e.target.closest('.code-chip')) {
+                return;
+            }
+            window.open(`${liveBaseUrl}${project.folder}/index.html`, '_blank');
+        });
+
         grid.appendChild(card);
     });
 }

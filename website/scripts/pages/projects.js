@@ -154,11 +154,13 @@ function renderProjects(filter = 'All') {
         const techTags = project.tech ? project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('') : '';
 
         card.innerHTML = `
-            <div class="card-header">
+            <div class="card-top">
                 <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px;">
                     ${difficulty} • ${dayLabel}
                 </span>
+                <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
+            <div class="card-divider"></div>
             
             <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); min-height: 40px;">
                 ${project.title}
@@ -168,33 +170,24 @@ function renderProjects(filter = 'All') {
                 ${techTags}
             </div>
 
-                <div class="flex gap-4 mt-auto">
-                    <a href="${liveLink}"
-                    class="btn"
-                    style="
-                        flex: 1;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        font-size: 0.9rem;
-                        padding: 10px 14px;
-                        border-radius: 10px;
-                        background-color: ${isDisabled ? '#FFE0C2' : '#FF7A18'};
-                        color: ${isDisabled ? '#9A5A1C' : '#FFFFFF'};
-                        font-weight: 500;
-                        opacity: ${isDisabled ? '0.6' : '1'};
-                        pointer-events: ${isDisabled ? 'none' : 'auto'};
-                        text-decoration: none;
-                        transition: all 0.2s ease;
-                    ">
-                    ${isDisabled ? 'Pending' : 'Live Demo'}
-                    </a>
-
-                    <a href="${codeLink}" target="_blank" class="btn btn-social" style="flex: 1; justify-content: center; font-size: 0.9rem;">
-                        View Code
-                    </a>
-                </div>
+            ${isDisabled ? `<div class="card-hint muted">Pending</div>` : ''}
         `;
+
+        // Code button opens repository without triggering card click
+        const codeChip = card.querySelector('.code-chip');
+        codeChip.onclick = (e) => {
+            e.stopPropagation();
+            window.open(codeLink, '_blank');
+        };
+
+        // Whole card opens live demo if available
+        if (!isDisabled) {
+            card.addEventListener('click', () => {
+                window.location.assign(liveLink);
+            });
+        } else {
+            card.classList.add('is-disabled');
+        }
 
         setupTiltEffect(card); // Attach 3D Tilt Logic
         grid.appendChild(card);
