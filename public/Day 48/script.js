@@ -564,8 +564,11 @@ function formatDate(dateString) {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', options);
+
 }
-=======
+
+}
+
 function openTab(id, el){
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -672,3 +675,4 @@ function closeModal(){
 }
 
 renderBookings();
+
