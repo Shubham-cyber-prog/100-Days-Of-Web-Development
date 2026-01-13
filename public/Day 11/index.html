@@ -3,25 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Day 11 – Blog Website</title>
+  <title>My Blog</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>My Blog</h1>
-    <p>Sharing thoughts, ideas & stories</p>
-    <button id="themeToggle">Toggle Theme</button>
-  </header>
+<header class="site-header">
+  <h1>My Blog</h1>
+  <p class="subtitle">Sharing thoughts, ideas & stories</p>
 
-  <main class="blog-container" id="blogContainer">
-    <!-- Blog posts injected by JavaScript -->
-  </main>
+  <div class="header-controls">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search posts..."
+      aria-label="Search posts"
+    />
+    <button id="themeToggle" aria-label="Toggle theme">
+      🌙
+    </button>
+  </div>
+</header>
 
-  <footer>
-    <p>© 2026 | Day 11 Blog Website</p>
-  </footer>
+<main class="blog-container" id="blogContainer"></main>
 
-  <script src="script.js"></script>
+<div class="pagination" id="pagination"></div>
+
+<footer class="site-footer">
+  © 2026 | Blog Website
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
