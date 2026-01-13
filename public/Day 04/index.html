@@ -1,85 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Atmosphere | Instant Weather</title>
-
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - Current Weather & Forecast</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-<!-- Animated Background -->
-<div class="background-container">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-</div>
-
-<div class="container">
-    <div class="card">
-
+    <div class="container">
         <!-- Header -->
-        <div class="header">
-            <h1 class="app-title">Atmosphere</h1>
-            <p class="app-subtitle">Instant Weather Updates</p>
+        <header class="header">
+            <h1 class="logo">Weather<span>Pro</span></h1>
+            <div class="header-controls">
+                <button id="unitToggle" class="unit-toggle">°C</button>
+                <button id="locationBtn" class="location-btn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search for a city..." class="search-input">
+                <button id="searchBtn" class="search-btn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
 
-        <!-- Search -->
-        <div class="search-box">
-            <input
-                id="cityInput"
-                type="text"
-                placeholder="Enter city name..."
-                autocomplete="off"
-                spellcheck="false"
-            />
-            <button id="searchBtn" aria-label="Search">
-                <i class="fas fa-search"></i>
-            </button>
-            <div id="suggestions"></div>
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading weather data...</p>
         </div>
 
-        <!-- Loader / Error -->
-        <div id="errorMsg" class="error-msg"></div>
-        <div id="loader" class="loader"></div>
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message hidden">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <p>City not found. Please try again.</p>
+        </div>
 
-        <!-- Weather Data -->
-        <div id="weatherData" class="weather-data hidden">
-            <h2 class="city-name" id="cityName"></h2>
-
-            <div class="weather-main">
-                <div class="temperature-container">
-                    <span class="temperature" id="temperature"></span>
-                    <span class="unit">°C</span>
-                </div>
-                <div class="weather-icon" id="weatherIcon"></div>
-            </div>
-
-            <p class="condition" id="condition"></p>
-
-            <div class="details">
-                <div class="detail-item">
-                    <div class="detail-icon"><i class="fas fa-wind"></i></div>
-                    <span class="label">Wind</span>
-                    <span class="val" id="windSpeed"></span>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-icon"><i class="fas fa-tint"></i></div>
-                    <span class="label">Humidity</span>
-                    <span class="val" id="humidity"></span>
-                </div>
-            </div>
-
-            <div class="extra-details">
-                <div class="extra-detail-item">
-                    <span class="extra-label">Feels Like</span>
-                    <span class="extra-val" id="feelsLike"></span>
+        <!-- Main Weather Content -->
+        <main id="weatherContent" class="weather-content hidden">
+            <!-- Current Weather -->
+            <section class="current-weather">
+                <div class="current-weather-main">
+                    <div class="weather-icon-large">
+                        <img id="currentWeatherIcon" src="" alt="Weather Icon">
+                    </div>
+                    <div class="current-temp">
+                        <span id="currentTemp">--°</span>
+                        <div class="current-location">
+                            <span id="currentLocation">--</span>
+                            <span id="currentDate">--</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="extra-detail-item">
                     <span class="extra-label">UV Index</span>
@@ -98,6 +81,10 @@
     </div>
 </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
+    <footer class="footer">
+        <p>© 2026 WeatherPro. All rights reserved.</p>
+        <p>WeatherPro is made with ❤️ by <strong>Bikramjit</strong>.</p>
+    </footer>
 </body>
 </html>

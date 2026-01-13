@@ -48,8 +48,7 @@ const projects = [
     // ADVANCED & CAPSTONE - Follow same pattern
     { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
     // ... add more as you complete them
-    { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] },
-    { day: 101, title: "Canvas Image Particle Animation", folder: "Day 101", level: "Intermediate", tech: ["HTML", "CSS", "JS", "HTML Canvas"] }
+    { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
 ];
 
 const grid = document.getElementById('projects-grid');
@@ -63,7 +62,6 @@ let currentFilters = {
     tech: ['HTML', 'CSS', 'JS']
 };
 
-
 // Completed days tracking
 let completedDays = [];
 
@@ -76,7 +74,6 @@ function getCompletedDays() {
 function saveCompletedDays(days) {
     localStorage.setItem('completedDays', JSON.stringify(days));
 }
-
 
 // Event listeners for filters
 document.getElementById('projectSearch').addEventListener('input', (e) => {
@@ -174,6 +171,10 @@ function renderProjects() {
             </div>
             <h3>${project.title}</h3>
             <p>${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}</p>
+            <div class="card-actions">
+                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
+                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
+            </div>
         `;
 
         const codeChip = card.querySelector('.code-chip');
@@ -192,7 +193,6 @@ function renderProjects() {
         grid.appendChild(card);
     });
 }
-
 
 // Event listener for completion checkboxes
 document.addEventListener('change', (e) => {

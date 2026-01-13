@@ -170,6 +170,37 @@ ul {
   color: var(--text-primary);
 }
 
+.clear-search-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.search-container:hover .clear-search-btn,
+.search-input:focus + .clear-search-btn,
+.clear-search-btn:hover {
+    opacity: 1;
+}
+
+.clear-search-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
 /* --- About Page: Learning Path Timeline --- */
 .learning-path {
   position: relative;
@@ -1159,6 +1190,54 @@ main {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   color: var(--bg-primary);
+}
+
+/* Completion Checkbox Styles */
+.completion-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.completion-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.completion-checkbox input:checked + .checkmark {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+/* Completed Project Styles */
+.project-card.completed {
+    opacity: 0.7;
+    border-color: var(--accent-primary);
+    background: rgba(237, 237, 237, 0.05);
+}
+
+.project-card.completed .checkmark {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--bg-primary);
 }
 
 /* Tooltip for Day Cell */

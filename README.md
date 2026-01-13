@@ -84,7 +84,6 @@ This repository documents my **100 Days of Web Development journey**, where I:
 ├── 📄 README.md                           # Documentation
 └── 📄 CONTRIBUTING.md                     # Contribution Guidelines
 ```
-
                # Dependencies configuration
 
 ---
@@ -122,14 +121,6 @@ Welcome to the **100 Days of Web Development** challenge! Follow these steps to 
    git commit -m "Add brief description of your changes"
    git push origin feature/your-feature-name
    ```
-   > **Note:** `git add .` stages **all modified and untracked files** in the repository.
->  
-> If you want to stage only a specific file, you can use:
-> ```bash
-> git add <filename>
-> ```
->  
-> This can help avoid accidentally committing unrelated changes.
 8. **Create a Pull Request**: Go to the original repository and create a PR with a clear description.
 
 ### Additional Tips
@@ -204,5 +195,4 @@ To maintain a clean and collaborative codebase, follow these Git workflow guidel
 - Regularly sync your fork with the upstream repository.
 - Use `.gitignore` to exclude unnecessary files (e.g., `node_modules/`, `.env`).
 
-<img src="https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26"/>
 
