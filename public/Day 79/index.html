@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebMail Client</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-envelope"></i>
+                <h1>WebMail</h1>
+            </div>
+            
+            <button class="compose-btn" id="composeBtn">
+                <i class="fas fa-pen"></i>
+                <span>Compose</span>
+            </button>
+            
+            <div class="folders">
+                <div class="folder-item active" data-folder="inbox">
+                    <i class="fas fa-inbox"></i>
+                    <span>Inbox</span>
+                    <span class="badge" id="inboxCount">5</span>
+                </div>
+                <div class="folder-item" data-folder="starred">
+                    <i class="fas fa-star"></i>
+                    <span>Starred</span>
+                    <span class="badge" id="starredCount">2</span>
+                </div>
+                <div class="folder-item" data-folder="sent">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Sent</span>
+                </div>
+                <div class="folder-item" data-folder="drafts">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Drafts</span>
+                    <span class="badge" id="draftsCount">1</span>
+                </div>
+                <div class="folder-item" data-folder="spam">
+                    <i class="fas fa-ban"></i>
+                    <span>Spam</span>
+                    <span class="badge" id="spamCount">3</span>
+                </div>
+                <div class="folder-item" data-folder="trash">
+                    <i class="fas fa-trash"></i>
+                    <span>Trash</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">JD</div>
+                    <div class="user-details">
+                        <h4>John Doe</h4>
+                        <p>john.doe@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search emails...">
+                </div>
+                
+                <div class="user-info mobile">
+                    <div class="user-avatar">JD</div>
+                </div>
+            </div>
+            
+            <div class="content-area">
+                <!-- Email List Section -->
+                <div class="email-list-container" id="emailListContainer">
+                    <div class="email-list-header">
+                        <h2 id="folderTitle">Inbox</h2>
+                        <div class="email-actions">
+                            <button id="refreshBtn">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Refresh</span>
+                            </button>
+                            <button id="selectAllBtn">
+                                <i class="fas fa-check-square"></i>
+                                <span>Select All</span>
+                            </button>
+                            <button id="deleteSelectedBtn">
+                                <i class="fas fa-trash"></i>
+                                <span>Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="email-list" id="emailList">
+                        <!-- Email items will be dynamically added here -->
+                    </div>
+                </div>
+                
+                <!-- Email View Section -->
+                <div class="email-view-container" id="emailViewContainer">
+                    <div class="email-view-header">
+                        <div class="email-view-subject" id="emailViewSubject">
+                            Welcome to WebMail!
+                        </div>
+                        <div class="email-view-info">
+                            <div class="email-view-sender">
+                                <div class="sender-avatar" id="senderAvatar">WM</div>
+                                <div class="sender-details">
+                                    <h4 id="senderName">WebMail Team</h4>
+                                    <p id="senderEmail">support@webmail.com</p>
+                                </div>
+                            </div>
+                            <div class="email-view-actions">
+                                <button class="action-btn" id="starEmailBtn">
+                                    <i class="far fa-star"></i>
+                                </button>
+                                <button class="action-btn" id="replyEmailBtn">
+                                    <i class="fas fa-reply"></i>
+                                </button>
+                                <button class="action-btn" id="deleteEmailBtn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="email-view-body" id="emailViewBody">
+                        <p>Welcome to WebMail Client!</p>
+                        <p>This is a fully functional email client built with HTML, CSS, and JavaScript.</p>
+                        <p>You can:</p>
+                        <ul>
+                            <li>Compose new emails</li>
+                            <li>Read received emails</li>
+                            <li>Reply to emails</li>
+                            <li>Star important emails</li>
+                            <li>Delete emails</li>
+                            <li>Search through your inbox</li>
+                        </ul>
+                        <p>Try clicking on an email to read it, or click the Compose button to send a new message.</p>
+                        <p>Best regards,<br>The WebMail Team</p>
+                    </div>
+                    
+                    <div class="email-view-footer">
+                        <input type="text" class="reply-input" id="replyInput" placeholder="Type your reply...">
+                        <button class="reply-btn" id="sendReplyBtn">Send Reply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Compose Email Modal -->
+    <div class="compose-modal" id="composeModal">
+        <div class="compose-header">
+            <h3>New Message</h3>
+            <button class="close-compose" id="closeComposeBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="compose-body">
+            <input type="text" class="compose-input" id="composeTo" placeholder="To">
+            <input type="text" class="compose-input" id="composeSubject" placeholder="Subject">
+            <textarea class="compose-textarea" id="composeBody" placeholder="Message"></textarea>
+        </div>
+        
+        <div class="compose-footer">
+            <button class="compose-send-btn" id="sendEmailBtn">
+                <i class="fas fa-paper-plane"></i>
+                Send
+            </button>
+            <div class="compose-options">
+                <button class="option-btn" id="saveDraftBtn">
+                    <i class="fas fa-save"></i>
+                    Save Draft
+                </button>
+                <button class="option-btn" id="discardBtn">
+                    <i class="fas fa-trash"></i>
+                    Discard
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
