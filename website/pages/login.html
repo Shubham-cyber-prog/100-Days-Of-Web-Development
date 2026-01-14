@@ -1,155 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | 100 Days of Web Dev Academy</title>
-    <link rel="icon" href="/website/assets/images/logo.png">
+    <title>Academy Access | 100 Days of Web Dev</title>
+    
+    <link rel="icon" type="image/png" href="/website/assets/images/logo.png">
     <link rel="stylesheet" href="../styles/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        .login-page {
+        :root {
+            --primary: #ff9d00;
+            --primary-glow: rgba(255, 157, 0, 0.4);
+            --bg-void: #030303;
+            --card-bg: rgba(10, 10, 10, 0.75);
+            --text-main: #ffffff;
+            --text-secondary: #a1a1a1;
+            --text-tertiary: #666666;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Full page scrollable setup */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-y: auto; /* Ensure vertical scrolling */
+            line-height: 1.6;
+        }
+
+        /* Atmospheric Background */
+        .stars-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1a1200 0%, #030303 100%);
+        }
+
+        .ambient-glow {
+            position: absolute;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(255, 157, 28, 0.08) 0%, transparent 60%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        /* Scrollable Wrapper */
+        .auth-wrapper {
+            width: 100%;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            /* Deep Void Gradients */
-            background: linear-gradient(180deg, var(--bg-void) 0%, #080808 100%);
-            overflow: hidden;
+            padding: 4rem 1rem; /* Space for scrolling on mobile */
         }
 
-        /* Ambient Background Glow */
-        .ambient-glow {
-            position: absolute;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(255, 159, 28, 0.08) 0%, transparent 60%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .login-card {
-            background: rgba(10, 10, 10, 0.6);
-            /* Darker glass */
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* High-Fidelity Card */
+        .auth-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
             border-radius: 32px;
-            /* Super rounded */
-            padding: var(--space-8) var(--space-10);
+            padding: 3rem 2.5rem;
             width: 100%;
-            max-width: 460px;
-            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8);
-            z-index: 1;
+            max-width: 480px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9);
             text-align: center;
             animation: floatUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Logo Enhancement - Centered and Glowing */
+        .logo-header {
+            margin-bottom: 2rem;
         }
 
         .login-logo-img {
             width: 120px;
             height: auto;
-            margin: 0 auto var(--space-6);
+            margin: 0 auto 1.5rem;
             display: block;
-            filter: drop-shadow(0 0 20px rgba(255, 159, 28, 0.3));
-            /* Cosmic glow */
+            filter: drop-shadow(0 0 25px var(--primary-glow));
+            transition: 0.3s;
         }
 
-        h1 {
-            font-size: var(--text-2xl);
-            margin-bottom: var(--space-2);
-            letter-spacing: -0.5px;
+        .login-logo-img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 35px var(--primary-glow));
         }
 
-        .subtext {
+        h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .subtext { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2.5rem; }
+
+        /* Form Controls */
+        .form-group { margin-bottom: 1.2rem; text-align: left; }
+        .form-label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .form-input {
+            width: 100%;
+            padding: 1.1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: #fff;
+            font-size: 1rem;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 157, 0, 0.05);
+            box-shadow: 0 0 20px rgba(255, 157, 0, 0.15);
+        }
+
+        /* Tab Switcher */
+        .auth-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            padding: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
             color: var(--text-secondary);
-            font-size: var(--text-sm);
-            margin-bottom: var(--space-8);
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            padding: 1.1rem;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px var(--primary-glow);
+            transition: 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: #fff;
+            box-shadow: 0 15px 30px var(--primary-glow);
         }
 
         .auth-divider {
-            margin: var(--space-6) 0;
+            margin: 2rem 0;
             color: var(--text-tertiary);
-            font-size: var(--text-xs);
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             display: flex;
             align-items: center;
             gap: 1rem;
         }
+        .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--glass-border); }
 
-        .auth-divider::before,
-        .auth-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--glass-border);
-        }
+        .hidden { display: none; }
 
         @keyframes floatUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px) scale(0.95);
-            }
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        @media (max-width: 480px) {
+            .auth-card { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
-
 <body>
 
-    <div class="login-page">
+    <div class="stars-container">
         <div class="ambient-glow"></div>
+    </div>
 
-        <div class="login-card">
-            <header>
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="login-logo-img">
-                <h1>Welcome Back</h1>
-                <p class="subtext">Enter your credentials to access the Academy Network.</p>
-            </header>
-
-            <div class="social-login grid gap-3">
-                <button class="btn btn-social google" onclick="handleLogin('Google')">
-                    Continue with Google
-                </button>
-                <button class="btn btn-social github" onclick="handleLogin('GitHub')">
-                    Continue with GitHub
-                </button>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            
+            <div class="logo-header">
+                <img src="../assets/images/logo.png" alt="Academy Logo" class="login-logo-img">
+                <h1 id="auth-title">Welcome Back</h1>
+                <p class="subtext" id="auth-subtext">Authorized personnel only.</p>
             </div>
 
-            <div class="auth-divider">or access via email</div>
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" onclick="switchTab('register')">Register</button>
+            </div>
 
-            <form id="loginForm" onsubmit="handleEmailLogin(event)" class="text-left">
+            <form id="login-form" onsubmit="handleAuth(event, 'login')">
                 <div class="form-group">
-                    <input type="email" id="email" class="form-input" placeholder="Email Address" required>
+                    <input type="email" class="form-input" placeholder="Email Address" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" class="form-input" placeholder="Password" required>
+                    <input type="password" class="form-input" placeholder="Access Code" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);">
-                    Initiate Launch Sequence
-                </button>
+                <button type="submit" class="btn-primary">Join Now</button>
+                <a href="#" style="display:block; margin-top: 1.5rem; color: var(--text-tertiary); font-size: 0.8rem; text-decoration: none;">Forgot Access Code?</a>
             </form>
 
-            <a href="#" class="form-link"
-                style="display: block; margin-top: var(--space-4); font-size: 0.85rem; color: var(--text-tertiary);">Forgot
-                Access Code?</a>
+            <form id="register-form" class="hidden" onsubmit="handleAuth(event, 'register')">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Academy Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="New Access Code" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="Confirm Access Code" required>
+                </div>
+                <button type="submit" class="btn-primary">Create Academy ID</button>
+            </form>
 
-            <!-- Guest access removed to enforce signup/signin flow -->
+            <div class="auth-divider">External Links</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <button class="tab-btn" style="border: 1px solid var(--glass-border); padding: 12px;" onclick="handleLogin('Google')">Google</button>
+                <button class="tab-btn" style="border: 1px solid var(--glass-border); padding: 12px;" onclick="handleLogin('GitHub')">GitHub</button>
+            </div>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <script>
+        function switchTab(type) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const title = document.getElementById('auth-title');
+            const subtext = document.getElementById('auth-subtext');
+            const tabs = document.querySelectorAll('.tab-btn');
+
+            tabs.forEach(btn => btn.classList.remove('active'));
+
+            if (type === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                title.innerText = "Welcome Back";
+                subtext.innerText = "Authorized personnel only.";
+                event.currentTarget.classList.add('active');
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                title.innerText = "Join Academy";
+                subtext.innerText = "Create your developer identity.";
+                tabs[1].classList.add('active');
+            }
+        }
+
+        function handleAuth(event, mode) {
+            event.preventDefault();
+            console.log(`Executing ${mode} protocol...`);
+            // Add your redirection or firebase logic here
+        }
+    </script>
+
     <script src="../scripts/auth/service.js"></script>
     <script src="../scripts/auth/guard.js"></script>
-
 </body>
-
 </html>
