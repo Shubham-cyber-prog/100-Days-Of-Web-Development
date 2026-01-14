@@ -54,7 +54,7 @@
   --duration-normal: 300ms;
   --duration-slow: 500ms;
 
-   /* Golden Hover Glow */
+  /* Golden Hover Glow */
   --golden-core: #f59e0b;
   --golden-alpha: rgba(245, 158, 11, 0.35);
   --golden-alpha-soft: rgba(245, 158, 11, 0.15);
@@ -176,34 +176,34 @@ ul {
 }
 
 .clear-search-btn {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.2s ease;
-    width: 1.5rem;
-    height: 1.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .search-container:hover .clear-search-btn,
 .search-input:focus + .clear-search-btn,
 .clear-search-btn:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .clear-search-btn:hover {
-    background: var(--bg-hover);
-    color: var(--text-primary);
+  background: var(--bg-hover);
+  color: var(--text-primary);
 }
 
 .clear-search-btn {
@@ -626,6 +626,94 @@ main {
   max-width: 800px;
   margin: 0 auto;
   animation: enter var(--duration-normal) var(--ease-out-quad) forwards;
+}
+
+/* Guest Mode Banner */
+.guest-banner {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 157, 0, 0.15),
+    rgba(255, 157, 0, 0.05)
+  );
+  border: 1px solid rgba(255, 157, 0, 0.3);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  animation: slideDown 0.4s ease-out;
+}
+
+.guest-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.guest-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.guest-text {
+  flex: 1;
+  min-width: 250px;
+}
+
+.guest-text strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.guest-text p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.upgrade-btn {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 157, 0, 0.9);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.upgrade-btn:hover {
+  background: rgb(255, 157, 0);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 157, 0, 0.4);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .guest-banner-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .guest-text {
+    min-width: auto;
+  }
+
+  .upgrade-btn {
+    width: 100%;
+  }
 }
 
 .page-hero h1 {
@@ -1257,50 +1345,50 @@ main {
 
 /* Completion Checkbox Styles */
 .completion-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    -webkit-user-select: none;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .completion-checkbox input[type="checkbox"] {
-    display: none;
+  display: none;
 }
 
 .checkmark {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--bg-hover);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--text-primary);
-    transition: all 0.2s ease;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
 }
 
 .completion-checkbox input:checked + .checkmark {
-    background: var(--accent-primary);
-    border-color: var(--accent-primary);
-    color: var(--bg-primary);
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--bg-primary);
 }
 
 /* Completed Project Styles */
 .project-card.completed {
-    opacity: 0.7;
-    border-color: var(--accent-primary);
-    background: rgba(237, 237, 237, 0.05);
+  opacity: 0.7;
+  border-color: var(--accent-primary);
+  background: rgba(237, 237, 237, 0.05);
 }
 
 .project-card.completed .checkmark {
-    background: var(--accent-primary);
-    border-color: var(--accent-primary);
-    color: var(--bg-primary);
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--bg-primary);
 }
 
 /* Completion Checkbox Styles */
@@ -2191,7 +2279,6 @@ body.login-page {
 }
 
 .auth-form-container {
-
   width: 100%;
   max-width: 380px;
   padding: 0 1rem;
@@ -2201,15 +2288,14 @@ body.login-page {
   transform: translateY(-5%);
   /* Match visual side bias */
 
-    width: 100%;
-    max-width: 380px;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.8rem;
-    transform: translateY(-5%);
-    /* Match visual side bias */
-
+  width: 100%;
+  max-width: 380px;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  transform: translateY(-5%);
+  /* Match visual side bias */
 }
 
 .auth-brand-logo {
@@ -2226,18 +2312,16 @@ body.login-page {
 }
 
 .auth-header h2 {
-
   font-size: 2.2rem;
   margin-bottom: 0.5rem;
   color: var(--text-primary);
   font-weight: 800;
 
-    font-size: 2.3rem;
-    letter-spacing: -0.5px;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-    font-weight: 800;
-
+  font-size: 2.3rem;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-weight: 800;
 }
 
 .auth-header p {
@@ -2284,17 +2368,15 @@ body.login-page {
 }
 
 .input-wrapper .form-input:focus {
-
   background: var(--bg-hover);
   border-bottom-color: var(--text-primary);
   outline: none;
   box-shadow: none;
 
-    background: var(--bg-hover);
-    border-bottom-color: var(--text-primary);
-    outline: none;
-    box-shadow: 0 4px 0 rgba(255, 255, 255, 0.18);
-
+  background: var(--bg-hover);
+  border-bottom-color: var(--text-primary);
+  outline: none;
+  box-shadow: 0 4px 0 rgba(255, 255, 255, 0.18);
 }
 
 /* Stacked Buttons */
@@ -2313,13 +2395,11 @@ body.login-page {
 }
 
 .btn-primary:hover {
-
   opacity: 0.9;
   transform: translateY(-1px);
 
-    opacity: 0.92;
-    transform: translateY(-2px);
-
+  opacity: 0.92;
+  transform: translateY(-2px);
 }
 
 .btn-google {

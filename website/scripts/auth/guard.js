@@ -15,11 +15,13 @@
 
     const currentPath = window.location.pathname;
     const isLoginPage = currentPath.includes('login.html');
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const isAuthenticated = sessionStorage.getItem('authToken') === 'true' && !isGuest;
+    
+    // Check both sessionStorage and localStorage for auth and guest mode
+    const isGuest = sessionStorage.getItem('authGuest') === 'true' || localStorage.getItem('isGuest') === 'true';
+    const isAuthenticated = (sessionStorage.getItem('authToken') === 'true' || localStorage.getItem('isAuthenticated') === 'true') && !isGuest;
 
-    // 1. If not authenticated and trying to access a protected page
-    if (!isAuthenticated) {
+    // 1. If not authenticated and not guest, check if trying to access a protected page
+    if (!isAuthenticated && !isGuest) {
         const isProtected = protectedRoutes.some(route => currentPath.includes(route));
 
         // Root path check (index.html or empty)
