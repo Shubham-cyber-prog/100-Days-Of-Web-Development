@@ -195,8 +195,19 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
         } catch (error) {
-            console.error('Error accessing microphone:', error);
-            alert('Could not access microphone. Please check your permissions and try again.');
+            let errorMessage = 'Could not access microphone. ';
+            
+            if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                errorMessage += 'Please allow microphone access in your browser settings.';
+            } else if (error.name === 'NotFoundError') {
+                errorMessage += 'No microphone found. Please connect a microphone and try again.';
+            } else if (error.name === 'NotReadableError') {
+                errorMessage += 'Microphone is already in use by another application.';
+            } else {
+                errorMessage += 'Please check your permissions and try again.';
+            }
+            
+            showNotification(errorMessage, 'error');
         }
     }
     
@@ -537,7 +548,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             localStorage.setItem('voiceNotes', JSON.stringify(notesForStorage));
         } catch (error) {
-            console.error('Error saving notes:', error);
+            showNotification('Failed to save notes. Storage may be full.', 'error');
         }
     }
     
@@ -560,12 +571,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 appState.notes.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
             }
         } catch (error) {
-            console.error('Error loading notes from storage:', error);
+            showNotification('Failed to load saved notes.', 'error');
             appState.notes = [];
         }
     }
     
-    function showNotification(message) {
+    function showNotification(message, type = 'success') {
         // Remove existing notification
         const existingNotification = document.querySelector('.notification');
         if (existingNotification) {
@@ -576,11 +587,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const notification = document.createElement('div');
         notification.className = 'notification';
         notification.textContent = message;
+        
+        const bgColor = type === 'error' 
+            ? 'linear-gradient(to right, #dc3545, #c82333)' 
+            : 'linear-gradient(to right, #28a745, #20c997)';
+        
         notification.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background: linear-gradient(to right, #28a745, #20c997);
+            background: ${bgColor};
             color: white;
             padding: 15px 25px;
             border-radius: 10px;
