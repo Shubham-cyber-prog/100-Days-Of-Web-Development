@@ -1,6 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elite Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+
+<div class="scroll-progress">
+  <div class="scroll-bar"></div>
+</div>
+
+<header class="header">
+  <nav class="nav">
+    <div class="logo">DevFolio</div>
+    <div class = "nav-links-container">
+    <ul class="nav-links">
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class = "nav-underline"></div>
+    </div>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+    <div class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </div>
+  </nav>
+  
+  
+  <div class="nav-underline"></div>
+</header>
+
+
+<div class="mobile-nav-overlay">
+  <div class="mobile-nav-close">
+    <i class="fas fa-times"></i>
+  </div>
+  <ul class="mobile-nav-links">
+    <li><a href="#home" class="mobile-nav-link">Home</a></li>
+    <li><a href="#about" class="mobile-nav-link">About</a></li>
+    <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+    <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+    <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+  </ul>
+</div>
+
+<section id="home" class="section hero">
+  <div class="hero-content">
+
+    <!---  Change "Your Name" to your name/username  --->
+    <h1>Hi, I'm <span class="animated-text">Your Name</span></h1>
+    <p class="hero-subtitle">Building clean, modern and premium web experiences.</p>
+    <a href="#projects" class="btn">Explore Work <i class="fas fa-arrow-down"></i></a>
+  </div>
+  <div class="hero-scroll-indicator">
+    <span>Scroll</span>
+    <div class="mouse">
+      <div class="wheel"></div>
+    </div>
+  </div>
+</section>
+
+
+<div class="section-separator"></div>
+
+<section id="about" class="section">
+
+    <!--- Update the content in the cards to tell about yourself --->
+  <h2 class="section-title"><span>About Me</span></h2>
+  <div class="about-grid">
+    <div class="card card-hover">
+      <div class="card-icon">
+        <i class="fas fa-code"></i>
+      </div>
+      <h3>Frontend Developer</h3>
+      <p>I am a frontend developer who loves design, animations and performance. Passionate about creating engaging user experiences.</p>
+    </div>
+    <div class="card card-hover">
+      <div class="card-icon">
+        <i class="fas fa-layer-group"></i>
+      </div>
+      <h3>UI Systems</h3>
+      <p>Focused on building open‑source, scalable and accessible UI systems that are both beautiful and functional.</p>
+    </div>
+    <div class="card card-hover">
+      <div class="card-icon">
+        <i class="fas fa-rocket"></i>
+      </div>
+      <h3>Continuous Learner</h3>
+      <p>Always exploring new technologies, frameworks and design trends to stay at the forefront of web development.</p>
+    </div>
+  </div>
+</section>
+
+
+<div class="section-separator"></div>
+
+<section id="skills" class="section">
+
+    <!--- Customize skills with your actual skill levels --->
+  <h2 class="section-title"><span>Skills</span></h2>
+  <div class="skills-grid">
+    <div class="skill-item">
+      <div class="skill-header">
+        <h3>HTML</h3>
+        <span class="skill-percent">95%</span>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-progress" data-progress="95"></div>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header">
+        <h3>CSS</h3>
+        <span class="skill-percent">90%</span>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-progress" data-progress="90"></div>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header">
+        <h3>JavaScript</h3>
+        <span class="skill-percent">85%</span>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-progress" data-progress="85"></div>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header">
+        <h3>Git</h3>
+        <span class="skill-percent">80%</span>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-progress" data-progress="80"></div>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header">
+        <h3>Responsive UI</h3>
+        <span class="skill-percent">95%</span>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-progress" data-progress="95"></div>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header">
+        <h3>React</h3>
+        <span class="skill-percent="75%></span>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-progress" data-progress="75"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="section-separator"></div>
+
+<section id="projects" class="section">
+
+    <!--- Update project details with your real projects --->
+  <h2 class="section-title"><span>Projects</span></h2>
+  <div class="projects-grid">
+    <div class="project-card project-hover">
+      <div class="project-img">
+        <div class="project-overlay">
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Preview</a>
+            <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
+        </div>
+        <div class="project-badge">New</div>
+      </div>
+      <div class="project-content">
+        <h3>Project One</h3>
+        <p>Modern UI with clean architecture, responsive design, and smooth animations.</p>
+        <div class="project-tech">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card project-hover">
+      <div class="project-img">
+        <div class="project-overlay">
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Preview</a>
+            <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-content">
+        <h3>Project Two</h3>
+        <p>Frontend‑only application with advanced animations and interactive elements.</p>
+        <div class="project-tech">
+          <span>JavaScript</span>
+          <span>GSAP</span>
+          <span>CSS</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card project-hover">
+      <div class="project-img">
+        <div class="project-overlay">
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Preview</a>
+            <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
+        </div>
+        <div class="project-badge">Open Source</div>
+      </div>
+      <div class="project-content">
+        <h3>Project Three</h3>
+        <p>Open‑source reusable template for portfolio websites with modern design.</p>
+        <div class="project-tech">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="section-separator"></div>
+
+<section id="contact" class="section">
+    <!--- Update email, location, phone --->
+  <h2 class="section-title"><span>Contact</span></h2>
+  <div class="contact-container">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div>
+          <h3>Email</h3>
+          <p>hello@yourname.com</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div>
+          <h3>Location</h3>
+          <p>San Francisco, CA</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <div>
+          <h3>Phone</h3>
+          <p>+1 (555) 123-4567</p>
+        </div>
+      </div>
+    </div>
+    
+    <form class="contact-form">
+      <div class="form-group">
+        <input type="text" placeholder="Your Name" required />
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Your Email" required />
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Your Message" rows="5"></textarea>
+      </div>
+      <button class="btn" type="submit">Send Message <i class="fas fa-paper-plane"></i></button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">DevFolio</div>
+    <p class="footer-tagline">Creating exceptional digital experiences</p>
+    <div class="footer-social">
+    <!---Add your actual GitHub, LinkedIn, Twitter, etc. links --->
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-codepen"></i></a>
+    </div>
+    <p class="footer-copyright">© 2026 Your Name. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SecureCrypto Wallet</title>
@@ -194,5 +500,6 @@
     </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>
