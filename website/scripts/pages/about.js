@@ -28,7 +28,6 @@ async function fetchLeaderboardStats() {
         updateTimestamps();
 
     } catch (error) {
-        console.error("Leaderboard Offline", error);
         // Fallback for demo/offline
         document.getElementById("statContributors").textContent = "237";
         document.getElementById("statPoints").textContent = "8,363";

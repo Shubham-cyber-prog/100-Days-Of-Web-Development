@@ -95,7 +95,9 @@ function getCompletedDays() {
         }
         return [];
     } catch (e) {
+
         console.error('Error parsing completedDays from localStorage:', e);
+
         return [];
     }
 }
@@ -109,7 +111,9 @@ function saveCompletedDays(days) {
     try {
         localStorage.setItem('completedDays', JSON.stringify(days));
     } catch (e) {
+
         console.error('Error saving completedDays to localStorage:', e);
+
     }
 }
 
