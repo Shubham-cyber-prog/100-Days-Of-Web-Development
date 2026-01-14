@@ -8,9 +8,11 @@
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f8f9fa;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 
 .container {
     max-width: 1200px;
@@ -26,6 +28,7 @@ body {
     width: 100%;
     top: 0;
     z-index: 1000;
+    background-color: var(--nav-bg);
 }
 
 .nav-container {
@@ -87,6 +90,29 @@ body {
     font-size: 24px;
     cursor: pointer;
 }
+
+/* css for dark mode */
+/* ===== THEME VARIABLES ===== */
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #333;
+    --card-bg: #ffffff;
+    --section-bg: #ffffff;
+    --muted-text: #666;
+    --border-color: #eee;
+    --nav-bg: #ffffff;
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #f1f1f1;
+    --card-bg: #1e1e1e;
+    --section-bg: #181818;
+    --muted-text: #aaaaaa;
+    --border-color: #333;
+    --nav-bg: #1a1a1a;
+}
+
 
 /* Hero Section */
 .hero {
@@ -185,6 +211,7 @@ body {
 .categories {
     padding: 80px 0;
     background: white;
+    background: var(--section-bg);
 }
 
 .categories h2 {
@@ -197,6 +224,7 @@ body {
     text-align: center;
     color: #666;
     margin-bottom: 40px;
+    color: var(--muted-text);
 }
 
 .categories a {
@@ -217,6 +245,7 @@ body {
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
+     background: var(--card-bg);
 }
 
 .category-card:hover {
@@ -236,12 +265,14 @@ body {
 
 .category-card p {
     color: #666;
+    color: var(--muted-text);
 }
 
 /* How It Works */
 .how-it-works {
     padding: 80px 0;
     background: #f8f9fa;
+     background: var(--bg-color);
 }
 
 .how-it-works h2 {
@@ -262,6 +293,7 @@ body {
     background: white;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    background: var(--card-bg);
 }
 
 .step-number {
@@ -286,6 +318,8 @@ body {
 .featured-freelancers {
     padding: 80px 0;
     background: white;
+    background: var(--section-bg);
+
 }
 
 .featured-freelancers h2 {
@@ -306,6 +340,7 @@ body {
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s;
+    background: var(--card-bg);
 }
 
 .freelancer-card:hover {
@@ -361,6 +396,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px solid var(--border-color);
 }
 
 .hourly-rate {
@@ -489,6 +525,7 @@ footer {
     width: 90%;
     max-width: 400px;
     position: relative;
+    background: var(--card-bg);
 }
 
 .close-modal {
@@ -511,6 +548,9 @@ footer {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
+    background: var(--section-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
 }
 
 .signup-options {
@@ -549,6 +589,7 @@ footer {
 .signup-option p {
     color: #666;
     font-size: 12px;
+    color: var(--muted-text);
 }
 
 /* Responsive Design */
@@ -569,7 +610,7 @@ footer {
         top: 100%;
         left: 0;
         width: 100%;
-        background: white;
+        background: var(--nav-bg);
         flex-direction: column;
         padding: 20px;
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);

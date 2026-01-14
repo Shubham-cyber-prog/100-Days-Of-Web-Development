@@ -88,14 +88,23 @@ const freelancers = [
 ];
 
 // DOM Elements
-let menuToggle, navMenu;
+let menuToggle, navMenu, themeToggle;
+
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize elements
     menuToggle = document.querySelector('.menu-toggle');
     navMenu = document.querySelector('.nav-menu');
-    
+    themeToggle = document.getElementById('theme-toggle');
+
+    // 🌙 DARK MODE: apply saved theme on page load
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        if (themeToggle) themeToggle.textContent = '☀️';
+    }
+
     // Load initial data
     loadCategories();
     loadFreelancers();
@@ -107,10 +116,30 @@ document.addEventListener('DOMContentLoaded', function() {
     checkAuth();
 });
 
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+
+    if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+        themeToggle.textContent = '☀️';
+    } else {
+        localStorage.setItem('theme', 'light');
+        themeToggle.textContent = '🌙';
+    }
+}
+
+
 // Setup all event listeners
 function setupEventListeners() {
     // Mobile menu toggle
     menuToggle.addEventListener('click', toggleMobileMenu);
+
+    // Dark mode toggle
+if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+}
+
     
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
@@ -369,6 +398,7 @@ document.addEventListener('keydown', (e) => {
         document.getElementById('searchInput')?.focus();
     }
 });
+
 
 // Export data for potential use
 window.freelanceHub = {

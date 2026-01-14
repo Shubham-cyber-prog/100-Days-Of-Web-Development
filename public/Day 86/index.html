@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreelanceHub - Find Talent & Work</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">Freelance<span>Hub</span></a>
-            
+
             <div class="nav-menu">
                 <a href="#home" class="active">Home</a>
                 <a href="#find-work">Find Work</a>
@@ -21,8 +24,12 @@
                 <a href="#how-it-works">How It Works</a>
                 <a href="#login" class="login-btn">Log In</a>
                 <a href="#signup" class="signup-btn">Sign Up</a>
+                <button id="theme-toggle" class="theme-toggle">
+                    🌙
+                </button>
+
             </div>
-            
+
             <button class="menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
@@ -35,14 +42,14 @@
             <div class="hero-content">
                 <h1>Find the perfect <span class="highlight">freelance</span> services for your business</h1>
                 <p>Join millions of people using FreelanceHub to turn their ideas into reality.</p>
-                
+
                 <div class="search-box">
                     <input type="text" placeholder="What service are you looking for?" id="searchInput">
                     <button class="search-btn" onclick="searchServices()">
                         <i class="fas fa-search"></i> Search
                     </button>
                 </div>
-                
+
                 <div class="popular-tags">
                     <span>Popular:</span>
                     <a href="#" onclick="searchTag('web development')">Web Development</a>
@@ -51,9 +58,10 @@
                     <a href="#" onclick="searchTag('marketing')">Marketing</a>
                 </div>
             </div>
-            
+
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Freelance Collaboration">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Freelance Collaboration">
             </div>
         </div>
     </section>
@@ -63,7 +71,7 @@
         <div class="container">
             <h2>Browse talent by category</h2>
             <p>Looking for work? <a href="#">Browse jobs</a></p>
-            
+
             <div class="category-grid" id="categoryGrid">
                 <!-- Categories will be loaded via JavaScript -->
             </div>
@@ -74,26 +82,26 @@
     <section class="how-it-works" id="how-it-works">
         <div class="container">
             <h2>How It Works</h2>
-            
+
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
                     <h3>Post a Project</h3>
                     <p>Describe what you need done and set your budget</p>
                 </div>
-                
+
                 <div class="step">
                     <div class="step-number">2</div>
                     <h3>Receive Proposals</h3>
                     <p>Get bids from skilled freelancers within minutes</p>
                 </div>
-                
+
                 <div class="step">
                     <div class="step-number">3</div>
                     <h3>Choose Freelancer</h3>
                     <p>Compare profiles, reviews, and proposals to make your choice</p>
                 </div>
-                
+
                 <div class="step">
                     <div class="step-number">4</div>
                     <h3>Pay Securely</h3>
@@ -107,7 +115,7 @@
     <section class="featured-freelancers">
         <div class="container">
             <h2>Featured Freelancers</h2>
-            
+
             <div class="freelancer-grid" id="freelancerGrid">
                 <!-- Freelancers will be loaded via JavaScript -->
             </div>
@@ -134,21 +142,21 @@
                     <h3>FreelanceHub</h3>
                     <p>Connecting talent with opportunity worldwide</p>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>For Clients</h4>
                     <a href="#">How to Hire</a>
                     <a href="#">Talent Marketplace</a>
                     <a href="#">Project Catalog</a>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>For Freelancers</h4>
                     <a href="#">How to Find Work</a>
                     <a href="#">Freelancer Resources</a>
                     <a href="#">Get Certified</a>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>Company</h4>
                     <a href="#">About Us</a>
@@ -156,7 +164,7 @@
                     <a href="#">Terms & Privacy</a>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; 2024 FreelanceHub. All rights reserved.</p>
             </div>
@@ -194,7 +202,7 @@
                     <p>Looking to find work</p>
                 </button>
             </div>
-            
+
             <form id="signupForm" style="display: none;">
                 <input type="text" placeholder="Full Name" required>
                 <input type="email" placeholder="Email" required>
