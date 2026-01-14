@@ -1,25 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Player</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music Player</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-   <div class="container">
-   <div class="navbar">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Specifications</a></li>
-    </ul>
-   </div>
-   <div class="content">
-    <img src="media/play icon.png" alt="Play Button" id="play-button">
 
-   </div>
-   <audio id="song" src="media/simple-audio.mp3" type="audio.mp3"></audio>
+<h1 class="app-title">Music Player</h1>
+
+<main class="container">
+
+  <!-- PLAYER CARD -->
+  <section class="player-card">
+
+    <input
+      type="text"
+      id="search"
+      placeholder="Search song or artist (press Enter)"
+    />
+
+    <div class="recommended">
+      <h4>Recommended</h4>
+      <ul id="recommendedList"></ul>
+    </div>
+
+    <div class="current placeholder" id="current">
+      <img id="cover" alt="Album Art" />
+      <h3 id="title">Nothing playing</h3>
+      <p id="artist">Search or select a recommendation</p>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button id="prev" disabled>⏮</button>
+      <button id="play" disabled>▶</button>
+      <button id="next" disabled>⏭</button>
+    </div>
+
+    <!-- TIME -->
+    <div class="time">
+      <span id="currentTime">0:00</span>
+      <span id="duration">0:00</span>
+    </div>
+
+    <!-- PROGRESS -->
+    <input type="range" id="progress" value="0">
+
+    <!-- VOLUME -->
+    <div class="volume">
+      🔊
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <audio id="audio"></audio>
+  </section>
+
+  <!-- RESULTS CARD -->
+  <section class="playlist-card">
+    <h3>Search Results</h3>
+
+    <div class="results-placeholder" id="resultsPlaceholder">
+      <p>🎵 Search for a song to see results here</p>
+    </div>
+
+    <ul id="playlist"></ul>
+  </section>
+
+</main>
+
 <script src="script.js"></script>
 </body>
 </html>
