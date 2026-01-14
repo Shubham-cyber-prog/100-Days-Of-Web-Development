@@ -291,6 +291,51 @@
         <div class="ambient-glow"></div>
     </div>
 
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            
+            <div class="logo-header">
+                <img src="../assets/images/logo.png" alt="Academy Logo" class="login-logo-img">
+                <h1 id="auth-title">Welcome Back</h1>
+                <p class="subtext" id="auth-subtext">Authorized personnel only.</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <form id="login-form" onsubmit="handleAuth(event, 'login')">
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="Access Code" required>
+                </div>
+                <button type="submit" class="btn-primary">Join Now</button>
+                <a href="#" style="display:block; margin-top: 1.5rem; color: var(--text-tertiary); font-size: 0.8rem; text-decoration: none;">Forgot Access Code?</a>
+            </form>
+
+            <form id="register-form" class="hidden" onsubmit="handleAuth(event, 'register')">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Academy Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="New Access Code" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="Confirm Access Code" required>
+                </div>
+                <button type="submit" class="btn-primary">Create Academy ID</button>
+            </form>
+
+            <div class="auth-divider">External Links</div>
+
+
     <div class="auth-wrapper">
         <div class="auth-card">
             
@@ -417,6 +462,17 @@
         }
 
 
+        function handleAuth(event, mode) {
+            event.preventDefault();
+            console.log(`Executing ${mode} protocol...`);
+            // Add your redirection or firebase logic here
+        }
+    </script>
+
+    <script src="../scripts/auth/service.js"></script>
+    <script src="../scripts/auth/guard.js"></script>
+
+
         async function handleAuth(event, mode) {
     event.preventDefault();
     const email = event.target.querySelector('input[type="email"]').value;
@@ -518,6 +574,7 @@ window.handleAuth = async (event, mode) => {
 
     <script src="../scripts/auth/service.js"></script>
     <script src="../scripts/auth/guard.js"></script>
+
 
 </body>
 </html>
