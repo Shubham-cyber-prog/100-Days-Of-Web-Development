@@ -15,7 +15,8 @@
 
     const currentPath = window.location.pathname;
     const isLoginPage = currentPath.includes('login.html');
-    const isAuthenticated = sessionStorage.getItem('authToken') === 'true';
+    const isGuest = sessionStorage.getItem('authGuest') === 'true';
+    const isAuthenticated = sessionStorage.getItem('authToken') === 'true' && !isGuest;
 
     // 1. If not authenticated and trying to access a protected page
     if (!isAuthenticated) {
@@ -44,6 +45,8 @@
                     }
                 }
 
+                // If a guest token exists, force removal to prevent bypass
+                if (isGuest) sessionStorage.removeItem('authGuest');
                 window.location.href = loginPath;
             }
         }

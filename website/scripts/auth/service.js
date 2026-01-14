@@ -32,14 +32,4 @@ function handleEmailLogin(e) {
     }, 1000);
 }
 
-function handleGuestLogin() {
-    const btn = event.currentTarget;
-    btn.innerText = 'Bypassing Security...';
-    btn.style.opacity = '0.7';
-
-    setTimeout(() => {
-        sessionStorage.setItem('authToken', 'true');
-        sessionStorage.setItem('authGuest', 'true');
-        window.location.href = 'dashboard.html';
-    }, 800);
-}
+// Guest login removed: no handleGuestLogin() provided to prevent bypass.
