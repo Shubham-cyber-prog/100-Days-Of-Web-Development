@@ -65,14 +65,52 @@ let currentFilters = {
 // Completed days tracking
 let completedDays = [];
 
+// Helper function to check if localStorage is available
+function isLocalStorageAvailable() {
+    try {
+        const test = '__localStorage_test__';
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 // localStorage functions
 function getCompletedDays() {
-    const stored = localStorage.getItem('completedDays');
-    return stored ? JSON.parse(stored) : [];
+    if (!isLocalStorageAvailable()) {
+        console.warn('localStorage is not available. Completed projects will not persist.');
+        return [];
+    }
+
+    try {
+        const stored = localStorage.getItem('completedDays');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            // Ensure it's an array and contains only numbers
+            if (Array.isArray(parsed) && parsed.every(d => typeof d === 'number' && !isNaN(d))) {
+                return parsed;
+            }
+        }
+        return [];
+    } catch (e) {
+        console.error('Error parsing completedDays from localStorage:', e);
+        return [];
+    }
 }
 
 function saveCompletedDays(days) {
-    localStorage.setItem('completedDays', JSON.stringify(days));
+    if (!isLocalStorageAvailable()) {
+        console.warn('localStorage is not available. Cannot save completed projects.');
+        return;
+    }
+
+    try {
+        localStorage.setItem('completedDays', JSON.stringify(days));
+    } catch (e) {
+        console.error('Error saving completedDays to localStorage:', e);
+    }
 }
 
 // Event listeners for filters
