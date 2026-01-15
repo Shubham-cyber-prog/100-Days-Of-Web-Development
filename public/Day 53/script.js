@@ -204,17 +204,42 @@ class FileUploader {
 
     saveToLocalStorage() {
         try {
-            localStorage.setItem('fileUploaderData', JSON.stringify(this.files));
-        } catch {
-            this.showToast('Unable to save files. Storage may be full.', 'error');
+            // Store only essential data (files are stored as DataURLs)
+            const data = {
+                files: this.files.map(file => ({
+                    id: file.id,
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    date: file.date,
+                    data: file.data
+                })),
+                lastUpdated: new Date().toISOString()
+            };
+            localStorage.setItem('fileUploaderData', JSON.stringify(data));
+        } catch (e) {
+            this.showToast('Error saving files (localStorage full?)', 'error');
         }
     }
 
     loadFromLocalStorage() {
         try {
             const data = localStorage.getItem('fileUploaderData');
-            if (data) this.files = JSON.parse(data) || [];
-        } catch {
+            if (data) {
+                const parsed = JSON.parse(data);
+                this.files = parsed.files || [];
+                
+                // Validate loaded data
+                this.files = this.files.filter(file => 
+                    file && file.id && file.name && file.size && file.data
+                );
+                
+                if (this.files.length > 0) {
+                    this.showToast(`Loaded ${this.files.length} files from storage`, 'info');
+                }
+            }
+        } catch (e) {
+            // Clear corrupted data
             localStorage.removeItem('fileUploaderData');
             this.files = [];
             this.showToast('Stored data was corrupted and reset.', 'warning');
