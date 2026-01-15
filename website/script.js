@@ -80,7 +80,6 @@ function isLocalStorageAvailable() {
 // localStorage functions
 function getCompletedDays() {
     if (!isLocalStorageAvailable()) {
-        console.warn('localStorage is not available. Completed projects will not persist.');
         return [];
     }
 
@@ -95,25 +94,19 @@ function getCompletedDays() {
         }
         return [];
     } catch (e) {
-
-        console.error('Error parsing completedDays from localStorage:', e);
-
         return [];
     }
 }
 
 function saveCompletedDays(days) {
     if (!isLocalStorageAvailable()) {
-        console.warn('localStorage is not available. Cannot save completed projects.');
         return;
     }
 
     try {
         localStorage.setItem('completedDays', JSON.stringify(days));
     } catch (e) {
-
-        console.error('Error saving completedDays to localStorage:', e);
-
+        // Error saving to localStorage, silently fail
     }
 }
 

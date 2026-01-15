@@ -165,11 +165,5 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDark = document.body.dataset.theme === 'dark';
         document.body.dataset.theme = isDark ? 'light' : 'dark';
         themeSwitcher.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
-
-
-        themeSwitcher.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
-
-        themeSwitcher.textContent = isDark ? 'Toggle Dark Mode' : 'Toggle Light Mode';
-
     });
 });
