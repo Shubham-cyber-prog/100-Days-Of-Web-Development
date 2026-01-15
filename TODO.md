@@ -1,4 +1,3 @@
-- [ ] Remove console.error from website/script.js (2 instances)
-- [ ] Remove console.error from website/scripts/pages/contributors.js (1 instance)
-- [ ] Remove console.error from website/scripts/pages/about.js (1 instance)
-- [ ] Verify website functionality
+- [x] Remove console.error from getWeather function in public/Day 04/script.js
+- [x] Remove console.error from fetchSuggestions function and add user-friendly error message in public/Day 04/script.js
+- [x] Test the changes by running the app and checking for errors
