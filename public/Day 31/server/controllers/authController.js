@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import logger from "../logger.js";
 
 // 🔐 Generate JWT
 const generateToken = (id) => {
@@ -68,8 +69,9 @@ export const loginUser = async (req, res) => {
       token: generateToken(user._id),
     });
   } catch (error) {
-  console.error("REGISTER ERROR:", error);
-  res.status(500).json({ message: "Server error" });
-}}
+    logger.error("Login error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
 
     

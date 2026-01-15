@@ -56,10 +56,14 @@
                 answersContainer, scoreSpan, finalScoreSpan, maxScoreSpan, resultMessage,
                 restartButton, progressBar, timerElement, timerContainer, scoreCircle, scoreText
             ];
-            
+
             const allValid = requiredElements.every(el => el !== null);
             if (!allValid) {
-                console.error("Some required DOM elements are missing. Quiz may not function correctly.");
+                // Graceful handling: Display an error message to the user
+                const errorMessage = document.createElement("div");
+                errorMessage.textContent = "Some required DOM elements are missing. Please check the HTML structure and try again.";
+                errorMessage.style.cssText = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #ffdddd; color: #d8000c; padding: 20px; border: 1px solid #d8000c; border-radius: 5px; font-size: 16px; z-index: 1000;";
+                document.body.appendChild(errorMessage);
             }
             return allValid;
         };

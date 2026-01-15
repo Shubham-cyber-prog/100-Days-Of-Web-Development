@@ -99,7 +99,6 @@ async function getWeather(lat, lon, name, country) {
         loader.style.display = 'none';
         weatherData.classList.remove('hidden');
     } catch (error) {
-        console.error(error);
         loader.style.display = 'none';
         errorMsg.textContent = "Error fetching weather data.";
         errorMsg.style.display = 'block';
@@ -174,8 +173,9 @@ async function fetchSuggestions(query) {
             suggestionsBox.appendChild(div);
         });
     } catch (err) {
-        console.error(err);
         suggestionsBox.style.display = 'none';
+        errorMsg.textContent = "Unable to load suggestions";
+        errorMsg.style.display = 'block';
     }
 }
 
