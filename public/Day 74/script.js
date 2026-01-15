@@ -15,6 +15,171 @@ document.addEventListener('DOMContentLoaded', function() {
     const voiceLevel = document.getElementById('voiceLevel');
     const levelBars = voiceLevel.querySelectorAll('.level-bar');
     
+
+const startNoteRecordingBtn = document.getElementById('startNoteRecording');
+const voiceNotesTextarea = document.getElementById('voiceNotes');
+const saveNoteBtn = document.getElementById('saveNote');
+const clearNoteBtn = document.getElementById('clearNote');
+const readNoteBtn = document.getElementById('readNote');
+
+let isNoteRecording = false;
+let noteRecognition;
+
+function initNoteRecording() {
+    if (!SpeechRecognition) return;
+    
+    noteRecognition = new SpeechRecognition();
+    noteRecognition.continuous = true;
+    noteRecognition.interimResults = true;
+    noteRecognition.lang = languageSelect.value;
+    
+    noteRecognition.onresult = function(event) {
+        let finalTranscript = '';
+        
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            if (event.results[i].isFinal) {
+                finalTranscript += event.results[i][0].transcript;
+            }
+        }
+        
+        if (finalTranscript) {
+            voiceNotesTextarea.value += finalTranscript + ' ';
+            voiceNotesTextarea.scrollTop = voiceNotesTextarea.scrollHeight;
+        }
+    };
+    
+    noteRecognition.onerror = function(event) {
+        stopNoteRecording();
+        addMessage("Voice Assistant", "Note recording error.");
+    };
+    
+    noteRecognition.onend = function() {
+        stopNoteRecording();
+    };
+}
+
+function startNoteRecording() {
+    if (isNoteRecording) return;
+    
+    if (isListening) {
+        addMessage("Voice Assistant", "Please stop listening first.");
+        return;
+    }
+    
+    if (!noteRecognition) {
+        initNoteRecording();
+    }
+    
+    try {
+        noteRecognition.start();
+        isNoteRecording = true;
+        startNoteRecordingBtn.innerHTML = '<i class="fas fa-stop-circle"></i> Stop';
+        startNoteRecordingBtn.classList.remove('btn-outline');
+        startNoteRecordingBtn.classList.add('btn-secondary');
+        
+        const indicator = document.createElement('span');
+        indicator.className = 'recording-indicator';
+        startNoteRecordingBtn.prepend(indicator);
+        
+        addMessage("Voice Assistant", "Note recording started.");
+        speakText("Note recording started.");
+    } catch (error) {
+        addMessage("Voice Assistant", "Failed to start note recording.");
+    }
+}
+
+function stopNoteRecording() {
+    if (!isNoteRecording) return;
+    
+    if (noteRecognition) {
+        noteRecognition.stop();
+    }
+    
+    isNoteRecording = false;
+    startNoteRecordingBtn.innerHTML = '<i class="fas fa-microphone"></i> Dictate';
+    startNoteRecordingBtn.classList.remove('btn-secondary');
+    startNoteRecordingBtn.classList.add('btn-outline');
+    
+    const indicator = startNoteRecordingBtn.querySelector('.recording-indicator');
+    if (indicator) {
+        indicator.remove();
+    }
+    
+    addMessage("Voice Assistant", "Note recording stopped.");
+}
+
+function saveNoteToStorage() {
+    const noteText = voiceNotesTextarea.value.trim();
+    if (!noteText) {
+        addMessage("Voice Assistant", "Note is empty.");
+        return;
+    }
+    
+    const noteName = prompt("Enter a name for this note:", `Note ${new Date().toLocaleDateString()}`);
+    if (!noteName) return;
+    
+    const savedNotes = JSON.parse(localStorage.getItem('voiceAssistantNotes')) || [];
+    const noteData = {
+        name: noteName,
+        date: new Date().toLocaleString(),
+        content: noteText
+    };
+    
+    savedNotes.push(noteData);
+    localStorage.setItem('voiceAssistantNotes', JSON.stringify(savedNotes));
+    
+    addMessage("Voice Assistant", `Note saved as "${noteName}".`);
+    speakText(`Note saved as ${noteName}.`);
+}
+
+function clearNote() {
+    if (voiceNotesTextarea.value.trim() && !confirm("Clear all text?")) {
+        return;
+    }
+    voiceNotesTextarea.value = '';
+}
+
+function readNoteAloud() {
+    const noteText = voiceNotesTextarea.value.trim();
+    if (!noteText) {
+        addMessage("Voice Assistant", "Note is empty.");
+        return;
+    }
+    
+    speakText("Reading your note: " + noteText);
+}
+
+// Event listeners
+startNoteRecordingBtn.addEventListener('click', function() {
+    if (isNoteRecording) {
+        stopNoteRecording();
+    } else {
+        startNoteRecording();
+    }
+});
+
+saveNoteBtn.addEventListener('click', saveNoteToStorage);
+clearNoteBtn.addEventListener('click', clearNote);
+readNoteBtn.addEventListener('click', readNoteAloud);
+
+// Update language change
+languageSelect.addEventListener('change', function() {
+    if (recognition) recognition.lang = this.value;
+    if (noteRecognition) noteRecognition.lang = this.value;
+    initSpeechSynthesis();
+});
+
+// Update main stop listening
+stopBtn.addEventListener('click', function() {
+    if (isListening && recognition) {
+        recognition.stop();
+    }
+    if (isNoteRecording) {
+        stopNoteRecording();
+    }
+});
+
+
     // Speech Recognition and Synthesis Setup
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;

@@ -49,7 +49,6 @@ async function fetchContributors() {
         });
 
     } catch (error) {
-        console.error('Comms Failure:', error);
         grid.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">
                 <h3>Transmission Interrupted</h3>

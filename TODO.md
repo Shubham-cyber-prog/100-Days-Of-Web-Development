@@ -1,7 +1,9 @@
-# TODO: Fix localStorage Persistence for Completed Projects
 
-## Tasks
-- [x] Add helper function to check if localStorage is available
-- [x] Enhance getCompletedDays() to handle localStorage unavailability and JSON parsing errors
-- [x] Enhance saveCompletedDays() to handle errors when saving to localStorage
-- [x] Test the changes to ensure persistence works and app doesn't crash if localStorage fails
+# TODO for Fixing MongoDB Logging Bug
+
+- [x] Import logger from '../logger.js' in public/Day 31/server/config/db.js
+- [x] Replace console.error("MongoDB connection failed") with logger.error("MongoDB connection failed", error) in the catch block
+- [ ] Test the MongoDB connection to ensure logging works properly
+
+- [x] Remove console.error from saveToLocalStorage() function in public/Day 53/script.js
+- [x] Remove console.error from loadFromLocalStorage() function in public/Day 53/script.js

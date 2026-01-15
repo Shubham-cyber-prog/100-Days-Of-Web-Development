@@ -28,11 +28,12 @@ async function fetchLeaderboardStats() {
         updateTimestamps();
 
     } catch (error) {
-        console.error("Leaderboard Offline", error);
         // Fallback for demo/offline
-        document.getElementById("statContributors").textContent = "237";
-        document.getElementById("statPoints").textContent = "8,363";
-        document.getElementById("statPRs").textContent = "1,287";
+        animateValue("statContributors", 0, 237, 1500);
+        animateValue("statPoints", 0, 8363, 2000);
+        animateValue("statPRs", 0, 1287, 1800);
+        // Update Timestamps
+        updateTimestamps();
     }
 }
 

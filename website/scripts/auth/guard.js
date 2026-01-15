@@ -18,8 +18,8 @@
     const isGuest = sessionStorage.getItem('authGuest') === 'true';
     const isAuthenticated = sessionStorage.getItem('authToken') === 'true' && !isGuest;
 
-    // 1. If not authenticated and trying to access a protected page
-    if (!isAuthenticated) {
+    // 1. If not authenticated and not guest, check if trying to access a protected page
+    if (!isAuthenticated && !isGuest) {
         const isProtected = protectedRoutes.some(route => currentPath.includes(route));
 
         // Root path check (index.html or empty)

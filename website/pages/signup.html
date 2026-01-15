@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | 100 Days of Web Dev Academy</title>
+    <link rel="icon" href="/website/assets/images/logo.png">
+    <link rel="stylesheet" href="../styles/index.css">
+
+    <style>
+        .signup-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            /* Deep Void Gradients */
+            background: linear-gradient(180deg, var(--bg-void) 0%, #080808 100%);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Ambient Background Glow */
+        .ambient-glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 159, 28, 0.08) 0%, transparent 60%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .signup-card {
+            background: rgba(10, 10, 10, 0.6);
+            /* Darker glass */
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            /* Super rounded */
+            padding: var(--space-8) var(--space-10);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8);
+            z-index: 1;
+            text-align: center;
+            animation: floatUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .signup-logo-img {
+            width: 120px;
+            height: auto;
+            margin: 0 auto var(--space-6);
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(255, 159, 28, 0.3));
+            /* Cosmic glow */
+        }
+
+        h1 {
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-2);
+            letter-spacing: -0.5px;
+        }
+
+        .subtext {
+            color: var(--text-secondary);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-8);
+        }
+
+        .auth-divider {
+            margin: var(--space-6) 0;
+            color: var(--text-tertiary);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-4);
+            position: relative;
+            text-align: left;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: var(--text-sm);
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .form-input.success {
+            border-color: #10b981;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+            animation: slideDown 0.2s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-indicator {
+            color: #10b981;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+            animation: slideDown 0.2s ease;
+        }
+
+        .success-indicator.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .password-strength {
+            height: 4px;
+            background: var(--glass-border);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .password-strength-text {
+            font-size: 0.7rem;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .password-strength-text.weak {
+            color: #ef4444;
+        }
+
+        .password-strength-text.fair {
+            color: #f59e0b;
+        }
+
+        .password-strength-text.good {
+            color: #3b82f6;
+        }
+
+        .password-strength-text.strong {
+            color: #10b981;
+        }
+
+        .form-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+        }
+
+        @media (max-width: 480px) {
+            .form-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .signup-card {
+                padding: var(--space-6) var(--space-5);
+            }
+        }
+
+        .social-login {
+            display: grid;
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+        }
+
+        .btn-social {
+            padding: var(--space-3) var(--space-4);
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-social:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-secondary);
+        }
+
+        .btn-social.loading {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: var(--space-4);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-link {
+            display: block;
+            margin-top: var(--space-4);
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            transition: all 0.3s ease;
+        }
+
+        .form-link:hover {
+            color: var(--accent-secondary);
+        }
+
+        .form-link .text-link-btn {
+            background: none;
+            border: none;
+            color: var(--accent-secondary);
+            cursor: pointer;
+            padding: 0;
+            font-size: inherit;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-link .text-link-btn:hover {
+            text-decoration: underline;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            padding: var(--space-4);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-6);
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes floatUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .password-requirements {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-3);
+            margin-top: var(--space-4);
+            font-size: 0.75rem;
+            text-align: left;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin: 0.25rem 0;
+            color: var(--text-secondary);
+        }
+
+        .requirement.met {
+            color: #10b981;
+        }
+
+        .requirement-icon {
+            margin-right: 0.5rem;
+            min-width: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="signup-page">
+        <div class="ambient-glow"></div>
+
+        <div class="signup-card">
+            <header>
+                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="signup-logo-img">
+                <h1 id="authTitle">Create Account</h1>
+                <p class="subtext" id="authSubtitle">Join the Academy Network and start your learning journey</p>
+            </header>
+
+            <div class="success-message" id="successMessage">
+                Account created successfully! Redirecting to login...
+            </div>
+
+            <div class="social-login">
+                <button type="button" class="btn-social google" id="googleSignup">
+                    Sign up with Google
+                </button>
+                <button type="button" class="btn-social github" id="githubSignup">
+                    Sign up with GitHub
+                </button>
+            </div>
+
+            <div class="auth-divider">or register with email</div>
+
+            <form id="signupForm" class="text-left">
+                <div class="form-columns">
+                    <div class="form-group">
+                        <input type="text" id="username" class="form-input" placeholder="Username" required>
+                        <div class="error-message" id="usernameError"></div>
+                        <div class="success-indicator" id="usernameSuccess">✓ Username available</div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" class="form-input" placeholder="Email Address" required>
+                        <div class="error-message" id="emailError"></div>
+                        <div class="success-indicator" id="emailSuccess">✓ Email available</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" class="form-input" placeholder="Password" required>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="password-strength-text" id="strengthText"></div>
+                    <div class="error-message" id="passwordError"></div>
+                    <div class="password-requirements">
+                        <div class="requirement" id="req-length">
+                            <span class="requirement-icon">○</span> At least 8 characters
+                        </div>
+                        <div class="requirement" id="req-uppercase">
+                            <span class="requirement-icon">○</span> One uppercase letter
+                        </div>
+                        <div class="requirement" id="req-lowercase">
+                            <span class="requirement-icon">○</span> One lowercase letter
+                        </div>
+                        <div class="requirement" id="req-number">
+                            <span class="requirement-icon">○</span> One number
+                        </div>
+                        <div class="requirement" id="req-special">
+                            <span class="requirement-icon">○</span> One special character (!@#$%^&*)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm Password" required>
+                    <div class="error-message" id="confirmError"></div>
+                    <div class="success-indicator" id="confirmSuccess">✓ Passwords match</div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn">
+                    Create Account
+                </button>
+            </form>
+
+            <p class="form-link">
+                Already have an account?
+                <button type="button" class="text-link-btn" id="loginLink">Log in here</button>
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../scripts/signup.js"></script>
+
+</body>
+
+</html>

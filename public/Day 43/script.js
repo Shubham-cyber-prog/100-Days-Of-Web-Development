@@ -254,7 +254,6 @@ class NewsAggregator {
             this.updateLastUpdated();
 
         } catch (error) {
-            console.error('Error loading news:', error);
             this.showError('Failed to load news. Please try again.');
         } finally {
             this.setLoadingState(false);
