@@ -42,6 +42,7 @@
             color: var(--text); 
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* --- Global Scroll Controls --- */
@@ -66,13 +67,15 @@
             position: fixed; width: 100%; top: 0; z-index: 1000;
             transition: all 0.4s ease;
         }
-        nav.scrolled { padding: 1.2rem 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(25px); }
+        /* UPDATED: Uses variable so it works in light mode too */
+        nav.scrolled { padding: 1.2rem 0; background: var(--nav-bg); backdrop-filter: blur(25px); }
 
         .nav-container {
             background: var(--nav-bg); padding: 0.7rem 2.5rem;
             border-radius: 100px; border: 1px solid var(--border);
             display: flex; align-items: center; gap: 2.5rem;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: background 0.3s, border 0.3s;
         }
         .nav-container a { 
             text-decoration: none; color: var(--text-dim); 
@@ -121,7 +124,7 @@
         
         .stat-card { 
             background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 3.5rem;
-            backdrop-filter: blur(15px); position: relative;
+            backdrop-filter: blur(15px); position: relative; transition: background 0.3s, border 0.3s;
         }
         .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; text-align: center; margin-bottom: 4rem; }
         .metrics h3 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 10px; }
@@ -168,7 +171,13 @@
         .path-node.active .node-dot { border-color: var(--primary); background: var(--primary); box-shadow: 0 0 20px var(--primary); }
 
         /* --- Footer Architecture --- */
-        footer { padding: 6rem 10%; border-top: 1px solid var(--border); background: #020202; margin-top: 10rem; }
+        footer { 
+            padding: 6rem 10%; 
+            border-top: 1px solid var(--border); 
+            background: var(--card-bg); /* UPDATED: Uses variable to switch to white in Light Mode */
+            margin-top: 10rem; 
+            transition: background 0.3s ease;
+        }
         .f-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 5rem; }
         .f-brand h4 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem; }
         .f-links h5 { color: var(--primary); margin-bottom: 1.5rem; letter-spacing: 2px; font-size: 0.9rem; }
@@ -181,6 +190,47 @@
             .dashboard { grid-template-columns: 1fr; }
             .f-grid { grid-template-columns: 1fr; }
             h1 { font-size: 4.5rem; }
+        }
+
+        /* --- Theme Variables & Styles --- */
+        body.light-mode {
+            --bg: #ffffff;
+            --card-bg: #f8f9fa;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --text: #121212;
+            --text-dim: #555555;
+            --border: #e0e0e0;
+            --glass: rgba(0, 0, 0, 0.03);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center; 
+            margin-top: 5rem; 
+            padding-top: 2rem; 
+            border-top: 1px solid var(--border); 
+            font-size: 0.75rem; 
+            color: var(--text-dim); /* UPDATED: Uses variable to be readable in Light Mode */
         }
     </style>
 </head>
@@ -197,6 +247,9 @@
             <a href="#vault">Learning</a>
             <a href="#path">Path</a>
             <a href="website/pages/login.html" style="color:var(--primary)">Login Portal</a>
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                ☀️
+            </button>
         </div>
     </nav>
 
@@ -288,7 +341,7 @@
                 </ul>
             </div>
         </div>
-        <div class="copyright" style="text-align:center; margin-top:5rem; padding-top:2rem; border-top:1px solid #111; font-size:0.75rem; color:rgb(180, 182, 176);">
+        <div class="copyright">
             &copy; 2026 DEVELOPMENT EVOLUTION HUB. ALL TRANSMISSIONS ENCRYPTED.
         </div>
     </footer>
@@ -372,7 +425,6 @@
             });
         }
 
-        // --- 4. CONSOLE TYPEWRITER LOGIC ---
         function runConsole() {
             const lines = [
                 "> Initializing Protocol 100-WD...",
@@ -394,14 +446,32 @@
             typeLine();
         }
 
-        // --- 5. GLOBAL EVENTS ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.add('light-mode');
+            themeBtn.innerText = '🌙';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                localStorage.setItem('theme', 'light');
+                themeBtn.innerText = '🌙';
+            } else {
+                localStorage.setItem('theme', 'dark');
+                themeBtn.innerText = '☀️';
+            }
+        });
+
         window.onscroll = () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 80) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         };
 
-        // Initialize System
         window.onload = () => {
             syncSystem();
             buildVault();
