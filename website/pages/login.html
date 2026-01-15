@@ -451,32 +451,44 @@
         </button>
       </div>
 
-      <form id="login-form" onsubmit="handleAuth(event, 'login')">
-        <div class="form-group">
-          <input type="email" class="form-input" placeholder="Email Address" required />
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-input" placeholder="Access Code" required />
-        </div>
-        <button type="submit" class="btn-primary">Join Now</button>
-        <a href="#" style="
-              display: block;
-              margin-top: 1.5rem;
-              color: var(--text-tertiary);
-              font-size: 0.8rem;
-              text-decoration: none;
-            ">Forgot Access Code?</a>
-      </form>
+    <div class="login-page">
+        <div class="ambient-glow"></div>
 
-      <form id="register-form" class="hidden" onsubmit="handleAuth(event, 'register')">
-        <div class="form-group">
-          <input type="text" class="form-input" placeholder="Full Name" required />
-        </div>
-        <div class="form-group">
-          <input type="email" class="form-input" placeholder="Academy Email" required />
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-input" placeholder="New Access Code" required />
+        <div class="login-card">
+            <header>
+                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="login-logo-img">
+                <h1>Welcome Back</h1>
+                <p class="subtext">Enter your credentials to access the Academy Network.</p>
+            </header>
+
+            <div class="social-login grid gap-3">
+                <button class="btn btn-social google" onclick="handleLogin('Google')">
+                    Continue with Google
+                </button>
+                <button class="btn btn-social github" onclick="handleLogin('GitHub')">
+                    Continue with GitHub
+                </button>
+            </div>
+
+            <div class="auth-divider">or access via email</div>
+
+            <form id="loginForm" onsubmit="handleEmailLogin(event)" class="text-left">
+                <div class="form-group">
+                    <input type="email" id="email" class="form-input" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" class="form-input" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);">
+                    Initiate Launch Sequence
+                </button>
+            </form>
+
+            <a href="#" class="form-link"
+                style="display: block; margin-top: var(--space-4); font-size: 0.85rem; color: var(--text-tertiary);">Forgot
+                Access Code?</a>
+
+            <!-- Guest access removed to enforce signup/signin flow -->
         </div>
         <div class="form-group">
           <input type="password" class="form-input" placeholder="Confirm Access Code" required />

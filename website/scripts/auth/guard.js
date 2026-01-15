@@ -15,10 +15,8 @@
 
     const currentPath = window.location.pathname;
     const isLoginPage = currentPath.includes('login.html');
-    
-    // Check both sessionStorage and localStorage for auth and guest mode
-    const isGuest = sessionStorage.getItem('authGuest') === 'true' || localStorage.getItem('isGuest') === 'true';
-    const isAuthenticated = (sessionStorage.getItem('authToken') === 'true' || localStorage.getItem('isAuthenticated') === 'true') && !isGuest;
+    const isGuest = sessionStorage.getItem('authGuest') === 'true';
+    const isAuthenticated = sessionStorage.getItem('authToken') === 'true' && !isGuest;
 
     // 1. If not authenticated and not guest, check if trying to access a protected page
     if (!isAuthenticated && !isGuest) {
