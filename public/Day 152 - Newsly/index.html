@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Newsly</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bgGlow"></div>
+
+  <header class="header">
+    <div class="brand">
+      <div class="logoDot"></div>
+      <div>
+        <h1>Newsly</h1>
+        <p>Clean headlines. Fast updates.</p>
+      </div>
+    </div>
+
+    <div class="searchBar">
+      <input id="searchInput" type="text" placeholder="Search (e.g. AI, India, Space)..." />
+      <button id="searchBtn">Search</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="categoryTabs">
+    <button class="tab active" data-category="general">Top</button>
+    <button class="tab" data-category="world">World</button>
+    <button class="tab" data-category="nation">Nation</button>
+    <button class="tab" data-category="business">Business</button>
+    <button class="tab" data-category="technology">Tech</button>
+    <button class="tab" data-category="sports">Sports</button>
+    <button class="tab" data-category="science">Science</button>
+    <button class="tab" data-category="health">Health</button>
+  </nav>
+
+  <main class="main">
+    <section class="topRow">
+      <div class="status">
+        <span class="pill" id="statusPill">Ready</span>
+        <span class="muted" id="resultCount">0 articles</span>
+      </div>
+
+      <button class="refreshBtn" id="refreshBtn">Refresh</button>
+    </section>
+
+    <section class="grid" id="newsGrid"></section>
+
+    <section class="emptyState" id="emptyState">
+      <h2>No news found</h2>
+      <p>Try searching a different keyword or switch category.</p>
+    </section>
+
+    <section class="note cardNote">
+      <p>
+        ⚠️ This is a demo project. If you want it to work, paste your <b>GNews API key</b> in <code>script.js</code>.
+      </p>
+    </section>
+  </main>
+
+<footer class="footer">
+  <small>
+    Built with HTML, CSS & JS • Powered by GNews API •
+    Made by <a href="https://github.com/suyash-jaiswal-7" target="_blank" rel="noreferrer">Suyash</a>
+  </small>
+</footer>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
