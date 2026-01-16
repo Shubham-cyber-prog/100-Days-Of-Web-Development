@@ -533,10 +533,321 @@
             color: var(--text-dim);
             /* UPDATED: Uses variable to be readable in Light Mode */
         }
+
+        /* ========================= */
+        /* 📱 MOBILE OPTIMIZATION */
+        /* ========================= */
+
+        @media (max-width: 768px) {
+
+            /* --- NAVBAR --- */
+            nav {
+                padding: 1rem 0;
+            }
+
+            .nav-container {
+                padding: 0.6rem 1.2rem;
+                gap: 1.2rem;
+                border-radius: 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-container a {
+                font-size: 0.65rem;
+                letter-spacing: 1px;
+            }
+
+            .theme-btn {
+                padding: 6px 8px;
+                font-size: 1rem;
+            }
+
+            /* --- HERO --- */
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding-top: 120px;
+                padding-bottom: 4rem;
+            }
+
+            h1 {
+                font-size: clamp(2.2rem, 8vw, 3.2rem);
+                letter-spacing: -2px;
+            }
+
+            .hero-box p {
+                font-size: 0.9rem;
+                padding: 0 1rem;
+            }
+
+            /* --- TERMINAL --- */
+            .dev-console {
+                max-width: 100%;
+                margin: 2rem 0;
+            }
+
+            .console-body {
+                font-size: 0.8rem;
+                height: auto;
+                min-height: 120px;
+            }
+
+            /* --- DASHBOARD --- */
+            .container {
+                padding: 4rem 1.2rem;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+                margin-top: -60px;
+            }
+
+            .stat-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .metrics h3 {
+                font-size: 2.8rem;
+            }
+
+            /* --- PROJECTS GRID --- */
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+
+            /* --- PATH --- */
+            .path-container {
+                padding-left: 30px;
+            }
+
+            .node-dot {
+                left: -45px;
+            }
+
+            /* --- FOOTER --- */
+            footer {
+                padding: 4rem 1.5rem;
+            }
+
+            .f-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            /* --- SCROLL BUTTONS --- */
+            .scroll-nav {
+                right: 16px;
+                bottom: 16px;
+            }
+
+            .scroll-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+
+            .scroll-nav {
+                display: none;
+            }
+        }
+
+        /* ========================= */
+        /* 📱 EXTRA SMALL DEVICES */
+        /* ========================= */
+
+        @media (max-width: 420px) {
+
+            .nav-container {
+                gap: 0.8rem;
+            }
+
+            .nav-container a {
+                font-size: 0.6rem;
+            }
+
+            h1 {
+                font-size: 2.1rem;
+            }
+
+            .status-pill {
+                font-size: 0.6rem;
+                padding: 8px 14px;
+            }
+
+            .lock-btn {
+                padding: 14px 28px !important;
+                font-size: 0.85rem !important;
+            }
+        }
+
+        /* ========================= */
+        /* 📱 MOBILE BOTTOM NAV */
+        /* ========================= */
+
+        .mobile-nav {
+            display: none;
+        }
+
+        .mobile-top-utils {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+
+            nav#navbar {
+                display: none;
+            }
+
+            .mobile-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+
+                height: 72px;
+                background: var(--nav-bg);
+
+
+                backdrop-filter: blur(22px);
+
+                border-top: 1px solid var(--border);
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+
+                z-index: 2500;
+            }
+
+            .mobile-link {
+                flex: 1;
+                text-align: center;
+                text-decoration: none;
+                color: var(--text-dim);
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+
+                font-size: 0.65rem;
+                transition: 0.3s ease;
+            }
+
+            .mobile-link span {
+                font-size: 1.4rem;
+            }
+
+            .mobile-link.active {
+                color: var(--primary);
+                text-shadow: 0 0 14px var(--primary-glow);
+            }
+
+            body {
+                padding-bottom: 88px;
+            }
+
+            .mobile-util {
+                background: transparent;
+                border: none;
+                color: var(--text-dim);
+                font-size: 1.1rem;
+                cursor: pointer;
+                transition: 0.25s ease;
+            }
+
+            .mobile-util:hover {
+                color: var(--primary);
+                transform: translateY(-2px);
+            }
+
+            .mobile-util.login {
+                text-decoration: none;
+            }
+
+            .mobile-top-utils {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                display: flex;
+                gap: 10px;
+                z-index: 3000;
+            }
+
+            .mobile-util-btn {
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                background: rgba(5, 5, 5, 0.85);
+                backdrop-filter: blur(12px);
+                border: 1px solid var(--border);
+                color: var(--text);
+                font-size: 1.1rem;
+                cursor: pointer;
+                transition: 0.25s ease;
+            }
+
+            .mobile-util-btn:hover {
+                color: var(--primary);
+                box-shadow: 0 0 12px var(--primary-glow);
+            }
+
+            nav.mobile-nav {
+                top: auto !important;
+                bottom: 0 !important;
+            }
+
+            .mobile-login-btn {
+                padding: 10px 16px;
+                border-radius: 999px;
+                background: var(--primary);
+                color: #000;
+                font-weight: 800;
+                font-size: 0.75rem;
+                text-decoration: none;
+                letter-spacing: 1px;
+                box-shadow: 0 0 14px var(--primary-glow);
+            }
+
+            .mobile-login-btn {
+                padding: 10px 18px;
+                border-radius: 999px;
+                background: var(--primary);
+                color: #000;
+                font-weight: 800;
+                font-size: 0.7rem;
+                letter-spacing: 1.5px;
+                text-decoration: none;
+                box-shadow: 0 0 14px var(--primary-glow);
+                transition: 0.25s ease;
+            }
+
+            .mobile-login-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 0 20px var(--primary-glow);
+            }
+        }
+
+        .section-anchor {
+            position: relative;
+            top: -40vh;
+            height: 1px;
+        }
     </style>
 </head>
 
 <body>
+    <!-- 📱 Mobile Top Utilities -->
+    <div class="mobile-top-utils">
+        <button id="mobile-theme-toggle-top" class="mobile-util-btn">☀️</button>
+        <a href="website/pages/login.html" class="mobile-login-btn">Login Portal</a>
+
+    </div>
 
     <div class="scroll-nav">
         <button class="scroll-btn" onclick="window.scrollTo(0,0)">▲</button>
@@ -790,6 +1101,25 @@
                 themeBtn.innerText = '☀️';
             }
         });
+        function toggleTheme() {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+            themeBtn.innerText = isLight ? '🌙' : '☀️';
+
+            const mobileTopBtn = document.getElementById('mobile-theme-toggle-top');
+            if (mobileTopBtn) mobileTopBtn.innerText = isLight ? '🌙' : '☀️';
+        }
+
+        themeBtn.addEventListener('click', toggleTheme);
+
+        const mobileThemeTop = document.getElementById('mobile-theme-toggle-top');
+        if (mobileThemeTop) {
+            mobileThemeTop.innerText = body.classList.contains('light-mode') ? '🌙' : '☀️';
+            mobileThemeTop.addEventListener('click', toggleTheme);
+        }
+
 
         window.onscroll = () => {
             const nav = document.getElementById('navbar');
@@ -815,24 +1145,77 @@
             entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
+                        const id = entry.target.id;
 
                         navLinks.forEach(link => {
-                            link.classList.remove('active-link');
-                            if (link.getAttribute('href') === `#${id}`) {
-                                link.classList.add('active-link');
-                            }
+                            link.classList.toggle(
+                                'active-link',
+                                link.getAttribute('href') === `#${id}`
+                            );
                         });
                     }
                 });
             },
             {
-                threshold: 0.6   // section must be mostly visible
+                root: null,
+                rootMargin: '-40% 0px -55% 0px',
+                threshold: 0
             }
         );
 
+
         sections.forEach(section => observer.observe(section));
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        // Scroll sync (reuse same observer logic)
+        const mobileObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        mobileLinks.forEach(link => {
+                            link.classList.toggle(
+                                'active',
+                                link.dataset.section === id
+                            );
+                        });
+                    }
+                });
+            },
+            {
+                rootMargin: '-50% 0px -45% 0px',
+                threshold: 0.1
+            }
+
+        );
+
+        ['command', 'vault', 'path'].forEach(id => {
+            const section = document.getElementById(id);
+            if (section) mobileObserver.observe(section);
+        });
     </script>
+
+
+    <!-- 📱 Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <a href="#command" class="mobile-link" data-section="command">
+            <span>⌘</span>
+            <small>Command</small>
+        </a>
+
+        <a href="#vault" class="mobile-link" data-section="vault">
+            <span></span>
+            <small>Learning</small>
+        </a>
+
+        <a href="#path" class="mobile-link" data-section="path">
+            <span>➤</span>
+            <small>Path</small>
+        </a>
+    </nav>
+
+
+
 </body>
 
 </html>
