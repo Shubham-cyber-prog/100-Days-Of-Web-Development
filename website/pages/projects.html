@@ -274,7 +274,37 @@
       }
     </style>
   </head>
+  <script>
+  // 1. Intercept all clicks on the project grid
+  document.getElementById('projectsGrid').addEventListener('click', async (e) => {
+    // Find if the clicked element (or its parent) is a link or a project card
+    const card = e.target.closest('.project-card');
+    if (!card) return;
 
+    // Get the destination URL from your data (adjust if your property name is different)
+    const targetUrl = card.getAttribute('data-url') || card.querySelector('a')?.getAttribute('href');
+    
+    if (targetUrl) {
+      e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
+
+      try {
+        // 2. Perform a "Health Check" on the URL
+        const response = await fetch(targetUrl, { method: 'HEAD' });
+
+        if (response.ok) {
+          // Milestone exists! Proceed to the project.
+          window.location.href = targetUrl;
+        } else {
+          // milestone folder missing (404), show your custom 404 page
+          window.location.href = './404.html'; 
+        }
+      } catch (error) {
+        // Network error or folder completely missing
+        window.location.href = './404.html';
+      }
+    }
+  });
+</script>
   <body>
     <!-- Header -->
     <header class="site-header">
