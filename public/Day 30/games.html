@@ -13,8 +13,16 @@
     </div>
     <main>
         <h1>Tic Tac Toe</h1>
+        <p id="turn">Turn: O</p>
+
+        <div id="scoreboard">
+          <p>O Wins: <span id="oScore">0</span></p>
+          <p>X Wins: <span id="xScore">0</span></p>
+          <p>Draws: <span id="drawScore">0</span></p>
+        </div>
+
         <div class="container">
-        <div class="game">
+          <div class="game">
             <button class="box"></button>
             <button class="box"></button>
             <button class="box"></button>
@@ -24,10 +32,16 @@
             <button class="box"></button>
             <button class="box"></button>
             <button class="box"></button>
+          </div>
         </div>
+
+        <div class="controls">
+          <button id="reset">Reset Game</button>
+          <button id="resetHistory">Reset History</button>
         </div>
-        <button id="reset">Reset Game</button>
     </main>
-    <script src="script.js"></script>
+
+    <!-- FIXED FILE NAME -->
+    <script src="games.js"></script>
 </body>
 </html>

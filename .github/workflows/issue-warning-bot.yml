@@ -1,0 +1,38 @@
+name: Issue Spam Warning Bot
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  warn-user:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check recent issues by user
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const username = context.payload.issue.user.login;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+
+            const result = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${owner}/${repo} type:issue author:${username} created:>=${since}`
+            });
+
+            const count = result.data.total_count;
+
+            if (count >= 3) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: context.issue.number,
+                body: `⚠️ **Warning!** You’ve opened **${count} issues** recently. Please avoid spamming and wait for a response.`
+              });
+            }

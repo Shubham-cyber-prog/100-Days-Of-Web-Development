@@ -115,6 +115,6 @@ const checkWinner = () => {
 };
 
 // ---------------- BUTTONS ----------------
-newBtn.addEventListener("click", resetGame);          // new round
-resetBtn.addEventListener("click", resetGame);        // clear board
-resetHistoryBtn.addEventListener("click", resetHistory); // clear board + scores
+newBtn.addEventListener("click", resetGame);
+resetBtn.addEventListener("click", resetGame);
+resetHistoryBtn.addEventListener("click", resetHistory);
