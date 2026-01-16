@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>100 Days of Web Development | Command Center</title>
-    
+
     <link rel="icon" type="image/png" href="website/assets/images/logo.png">
     <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -27,19 +30,43 @@
         }
 
         /* --- Global Reset & Animations --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 
-            0% { box-shadow: 0 0 0 0 rgba(255, 157, 0, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 157, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 157, 0, 0); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text); 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 157, 0, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 157, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 157, 0, 0);
+            }
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
             transition: background-color 0.3s, color 0.3s;
@@ -47,149 +74,422 @@
 
         /* --- Global Scroll Controls --- */
         .scroll-nav {
-            position: fixed; bottom: 40px; right: 40px;
-            display: flex; flex-direction: column; gap: 12px; z-index: 9999;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
         }
 
         .scroll-btn {
-            width: 55px; height: 55px; background: var(--primary);
-            border: none; border-radius: 50%; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.3s;
-            font-size: 1.5rem; color: #000; font-weight: bold;
+            width: 55px;
+            height: 55px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+            font-size: 1.5rem;
+            color: #000;
+            font-weight: bold;
         }
 
-        .scroll-btn:hover { transform: translateY(-5px) scale(1.1); background: #fff; }
+        .scroll-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: #fff;
+        }
 
         /* --- Navigation Pill --- */
-        nav { 
-            display: flex; justify-content: center; padding: 2rem 0; 
-            position: fixed; width: 100%; top: 0; z-index: 1000;
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 2rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
             transition: all 0.4s ease;
         }
+
         /* UPDATED: Uses variable so it works in light mode too */
-        nav.scrolled { padding: 1.2rem 0; background: var(--nav-bg); backdrop-filter: blur(25px); }
+        nav.scrolled {
+            padding: 1.2rem 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(25px);
+        }
 
         .nav-container {
-            background: var(--nav-bg); padding: 0.7rem 2.5rem;
-            border-radius: 100px; border: 1px solid var(--border);
-            display: flex; align-items: center; gap: 2.5rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            background: var(--nav-bg);
+            padding: 0.7rem 2.5rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             transition: background 0.3s, border 0.3s;
         }
-        .nav-container a { 
-            text-decoration: none; color: var(--text-dim); 
-            font-weight: 700; font-size: 0.8rem; transition: 0.3s; 
-            text-transform: uppercase; letter-spacing: 1.5px;
+
+        .nav-container a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-weight: 700;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
-        .nav-container a:hover { color: var(--primary); }
-        .active-link { color: var(--primary) !important; text-shadow: 0 0 10px var(--primary-glow); }
+
+        .nav-container a:hover {
+            color: var(--primary);
+        }
+
+        .active-link {
+            color: var(--primary) !important;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
 
         /* --- Hero Command Center --- */
-        .hero { 
-            height: 100vh; display: flex; align-items: center; justify-content: center; 
-            text-align: center; position: relative; padding-top: 100px;
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding-top: 100px;
         }
-        .hero::after {
-            content: ""; position: absolute; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a1000 0%, transparent 70%);
-            z-index: -1; opacity: 0.4;
-        }
-        .hero-box { max-width: 1100px; padding: 0 2rem; animation: fadeIn 1.2s ease; }
-        
-        .status-pill {
-            display: inline-flex; align-items: center; gap: 12px;
-            background: rgba(255, 157, 0, 0.08); border: 1px solid var(--primary);
-            padding: 10px 20px; border-radius: 50px; color: var(--primary);
-            font-weight: 800; font-size: 0.7rem; letter-spacing: 2.5px; margin-bottom: 2.5rem;
-        }
-        .status-dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 2s infinite; }
 
-        h1 { font-size: clamp(3.5rem, 10vw, 7rem); line-height: 0.9; font-weight: 800; letter-spacing: -5px; margin-bottom: 2rem; }
-        .highlight { color: var(--primary); text-shadow: 0 0 50px var(--primary-glow); }
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a1000 0%, transparent 70%);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .hero-box {
+            max-width: 1100px;
+            padding: 0 2rem;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 157, 0, 0.08);
+            border: 1px solid var(--primary);
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 2.5px;
+            margin-bottom: 2.5rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            line-height: 0.9;
+            font-weight: 800;
+            letter-spacing: -5px;
+            margin-bottom: 2rem;
+        }
+
+        .highlight {
+            color: var(--primary);
+            text-shadow: 0 0 50px var(--primary-glow);
+        }
 
         /* --- Terminal Emulator --- */
         .dev-console {
-            background: #050505; border: 1px solid var(--border); border-radius: 14px;
-            max-width: 650px; margin: 3rem auto; text-align: left; overflow: hidden;
-            font-family: 'JetBrains Mono', monospace; box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+            background: #050505;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            max-width: 650px;
+            margin: 3rem auto;
+            text-align: left;
+            overflow: hidden;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
         }
-        .console-header { background: #111; padding: 12px 18px; display: flex; gap: 10px; border-bottom: 1px solid var(--border); }
-        .c-dot { width: 12px; height: 12px; border-radius: 50%; }
-        .console-body { padding: 25px; color: var(--success); font-size: 0.9rem; height: 150px; line-height: 1.8; }
+
+        .console-header {
+            background: #111;
+            padding: 12px 18px;
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .c-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .console-body {
+            padding: 25px;
+            color: var(--success);
+            font-size: 0.9rem;
+            height: 150px;
+            line-height: 1.8;
+        }
 
         /* --- Dashboard Grid --- */
-        .container { padding: 5rem 10%; max-width: 1500px; margin: auto; }
-        .dashboard { display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; margin-top: -120px; position: relative; z-index: 50; }
-        
-        .stat-card { 
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 3.5rem;
-            backdrop-filter: blur(15px); position: relative; transition: background 0.3s, border 0.3s;
+        .container {
+            padding: 5rem 10%;
+            max-width: 1500px;
+            margin: auto;
         }
-        .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; text-align: center; margin-bottom: 4rem; }
-        .metrics h3 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 10px; }
-        .metrics p { color: var(--text-dim); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2.5rem;
+            margin-top: -120px;
+            position: relative;
+            z-index: 50;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 3.5rem;
+            backdrop-filter: blur(15px);
+            position: relative;
+            transition: background 0.3s, border 0.3s;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .metrics h3 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .metrics p {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
         /* --- Security Gates (Locked Content) --- */
-        .vault-item { position: relative; overflow: hidden; transition: 0.4s; }
-        .lock-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; transition: 0.4s; z-index: 10; border-radius: 24px;
+        .vault-item {
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
         }
-        .vault-item:hover .lock-overlay { opacity: 1; cursor: pointer; }
-        .lock-btn { 
-            margin-top: 15px; background: var(--primary); border: none; padding: 10px 25px; 
-            border-radius: 50px; font-weight: 800; color: #000; cursor: pointer;
+
+        .lock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.4s;
+            z-index: 10;
+            border-radius: 24px;
+        }
+
+        .vault-item:hover .lock-overlay {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .lock-btn {
+            margin-top: 15px;
+            background: var(--primary);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 800;
+            color: #000;
+            cursor: pointer;
         }
 
         /* --- Progress Tracking --- */
-        .progress-meta { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 800; font-size: 0.85rem; }
-        .track-outer { width: 100%; height: 14px; background: #111; border-radius: 50px; overflow: hidden; border: 1px solid #222; }
-        .track-inner { 
-            height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), #ffc400); 
-            box-shadow: 0 0 30px var(--primary-glow); transition: 2.5s cubic-bezier(0.2, 1, 0.3, 1);
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        .track-outer {
+            width: 100%;
+            height: 14px;
+            background: #111;
+            border-radius: 50px;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+
+        .track-inner {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), #ffc400);
+            box-shadow: 0 0 30px var(--primary-glow);
+            transition: 2.5s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
         /* --- Project Compendium --- */
-        .project-section { margin-top: 12rem; }
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
-        .project-card { 
-            background: var(--card-bg); border: 1px solid var(--border); padding: 2.5rem; 
-            border-radius: 28px; position: relative; transition: 0.5s;
+        .project-section {
+            margin-top: 12rem;
         }
-        .project-card:hover { border-color: var(--primary); transform: translateY(-10px); }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 28px;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-10px);
+        }
 
         /* --- Roadmap Path --- */
-        .path-container { position: relative; padding-left: 50px; border-left: 3px solid var(--border); margin-top: 4rem; }
-        .path-node { position: relative; margin-bottom: 5rem; background: var(--card-bg); padding: 2.5rem; border-radius: 24px; border: 1px solid var(--border); }
-        .node-dot { 
-            position: absolute; left: -63px; top: 40px; width: 24px; height: 24px; 
-            background: var(--bg); border: 4px solid var(--border); border-radius: 50%; z-index: 5;
+        .path-container {
+            position: relative;
+            padding-left: 50px;
+            border-left: 3px solid var(--border);
+            margin-top: 4rem;
         }
-        .path-node.active .node-dot { border-color: var(--primary); background: var(--primary); box-shadow: 0 0 20px var(--primary); }
+
+        .path-node {
+            position: relative;
+            margin-bottom: 5rem;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .node-dot {
+            position: absolute;
+            left: -63px;
+            top: 40px;
+            width: 24px;
+            height: 24px;
+            background: var(--bg);
+            border: 4px solid var(--border);
+            border-radius: 50%;
+            z-index: 5;
+        }
+
+        .path-node.active .node-dot {
+            border-color: var(--primary);
+            background: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+        }
 
         /* --- Footer Architecture --- */
-        footer { 
-            padding: 6rem 10%; 
-            border-top: 1px solid var(--border); 
-            background: var(--card-bg); /* UPDATED: Uses variable to switch to white in Light Mode */
-            margin-top: 10rem; 
+        footer {
+            padding: 6rem 10%;
+            border-top: 1px solid var(--border);
+            background: var(--card-bg);
+            /* UPDATED: Uses variable to switch to white in Light Mode */
+            margin-top: 10rem;
             transition: background 0.3s ease;
         }
-        .f-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 5rem; }
-        .f-brand h4 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem; }
-        .f-links h5 { color: var(--primary); margin-bottom: 1.5rem; letter-spacing: 2px; font-size: 0.9rem; }
-        .f-links ul { list-style: none; }
-        .f-links li { margin-bottom: 12px; }
-        .f-links a { color: var(--text-dim); text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
-        .f-links a:hover { color: var(--primary); padding-left: 8px; }
+
+        .f-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 5rem;
+        }
+
+        .f-brand h4 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .f-links h5 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .f-links ul {
+            list-style: none;
+        }
+
+        .f-links li {
+            margin-bottom: 12px;
+        }
+
+        .f-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .f-links a:hover {
+            color: var(--primary);
+            padding-left: 8px;
+        }
 
         @media (max-width: 1100px) {
-            .dashboard { grid-template-columns: 1fr; }
-            .f-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 4.5rem; }
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .f-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 4.5rem;
+            }
         }
 
         /* --- Theme Variables & Styles --- */
@@ -225,15 +525,17 @@
         }
 
         .copyright {
-            text-align: center; 
-            margin-top: 5rem; 
-            padding-top: 2rem; 
-            border-top: 1px solid var(--border); 
-            font-size: 0.75rem; 
-            color: var(--text-dim); /* UPDATED: Uses variable to be readable in Light Mode */
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            /* UPDATED: Uses variable to be readable in Light Mode */
         }
     </style>
 </head>
+
 <body>
 
     <div class="scroll-nav">
@@ -243,22 +545,23 @@
 
     <nav id="navbar">
         <div class="nav-container">
-            <a href="#" class="active-link">Command</a>
-            <a href="#vault">Learning</a>
-            <a href="#path">Path</a>
+            <a href="#command" class="nav-link active-link">Command</a>
+            <a href="#vault" class="nav-link">Learning</a>
+            <a href="#path" class="nav-link">Path</a>
             <a href="website/pages/login.html" style="color:var(--primary)">Login Portal</a>
-            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
-                ☀️
-            </button>
+            <button id="theme-toggle" class="theme-btn">☀️</button>
         </div>
     </nav>
 
-    <header class="hero">
+
+    <header class="hero" id="command">
         <div class="hero-box">
-            <div class="status-pill"><div class="status-dot"></div> PROTOCOL 100-WD: ACTIVE</div>
+            <div class="status-pill">
+                <div class="status-dot"></div> PROTOCOL 100-WD: ACTIVE
+            </div>
             <h1>The Art of <br><span class="highlight">Web Engineering</span></h1>
             <p>Deploying 100 targeted modules to bridge the gap between frontend logic and full-stack architecture.</p>
-            
+
             <div class="dev-console">
                 <div class="console-header">
                     <div class="c-dot" style="background:#ff5f56"></div>
@@ -267,8 +570,9 @@
                 </div>
                 <div class="console-body" id="console-output"></div>
             </div>
-            
-            <a href="#vault" class="lock-btn" style="padding:18px 45px; font-size:1rem; text-decoration:none;">INITIATE MODULES</a>
+
+            <a href="#vault" class="lock-btn" style="padding:18px 45px; font-size:1rem; text-decoration:none;">INITIATE
+                MODULES</a>
         </div>
     </header>
 
@@ -276,9 +580,18 @@
         <div class="dashboard">
             <div class="stat-card">
                 <div class="metrics">
-                    <div class="metric-item"><h3 id="m-day">0</h3><p>Global Day</p></div>
-                    <div class="metric-item"><h3 id="m-streak" style="color:var(--primary)">0</h3><p>Live Streak</p></div>
-                    <div class="metric-item"><h3>100%</h3><p>System Integrity</p></div>
+                    <div class="metric-item">
+                        <h3 id="m-day">0</h3>
+                        <p>Global Day</p>
+                    </div>
+                    <div class="metric-item">
+                        <h3 id="m-streak" style="color:var(--primary)">0</h3>
+                        <p>Live Streak</p>
+                    </div>
+                    <div class="metric-item">
+                        <h3>100%</h3>
+                        <p>System Integrity</p>
+                    </div>
                 </div>
 
                 <div class="progress-container">
@@ -286,24 +599,30 @@
                         <span>PROTOCOL SYNC STATUS</span>
                         <span id="sync-label">0%</span>
                     </div>
-                    <div class="track-outer"><div class="track-inner" id="sync-bar"></div></div>
+                    <div class="track-outer">
+                        <div class="track-inner" id="sync-bar"></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="stat-card" style="display:flex; flex-direction:column; justify-content:center; text-align:center;">
+            <div class="stat-card"
+                style="display:flex; flex-direction:column; justify-content:center; text-align:center;">
                 <p style="letter-spacing:4px; font-size:0.7rem; color:var(--text-dim)">CURRENT TIMESTAMP</p>
-                <h2 id="live-clock" style="font-size: 2.2rem; margin-top: 10px; font-family:'JetBrains Mono'">00:00:00</h2>
-                <div style="margin-top:20px; color:var(--primary); font-weight:800; font-size:0.8rem">SYSTEMS NOMINAL</div>
+                <h2 id="live-clock" style="font-size: 2.2rem; margin-top: 10px; font-family:'JetBrains Mono'">00:00:00
+                </h2>
+                <div style="margin-top:20px; color:var(--primary); font-weight:800; font-size:0.8rem">SYSTEMS NOMINAL
+                </div>
             </div>
         </div>
 
         <section id="vault" class="project-section">
             <div style="margin-bottom: 4rem;">
                 <h2 style="font-size: 3.5rem; letter-spacing: -3px;">Projects</h2>
-                <p style="color:var(--text-dim)">Encryption active. Higher level modules require developer authentication.</p>
+                <p style="color:var(--text-dim)">Encryption active. Higher level modules require developer
+                    authentication.</p>
             </div>
             <div class="grid-layout" id="vault-grid">
-                </div>
+            </div>
         </section>
 
         <section id="path" style="margin-top: 12rem;">
@@ -312,7 +631,7 @@
                 <p style="color:var(--text-dim)">Phased progression strategy for full-stack dominance.</p>
             </div>
             <div class="path-container" id="path-grid">
-                </div>
+            </div>
         </section>
     </div>
 
@@ -320,7 +639,8 @@
         <div class="f-grid">
             <div class="f-brand">
                 <h4>100 DAYS <span class="highlight">WEB DEV</span></h4>
-                <p>An open-source initiative documenting the rigorous transition into elite web engineering. Mission protocols include daily commits, technical blogging, and community interaction.</p>
+                <p>An open-source initiative documenting the rigorous transition into elite web engineering. Mission
+                    protocols include daily commits, technical blogging, and community interaction.</p>
             </div>
             <div class="f-links">
                 <h5>QUICK ACCESS</h5>
@@ -334,9 +654,14 @@
             <div class="f-links">
                 <h5>EXTERNAL NODES</h5>
                 <ul>
-                    <li><a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26">GitHub Repository</a></li>
-                    <li><a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/blob/main/CONTRIBUTING.md">Project Documentation</a></li>
-                    <li><a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a></li>
+                    <li><a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26">GitHub
+                            Repository</a></li>
+                    <li><a
+                            href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/blob/main/CONTRIBUTING.md">Project
+                            Documentation</a></li>
+                    <li><a
+                            href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/blob/main/CODE_OF_CONDUCT.md">Code
+                            of Conduct</a></li>
                     <li><a href="https://discord.com/invite/eMTePUK3gJ">Discord Community</a></li>
                 </ul>
             </div>
@@ -370,12 +695,12 @@
             const now = new Date();
             const elapsed = Math.abs(now - START_EPOCH);
             const currentDay = Math.min(100, Math.ceil(elapsed / (1000 * 60 * 60 * 24)));
-            
+
             // Update Dashboard Metrics
             document.getElementById('m-day').innerText = currentDay;
-            document.getElementById('m-streak').innerText = currentDay; 
+            document.getElementById('m-streak').innerText = currentDay;
             document.getElementById('sync-label').innerText = currentDay + "%";
-            
+
             setTimeout(() => {
                 document.getElementById('sync-bar').style.width = currentDay + "%";
             }, 600);
@@ -435,7 +760,7 @@
             ];
             const output = document.getElementById('console-output');
             let lineIdx = 0;
-            
+
             function typeLine() {
                 if (lineIdx < lines.length) {
                     output.innerHTML += lines[lineIdx] + "<br>";
@@ -456,7 +781,7 @@
 
         themeBtn.addEventListener('click', () => {
             body.classList.toggle('light-mode');
-            
+
             if (body.classList.contains('light-mode')) {
                 localStorage.setItem('theme', 'light');
                 themeBtn.innerText = '🌙';
@@ -478,6 +803,36 @@
             buildPath();
             runConsole();
         };
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const sections = [
+            document.getElementById('command'),
+            document.getElementById('vault'),
+            document.getElementById('path')
+        ];
+
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+
+                        navLinks.forEach(link => {
+                            link.classList.remove('active-link');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active-link');
+                            }
+                        });
+                    }
+                });
+            },
+            {
+                threshold: 0.6   // section must be mostly visible
+            }
+        );
+
+        sections.forEach(section => observer.observe(section));
     </script>
 </body>
+
 </html>

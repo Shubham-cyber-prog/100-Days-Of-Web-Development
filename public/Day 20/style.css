@@ -1,240 +1,230 @@
+/* =========================
+   QR PAGE — MAIN SITE THEME
+   ========================= */
+
+:root {
+  --bg-primary: #0b0a08;
+  --bg-card: rgba(255, 255, 255, 0.06);
+  --bg-hover: rgba(255, 255, 255, 0.12);
+
+  --text-primary: #ffffff;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  /* 🔥 MAIN SITE ORANGE / RED ACCENT */
+  --accent: #f97316;
+  /* orange */
+  --accent-glow: rgba(249, 115, 22, 0.35);
+
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+
+/* ---------- Reset ---------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
 }
 
+/* ---------- Body ---------- */
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  background: radial-gradient(1200px 600px at top,
+      rgba(124, 58, 237, 0.08),
+      transparent 60%),
+    var(--bg-primary);
+  color: var(--text-primary);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 32px;
 }
 
+/* ---------- Container ---------- */
 .container {
   width: 100%;
-  max-width: 380px;
-  text-align: center;
-  color: #fff;
+  max-width: 520px;
 }
 
+/* ---------- Title ---------- */
 h1 {
-  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
 }
 
+/* ---------- Tabs ---------- */
 .tabs {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
 .tab {
   flex: 1;
-  margin: 0 3px;
-  padding: 10px;
-  border-radius: 12px;
-  border: none;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-weight: 600;
   cursor: pointer;
-  background: rgba(255,255,255,0.2);
-  color: #fff;
-  transition: 0.3s;
+  transition: all 0.25s ease;
+}
+
+.tab:hover {
+  background: var(--bg-hover);
+  transform: translateY(-1px);
 }
 
 .tab.active {
-  background: #fff;
-  color: #333;
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 0 0 1px var(--accent),
+    0 8px 30px var(--accent-glow);
 }
 
+/* ---------- Card ---------- */
 .glass-card {
-  padding: 20px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-  animation: fadeIn 0.6s ease;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  animation: fadeUp 0.6s ease;
 }
 
+/* ---------- Inputs ---------- */
 input {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  margin-bottom: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
 }
 
+input::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ---------- Buttons ---------- */
 button {
   width: 100%;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 14px;
   border: none;
   cursor: pointer;
-  background: #fff;
+  background: linear-gradient(135deg,
+      var(--accent),
+      #5b21b6);
+  color: white;
   font-weight: 600;
-  transition: 0.3s;
+  transition: all 0.25s ease;
   margin-top: 10px;
 }
 
 button:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px var(--accent-glow);
 }
 
+/* ---------- Tab Content ---------- */
 .tab-content {
   display: none;
-  animation: slide 0.4s ease;
 }
 
 .tab-content.active {
   display: block;
+  animation: slideFade 0.35s ease;
 }
 
+/* ---------- QR Output ---------- */
 .qr-box {
-  margin-top: 20px;
+  margin-top: 18px;
   display: none;
-  animation: pop 0.5s ease forwards;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.35);
 }
 
 #downloadBtn {
   display: none;
 }
 
-@keyframes pop {
-  from { transform: scale(0.6); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slide {
-  from { opacity: 0; transform: translateX(20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-body {
-  background-size: cover;
-  background-position: center;
-  transition: background 0.6s ease;
-}
-
+/* ---------- Background Controls ---------- */
 .bg-controls {
   display: flex;
   gap: 8px;
-  margin-top: 15px;
+  margin-top: 14px;
 }
 
-/* Align Day 20 QR styles with main site theme */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-}
-
-:root{
-  --bg: #f6f1e9;
-  --card: #ffffff;
-  --text: #1f1f2e;
-  --accent: #1f1f2e;
-  --muted: #6b7280;
-}
-
-body {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 28px;
-}
-
-.container {
-  width: 100%;
-  max-width: 520px;
-  text-align: left;
-}
-
-h1 {
-  margin-bottom: 14px;
-  font-size: 1.4rem;
-}
-
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.tab {
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(31,31,46,0.06);
-  cursor: pointer;
+.bg-controls button {
   background: transparent;
-  color: var(--text);
-  font-weight: 600;
-  transition: background 180ms, transform 180ms;
-}
-
-.tab.active {
-  background: var(--card);
-  box-shadow: 0 6px 20px rgba(31,31,46,0.06);
-}
-
-.glass-card {
-  padding: 20px;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  padding: 8px;
   border-radius: 12px;
-  background: var(--card);
-  box-shadow: 0 8px 30px rgba(2,6,23,0.06);
+  color: var(--text-secondary);
 }
 
-input {
+.bg-controls button:hover {
+  background: var(--bg-hover);
+}
+
+/* ---------- Media ---------- */
+video,
+canvas {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(31,31,46,0.06);
-  outline: none;
-  margin-bottom: 10px;
-  color: var(--text);
+  border-radius: 14px;
+  margin-top: 12px;
 }
 
-input:focus {
-  box-shadow: 0 6px 20px rgba(6,182,212,0.06);
-  border-color: rgba(6,182,212,0.18);
+/* ---------- Animations ---------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  background: var(--accent);
-  color: white;
-  font-weight: 600;
-  transition: transform 180ms, background 180ms;
-  margin-top: 10px;
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-button:hover { transform: translateY(-2px); }
+/* ---------- Mobile ---------- */
+@media (max-width: 480px) {
+  body {
+    padding: 18px;
+  }
 
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-.qr-box { margin-top: 18px; display: none; }
-#downloadBtn { display: none; }
-
-.bg-controls { display:flex; gap:8px; margin-top:12px; }
-.bg-controls button { flex:1; padding:8px; font-size:13px; border-radius:8px; border:1px solid rgba(31,31,46,0.04); background:transparent }
-
-video, canvas { width:100%; border-radius:10px; margin-top:10px }
-
-@media (max-width:420px){ .container{ padding:0 } .tabs{flex-direction:column} }
+  .tabs {
+    flex-direction: column;
+  }
+}
