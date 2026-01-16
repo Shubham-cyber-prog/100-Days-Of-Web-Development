@@ -247,12 +247,12 @@ class FileUploader {
             if (data) {
                 const parsed = JSON.parse(data);
                 this.files = parsed.files || [];
-                
+
                 // Validate loaded data
-                this.files = this.files.filter(file => 
+                this.files = this.files.filter(file =>
                     file && file.id && file.name && file.size && file.data
                 );
-                
+
                 if (this.files.length > 0) {
                     this.showToast(`Loaded ${this.files.length} files from storage`, 'info');
                 }
