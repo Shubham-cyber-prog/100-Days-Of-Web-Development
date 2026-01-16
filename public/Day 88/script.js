@@ -3,14 +3,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
         import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- CONFIGURATION START ---
+        // REPLACE WITH YOUR OWN FIREBASE CREDENTIALS - See README.md for setup instructions
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "AIzaSyDw3ZozNb_NJgv3l_7vN7XTXIPdMHEAtRM",
-            authDomain: "medimitra1-4fac0.firebaseapp.com",
-            projectId: "medimitra1-4fac0",
-            storageBucket: "medimitra1-4fac0.firebasestorage.app",
-            messagingSenderId: "158778950976",
-            appId: "1:158778950976:web:5c9108464a747e111026a5",
-            measurementId: "G-9B2FCCF52Z"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
         };
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'medimitra-prod-v2';
         // --- CONFIGURATION END ---
