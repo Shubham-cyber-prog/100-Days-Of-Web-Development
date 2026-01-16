@@ -1,3 +1,13 @@
+import { auth } from './firebase-config.js';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
+    sendPasswordResetEmail,
+    signOut
+} from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Elements ---
     const authForm = document.getElementById('authForm');
@@ -70,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Form Submission & Validation ---
-    authForm.addEventListener('submit', (e) => {
+    authForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         // Reset errors
@@ -98,38 +108,95 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (isValid) {
-            // Mock Loading State
+            // Loading State
             const originalBtnText = submitBtn.textContent;
             submitBtn.textContent = 'Processing...';
             submitBtn.disabled = true;
 
-            // Simulate API Call
-            setTimeout(() => {
-                // Success
-                localStorage.setItem('isAuthenticated', 'true');
-                localStorage.setItem('userEmail', email);
-
-                // Redirect
+            try {
+                if (isLogin) {
+                    // Sign in
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else {
+                    // Sign up
+                    await createUserWithEmailAndPassword(auth, email, password);
+                }
+                // Success - Firebase handles auth state, redirect will happen via auth state listener
                 window.location.href = 'dashboard.html';
-            }, 1500);
+            } catch (error) {
+                console.error('Authentication error:', error);
+                let errorMessage = 'An error occurred. Please try again.';
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'No account found with this email.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Incorrect password.';
+                        break;
+                    case 'auth/email-already-in-use':
+                        errorMessage = 'An account with this email already exists.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage = 'Password is too weak.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Invalid email address.';
+                        break;
+                }
+                showError(emailInput, errorMessage);
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
         }
     });
 
-    // --- Mock Social Auth ---
+    // --- Social Auth ---
+    const socialBtns = document.querySelectorAll('.social-btn');
+    const provider = new GoogleAuthProvider();
+
     socialBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Mock Loading State
+        btn.addEventListener('click', async () => {
+            // Loading State
             const originalText = btn.innerHTML;
             btn.innerHTML = 'Connecting...';
             btn.classList.add('loading');
 
-            setTimeout(() => {
-                localStorage.setItem('isAuthenticated', 'true');
-                localStorage.setItem('userEmail', 'social_user@example.com');
+            try {
+                await signInWithPopup(auth, provider);
+                // Success - redirect will happen via auth state listener
                 window.location.href = 'dashboard.html';
-            }, 1000);
+            } catch (error) {
+                console.error('Social auth error:', error);
+                showError(emailInput, 'Failed to sign in with Google. Please try again.');
+                btn.innerHTML = originalText;
+                btn.classList.remove('loading');
+            }
         });
     });
+
+    // --- Password Reset ---
+    if (forgotPasswordAction) {
+        forgotPasswordAction.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            if (!email) {
+                showError(emailInput, 'Please enter your email address first.');
+                return;
+            }
+            if (!validateEmail(email)) {
+                showError(emailInput, 'Please enter a valid email address.');
+                return;
+            }
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                alert('Password reset email sent! Check your inbox.');
+            } catch (error) {
+                console.error('Password reset error:', error);
+                showError(emailInput, 'Failed to send password reset email. Please try again.');
+            }
+        });
+    }
 
 
     // --- Helpers ---
