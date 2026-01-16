@@ -204,6 +204,11 @@ class FileUploader {
 
     saveToLocalStorage() {
         try {
+
+            localStorage.setItem('fileUploaderData', JSON.stringify(this.files));
+        } catch {
+            this.showToast('Unable to save files. Storage may be full.', 'error');
+
 t
             localStorage.setItem('fileUploaderData', JSON.stringify(this.files));
         } catch {
@@ -241,6 +246,10 @@ t
     loadFromLocalStorage() {
         try {
             const data = localStorage.getItem('fileUploaderData');
+
+            if (data) this.files = JSON.parse(data) || [];
+        } catch {
+
 
             if (data) this.files = JSON.parse(data) || [];
         } catch {
