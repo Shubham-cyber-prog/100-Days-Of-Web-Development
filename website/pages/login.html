@@ -2,6 +2,12 @@
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academy Access | 100 Days of Web Dev</title>
+
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Academy Access | 100 Days of Web Dev</title>
@@ -228,347 +234,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Academy Access | 100 Days of Web Dev</title>
 
-    <link rel="icon" type="image/png" href="/website/assets/images/logo.png" />
-    <link rel="stylesheet" href="../styles/index.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
-      rel="stylesheet"
-    />
 
-    <style>
-      :root {
-        --primary: #ff9d00;
-        --primary-glow: rgba(255, 157, 0, 0.4);
-        --bg-void: #030303;
-        --card-bg: rgba(10, 10, 10, 0.75);
-        --text-main: #ffffff;
-        --text-secondary: #a1a1a1;
-        --text-tertiary: #666666;
-        --glass-border: rgba(255, 255, 255, 0.08);
-      }
-
-      /* Full page scrollable setup */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Plus Jakarta Sans", sans-serif;
-        background-color: var(--bg-void);
-        color: var(--text-main);
-        min-height: 100vh;
-        overflow-y: auto; /* Ensure vertical scrolling */
-        line-height: 1.6;
-      }
-
-      /* Atmospheric Background */
-      .stars-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: radial-gradient(
-          circle at 50% 50%,
-          #1a1200 0%,
-          #030303 100%
-        );
-      }
-
-      .ambient-glow {
-        position: absolute;
-        width: 800px;
-        height: 800px;
-        background: radial-gradient(
-          circle,
-          rgba(255, 157, 28, 0.08) 0%,
-          transparent 60%
-        );
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-      }
-
-      /* Scrollable Wrapper */
-      .auth-wrapper {
-        width: 100%;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4rem 1rem; /* Space for scrolling on mobile */
-      }
-
-      /* High-Fidelity Card */
-      .auth-card {
-        background: var(--card-bg);
-        backdrop-filter: blur(30px);
-        -webkit-backdrop-filter: blur(30px);
-        border: 1px solid var(--glass-border);
-        border-radius: 32px;
-        padding: 3rem 2.5rem;
-        width: 100%;
-        max-width: 480px;
-        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9);
-        text-align: center;
-        animation: floatUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-
-      /* Logo Enhancement - Centered and Glowing */
-      .logo-header {
-        margin-bottom: 2rem;
-      }
-
-      .login-logo-img {
-        width: 120px;
-        height: auto;
-        margin: 0 auto 1.5rem;
-        display: block;
-        filter: drop-shadow(0 0 25px var(--primary-glow));
-        transition: 0.3s;
-      }
-
-      .login-logo-img:hover {
-        transform: scale(1.05);
-        filter: drop-shadow(0 0 35px var(--primary-glow));
-      }
-
-      h1 {
-        font-size: 2rem;
-        font-weight: 800;
-        letter-spacing: -1px;
-        margin-bottom: 0.5rem;
-      }
-      .subtext {
-        color: var(--text-secondary);
-        font-size: 0.95rem;
-        margin-bottom: 2.5rem;
-      }
-
-      /* Form Controls */
-      .form-group {
-        margin-bottom: 1.2rem;
-        text-align: left;
-      }
-      .form-label {
-        display: block;
-        font-size: 0.75rem;
-        color: var(--text-dim);
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .form-input {
-        width: 100%;
-        padding: 1.1rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--glass-border);
-        border-radius: 16px;
-        color: #fff;
-        font-size: 1rem;
-        transition: 0.3s;
-        outline: none;
-      }
-
-      .form-input:focus {
-        border-color: var(--primary);
-        background: rgba(255, 157, 0, 0.05);
-        box-shadow: 0 0 20px rgba(255, 157, 0, 0.15);
-      }
-
-      /* Tab Switcher */
-      .auth-tabs {
-        display: flex;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 50px;
-        margin-bottom: 2rem;
-        padding: 4px;
-      }
-
-      .tab-btn {
-        flex: 1;
-        padding: 10px;
-        border: none;
-        background: transparent;
-        color: var(--text-secondary);
-        font-weight: 700;
-        cursor: pointer;
-        border-radius: 50px;
-        transition: 0.3s;
-      }
-
-      .tab-btn.active {
-        background: var(--primary);
-        color: #000;
-      }
-
-      .external-auth-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        margin-top: 1.5rem;
-        width: 100%;
-      }
-
-      .social-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        padding: 16px 24px;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
-        color: #ffffff;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        position: relative;
-        white-space: nowrap;
-        width: 100%;
-      }
-
-      .social-btn::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.1),
-          transparent
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .social-btn:hover::before {
-        opacity: 1;
-      }
-
-      .social-icon {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-
-      .social-icon img,
-      .social-icon svg {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-
-      /* Google specific styling */
-      .social-btn.google {
-        background: rgba(255, 255, 255, 0.09);
-      }
-
-      .social-btn.google:hover {
-        background: rgba(255, 255, 255, 0.14);
-        border-color: rgba(66, 133, 244, 0.5);
-        box-shadow: 0 6px 20px rgba(66, 133, 244, 0.25);
-      }
-
-      /* GitHub specific styling */
-      .social-btn.github {
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .social-btn.github svg {
-        fill: #ffffff;
-      }
-
-      .social-btn.github:hover {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(139, 92, 246, 0.5);
-        box-shadow: 0 6px 20px rgba(139, 92, 246, 0.25);
-      }
-
-      /* Enhanced hover effect */
-      .social-btn:hover {
-        transform: translateY(-2px);
-      }
-
-      .social-btn:hover .social-icon {
-        transform: scale(1.08);
-      }
-
-      .social-btn:active {
-        transform: translateY(0);
-      }
-
-      /* Guest Mode Button */
-      .guest-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        padding: 16px 24px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 157, 0, 0.25);
-        border-radius: 14px;
-        color: var(--primary);
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        margin-top: 1.25rem;
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .guest-btn::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 157, 0, 0.1),
-          transparent
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .guest-btn:hover::before {
-        opacity: 1;
-      }
-
-
-    @media (max-width: 480px) {
-      .auth-card {
-        padding: 2rem 1.5rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="../styles/index.css" />
+  <link rel="stylesheet" href="../styles/pages/auth-card.css" />
 </head>
 
-
-
-<body>
-  <div class="stars-container">
-    <div class="ambient-glow"></div>
-  </div>
+<body class="auth-card-page">
 
   <div class="auth-wrapper">
     <div class="auth-card">
-  <div class="logo-header">
-        <img src="../assets/images/logo.png" alt="Academy Logo" class="login-logo-img">
+
+      <div class="logo-header">
+        <img src="../assets/images/logo.png" class="login-logo-img" />
         <h1 id="auth-title">Welcome Back</h1>
         <p class="subtext" id="auth-subtext">Authorized personnel only.</p>
+
+      </div>
+
+      <div class="auth-tabs">
+        <button class="tab-btn active" data-tab="login">Login</button>
+        <button class="tab-btn" data-tab="register">Register</button>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <input type="email" class="form-input" placeholder="Email Address" required />
+        <input type="password" class="form-input" placeholder="Access Code" required />
+        <button class="btn-primary">Join Now</button>
+        <a class="form-link">Forgot Access Code?</a>
+      </form>
+
+      <form id="register-form" class="auth-form hidden">
+
     </div>
 
     <div class="auth-tabs">
@@ -644,29 +340,20 @@
 
     <form id="login-form" onsubmit="handleAuth(event, 'login')">
       <div class="form-group">
+
         <input type="email" class="form-input" placeholder="Email Address" required />
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-input" placeholder="Access Code" required />
-      </div>
-      <button type="submit" class="btn-primary">Join Now</button>
-      <a href="#" style="
+        <input type="password" class="form-input" placeholder="Create Access Code" required />
+        <button class="btn-primary">Create Account</button>
+      </form>
 
-      .guest-btn:hover {
-        background: rgba(255, 157, 0, 0.12);
-        border-color: rgba(255, 157, 0, 0.5);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 157, 0, 0.2);
-      }
+      <div class="auth-divider">External Access</div>
 
-      .guest-icon {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
+
+      <div class="external-auth-grid">
+        <button class="social-btn google">
+          <img src="../assets/images/google.png" alt="Google" />
+            Continue with Google
+        </button>
 
       .guest-icon svg {
         width: 100%;
@@ -1057,225 +744,15 @@ window.handleAuth = async (event, mode) => {
         <span>Google</span>
       </button>
 
-      <button class="social-btn github" onclick="signInWithGitHub()">
-        <span class="social-icon">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+
+        <button class="social-btn github">
+          <svg aria-hidden="true" focusable="false" class="octicon octicon-mark-github" viewBox="0 0 24 24" width="32" height="32" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom">
+            <path d="M12 1C5.923 1 1 5.923 1 12c0 4.867 3.149 8.979 7.521 10.436.55.096.756-.233.756-.522 0-.262-.013-1.128-.013-2.049-2.764.509-3.479-.674-3.699-1.292-.124-.317-.66-1.293-1.127-1.554-.385-.207-.936-.715-.014-.729.866-.014 1.485.797 1.691 1.128.99 1.663 2.571 1.196 3.204.907.096-.715.385-1.196.701-1.471-2.448-.275-5.005-1.224-5.005-5.432 0-1.196.426-2.186 1.128-2.956-.111-.275-.496-1.402.11-2.915 0 0 .921-.288 3.024 1.128a10.193 10.193 0 0 1 2.75-.371c.936 0 1.871.123 2.75.371 2.104-1.43 3.025-1.128 3.025-1.128.605 1.513.221 2.64.111 2.915.701.77 1.127 1.747 1.127 2.956 0 4.222-2.571 5.157-5.019 5.432.399.344.743 1.004.743 2.035 0 1.471-.014 2.654-.014 3.025 0 .289.206.632.756.522C19.851 20.979 23 16.854 23 12c0-6.077-4.922-11-11-11Z"></path>
           </svg>
-        </span>
-        <span>GitHub</span>
-      </button>
-    </div>
-
-    <button class="guest-btn" onclick="signInAsGuest()">
-      <span class="guest-icon">
-        <svg viewBox="0 0 24 24">
-          <path
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-        </svg>
-      </span>
-      <span>Try as Guest</span>
-    </button>
-  </div>
-  </div>
-
-  <script>
-    function switchTab(type) {
-      const loginForm = document.getElementById("login-form");
-      const registerForm = document.getElementById("register-form");
-      const title = document.getElementById("auth-title");
-      const subtext = document.getElementById("auth-subtext");
-      const tabs = document.querySelectorAll(".tab-btn");
-
-      tabs.forEach((btn) => btn.classList.remove("active"));
-
-      if (type === "login") {
-        loginForm.classList.remove("hidden");
-        registerForm.classList.add("hidden");
-        title.innerText = "Welcome Back";
-        subtext.innerText = "Authorized personnel only.";
-        event.currentTarget.classList.add("active");
-      } else {
-        loginForm.classList.add("hidden");
-        registerForm.classList.remove("hidden");
-        title.innerText = "Join Academy";
-        subtext.innerText = "Create your developer identity.";
-        tabs[1].classList.add("active");
-      }
-    }
-
-    async function handleAuth(event, mode) {
-      event.preventDefault();
-      const email = event.target.querySelector('input[type="email"]').value;
-      const password = event.target.querySelector(
-        'input[type="password"]'
-      ).value;
-
-      try {
-        if (mode === "register") {
-          await createUserWithEmailAndPassword(auth, email, password);
-          alert("Academy ID Created!");
-        } else {
-          await signInWithEmailAndPassword(auth, email, password);
-        }
-        window.location.href = "dashboard.html";
-      } catch (error) {
-        alert(error.message);
-      }
-    }
-  </script>
-
-  <script src="../scripts/auth/service.js"></script>
-  <script src="../scripts/auth/guard.js"></script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import {
-      getAuth,
-      signInWithPopup,
-      signInAnonymously,
-      GoogleAuthProvider,
-      GithubAuthProvider,
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword,
-    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    /* 🔐 Firebase Config — ONLY ONCE */
-    const firebaseConfig = {
-      apiKey: "AIzaSyDZqZKcsk3BxIaiGhdr-fdtSPugwvSDnAQ",
-      authDomain: "days-8c631.firebaseapp.com",
-      projectId: "days-8c631",
-      storageBucket: "days-8c631.firebasestorage.app",
-      messagingSenderId: "624144787653",
-      appId: "1:624144787653:web:54330eaa3209e00118a8ac",
-    };
-
-    /* Init */
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    /* 🔑 Google */
-    window.signInWithGoogle = async () => {
-      try {
-        const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        localStorage.removeItem("isGuest"); // Clear guest mode
-        localStorage.setItem("user_name", result.user.displayName);
-        localStorage.setItem("user_pic", result.user.photoURL);
-        window.location.href = "dashboard.html";
-      } catch (err) {
-        alert(err.message);
-
-      }
-    };
-
-    /* 🔑 GitHub */
-    window.signInWithGitHub = async () => {
-      try {
-        const provider = new GithubAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        localStorage.removeItem("isGuest"); // Clear guest mode
-        localStorage.setItem("user_name", result.user.displayName);
-        localStorage.setItem("user_pic", result.user.photoURL);
-        window.location.href = "dashboard.html";
-      } catch (err) {
-        alert("GitHub auth failed. Check Firebase callback URL.");
-      }
-    };
-
-    /* 🔐 Email Auth */
-    window.handleAuth = async (event, mode) => {
-      event.preventDefault();
-      const email = event.target.querySelector('input[type="email"]').value;
-      const password = event.target.querySelector(
-        'input[type="password"]'
-      ).value;
-
-      try {
-        if (mode === "register") {
-          await createUserWithEmailAndPassword(auth, email, password);
-
-            "
-            >Forgot Access Code?</a
-          >
-        </form>
-
-        <form
-          id="register-form"
-          class="hidden"
-          onsubmit="handleAuth(event, 'register')"
-        >
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-input"
-              placeholder="Full Name"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="email"
-              class="form-input"
-              placeholder="Academy Email"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-input"
-              placeholder="New Access Code"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-input"
-              placeholder="Confirm Access Code"
-              required
-            />
-          </div>
-          <button type="submit" class="btn-primary">Create Academy ID</button>
-        </form>
-
-        <div class="auth-divider">External Links</div>
-
-        <div class="external-auth-grid">
-          <button class="social-btn google" onclick="signInWithGoogle()">
-            <span class="social-icon">
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google"
-              />
-            </span>
-            <span>Google</span>
-          </button>
-
-          <button class="social-btn github" onclick="signInWithGitHub()">
-            <span class="social-icon">
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                />
-              </svg>
-            </span>
-            <span>GitHub</span>
-          </button>
-        </div>
-
-        <button class="guest-btn" onclick="signInAsGuest()">
-          <span class="guest-icon">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
-              />
-            </svg>
-          </span>
-          <span>Try as Guest</span>
+          Continue with GitHub
         </button>
       </div>
+
     </div>
 
     <script>
@@ -1388,179 +865,13 @@ alert("GitHub auth failed. Check Firebase callback URL.");
 }
 };
 
-/* 🔐 Email Auth */
-window.handleAuth = async (event, mode) => {
-event.preventDefault();
-const email = event.target.querySelector('input[type="email"]').value;
-const password = event.target.querySelector(
-'input[type="password"]'
-).value;
 
-try {
-if (mode === "register") {
-await createUserWithEmailAndPassword(auth, email, password);
-} else {
-await signInWithEmailAndPassword(auth, email, password);
-}
-localStorage.removeItem("isGuest"); // Clear guest mode
-window.location.href = "dashboard.html";
-} catch (err) {
-alert(err.message);
-}
-};
 
-/* 👤 Guest Mode - Anonymous Authentication */
-window.signInAsGuest = async () => {
-try {
-const result = await signInAnonymously(auth);
-// Mark user as guest in localStorage
-localStorage.setItem("isGuest", "true");
-localStorage.setItem("user_name", "Guest User");
-localStorage.setItem(
-"user_pic",
-"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M12 2C6.48
-2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0
-14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E"
-);
-localStorage.setItem("guest_session_start", Date.now().toString());
+      <button class="guest-btn">Try as Guest</button>
 
-console.log("Guest signed in with UID:", result.user.uid);
-window.location.href = "dashboard.html";
-} catch (err) {
-console.error("Guest sign-in error:", err);
-alert("Unable to start guest session. Please try again.");
-}
-};
-</script>
+    </div>
+  </div>
+
+  <script src="../scripts/auth/auth-ui.js"></script>
 </body>
-
 </html>
-
-
-
-</html>
-
-      async function handleAuth(event, mode) {
-        event.preventDefault();
-        const email = event.target.querySelector('input[type="email"]').value;
-        const password = event.target.querySelector(
-          'input[type="password"]'
-        ).value;
-
-        try {
-          if (mode === "register") {
-            await createUserWithEmailAndPassword(auth, email, password);
-            alert("Academy ID Created!");
-          } else {
-            await signInWithEmailAndPassword(auth, email, password);
-          }
-          window.location.href = "dashboard.html";
-        } catch (error) {
-          alert(error.message);
-        }
-      }
-    </script>
-
-    <script src="../scripts/auth/service.js"></script>
-    <script src="../scripts/auth/guard.js"></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-      import {
-        getAuth,
-        signInWithPopup,
-        signInAnonymously,
-        GoogleAuthProvider,
-        GithubAuthProvider,
-        signInWithEmailAndPassword,
-        createUserWithEmailAndPassword,
-      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-      /* 🔐 Firebase Config — REPLACE WITH YOUR OWN VALUES */
-      /* See README.md for Firebase setup instructions */
-      const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID",
-      };
-
-      /* Init */
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-
-      /* 🔑 Google */
-      window.signInWithGoogle = async () => {
-        try {
-          const provider = new GoogleAuthProvider();
-          const result = await signInWithPopup(auth, provider);
-          localStorage.removeItem("isGuest"); // Clear guest mode
-          localStorage.setItem("user_name", result.user.displayName);
-          localStorage.setItem("user_pic", result.user.photoURL);
-          window.location.href = "dashboard.html";
-        } catch (err) {
-          alert(err.message);
-        }
-      };
-
-      /* 🔑 GitHub */
-      window.signInWithGitHub = async () => {
-        try {
-          const provider = new GithubAuthProvider();
-          const result = await signInWithPopup(auth, provider);
-          localStorage.removeItem("isGuest"); // Clear guest mode
-          localStorage.setItem("user_name", result.user.displayName);
-          localStorage.setItem("user_pic", result.user.photoURL);
-          window.location.href = "dashboard.html";
-        } catch (err) {
-          alert("GitHub auth failed. Check Firebase callback URL.");
-        }
-      };
-
-      /* 🔐 Email Auth */
-      window.handleAuth = async (event, mode) => {
-        event.preventDefault();
-        const email = event.target.querySelector('input[type="email"]').value;
-        const password = event.target.querySelector(
-          'input[type="password"]'
-        ).value;
-
-        try {
-          if (mode === "register") {
-            await createUserWithEmailAndPassword(auth, email, password);
-          } else {
-            await signInWithEmailAndPassword(auth, email, password);
-          }
-          localStorage.removeItem("isGuest"); // Clear guest mode
-          window.location.href = "dashboard.html";
-        } catch (err) {
-          alert(err.message);
-        }
-      };
-
-      /* 👤 Guest Mode - Anonymous Authentication */
-      window.signInAsGuest = async () => {
-        try {
-          const result = await signInAnonymously(auth);
-          // Mark user as guest in localStorage
-          localStorage.setItem("isGuest", "true");
-          localStorage.setItem("user_name", "Guest User");
-          localStorage.setItem(
-            "user_pic",
-            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E"
-          );
-          localStorage.setItem("guest_session_start", Date.now().toString());
-
-          console.log("Guest signed in with UID:", result.user.uid);
-          window.location.href = "dashboard.html";
-        } catch (err) {
-          console.error("Guest sign-in error:", err);
-          alert("Unable to start guest session. Please try again.");
-        }
-      };
-    </script>
-  </body>
-</html>
-
-
