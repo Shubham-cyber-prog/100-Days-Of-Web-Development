@@ -1,5 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Academy Access | 100 Days of Web Dev</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" href="../assets/images/logo.png" />
+
+  <style>
+    :root {
+      --accent: #ff9d00;
+      --bg: #050505;
+      --card: rgba(15, 15, 15, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --text-muted: #9a9a9a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,157,0,0.15), transparent 55%),
+        #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 3rem 2.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      backdrop-filter: blur(25px);
+      box-shadow: 0 40px 120px rgba(0,0,0,.9);
+      text-align: center;
+    }
+
+    .logo {
+      width: 64px;
+      margin-bottom: 1.25rem;
+      filter: drop-shadow(0 0 18px rgba(255,157,0,.45));
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: .4rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: .95rem;
+      margin-bottom: 2.2rem;
+    }
+
+    /* Toggle */
+    .auth-tabs {
+      display: flex;
+      background: rgba(255,255,255,.06);
+      border-radius: 999px;
+      padding: 4px;
+      margin-bottom: 2rem;
+    }
+
+    .tab {
+      flex: 1;
+      padding: .6rem 0;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 700;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .tab.active {
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 0 20px rgba(255,157,0,.6);
+    }
+
+    /* Inputs */
+    input {
+      width: 100%;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1.1rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      color: #fff;
+      font-size: .95rem;
+    }
+
+    input::placeholder {
+      color: #777;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,157,0,.15);
+    }
+
+    /* Buttons */
+    .primary-btn {
+      width: 100%;
+      padding: 1.1rem;
+      border-radius: 18px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: .5rem;
+      box-shadow: 0 10px 30px rgba(255,157,0,.45);
+      transition: .25s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(255,157,0,.65);
+    }
+
+    .forgot {
+      display: block;
+      margin-top: 1.2rem;
+      font-size: .8rem;
+      color: #777;
+      text-decoration: none;
+    }
+
+    .divider {
+      margin: 2rem 0 1.2rem;
+      font-size: .7rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .social-btn {
+      width: 100%;
+      padding: .95rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: .8rem;
+      transition: .25s;
+    }
 
 <head>
   <meta charset="UTF-8" />
@@ -234,7 +395,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Academy Access | 100 Days of Web Dev</title>
 
+    .social-btn:hover {
+      background: rgba(255,255,255,.12);
+    }
 
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
   <link rel="stylesheet" href="../styles/index.css" />
   <link rel="stylesheet" href="../styles/pages/auth-card.css" />
 </head>
@@ -301,43 +472,22 @@
       <button type="submit" class="btn-primary">Create Academy ID</button>
     </form>
 
-    <div class="auth-divider">External Links</div>
-
-    <div class="external-auth-grid">
-      <button class="social-btn google" onclick="signInWithGoogle()">
-        <span class="social-icon">
-          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
-        </span>
-        <span>Google</span>
-      </button>
-
-      <button class="social-btn github" onclick="signInWithGitHub()">
-        <span class="social-icon">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-          </svg>
-        </span>
-        <span>GitHub</span>
-      </button>
-    </div>
-
-    =======
-    <div class="logo-header">
-      <img src="../assets/images/logo.png" alt="Academy Logo" class="login-logo-img" />
-      <h1 id="auth-title">Welcome Back</h1>
-      <p class="subtext" id="auth-subtext">Authorized personnel only.</p>
-    </div>
+  <div class="auth-card">
+    <img src="../assets/images/logo.png" class="logo" />
+    <h1 id="title">Welcome Back</h1>
+    <p class="subtitle" id="subtitle">Authorized personnel only.</p>
 
     <div class="auth-tabs">
-      <button class="tab-btn active" onclick="switchTab('login')">
-        Login
-      </button>
-      <button class="tab-btn" onclick="switchTab('register')">
-        Register
-      </button>
+      <button class="tab active" id="loginTab" onclick="switchTab('login')">Login</button>
+      <button class="tab" id="registerTab" onclick="switchTab('register')">Register</button>
     </div>
 
+    <!-- LOGIN -->
+    <form id="loginForm" onsubmit="handleEmailLogin(event)">
+      <input type="email" placeholder="Email Address" required />
+      <input type="password" placeholder="Access Code" required />
+      <button class="primary-btn">Join Now</button>
+      <a href="#" class="forgot">Forgot Access Code?</a>
     <form id="login-form" onsubmit="handleAuth(event, 'login')">
       <div class="form-group">
 
@@ -718,32 +868,53 @@ window.handleAuth = async (event, mode) => {
             ">Forgot Access Code?</a>
     </form>
 
-    <form id="register-form" class="hidden" onsubmit="handleAuth(event, 'register')">
-      <div class="form-group">
-        <input type="text" class="form-input" placeholder="Full Name" required />
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-input" placeholder="Academy Email" required />
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-input" placeholder="New Access Code" required />
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-input" placeholder="Confirm Access Code" required />
-      </div>
-      <button type="submit" class="btn-primary">Create Academy ID</button>
+    <!-- REGISTER -->
+    <form id="registerForm" class="hidden" onsubmit="handleEmailLogin(event)">
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Academy Email" required />
+      <input type="password" placeholder="New Access Code" required />
+      <button class="primary-btn">Create Academy ID</button>
     </form>
 
-    <div class="auth-divider">External Links</div>
+    <div class="divider">External Links</div>
 
-    <div class="external-auth-grid">
-      <button class="social-btn google" onclick="signInWithGoogle()">
-        <span class="social-icon">
-          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
-        </span>
-        <span>Google</span>
-      </button>
+    <button class="social-btn" onclick="handleLogin('google')">Continue with Google</button>
+    <button class="social-btn" onclick="handleLogin('github')">Continue with GitHub</button>
+  </div>
 
+  <!-- EXISTING AUTH LOGIC -->
+  <script src="../scripts/auth/guard.js"></script>
+  <script src="../scripts/auth/service.js"></script>
+
+  <script>
+    function switchTab(type) {
+      const login = document.getElementById("loginForm");
+      const register = document.getElementById("registerForm");
+      const title = document.getElementById("title");
+      const sub = document.getElementById("subtitle");
+      const loginTab = document.getElementById("loginTab");
+      const registerTab = document.getElementById("registerTab");
+
+      loginTab.classList.remove("active");
+      registerTab.classList.remove("active");
+
+      if (type === "login") {
+        login.classList.remove("hidden");
+        register.classList.add("hidden");
+        title.innerText = "Welcome Back";
+        sub.innerText = "Authorized personnel only.";
+        loginTab.classList.add("active");
+      } else {
+        login.classList.add("hidden");
+        register.classList.remove("hidden");
+        title.innerText = "Join Academy";
+        sub.innerText = "Create your developer identity.";
+        registerTab.classList.add("active");
+      }
+    }
+  </script>
+
+</body>
 
         <button class="social-btn github">
           <svg aria-hidden="true" focusable="false" class="octicon octicon-mark-github" viewBox="0 0 24 24" width="32" height="32" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom">
