@@ -1,5 +1,4 @@
 
-// ===== CONFIGURATION CONSTANTS =====
 const TIMER_CONFIG = {
     easy: 20,
     medium: 15,
@@ -116,7 +115,7 @@ if (document.readyState === "loading") {
 } else {
     if (validateDOM()) initializeEventListeners();
 }
-=======
+
         // ===== CONFIGURATION CONSTANTS =====
         const TIMER_CONFIG = {
             easy: 20,

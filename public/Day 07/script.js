@@ -38,12 +38,82 @@ function addExpense(name, amount, category) {
     updateTotal();
 }
 
+limitAmountEl.textContent = MONTHLY_LIMIT;
+
+/* Edit limit */
+limitAmountEl.onclick = () => {
+  const value = Number(prompt("Edit monthly limit:", MONTHLY_LIMIT));
+  if (!value || value <= 0) return;
+  MONTHLY_LIMIT = value;
+  localStorage.setItem("monthlyLimit", MONTHLY_LIMIT);
+  limitAmountEl.textContent = MONTHLY_LIMIT;
+  render();
+};
+
+/* Modal controls */
+openBtn.onclick = () => modal.classList.add("show");
+cancelBtn.onclick = () => modal.classList.remove("show");
+
+/* Add expense */
+addBtn.onclick = () => {
+  const desc = descInput.value.trim();
+  const amt = Number(amountInput.value);
+  const cat = categoryInput.value;
+  const date = dateInput.value;
+
+  if (!desc || amt <= 0 || isNaN(amt)) return;
+
+  expenses.push({ desc, amount: amt, category: cat, date: date });
+  descInput.value = "";
+  amountInput.value = "";
+  dateInput.value = "";
+  modal.classList.remove("show");
+
+  render();
+};
+
+/* Render everything */
+function render() {
+  expenseList.innerHTML = "";
+
+  let total = 0;
+  let catTotals = { : 0, shopping: 0, travel: 0, health: 0 };
+
+  expenses.forEach(e => {
+    total += e.amount;
+    catTotals[e.category] += e.amount;
+
+    const div = document.createElement("div");
+    div.className = "expense-item";
+    div.innerHTML = `
+      <div>
+        <div>${e.desc}</div>
+        <small style="color: #6b7280; font-size: 12px;">${e.date ? formatDate(e.date) : ''}</small>
+      </div>
+      <strong>₹${e.amount.toFixed(2)}</strong>
+    `;
+    expenseList.appendChild(div);
+  });
+
+  totalEl.textContent = `Total Expense: ₹${total.toFixed(2)}`;
+  expenseAmount.textContent = `₹${total.toFixed(0)}`;
+
+  foodTotalEl.textContent = `₹${catTotals.food}`;
+  shoppingTotalEl.textContent = `₹${catTotals.shopping}`;
+  travelTotalEl.textContent = `₹${catTotals.travel}`;
+  healthTotalEl.textContent = `₹${catTotals.health}`;
+
+  updateRing(catTotals, total);
+  warning.style.display = total > MONTHLY_LIMIT ? "block" : "none";
+=======
+
 // Delete expense
 function deleteExpense(id) {
     expenses = expenses.filter(expense => expense.id !== id);
     saveExpenses();
     renderExpenses();
     updateTotal();
+
 }
 
 // Render expenses list

@@ -209,6 +209,10 @@ class FileUploader {
         } catch {
             this.showToast('Unable to save files. Storage may be full.', 'error');
 
+            localStorage.setItem('fileUploaderData', JSON.stringify(this.files));
+        } catch {
+            this.showToast('Unable to save files. Storage may be full.', 'error');
+
             // Store only essential data (files are stored as DataURLs)
             const data = {
                 files: this.files.map(file => ({
@@ -225,12 +229,17 @@ class FileUploader {
         } catch (e) {
             this.showToast('Error saving files (localStorage full?)', 'error');
 
+
         }
     }
 
     loadFromLocalStorage() {
         try {
             const data = localStorage.getItem('fileUploaderData');
+
+            if (data) this.files = JSON.parse(data) || [];
+        } catch {
+
 
             if (data) this.files = JSON.parse(data) || [];
         } catch {
@@ -249,6 +258,7 @@ class FileUploader {
                 }
             }
         } catch (e) {
+
 
             localStorage.removeItem('fileUploaderData');
             this.files = [];
