@@ -1,79 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Product Page</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce product page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asimovian&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <header class="navbar">
+        <div class="logo">AuraSound</div>
+        <nav class="nav-links">
+            <a href="#hero-section">Home</a>
+            <a href="#features-section">Features</a>
+            <a href="#gallery-section">Gallery</a>
+            <a href="#reviews-section">Reviews</a>
+            <button class="btn nav-btn">Buy Now</button>
+        </nav>
+    </header>
 
-  <main class="container">
+    <main>
+        <section id="hero-section">
+            <div class="hero-content">
+                <h1>AuraSound Wireless Headphone</h1>
+                <p>Experience immersive, high-fidelity audio with industry-leading noise cancellation.</p>
+                <button class="btn hero-btn">Buy Now</button>
+            </div>
+            <div class="hero-image">
+                <img src="images/edit1.png" alt="AuraSound wireless headphones" width="500" height="500" style="float: right;">
+            </div>
+        </section>
 
-    <section class="product">
+        <section id="features-section">
+            <h2>Product Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-wave-square"></i>
+                    <h3>High-Fidelity Audio</h3>
+                    <p>Hear every detail with custom-tuned drivers for rich, deep bass and crystal-clear highs.</p>
+                </div>
+                 <div class="feature-item">
+                    <i class="fas fa-ear-listen"></i>
+                    <h3>Noise Cancellation</h3>
+                    <p>Block out the world and focus on your music with our advanced active noise cancellation.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-battery-full"></i>
+                    <h3>All-Day Battery</h3>
+                    <p>Enjoy up to 40 hours of playtime on a single charge, keeping you powered all day.</p>
+                </div>
+                 <div class="feature-item">
+                    <i class="fab fa-bluetooth-b"></i>
+                    <h3>Seamless Connectivity</h3>
+                    <p>Connect instantly and switch between devices with the latest Bluetooth 5.3 technology.</p>
+                </div>
+            </div>
+        </section>
 
-      <!-- Left: Product Selector -->
-      <div class="product-images">
-        <img id="mainImage" src="images/headphones.png" alt="Product" />
+         <section id="gallery-section">
+            <h2 style="text-align: center;">Gallery</h2>
+            <div class="gallery-images">
+                <img src="images/edit1.png" alt="Headphones front view" width="200" height="200">
+                <img src="images/edit2.png" alt="Headphones side view" width="200" height="200">
+                <img src="images/edit3.jpg" alt="Headphones folded" width="200" height="200">
+            </div>
+        </section>
 
-        <div class="thumbnails">
-          <img src="images/headphones.png" data-id="0" class="active" />
-          <img src="images/earphones.png" data-id="1" />
-          <img src="images/airpods.png" data-id="2" />
+         <section id="reviews-section">
+            <h2 style="text-align:center ;">Customer Reviews</h2>
+            <div class="review-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"The noise cancellation on the AuraSound is a game-changer for my commute. Incredibly comfortable too!"</p>
+                <span class="reviewer-name">Priya</span>
+            </div>
+        </section>
+    </main>
+
+     <footer id="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">AuraSound</div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
-      </div>
-
-      <!-- Right: Product Info -->
-      <div class="product-info">
-        <h1 id="title">Wireless Headphones</h1>
-
-        <p class="price">
-          ₹<span id="price">2999</span>
-          <span class="original" id="originalPrice">₹3999</span>
-        </p>
-
-        <p class="rating">⭐ <span id="rating">4.4</span> (128 reviews)</p>
-
-        <div class="quantity">
-          <button id="decrease">−</button>
-          <span id="qty">1</span>
-          <button id="increase">+</button>
-        </div>
-
-        <button id="addToCart">Add to Cart</button>
-        <a href="cart.html" class="back-link">View Cart</a>
-      </div>
-
-    </section>
-
-    <section class="description">
-      <h2>Description</h2>
-      <p id="description">
-        High-quality wireless headphones with noise cancellation and long battery life.
-      </p>
-    </section>
-
-    <section class="related">
-  <h2>Related Products</h2>
-
-  <div class="related-grid">
-    <div class="related-card">
-      <img src="images/earphones.png" />
-      <p>Wired Earphones</p>
-      <span>₹999</span>
-    </div>
-
-    <div class="related-card">
-      <img src="images/airpods.png" />
-      <p>Bluetooth AirPods</p>
-      <span>₹1999</span>
-    </div>
-  </div>
-</section>
-
-<a href="cart.html" class="back-link">View Cart</a>
-
-  </main>
-
-  <script src="script.js"></script>
+    </footer>
+    
 </body>
 </html>
