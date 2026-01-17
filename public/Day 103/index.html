@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>README Toolkit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h1>📘 README</h1>
+
+      <nav>
+        <button class="nav-item active">Generator</button>
+        <button class="nav-item">Badges</button>
+        <button class="nav-item">GitHub Import</button>
+        <button class="nav-item">Templates</button>
+        <button class="nav-item">Export</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="themeToggle" class="icon-btn">🌙</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="workspace">
+      <!-- EDITOR -->
+      <section class="editor">
+        <h2>README Generator</h2>
+
+        <h3>GitHub Import</h3>
+        <input id="githubUser" placeholder="GitHub Username" />
+        <input id="githubRepo" placeholder="Repository Name" />
+        <button onclick="importFromGitHub()">Import from GitHub</button>
+
+        <h3>Badges</h3>
+                    <div class="checkbox-group">
+            <label>
+                <input type="checkbox" value="license" checked />
+                <span>License</span>
+            </label>
+
+            <label>
+                <input type="checkbox" value="stars" checked />
+                <span>Stars</span>
+            </label>
+
+            <label>
+                <input type="checkbox" value="forks" />
+                <span>Forks</span>
+            </label>
+
+            <label>
+                <input type="checkbox" value="html" />
+                <span>HTML</span>
+            </label>
+
+            <label>
+                <input type="checkbox" value="css" />
+                <span>CSS</span>
+            </label>
+
+            <label>
+                <input type="checkbox" value="js" />
+                <span>JavaScript</span>
+            </label>
+            </div>
+
+
+        <hr />
+
+        <input id="title" placeholder="Project Title" />
+        <textarea id="description" placeholder="Project Description"></textarea>
+        <textarea id="features" placeholder="Features (one per line)"></textarea>
+        <input id="tech" placeholder="Tech Stack (comma separated)" />
+        <textarea id="install" placeholder="Installation Steps"></textarea>
+        <textarea id="usage" placeholder="Usage Instructions"></textarea>
+        <input id="license" placeholder="License (MIT, GPL, etc.)" />
+        <input id="author" placeholder="Author / GitHub Username" />
+
+        <div class="btn-group">
+          <button class="primary" onclick="generateREADME()">Generate</button>
+          <button onclick="loadTemplate()">Template</button>
+        </div>
+
+        <div class="btn-group secondary">
+          <button onclick="copyREADME()">Copy</button>
+          <button onclick="downloadREADME()">Download</button>
+        </div>
+      </section>
+
+      <!-- PREVIEW -->
+      <section class="preview-panel">
+        <h2>Live Preview</h2>
+
+        <div class="score-box">
+            <div class="score-header">
+            <span>README Quality</span>
+            <strong id="scoreText">0%</strong>
+            </div>
+            <div class="score-bar">
+            <div id="scoreFill"></div>
+            </div>
+            <ul id="scoreChecklist"></ul>
+        </div>
+
+        <div id="preview" class="preview-empty">
+            <p>👋 Start by generating a README</p>
+            <p class="muted">Your markdown preview will appear here</p>
+        </div>
+        </section>
+
+    </main>
+  </div>
+
+  <script src="js/preview.js"></script>
+  <script src="js/badges.js"></script>
+  <script src="js/github.js"></script>
+  <script src="js/score.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/generator.js"></script>
+</body>
+</html>
