@@ -2,17 +2,36 @@ import { auth } from './firebase-config.js';
 import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Check if user is guest
-    const isGuest = localStorage.getItem('isGuest') === 'true';
-    const guestBanner = document.getElementById('guestBanner');
-    
-    // Show guest banner if in guest mode
-    if (isGuest && guestBanner) {
-        guestBanner.style.display = 'block';
-    }
+    // Check authentication with Firebase
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            window.location.href = 'login.html';
+            return;
+        }
 
-    // Projects data
-    const projects = [
+        // User is authenticated, initialize dashboard
+        initializeDashboard(user);
+    });
+
+    function initializeDashboard(user) {
+        // Set user name
+        const userNameElement = document.getElementById('userName');
+        userNameElement.textContent = user.email.split('@')[0];
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                localStorage.removeItem('completedDays');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        // Projects data
+        const projects = [
         // BEGINNER (Days 1-30) - Updated to match your actual Day XX folders
         { day: 1, title: "Animated Landing Page", folder: "Day 01", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
         { day: 2, title: "Advanced To-Do List", folder: "Day 02", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
@@ -65,6 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
     ];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+        // Load completed days from localStorage (keeping this for now, but could be moved to Firebase later)
+        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+=======
+=======
+>>>>>>> 5bcdac685b2eae0b3fd60319a1663ba165e7ec3a
     // Check authentication
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     const userEmail = localStorage.getItem('userEmail');
@@ -75,9 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Set user name - prioritize stored name (for Google/GitHub/Guest), fallback to email
     const userNameElement = document.getElementById('userName');
     if (userName) {
+<<<<<<< HEAD
+=======
         userNameElement.textContent = userName;
     } else if (userEmail) {
         userNameElement.textContent = userEmail.split('@')[0];
@@ -108,13 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update stats
     updateStats();
 
-    // Update heatmap stats
-    updateHeatmapStats();
-
     // Render recommendations
     renderRecommendations();
 
     function renderProgressGrid() {
+>>>>>>> 5bcdac685b2eae0b3fd60319a1663ba165e7ec3a
         const progressGrid = document.getElementById('progressGrid');
         progressGrid.innerHTML = '';
 
