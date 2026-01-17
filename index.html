@@ -1,1289 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>100 Days of Web Development | Command Center</title>
 
-    
-    <link rel="icon" type="image/png" href="website/assets/images/logo.png">
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Design System -->
+    <link rel="stylesheet" href="website/styles/index.css">
 
-
-    <link rel="icon" type="image/png" href="website/assets/images/logo.png">
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
 
-
-    <style>
-        :root {
-            /* Midnight Amber Palette */
-            --primary: #ff9d00;
-            --primary-glow: rgba(255, 157, 0, 0.4);
-            --bg: #000000;
-            --card-bg: #080808;
-            --nav-bg: rgba(5, 5, 5, 0.9);
-            --text: #ffffff;
-            --text-dim: #888888;
-            --border: #1a1a1a;
-            --success: #00ff88;
-            --danger: #ff4444;
-            --glass: rgba(255, 255, 255, 0.03);
-        }
-
-        /* --- Global Reset & Animations --- */
-
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 
-            0% { box-shadow: 0 0 0 0 rgba(255, 157, 0, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 157, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 157, 0, 0); }
-        }
-
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text); 
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 157, 0, 0.7);
-            }
-
-            70% {
-                box-shadow: 0 0 0 10px rgba(255, 157, 0, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 157, 0, 0);
-            }
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: background-color 0.3s, color 0.3s;
-
-        }
-
-        /* --- Global Scroll Controls --- */
-        .scroll-nav {
-
-            position: fixed; bottom: 40px; right: 40px;
-            display: flex; flex-direction: column; gap: 12px; z-index: 9999;
-        }
-
-        .scroll-btn {
-            width: 55px; height: 55px; background: var(--primary);
-            border: none; border-radius: 50%; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.3s;
-            font-size: 1.5rem; color: #000; font-weight: bold;
-        }
-
-        .scroll-btn:hover { transform: translateY(-5px) scale(1.1); background: #fff; }
-
-        /* --- Navigation Pill --- */
-        nav { 
-            display: flex; justify-content: center; padding: 2rem 0; 
-            position: fixed; width: 100%; top: 0; z-index: 1000;
-            transition: all 0.4s ease;
-        }
-        nav.scrolled { padding: 1.2rem 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(25px); }
-
-        .nav-container {
-            background: var(--nav-bg); padding: 0.7rem 2.5rem;
-            border-radius: 100px; border: 1px solid var(--border);
-            display: flex; align-items: center; gap: 2.5rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
-        .nav-container a { 
-            text-decoration: none; color: var(--text-dim); 
-            font-weight: 700; font-size: 0.8rem; transition: 0.3s; 
-            text-transform: uppercase; letter-spacing: 1.5px;
-        }
-        .nav-container a:hover { color: var(--primary); }
-        .active-link { color: var(--primary) !important; text-shadow: 0 0 10px var(--primary-glow); }
-
-          
-        .scroll-btn {
-            width: 55px;
-            height: 55px;
-            background: var(--primary);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            transition: 0.3s;
-            font-size: 1.5rem;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .scroll-btn:hover {
-            transform: translateY(-5px) scale(1.1);
-            background: #fff;
-        }
-
-        /* --- Navigation Pill --- */
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 2rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.4s ease;
-        }
-
-        /* UPDATED: Uses variable so it works in light mode too */
-        nav.scrolled {
-            padding: 1.2rem 0;
-            background: var(--nav-bg);
-            backdrop-filter: blur(25px);
-        }
-
-        .nav-container {
-            background: var(--nav-bg);
-            padding: 0.7rem 2.5rem;
-            border-radius: 100px;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            transition: background 0.3s, border 0.3s;
-        }
-
-        .nav-container a {
-            text-decoration: none;
-            color: var(--text-dim);
-            font-weight: 700;
-            font-size: 0.8rem;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .nav-container a:hover {
-            color: var(--primary);
-        }
-
-        .active-link {
-            color: var(--primary) !important;
-            text-shadow: 0 0 10px var(--primary-glow);
-        }
-
-        /* --- Hero Command Center --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            padding-top: 100px;
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #1a1000 0%, transparent 70%);
-            z-index: -1;
-            opacity: 0.4;
-        }
-
-        .hero-box {
-            max-width: 1100px;
-            padding: 0 2rem;
-            animation: fadeIn 1.2s ease;
-        }
-
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255, 157, 0, 0.08);
-            border: 1px solid var(--primary);
-            padding: 10px 20px;
-            border-radius: 50px;
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 0.7rem;
-            letter-spacing: 2.5px;
-            margin-bottom: 2.5rem;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        h1 {
-            font-size: clamp(3.5rem, 10vw, 7rem);
-            line-height: 0.9;
-            font-weight: 800;
-            letter-spacing: -5px;
-            margin-bottom: 2rem;
-        }
-
-        .highlight {
-            color: var(--primary);
-            text-shadow: 0 0 50px var(--primary-glow);
-        }
-
-        /* --- Terminal Emulator --- */
-        .dev-console {
-            background: #050505;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            max-width: 650px;
-            margin: 3rem auto;
-            text-align: left;
-            overflow: hidden;
-            font-family: 'JetBrains Mono', monospace;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-        }
-
-        .console-header {
-            background: #111;
-            padding: 12px 18px;
-            display: flex;
-            gap: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .c-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .console-body {
-            padding: 25px;
-            color: var(--success);
-            font-size: 0.9rem;
-            height: 150px;
-            line-height: 1.8;
-        }
-
-        /* --- Dashboard Grid --- */
-        .container {
-            padding: 5rem 10%;
-            max-width: 1500px;
-            margin: auto;
-        }
-
-        .dashboard {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2.5rem;
-            margin-top: -120px;
-            position: relative;
-            z-index: 50;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 3.5rem;
-            backdrop-filter: blur(15px);
-            position: relative;
-            transition: background 0.3s, border 0.3s;
-        }
-
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .metrics h3 {
-            font-size: 4rem;
-            font-weight: 800;
-            letter-spacing: -2px;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .metrics p {
-            color: var(--text-dim);
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* --- Security Gates (Locked Content) --- */
-        .vault-item {
-            position: relative;
-            overflow: hidden;
-            transition: 0.4s;
-        }
-
-        .lock-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: 0.4s;
-            z-index: 10;
-            border-radius: 24px;
-        }
-
-        .vault-item:hover .lock-overlay {
-            opacity: 1;
-            cursor: pointer;
-        }
-
-        .lock-btn {
-            margin-top: 15px;
-            background: var(--primary);
-            border: none;
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-weight: 800;
-            color: #000;
-            cursor: pointer;
-        }
-
-        /* --- Progress Tracking --- */
-        .progress-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            font-weight: 800;
-            font-size: 0.85rem;
-        }
-
-        .track-outer {
-            width: 100%;
-            height: 14px;
-            background: #111;
-            border-radius: 50px;
-            overflow: hidden;
-            border: 1px solid #222;
-        }
-
-        .track-inner {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--primary), #ffc400);
-            box-shadow: 0 0 30px var(--primary-glow);
-            transition: 2.5s cubic-bezier(0.2, 1, 0.3, 1);
-        }
-
-        /* --- Project Compendium --- */
-        .project-section {
-            margin-top: 12rem;
-        }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 2.5rem;
-            border-radius: 28px;
-            position: relative;
-            transition: 0.5s;
-        }
-
-        .project-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-10px);
-        }
-
-        /* --- Roadmap Path --- */
-        .path-container {
-            position: relative;
-            padding-left: 50px;
-            border-left: 3px solid var(--border);
-            margin-top: 4rem;
-        }
-
-        .path-node {
-            position: relative;
-            margin-bottom: 5rem;
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-        }
-
-        .node-dot {
-            position: absolute;
-            left: -63px;
-            top: 40px;
-            width: 24px;
-            height: 24px;
-            background: var(--bg);
-            border: 4px solid var(--border);
-            border-radius: 50%;
-            z-index: 5;
-        }
-
-        .path-node.active .node-dot {
-            border-color: var(--primary);
-            background: var(--primary);
-            box-shadow: 0 0 20px var(--primary);
-        }
-
-        /* --- Footer Architecture --- */
-        footer {
-            padding: 6rem 10%;
-            border-top: 1px solid var(--border);
-            background: var(--card-bg);
-            /* UPDATED: Uses variable to switch to white in Light Mode */
-            margin-top: 10rem;
-            transition: background 0.3s ease;
-        }
-
-        .f-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 5rem;
-        }
-
-        .f-brand h4 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-        }
-
-        .f-links h5 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-        }
-
-        .f-links ul {
-            list-style: none;
-        }
-
-        .f-links li {
-            margin-bottom: 12px;
-        }
-
-        .f-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .f-links a:hover {
-            color: var(--primary);
-            padding-left: 8px;
-        }
-
-        @media (max-width: 1100px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-
-            .f-grid {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 4.5rem;
-            }
-        }
-
-        /* --- Theme Variables & Styles --- */
-        body.light-mode {
-            --bg: #ffffff;
-            --card-bg: #f8f9fa;
-            --nav-bg: rgba(255, 255, 255, 0.9);
-            --text: #121212;
-            --text-dim: #555555;
-            --border: #e0e0e0;
-            --glass: rgba(0, 0, 0, 0.03);
-        }
-
-        .theme-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text);
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
-            transform: translateY(-2px);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 5rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            /* UPDATED: Uses variable to be readable in Light Mode */
-        }
-
-        /* ========================= */
-        /* 📱 MOBILE OPTIMIZATION */
-        /* ========================= */
-
-        @media (max-width: 768px) {
-
-            /* --- NAVBAR --- */
-            nav {
-                padding: 1rem 0;
-            }
-
-            .nav-container {
-                padding: 0.6rem 1.2rem;
-                gap: 1.2rem;
-                border-radius: 24px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .nav-container a {
-                font-size: 0.65rem;
-                letter-spacing: 1px;
-            }
-
-            .theme-btn {
-                padding: 6px 8px;
-                font-size: 1rem;
-            }
-
-            /* --- HERO --- */
-            .hero {
-                height: auto;
-                min-height: 100vh;
-                padding-top: 120px;
-                padding-bottom: 4rem;
-            }
-
-            h1 {
-                font-size: clamp(2.2rem, 8vw, 3.2rem);
-                letter-spacing: -2px;
-            }
-
-            .hero-box p {
-                font-size: 0.9rem;
-                padding: 0 1rem;
-            }
-
-            /* --- TERMINAL --- */
-            .dev-console {
-                max-width: 100%;
-                margin: 2rem 0;
-            }
-
-            .console-body {
-                font-size: 0.8rem;
-                height: auto;
-                min-height: 120px;
-            }
-
-            /* --- DASHBOARD --- */
-            .container {
-                padding: 4rem 1.2rem;
-            }
-
-            .dashboard {
-                grid-template-columns: 1fr;
-                margin-top: -60px;
-            }
-
-            .stat-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .metrics {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .metrics h3 {
-                font-size: 2.8rem;
-            }
-
-            /* --- PROJECTS GRID --- */
-            .grid-layout {
-                grid-template-columns: 1fr;
-            }
-
-            /* --- PATH --- */
-            .path-container {
-                padding-left: 30px;
-            }
-
-            .node-dot {
-                left: -45px;
-            }
-
-            /* --- FOOTER --- */
-            footer {
-                padding: 4rem 1.5rem;
-            }
-
-            .f-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            /* --- SCROLL BUTTONS --- */
-            .scroll-nav {
-                right: 16px;
-                bottom: 16px;
-            }
-
-            .scroll-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 1.2rem;
-            }
-
-            .scroll-nav {
-                display: none;
-            }
-        }
-
-        /* ========================= */
-        /* 📱 EXTRA SMALL DEVICES */
-        /* ========================= */
-
-        @media (max-width: 420px) {
-
-            .nav-container {
-                gap: 0.8rem;
-            }
-
-            .nav-container a {
-                font-size: 0.6rem;
-            }
-
-            h1 {
-                font-size: 2.1rem;
-            }
-
-            .status-pill {
-                font-size: 0.6rem;
-                padding: 8px 14px;
-            }
-
-            .lock-btn {
-                padding: 14px 28px !important;
-                font-size: 0.85rem !important;
-            }
-        }
-
-        /* ========================= */
-        /* 📱 MOBILE BOTTOM NAV */
-        /* ========================= */
-
-        .mobile-nav {
-            display: none;
-        }
-
-        .mobile-top-utils {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-
-            nav#navbar {
-                display: none;
-            }
-
-            .mobile-nav {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-
-                height: 72px;
-                background: var(--nav-bg);
-
-
-                backdrop-filter: blur(22px);
-
-                border-top: 1px solid var(--border);
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-
-                z-index: 2500;
-            }
-
-            .mobile-link {
-                flex: 1;
-                text-align: center;
-                text-decoration: none;
-                color: var(--text-dim);
-
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 4px;
-
-                font-size: 0.65rem;
-                transition: 0.3s ease;
-            }
-
-            .mobile-link span {
-                font-size: 1.4rem;
-            }
-
-            .mobile-link.active {
-                color: var(--primary);
-                text-shadow: 0 0 14px var(--primary-glow);
-            }
-
-            body {
-                padding-bottom: 88px;
-            }
-
-            .mobile-util {
-                background: transparent;
-                border: none;
-                color: var(--text-dim);
-                font-size: 1.1rem;
-                cursor: pointer;
-                transition: 0.25s ease;
-            }
-
-            .mobile-util:hover {
-                color: var(--primary);
-                transform: translateY(-2px);
-            }
-
-            .mobile-util.login {
-                text-decoration: none;
-            }
-
-            .mobile-top-utils {
-                position: fixed;
-                top: 16px;
-                right: 16px;
-                display: flex;
-                gap: 10px;
-                z-index: 3000;
-            }
-
-            .mobile-util-btn {
-                width: 42px;
-                height: 42px;
-                border-radius: 50%;
-                background: rgba(5, 5, 5, 0.85);
-                backdrop-filter: blur(12px);
-                border: 1px solid var(--border);
-                color: var(--text);
-                font-size: 1.1rem;
-                cursor: pointer;
-                transition: 0.25s ease;
-            }
-
-            .mobile-util-btn:hover {
-                color: var(--primary);
-                box-shadow: 0 0 12px var(--primary-glow);
-            }
-
-            nav.mobile-nav {
-                top: auto !important;
-                bottom: 0 !important;
-            }
-
-            .mobile-login-btn {
-                padding: 10px 16px;
-                border-radius: 999px;
-                background: var(--primary);
-                color: #000;
-                font-weight: 800;
-                font-size: 0.75rem;
-                text-decoration: none;
-                letter-spacing: 1px;
-                box-shadow: 0 0 14px var(--primary-glow);
-            }
-
-            .mobile-login-btn {
-                padding: 10px 18px;
-                border-radius: 999px;
-                background: var(--primary);
-                color: #000;
-                font-weight: 800;
-                font-size: 0.7rem;
-                letter-spacing: 1.5px;
-                text-decoration: none;
-                box-shadow: 0 0 14px var(--primary-glow);
-                transition: 0.25s ease;
-            }
-
-            .mobile-login-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 0 20px var(--primary-glow);
-            }
-        }
-
-        .section-anchor {
-            position: relative;
-            top: -40vh;
-            height: 1px;
-        }
-
-
-        /* --- Hero Command Center --- */
-        .hero { 
-            height: 100vh; display: flex; align-items: center; justify-content: center; 
-            text-align: center; position: relative; padding-top: 100px;
-        }
-        .hero::after {
-            content: ""; position: absolute; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a1000 0%, transparent 70%);
-            z-index: -1; opacity: 0.4;
-        }
-        .hero-box { max-width: 1100px; padding: 0 2rem; animation: fadeIn 1.2s ease; }
-        
-        .status-pill {
-            display: inline-flex; align-items: center; gap: 12px;
-            background: rgba(255, 157, 0, 0.08); border: 1px solid var(--primary);
-            padding: 10px 20px; border-radius: 50px; color: var(--primary);
-            font-weight: 800; font-size: 0.7rem; letter-spacing: 2.5px; margin-bottom: 2.5rem;
-        }
-        .status-dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 2s infinite; }
-
-        h1 { font-size: clamp(3.5rem, 10vw, 7rem); line-height: 0.9; font-weight: 800; letter-spacing: -5px; margin-bottom: 2rem; }
-        .highlight { color: var(--primary); text-shadow: 0 0 50px var(--primary-glow); }
-
-        /* --- Terminal Emulator --- */
-        .dev-console {
-            background: #050505; border: 1px solid var(--border); border-radius: 14px;
-            max-width: 650px; margin: 3rem auto; text-align: left; overflow: hidden;
-            font-family: 'JetBrains Mono', monospace; box-shadow: 0 30px 60px rgba(0,0,0,0.7);
-        }
-        .console-header { background: #111; padding: 12px 18px; display: flex; gap: 10px; border-bottom: 1px solid var(--border); }
-        .c-dot { width: 12px; height: 12px; border-radius: 50%; }
-        .console-body { padding: 25px; color: var(--success); font-size: 0.9rem; height: 150px; line-height: 1.8; }
-
-        /* --- Dashboard Grid --- */
-        .container { padding: 5rem 10%; max-width: 1500px; margin: auto; }
-        .dashboard { display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; margin-top: -120px; position: relative; z-index: 50; }
-        
-        .stat-card { 
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 3.5rem;
-            backdrop-filter: blur(15px); position: relative;
-        }
-        .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; text-align: center; margin-bottom: 4rem; }
-        .metrics h3 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 10px; }
-        .metrics p { color: var(--text-dim); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; }
-
-        /* --- Security Gates (Locked Content) --- */
-        .vault-item { position: relative; overflow: hidden; transition: 0.4s; }
-        .lock-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; transition: 0.4s; z-index: 10; border-radius: 24px;
-        }
-        .vault-item:hover .lock-overlay { opacity: 1; cursor: pointer; }
-        .lock-btn { 
-            margin-top: 15px; background: var(--primary); border: none; padding: 10px 25px; 
-            border-radius: 50px; font-weight: 800; color: #000; cursor: pointer;
-        }
-
-        /* --- Progress Tracking --- */
-        .progress-meta { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 800; font-size: 0.85rem; }
-        .track-outer { width: 100%; height: 14px; background: #111; border-radius: 50px; overflow: hidden; border: 1px solid #222; }
-        .track-inner { 
-            height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), #ffc400); 
-            box-shadow: 0 0 30px var(--primary-glow); transition: 2.5s cubic-bezier(0.2, 1, 0.3, 1);
-        }
-
-        /* --- Project Compendium --- */
-        .project-section { margin-top: 12rem; }
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
-        .project-card { 
-            background: var(--card-bg); border: 1px solid var(--border); padding: 2.5rem; 
-            border-radius: 28px; position: relative; transition: 0.5s;
-        }
-        .project-card:hover { border-color: var(--primary); transform: translateY(-10px); }
-
-        /* --- Roadmap Path --- */
-        .path-container { position: relative; padding-left: 50px; border-left: 3px solid var(--border); margin-top: 4rem; }
-        .path-node { position: relative; margin-bottom: 5rem; background: var(--card-bg); padding: 2.5rem; border-radius: 24px; border: 1px solid var(--border); }
-        .node-dot { 
-            position: absolute; left: -63px; top: 40px; width: 24px; height: 24px; 
-            background: var(--bg); border: 4px solid var(--border); border-radius: 50%; z-index: 5;
-        }
-        .path-node.active .node-dot { border-color: var(--primary); background: var(--primary); box-shadow: 0 0 20px var(--primary); }
-
-        /* --- Footer Architecture --- */
-        footer { padding: 6rem 10%; border-top: 1px solid var(--border); background: #020202; margin-top: 10rem; }
-        .f-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 5rem; }
-        .f-brand h4 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem; }
-        .f-links h5 { color: var(--primary); margin-bottom: 1.5rem; letter-spacing: 2px; font-size: 0.9rem; }
-        .f-links ul { list-style: none; }
-        .f-links li { margin-bottom: 12px; }
-        .f-links a { color: var(--text-dim); text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
-        .f-links a:hover { color: var(--primary); padding-left: 8px; }
-
-        @media (max-width: 1100px) {
-            .dashboard { grid-template-columns: 1fr; }
-            .f-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 4.5rem; }
-        }
-
-     body.light-mode {
-  --bg: #ffffff;
-  --card-bg: #f8f9fa;
-  --nav-bg: rgba(255, 255, 255, 0.9);
-  --text: #121212;
-  --text-dim: #555555;
-  --border: #e0e0e0;
-}
-   
-    </style>
+    <link rel="icon" type="image/png" href="website/assets/images/logo.png">
 </head>
+
 <body>
-
-    <!-- 📱 Mobile Top Utilities -->
-    <div class="mobile-top-utils">
-        <button id="mobile-theme-toggle-top" class="mobile-util-btn">☀️</button>
-        <a href="website/pages/login.html" class="mobile-login-btn">Login Portal</a>
-
-    </div>
-
-    <div class="scroll-nav">
-        <button class="scroll-btn" onclick="window.scrollTo(0,0)">▲</button>
-        <button class="scroll-btn" onclick="window.scrollTo(0, document.body.scrollHeight)">▼</button>
-    </div>
-
-    <nav id="navbar">
+    <!-- Navbar -->
+    <header class="site-header">
         <div class="nav-container">
-            <a href="#command" class="nav-link active-link">Command</a>
-            <a href="#vault" class="nav-link">Learning</a>
-            <a href="#path" class="nav-link">Path</a>
-            <a href="website/pages/login.html" style="color:var(--primary)">Login Portal</a>
-            <button id="theme-toggle" class="theme-btn">☀️</button>
-        </div>
-    </nav>
+            <a href="#" class="nav-logo">
+                <img src="website/assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
+            </a>
 
+            <nav class="nav-links">
+                <a href="#" class="nav-link active">Home</a>
+                <a href="website/pages/projects.html" class="nav-link">Projects</a>
+                <a href="website/pages/about.html" class="nav-link">About</a>
+                <a href="website/pages/contributors.html" class="nav-link">Contributors</a>
+            </nav>
 
-    <header class="hero" id="command">
-        <div class="hero-box">
-            <div class="status-pill">
-                <div class="status-dot"></div> PROTOCOL 100-WD: ACTIVE
+            <div class="nav-user">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
+                <a href="website/pages/dashboard.html" class="btn btn-primary text-sm">Dashboard</a>
+
+                <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
             </div>
-            <h1>The Art of <br><span class="highlight">Web Engineering</span></h1>
-            <p>Deploying 100 targeted modules to bridge the gap between frontend logic and full-stack architecture.</p>
-
-            <div class="dev-console">
-                <div class="console-header">
-                    <div class="c-dot" style="background:#ff5f56"></div>
-                    <div class="c-dot" style="background:#ffbd2e"></div>
-                    <div class="c-dot" style="background:#27c93f"></div>
-                </div>
-                <div class="console-body" id="console-output"></div>
-            </div>
-
-            <a href="#vault" class="lock-btn" style="padding:18px 45px; font-size:1rem; text-decoration:none;">INITIATE
-                MODULES</a>
         </div>
     </header>
 
-    <div class="container">
-        <div class="dashboard">
-            <div class="stat-card">
-                <div class="metrics">
-                    <div class="metric-item">
-                        <h3 id="m-day">0</h3>
-                        <p>Global Day</p>
-                    </div>
-                    <div class="metric-item">
-                        <h3 id="m-streak" style="color:var(--primary)">0</h3>
-                        <p>Live Streak</p>
-                    </div>
-                    <div class="metric-item">
-                        <h3>100%</h3>
-                        <p>System Integrity</p>
-                    </div>
-                </div>
+    <main class="container section">
+        <!-- Hero Section -->
+        <section class="zenith-hero animate-enter">
+            <h1 class="hero-title">Forge Your Future<br>One Day at a Time</h1>
+            <p class="hero-subtitle">
+                Join the elite 100-day coding protocol. Master modern web development through rigorous daily deployment
+                cycles.
+            </p>
+            <div class="hero-actions">
+                <a href="website/pages/dashboard.html" class="btn-zenith-primary">Initialize Protocol</a>
+                <a href="website/pages/projects.html" class="btn-zenith-secondary">View Archive</a>
+            </div>
+        </section>
 
-                <div class="progress-container">
-                    <div class="progress-meta">
-                        <span>PROTOCOL SYNC STATUS</span>
-                        <span id="sync-label">0%</span>
-                    </div>
-                    <div class="track-outer">
-                        <div class="track-inner" id="sync-bar"></div>
-                    </div>
+        <!-- Features Grid -->
+        <section class="features-section animate-enter delay-100">
+            <div class="grid grid-3">
+                <div class="feature-card">
+                    <span class="feature-icon">🚀</span>
+                    <h3>Daily Deployments</h3>
+                    <p>Build and ship a new project every single day. From simple scripts to complex full-stack
+                        applications.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Modern Stack</h3>
+                    <p>Master the latest technologies including React, Next.js, TailwindCSS, and serverless
+                        architecture.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🤝</span>
+                    <h3>Community Driven</h3>
+                    <p>Join a squad of dedicated developers. Code reviews, pair programming, and collaborative growth.
+                    </p>
                 </div>
             </div>
+        </section>
+    </main>
 
-            <div class="stat-card"
-                style="display:flex; flex-direction:column; justify-content:center; text-align:center;">
-                <p style="letter-spacing:4px; font-size:0.7rem; color:var(--text-dim)">CURRENT TIMESTAMP</p>
-                <h2 id="live-clock" style="font-size: 2.2rem; margin-top: 10px; font-family:'JetBrains Mono'">00:00:00
-                </h2>
-                <div style="margin-top:20px; color:var(--primary); font-weight:800; font-size:0.8rem">SYSTEMS NOMINAL
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand animate-enter">
+                <a href="#" class="footer-logo">
+                    <img src="website/assets/images/logo.png" alt="Logo">
+                    <h2>100 Days of<br><span class="text-flame">Web Dev</span></h2>
+                </a>
+                <p class="footer-desc">
+                    A hyper-intensive protocol designed to forge elite web engineers through daily deployment cycles.
+                </p>
+            </div>
+
+            <div class="footer-col animate-enter delay-100">
+                <h3>Navigation</h3>
+                <nav class="footer-links">
+                    <a href="#" class="footer-link">Home Base</a>
+                    <a href="website/pages/projects.html" class="footer-link">Archive</a>
+                    <a href="website/pages/about.html" class="footer-link">Leaderboard</a>
+                    <a href="website/pages/contributors.html" class="footer-link">Crew</a>
+                </nav>
+            </div>
+
+            <div class="footer-col animate-enter delay-200">
+                <h3>Resources</h3>
+                <nav class="footer-links">
+                    <a href="#" class="footer-link">Documentation</a>
+                    <a href="#" class="footer-link">API Status</a>
+                    <a href="website/pages/contact.html" class="footer-link">Contact Comms</a>
+                </nav>
+            </div>
+
+            <div class="footer-col animate-enter delay-300">
+                <h3>Connect</h3>
+                <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-btn" aria-label="Github"><svg class="icon" viewBox="0 0 24 24">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                            </path>
+                        </svg></a>
+                    <a href="#" class="social-btn" aria-label="Twitter"><svg class="icon" viewBox="0 0 24 24">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg></a>
                 </div>
             </div>
         </div>
 
-        <section id="vault" class="project-section">
-            <div style="margin-bottom: 4rem;">
-                <h2 style="font-size: 3.5rem; letter-spacing: -3px;">Projects</h2>
-                <p style="color:var(--text-dim)">Encryption active. Higher level modules require developer
-                    authentication.</p>
-            </div>
-            <div class="grid-layout" id="vault-grid">
-            </div>
-        </section>
-
-        <section id="path" style="margin-top: 12rem;">
-            <div style="margin-bottom: 4rem;">
-                <h2 style="font-size: 3.5rem; letter-spacing: -3px;">Engineering Path</h2>
-                <p style="color:var(--text-dim)">Phased progression strategy for full-stack dominance.</p>
-            </div>
-            <div class="path-container" id="path-grid">
-            </div>
-        </section>
-    </div>
-
-    <footer>
-        <div class="f-grid">
-            <div class="f-brand">
-                <h4>100 DAYS <span class="highlight">WEB DEV</span></h4>
-                <p>An open-source initiative documenting the rigorous transition into elite web engineering. Mission protocols include daily commits, technical blogging, and community interaction.</p>
-            </div>
-            <div class="f-links">
-                <h5>QUICK ACCESS</h5>
-                <ul>
-                    <li><a href="website/pages/login.html">Command Dashboard</a></li>
-                    <li><a href="website/pages/login.html">Module Vault</a></li>
-                    <li><a href="website/pages/login.html">Engineering Path</a></li>
-                    <li><a href="website/pages/login.html">Developer Auth</a></li>
-                </ul>
-            </div>
-            <div class="f-links">
-                <h5>EXTERNAL NODES</h5>
-                <ul>
-                    <li><a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26">GitHub Repository</a></li>
-                    <li><a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/blob/main/CONTRIBUTING.md">Project Documentation</a></li>
-                    <li><a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a></li>
-                    <li><a href="https://discord.com/invite/eMTePUK3gJ">Discord Community</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright" style="text-align:center; margin-top:5rem; padding-top:2rem; border-top:1px solid #111; font-size:0.75rem; color:rgb(180, 182, 176);">
-            &copy; 2026 DEVELOPMENT EVOLUTION HUB. ALL TRANSMISSIONS ENCRYPTED.
+        <div class="container footer-bottom">
+            <p class="copyright">&copy; 2026 100 Days of Web Dev. All Systems Nominal.</p>
+            <p class="made-by">
+                Maintained by <span class="text-flame font-bold">Subham</span>
+                <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                    </path>
+                </svg>
+            </p>
         </div>
     </footer>
 
-    <script>
-        // --- 1. SYSTEM DATA & CONFIGURATION ---
-        const START_EPOCH = new Date("2026-01-01"); // Define Mission Start Date
-        const AUTH_PATH = "website/pages/login.html";
-
-        const VAULT_DATA = [
-            { id: 1, title: "Structural Core", category: "HTML/CSS", locked: false },
-            { id: 2, title: "Auth Protocols", category: "Security", locked: true },
-            { id: 15, title: "Logic Engines", category: "JavaScript", locked: true },
-            { id: 45, title: "State Persistence", category: "React/Redux", locked: true },
-            { id: 80, title: "Neural Networks", category: "AI/ML", locked: true }
-        ];
-
-        const PATH_DATA = [
-            { phase: "I: Foundation", details: "Deep-dive into semantic structure and modern CSS architecture.", active: true },
-            { phase: "II: Intelligence", details: "Mastering the JavaScript runtime and asynchronous patterns.", active: false },
-            { phase: "III: Integration", details: "Building modular systems with modern frontend frameworks.", active: false }
-        ];
-
-        // --- 2. DYNAMIC STREAK & TIME LOGIC ---
-        function syncSystem() {
-            const now = new Date();
-            const elapsed = Math.abs(now - START_EPOCH);
-            const currentDay = Math.min(100, Math.ceil(elapsed / (1000 * 60 * 60 * 24)));
-            
-            // Update Dashboard Metrics
-            document.getElementById('m-day').innerText = currentDay;
-            document.getElementById('m-streak').innerText = currentDay; 
-            document.getElementById('sync-label').innerText = currentDay + "%";
-            
-            setTimeout(() => {
-                document.getElementById('sync-bar').style.width = currentDay + "%";
-            }, 600);
-
-            // Live Clock System
-            setInterval(() => {
-                const time = new Date();
-                document.getElementById('live-clock').innerText = time.toLocaleTimeString();
-            }, 1000);
-        }
-
-        // --- 3. UI GENERATION ENGINE ---
-        function buildVault() {
-            const grid = document.getElementById('vault-grid');
-            VAULT_DATA.forEach(module => {
-                grid.innerHTML += `
-                    <div class="project-card vault-item">
-                        <span style="color:var(--primary); font-family:'JetBrains Mono'; font-size:0.75rem">MOD_V.${module.id}</span>
-                        <h4 style="margin: 15px 0; font-size:1.4rem;">${module.title}</h4>
-                        <p style="color:var(--text-dim); font-size:0.85rem">${module.category}</p>
-                        ${module.locked ? `
-                        <div class="lock-overlay" onclick="window.location.href='${AUTH_PATH}'">
-                            <span style="font-size:2rem">🔒</span>
-                            <p style="font-weight:800; margin-top:10px;">SECURE ACCESS REQUIRED</p>
-                            <button class="lock-btn">AUTHENTICATE</button>
-                        </div>` : ''}
-                    </div>
-                `;
-            });
-        }
-
-        function buildPath() {
-            const grid = document.getElementById('path-grid');
-            PATH_DATA.forEach(node => {
-                grid.innerHTML += `
-                    <div class="path-node ${node.active ? 'active' : ''} vault-item">
-                        <div class="node-dot"></div>
-                        <h4>${node.phase}</h4>
-                        <p>${node.details}</p>
-                        ${!node.active ? `
-                        <div class="lock-overlay" onclick="window.location.href='${AUTH_PATH}'">
-                            <span style="font-size:1.5rem">🔒</span>
-                            <p style="font-size:0.7rem; font-weight:800;">LOCKED PHASE</p>
-                        </div>` : ''}
-                    </div>
-                `;
-            });
-        }
-
-        // --- 4. CONSOLE TYPEWRITER LOGIC ---
-        function runConsole() {
-            const lines = [
-                "> Initializing Protocol 100-WD...",
-                "> Checking system integrity... [OK]",
-                "> Syncing streak data... [SYNCED]",
-                "> Monitoring developer activity...",
-                "> Welcome back. Mission Day " + document.getElementById('m-day').innerText + " is active."
-            ];
-            const output = document.getElementById('console-output');
-            let lineIdx = 0;
-            
-            function typeLine() {
-                if (lineIdx < lines.length) {
-                    output.innerHTML += lines[lineIdx] + "<br>";
-                    lineIdx++;
-                    setTimeout(typeLine, 600);
-                }
-            }
-            typeLine();
-        }
-
-        // --- 5. GLOBAL EVENTS ---
-        window.onscroll = () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 80) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-        };
-
-        // Initialize System
-        window.onload = () => {
-            syncSystem();
-            buildVault();
-            buildPath();
-            runConsole();
-        };
-                // --- THEME TOGGLE LOGIC ---
-        const themeBtn = document.getElementById('theme-toggle');
-        const mobileThemeBtn = document.getElementById('mobile-theme-toggle-top');
-        const body = document.body;
-
-        // Load saved theme
-        if (localStorage.getItem('theme') === 'light') {
-        body.classList.add('light-mode');
-        if (themeBtn) themeBtn.textContent = '🌙';
-        if (mobileThemeBtn) mobileThemeBtn.textContent = '🌙';
-        }
-
-        function toggleTheme() {
-        body.classList.toggle('light-mode');
-        const isLight = body.classList.contains('light-mode');
-
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
-
-        if (themeBtn) themeBtn.textContent = isLight ? '🌙' : '☀️';
-        if (mobileThemeBtn) mobileThemeBtn.textContent = isLight ? '🌙' : '☀️';
-        }
-
-        // Click handlers
-        if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-        if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
-
-    </script>
+    <!-- Scripts -->
+    <script src="website/scripts/components/cursor.js"></script>
+    <script src="website/scripts/components/navigation.js"></script>
 </body>
+
 </html>

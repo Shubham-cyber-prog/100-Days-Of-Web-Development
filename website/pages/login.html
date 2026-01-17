@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
+</head>
+
+<body>
+    <div class="container section"
+        style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+
+        <div class="card animate-enter"
+            style="max-width: 400px; width: 100%; padding: var(--space-8); border: 1px solid var(--border-color);">
+            <div style="text-align: center; margin-bottom: var(--space-6);">
+                <img src="../assets/images/logo.png" alt="Logo" style="width: 50px; margin-bottom: var(--space-4);">
+                <h1 style="font-size: 1.8rem; margin-bottom: var(--space-2);">Welcome Back</h1>
+                <p class="text-secondary">Enter your credentials to access the system.</p>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group" style="margin-bottom: var(--space-4);">
+                    <label for="email"
+                        style="display: block; margin-bottom: var(--space-2); font-weight: 500;">Email</label>
+                    <input type="email" id="email" required
+                        style="width: 100%; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary);">
+                </div>
+
+                <div class="form-group" style="margin-bottom: var(--space-6);">
+                    <label for="password"
+                        style="display: block; margin-bottom: var(--space-2); font-weight: 500;">Password</label>
+                    <input type="password" id="password" required
+                        style="width: 100%; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary);">
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; justify-content: center;">Authenticate</button>
+            </form>
+
+            <div style="margin-top: var(--space-6); text-align: center;">
+                <p class="text-secondary text-sm">Or initiate guest protocol:</p>
+                <button onclick="handleGuestLogin()" class="btn btn-outline text-sm"
+                    style="margin-top: var(--space-2); width: 100%; justify-content: center;">Continue as Guest</button>
+            </div>
+
+            <div style="margin-top: var(--space-4); text-align: center;">
+                <a href="../../index.html" class="text-sm text-secondary hover-text-primary">← Return to Base</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            // Mock Auth
+            sessionStorage.setItem('authToken', 'true');
+            sessionStorage.setItem('authGuest', 'false');
+            localStorage.setItem('isAuthenticated', 'true');
+            window.location.href = 'dashboard.html';
+        }
+
+        function handleGuestLogin() {
+            sessionStorage.setItem('authToken', 'false');
+            sessionStorage.setItem('authGuest', 'true');
+            localStorage.setItem('isGuest', 'true');
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+
+</html>
