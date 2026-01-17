@@ -1,0 +1,25 @@
+/* hide default cursor */
+body {
+  cursor: none;
+}
+
+/* fire cursor wrapper */
+.cursor {
+  position: fixed; /* 🔥 absolute nahi */
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+/* gif itself */
+.cursor img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px orange)
+          drop-shadow(0 0 20px red);
+}
