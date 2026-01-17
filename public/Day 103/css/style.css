@@ -1,0 +1,243 @@
+/* =====================
+   DESIGN TOKENS
+===================== */
+:root {
+  --bg: #f4f6fb;
+  --sidebar: #ffffff;
+  --card: #ffffff;
+  --surface: #f9fafb;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #2563eb;
+  --success: #22c55e;
+}
+
+body.dark {
+  --bg: #0f141b;
+  --sidebar: #0b0f15;
+  --card: #141a23;
+  --surface: #1a2230;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: #2a3446;
+}
+
+/* =====================
+   BASE
+===================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* =====================
+   LAYOUT
+===================== */
+.app-shell {
+  display: flex;
+  height: 100vh;
+}
+
+/* =====================
+   SIDEBAR
+===================== */
+.sidebar {
+  width: 220px;
+  background: var(--sidebar);
+  padding: 1rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h1 {
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.nav-item {
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.nav-item.active {
+  background: rgba(37,99,235,0.12);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* =====================
+   WORKSPACE
+===================== */
+.workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 1.2rem;
+  padding: 1.2rem;
+}
+
+/* =====================
+   EDITOR (PRIMARY)
+===================== */
+.editor {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 1.4rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  overflow-y: auto;
+}
+
+.editor h2 {
+  margin-top: 0;
+}
+
+.editor h3 {
+  margin-top: 1.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* =====================
+   INPUTS (FIXED)
+===================== */
+input,
+textarea {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+/* =====================
+   BADGES (CALM)
+===================== */
+/* BADGES – checkbox on the right */
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem 1rem;
+  background: #fafafa;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 👈 THIS moves checkbox to right */
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.3rem 0.4rem;
+}
+
+.checkbox-group span {
+  order: 1;   /* text first */
+}
+
+.checkbox-group input {
+  order: 2;   /* checkbox last (right side) */
+  accent-color: var(--primary);
+}
+
+/* =====================
+   BUTTONS
+===================== */
+.btn-group {
+  display: flex;
+  gap: 0.6rem;
+}
+
+button {
+  padding: 0.65rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+button.primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+/* =====================
+   PREVIEW (SECONDARY)
+===================== */
+.preview-panel {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  overflow-y: auto;
+}
+
+.preview-empty {
+  margin-top: 3rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* =====================
+   SCORE
+===================== */
+.score-box {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.score-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#scoreFill {
+  height: 100%;
+  width: 0%;
+  background: var(--success);
+  transition: width 0.3s ease;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+  .preview-panel {
+    display: none;
+  }
+}
