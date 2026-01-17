@@ -15,7 +15,7 @@
 
     const currentPath = window.location.pathname;
     const isLoginPage = currentPath.includes('login.html');
-    
+
     // Use sessionStorage as source of truth; clean up any stale localStorage flags
     const guestSession = sessionStorage.getItem('authGuest') === 'true';
     const guestLocal = localStorage.getItem('isGuest') === 'true';
@@ -37,7 +37,9 @@
         const isProtected = protectedRoutes.some(route => currentPath.includes(route));
 
         // Root path check (index.html or empty)
-        const isRoot = currentPath.endsWith('/') || currentPath.endsWith('index.html');
+        // const isRoot = currentPath.endsWith('/') || currentPath.endsWith('index.html');
+        const isRoot = false; // Landing page is public
+
 
         if (isProtected || isRoot) {
             if (!isLoginPage) {
