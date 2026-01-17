@@ -237,9 +237,35 @@ t
             };
             localStorage.setItem('fileUploaderData', JSON.stringify(data));
         } catch (e) {
-            this.showToast('Error saving files (localStorage full?)', 'error');
-
-
+            // Attempt recovery by removing oldest files if localStorage is full
+            if (this.files.length > 0) {
+                // Sort files by date (oldest first)
+                const sortedFiles = this.files.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+                // Remove the oldest file
+                const removedFile = sortedFiles.shift();
+                this.files = this.files.filter(f => f.id !== removedFile.id);
+                this.showToast(`Removed oldest file "${removedFile.name}" to free up space`, 'warning');
+                // Retry saving
+                try {
+                    const data = {
+                        files: this.files.map(file => ({
+                            id: file.id,
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                            date: file.date,
+                            data: file.data
+                        })),
+                        lastUpdated: new Date().toISOString()
+                    };
+                    localStorage.setItem('fileUploaderData', JSON.stringify(data));
+                    this.showToast('Files saved after freeing up space', 'success');
+                } catch (retryError) {
+                    this.showToast('Unable to save files even after cleanup. Please clear some files manually.', 'error');
+                }
+            } else {
+                this.showToast('Unable to save files. Local storage may be full or unavailable.', 'error');
+            }
         }
     }
 
@@ -276,6 +302,14 @@ t
                 }
             }
         } catch (e) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+            // Clear corrupted data
+            localStorage.removeItem('fileUploaderData');
+            this.files = [];
+            this.showToast('Failed to load files from storage. Data may be corrupted.', 'error');
+=======
+=======
 
 
             localStorage.removeItem('fileUploaderData');
@@ -284,9 +318,11 @@ t
         }
     }
 }
+>>>>>>> 5bcdac685b2eae0b3fd60319a1663ba165e7ec3a
 
-let uploader;
-window.addEventListener('DOMContentLoaded', () => {
+            localStorage.removeItem('fileUploaderData');
+            this.files = [];
+            this.showToast('Stored data was corrupted and reset.', 'warning');
     uploader = new FileUploader();
     window.uploader = uploader;
 });
