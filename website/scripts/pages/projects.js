@@ -12,7 +12,7 @@ const folderMap = {
     11: "Day 11", 12: "Day 12", 13: "Day 13", 14: "Day 14", 15: "Day 15",
     16: "Day 16", 17: "Day 17", 18: "Day 18", 19: "Day 19", 20: "Day 20",
     21: "Day 21", 22: "Day 22", 23: "Day 23", 24: "Day 24", 25: "Day 25",
-    26: "DAY 26", 27: "Day 27", 28: "Day 28", 29: "Day 29", 30: "Day 30",
+    26: "Day 26", 27: "Day 27", 28: "Day 28", 29: "Day 29", 30: "Day 30",
     31: "Day 31", 32: "Day 32", 33: "Day 33", 34: "Day 34", 35: "Day 35",
     36: "Day 36", 37: "Day 37", 38: "Day 38", 39: "Day 39", 40: "Day 40",
     41: "Day 41", 42: "Day 42", 43: "Day 43", 44: "Day 44", 45: "Day 45",
@@ -24,9 +24,10 @@ const folderMap = {
     71: "Day 71", 72: "Day 72", 73: "Day 73", 74: "Day 74", 75: "Day 75",
     76: "Day 76", 77: "Day 77", 78: "Day 78", 79: "Day 79", 80: "Day 80",
     81: "Day 81", 82: "Day 82", 83: "Day 83", 84: "Day 84", 85: "Day 85",
-     87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
+    87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
+    145: "Day 145",
     151: "Day 151"
 };
 
@@ -75,7 +76,7 @@ const allProjects = [
     { day: 95, title: "Fullstack Application", tech: ["MERN Stack"] }, { day: 96, title: "AI-Powered App", tech: ["LangChain", "OpenAI"] },
     { day: 97, title: "Open-Source “Smart Community Hub”", tech: ["Next.js", "Supabase"] }, { day: 98, title: "Smart Campus Platform", tech: ["Next.js", "PostgreSQL"] },
     { day: 99, title: "Music App using Next.js", tech: ["Next.js", "Spotify API"] }, { day: 100, title: "Survival Protocol", tech: ["Next.js", "TypeScript"] },
-     
+
     //Extended Capstone Projects (Day 101-150) medium level HTML, CSS, JAVASCRIPT , TYPESCRIPT ,  FOR ECWoC26 Extended Program
     { day: 101, title: "Canvas Image Particle Animation", folder: "Day 101", level: "Intedmediate", tech: ["HTML", "CSS", "JS", "HTML Canvas"] }, { day: 102, title: "Interactive Storytelling Website", tech: ["HTML", "CSS", "JS"] },
     { day: 103, title: "Readme Tool Kit", tech: ["HTML", "CSS", "JS"] }, { day: 104, title: "3D Model Viewer", tech: ["Three.js", "JS"] },
@@ -131,7 +132,7 @@ function renderProjects(filter = 'All') {
 
         if (folderName) {
             // Updated path to ensure it points correctly from your projects page
-            liveLink = `../public/${folderName}/index.html`; 
+            liveLink = `../public/${folderName}/index.html`;
             codeLink = `${REPO_URL}/${folderName}`;
         } else {
             isDisabled = true;
@@ -188,17 +189,17 @@ function renderProjects(filter = 'All') {
 
 // Ensure the path to 404.html is correct relative to your current folder
 async function handleProjectClick(event, url) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     try {
         // Use 'no-cache' to ensure the browser doesn't give a fake "OK" 
         const response = await fetch(url, { method: 'HEAD', cache: 'no-cache' });
-        
+
         if (response.ok) {
             window.open(url, '_blank', 'noopener,noreferrer');
         } else {
             // If the folder isn't there, redirect to your mission recovery page
-            window.location.href = './404.html'; 
+            window.location.href = './404.html';
         }
     } catch (error) {
         // This catches the "Cannot GET" scenario (network/file not found)
@@ -273,16 +274,16 @@ document.addEventListener('DOMContentLoaded', () => {
 const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 100) {
-    scrollToTopBtn.classList.add("show");
-  } else {
-    scrollToTopBtn.classList.remove("show");
-  }
+    if (window.scrollY > 100) {
+        scrollToTopBtn.classList.add("show");
+    } else {
+        scrollToTopBtn.classList.remove("show");
+    }
 });
 
 scrollToTopBtn.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
 });
