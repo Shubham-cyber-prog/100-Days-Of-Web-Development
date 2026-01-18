@@ -28,7 +28,8 @@ const folderMap = {
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
     145: "Day 145",
-    151: "Day 151"
+    151: "Day 151",
+    153: "Day 153"
 };
 
 // Full 100-Day Project List
@@ -104,7 +105,8 @@ const allProjects = [
     { day: 147, title: "Advanced Financial Planning Tool", tech: ["Next.js", "Prisma"] }, { day: 148, title: "AI-Powered Document Summarization Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
     // DAY 151
-    { day: 151, title: "Mini Geo Guesser", tech: ["HTML", "CSS", "JS"] }
+    { day: 151, title: "Mini Geo Guesser", tech: ["HTML", "CSS", "JS"] },
+    { day: 153, title: "Stopwatch App", tech: ["HTML", "CSS", "JS"] }
 ];
 
 function getDifficulty(day) {
