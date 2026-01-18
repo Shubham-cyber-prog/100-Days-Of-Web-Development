@@ -359,3 +359,19 @@ service cloud.firestore {
 - Check browser console for specific error messages
 
 ---
+
+
+## 🏆 Hall of Fame
+
+Thank you to everyone who has contributed to this project! 🙌  
+We appreciate your support, commits, issues, ideas, and pull requests 💜
+
+<p align="center">
+  <!-- Contributors from GitHub -->
+  <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" />
+  </a>
+</p>
+
+> *Every contributor brings this project closer to excellence!*
+
