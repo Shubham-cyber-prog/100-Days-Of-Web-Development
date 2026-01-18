@@ -1089,25 +1089,7 @@
 
 </html>
 
-      async function handleAuth(event, mode) {
-        event.preventDefault();
-        const email = event.target.querySelector('input[type="email"]').value;
-        const password = event.target.querySelector(
-          'input[type="password"]'
-        ).value;
-
-        try {
-          if (mode === "register") {
-            await createUserWithEmailAndPassword(auth, email, password);
-            alert("Academy ID Created!");
-          } else {
-            await signInWithEmailAndPassword(auth, email, password);
-          }
-          window.location.href = "dashboard.html";
-        } catch (error) {
-          alert(error.message);
-        }
-      }
+  
     </script>
 
 
@@ -1214,6 +1196,4 @@
 </html>
 
 </html>
->>>>>>> upstream/main
-=======
->>>>>>> upstream/main
+
