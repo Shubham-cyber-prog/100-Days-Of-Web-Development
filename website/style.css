@@ -3270,3 +3270,38 @@ body.login-page {
 .auth-divider span {
   padding: 0 1rem;
 }
+
+/* Improved PNG icon styles */
+.footer-socials .social-btn img.icon {
+    width: 26px; /* Slightly larger */
+    height: 26px;
+    object-fit: contain;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Make black icons adapt to theme */
+    filter: brightness(0) saturate(100%) invert(55%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+}
+
+/* Light theme */
+[data-theme="light"] .footer-socials .social-btn img.icon {
+    filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(80%) contrast(80%);
+}
+
+/* Dark theme */
+[data-theme="dark"] .footer-socials .social-btn img.icon {
+    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+/* Hover effects */
+.footer-socials .social-btn:hover img.icon {
+    transform: translateY(-3px) scale(1.1);
+    filter: brightness(0) saturate(100%) invert(68%) sepia(67%) saturate(500%) hue-rotate(350deg) brightness(105%) contrast(101%);
+}
+
+[data-theme="light"] .footer-socials .social-btn:hover img.icon {
+    filter: brightness(0) saturate(100%) invert(25%) sepia(100%) saturate(1500%) hue-rotate(350deg) brightness(95%) contrast(95%);
+}
+
+[data-theme="dark"] .footer-socials .social-btn:hover img.icon {
+    filter: brightness(0) saturate(100%) invert(90%) sepia(100%) saturate(1500%) hue-rotate(350deg) brightness(110%) contrast(110%);
+}
