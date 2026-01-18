@@ -1,105 +1,503 @@
-/* --- Projects Layout --- */
+/* ============================================
+   MODERN PROJECTS LAYOUT v2.0
+   Sleek, responsive projects grid with smooth interactions
+   ============================================ */
+
+:root {
+  /* Project grid variables */
+  --project-card-width: minmax(340px, 1fr);
+  --project-grid-gap: 1.75rem;
+  --project-radius: 20px;
+  --card-transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   PROJECTS GRID SYSTEM
+   ============================================ */
+
 .projects-grid {
-    display: grid;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--project-card-width));
+  gap: var(--project-grid-gap);
+  padding: 1rem 0 4rem;
+  
+  /* Smooth animation for grid changes */
+  transition: grid-template-columns 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (min-width: 1536px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .projects-grid {
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    /* Slightly wider cards */
-    gap: 2rem;
-    padding-bottom: 6rem;
+    gap: 1.5rem;
+  }
 }
 
-/* ===== CONTROLS SECTION ===== */
-.projects-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    margin-top: 2.5rem;
-    margin-bottom: 2rem;
-    width: 100%;
-}
-
-.search-container {
-    max-width: 500px;
-    /* Wider search bar */
-    width: 100%;
-}
-
-/* ===== FILTER TABS ===== */
-.filter-tabs {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.tab-btn {
-    padding: 0.6rem 1.25rem;
-    background: var(--bg-card);
-    /* Glass-like if alpha */
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 100px;
-    /* Full pill shape */
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.tab-btn:hover {
-    background: var(--bg-hover);
-    color: var(--text-primary);
-    transform: translateY(-2px);
-    border-color: var(--text-tertiary);
-}
-
-.tab-btn.active {
-    background: var(--text-primary);
-    /* Solid accent */
-    color: var(--bg-primary);
-    /* Inverted text */
-    border-color: var(--text-primary);
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
 }
 
 @media (max-width: 640px) {
-    .tab-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-        /* Single column on mobile */
-    }
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
-/* === Tech Tags === */
+/* ============================================
+   CONTROLS SECTION - MODERN DESIGN
+   ============================================ */
+
+.projects-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin: 3rem auto 4rem;
+  max-width: 1200px;
+  padding: 0 1.5rem;
+  position: relative;
+}
+
+/* Decorative line */
+.projects-controls::before {
+  content: '';
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--accent-core), 
+    transparent
+  );
+}
+
+/* ============================================
+   SEARCH COMPONENT - ELEGANT DESIGN
+   ============================================ */
+
+.search-container {
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+}
+
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.25rem;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: var(--card-transition);
+  backdrop-filter: blur(10px);
+}
+
+.search-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-core);
+  box-shadow: 0 0 0 3px rgba(255, 157, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.search-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* Search results counter */
+.search-info {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+  opacity: 0.9;
+}
+
+/* ============================================
+   FILTER TABS - MODERN PILL DESIGN
+   ============================================ */
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+.tab-btn {
+  padding: 0.7rem 1.5rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1.5px solid transparent;
+  border-radius: 100px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--card-transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Tab icon */
+.tab-btn i {
+  font-size: 0.9em;
+  transition: transform 0.3s ease;
+}
+
+/* Hover state */
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+/* Active state with gradient */
+.tab-btn.active {
+  background: linear-gradient(135deg, #ff9d00, #ff6b6b);
+  color: #000;
+  border-color: transparent;
+  font-weight: 600;
+  box-shadow: 
+    0 4px 20px rgba(255, 157, 0, 0.3),
+    0 0 0 1px rgba(255, 157, 0, 0.2) inset;
+}
+
+.tab-btn.active i {
+  transform: scale(1.1);
+}
+
+/* Active tab counter badge */
+.tab-btn .badge {
+  background: rgba(0, 0, 0, 0.2);
+  color: inherit;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 20px;
+  margin-left: 0.25rem;
+}
+
+/* ============================================
+   TECH TAGS - MODERN BADGES
+   ============================================ */
+
 .tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.25rem 0;
 }
 
 .tech-tag {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.6rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.2s ease;
+  font-size: 0.72rem;
+  padding: 0.35rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  transition: var(--card-transition);
+  position: relative;
+  overflow: hidden;
 }
 
+/* Tech tag gradient on hover */
+.tech-tag:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 157, 0, 0.3);
+  color: var(--text-secondary);
+  transform: translateY(-1px);
+}
+
+/* Tech tag in active project card */
 .project-card:hover .tech-tag {
-    border-color: var(--accent-core);
-    color: var(--text-secondary);
-    background: rgba(255, 159, 28, 0.05);
+  background: linear-gradient(135deg, 
+    rgba(255, 157, 0, 0.1), 
+    rgba(255, 107, 107, 0.1)
+  );
+  border-color: rgba(255, 157, 0, 0.4);
+  color: var(--accent-core);
+  box-shadow: 0 4px 12px rgba(255, 157, 0, 0.1);
+}
+
+/* Popular tech tag highlight */
+.tech-tag.highlight {
+  background: rgba(255, 157, 0, 0.1);
+  border-color: rgba(255, 157, 0, 0.3);
+  color: #ff9d00;
+}
+
+/* ============================================
+   PROJECT CARD ENHANCEMENTS
+   ============================================ */
+
+.project-card {
+  border-radius: var(--project-radius);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card content area */
+.project-card .card-content {
+  padding: 1.75rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Project title */
+.project-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+/* Project description */
+.project-card .description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+/* Project footer */
+.project-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.25rem;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Project stats */
+.project-stats {
+  display: flex;
+  gap: 1rem;
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+}
+
+.project-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Project action button */
+.project-action {
+  padding: 0.6rem 1.25rem;
+  background: rgba(255, 157, 0, 0.1);
+  color: #ff9d00;
+  border: 1px solid rgba(255, 157, 0, 0.2);
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: var(--card-transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.project-action:hover {
+  background: rgba(255, 157, 0, 0.2);
+  border-color: rgba(255, 157, 0, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 157, 0, 0.2);
+}
+
+/* ============================================
+   VIEW TOGGLE (GRID/LIST)
+   ============================================ */
+
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 0.25rem;
+  margin-left: auto;
+}
+
+.view-btn {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.view-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* List view */
+.projects-grid.list-view {
+  grid-template-columns: 1fr;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.projects-grid.list-view .project-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .projects-grid.list-view .project-card {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ============================================
+   LOADING & EMPTY STATES
+   ============================================ */
+
+/* Loading skeleton */
+.skeleton-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--project-radius);
+  padding: 1.75rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* No results */
+.no-results {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
+}
+
+.no-results i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* ============================================
+   LIGHT MODE ADAPTATION
+   ============================================ */
+
+[data-theme="light"] {
+  --project-card-width: minmax(340px, 1fr);
+}
+
+[data-theme="light"] .search-input {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .filter-tabs {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .tech-tag {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .project-card:hover .tech-tag {
+  background: rgba(255, 157, 0, 0.08);
+  border-color: rgba(255, 157, 0, 0.3);
+  color: #ff9d00;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Stagger animation for grid items */
+.projects-grid > * {
+  animation: slideUpFade 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger delay for grid items */
+.projects-grid > *:nth-child(1) { animation-delay: 0.1s; }
+.projects-grid > *:nth-child(2) { animation-delay: 0.2s; }
+.projects-grid > *:nth-child(3) { animation-delay: 0.3s; }
+.projects-grid > *:nth-child(4) { animation-delay: 0.4s; }
+.projects-grid > *:nth-child(5) { animation-delay: 0.5s; }
+.projects-grid > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-grid > *,
+  .tab-btn,
+  .tech-tag,
+  .project-action {
+    animation: none !important;
+    transition: none !important;
+  }
 }
