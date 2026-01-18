@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Preview</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Form Builder</h1>
+    <button id="themeToggle" class="nav-btn nav-toggle">
+    🌙 Dark Mode
+  </button>
+  </header>
+
+  <main class="container">
+    <h2 id="previewTitle"></h2>
+
+    <p id="emptyPreview" class="empty-state hidden">
+      No form has been created yet.<br />
+      Please build a form first.
+    </p>
+
+    <form id="previewForm" class="hidden">
+      <div id="previewFields"></div>
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="successMsg" class="success hidden">
+      Form submitted successfully!
+    </p>
+  </main>
+
+  <script src="js/theme.js"></script>
+  <script src="js/preview.js"></script>
+</body>
+</html>
