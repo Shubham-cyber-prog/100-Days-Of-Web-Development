@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academy Access | 100 Days of Web Dev</title>
+
+  <link rel="icon" href="../assets/images/logo.png" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --primary: #ff9d00;
+      --primary-glow: rgba(255, 157, 0, 0.35);
+      --bg: #050505;
+      --card: rgba(20, 20, 20, 0.85);
+      --text: #ffffff;
+      --muted: #9ca3af;
+      --border: rgba(255,255,255,0.08);
+    }
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -90,7 +113,7 @@
           #030303 100%
         );
       }
->>>>>>> upstream/main
+
 
       .ambient-glow {
         position: absolute;
@@ -420,184 +443,173 @@
         box-shadow: 0 6px 20px rgba(66, 133, 244, 0.25);
       }
 
-      /* GitHub specific styling */
-      .social-btn.github {
-        background: rgba(255, 255, 255, 0.06);
-      }
 
-      .social-btn.github svg {
-        fill: #ffffff;
-      }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-      .social-btn.github:hover {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(139, 92, 246, 0.5);
-        box-shadow: 0 6px 20px rgba(139, 92, 246, 0.25);
-      }
+    body {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background: radial-gradient(circle at top, #1a1200, #050505);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-      /* Enhanced hover effect */
-      .social-btn:hover {
-        transform: translateY(-2px);
-      }
+    .auth-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
 
-      .social-btn:hover .social-icon {
-        transform: scale(1.08);
-      }
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 2.5rem;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+      text-align: center;
+      animation: fadeUp .6s ease;
+    }
 
-      .social-btn:active {
-        transform: translateY(0);
-      }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-      /* Guest Mode Button */
-      .guest-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        padding: 16px 24px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 157, 0, 0.25);
-        border-radius: 14px;
-        color: var(--primary);
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        margin-top: 1.25rem;
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-      }
+    .logo {
+      width: 90px;
+      margin-bottom: 1.2rem;
+      filter: drop-shadow(0 0 20px var(--primary-glow));
+    }
 
-      .guest-btn::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 157, 0, 0.1),
-          transparent
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
+    h1 { font-size: 1.8rem; margin-bottom: .4rem; }
+    .subtext { color: var(--muted); font-size: .9rem; margin-bottom: 2rem; }
+
+    .tabs {
+      display: flex;
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      padding: 4px;
+      margin-bottom: 1.8rem;
+    }
+
+
+    .tabs button {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: .6rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 999px;
+    }
 
       .guest-btn:hover::before {
         opacity: 1;
       }
 
 
-      .guest-btn:hover {
-        background: rgba(255, 157, 0, 0.12);
-        border-color: rgba(255, 157, 0, 0.5);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 157, 0, 0.2);
-      }
 
-      .guest-icon {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
+    .tabs button.active {
+      background: var(--primary);
+      color: #000;
+    }
 
-      .guest-icon svg {
-        width: 100%;
-        height: 100%;
-        fill: var(--primary);
-      }
+    .form-group { margin-bottom: 1rem; }
 
-      /* Responsive text sizing */
-      @media (max-width: 480px) {
-        .social-btn {
-          font-size: 0.85rem;
-          padding: 14px 10px;
-          gap: 8px;
-        }
+    input {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: white;
+      font-size: .95rem;
+    }
 
-        .social-icon {
-          width: 18px;
-          height: 18px;
-        }
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(255,157,0,.2);
+    }
 
-        .external-auth-grid {
-          gap: 0.6rem;
-        }
+    .btn-primary {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 16px;
+      border: none;
+      font-weight: 800;
+      background: var(--primary);
+      color: #000;
+      cursor: pointer;
+      box-shadow: 0 12px 30px var(--primary-glow);
+    }
 
-        .guest-btn {
-          font-size: 0.9rem;
-          padding: 12px 20px;
-        }
-      }
+    .divider {
+      margin: 2rem 0 1.2rem;
+      font-size: .7rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
 
-      /* Buttons */
-      .btn-primary {
-        width: 100%;
-        padding: 1.1rem;
-        background: var(--primary);
-        color: #000;
-        border: none;
-        border-radius: 16px;
-        font-weight: 800;
-        font-size: 1rem;
-        cursor: pointer;
-        box-shadow: 0 10px 25px var(--primary-glow);
-        transition: 0.3s;
-        margin-top: 1rem;
-      }
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
 
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        background: #fff;
-        box-shadow: 0 15px 30px var(--primary-glow);
-      }
+    .social {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
 
-      .auth-divider {
-        margin: 2rem 0;
-        color: var(--text-tertiary);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      .auth-divider::before,
-      .auth-divider::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--glass-border);
-      }
+    .social button,
+    .guest {
+      padding: .9rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
 
-      .hidden {
-        display: none;
-      }
+    .guest {
+      margin-top: 1rem;
+      color: var(--primary);
+      border-color: rgba(255,157,0,.3);
+    }
 
-      @keyframes floatUp {
-        from {
-          opacity: 0;
-          transform: translateY(40px) scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
+    .hidden { display: none; }
+  </style>
+</head>
 
-      @media (max-width: 480px) {
-        .auth-card {
-          padding: 2rem 1.5rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="stars-container">
-      <div class="ambient-glow"></div>
-    </div>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <img src="../assets/images/logo.png" class="logo" alt="Logo" />
+      <h1 id="title">Welcome Back</h1>
+      <p class="subtext" id="subtitle">Authorized personnel only.</p>
+
+      <div class="tabs">
+        <button class="active" onclick="switchTab('login')">Login</button>
+        <button onclick="switchTab('register')">Register</button>
+      </div>
+
+
+      <form id="login">
+        <div class="form-group">
+          <input type="email" placeholder="Email Address" required />
 
     <div class="auth-wrapper">
       <div class="auth-card">
@@ -610,84 +622,29 @@
           <h1 id="auth-title">Welcome Back</h1>
           <p class="subtext" id="auth-subtext">Authorized personnel only.</p>
 
+
         </div>
-
-        <div class="auth-tabs">
-          <button class="tab-btn active" onclick="switchTab('login')">
-            Login
-          </button>
-          <button class="tab-btn" onclick="switchTab('register')">
-            Register
-          </button>
+        <div class="form-group">
+          <input type="password" placeholder="Access Code" required />
         </div>
+        <button class="btn-primary">Join Now</button>
+      </form>
 
-        <form id="login-form" onsubmit="handleAuth(event, 'login')">
-          <div class="form-group">
-            <input
-              type="email"
-              class="form-input"
-              placeholder="Email Address"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-input"
-              placeholder="Access Code"
-              required
-            />
-          </div>
-          <button type="submit" class="btn-primary">Join Now</button>
-          <a
-            href="#"
-            style="
+      <form id="register" class="hidden">
+        <div class="form-group"><input placeholder="Full Name" required /></div>
+        <div class="form-group"><input type="email" placeholder="Academy Email" required /></div>
+        <div class="form-group"><input type="password" placeholder="New Access Code" required /></div>
+        <button class="btn-primary">Create Academy ID</button>
+      </form>
 
->>>>>>> upstream/main
-              display: block;
-              margin-top: 1.5rem;
-              color: var(--text-tertiary);
-              font-size: 0.8rem;
-              text-decoration: none;
+      <div class="divider">External Links</div>
 
-            ">Forgot Access Code?</a>
-    </form>
-
-    <form id="register-form" class="hidden" onsubmit="handleAuth(event, 'register')">
-      <div class="form-group">
-        <input type="text" class="form-input" placeholder="Full Name" required />
+      <div class="social">
+        <button onclick="signInWithGoogle()">Continue with Google</button>
+        <button onclick="signInWithGitHub()">Continue with GitHub</button>
       </div>
-      <div class="form-group">
-        <input type="email" class="form-input" placeholder="Academy Email" required />
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-input" placeholder="New Access Code" required />
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-input" placeholder="Confirm Access Code" required />
-      </div>
-      <button type="submit" class="btn-primary">Create Academy ID</button>
-    </form>
 
-    <div class="auth-divider">External Links</div>
-
-    <div class="external-auth-grid">
-      <button class="social-btn google" onclick="signInWithGoogle()">
-        <span class="social-icon">
-          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
-        </span>
-        <span>Google</span>
-      </button>
-
-      <button class="social-btn github" onclick="signInWithGitHub()">
-        <span class="social-icon">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-          </svg>
-        </span>
-        <span>GitHub</span>
-      </button>
+      <button class="guest" onclick="signInAsGuest()">Try as Guest</button>
     </div>
 
 
@@ -701,53 +658,22 @@
       <span>Try as Guest</span>
     </button>
   </div>
+
   </div>
 
   <script>
-    function switchTab(type) {
-      const loginForm = document.getElementById("login-form");
-      const registerForm = document.getElementById("register-form");
-      const title = document.getElementById("auth-title");
-      const subtext = document.getElementById("auth-subtext");
-      const tabs = document.querySelectorAll(".tab-btn");
+  function completeLogin(isGuest = false) {
+    sessionStorage.setItem("authToken", "true");
 
-      tabs.forEach((btn) => btn.classList.remove("active"));
-
-      if (type === "login") {
-        loginForm.classList.remove("hidden");
-        registerForm.classList.add("hidden");
-        title.innerText = "Welcome Back";
-        subtext.innerText = "Authorized personnel only.";
-        event.currentTarget.classList.add("active");
-      } else {
-        loginForm.classList.add("hidden");
-        registerForm.classList.remove("hidden");
-        title.innerText = "Join Academy";
-        subtext.innerText = "Create your developer identity.";
-        tabs[1].classList.add("active");
-      }
+    if (isGuest) {
+      sessionStorage.setItem("authGuest", "true");
+    } else {
+      sessionStorage.removeItem("authGuest");
     }
 
-    async function handleAuth(event, mode) {
-      event.preventDefault();
-      const email = event.target.querySelector('input[type="email"]').value;
-      const password = event.target.querySelector(
-        'input[type="password"]'
-      ).value;
 
-      try {
-        if (mode === "register") {
-          await createUserWithEmailAndPassword(auth, email, password);
-          alert("Academy ID Created!");
-        } else {
-          await signInWithEmailAndPassword(auth, email, password);
-        }
-        window.location.href = "dashboard.html";
-      } catch (error) {
-        alert(error.message);
-      }
-    }
-  </script>
+    window.location.href = "dashboard.html";
+  }
 
   <script src="../scripts/auth/service.js"></script>
   <script src="../scripts/auth/guard.js"></script>
@@ -916,89 +842,30 @@
           </button>
         </div>
 
-        <form id="login-form" onsubmit="handleAuth(event, 'login')">
-          <div class="form-group">
-            <input
-              type="email"
-              class="form-input"
-              placeholder="Email Address"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-input"
-              placeholder="Access Code"
-              required
-            />
-          </div>
-          <button type="submit" class="btn-primary">Join Now</button>
-          <a
-            href="#"
-            style="
-              display: block;
-              margin-top: 1.5rem;
-              color: var(--text-tertiary);
-              font-size: 0.8rem;
-              text-decoration: none;
-            "
-            >Forgot Access Code?</a
-          >
-        </form>
 
-        <form
-          id="register-form"
-          class="hidden"
-          onsubmit="handleAuth(event, 'register')"
-        >
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-input"
-              placeholder="Full Name"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="email"
-              class="form-input"
-              placeholder="Academy Email"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-input"
-              placeholder="New Access Code"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-input"
-              placeholder="Confirm Access Code"
-              required
-            />
-          </div>
-          <button type="submit" class="btn-primary">Create Academy ID</button>
-        </form>
+  document.getElementById("login").addEventListener("submit", (e) => {
+    e.preventDefault();
+    completeLogin(false);
+  });
 
-        <div class="auth-divider">External Links</div>
+  document.getElementById("register").addEventListener("submit", (e) => {
+    e.preventDefault();
+    completeLogin(false);
+  });
 
-        <div class="external-auth-grid">
-          <button class="social-btn google" onclick="signInWithGoogle()">
-            <span class="social-icon">
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google"
-              />
-            </span>
-            <span>Google</span>
-          </button>
+  function signInWithGoogle() {
+    completeLogin(false);
+  }
+
+  function signInWithGitHub() {
+    completeLogin(false);
+  }
+
+
+  function signInAsGuest() {
+    completeLogin(true);
+  }
+</script>
 
           <button class="social-btn github" onclick="signInWithGitHub()">
             <span class="social-icon">
@@ -1081,7 +948,11 @@
 
 
 
+
+</body>
 </html>
+
+
 
 </html>
 
@@ -1196,4 +1067,3 @@
 </html>
 
 </html>
-
