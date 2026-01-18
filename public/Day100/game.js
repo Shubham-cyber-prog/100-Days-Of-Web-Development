@@ -1492,9 +1492,12 @@ function createConnection(fromId, toId) {
 
     if (!valid) {
         new Audio("assets/sounds/click-9.mp3").play();
-        console.error(
-            "Invalid connection topology: WAF/ALB from Internet -> WAF -> ALB -> Compute -> (RDS/S3)"
-        );
+       alert(
+    "Invalid connection topology.\n\nValid flow:\nInternet → WAF → ALB → Compute → (DB / S3)"
+);
+
+// Dev-only warning (no production pollution)
+console.warn("Invalid connection topology attempted");
         return;
     }
 
@@ -2776,10 +2779,13 @@ window.saveGameState = () => {
 
         STATE.sound.playPlace(); // Use place sound as feedback
     } catch (error) {
-        console.error("Failed to save game:", error);
-        alert("Failed to save game. Please try again.");
-    }
-};
+    alert(
+        "Failed to save game.\nYour browser storage may be full or blocked."
+    );
+
+    // Safe logging (non-blocking, non-polluting)
+    console.warn("Save game failed", error);
+}
 
 function migrateOldSave(saveData) {
     if (saveData.trafficDistribution) {
@@ -2925,10 +2931,13 @@ window.loadGameState = () => {
 
         STATE.sound.playPlace();
     } catch (error) {
-        console.error("Failed to load game:", error);
-        alert("Failed to load game. The save file may be corrupted.");
-    }
-};
+    alert(
+        "Failed to load game.\nThe save file may be corrupted.\nStarting a fresh game."
+    );
+
+    // Safe logging
+    console.warn("Load game failed", error);
+}
 
 function clearCurrentGame() {
     while (serviceGroup.children.length > 0) {

@@ -1,0 +1,173 @@
+:root {
+  --glass: rgba(15, 23, 42, 0.75);
+  --border: rgba(255, 255, 255, 0.08);
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --success: #22c55e;
+  --text-main: #f8fafc;
+  --text-sub: #cbd5f5;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Background image layer */
+#background {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.8s ease, background-image 0.8s ease;
+  z-index: -2;
+}
+
+/* Dark overlay for readability */
+#background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(2, 6, 23, 0.65),
+    rgba(2, 6, 23, 0.85)
+  );
+}
+
+/* Layout */
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+/* Glass card */
+.story-card {
+  width: 100%;
+  max-width: 720px;
+  padding: 2.4rem 2.6rem 2.8rem;
+  border-radius: 22px;
+  background: var(--glass);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--border);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+  animation: fadeIn 0.6s ease;
+}
+
+/* Header */
+.story-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+}
+
+.story-header h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+/* Icon button */
+.icon-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.45rem 0.6rem;
+  font-size: 1.1rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* Story text */
+.story-body {
+  margin-bottom: 2rem;
+}
+
+#story-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-sub);
+  white-space: pre-line;
+  min-height: 140px;
+  position: relative;
+}
+
+/* Cursor */
+#story-text::after {
+  content: "▍";
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Choices */
+.choices {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.choices button {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border: none;
+  border-radius: 14px;
+  padding: 0.9rem 1.1rem;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 12px 20px rgba(79,70,229,0.35);
+  animation: slideUp 0.4s ease forwards;
+}
+
+.choices button::before {
+  content: "➜";
+  margin-right: 0.6rem;
+}
+
+.restart {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.85rem;
+  background: linear-gradient(135deg, var(--success), #16a34a);
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  .story-card {
+    padding: 1.9rem 1.8rem 2.2rem;
+  }
+}

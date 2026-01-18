@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Lost in Mission | 100 Days of Web Dev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --brand-orange: #ff8c00;
+            --brand-dark: #0f172a;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar-custom {
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 10px 30px;
+        }
+
+        .nav-pill {
+            background: var(--brand-orange);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .error-glow {
+            text-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+
+        .home-btn {
+            background: black;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: var(--brand-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-6">
+
+    <div class="fixed top-10 left-0 w-full flex justify-center">
+        <nav class="navbar-custom flex items-center gap-6">
+            <div class="flex items-center gap-2 mr-4">
+                <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-xs">🚀</div>
+            </div>
+            <ul class="flex items-center gap-2">
+                <li><a href="index.html" class="nav-pill">Return to Base</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="text-center max-w-lg">
+        <h1 class="text-[12rem] font-black text-slate-900 leading-none error-glow">404</h1>
+        <div class="bg-orange-500 text-white inline-block px-4 py-1 rounded-md font-bold uppercase tracking-widest text-sm mb-8">
+            Mission Interrupted
+        </div>
+        
+        <h2 class="text-3xl font-extrabold text-slate-800 mb-4">Page Not Found</h2>
+        <p class="text-slate-500 font-medium mb-10 leading-relaxed">
+            The milestone you are looking for (like Day 81) might be currently under development or has been moved to a new sector.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="dashboard.html" class="home-btn px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2">
+                <i class="fa-solid fa-house"></i>
+                Back to Dashboard
+            </a>
+            <a href="projects.html" class="bg-white border-2 border-slate-100 text-slate-600 px-8 py-4 rounded-2xl font-bold hover:border-orange-500 transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-code"></i>
+                View Projects
+            </a>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 right-0 p-10 opacity-10 pointer-events-none">
+        <i class="fa-solid fa-rocket text-[15rem] rotate-45 text-orange-500"></i>
+    </div>
+
+</body>
+</html>

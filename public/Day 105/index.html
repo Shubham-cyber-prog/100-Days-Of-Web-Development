@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Builder</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+  <h1>Form Builder</h1>
+
+  <a href="preview.html" target="_blank" class="nav-btn">Preview Form</a>
+  <a href="responses.html" target="_blank" class="nav-btn">View Responses</a>
+  <a href="example.html" class="nav-btn">View Example</a>
+
+  <button id="themeToggle" class="nav-btn nav-toggle">
+    🌙 Dark Mode
+  </button>
+</header>
+
+
+  <main class="container">
+    <section class="builder">
+      <input
+        type="text"
+        id="formTitle"
+        placeholder="Form Title"
+      />
+
+      <div class="buttons">
+        <button onclick="addField('text')">Text</button>
+        <button onclick="addField('email')">Email</button>
+        <button onclick="addField('number')">Number</button>
+        <button onclick="addField('textarea')">Textarea</button>
+        <button onclick="addField('select')">Dropdown</button>
+        <button onclick="addField('checkbox')">Checkbox Group</button>
+        <button onclick="addField('radio')">Radio Group</button>
+        <button onclick="clearForm()" style="background:#ef4444;color:white;">
+          Clear Form
+        </button>
+      </div>
+
+      <div id="fieldsList"></div>
+    </section>
+  </main>
+
+  <script src="js/theme.js"></script>
+  <script src="js/builder.js"></script>
+</body>
+</html>
