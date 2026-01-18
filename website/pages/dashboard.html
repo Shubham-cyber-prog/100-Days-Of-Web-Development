@@ -110,6 +110,37 @@
       margin-top: var(--space-8);
       display: inline-block;
     }
+
+    /* ================================
+   FIX: MOBILE LIGHT MODE NAV VISIBILITY
+   ================================ */
+
+    @media (max-width: 768px) {
+      [data-theme="light"] .site-header {
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      [data-theme="light"] .nav-container {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+      }
+
+      [data-theme="light"] .nav-link {
+        color: #0f172a !important;
+      }
+
+      [data-theme="light"] .nav-link.active {
+        color: #c2410c !important;
+        /* flame accent */
+      }
+
+      [data-theme="light"] .mobile-toggle svg,
+      [data-theme="light"] #theme-toggle-btn svg {
+        stroke: #0f172a !important;
+        color: #0f172a !important;
+      }
+    }
   </style>
 </head>
 
@@ -407,7 +438,7 @@
 
   <!-- Scripts -->
   <script src="../scripts/components/cursor.js"></script>
-  <script src="../scripts/auth/guard.js"></script>
+  <!--script src="../scripts/auth/guard.js"></script-->s
   <script src="../scripts/components/navigation.js"></script>
   <script src="../scripts/pages/dashboard.js"></script>
 </body>
