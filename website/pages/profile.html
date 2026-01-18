@@ -1,272 +1,581 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/website/assets/images/logo.png">
-    <title>Profile | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css">
+    <title>Login | Academy</title>
     <style>
-        .profile-container {
-            padding-top: 120px;
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: var(--space-8);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        @media (max-width: 900px) {
-            .profile-container {
-                grid-template-columns: 1fr;
-            }
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --success: #10b981;
+            --error: #ef4444;
+            --border: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
         }
 
-        /* ID Card Style */
-        .id-card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8);
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+        }
+
+        .logo {
             text-align: center;
-            position: sticky;
-            top: 120px;
-            backdrop-filter: blur(20px);
+            margin-bottom: 30px;
         }
 
-        .profile-avatar-lg {
-            width: 140px;
-            height: 140px;
+        .logo h1 {
+            color: var(--dark);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--success));
             border-radius: 50%;
-            border: 4px solid var(--bg-void);
-            box-shadow: 0 0 0 2px var(--accent-core);
-            margin: 0 auto var(--space-6);
-            /* Centered */
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
             display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 14px;
         }
 
-        .rank-badge {
-            display: inline-block;
-            background: var(--accent-core);
-            color: #000;
-            font-size: var(--text-xs);
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 100px;
-            margin-bottom: var(--space-4);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .mission-log-panel {
-            background: var(--bg-surface);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8);
-        }
-
-        /* Mission Matrix - GitHub Style 25x4 */
-        .mission-grid {
-            display: grid;
-            grid-template-columns: repeat(25, 1fr);
-            gap: 4px;
-            margin: var(--space-6) 0;
-            padding-bottom: var(--space-2);
-            /* Space for scrollbar if needed */
-        }
-
-        .mission-cell {
-            aspect-ratio: 1;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 2px;
-            transition: all 0.2s;
+        .input-group {
             position: relative;
         }
 
-        .mission-cell:hover {
-            transform: scale(1.5);
-            z-index: 10;
-            background: var(--accent-glow);
-            box-shadow: 0 0 10px var(--accent-core);
-            border-radius: 4px;
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            font-size: 16px;
         }
 
-        /* Active Cells - Neon Orange */
-        .mission-cell.completed {
-            background: var(--accent-core);
-            box-shadow: 0 0 4px var(--accent-alpha);
+        .form-control {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
         }
 
-        /* Responsive Matrix */
-        @media (max-width: 768px) {
-            .mission-grid {
-                /* On mobile, standard contribution graphs scroll horizontally */
-                display: grid;
-                grid-template-columns: repeat(25, minmax(10px, 1fr));
-                gap: 2px;
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-control.error {
+            border-color: var(--error);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--secondary);
+        }
+
+        .register-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .remember-me input {
+            width: 16px;
+            height: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
             }
 
-            .mission-cell {
-                border-radius: 1px;
+            .social-login {
+                grid-template-columns: 1fr;
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
+    <div class="container">
+        <div class="login-card">
+            <div class="logo">
+                <div class="logo-icon">A</div>
+                <h1>Academy Login</h1>
+                <p>Welcome back! Please sign in to continue</p>
+            </div>
 
-    <header class="site-header">
-        <div class="nav-container">
-            <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
-            </a>
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Dashboard</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contributors.html" class="nav-link">Contributors</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </nav>
-            <div class="nav-user">
-                <button class="mobile-toggle" onclick="toggleMobileMenu()">
-                    <svg class="icon icon-lg" viewBox="0 0 24 24">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
+            <div class="message" id="message"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" 
+                               id="email" 
+                               class="form-control" 
+                               placeholder="Enter your email"
+                               required>
+                    </div>
+                    <div class="error-message" id="email-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" 
+                               id="password" 
+                               class="form-control" 
+                               placeholder="Enter your password"
+                               required>
+                        <i class="fas fa-eye toggle-password" 
+                           style="position: absolute; right: 15px; left: auto; cursor: pointer;"></i>
+                    </div>
+                    <div class="error-message" id="password-error"></div>
+                </div>
+
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="#" id="forgotPassword">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <span id="btnText">Sign In</span>
+                    <div class="loading" id="loading"></div>
                 </button>
-                <div class="user-avatar-wrapper">
-                    <button class="user-avatar" onclick="toggleUserMenu()">
-                        <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%;">
-                    </button>
-                    <div class="user-dropdown">
-                        <a href="profile.html" class="dropdown-item">View Profile</a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item text-danger" onclick="handleLogout()">Log Out</button>
-                    </div>
-                </div>
+            </form>
+
+            <div class="divider">or continue with</div>
+
+            <div class="social-login">
+                <button class="social-btn" id="googleBtn">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
+                    Google
+                </button>
+                <button class="social-btn" id="githubBtn">
+                    <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub">
+                    GitHub
+                </button>
+            </div>
+
+            <div class="register-link">
+                Don't have an account?
+                <a href="#" id="registerLink">Sign up now</a>
             </div>
         </div>
-    </header>
+    </div>
 
-    <main class="container">
-        <div class="profile-container">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const loading = document.getElementById('loading');
+            const message = document.getElementById('message');
+            const togglePassword = document.querySelector('.toggle-password');
+            const googleBtn = document.getElementById('googleBtn');
+            const githubBtn = document.getElementById('githubBtn');
+            const forgotPassword = document.getElementById('forgotPassword');
+            const registerLink = document.getElementById('registerLink');
 
-            <!-- Left: ID Card -->
-            <aside class="id-card animate-enter">
-                <img src="https://github.com/ntbnaren7.png" alt="Profile" class="profile-avatar-lg">
-                <div class="rank-badge">Commander Lvl 45</div>
-                <h1 style="font-size: var(--text-2xl); margin-bottom: var(--space-1);">Naren</h1>
-                <p class="text-tertiary">@ntbnaren7</p>
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
 
-                <div style="margin-top: var(--space-8); display: flex; flex-direction: column; gap: var(--space-3);">
-                    <button class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Edit Profile</button>
-                    <button class="btn btn-social" style="width: 100%; justify-content: center;">Share Identity</button>
-                </div>
-            </aside>
+            // Form validation
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
 
-            <!-- Right: Mission Log -->
-            <section class="mission-log-panel animate-enter delay-100">
-                <div class="flex justify-between items-end mb-6">
-                    <div>
-                        <h2 style="margin-bottom: var(--space-1);">Mission Matrix</h2>
-                        <p class="text-secondary">Visual record of daily deployments.</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-flame" style="font-size: var(--text-3xl); font-weight: 900;">45%</span>
-                        <p class="text-xs text-secondary uppercase tracking-widest">Complete</p>
-                    </div>
-                </div>
+            function validatePassword(password) {
+                return password.length >= 6;
+            }
 
-                <div id="missionGrid" class="mission-grid">
-                    <!-- Injected via profile.js -->
-                </div>
+            function showError(inputId, message) {
+                const errorElement = document.getElementById(inputId + '-error');
+                const inputElement = document.getElementById(inputId);
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                inputElement.classList.add('error');
+            }
 
-                <div class="flex justify-between items-center mt-3 pt-3 border-t border-white-5">
-                    <span class="text-xs text-tertiary uppercase tracking-wider font-bold">Initiation</span>
-                    <span class="text-xs text-secondary font-mono">100-DAY CYCLE</span>
-                    <span
-                        class="text-xs text-tertiary uppercase tracking-wider font-bold text-accet-core">Mastery</span>
-                </div>
-            </section>
-        </div>
-    </main>
+            function clearError(inputId) {
+                const errorElement = document.getElementById(inputId + '-error');
+                const inputElement = document.getElementById(inputId);
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputElement.classList.remove('error');
+            }
 
-    <!-- Professional Footer -->
-    <footer class="site-footer">
-        <div class="container footer-content">
-            <!-- Brand -->
-            <div class="footer-brand animate-enter">
-                <a href="dashboard.html" class="footer-logo">
-                    <img src="../assets/images/logo.png" alt="Logo">
-                    <h2>100 Days of<br><span class="text-flame">Web Dev</span></h2>
-                </a>
-                <p class="footer-desc">
-                    A hyper-intensive protocol designed to forge elite web engineers through daily deployment cycles.
-                </p>
-            </div>
+            function showMessage(type, text) {
+                message.textContent = text;
+                message.className = 'message ' + type;
+                message.style.display = 'block';
+                
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 5000);
+            }
 
-            <!-- Quick Links -->
-            <div class="footer-col animate-enter delay-100">
-                <h3>Navigation</h3>
-                <nav class="footer-links">
-                    <a href="dashboard.html" class="footer-link">Home Base</a>
-                    <a href="projects.html" class="footer-link">Archive</a>
-                    <a href="about.html" class="footer-link">Leaderboard</a>
-                    <a href="contributors.html" class="footer-link">Crew</a>
-                </nav>
-            </div>
+            // Handle form submission
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const email = emailInput.value.trim();
+                const password = passwordInput.value.trim();
+                let isValid = true;
 
-            <!-- Resources -->
-            <div class="footer-col animate-enter delay-200">
-                <h3>Resources</h3>
-                <nav class="footer-links">
-                    <a href="#" class="footer-link">Documentation</a>
-                    <a href="#" class="footer-link">API Status</a>
-                    <a href="contact.html" class="footer-link">Contact Comms</a>
-                    <a href="#" class="footer-link">System Logic</a>
-                </nav>
-            </div>
+                // Clear previous errors
+                clearError('email');
+                clearError('password');
+                message.style.display = 'none';
 
-            <!-- Connect -->
-            <div class="footer-col animate-enter delay-300">
-                <h3>Connect</h3>
-                <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-                <div class="footer-socials">
-                    <a href="#" class="social-btn" aria-label="Github"><svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                            </path>
-                        </svg></a>
-                    <a href="#" class="social-btn" aria-label="Twitter"><svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                            </path>
-                        </svg></a>
-                    <a href="#" class="social-btn" aria-label="Discord"><svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z">
-                            </path>
-                        </svg></a>
-                </div>
-            </div>
-        </div>
+                // Validate email
+                if (!email) {
+                    showError('email', 'Email is required');
+                    isValid = false;
+                } else if (!validateEmail(email)) {
+                    showError('email', 'Please enter a valid email');
+                    isValid = false;
+                }
 
-        <div class="container footer-bottom">
-            <p class="copyright">&copy; 2026 100 Days of Web Dev. All Systems Nominal.</p>
-            <p class="made-by">
-                Maintained by <span class="text-flame font-bold">Subham</span>
-                <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                    </path>
-                </svg>
-            </p>
-        </div>
-    </footer>
+                // Validate password
+                if (!password) {
+                    showError('password', 'Password is required');
+                    isValid = false;
+                } else if (!validatePassword(password)) {
+                    showError('password', 'Password must be at least 6 characters');
+                    isValid = false;
+                }
 
-    <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/pages/profile.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
+                if (!isValid) return;
+
+                // Show loading state
+                btnText.style.display = 'none';
+                loading.style.display = 'block';
+                submitBtn.disabled = true;
+
+                // Simulate API call (replace with actual API call)
+                try {
+                    // This is a simulation - replace with real authentication
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // For demo purposes, accept any email/password
+                    // In real app, you would make an API call here
+                    
+                    showMessage('success', 'Login successful! Redirecting...');
+                    
+                    // Simulate redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                    
+                } catch (error) {
+                    showMessage('error', 'Login failed. Please check your credentials.');
+                    console.error('Login error:', error);
+                } finally {
+                    // Reset button state
+                    btnText.style.display = 'block';
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // Social login buttons
+            googleBtn.addEventListener('click', function() {
+                showMessage('info', 'Redirecting to Google authentication...');
+                // In real app: window.location.href = '/auth/google';
+            });
+
+            githubBtn.addEventListener('click', function() {
+                showMessage('info', 'Redirecting to GitHub authentication...');
+                // In real app: window.location.href = '/auth/github';
+            });
+
+            // Forgot password
+            forgotPassword.addEventListener('click', function(e) {
+                e.preventDefault();
+                const email = prompt('Please enter your email to reset password:');
+                if (email && validateEmail(email)) {
+                    showMessage('success', `Password reset link sent to ${email}`);
+                } else if (email) {
+                    alert('Please enter a valid email address');
+                }
+            });
+
+            // Register link
+            registerLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showMessage('info', 'Redirecting to registration page...');
+                // In real app: window.location.href = '/register';
+            });
+
+            // Auto-fill demo credentials for testing
+            window.demoLogin = function() {
+                emailInput.value = 'demo@academy.com';
+                passwordInput.value = 'password123';
+                loginForm.requestSubmit();
+            };
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    loginForm.requestSubmit();
+                }
+                if (e.altKey && e.key === 'd') {
+                    window.demoLogin();
+                }
+            });
+
+            // Check for saved credentials
+            const savedEmail = localStorage.getItem('rememberedEmail');
+            if (savedEmail) {
+                emailInput.value = savedEmail;
+                document.getElementById('remember').checked = true;
+            }
+        });
+    </script>
 </body>
-
 </html>
