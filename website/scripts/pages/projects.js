@@ -132,7 +132,7 @@ function renderProjects(filter = 'All') {
 
         if (folderName) {
             // Updated path to ensure it points correctly from your projects page
-            liveLink = `../public/${folderName}/index.html`;
+            liveLink = `../../public/${folderName}/index.html`;
             codeLink = `${REPO_URL}/${folderName}`;
         } else {
             isDisabled = true;
