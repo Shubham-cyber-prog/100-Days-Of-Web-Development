@@ -1,50 +1,778 @@
-/* --- Animations: Motion System --- */
+/* ============================================
+   ADVANCED MOTION SYSTEM v2.0
+   Professional animation library for modern web
+   ============================================ */
 
-/* keyframes */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+:root {
+  /* Animation easings - Material Design inspired */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphatic: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-overshoot: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-bounce: cubic-bezier(0.68, 0.7, 0.25, 1.05);
+  
+  /* Animation durations */
+  --duration-ultrafast: 150ms;
+  --duration-fast: 250ms;
+  --duration-normal: 400ms;
+  --duration-slow: 600ms;
+  --duration-ultraslow: 800ms;
+  
+  /* Stagger delays */
+  --stagger-step: 80ms;
+  --stagger-short: 40ms;
+  --stagger-long: 120ms;
+  
+  /* Motion preferences */
+  --motion-reduce: 0;
+  --motion-safe: 1;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-reduce: 1;
+    --motion-safe: 0;
+  }
+}
+
+/* ============================================
+   KEYFRAMES LIBRARY
+   ============================================ */
+
+/* === ENTRANCE ANIMATIONS === */
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(30px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  70% {
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUpSpring {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-8px);
+  }
+  80% {
+    transform: translateY(4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRightSpring {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-8px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* === EXIT ANIMATIONS === */
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+@keyframes fadeOutScale {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* === ATTENTION ANIMATIONS === */
 
 @keyframes rocketPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-        filter: brightness(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-        filter: brightness(1.2);
-    }
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1) drop-shadow(0 0 8px rgba(255, 107, 107, 0));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: brightness(1.3) drop-shadow(0 0 20px rgba(255, 107, 107, 0.7));
+  }
 }
 
-/* Utilities */
-.animate-enter {
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(-1deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(1deg);
+  }
 }
 
-.delay-100 {
-    animation-delay: 100ms;
+@keyframes gentlePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
 }
 
-.delay-200 {
-    animation-delay: 200ms;
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
-.delay-300 {
-    animation-delay: 300ms;
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+  }
 }
 
-/* Micro-interactions */
+@keyframes bounceSoft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes spinSlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx, 100px), var(--ty, -100px)) rotate(var(--r, 180deg));
+    opacity: 0;
+  }
+}
+
+@keyframes morph {
+  0% {
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+  }
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes textReveal {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes slideInWave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes tiltShake {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* === SCROLL-BASED ANIMATIONS === */
+
+@keyframes parallaxSlide {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(var(--parallax-speed, 1) * -20%));
+  }
+}
+
+@keyframes scrollReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   ANIMATION UTILITY CLASSES
+   ============================================ */
+
+/* === ENTRANCE UTILITIES === */
+
+.animate-enter-up {
+  animation: fadeInUp var(--duration-normal) var(--ease-smooth) forwards;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-enter-down {
+  animation: fadeInDown var(--duration-normal) var(--ease-smooth) forwards;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-enter-left {
+  animation: fadeInLeft var(--duration-normal) var(--ease-smooth) forwards;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-enter-right {
+  animation: fadeInRight var(--duration-normal) var(--ease-smooth) forwards;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-enter-scale {
+  animation: fadeInScale var(--duration-slow) var(--ease-overshoot) forwards;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-enter-spring {
+  animation: slideUpSpring var(--duration-slow) var(--ease-elastic) forwards;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-enter-pop {
+  animation: fadeInScale var(--duration-fast) var(--ease-emphatic) forwards;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+/* === ATTENTION UTILITIES === */
+
+.animate-pulse-soft {
+  animation: gentlePulse 3s var(--ease-smooth) infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-pulse-strong {
+  animation: rocketPulse 2s var(--ease-emphatic) infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-float {
+  animation: float 6s var(--ease-smooth) infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-bounce-soft {
+  animation: bounceSoft 2s var(--ease-bounce) infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 20s linear infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s var(--ease-elastic);
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-glow {
+  animation: glowPulse 3s var(--ease-smooth) infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s var(--ease-smooth) infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-morph {
+  animation: morph 8s var(--ease-smooth) infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-gradient-flow {
+  animation: gradientFlow 5s var(--ease-smooth) infinite;
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+.animate-tilt-shake {
+  animation: tiltShake 0.5s var(--ease-elastic);
+  animation-play-state: var(--motion-safe, running) paused;
+}
+
+/* === DELAY UTILITIES === */
+
+.delay-50 { animation-delay: 50ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-250 { animation-delay: 250ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+.delay-900 { animation-delay: 900ms; }
+.delay-1000 { animation-delay: 1000ms; }
+
+/* === DURATION UTILITIES === */
+
+.duration-100 { animation-duration: 100ms; }
+.duration-150 { animation-duration: 150ms; }
+.duration-200 { animation-duration: 200ms; }
+.duration-250 { animation-duration: 250ms; }
+.duration-300 { animation-duration: 300ms; }
+.duration-400 { animation-duration: 400ms; }
+.duration-500 { animation-duration: 500ms; }
+.duration-600 { animation-duration: 600ms; }
+.duration-700 { animation-duration: 700ms; }
+.duration-800 { animation-duration: 800ms; }
+.duration-900 { animation-duration: 900ms; }
+.duration-1000 { animation-duration: 1000ms; }
+
+/* === EASING UTILITIES === */
+
+.ease-smooth { animation-timing-function: var(--ease-smooth); }
+.ease-emphatic { animation-timing-function: var(--ease-emphatic); }
+.ease-overshoot { animation-timing-function: var(--ease-overshoot); }
+.ease-elastic { animation-timing-function: var(--ease-elastic); }
+.ease-quart { animation-timing-function: var(--ease-quart); }
+.ease-bounce { animation-timing-function: var(--ease-bounce); }
+
+/* === FILL MODE UTILITIES === */
+
+.fill-none { animation-fill-mode: none; }
+.fill-forwards { animation-fill-mode: forwards; }
+.fill-backwards { animation-fill-mode: backwards; }
+.fill-both { animation-fill-mode: both; }
+
+/* === PLAY STATE UTILITIES === */
+
+.play-running { animation-play-state: running; }
+.play-paused { animation-play-state: paused; }
+
+/* === STAGGER UTILITIES === */
+
+.stagger-children > * {
+  animation-delay: calc(var(--stagger-index, 0) * var(--stagger-step, 80ms));
+}
+
+.stagger-group-1 > *:nth-child(1) { --stagger-index: 0; }
+.stagger-group-1 > *:nth-child(2) { --stagger-index: 1; }
+.stagger-group-1 > *:nth-child(3) { --stagger-index: 2; }
+.stagger-group-1 > *:nth-child(4) { --stagger-index: 3; }
+.stagger-group-1 > *:nth-child(5) { --stagger-index: 4; }
+.stagger-group-1 > *:nth-child(6) { --stagger-index: 5; }
+.stagger-group-1 > *:nth-child(7) { --stagger-index: 6; }
+.stagger-group-1 > *:nth-child(8) { --stagger-index: 7; }
+.stagger-group-1 > *:nth-child(9) { --stagger-index: 8; }
+.stagger-group-1 > *:nth-child(10) { --stagger-index: 9; }
+
+/* === INTERACTION UTILITIES === */
+
+.hover-lift {
+  transition: transform var(--duration-fast) var(--ease-smooth),
+              box-shadow var(--duration-fast) var(--ease-smooth);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.hover-scale {
+  transition: transform var(--duration-fast) var(--ease-emphatic);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: box-shadow var(--duration-fast) var(--ease-smooth);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+}
+
 .hover-orbit:hover {
-    animation: rocketPulse 2s infinite;
+  animation: rocketPulse 2s var(--ease-emphatic) infinite;
+}
+
+.hover-wiggle:hover {
+  animation: wiggle 0.6s var(--ease-elastic);
+}
+
+.hover-tilt:hover {
+  transition: transform var(--duration-fast) var(--ease-overshoot);
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+}
+
+.hover-shimmer:hover {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s var(--ease-smooth);
+}
+
+.hover-pulse:hover {
+  animation: gentlePulse 1.5s var(--ease-smooth) infinite;
+}
+
+/* === SCROLL TRIGGER UTILITIES === */
+
+.scroll-trigger {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--duration-normal) var(--ease-smooth),
+              transform var(--duration-normal) var(--ease-smooth);
+}
+
+.scroll-trigger.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.parallax-layer {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* === PERFORMANCE OPTIMIZATIONS === */
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-scroll {
+  will-change: transform, opacity;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* === REDUCED MOTION OVERRIDES === */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-enter-up,
+  .animate-enter-down,
+  .animate-enter-left,
+  .animate-enter-right,
+  .animate-enter-scale,
+  .animate-enter-spring,
+  .animate-enter-pop,
+  .animate-pulse-soft,
+  .animate-pulse-strong,
+  .animate-float,
+  .animate-bounce-soft,
+  .animate-spin-slow,
+  .animate-wiggle,
+  .animate-glow,
+  .animate-shimmer,
+  .animate-morph,
+  .animate-gradient-flow,
+  .animate-tilt-shake {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .hover-lift:hover,
+  .hover-scale:hover,
+  .hover-tilt:hover {
+    transform: none !important;
+  }
+  
+  .scroll-trigger {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* === JAVASCRIPT TRIGGER CLASSES === */
+
+.animate-on-scroll {
+  opacity: 0;
+  animation-play-state: paused;
+}
+
+.animate-on-view {
+  opacity: 0;
+  animation-play-state: paused;
+}
+
+.animate-on-hover {
+  animation-play-state: paused;
+}
+
+.animate-on-hover:hover {
+  animation-play-state: running;
+}
+
+/* ============================================
+   COMPONENT ANIMATIONS
+   ============================================ */
+
+/* Button animations */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.btn-ripple:focus:not(:active)::after {
+  animation: ripple 1s var(--ease-smooth);
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(40, 40);
+    opacity: 0;
+  }
+}
+
+/* Loading spinner */
+.spinner {
+  animation: spinSlow 1s linear infinite;
+}
+
+.spinner-dot {
+  animation: bounceSoft 1.4s infinite ease-in-out both;
+}
+
+.spinner-dot:nth-child(1) { animation-delay: -0.32s; }
+.spinner-dot:nth-child(2) { animation-delay: -0.16s; }
+
+/* Notification/toast */
+.notification-slide {
+  animation: slideInRightSpring 0.5s var(--ease-elastic) forwards;
+}
+
+.notification-exit {
+  animation: fadeOutDown 0.3s var(--ease-smooth) forwards;
+}
+
+/* Modal animations */
+.modal-enter {
+  animation: fadeInScale 0.3s var(--ease-emphatic) forwards;
+}
+
+.modal-exit {
+  animation: fadeOutScale 0.2s var(--ease-smooth) forwards;
+}
+
+/* Progress bar */
+.progress-pulse {
+  animation: shimmer 2s var(--ease-smooth) infinite;
+}
+
+/* Tooltip */
+.tooltip-enter {
+  animation: fadeInUp 0.2s var(--ease-smooth) forwards;
+}
+
+/* Card hover effects */
+.card-3d {
+  transition: transform 0.5s var(--ease-smooth),
+              box-shadow 0.5s var(--ease-smooth);
+  transform-style: preserve-3d;
+}
+
+.card-3d:hover {
+  transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================
+   SAMPLE USAGE
+   ============================================ */
+
+/* 
+  <div class="animate-enter-up delay-100">
+  <div class="animate-enter-spring ease-elastic">
+  <div class="stagger-children stagger-group-1">
+  <button class="hover-lift hover-glow">
+  <div class="scroll-trigger animate-on-scroll animate-enter-up">
+*/
+
+/* Initialize animations on load */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-on-load {
+    animation-play-state: running;
+  }
 }
