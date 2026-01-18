@@ -3,8 +3,14 @@
  * Protects routes by checking for a session token.
  * Redirects unauthenticated users to login.html.
  */
+// Allow dashboard access in demo / OSS mode
+const DEMO_MODE = true;
 
 (function () {
+    if (DEMO_MODE) {
+        return;
+    }
+
     const protectedRoutes = [
         'dashboard.html',
         'projects.html',
