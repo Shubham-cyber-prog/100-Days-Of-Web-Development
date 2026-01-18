@@ -93,6 +93,10 @@
         border: none;
         background: transparent;
         cursor: pointer;
+        padding: 1rem;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
 
         /* 3D Context */
         perspective: 1000px;
@@ -109,7 +113,9 @@
                for cursor tracking to feel responsive. 0.1s is a good balance.
                Box-shadow can be slower.
             */
-        transition: transform 0.05s ease-out, box-shadow 0.4s ease;
+        transition:
+          transform 0.05s ease-out,
+          box-shadow 0.4s ease;
         transform: rotateX(var(--rx)) rotateY(var(--ry))
           translate3d(var(--tx), var(--ty), 0);
 
@@ -121,14 +127,16 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 0.5rem;
+        gap: 0.75rem;
+        margin-bottom: 0.25rem;
+        flex-wrap: nowrap;
       }
 
       .card-divider {
         width: 100%;
         height: 1px;
         background: var(--glass-border);
-        margin: 12px 0 16px;
+        margin: 0.5rem 0 0.75rem;
       }
 
       .code-chip {
@@ -177,6 +185,34 @@
         font-size: var(--text-sm);
         color: var(--text-tertiary);
         opacity: 0.9;
+        padding-top: var(--space-2);
+      }
+
+      .project-card h3 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-height: 1.3;
+        word-wrap: break-word;
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: auto;
+      }
+
+      .tech-tag {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        background: var(--accent-alpha);
+        border: 1px solid var(--accent-core);
+        border-radius: 4px;
+        color: var(--text-secondary);
+        white-space: nowrap;
       }
 
       .card-hint.muted {
@@ -200,7 +236,8 @@
             */
         transform: rotateX(var(--rx)) rotateY(var(--ry))
           translate3d(var(--tx), var(--ty), 0) scale(1.02);
-        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6),
+        box-shadow:
+          0 15px 35px -5px rgba(0, 0, 0, 0.6),
           0 0 10px rgba(255, 159, 28, 0.2);
         /* Stronger accent glow on hover */
         z-index: 10;
@@ -275,36 +312,40 @@
     </style>
   </head>
   <script>
-  // 1. Intercept all clicks on the project grid
-  document.getElementById('projectsGrid').addEventListener('click', async (e) => {
-    // Find if the clicked element (or its parent) is a link or a project card
-    const card = e.target.closest('.project-card');
-    if (!card) return;
+    // 1. Intercept all clicks on the project grid
+    document
+      .getElementById("projectsGrid")
+      .addEventListener("click", async (e) => {
+        // Find if the clicked element (or its parent) is a link or a project card
+        const card = e.target.closest(".project-card");
+        if (!card) return;
 
-    // Get the destination URL from your data (adjust if your property name is different)
-    const targetUrl = card.getAttribute('data-url') || card.querySelector('a')?.getAttribute('href');
-    
-    if (targetUrl) {
-      e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
+        // Get the destination URL from your data (adjust if your property name is different)
+        const targetUrl =
+          card.getAttribute("data-url") ||
+          card.querySelector("a")?.getAttribute("href");
 
-      try {
-        // 2. Perform a "Health Check" on the URL
-        const response = await fetch(targetUrl, { method: 'HEAD' });
+        if (targetUrl) {
+          e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
 
-        if (response.ok) {
-          // Milestone exists! Proceed to the project.
-          window.location.href = targetUrl;
-        } else {
-          // milestone folder missing (404), show your custom 404 page
-          window.location.href = './404.html'; 
+          try {
+            // 2. Perform a "Health Check" on the URL
+            const response = await fetch(targetUrl, { method: "HEAD" });
+
+            if (response.ok) {
+              // Milestone exists! Proceed to the project.
+              window.location.href = targetUrl;
+            } else {
+              // milestone folder missing (404), show your custom 404 page
+              window.location.href = "./404.html";
+            }
+          } catch (error) {
+            // Network error or folder completely missing
+            window.location.href = "./404.html";
+          }
         }
-      } catch (error) {
-        // Network error or folder completely missing
-        window.location.href = './404.html';
-      }
-    }
-  });
-</script>
+      });
+  </script>
   <body>
     <!-- Header -->
     <header class="site-header">

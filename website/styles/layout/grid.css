@@ -1,112 +1,114 @@
 /* --- Layout: Grid & Container --- */
 
 .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: var(--container-padding);
-    padding-right: var(--container-padding);
-    max-width: var(--container-width-xl);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  max-width: var(--container-width-xl);
 }
 
 /* Responsive Container Widths */
 @media (max-width: 1280px) {
-    .container {
-        max-width: 1024px;
-    }
+  .container {
+    max-width: 1024px;
+  }
 }
 
 @media (max-width: 1024px) {
-    .container {
-        max-width: 768px;
-    }
+  .container {
+    max-width: 768px;
+  }
 }
 
 @media (max-width: 768px) {
-    .container {
-        max-width: 100%;
-    }
+  .container {
+    max-width: 100%;
+  }
 }
 
 /* Grid System */
 .grid {
-    display: grid;
-    gap: var(--space-6);
+  display: grid;
+  gap: var(--space-6);
 }
 
 .grid-2 {
-    grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .grid-3 {
-    grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .grid-4 {
-    grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
 /* Stack on Mobile */
 @media (max-width: 900px) {
-    .grid-3 {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .grid-4 {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 600px) {
+  /* Stack grid-2 and grid-3 on small mobile */
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
 
-    /* Stack grid-2 and grid-3 on small mobile */
-    .grid-2,
-    .grid-3 {
-        grid-template-columns: 1fr;
-    }
+  /* Maintain responsive columns for grid-4 (Projects) */
+  .grid-4 {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    /* Reduce gap on mobile */
+  }
 
-    /* Maintain 2 columns for grid-4 (Projects) as requested, 
-       unless it's extremely small, but user asked for 2. */
-    .grid-4 {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-3);
-        /* Reduce gap on mobile */
-    }
+  .grid {
+    gap: 1rem;
+  }
 }
 
 /* Flex Utilities */
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .flex-col {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .get-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .items-center {
-    align-items: center;
+  align-items: center;
 }
 
 .justify-between {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .gap-2 {
-    gap: var(--space-2);
+  gap: var(--space-2);
 }
 
 .gap-4 {
-    gap: var(--space-4);
+  gap: var(--space-4);
 }
 
 /* Section Spacing */
 .section {
-    padding-top: var(--space-16);
-    padding-bottom: var(--space-16);
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
 }

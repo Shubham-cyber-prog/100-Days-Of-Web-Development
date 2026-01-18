@@ -150,16 +150,16 @@ function renderProjects(filter = 'All') {
 
         card.innerHTML = `
             <div class="card-top">
-                <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px;">
+                <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; max-width: calc(100% - 40px);">
                     ${difficulty} • ${dayLabel}
                 </span>
                 <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
             <div class="card-divider"></div>
-            <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); min-height: 40px;">
+            <h3 style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
                 ${project.title}
             </h3>
-            <div class="tech-stack" style="margin-bottom: var(--space-4); display: flex; flex-wrap: wrap; gap: 5px;">
+            <div class="tech-stack" style="margin-bottom: 0.5rem;">
                 ${techTags}
             </div>
             ${isDisabled ? `<div class="card-hint muted">Pending</div>` : ''}
