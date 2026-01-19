@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Tetris</h1>
+        <div class="game-info">
+            <div class="info-item">
+                <span>Score:</span>
+                <span id="score">0</span>
+            </div>
+            <div class="info-item">
+                <span>Level:</span>
+                <span id="level">1</span>
+            </div>
+            <div class="info-item">
+                <span>Lines:</span>
+                <span id="lines">0</span>
+            </div>
+        </div>
+        <canvas id="gameCanvas" width="300" height="600"></canvas>
+        <div class="controls">
+            <p>Use arrow keys: ← → ↓ to move, ↑ to rotate</p>
+            <p>Spacebar: Drop piece</p>
+            <button id="restartBtn">Restart Game</button>
+        </div>
+        <div id="gameOver" class="game-over hidden">
+            <h2>Game Over!</h2>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <p>Level: <span id="finalLevel">1</span></p>
+            <p>Lines: <span id="finalLines">0</span></p>
+            <button id="playAgainBtn">Play Again</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
