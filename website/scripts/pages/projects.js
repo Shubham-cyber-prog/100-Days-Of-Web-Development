@@ -27,10 +27,11 @@ const folderMap = {
     87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
+    102: "Day 102", 103: "Day 103", 105: "Day 105", 107: "Day 107",
     145: "Day 145",
     151: "Day 151",
     152: "Day 152 - Newsly",
-    155: "Day 155"
+    155: "Day 155", 156: "Day 156"
 };
 
 // Full 100-Day Project List
@@ -178,16 +179,16 @@ function renderProjects(filter = 'All') {
 
         card.innerHTML = `
             <div class="card-top">
-                <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px;">
+                <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; max-width: calc(100% - 40px);">
                     ${difficulty} • ${dayLabel}
                 </span>
                 <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
             <div class="card-divider"></div>
-            <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); min-height: 40px;">
+            <h3 style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
                 ${project.title}
             </h3>
-            <div class="tech-stack" style="margin-bottom: var(--space-4); display: flex; flex-wrap: wrap; gap: 5px;">
+            <div class="tech-stack" style="margin-bottom: 0.5rem;">
                 ${techTags}
             </div>
             ${isDisabled ? `<div class="card-hint muted">Pending</div>` : ''}
