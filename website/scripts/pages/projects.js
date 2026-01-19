@@ -31,6 +31,7 @@ const folderMap = {
     145: "Day 145",
     151: "Day 151",
     152: "Day 152 - Newsly",
+    154: "Day 154 ",
     155: "Day 155", 156: "Day 156"
 };
 
@@ -108,6 +109,10 @@ const allProjects = [
     { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
     // DAY 151
     { day: 151, title: "Mini Geo Guesser", tech: ["HTML", "CSS", "JS"] },
+    // DAY 152
+    { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
+    // DAY 154
+    { day: 154, title: "Snake Game", tech: ["HTML", "CSS", "JS"] }
     { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
     { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] }
 ];
