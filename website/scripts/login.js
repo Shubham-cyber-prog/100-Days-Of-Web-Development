@@ -1,4 +1,3 @@
-
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
 import {
     getAuth,
@@ -8,8 +7,10 @@ import {
     GoogleAuthProvider,
     GithubAuthProvider,
     sendPasswordResetEmail,
-    signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
+    setPersistence,
+    browserLocalPersistence,
+    browserSessionPersistence
 } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
 
 // Your Firebase configuration - REPLACE WITH YOUR ACTUAL CONFIG
@@ -26,9 +27,58 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Set persistence to LOCAL (keeps user logged in)
+setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+        console.log('Auth persistence set to LOCAL');
+    })
+    .catch((error) => {
+        console.error('Error setting persistence:', error);
+    });
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Auth script loaded');
     
+    // --- Check if user is already logged in ---
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log('User already logged in:', user.email);
+            console.log('UID:', user.uid);
+            
+            // Store user info in localStorage for easy access
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userEmail', user.email);
+            localStorage.setItem('userId', user.uid);
+            localStorage.setItem('userName', user.displayName || user.email.split('@')[0]);
+            
+            // If user is on login page, redirect to dashboard
+            if (window.location.pathname.includes('login.html') || 
+                window.location.pathname.includes('index.html') ||
+                window.location.pathname === '/') {
+                
+                console.log('Redirecting to dashboard...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 500);
+            }
+        } else {
+            // User is not logged in
+            console.log('No user logged in');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userName');
+            
+            // If user is on dashboard without auth, redirect to login
+            if (window.location.pathname.includes('dashboard.html')) {
+                console.log('Not authenticated, redirecting to login...');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 500);
+            }
+        }
+    });
+
     // --- Elements ---
     const authForm = document.getElementById('authForm');
     const emailInput = document.getElementById('email');
@@ -46,406 +96,489 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- State ---
     let isLogin = true;
 
-    // --- Check if user is already logged in ---
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            console.log('User already logged in:', user.email);
-            // Redirect to dashboard if already logged in
-            window.location.href = 'dashboard.html';
+    // --- If form elements exist, setup login/register ---
+    if (authForm) {
+        // --- Toggle between Login and Register ---
+        function attachToggleListener() {
+            const toggleBtn = document.querySelector('#toggleAuth');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    isLogin = !isLogin;
+                    updateUI();
+                });
+            }
         }
-    });
 
-    // --- Toggle between Login and Register ---
-    function attachToggleListener() {
-        const toggleBtn = document.querySelector('#toggleAuth');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                isLogin = !isLogin;
-                updateUI();
+        // Initialize toggle listener
+        attachToggleListener();
+
+        function updateUI() {
+            // Animate transition
+            const headerText = document.querySelector('.auth-header');
+            if (headerText) headerText.style.opacity = '0';
+
+            setTimeout(() => {
+                if (isLogin) {
+                    authTitle.textContent = 'Welcome Back!';
+                    authSubtitle.innerHTML = `Don't have an account? <button id="toggleAuth" class="text-link-btn">Create a new account now</button>, it's FREE!`;
+                    if (confirmPasswordGroup) confirmPasswordGroup.style.display = 'none';
+                    submitBtn.textContent = 'Login Now';
+                    if (confirmPasswordInput) confirmPasswordInput.removeAttribute('required');
+                    if (forgotPasswordAction) forgotPasswordAction.style.display = 'flex';
+                } else {
+                    authTitle.textContent = 'Create Account';
+                    authSubtitle.innerHTML = `Already have an account? <button id="toggleAuth" class="text-link-btn">Log in instead</button>`;
+                    if (confirmPasswordGroup) confirmPasswordGroup.style.display = 'block';
+                    submitBtn.textContent = 'Join Now';
+                    if (confirmPasswordInput) confirmPasswordInput.setAttribute('required', 'true');
+                    if (forgotPasswordAction) forgotPasswordAction.style.display = 'none';
+                }
+
+                // Re-attach toggle listener
+                attachToggleListener();
+
+                if (headerText) {
+                    headerText.style.transition = 'opacity 200ms ease';
+                    headerText.style.opacity = '1';
+                }
+
+                // Clear previous errors
+                clearErrors();
+            }, 150);
+        }
+
+        // --- Form Validation ---
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function clearErrors() {
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.classList.remove('error');
+                const errorMsg = input.nextElementSibling;
+                if (errorMsg && errorMsg.classList.contains('error-msg')) {
+                    errorMsg.remove();
+                }
             });
         }
-    }
 
-    // Initialize toggle listener
-    attachToggleListener();
-
-    function updateUI() {
-        // Animate transition
-        const headerText = document.querySelector('.auth-header');
-        if (headerText) headerText.style.opacity = '0';
-
-        setTimeout(() => {
-            if (isLogin) {
-                authTitle.textContent = 'Welcome Back!';
-                authSubtitle.innerHTML = `Don't have an account? <button id="toggleAuth" class="text-link-btn">Create a new account now</button>, it's FREE!`;
-                if (confirmPasswordGroup) confirmPasswordGroup.style.display = 'none';
-                submitBtn.textContent = 'Login Now';
-                if (confirmPasswordInput) confirmPasswordInput.removeAttribute('required');
-                if (forgotPasswordAction) forgotPasswordAction.style.display = 'flex';
-            } else {
-                authTitle.textContent = 'Create Account';
-                authSubtitle.innerHTML = `Already have an account? <button id="toggleAuth" class="text-link-btn">Log in instead</button>`;
-                if (confirmPasswordGroup) confirmPasswordGroup.style.display = 'block';
-                submitBtn.textContent = 'Join Now';
-                if (confirmPasswordInput) confirmPasswordInput.setAttribute('required', 'true');
-                if (forgotPasswordAction) forgotPasswordAction.style.display = 'none';
+        function showError(input, message) {
+            // Remove existing error
+            const existingError = input.nextElementSibling;
+            if (existingError && existingError.classList.contains('error-msg')) {
+                existingError.remove();
             }
 
-            // Re-attach toggle listener
-            attachToggleListener();
-
-            if (headerText) {
-                headerText.style.transition = 'opacity 200ms ease';
-                headerText.style.opacity = '1';
-            }
-
-            // Clear previous errors
-            clearErrors();
-        }, 150);
-    }
-
-    // --- Form Validation ---
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function clearErrors() {
-        const inputs = document.querySelectorAll('.form-input');
-        inputs.forEach(input => {
-            input.classList.remove('error');
-            const errorMsg = input.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('error-msg')) {
-                errorMsg.remove();
-            }
-        });
-    }
-
-    function showError(input, message) {
-        // Remove existing error
-        const existingError = input.nextElementSibling;
-        if (existingError && existingError.classList.contains('error-msg')) {
-            existingError.remove();
-        }
-
-        // Add error class to input
-        input.classList.add('error');
-        
-        // Create error message element
-        const errorMsg = document.createElement('div');
-        errorMsg.className = 'error-msg';
-        errorMsg.textContent = message;
-        errorMsg.style.color = '#ef4444';
-        errorMsg.style.fontSize = '0.875rem';
-        errorMsg.style.marginTop = '0.25rem';
-        
-        // Insert after input
-        input.parentNode.insertBefore(errorMsg, input.nextSibling);
-
-        // Shake animation
-        input.style.animation = 'shake 0.3s ease-in-out';
-        setTimeout(() => {
-            input.style.animation = '';
-        }, 300);
-    }
-
-    // Add shake animation CSS
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-        
-        .error {
-            border-color: #ef4444 !important;
-            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1) !important;
-        }
-        
-        .loading {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        
-        .text-link-btn {
-            background: none;
-            border: none;
-            color: #3b82f6;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: inherit;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .text-link-btn:hover {
-            color: #2563eb;
-        }
-    `;
-    document.head.appendChild(style);
-
-    // --- Form Submission ---
-    authForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        clearErrors();
-
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
-
-        let isValid = true;
-
-        // Email validation
-        if (!email) {
-            showError(emailInput, 'Email is required');
-            isValid = false;
-        } else if (!validateEmail(email)) {
-            showError(emailInput, 'Please enter a valid email address');
-            isValid = false;
-        }
-
-        // Password validation
-        if (!password) {
-            showError(passwordInput, 'Password is required');
-            isValid = false;
-        } else if (password.length < 6) {
-            showError(passwordInput, 'Password must be at least 6 characters');
-            isValid = false;
-        }
-
-        // Confirm password validation (for registration only)
-        if (!isLogin) {
-            if (!confirmPassword) {
-                showError(confirmPasswordInput, 'Please confirm your password');
-                isValid = false;
-            } else if (password !== confirmPassword) {
-                showError(confirmPasswordInput, 'Passwords do not match');
-                isValid = false;
-            }
-        }
-
-        if (!isValid) return;
-
-        // Show loading state
-        const originalBtnText = submitBtn.textContent;
-        submitBtn.textContent = 'Processing...';
-        submitBtn.disabled = true;
-        submitBtn.classList.add('loading');
-
-        try {
-            if (isLogin) {
-                // Login
-                await signInWithEmailAndPassword(auth, email, password);
-                console.log('Login successful');
-                window.location.href = 'dashboard.html';
-            } else {
-                // Register
-                await createUserWithEmailAndPassword(auth, email, password);
-                console.log('Registration successful');
-                // Show success message and auto login
-                alert('Account created successfully! Redirecting to dashboard...');
-                window.location.href = 'dashboard.html';
-            }
-        } catch (error) {
-            console.error('Auth error:', error);
+            // Add error class to input
+            input.classList.add('error');
             
-            let errorMessage = 'An error occurred. Please try again.';
+            // Create error message element
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'error-msg';
+            errorMsg.textContent = message;
+            errorMsg.style.color = '#ef4444';
+            errorMsg.style.fontSize = '0.875rem';
+            errorMsg.style.marginTop = '0.25rem';
             
-            switch (error.code) {
-                case 'auth/user-not-found':
-                    errorMessage = 'No account found with this email.';
-                    break;
-                case 'auth/wrong-password':
-                    errorMessage = 'Incorrect password.';
-                    break;
-                case 'auth/email-already-in-use':
-                    errorMessage = 'An account with this email already exists.';
-                    break;
-                case 'auth/weak-password':
-                    errorMessage = 'Password is too weak. Please use at least 6 characters.';
-                    break;
-                case 'auth/invalid-email':
-                    errorMessage = 'Invalid email address.';
-                    break;
-                case 'auth/too-many-requests':
-                    errorMessage = 'Too many attempts. Please try again later.';
-                    break;
-                case 'auth/network-request-failed':
-                    errorMessage = 'Network error. Please check your connection.';
-                    break;
+            // Insert after input
+            input.parentNode.insertBefore(errorMsg, input.nextSibling);
+
+            // Shake animation
+            input.style.animation = 'shake 0.3s ease-in-out';
+            setTimeout(() => {
+                input.style.animation = '';
+            }, 300);
+        }
+
+        // Add shake animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
             }
             
-            showError(emailInput, errorMessage);
-        } finally {
-            // Reset button state
-            submitBtn.textContent = originalBtnText;
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('loading');
-        }
-    });
-
-    // --- Social Authentication ---
-    if (googleBtn) {
-        googleBtn.addEventListener('click', async () => {
-            try {
-                const provider = new GoogleAuthProvider();
-                googleBtn.disabled = true;
-                googleBtn.textContent = 'Connecting...';
-                
-                const result = await signInWithPopup(auth, provider);
-                console.log('Google sign-in successful:', result.user.email);
-                window.location.href = 'dashboard.html';
-            } catch (error) {
-                console.error('Google sign-in error:', error);
-                let errorMessage = 'Failed to sign in with Google. ';
-                
-                if (error.code === 'auth/popup-blocked') {
-                    errorMessage += 'Popup blocked by browser. Please allow popups for this site.';
-                } else if (error.code === 'auth/popup-closed-by-user') {
-                    errorMessage += 'Popup closed. Please try again.';
-                } else {
-                    errorMessage += 'Please try again.';
-                }
-                
-                showError(emailInput, errorMessage);
-                googleBtn.disabled = false;
-                googleBtn.textContent = 'Continue with Google';
-            }
-        });
-    }
-
-    if (githubBtn) {
-        githubBtn.addEventListener('click', async () => {
-            try {
-                const provider = new GithubAuthProvider();
-                githubBtn.disabled = true;
-                githubBtn.textContent = 'Connecting...';
-                
-                const result = await signInWithPopup(auth, provider);
-                console.log('GitHub sign-in successful:', result.user.email);
-                window.location.href = 'dashboard.html';
-            } catch (error) {
-                console.error('GitHub sign-in error:', error);
-                let errorMessage = 'Failed to sign in with GitHub. ';
-                
-                if (error.code === 'auth/popup-blocked') {
-                    errorMessage += 'Popup blocked by browser. Please allow popups for this site.';
-                } else if (error.code === 'auth/popup-closed-by-user') {
-                    errorMessage += 'Popup closed. Please try again.';
-                } else if (error.code === 'auth/account-exists-with-different-credential') {
-                    errorMessage += 'An account already exists with this email. Try signing in with another method.';
-                } else {
-                    errorMessage += 'Please try again.';
-                }
-                
-                showError(emailInput, errorMessage);
-                githubBtn.disabled = false;
-                githubBtn.textContent = 'Continue with GitHub';
-            }
-        });
-    }
-
-    // --- Guest Login (Without Firebase Auth) ---
-    if (guestBtn) {
-        guestBtn.addEventListener('click', () => {
-            if (confirm('Continue as guest? Some features may be limited.')) {
-                // Store guest session in localStorage
-                localStorage.setItem('isGuest', 'true');
-                localStorage.setItem('guestSession', Date.now().toString());
-                localStorage.setItem('guestName', 'Guest User');
-                
-                console.log('Guest login successful');
-                window.location.href = 'dashboard.html';
-            }
-        });
-    }
-
-    // --- Forgot Password ---
-    if (forgotPasswordAction) {
-        forgotPasswordAction.addEventListener('click', async (e) => {
-            e.preventDefault();
-            
-            const email = emailInput.value.trim();
-            
-            if (!email) {
-                showError(emailInput, 'Please enter your email address first.');
-                return;
+            .error {
+                border-color: #ef4444 !important;
+                box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1) !important;
             }
             
-            if (!validateEmail(email)) {
-                showError(emailInput, 'Please enter a valid email address.');
-                return;
+            .loading {
+                opacity: 0.7;
+                cursor: not-allowed;
             }
-
-            try {
-                forgotPasswordAction.textContent = 'Sending...';
-                forgotPasswordAction.disabled = true;
-                
-                await sendPasswordResetEmail(auth, email);
-                
-                alert(`Password reset email sent to ${email}. Please check your inbox.`);
-            } catch (error) {
-                console.error('Password reset error:', error);
-                
-                let errorMessage = 'Failed to send password reset email. ';
-                
-                if (error.code === 'auth/user-not-found') {
-                    errorMessage = 'No account found with this email.';
-                } else if (error.code === 'auth/too-many-requests') {
-                    errorMessage = 'Too many attempts. Please try again later.';
-                } else {
-                    errorMessage += 'Please try again.';
-                }
-                
-                showError(emailInput, errorMessage);
-            } finally {
-                forgotPasswordAction.textContent = 'Forgot Password?';
-                forgotPasswordAction.disabled = false;
+            
+            .text-link-btn {
+                background: none;
+                border: none;
+                color: #3b82f6;
+                text-decoration: underline;
+                cursor: pointer;
+                font-size: inherit;
+                padding: 0;
+                margin: 0;
             }
-        });
-    }
-
-    // --- Demo Login for Testing (Remove in production) ---
-    function setupDemoLogin() {
-        // Add demo button if not exists
-        if (!document.getElementById('demoBtn')) {
-            const demoBtn = document.createElement('button');
-            demoBtn.id = 'demoBtn';
-            demoBtn.className = 'demo-btn';
-            demoBtn.textContent = 'Try Demo Account';
-            demoBtn.style.cssText = `
+            
+            .text-link-btn:hover {
+                color: #2563eb;
+            }
+            
+            .success-message {
                 background: #10b981;
                 color: white;
-                border: none;
-                padding: 10px 20px;
+                padding: 1rem;
                 border-radius: 8px;
-                cursor: pointer;
-                margin-top: 20px;
-                font-weight: 500;
-                width: 100%;
+                margin: 1rem 0;
+                text-align: center;
+                animation: fadeIn 0.3s ease;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // --- Form Submission ---
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearErrors();
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
+
+            let isValid = true;
+
+            // Email validation
+            if (!email) {
+                showError(emailInput, 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError(emailInput, 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            // Password validation
+            if (!password) {
+                showError(passwordInput, 'Password is required');
+                isValid = false;
+            } else if (password.length < 6) {
+                showError(passwordInput, 'Password must be at least 6 characters');
+                isValid = false;
+            }
+
+            // Confirm password validation (for registration only)
+            if (!isLogin) {
+                if (!confirmPassword) {
+                    showError(confirmPasswordInput, 'Please confirm your password');
+                    isValid = false;
+                } else if (password !== confirmPassword) {
+                    showError(confirmPasswordInput, 'Passwords do not match');
+                    isValid = false;
+                }
+            }
+
+            if (!isValid) return;
+
+            // Show loading state
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+
+            try {
+                let userCredential;
+                
+                if (isLogin) {
+                    // Login
+                    userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    console.log('Login successful:', userCredential.user.email);
+                    
+                    // Show success message
+                    showSuccessMessage('Login successful! Redirecting...');
+                } else {
+                    // Register
+                    userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    console.log('Registration successful:', userCredential.user.email);
+                    
+                    // Show success message
+                    showSuccessMessage('Account created successfully! Redirecting...');
+                }
+
+                // Store user info
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', userCredential.user.email);
+                localStorage.setItem('userId', userCredential.user.uid);
+                
+                // Wait 1.5 seconds then redirect
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Auth error:', error);
+                
+                let errorMessage = 'An error occurred. Please try again.';
+                
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'No account found with this email.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Incorrect password.';
+                        break;
+                    case 'auth/email-already-in-use':
+                        errorMessage = 'An account with this email already exists.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage = 'Password is too weak. Please use at least 6 characters.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Invalid email address.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Too many attempts. Please try again later.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMessage = 'Network error. Please check your connection.';
+                        break;
+                }
+                
+                showError(emailInput, errorMessage);
+                
+                // Reset button state
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
+        });
+
+        function showSuccessMessage(message) {
+            // Remove existing success messages
+            const existingSuccess = document.querySelector('.success-message');
+            if (existingSuccess) existingSuccess.remove();
+            
+            // Create success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'success-message';
+            successMsg.innerHTML = `
+                <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+                ${message}
             `;
             
-            demoBtn.addEventListener('click', () => {
-                // Auto-fill demo credentials
-                emailInput.value = 'demo@example.com';
-                passwordInput.value = 'demo123';
-                
-                if (confirm('Use demo account? Email: demo@example.com, Password: demo123')) {
-                    // Trigger form submission after 1 second
+            // Insert after form
+            authForm.parentNode.insertBefore(successMsg, authForm.nextSibling);
+        }
+
+        // --- Social Authentication ---
+        if (googleBtn) {
+            googleBtn.addEventListener('click', async () => {
+                try {
+                    const provider = new GoogleAuthProvider();
+                    googleBtn.disabled = true;
+                    googleBtn.textContent = 'Connecting...';
+                    googleBtn.classList.add('loading');
+                    
+                    const userCredential = await signInWithPopup(auth, provider);
+                    console.log('Google sign-in successful:', userCredential.user.email);
+                    
+                    // Store user info
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', userCredential.user.email);
+                    localStorage.setItem('userId', userCredential.user.uid);
+                    localStorage.setItem('userName', userCredential.user.displayName);
+                    
+                    // Show success and redirect
+                    showSuccessMessage('Google login successful! Redirecting...');
+                    
                     setTimeout(() => {
-                        authForm.dispatchEvent(new Event('submit'));
-                    }, 1000);
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                    
+                } catch (error) {
+                    console.error('Google sign-in error:', error);
+                    let errorMessage = 'Failed to sign in with Google. ';
+                    
+                    if (error.code === 'auth/popup-blocked') {
+                        errorMessage += 'Popup blocked by browser. Please allow popups for this site.';
+                    } else if (error.code === 'auth/popup-closed-by-user') {
+                        errorMessage += 'Popup closed. Please try again.';
+                    } else {
+                        errorMessage += 'Please try again.';
+                    }
+                    
+                    showError(emailInput, errorMessage);
+                    googleBtn.disabled = false;
+                    googleBtn.textContent = 'Continue with Google';
+                    googleBtn.classList.remove('loading');
                 }
             });
-            
-            authForm.parentNode.insertBefore(demoBtn, authForm.nextSibling);
+        }
+
+        if (githubBtn) {
+            githubBtn.addEventListener('click', async () => {
+                try {
+                    const provider = new GithubAuthProvider();
+                    githubBtn.disabled = true;
+                    githubBtn.textContent = 'Connecting...';
+                    githubBtn.classList.add('loading');
+                    
+                    const userCredential = await signInWithPopup(auth, provider);
+                    console.log('GitHub sign-in successful:', userCredential.user.email);
+                    
+                    // Store user info
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', userCredential.user.email || 'github-user@github.com');
+                    localStorage.setItem('userId', userCredential.user.uid);
+                    localStorage.setItem('userName', userCredential.user.displayName || 'GitHub User');
+                    
+                    // Show success and redirect
+                    showSuccessMessage('GitHub login successful! Redirecting...');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                    
+                } catch (error) {
+                    console.error('GitHub sign-in error:', error);
+                    let errorMessage = 'Failed to sign in with GitHub. ';
+                    
+                    if (error.code === 'auth/popup-blocked') {
+                        errorMessage += 'Popup blocked by browser. Please allow popups for this site.';
+                    } else if (error.code === 'auth/popup-closed-by-user') {
+                        errorMessage += 'Popup closed. Please try again.';
+                    } else if (error.code === 'auth/account-exists-with-different-credential') {
+                        errorMessage += 'An account already exists with this email. Try signing in with another method.';
+                    } else {
+                        errorMessage += 'Please try again.';
+                    }
+                    
+                    showError(emailInput, errorMessage);
+                    githubBtn.disabled = false;
+                    githubBtn.textContent = 'Continue with GitHub';
+                    githubBtn.classList.remove('loading');
+                }
+            });
+        }
+
+        // --- Guest Login (Without Firebase Auth) ---
+        if (guestBtn) {
+            guestBtn.addEventListener('click', () => {
+                if (confirm('Continue as guest? Some features may be limited.')) {
+                    // Store guest session in localStorage
+                    localStorage.setItem('isGuest', 'true');
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('guestSession', Date.now().toString());
+                    localStorage.setItem('userName', 'Guest User');
+                    localStorage.setItem('userEmail', 'guest@example.com');
+                    localStorage.setItem('userId', 'guest_' + Date.now());
+                    
+                    console.log('Guest login successful');
+                    
+                    // Show success and redirect
+                    showSuccessMessage('Welcome Guest! Redirecting...');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                }
+            });
+        }
+
+        // --- Forgot Password ---
+        if (forgotPasswordAction) {
+            forgotPasswordAction.addEventListener('click', async (e) => {
+                e.preventDefault();
+                
+                const email = emailInput.value.trim();
+                
+                if (!email) {
+                    showError(emailInput, 'Please enter your email address first.');
+                    return;
+                }
+                
+                if (!validateEmail(email)) {
+                    showError(emailInput, 'Please enter a valid email address.');
+                    return;
+                }
+
+                try {
+                    forgotPasswordAction.textContent = 'Sending...';
+                    forgotPasswordAction.disabled = true;
+                    
+                    await sendPasswordResetEmail(auth, email);
+                    
+                    showSuccessMessage(`Password reset email sent to ${email}. Please check your inbox.`);
+                } catch (error) {
+                    console.error('Password reset error:', error);
+                    
+                    let errorMessage = 'Failed to send password reset email. ';
+                    
+                    if (error.code === 'auth/user-not-found') {
+                        errorMessage = 'No account found with this email.';
+                    } else if (error.code === 'auth/too-many-requests') {
+                        errorMessage = 'Too many attempts. Please try again later.';
+                    } else {
+                        errorMessage += 'Please try again.';
+                    }
+                    
+                    showError(emailInput, errorMessage);
+                } finally {
+                    forgotPasswordAction.textContent = 'Forgot Password?';
+                    forgotPasswordAction.disabled = false;
+                }
+            });
+        }
+
+        // --- Demo Login for Testing (Remove in production) ---
+        function setupDemoLogin() {
+            // Add demo button if not exists
+            if (!document.getElementById('demoBtn')) {
+                const demoBtn = document.createElement('button');
+                demoBtn.id = 'demoBtn';
+                demoBtn.className = 'demo-btn';
+                demoBtn.textContent = 'Try Demo Account';
+                demoBtn.style.cssText = `
+                    background: #10b981;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    margin-top: 20px;
+                    font-weight: 500;
+                    width: 100%;
+                `;
+                
+                demoBtn.addEventListener('click', () => {
+                    // Auto-fill demo credentials
+                    emailInput.value = 'demo@example.com';
+                    passwordInput.value = 'demo123';
+                    
+                    if (confirm('Use demo account? Email: demo@example.com, Password: demo123')) {
+                        // Trigger form submission after 1 second
+                        setTimeout(() => {
+                            authForm.dispatchEvent(new Event('submit'));
+                        }, 1000);
+                    }
+                });
+                
+                authForm.parentNode.insertBefore(demoBtn, authForm.nextSibling);
+            }
+        }
+
+        // Only enable demo in development
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            setupDemoLogin();
         }
     }
-
-    // Only enable demo in development
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        setupDemoLogin();
-    }
 });
+
+// Export auth for other files to use
+export { auth };
