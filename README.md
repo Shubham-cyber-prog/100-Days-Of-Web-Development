@@ -16,7 +16,7 @@ Level up your **frontend skills** with this **100 Days of Web Development Challe
 ![GitHub Repo Size](https://img.shields.io/github/repo-size/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)
 ![GitHub Stars](https://img.shields.io/github/stars/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)
 
-🔗 **Join our Discord community:** [Click Here](https://discord.gg/SW7puwEm)
+🔗 **Join our Discord community:** [Click Here](https://discord.gg/BFTWMU6p)
 
 ---
 
