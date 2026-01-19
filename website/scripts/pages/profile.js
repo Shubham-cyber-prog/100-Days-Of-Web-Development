@@ -82,16 +82,17 @@ function loadProfileData() {
     }
     // Default profile data
     return {
-        username: 'Naren',
-        handle: '@ntbnaren7',
-        avatar: 'https://github.com/ntbnaren7.png',
-        rank: 'Commander',
-        level: 45,
-        bio: 'Web developer | Learning by building | 100-Day Challenge',
-        location: 'India',
-        website: 'https://example.com',
-        github: 'https://github.com/ntbnaren7'
-    };
+    username: 'Shubham-cyber-prog',
+    handle: '@ShubhamCyberProg',
+    avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
+    rank: 'Developer',
+    level: 2,
+    bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
+    location: 'India',
+    website: 'https://tripolio.netlify.app/', 
+    github: 'https://github.com/Shubham-cyber-prog'
+};
+
 }
 
 // Save profile data to localStorage
