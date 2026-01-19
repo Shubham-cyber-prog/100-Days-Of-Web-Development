@@ -29,7 +29,8 @@ const folderMap = {
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
     145: "Day 145",
     151: "Day 151",
-    153: "Day 153"
+    152: "Day 152 - Newsly",
+    155: "Day 155"
 };
 
 // Full 100-Day Project List
@@ -106,7 +107,8 @@ const allProjects = [
     { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
     // DAY 151
     { day: 151, title: "Mini Geo Guesser", tech: ["HTML", "CSS", "JS"] },
-    { day: 153, title: "Stopwatch App", tech: ["HTML", "CSS", "JS"] }
+    { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
+    { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] }
 ];
 
 function getDifficulty(day) {
@@ -176,16 +178,16 @@ function renderProjects(filter = 'All') {
 
         card.innerHTML = `
             <div class="card-top">
-                <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; max-width: calc(100% - 40px);">
+                <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px;">
                     ${difficulty} • ${dayLabel}
                 </span>
                 <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
             <div class="card-divider"></div>
-            <h3 style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
+            <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); min-height: 40px;">
                 ${project.title}
             </h3>
-            <div class="tech-stack" style="margin-bottom: 0.5rem;">
+            <div class="tech-stack" style="margin-bottom: var(--space-4); display: flex; flex-wrap: wrap; gap: 5px;">
                 ${techTags}
             </div>
             ${isDisabled ? `<div class="card-hint muted">Pending</div>` : ''}
