@@ -112,7 +112,7 @@ const allProjects = [
     // DAY 152
     { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
     // DAY 154
-    { day: 154, title: "Snake Game", tech: ["HTML", "CSS", "JS"] }
+    { day: 154, title: "Snake Game", tech: ["HTML", "CSS", "JS"] },
     { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
     { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] }
 ];
