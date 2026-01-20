@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>3D Model Viewer | Capstone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Import Map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="header">
+    <h1>3D Model Viewer</h1>
+    <p>Three.js · HDR · Drag & Drop</p>
+  </header>
+
+  <main class="viewer-container">
+    <div id="loader">Loading model…</div>
+    <canvas id="three-canvas"></canvas>
+
+    <!-- UI Panel -->
+   <div class="ui-panel">
+  <label>
+    Color
+    <input type="color" id="colorPicker" value="#ffffff">
+  </label>
+
+  <label>
+    Metalness
+    <input type="range" id="metalness" min="0" max="1" step="0.01" value="0.5">
+  </label>
+
+  <label>
+    Roughness
+    <input type="range" id="roughness" min="0" max="1" step="0.01" value="0.5">
+  </label>
+</div>
+
+<div class="bottom-controls">
+  <button id="screenshotBtn">📸 Screenshot</button>
+  <button id="resetCameraBtn">🔄 Reset</button>
+  <button id="autoRotateBtn">🔁 Rotate</button>
+</div>
+
+</div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    Drag & drop a <code>.glb</code> file anywhere
+  </footer>
+
+  <script type="module" src="./viewer.js"></script>
+</body>
+</html>
