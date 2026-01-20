@@ -30,7 +30,7 @@ async function fetchContributors() {
 
             card.innerHTML = `
                 <div style="position: relative; display: inline-block;">
-                    <img src="${user.avatar_url}" 
+                    <img class="avatar" src="${user.avatar_url}" 
                          alt="${user.login}" 
                          style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 16px; border: 2px solid var(--glass-border);">
                     ${index < 3 ? `<span style="position: absolute; bottom: 10px; right: -5px; background: var(--accent-core); color: black; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold;">#${index + 1}</span>` : ''}
