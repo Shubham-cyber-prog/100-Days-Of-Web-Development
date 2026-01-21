@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/website/assets/images/logo.png" />
+    <title>Documentation | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      .docs-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 120px 20px 60px;
+      }
+
+      .docs-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .docs-header h1 {
+        font-size: var(--text-4xl);
+        margin-bottom: var(--space-4);
+        background: linear-gradient(
+          135deg,
+          var(--text-primary) 0%,
+          var(--accent-core) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .docs-nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 60px;
+      }
+
+      .doc-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .doc-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent-core);
+        box-shadow: 0 8px 20px rgba(255, 122, 24, 0.2);
+      }
+
+      .doc-card i {
+        font-size: 2rem;
+        color: var(--accent-core);
+        margin-bottom: 12px;
+      }
+
+      .doc-card h3 {
+        margin-bottom: 8px;
+      }
+
+      .docs-section {
+        margin-bottom: 60px;
+        padding: 30px;
+        background: var(--bg-surface);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+      }
+
+      .docs-section h2 {
+        font-size: var(--text-2xl);
+        margin-bottom: 20px;
+        color: var(--accent-core);
+        border-bottom: 2px solid var(--glass-border);
+        padding-bottom: 10px;
+      }
+
+      .docs-section h3 {
+        font-size: var(--text-xl);
+        margin: 24px 0 12px;
+        color: var(--text-primary);
+      }
+
+      .docs-section p {
+        line-height: 1.8;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+      }
+
+      .docs-section ul,
+      .docs-section ol {
+        margin-left: 24px;
+        margin-bottom: 16px;
+        line-height: 1.8;
+      }
+
+      .docs-section li {
+        margin-bottom: 8px;
+        color: var(--text-secondary);
+      }
+
+      .code-block {
+        background: var(--bg-nebula);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 16px;
+        margin: 16px 0;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+      }
+
+      .info-box {
+        background: rgba(255, 122, 24, 0.1);
+        border-left: 4px solid var(--accent-core);
+        padding: 16px;
+        margin: 16px 0;
+        border-radius: 4px;
+      }
+
+      .info-box strong {
+        color: var(--accent-core);
+      }
+
+      .toc {
+        background: var(--bg-nebula);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 40px;
+      }
+
+      .toc h3 {
+        margin-bottom: 12px;
+        color: var(--accent-core);
+      }
+
+      .toc ul {
+        list-style: none;
+        margin-left: 0;
+      }
+
+      .toc a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .toc a:hover {
+        color: var(--accent-core);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Contributors</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+            style="
+              margin-right: 15px;
+              background: none;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--text-secondary)"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%; border-radius: 50%"
+              />
+            </button>
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a>
+              <a href="#" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="docs-container">
+      <div class="docs-header animate-enter">
+        <h1>📚 Technical Documentation</h1>
+        <p class="text-secondary">
+          Complete guide to the 100 Days of Web Development challenge
+        </p>
+      </div>
+
+      <!-- Quick Navigation Cards -->
+      <div class="docs-nav animate-enter delay-100">
+        <div class="doc-card" onclick="location.href = '#getting-started'">
+          <i class="fas fa-rocket"></i>
+          <h3>Getting Started</h3>
+          <p class="text-secondary text-sm">Setup and first steps</p>
+        </div>
+        <div class="doc-card" onclick="location.href = '#project-structure'">
+          <i class="fas fa-folder-tree"></i>
+          <h3>Project Structure</h3>
+          <p class="text-secondary text-sm">Understand the codebase</p>
+        </div>
+        <div class="doc-card" onclick="location.href = '#contributing'">
+          <i class="fas fa-code-branch"></i>
+          <h3>Contributing</h3>
+          <p class="text-secondary text-sm">Join the community</p>
+        </div>
+        <div class="doc-card" onclick="location.href = '#faq'">
+          <i class="fas fa-circle-question"></i>
+          <h3>FAQ</h3>
+          <p class="text-secondary text-sm">Common questions</p>
+        </div>
+      </div>
+
+      <!-- Table of Contents -->
+      <div class="toc animate-enter delay-200">
+        <h3>📑 Table of Contents</h3>
+        <ul>
+          <li><a href="#getting-started">1. Getting Started</a></li>
+          <li><a href="#project-structure">2. Project Structure</a></li>
+          <li><a href="#daily-challenges">3. Daily Challenges</a></li>
+          <li><a href="#contributing">4. Contributing Guidelines</a></li>
+          <li><a href="#tech-stack">5. Tech Stack</a></li>
+          <li><a href="#faq">6. FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Getting Started -->
+      <section
+        id="getting-started"
+        class="docs-section animate-enter delay-300"
+      >
+        <h2><i class="fas fa-rocket"></i> Getting Started</h2>
+
+        <h3>Prerequisites</h3>
+        <p>Before you begin, make sure you have the following installed:</p>
+        <ul>
+          <li>A modern web browser (Chrome, Firefox, Safari, or Edge)</li>
+          <li>Code editor (VS Code recommended)</li>
+          <li>Git for version control</li>
+          <li>Basic knowledge of HTML, CSS, and JavaScript</li>
+        </ul>
+
+        <h3>Installation</h3>
+        <p>Clone the repository to get started:</p>
+        <div class="code-block">
+          git clone
+          https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development.git<br />
+          cd 100-Days-Of-Web-Development
+        </div>
+
+        <h3>Running Locally</h3>
+        <p>You can run this project in several ways:</p>
+        <ol>
+          <li>
+            <strong>Using Live Server (VS Code):</strong> Install the Live
+            Server extension and click "Go Live"
+          </li>
+          <li>
+            <strong>Using Python:</strong>
+            <code>python -m http.server 8000</code>
+          </li>
+          <li><strong>Using Node.js:</strong> <code>npx http-server</code></li>
+          <li>
+            <strong>Direct File Open:</strong> Open <code>index.html</code> in
+            your browser
+          </li>
+        </ol>
+
+        <div class="info-box">
+          <strong>💡 Tip:</strong> For the best experience, use a local server
+          to avoid CORS issues with some projects.
+        </div>
+      </section>
+
+      <!-- Project Structure -->
+      <section id="project-structure" class="docs-section">
+        <h2><i class="fas fa-folder-tree"></i> Project Structure</h2>
+
+        <p>Understanding the project organization:</p>
+
+        <div class="code-block">
+          100-Days-Of-Web-Development/<br />
+          ├── public/<br />
+          │ ├── Day 01/<br />
+          │ ├── Day 02/<br />
+          │ └── ... (100 daily projects)<br />
+          ├── website/<br />
+          │ ├── pages/ # Dashboard, projects, etc.<br />
+          │ ├── styles/ # Global CSS files<br />
+          │ ├── scripts/ # JavaScript modules<br />
+          │ └── assets/ # Images, icons, etc.<br />
+          ├── README.md<br />
+          ├── CONTRIBUTING.md<br />
+          └── CODE_OF_CONDUCT.md
+        </div>
+
+        <h3>Key Directories</h3>
+        <ul>
+          <li>
+            <strong>public/</strong> - Contains all 100 daily challenge projects
+          </li>
+          <li>
+            <strong>website/pages/</strong> - Dashboard interface and navigation
+            pages
+          </li>
+          <li>
+            <strong>website/styles/</strong> - Global stylesheets and theming
+          </li>
+          <li>
+            <strong>website/scripts/</strong> - JavaScript functionality and
+            interactions
+          </li>
+        </ul>
+      </section>
+
+      <!-- Daily Challenges -->
+      <section id="daily-challenges" class="docs-section">
+        <h2><i class="fas fa-calendar-days"></i> Daily Challenges</h2>
+
+        <h3>Challenge Structure</h3>
+        <p>Each day's project follows a consistent structure:</p>
+        <ul>
+          <li><code>index.html</code> - Main HTML file</li>
+          <li><code>style.css</code> or <code>styles.css</code> - Styling</li>
+          <li><code>script.js</code> - JavaScript functionality</li>
+          <li><code>README.md</code> - Project description (optional)</li>
+        </ul>
+
+        <h3>Difficulty Levels</h3>
+        <ul>
+          <li>
+            <strong>Beginner (Days 1-30):</strong> HTML/CSS fundamentals, basic
+            JavaScript
+          </li>
+          <li>
+            <strong>Intermediate (Days 31-70):</strong> DOM manipulation, APIs,
+            responsive design
+          </li>
+          <li>
+            <strong>Advanced (Days 71-90):</strong> Complex interactions, data
+            structures
+          </li>
+          <li>
+            <strong>Capstone (Days 91-100):</strong> Full-featured applications
+          </li>
+        </ul>
+
+        <h3>Adding a New Day</h3>
+        <p>To add your own day's project:</p>
+        <ol>
+          <li>Create a new folder: <code>public/Day XX/</code></li>
+          <li>Add your HTML, CSS, and JS files</li>
+          <li>
+            Update the project metadata in
+            <code>scripts/pages/projects.js</code>
+          </li>
+          <li>Submit a pull request</li>
+        </ol>
+      </section>
+
+      <!-- Contributing -->
+      <section id="contributing" class="docs-section">
+        <h2><i class="fas fa-code-branch"></i> Contributing Guidelines</h2>
+
+        <p>
+          We welcome contributions from developers of all skill levels! Here's
+          how you can contribute:
+        </p>
+
+        <h3>Ways to Contribute</h3>
+        <ul>
+          <li>🐛 Report bugs and issues</li>
+          <li>✨ Suggest new features or improvements</li>
+          <li>📝 Improve documentation</li>
+          <li>💻 Submit new day projects</li>
+          <li>🎨 Enhance UI/UX design</li>
+          <li>🔧 Fix existing issues</li>
+        </ul>
+
+        <h3>Contribution Workflow</h3>
+        <ol>
+          <li>Fork the repository</li>
+          <li>
+            Create a feature branch:
+            <code>git checkout -b feature/your-feature</code>
+          </li>
+          <li>Make your changes</li>
+          <li>
+            Commit with clear messages:
+            <code>git commit -m "feat: add new feature"</code>
+          </li>
+          <li>
+            Push to your fork: <code>git push origin feature/your-feature</code>
+          </li>
+          <li>Open a Pull Request</li>
+        </ol>
+
+        <div class="info-box">
+          <strong>📖 Read More:</strong> Check out our
+          <a
+            href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development/blob/main/CONTRIBUTING.md"
+            style="color: var(--accent-core)"
+            >CONTRIBUTING.md</a
+          >
+          for detailed guidelines.
+        </div>
+      </section>
+
+      <!-- Tech Stack -->
+      <section id="tech-stack" class="docs-section">
+        <h2><i class="fas fa-layer-group"></i> Tech Stack</h2>
+
+        <h3>Frontend Technologies</h3>
+        <ul>
+          <li><strong>HTML5:</strong> Semantic markup and structure</li>
+          <li>
+            <strong>CSS3:</strong> Modern styling with custom properties, grid,
+            and flexbox
+          </li>
+          <li>
+            <strong>JavaScript (ES6+):</strong> Vanilla JS for all interactions
+          </li>
+        </ul>
+
+        <h3>Design System</h3>
+        <ul>
+          <li>
+            <strong>Color Scheme:</strong> Dark/Light theme with cosmic accent
+            colors
+          </li>
+          <li>
+            <strong>Typography:</strong> System fonts for optimal performance
+          </li>
+          <li><strong>Icons:</strong> Font Awesome 6.5.1</li>
+          <li>
+            <strong>Animations:</strong> CSS transitions and keyframe animations
+          </li>
+        </ul>
+
+        <h3>No Build Tools Required</h3>
+        <p>
+          This project uses vanilla web technologies without any build process
+          or framework dependencies. This makes it:
+        </p>
+        <ul>
+          <li>✅ Easy to understand for beginners</li>
+          <li>✅ Quick to set up and run</li>
+          <li>✅ Lightweight and fast</li>
+          <li>✅ Great for learning fundamentals</li>
+        </ul>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="docs-section">
+        <h2>
+          <i class="fas fa-circle-question"></i> Frequently Asked Questions
+        </h2>
+
+        <h3>Do I need to complete all 100 days?</h3>
+        <p>
+          Not at all! Start wherever you feel comfortable. You can pick and
+          choose projects based on your interests and skill level.
+        </p>
+
+        <h3>Can I use frameworks like React or Vue?</h3>
+        <p>
+          This challenge focuses on vanilla JavaScript to build strong
+          fundamentals. However, you're welcome to create framework versions as
+          bonus projects!
+        </p>
+
+        <h3>How do I track my progress?</h3>
+        <p>
+          Use the interactive dashboard that includes a heatmap visualization to
+          track your daily commits and progress.
+        </p>
+
+        <h3>What if I miss a day?</h3>
+        <p>
+          No problem! This isn't a strict daily challenge. Learn at your own
+          pace and complete projects when you can.
+        </p>
+
+        <h3>Can I modify existing projects?</h3>
+        <p>
+          Absolutely! Feel free to enhance, redesign, or expand any project.
+          Just make sure to submit a PR if you'd like to contribute back.
+        </p>
+
+        <h3>Is this suitable for complete beginners?</h3>
+        <p>
+          Yes! The projects start with beginner-friendly HTML/CSS and gradually
+          introduce JavaScript concepts. Some programming knowledge is helpful
+          but not required.
+        </p>
+
+        <h3>How can I get help?</h3>
+        <p>
+          Join our
+          <a
+            href="https://discord.gg/BFTWMU6p"
+            style="color: var(--accent-core)"
+            >Discord community</a
+          >
+          or open an issue on GitHub. The community is friendly and always ready
+          to help!
+        </p>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="footer-brand animate-enter">
+          <a href="dashboard.html" class="footer-logo">
+            <img src="../assets/images/logo.png" alt="Logo" />
+            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+          </a>
+          <p class="footer-desc">
+            A hyper-intensive protocol designed to forge elite web engineers
+            through daily deployment cycles.
+          </p>
+        </div>
+
+        <div class="footer-col animate-enter delay-100">
+          <h3>Navigation</h3>
+          <nav class="footer-links">
+            <a href="dashboard.html" class="footer-link">Home Base</a>
+            <a href="projects.html" class="footer-link">Archive</a>
+            <a href="about.html" class="footer-link">Leaderboard</a>
+            <a href="contributors.html" class="footer-link">Crew</a>
+          </nav>
+        </div>
+
+        <div class="footer-col animate-enter delay-200">
+          <h3>Resources</h3>
+          <nav class="footer-links">
+            <a href="documentation.html" class="footer-link">Documentation</a>
+            <a href="api-status.html" class="footer-link">API Status</a>
+            <a href="contact.html" class="footer-link">Contact Comms</a>
+            <a href="system-logic.html" class="footer-link">System Logic</a>
+          </nav>
+        </div>
+
+        <div class="footer-col animate-enter delay-300">
+          <h3>Connect</h3>
+          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+          <div class="footer-socials">
+            <a
+              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development"
+              class="social-btn"
+              aria-label="Github"
+            >
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                ></path>
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Twitter">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="https://discord.gg/BFTWMU6p"
+              class="social-btn"
+              aria-label="Discord"
+            >
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <p class="copyright">
+          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
+        </p>
+        <p class="made-by">
+          Maintained by <span class="text-flame font-bold">Subham</span>
+          <svg
+            class="icon icon-sm heart-pulse"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
+          </svg>
+        </p>
+      </div>
+    </footer>
+
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+  </body>
+</html>

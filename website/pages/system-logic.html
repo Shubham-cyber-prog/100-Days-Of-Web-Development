@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/website/assets/images/logo.png" />
+    <title>System Logic | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      .logic-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 120px 20px 60px;
+      }
+
+      .logic-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .logic-header h1 {
+        font-size: var(--text-4xl);
+        margin-bottom: var(--space-4);
+        background: linear-gradient(
+          135deg,
+          var(--text-primary) 0%,
+          var(--accent-core) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .architecture-section {
+        background: var(--bg-surface);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 40px;
+        margin-bottom: 40px;
+      }
+
+      .architecture-section h2 {
+        color: var(--accent-core);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .flow-diagram {
+        background: var(--bg-nebula);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 30px;
+        margin: 24px 0;
+      }
+
+      .flow-step {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 24px;
+        padding: 16px;
+        background: var(--bg-surface);
+        border-radius: 8px;
+        border-left: 4px solid var(--accent-core);
+      }
+
+      .flow-step:last-child {
+        margin-bottom: 0;
+      }
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--accent-core);
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        margin-bottom: 4px;
+        color: var(--text-primary);
+      }
+
+      .step-content p {
+        color: var(--text-secondary);
+        font-size: var(--text-sm);
+        line-height: 1.6;
+      }
+
+      .component-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin: 24px 0;
+      }
+
+      .component-card {
+        background: var(--bg-nebula);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.3s;
+      }
+
+      .component-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent-core);
+        box-shadow: 0 8px 20px rgba(255, 122, 24, 0.2);
+      }
+
+      .component-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-core),
+          var(--accent-glow)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+
+      .component-icon i {
+        font-size: 1.5rem;
+        color: #000;
+      }
+
+      .component-card h3 {
+        margin-bottom: 8px;
+        color: var(--text-primary);
+      }
+
+      .component-card p {
+        color: var(--text-secondary);
+        font-size: var(--text-sm);
+        line-height: 1.6;
+      }
+
+      .tech-list {
+        list-style: none;
+        margin-top: 12px;
+      }
+
+      .tech-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--glass-border);
+        color: var(--text-secondary);
+        font-size: var(--text-sm);
+      }
+
+      .tech-list li:last-child {
+        border-bottom: none;
+      }
+
+      .tech-list i {
+        color: var(--accent-core);
+        margin-right: 8px;
+      }
+
+      .code-snippet {
+        background: var(--bg-nebula);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 16px 0;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        overflow-x: auto;
+        color: var(--text-secondary);
+      }
+
+      .code-snippet .comment {
+        color: #6b7280;
+      }
+
+      .code-snippet .keyword {
+        color: var(--accent-core);
+      }
+
+      .highlight-box {
+        background: rgba(255, 122, 24, 0.1);
+        border: 1px solid var(--accent-core);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 24px 0;
+      }
+
+      .highlight-box h4 {
+        color: var(--accent-core);
+        margin-bottom: 12px;
+      }
+
+      .tab-container {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+        border-bottom: 2px solid var(--glass-border);
+      }
+
+      .tab-btn {
+        background: transparent;
+        border: none;
+        padding: 12px 24px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+      }
+
+      .tab-btn:hover {
+        color: var(--text-primary);
+      }
+
+      .tab-btn.active {
+        color: var(--accent-core);
+        border-bottom-color: var(--accent-core);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Contributors</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+            style="
+              margin-right: 15px;
+              background: none;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--text-secondary)"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%; border-radius: 50%"
+              />
+            </button>
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a>
+              <a href="#" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="logic-container">
+      <div class="logic-header animate-enter">
+        <h1>⚙️ System Architecture & Logic</h1>
+        <p class="text-secondary">
+          Deep dive into the technical architecture and design patterns
+        </p>
+      </div>
+
+      <!-- Architecture Overview -->
+      <section class="architecture-section animate-enter delay-100">
+        <h2><i class="fas fa-diagram-project"></i> Architecture Overview</h2>
+        <p class="text-secondary" style="margin-bottom: 24px">
+          The 100 Days of Web Development platform is built on a modular,
+          component-based architecture using vanilla JavaScript, ensuring
+          maximum performance and minimal dependencies.
+        </p>
+
+        <div class="highlight-box">
+          <h4><i class="fas fa-lightbulb"></i> Design Philosophy</h4>
+          <ul class="tech-list">
+            <li>
+              <i class="fas fa-check"></i>
+              <strong>Zero Dependencies:</strong> Pure vanilla JS, no frameworks
+              required
+            </li>
+            <li>
+              <i class="fas fa-check"></i>
+              <strong>Progressive Enhancement:</strong> Core functionality works
+              without JavaScript
+            </li>
+            <li>
+              <i class="fas fa-check"></i>
+              <strong>Modular Architecture:</strong> Reusable components and
+              utilities
+            </li>
+            <li>
+              <i class="fas fa-check"></i>
+              <strong>Performance First:</strong> Optimized for speed and
+              efficiency
+            </li>
+          </ul>
+        </div>
+
+        <div class="flow-diagram">
+          <h3 style="margin-bottom: 20px; color: var(--text-primary)">
+            Application Flow
+          </h3>
+          <div class="flow-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Entry Point</h4>
+              <p>
+                User lands on dashboard.html or projects.html. HTML loads with
+                critical CSS inline.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Component Initialization</h4>
+              <p>
+                Navigation, theme system, and cursor effects initialize from
+                modular scripts.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Data Loading</h4>
+              <p>
+                Project metadata loads asynchronously, populating the grid with
+                filters and search.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Interactive Features</h4>
+              <p>
+                User interactions trigger events: filtering, searching, theme
+                toggling, navigation.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>Project Navigation</h4>
+              <p>
+                Clicking a project validates its existence via fetch, then
+                navigates or shows 404.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Core Components -->
+      <section class="architecture-section animate-enter delay-200">
+        <h2><i class="fas fa-cubes"></i> Core Components</h2>
+
+        <div class="component-grid">
+          <div class="component-card">
+            <div class="component-icon">
+              <i class="fas fa-compass"></i>
+            </div>
+            <h3>Navigation System</h3>
+            <p>
+              Handles routing, mobile menu, user dropdown, and scroll effects.
+            </p>
+            <ul class="tech-list">
+              <li><i class="fas fa-file-code"></i> navigation.js</li>
+              <li><i class="fas fa-cog"></i> Active state management</li>
+              <li><i class="fas fa-mobile-alt"></i> Responsive breakpoints</li>
+            </ul>
+          </div>
+
+          <div class="component-card">
+            <div class="component-icon">
+              <i class="fas fa-palette"></i>
+            </div>
+            <h3>Theme Engine</h3>
+            <p>
+              Dark/light mode with CSS custom properties and localStorage
+              persistence.
+            </p>
+            <ul class="tech-list">
+              <li><i class="fas fa-moon"></i> Toggle mechanism</li>
+              <li><i class="fas fa-database"></i> Preference storage</li>
+              <li><i class="fas fa-sync-alt"></i> Real-time updates</li>
+            </ul>
+          </div>
+
+          <div class="component-card">
+            <div class="component-icon">
+              <i class="fas fa-folder-open"></i>
+            </div>
+            <h3>Project Manager</h3>
+            <p>Loads, filters, and renders all 100+ projects dynamically.</p>
+            <ul class="tech-list">
+              <li><i class="fas fa-file-code"></i> projects.js</li>
+              <li><i class="fas fa-search"></i> Real-time search</li>
+              <li><i class="fas fa-filter"></i> Category filtering</li>
+            </ul>
+          </div>
+
+          <div class="component-card">
+            <div class="component-icon">
+              <i class="fas fa-mouse-pointer"></i>
+            </div>
+            <h3>Cursor Effects</h3>
+            <p>Custom cursor with glow effects and interactive feedback.</p>
+            <ul class="tech-list">
+              <li><i class="fas fa-file-code"></i> cursor.js</li>
+              <li><i class="fas fa-star"></i> Cosmic trail effect</li>
+              <li><i class="fas fa-hand-pointer"></i> Element interaction</li>
+            </ul>
+          </div>
+
+          <div class="component-card">
+            <div class="component-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <h3>Progress Tracker</h3>
+            <p>Heatmap visualization showing daily coding activity.</p>
+            <ul class="tech-list">
+              <li><i class="fas fa-calendar"></i> Contribution graph</li>
+              <li><i class="fas fa-fire"></i> Streak tracking</li>
+              <li><i class="fas fa-trophy"></i> Achievement system</li>
+            </ul>
+          </div>
+
+          <div class="component-card">
+            <div class="component-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Auth Interface</h3>
+            <p>Static login/signup UI for demonstration (no backend).</p>
+            <ul class="tech-list">
+              <li><i class="fas fa-file-code"></i> login.js</li>
+              <li><i class="fas fa-eye"></i> Password visibility</li>
+              <li><i class="fas fa-check-circle"></i> Form validation</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Data Flow -->
+      <section class="architecture-section animate-enter delay-300">
+        <h2><i class="fas fa-code-branch"></i> Data Flow & State Management</h2>
+
+        <div class="tab-container">
+          <button class="tab-btn active" onclick="switchTab('projects')">
+            Projects Data
+          </button>
+          <button class="tab-btn" onclick="switchTab('theme')">
+            Theme State
+          </button>
+          <button class="tab-btn" onclick="switchTab('user')">
+            User Session
+          </button>
+        </div>
+
+        <div id="projects-tab" class="tab-content active">
+          <h3 style="margin-bottom: 16px">Project Data Structure</h3>
+          <div class="code-snippet">
+            <span class="comment">// Example project metadata</span>
+            <span class="keyword">const</span> projects = [ { day:
+            <span style="color: #f59e0b">1</span>, title:
+            <span style="color: #10b981">"Animated Login Form"</span>,
+            description:
+            <span style="color: #10b981"
+              >"Beautiful login interface with smooth animations"</span
+            >, difficulty: <span style="color: #10b981">"Beginner"</span>,
+            technologies: [<span style="color: #10b981">"HTML"</span>,
+            <span style="color: #10b981">"CSS"</span>,
+            <span style="color: #10b981">"JavaScript"</span>], path:
+            <span style="color: #10b981">"/public/Day 01/"</span>, features:
+            [<span style="color: #10b981">"Responsive"</span>,
+            <span style="color: #10b981">"Animated"</span>] },
+            <span class="comment">// ... 99 more projects</span>
+            ];
+          </div>
+          <p class="text-secondary" style="margin-top: 16px">
+            Projects are stored as JSON objects and filtered/searched in
+            real-time using vanilla JavaScript array methods.
+          </p>
+        </div>
+
+        <div id="theme-tab" class="tab-content">
+          <h3 style="margin-bottom: 16px">Theme Persistence</h3>
+          <div class="code-snippet">
+            <span class="comment">// Theme toggle implementation</span>
+            <span class="keyword">function</span> toggleTheme() {
+            <span class="keyword">const</span> currentTheme =
+            document.documentElement.getAttribute(<span style="color: #10b981"
+              >'data-theme'</span
+            >); <span class="keyword">const</span> newTheme = currentTheme ===
+            <span style="color: #10b981">'dark'</span> ?
+            <span style="color: #10b981">'light'</span> :
+            <span style="color: #10b981">'dark'</span>;
+            document.documentElement.setAttribute(<span style="color: #10b981"
+              >'data-theme'</span
+            >, newTheme); localStorage.setItem(<span style="color: #10b981"
+              >'theme'</span
+            >, newTheme); updateThemeIcon(newTheme); }
+
+            <span class="comment">// Load saved theme on page load</span>
+            <span class="keyword">const</span> savedTheme =
+            localStorage.getItem(<span style="color: #10b981">'theme'</span>) ||
+            <span style="color: #10b981">'dark'</span>;
+            document.documentElement.setAttribute(<span style="color: #10b981"
+              >'data-theme'</span
+            >, savedTheme);
+          </div>
+          <p class="text-secondary" style="margin-top: 16px">
+            User preferences are stored in localStorage and applied immediately
+            on page load.
+          </p>
+        </div>
+
+        <div id="user-tab" class="tab-content">
+          <h3 style="margin-bottom: 16px">Session Management</h3>
+          <div class="code-snippet">
+            <span class="comment">// Simulated authentication check</span>
+            <span class="keyword">function</span> checkAuth() {
+            <span class="keyword">const</span> isLoggedIn =
+            localStorage.getItem(<span style="color: #10b981"
+              >'isAuthenticated'</span
+            >) === <span style="color: #10b981">'true'</span>;
+
+            <span class="keyword">if</span> (!isLoggedIn && !isPublicPage()) {
+            window.location.href =
+            <span style="color: #10b981">'login.html'</span>; }
+
+            <span class="keyword">return</span> isLoggedIn; }
+
+            <span class="keyword">function</span> handleLogout() {
+            localStorage.removeItem(<span style="color: #10b981"
+              >'isAuthenticated'</span
+            >); localStorage.removeItem(<span style="color: #10b981"
+              >'userData'</span
+            >); window.location.href =
+            <span style="color: #10b981">'login.html'</span>; }
+          </div>
+          <p class="text-secondary" style="margin-top: 16px">
+            Note: This is a demonstration UI only. Real authentication would
+            require a backend server.
+          </p>
+        </div>
+      </section>
+
+      <!-- Performance Optimizations -->
+      <section class="architecture-section animate-enter delay-400">
+        <h2><i class="fas fa-rocket"></i> Performance Optimizations</h2>
+
+        <div class="component-grid">
+          <div class="component-card">
+            <h3><i class="fas fa-bolt"></i> Lazy Loading</h3>
+            <p>
+              Images and components load on-demand to reduce initial page
+              weight.
+            </p>
+          </div>
+
+          <div class="component-card">
+            <h3><i class="fas fa-compress"></i> CSS Optimization</h3>
+            <p>
+              Critical CSS inline, custom properties for theming, minimal
+              repaints.
+            </p>
+          </div>
+
+          <div class="component-card">
+            <h3><i class="fas fa-memory"></i> DOM Caching</h3>
+            <p>
+              Element references cached to avoid repeated querySelector calls.
+            </p>
+          </div>
+
+          <div class="component-card">
+            <h3><i class="fas fa-search"></i> Debounced Search</h3>
+            <p>
+              Search input debounced to prevent excessive filtering operations.
+            </p>
+          </div>
+
+          <div class="component-card">
+            <h3><i class="fas fa-database"></i> LocalStorage Cache</h3>
+            <p>User preferences and session data persisted locally.</p>
+          </div>
+
+          <div class="component-card">
+            <h3><i class="fas fa-code"></i> Event Delegation</h3>
+            <p>
+              Single listeners on parent elements instead of multiple per child.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="footer-brand animate-enter">
+          <a href="dashboard.html" class="footer-logo">
+            <img src="../assets/images/logo.png" alt="Logo" />
+            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+          </a>
+          <p class="footer-desc">
+            A hyper-intensive protocol designed to forge elite web engineers
+            through daily deployment cycles.
+          </p>
+        </div>
+
+        <div class="footer-col animate-enter delay-100">
+          <h3>Navigation</h3>
+          <nav class="footer-links">
+            <a href="dashboard.html" class="footer-link">Home Base</a>
+            <a href="projects.html" class="footer-link">Archive</a>
+            <a href="about.html" class="footer-link">Leaderboard</a>
+            <a href="contributors.html" class="footer-link">Crew</a>
+          </nav>
+        </div>
+
+        <div class="footer-col animate-enter delay-200">
+          <h3>Resources</h3>
+          <nav class="footer-links">
+            <a href="documentation.html" class="footer-link">Documentation</a>
+            <a href="api-status.html" class="footer-link">API Status</a>
+            <a href="contact.html" class="footer-link">Contact Comms</a>
+            <a href="system-logic.html" class="footer-link">System Logic</a>
+          </nav>
+        </div>
+
+        <div class="footer-col animate-enter delay-300">
+          <h3>Connect</h3>
+          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+          <div class="footer-socials">
+            <a
+              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development"
+              class="social-btn"
+              aria-label="Github"
+            >
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                ></path>
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Twitter">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="https://discord.gg/BFTWMU6p"
+              class="social-btn"
+              aria-label="Discord"
+            >
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <p class="copyright">
+          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
+        </p>
+        <p class="made-by">
+          Maintained by <span class="text-flame font-bold">Subham</span>
+          <svg
+            class="icon icon-sm heart-pulse"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
+          </svg>
+        </p>
+      </div>
+    </footer>
+
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script>
+      function switchTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // Remove active from all buttons
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Show selected tab
+        document.getElementById(tabName + "-tab").classList.add("active");
+
+        // Activate clicked button
+        event.target.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
