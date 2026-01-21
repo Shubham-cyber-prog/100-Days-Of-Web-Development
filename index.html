@@ -17,9 +17,395 @@
         rel="stylesheet">
 
     <link rel="icon" type="image/png" href="website/assets/images/logo.png">
+    
+    <!-- Fire Cursor -->
+    <link rel="stylesheet" href="firecursor.css">
+    
+    <style>
+        /* Enhanced Modern UI Styles */
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-dark: linear-gradient(135deg, #1e1e2e 0%, #2a2a40 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.3);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245, 87, 108, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
+            animation: particles 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes particles {
+            0%, 100% { opacity: 0.5; transform: translateY(0); }
+            50% { opacity: 0.8; transform: translateY(-20px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Enhanced Header */
+        .site-header {
+            background: rgba(15, 15, 35, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-logo {
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section Enhancement */
+        .zenith-hero {
+            text-align: center;
+            padding: 100px 20px 80px;
+            position: relative;
+        }
+
+        .zenith-hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #667eea 50%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: gradient-shift 3s ease infinite;
+            background-size: 200% 200%;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-zenith-primary,
+        .btn-zenith-secondary {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-zenith-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .btn-zenith-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-zenith-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-zenith-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-zenith-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-zenith-secondary:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.8);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Feature Cards Enhancement */
+        .features-section {
+            padding: 60px 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(102, 126, 234, 0.6);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Enhanced Footer */
+        .site-footer {
+            background: rgba(15, 15, 35, 0.95);
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            padding: 60px 20px 40px;
+        }
+
+        .social-btn {
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: var(--gradient-primary);
+            border-color: transparent;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer-link {
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .footer-link::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #667eea;
+            padding-left: 20px;
+        }
+
+        .footer-link:hover::before {
+            opacity: 1;
+        }
+
+        .heart-pulse {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+
+        /* Animations */
+        .animate-enter {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-zenith-primary,
+            .btn-zenith-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
 </head>
-<!-- Fire Cursor -->
-<link rel="stylesheet" href="firecursor.css">
 
 <body>
     <!-- Navbar -->
@@ -97,10 +483,6 @@
         </section>
     </main>
 
-    <!--  feature of fire-cursor -->
-
-
-
     <!-- Footer -->
     <footer class="site-footer">
         <div class="container footer-content">
@@ -137,8 +519,7 @@
                 <h3>Connect</h3>
                 <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
                 <div class="footer-socials">
-                    <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git
-                            " class="social-btn" aria-label="Github">
+                    <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git" class="social-btn" aria-label="Github">
                         <img src="website/assets/images/github.png" alt="GitHub" class="icon">
                     </a>
                     
@@ -148,7 +529,7 @@
                     </a>
                     
                     <!-- Discord using PNG image -->
-                    <a href=" https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Discord">
+                    <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Discord">
                         <img src="website/assets/images/discord.png" alt="Discord" class="icon">
                     </a>
                 </div>
