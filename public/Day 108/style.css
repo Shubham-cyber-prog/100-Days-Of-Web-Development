@@ -1,0 +1,229 @@
+/* =========================
+   RESET & BASE
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #121212, #0b0b0b 60%);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* =========================
+   TOP NAVBAR
+========================= */
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1f1f1f;
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0.7rem 1.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.nav-center {
+  text-align: center;
+}
+
+.status {
+  font-size: 0.85rem;
+  color: #22c55e;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #aaa;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  color: #22c55e;
+}
+
+/* =========================
+   LAYOUT WRAPPERS
+========================= */
+.page {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2.5rem 1.5rem 3rem;
+}
+
+/* =========================
+   DEMO PAGE
+========================= */
+.demo-hero {
+  margin-bottom: 3rem;
+}
+
+.demo-section {
+  background: #111;
+  border: 1px solid #1f1f1f;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.demo-section h2 {
+  margin-bottom: 0.8rem;
+}
+
+.demo-section p {
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.features {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.features li {
+  margin: 0.5rem 0;
+  color: #ddd;
+}
+
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.before-after img {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid #222;
+}
+
+.center {
+  text-align: center;
+}
+
+.cta-btn {
+  display: inline-block;
+  margin-top: 1.2rem;
+  padding: 0.9rem 2rem;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #000;
+  font-weight: 700;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+/* =========================
+   EDITOR PAGE
+========================= */
+.editor-section {
+  max-width: 1100px;
+  margin: 2.5rem auto 0;
+  padding: 2rem;
+  background: #111;
+  border-radius: 20px;
+  border: 1px solid #1f1f1f;
+}
+
+.upload-box {
+  text-align: center;
+  margin-bottom: 1.8rem;
+}
+
+.upload-box input {
+  display: none;
+}
+
+.upload-box label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.8rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff8c00, #ffb347);
+  color: #000;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.editor {
+  background: radial-gradient(circle at top, #151515, #0f0f0f);
+  border-radius: 18px;
+  padding: 1.2rem;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #222;
+}
+
+canvas {
+  display: block;
+  border-radius: 14px;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 1.8rem;
+}
+
+.controls button {
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#grayscaleBtn { background: #e5e7eb; color: #000; }
+#edgeBtn { background: #38bdf8; color: #000; }
+#cartoonBtn { background: #a855f7; color: #fff; }
+#removeBgBtn { background: #ff8c00; color: #000; }
+#resetBtn { background: #444; color: #fff; }
+#downloadBtn { background: #22c55e; color: #000; }
+
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #666;
+  font-size: 0.85rem;
+}
