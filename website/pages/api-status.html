@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/website/assets/images/logo.png" />
+    <title>API Status | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      .status-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 120px 20px 60px;
+      }
+
+      .status-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .status-header h1 {
+        font-size: var(--text-4xl);
+        margin-bottom: var(--space-4);
+        background: linear-gradient(
+          135deg,
+          var(--text-primary) 0%,
+          var(--accent-core) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .overall-status {
+        background: var(--bg-surface);
+        border: 2px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 40px;
+        text-align: center;
+        margin-bottom: 60px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .overall-status.operational {
+        border-color: #10b981;
+        background: linear-gradient(
+          135deg,
+          rgba(16, 185, 129, 0.1) 0%,
+          transparent 100%
+        );
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: #10b981;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 100px;
+        font-weight: bold;
+        font-size: var(--text-lg);
+        margin-bottom: 16px;
+      }
+
+      .status-badge i {
+        font-size: 1.5rem;
+      }
+
+      .uptime-stat {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: var(--text-3xl);
+        font-weight: bold;
+        color: var(--accent-core);
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-size: var(--text-sm);
+        margin-top: 4px;
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 60px;
+      }
+
+      .service-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.3s;
+      }
+
+      .service-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .service-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .service-name {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .service-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--accent-alpha);
+        color: var(--accent-core);
+      }
+
+      .status-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 10px #10b981;
+        animation: pulse 2s infinite;
+      }
+
+      .status-indicator.degraded {
+        background: #f59e0b;
+        box-shadow: 0 0 10px #f59e0b;
+      }
+
+      .status-indicator.down {
+        background: #ef4444;
+        box-shadow: 0 0 10px #ef4444;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .service-details {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .response-time {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--glass-border);
+      }
+
+      .response-time strong {
+        color: var(--accent-core);
+      }
+
+      .timeline-section {
+        background: var(--bg-surface);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 40px;
+      }
+
+      .timeline-section h2 {
+        margin-bottom: 24px;
+        color: var(--accent-core);
+      }
+
+      .incident {
+        padding: 16px;
+        background: var(--bg-nebula);
+        border-left: 4px solid var(--accent-core);
+        border-radius: 4px;
+        margin-bottom: 16px;
+      }
+
+      .incident-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 8px;
+      }
+
+      .incident-title {
+        font-weight: bold;
+        color: var(--text-primary);
+      }
+
+      .incident-date {
+        font-size: var(--text-sm);
+        color: var(--text-tertiary);
+      }
+
+      .incident-description {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .no-incidents {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-secondary);
+      }
+
+      .no-incidents i {
+        font-size: 3rem;
+        color: #10b981;
+        margin-bottom: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Contributors</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+            style="
+              margin-right: 15px;
+              background: none;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--text-secondary)"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%; border-radius: 50%"
+              />
+            </button>
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a>
+              <a href="#" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="status-container">
+      <div class="status-header animate-enter">
+        <h1>🔧 System Status</h1>
+        <p class="text-secondary">
+          Real-time monitoring of all platform services
+        </p>
+      </div>
+
+      <!-- Overall Status -->
+      <div class="overall-status operational animate-enter delay-100">
+        <div class="status-badge">
+          <i class="fas fa-check-circle"></i>
+          All Systems Operational
+        </div>
+        <p class="text-secondary">
+          All services are running smoothly with no reported issues.
+        </p>
+        <div class="uptime-stat">
+          <div class="stat-item">
+            <div class="stat-value">99.9%</div>
+            <div class="stat-label">Uptime (30 days)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">< 100ms</div>
+            <div class="stat-label">Avg Response Time</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Active Incidents</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="services-grid animate-enter delay-200">
+        <!-- Web Application -->
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-name">
+              <div class="service-icon">
+                <i class="fas fa-globe"></i>
+              </div>
+              <div>
+                <h3>Web Application</h3>
+              </div>
+            </div>
+            <div class="status-indicator" title="Operational"></div>
+          </div>
+          <div class="service-details">
+            Main dashboard and project interface serving all interactive
+            features.
+          </div>
+          <div class="response-time">
+            <i class="fas fa-clock"></i>
+            <span>Response time: <strong>45ms</strong></span>
+          </div>
+        </div>
+
+        <!-- Project Repository -->
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-name">
+              <div class="service-icon">
+                <i class="fas fa-folder-open"></i>
+              </div>
+              <div>
+                <h3>Project Repository</h3>
+              </div>
+            </div>
+            <div class="status-indicator" title="Operational"></div>
+          </div>
+          <div class="service-details">
+            Access to all 100+ daily challenge projects and source code.
+          </div>
+          <div class="response-time">
+            <i class="fas fa-clock"></i>
+            <span>Response time: <strong>32ms</strong></span>
+          </div>
+        </div>
+
+        <!-- GitHub Integration -->
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-name">
+              <div class="service-icon">
+                <i class="fab fa-github"></i>
+              </div>
+              <div>
+                <h3>GitHub Integration</h3>
+              </div>
+            </div>
+            <div class="status-indicator" title="Operational"></div>
+          </div>
+          <div class="service-details">
+            Version control, contributions, and community collaboration
+            features.
+          </div>
+          <div class="response-time">
+            <i class="fas fa-clock"></i>
+            <span>Response time: <strong>68ms</strong></span>
+          </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-name">
+              <div class="service-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div>
+                <h3>Progress Tracker</h3>
+              </div>
+            </div>
+            <div class="status-indicator" title="Operational"></div>
+          </div>
+          <div class="service-details">
+            Heatmap visualization and daily progress tracking system.
+          </div>
+          <div class="response-time">
+            <i class="fas fa-clock"></i>
+            <span>Response time: <strong>28ms</strong></span>
+          </div>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-name">
+              <div class="service-icon">
+                <i class="fas fa-search"></i>
+              </div>
+              <div>
+                <h3>Search & Filter</h3>
+              </div>
+            </div>
+            <div class="status-indicator" title="Operational"></div>
+          </div>
+          <div class="service-details">
+            Real-time project search and category filtering functionality.
+          </div>
+          <div class="response-time">
+            <i class="fas fa-clock"></i>
+            <span>Response time: <strong>15ms</strong></span>
+          </div>
+        </div>
+
+        <!-- Theme System -->
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-name">
+              <div class="service-icon">
+                <i class="fas fa-palette"></i>
+              </div>
+              <div>
+                <h3>Theme System</h3>
+              </div>
+            </div>
+            <div class="status-indicator" title="Operational"></div>
+          </div>
+          <div class="service-details">
+            Dark/light mode switching and custom CSS properties system.
+          </div>
+          <div class="response-time">
+            <i class="fas fa-clock"></i>
+            <span>Response time: <strong>8ms</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Incident Timeline -->
+      <div class="timeline-section animate-enter delay-300">
+        <h2><i class="fas fa-history"></i> Recent Incidents</h2>
+        <div class="no-incidents">
+          <i class="fas fa-check-circle"></i>
+          <p><strong>No incidents reported in the last 30 days</strong></p>
+          <p class="text-sm">
+            The platform has maintained 99.9% uptime with excellent performance.
+          </p>
+        </div>
+      </div>
+
+      <!-- System Information -->
+      <div class="timeline-section animate-enter delay-400">
+        <h2><i class="fas fa-info-circle"></i> System Information</h2>
+        <div style="display: grid; gap: 16px">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              padding: 12px;
+              background: var(--bg-nebula);
+              border-radius: 8px;
+            "
+          >
+            <span class="text-secondary">Platform Version</span>
+            <span class="font-bold">v2.0.0</span>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              padding: 12px;
+              background: var(--bg-nebula);
+              border-radius: 8px;
+            "
+          >
+            <span class="text-secondary">Last Updated</span>
+            <span class="font-bold">January 21, 2026</span>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              padding: 12px;
+              background: var(--bg-nebula);
+              border-radius: 8px;
+            "
+          >
+            <span class="text-secondary">Technology Stack</span>
+            <span class="font-bold">HTML5, CSS3, Vanilla JS</span>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              padding: 12px;
+              background: var(--bg-nebula);
+              border-radius: 8px;
+            "
+          >
+            <span class="text-secondary">Projects Available</span>
+            <span class="font-bold">100+</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="footer-brand animate-enter">
+          <a href="dashboard.html" class="footer-logo">
+            <img src="../assets/images/logo.png" alt="Logo" />
+            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+          </a>
+          <p class="footer-desc">
+            A hyper-intensive protocol designed to forge elite web engineers
+            through daily deployment cycles.
+          </p>
+        </div>
+
+        <div class="footer-col animate-enter delay-100">
+          <h3>Navigation</h3>
+          <nav class="footer-links">
+            <a href="dashboard.html" class="footer-link">Home Base</a>
+            <a href="projects.html" class="footer-link">Archive</a>
+            <a href="about.html" class="footer-link">Leaderboard</a>
+            <a href="contributors.html" class="footer-link">Crew</a>
+          </nav>
+        </div>
+
+        <div class="footer-col animate-enter delay-200">
+          <h3>Resources</h3>
+          <nav class="footer-links">
+            <a href="documentation.html" class="footer-link">Documentation</a>
+            <a href="api-status.html" class="footer-link">API Status</a>
+            <a href="contact.html" class="footer-link">Contact Comms</a>
+            <a href="system-logic.html" class="footer-link">System Logic</a>
+          </nav>
+        </div>
+
+        <div class="footer-col animate-enter delay-300">
+          <h3>Connect</h3>
+          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+          <div class="footer-socials">
+            <a
+              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development"
+              class="social-btn"
+              aria-label="Github"
+            >
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                ></path>
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Twitter">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="https://discord.gg/BFTWMU6p"
+              class="social-btn"
+              aria-label="Discord"
+            >
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <p class="copyright">
+          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
+        </p>
+        <p class="made-by">
+          Maintained by <span class="text-flame font-bold">Subham</span>
+          <svg
+            class="icon icon-sm heart-pulse"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
+          </svg>
+        </p>
+      </div>
+    </footer>
+
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+  </body>
+</html>
