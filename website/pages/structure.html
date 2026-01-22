@@ -1,140 +1,133 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/website/assets/images/logo.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/website/assets/images/logo.png" />
     <title>Structure | Mission Control</title>
-    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/index.css" />
     <style>
-        .tree-container {
-            border-left: 2px solid var(--border-light);
-            padding-left: var(--space-6);
-            margin-left: var(--space-4);
-        }
+      .tree-container {
+        border-left: 2px solid var(--border-light);
+        padding-left: var(--space-6);
+        margin-left: var(--space-4);
+      }
 
-        .tree-item {
-            position: relative;
-            margin-bottom: var(--space-4);
-        }
+      .tree-item {
+        position: relative;
+        margin-bottom: var(--space-4);
+      }
 
-        .tree-item::before {
-            content: '';
-            position: absolute;
-            left: -26px;
-            /* -24px padding + -2px border */
-            top: 12px;
-            width: 20px;
-            height: 2px;
-            background: var(--border-light);
-        }
+      .tree-item::before {
+        content: "";
+        position: absolute;
+        left: -26px;
+        /* -24px padding + -2px border */
+        top: 12px;
+        width: 20px;
+        height: 2px;
+        background: var(--border-light);
+      }
 
-        .folder-name {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-            font-family: var(--font-mono);
-            color: var(--accent-orbit);
-            margin-bottom: var(--space-2);
-        }
+      .folder-name {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-family: var(--font-mono);
+        color: var(--accent-orbit);
+        margin-bottom: var(--space-2);
+      }
 
-        .file-list {
-            padding-left: var(--space-6);
-            border-left: 2px solid rgba(255, 255, 255, 0.05);
-        }
+      .file-list {
+        padding-left: var(--space-6);
+        border-left: 2px solid rgba(255, 255, 255, 0.05);
+      }
 
-        .file-item {
-            color: var(--text-secondary);
-            font-family: var(--font-mono);
-            font-size: var(--text-sm);
-            margin-bottom: var(--space-2);
-        }
+      .file-item {
+        color: var(--text-secondary);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        margin-bottom: var(--space-2);
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <header class="site-header">
-        <div class="container nav-container">
-            <a href="dashboard.html" class="nav-logo">
-                <span class="logo-icon">🚀</span>
-                100 Days
-            </a>
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Mission Control</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contributors.html" class="nav-link">Team</a>
-                <a href="structure.html" class="nav-link active">Structure</a>
-            </nav>
-            <div class="nav-user">
-                <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
-                <div class="user-avatar">👨‍🚀</div>
-            </div>
+      <div class="container nav-container">
+        <a href="dashboard.html" class="nav-logo">
+          <span class="logo-icon">🚀</span>
+          100 Days
+        </a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Mission Control</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Team</a>
+          <a href="structure.html" class="nav-link active">Structure</a>
+        </nav>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+          <div class="user-avatar">👨‍🚀</div>
         </div>
+      </div>
     </header>
 
     <main class="container section">
-        <div class="text-center" style="margin-bottom: var(--space-8);">
-            <h1>System Architecture</h1>
-            <p>Blueprints of the station.</p>
-        </div>
+      <div class="text-center" style="margin-bottom: var(--space-8)">
+        <h1>System Architecture</h1>
+        <p>Blueprints of the station.</p>
+      </div>
 
-        <div class="card animate-enter" style="max-width: 800px; margin: 0 auto;">
-            <div class="tree-container">
-                <!-- Root -->
-                <div class="tree-item">
-                    <div class="folder-name">📁 100-Days-Of-Web-Development/</div>
+      <div class="card animate-enter" style="max-width: 800px; margin: 0 auto">
+        <div class="tree-container">
+          <!-- Root -->
+          <div class="tree-item">
+            <div class="folder-name">📁 100-Days-Of-Web-Development/</div>
 
+            <div class="file-list">
+              <div class="file-item">📄 README.md</div>
+              <div class="file-item">📄 index.html (Redirector)</div>
+
+              <!-- Website -->
+              <div class="tree-item" style="margin-top: var(--space-4)">
+                <div class="folder-name">📁 website/</div>
+                <div class="file-list">
+                  <div class="tree-item">
+                    <div class="folder-name">📁 pages/</div>
                     <div class="file-list">
-                        <div class="file-item">📄 README.md</div>
-                        <div class="file-item">📄 index.html (Redirector)</div>
-
-                        <!-- Website -->
-                        <div class="tree-item" style="margin-top: var(--space-4);">
-                            <div class="folder-name">📁 website/</div>
-                            <div class="file-list">
-
-                                <div class="tree-item">
-                                    <div class="folder-name">📁 pages/</div>
-                                    <div class="file-list">
-                                        <div class="file-item">📄 login.html</div>
-                                        <div class="file-item">📄 dashboard.html</div>
-                                        <div class="file-item">📄 projects.html</div>
-                                    </div>
-                                </div>
-
-                                <div class="tree-item">
-                                    <div class="folder-name">📁 styles/</div>
-                                    <div class="file-list">
-                                        <div class="file-item">📁 tokens/ (colors, type)</div>
-                                        <div class="file-item">📁 base/</div>
-                                        <div class="file-item">📁 components/</div>
-                                    </div>
-                                </div>
-
-                                <div class="tree-item">
-                                    <div class="folder-name">📁 scripts/</div>
-                                    <div class="file-list">
-                                        <div class="file-item">📁 auth/ (guard.js)</div>
-                                        <div class="file-item">📁 core/</div>
-                                        <div class="file-item">📁 pages/</div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
+                      <div class="file-item">📄 login.html</div>
+                      <div class="file-item">📄 dashboard.html</div>
+                      <div class="file-item">📄 projects.html</div>
                     </div>
-                </div>
-            </div>
-        </div>
+                  </div>
 
+                  <div class="tree-item">
+                    <div class="folder-name">📁 styles/</div>
+                    <div class="file-list">
+                      <div class="file-item">📁 tokens/ (colors, type)</div>
+                      <div class="file-item">📁 base/</div>
+                      <div class="file-item">📁 components/</div>
+                    </div>
+                  </div>
+
+                  <div class="tree-item">
+                    <div class="folder-name">📁 scripts/</div>
+                    <div class="file-list">
+                      <div class="file-item">📁 auth/ (guard.js)</div>
+                      <div class="file-item">📁 core/</div>
+                      <div class="file-item">📁 pages/</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="../scripts/auth/guard.js"></script>
     <script src="../scripts/components/navigation.js"></script>
-</body>
-
+  </body>
 </html>

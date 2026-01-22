@@ -99,11 +99,29 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeIcon(savedTheme);
 });
 
-/* Logout Logic */
+/* Logout Logic - Using Local Auth Service */
 function handleLogout() {
     if (confirm('Abort mission and logout?')) {
-        sessionStorage.removeItem('authToken');
-        sessionStorage.removeItem('authGuest');
-        window.location.href = window.location.pathname.includes('/pages/') ? '../pages/login.html' : 'website/pages/login.html';
+        console.log('🚪 Logout initiated...');
+        
+        // Use AuthService if available
+        if (window.AuthService) {
+            window.AuthService.logout();
+        } else {
+            // Fallback: Clear all auth data manually
+            sessionStorage.clear();
+            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('current_user');
+            localStorage.removeItem('is_guest');
+            localStorage.removeItem('guestSession');
+        }
+        
+        // Determine correct login path
+        const loginPath = window.location.pathname.includes('/pages/') 
+            ? 'login.html' 
+            : 'website/pages/login.html';
+        
+        console.log('✅ Logged out, redirecting to:', loginPath);
+        window.location.href = loginPath;
     }
 }
