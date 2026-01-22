@@ -27,7 +27,7 @@ const folderMap = {
     87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
-    102: "Day 102", 103: "Day 103", 105: "Day 105", 107: "Day 107",
+    102: "Day 102", 103: "Day 103", 105: "Day 105", 107: "Day 107", 111: "day-111",
     145: "Day 145",
     151: "Day 151",
     152: "Day 152 - Newsly",
@@ -143,6 +143,11 @@ function renderProjects(filter = 'All') {
         /* SPECIAL CASE: README TOOL KIT (DAY 103) */
         if (project.day === 103) {
             liveLink = 'https://100dayswebdevelopment-ecwoc.netlify.app/public/Day%20103/index.html';
+            codeLink = `${REPO_URL}/${folderName}`;
+            isDisabled = false;
+        }
+        else if (project.day === 111) {
+            liveLink = `../../public/${folderName}/build/index.html`
             codeLink = `${REPO_URL}/${folderName}`;
             isDisabled = false;
         }
