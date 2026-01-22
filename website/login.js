@@ -1,3 +1,11 @@
+/**
+ * Local Authentication System
+ * Firebase code commented out for future use
+ */
+
+/* ==========================================
+   FIREBASE CODE - COMMENTED OUT FOR FUTURE USE
+   ==========================================
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
 import {
     getAuth,
@@ -24,9 +32,29 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Auth script loaded');
+    console.log('🔐 Local Auth System loaded');
+    
+    // Load AuthService
+    const script = document.createElement('script');
+    script.src = '../scripts/auth/auth-service.js';
+    script.onload = () => initAuth();
+    document.head.appendChild(script);
+});
+
+function initAuth() {
+    const auth = window.AuthService;
+    
+    // Check if already authenticated
+    if (auth.isAuthenticated()) {
+        console.log('✅ User already authenticated, redirecting...');
+        window.location.href = 'pages/dashboard.html';
+        return;
+    }
+    
+    console.log('🔓 Not authenticated, showing login form');
     
     // --- Elements ---
     const authForm = document.getElementById('authForm');
@@ -41,18 +69,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const googleBtn = document.getElementById('googleBtn');
     const githubBtn = document.getElementById('githubBtn');
     const guestBtn = document.getElementById('guestBtn');
+    const rememberMeCheckbox = document.getElementById('rememberMe');
 
     // --- State ---
     let isLogin = true;
 
-    // --- Check if user is already logged in ---
+    /* ==========================================
+       FIREBASE AUTH CHECK - COMMENTED OUT
+       ==========================================
     onAuthStateChanged(auth, (user) => {
         if (user) {
             console.log('User already logged in:', user.email);
-            // Redirect to dashboard if already logged in
             window.location.href = 'dashboard.html';
         }
     });
+    ========================================== */
 
     // --- Toggle between Login and Register ---
     function attachToggleListener() {
@@ -193,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = emailInput.value.trim();
         const password = passwordInput.value;
         const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
+        const rememberMe = rememberMeCheckbox ? rememberMeCheckbox.checked : false;
 
         let isValid = true;
 
@@ -235,21 +267,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             if (isLogin) {
-                // Login
+                // === LOCAL LOGIN ===
+                console.log('🔐 Attempting local login...');
+                const result = await auth.login(email, password, rememberMe);
+                
+                if (result.success) {
+                    console.log('✅ Login successful:', result.user.email);
+                    // Show success and redirect
+                    showSuccess('Welcome back! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'pages/dashboard.html';
+                    }, 500);
+                } else {
+                    showError(emailInput, result.message);
+                }
+                
+                /* ==========================================
+                   FIREBASE LOGIN - COMMENTED OUT
+                   ==========================================
                 await signInWithEmailAndPassword(auth, email, password);
                 console.log('Login successful');
                 window.location.href = 'dashboard.html';
+                ========================================== */
             } else {
-                // Register
+                // === LOCAL REGISTRATION ===
+                console.log('📝 Attempting local registration...');
+                const result = await auth.register(email, password);
+                
+                if (result.success) {
+                    console.log('✅ Registration successful:', result.user.email);
+                    // Show success message
+                    showSuccess('Account created! Logging you in...');
+                    
+                    // Auto-login after registration
+                    setTimeout(async () => {
+                        const loginResult = await auth.login(email, password, rememberMe);
+                        if (loginResult.success) {
+                            window.location.href = 'pages/dashboard.html';
+                        }
+                    }, 1000);
+                } else {
+                    showError(emailInput, result.message);
+                }
+                
+                /* ==========================================
+                   FIREBASE REGISTRATION - COMMENTED OUT
+                   ==========================================
                 await createUserWithEmailAndPassword(auth, email, password);
                 console.log('Registration successful');
-                // Show success message and auto login
                 alert('Account created successfully! Redirecting to dashboard...');
                 window.location.href = 'dashboard.html';
+                ========================================== */
             }
         } catch (error) {
             console.error('Auth error:', error);
+            showError(emailInput, 'An unexpected error occurred. Please try again.');
             
+            /* ==========================================
+               FIREBASE ERROR HANDLING - COMMENTED OUT
+               ==========================================
             let errorMessage = 'An error occurred. Please try again.';
             
             switch (error.code) {
@@ -277,6 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             showError(emailInput, errorMessage);
+            ========================================== */
         } finally {
             // Reset button state
             submitBtn.textContent = originalBtnText;
@@ -285,6 +362,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // === Add success message function ===
+    function showSuccess(message) {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-msg';
+        successDiv.textContent = message;
+        successDiv.style.cssText = `
+            background: #10b981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 16px;
+            font-weight: 500;
+        `;
+        authForm.appendChild(successDiv);
+        setTimeout(() => successDiv.remove(), 3000);
+    }
+
+    /* ==========================================
+       SOCIAL AUTHENTICATION - COMMENTED OUT (Firebase required)
+       ==========================================
     // --- Social Authentication ---
     if (googleBtn) {
         googleBtn.addEventListener('click', async () => {
@@ -345,12 +443,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    ========================================== */
 
-    // --- Guest Login (Without Firebase Auth) ---
+    // Disable social auth buttons (Firebase not configured)
+    if (googleBtn) {
+        googleBtn.disabled = true;
+        googleBtn.textContent = 'Google Sign-in (Coming Soon)';
+        googleBtn.style.opacity = '0.5';
+    }
+    
+    if (githubBtn) {
+        githubBtn.disabled = true;
+        githubBtn.textContent = 'GitHub Sign-in (Coming Soon)';
+        githubBtn.style.opacity = '0.5';
+    }
+
+    // === Guest Login - LOCAL VERSION ===
     if (guestBtn) {
         guestBtn.addEventListener('click', () => {
             if (confirm('Continue as guest? Some features may be limited.')) {
-                // Store guest session in localStorage
+                console.log('🎭 Guest login initiated...');
+                const result = auth.loginAsGuest();
+                
+                if (result.success) {
+                    console.log('✅ Guest login successful');
+                    showSuccess('Welcome, Guest! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'pages/dashboard.html';
+                    }, 500);
+                } else {
+                    showError(emailInput, 'Guest login failed. Please try again.');
+                }
+            }
+        });
+    }
+
+    /* ==========================================
+       OLD GUEST LOGIN - COMMENTED OUT
+       ==========================================
+    if (guestBtn) {
+        guestBtn.addEventListener('click', () => {
+            if (confirm('Continue as guest? Some features may be limited.')) {
                 localStorage.setItem('isGuest', 'true');
                 localStorage.setItem('guestSession', Date.now().toString());
                 localStorage.setItem('guestName', 'Guest User');
@@ -360,7 +493,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    ========================================== */
 
+    /* ==========================================
+       FORGOT PASSWORD - COMMENTED OUT (Firebase required)
+       ==========================================
     // --- Forgot Password ---
     if (forgotPasswordAction) {
         forgotPasswordAction.addEventListener('click', async (e) => {
@@ -405,7 +542,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    ========================================== */
 
+    // Forgot password - Local version (demo only)
+    if (forgotPasswordAction) {
+        forgotPasswordAction.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Password reset is not available in local mode.\n\nFor demo purposes:\n- Create a new account\n- Or use existing credentials\n\nNote: All data is stored locally in your browser.');
+        });
+    }
+}
+
+/* ==========================================
+   DEMO LOGIN SETUP - COMMENTED OUT
+   ==========================================
     // --- Demo Login for Testing (Remove in production) ---
     function setupDemoLogin() {
         // Add demo button if not exists
@@ -448,3 +598,4 @@ document.addEventListener('DOMContentLoaded', () => {
         setupDemoLogin();
     }
 });
+========================================== */
