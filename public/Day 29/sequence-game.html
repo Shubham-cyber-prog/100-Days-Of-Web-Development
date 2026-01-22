@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sequence Memory Game</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Schoolbell";
+}
+
+body{
+    background: radial-gradient(circle at top,#2f2f2f,#121212);
+    color:white;
+    min-height:100vh;
+}
+
+/* HEADER */
+.header{
+    text-align:center;
+    padding:30px 20px;
+    background: linear-gradient(135deg,#1e1e1e,#2c2c2c);
+    box-shadow:0 10px 30px rgba(0,0,0,0.7);
+}
+
+.header h1{
+    font-size:36px;
+}
+
+.brain-icon{
+    color:white;
+    margin-right:10px;
+    text-shadow:0 0 12px rgba(255,255,255,0.8);
+}
+
+/* INFO */
+.info{
+    text-align:center;
+    margin:20px 0;
+    font-size:18px;
+}
+
+/* GAME AREA */
+.game-container{
+    display:grid;
+    grid-template-columns: repeat(2, 140px);
+    gap:20px;
+    justify-content:center;
+    margin-top:30px;
+}
+
+/* BUTTONS */
+.game-btn{
+    width:140px;
+    height:140px;
+    border-radius:20px;
+    cursor:pointer;
+    opacity:0.85;
+    transition:0.2s;
+}
+
+.game-btn.active{
+    opacity:1;
+    box-shadow:0 0 20px white;
+}
+
+.red{ background:#DD4B3E; }
+.blue{ background:#4B3EDD; }
+.green{ background:#3EDD4B; }
+.yellow{ background:#ffd037; }
+
+/* CONTROLS */
+.controls{
+    text-align:center;
+    margin:30px 0;
+}
+
+button{
+    padding:8px 18px;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#3EDD4B;
+}
+
+button:hover{
+    box-shadow:0 0 12px #3EDD4B;
+    transform:scale(1.05);
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    margin:30px 0;
+    opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>
+        <i class="fa-solid fa-brain brain-icon"></i>
+        Sequence Memory Game
+    </h1>
+</div>
+
+<!-- INFO -->
+<div class="info">
+    Watch the sequence and repeat it<br>
+    Level: <span id="level">0</span>
+</div>
+
+<!-- GAME -->
+<div class="game-container">
+    <div class="game-btn red" id="red"></div>
+    <div class="game-btn blue" id="blue"></div>
+    <div class="game-btn green" id="green"></div>
+    <div class="game-btn yellow" id="yellow"></div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+    <button onclick="startGame()">Start / Restart</button>
+</div>
+
+<footer>
+    © 2026 Memory Games Project
+</footer>
+
+<script>
+const buttons = ["red","blue","green","yellow"];
+let gameSequence = [];
+let userSequence = [];
+let level = 0;
+let started = false;
+
+const levelDisplay = document.getElementById("level");
+
+function startGame(){
+    gameSequence = [];
+    userSequence = [];
+    level = 0;
+    started = true;
+    nextLevel();
+}
+
+function nextLevel(){
+    userSequence = [];
+    level++;
+    levelDisplay.innerText = level;
+
+    const random = buttons[Math.floor(Math.random()*4)];
+    gameSequence.push(random);
+
+    playSequence();
+}
+
+function playSequence(){
+    let i = 0;
+    const interval = setInterval(()=>{
+        flashButton(gameSequence[i]);
+        i++;
+        if(i >= gameSequence.length){
+            clearInterval(interval);
+        }
+    },600);
+}
+
+function flashButton(color){
+    const btn = document.getElementById(color);
+    btn.classList.add("active");
+    setTimeout(()=>btn.classList.remove("active"),300);
+}
+
+document.querySelectorAll(".game-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+        if(!started) return;
+
+        const color = btn.id;
+        userSequence.push(color);
+        flashButton(color);
+        checkAnswer(userSequence.length - 1);
+    });
+});
+
+function checkAnswer(index){
+    if(userSequence[index] === gameSequence[index]){
+        if(userSequence.length === gameSequence.length){
+            setTimeout(nextLevel,800);
+        }
+    } else {
+        alert("Game Over! You reached Level " + level);
+        started = false;
+    }
+}
+</script>
+
+</body>
+</html>

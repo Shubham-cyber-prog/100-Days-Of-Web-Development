@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Image Memory Game</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Schoolbell";
+}
+
+body{
+    background: radial-gradient(circle at top,#2f2f2f,#121212);
+    color:white;
+    min-height:100vh;
+}
+
+/* HEADER */
+.header{
+    text-align:center;
+    padding:30px 20px;
+    background: linear-gradient(135deg,#1e1e1e,#2c2c2c);
+    box-shadow:0 10px 30px rgba(0,0,0,0.7);
+}
+
+.header h1{
+    font-size:36px;
+}
+
+.brain-icon{
+    color:white;
+    margin-right:10px;
+    text-shadow:0 0 12px rgba(255,255,255,0.8);
+}
+
+/* INFO */
+.info{
+    text-align:center;
+    margin:20px 0;
+    font-size:18px;
+}
+
+/* GAME GRID */
+.game-container{
+    display:grid;
+    grid-template-columns: repeat(4, 120px);
+    gap:20px;
+    justify-content:center;
+    margin-top:30px;
+}
+
+/* CARD */
+.card{
+    width:120px;
+    height:120px;
+    border-radius:16px;
+    cursor:pointer;
+    position:relative;
+    transform-style:preserve-3d;
+    transition: transform 0.6s;
+}
+
+.card.flip{
+    transform: rotateY(180deg);
+}
+
+.card-face{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+    backface-visibility:hidden;
+    border-radius:16px;
+}
+
+.card-front{
+    background:#1f1f1f;
+}
+
+.card-back{
+    background:#ffd037;
+    color:black;
+    transform: rotateY(180deg);
+}
+
+/* CONTROLS */
+.controls{
+    text-align:center;
+    margin:30px 0;
+}
+
+button{
+    padding:8px 18px;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#3EDD4B;
+}
+
+button:hover{
+    box-shadow:0 0 12px #3EDD4B;
+    transform:scale(1.05);
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    margin:30px 0;
+    opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>
+        <i class="fa-solid fa-brain brain-icon"></i>
+        Image Memory Game
+    </h1>
+</div>
+
+<!-- INFO -->
+<div class="info">
+    Remember the images and match the pairs 🖼️
+</div>
+
+<!-- GAME -->
+<div class="game-container" id="gameBoard"></div>
+
+<!-- CONTROLS -->
+<div class="controls">
+    <button onclick="restartGame()">Restart Game</button>
+</div>
+
+<footer>
+    © 2026 Memory Games Project
+</footer>
+
+<script>
+const images = ["🐶","🐱","🦊","🐼","🐸","🐵","🐰","🐯"];
+let cards = [...images, ...images];
+let flippedCards = [];
+let lockBoard = false;
+
+const gameBoard = document.getElementById("gameBoard");
+
+function shuffle(array){
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function createBoard(){
+    gameBoard.innerHTML = "";
+    shuffle(cards);
+
+    cards.forEach(img => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        card.innerHTML = `
+            <div class="card-face card-front"></div>
+            <div class="card-face card-back">${img}</div>
+        `;
+
+        card.addEventListener("click", () => flipCard(card));
+        gameBoard.appendChild(card);
+    });
+
+    // Show all cards briefly
+    setTimeout(() => {
+        document.querySelectorAll(".card").forEach(c => c.classList.add("flip"));
+        setTimeout(() => {
+            document.querySelectorAll(".card").forEach(c => c.classList.remove("flip"));
+        }, 2000);
+    }, 500);
+}
+
+function flipCard(card){
+    if(lockBoard || card.classList.contains("flip")) return;
+
+    card.classList.add("flip");
+    flippedCards.push(card);
+
+    if(flippedCards.length === 2){
+        checkMatch();
+    }
+}
+
+function checkMatch(){
+    lockBoard = true;
+    const [first, second] = flippedCards;
+
+    const isMatch =
+        first.querySelector(".card-back").textContent ===
+        second.querySelector(".card-back").textContent;
+
+    if(!isMatch){
+        setTimeout(() => {
+            first.classList.remove("flip");
+            second.classList.remove("flip");
+            resetTurn();
+        }, 800);
+    } else {
+        resetTurn();
+    }
+}
+
+function resetTurn(){
+    flippedCards = [];
+    lockBoard = false;
+}
+
+function restartGame(){
+    flippedCards = [];
+    lockBoard = false;
+    createBoard();
+}
+
+/* INIT */
+createBoard();
+</script>
+
+</body>
+</html>
