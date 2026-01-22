@@ -44,8 +44,9 @@ This repository documents my **100 Days of Web Development journey**, where I:
 
 ## 🔧 Tech Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript
+- **Frontend**: HTML5, CSS3, JavaScript, TypeScript
 - **Version Control**: Git & GitHub
+- **Backend**: NodeJS, ExpressJS, Python 
 
 ---
 
