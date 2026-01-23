@@ -448,7 +448,7 @@
           // Check if already authenticated
           if (auth.isAuthenticated()) {
             console.log("✅ Already authenticated, redirecting...");
-            window.location.href = "dashboard.html";
+            window.location.href = "./dashboard.html";
           }
         };
         document.head.appendChild(script);
@@ -553,7 +553,7 @@
 
               // Small delay to ensure storage is committed
               setTimeout(() => {
-                window.location.href = "dashboard.html";
+                window.location.href = "./dashboard.html";
               }, 100);
             } else {
               showError("login", result.message || "Invalid credentials");
@@ -621,7 +621,7 @@
                 });
 
                 setTimeout(() => {
-                  window.location.href = "dashboard.html";
+                  window.location.href = "./dashboard.html";
                 }, 100);
               } else {
                 showError(
@@ -676,7 +676,7 @@
             alert("Welcome! You are now in guest mode.");
 
             setTimeout(() => {
-              window.location.href = "dashboard.html";
+              window.location.href = "./dashboard.html";
             }, 100);
           } else {
             alert("Guest login failed: " + (result.message || "Unknown error"));
