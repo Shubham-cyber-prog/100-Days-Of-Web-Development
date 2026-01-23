@@ -1,52 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>Tic Tac Toe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-  <h1>TIC TAC TOE</h1>
+<body class="blur">
 
-  <!-- TURN -->
-  <p id="turn">Turn: O</p>
+<!-- ===== GAME UI ===== -->
+<div class="game-wrapper hidden" id="gameUI">
+  <h1>Tic Tac Toe</h1>
+  <p id="turn">O's Turn</p>
 
-  <!-- SCOREBOARD -->
-  <div id="scoreboard">
-    <p>O Wins: <span id="oScore">0</span></p>
-    <p>X Wins: <span id="xScore">0</span></p>
-    <p>Draws: <span id="drawScore">0</span></p>
+  <div class="board">
+    <button class="box"></button>
+    <button class="box"></button>
+    <button class="box"></button>
+    <button class="box"></button>
+    <button class="box"></button>
+    <button class="box"></button>
+    <button class="box"></button>
+    <button class="box"></button>
+    <button class="box"></button>
   </div>
 
-  <!-- MESSAGE -->
-  <div class="msg-container hide">
-    <p id="msg"></p>
-    <button id="new">New Game</button>
-  </div>
-
-  <!-- BOARD -->
-  <div class="container">
-    <div class="game">
-      <button class="box"></button>
-      <button class="box"></button>
-      <button class="box"></button>
-      <button class="box"></button>
-      <button class="box"></button>
-      <button class="box"></button>
-      <button class="box"></button>
-      <button class="box"></button>
-      <button class="box"></button>
-    </div>
-  </div>
-
-  <!-- CONTROLS -->
   <div class="controls">
-    <button id="reset">Reset Board</button>
-    <button id="resetHistory">Reset History</button>
+    <button onclick="resetGame()">Restart</button>
   </div>
+</div>
 
-  <script src="games.js"></script>
+<!-- ===== WELCOME MODAL ===== -->
+<div class="modal" id="welcomeModal">
+  <div class="modal-box">
+    <h2>Welcome 🎮</h2>
+    <p>Ready to play Tic Tac Toe?</p>
+    <button onclick="openMode()">Continue</button>
+  </div>
+</div>
+
+<!-- ===== MODE MODAL ===== -->
+<div class="modal hidden" id="modeModal">
+  <div class="modal-box">
+    <h3>Select Mode</h3>
+    <button onclick="startGame('single')">Play with Computer</button>
+    <button onclick="startGame('two')">Two Player</button>
+  </div>
+</div>
+
+<!-- ===== RESULT MODAL ===== -->
+<div class="modal hidden" id="resultModal">
+  <div class="modal-box">
+    <h3 id="resultText"></h3>
+    <button onclick="closeResult()">Play Again</button>
+    <a href="index.html">
+      <button>Back To Home Page</button>
+    </a>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
