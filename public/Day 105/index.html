@@ -1,51 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Form Builder</title>
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+<title>Advanced Form Builder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f1f5f9;
+}
+
+/* HEADER */
+header{
+  background:#fff;
+  padding:1rem 2rem;
+  border-bottom:1px solid #e2e8f0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+header h1{
+  margin:0;
+  font-size:1.3rem;
+}
+
+header a{
+  margin-left:1rem;
+  text-decoration:none;
+  color:#2563eb;
+  font-size:0.9rem;
+}
+
+/* LAYOUT */
+.layout{
+  max-width:1100px;
+  margin:2.5rem auto;
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:2rem;
+}
+
+/* LEFT PANEL */
+.palette{
+  background:#fff;
+  padding:1.5rem;
+  border-radius:16px;
+  border:1px solid #e2e8f0;
+}
+
+.palette h3{
+  margin-top:0;
+}
+
+.palette-item{
+  padding:0.65rem;
+  margin-bottom:0.6rem;
+  border-radius:10px;
+  background:#f8fafc;
+  border:1px dashed #cbd5f5;
+  cursor:grab;
+}
+
+/* RIGHT PANEL */
+.canvas{
+  background:#fff;
+  padding:2rem;
+  border-radius:18px;
+  border:1px solid #e2e8f0;
+  min-height:420px;
+}
+
+.empty{
+  color:#64748b;
+  text-align:center;
+  margin-top:3rem;
+}
+
+/* FIELD CARD */
+.field{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:14px;
+  padding:1.2rem;
+  margin-bottom:1rem;
+}
+
+/* FIELD LABEL */
+.field-label{
+  width:100%;
+  padding:0.45rem 0.6rem;
+  border-radius:8px;
+  border:1px solid #cbd5e1;
+  font-weight:500;
+  margin-bottom:0.6rem;
+}
+
+/* INPUT PREVIEW */
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="number"],
+.field textarea,
+.field select{
+  width:100%;
+  padding:0.6rem;
+  border-radius:10px;
+  border:1px solid #e2e8f0;
+}
+
+/* OPTIONS */
+.option{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:6px;
+}
+
+.option input[type="radio"],
+.option input[type="checkbox"]{
+  accent-color:#2563eb;
+}
+
+.option input[type="text"]{
+  flex:1;
+  padding:4px 6px;
+  border-radius:6px;
+  border:1px solid #cbd5e1;
+}
+
+.add-option{
+  margin-top:8px;
+  background:none;
+  border:none;
+  color:#2563eb;
+  cursor:pointer;
+  font-size:0.85rem;
+}
+</style>
 </head>
+
 <body>
 
-  <header>
-  <h1>Form Builder</h1>
-
-  <a href="preview.html" target="_blank" class="nav-btn">Preview Form</a>
-  <a href="responses.html" target="_blank" class="nav-btn">View Responses</a>
-  <a href="example.html" class="nav-btn">View Example</a>
-
-  <button id="themeToggle" class="nav-btn nav-toggle">
-    🌙 Dark Mode
-  </button>
+<header>
+  <h1>Advanced Form Builder</h1>
+  <nav>
+    <a href="preview.html">Preview</a>
+    <a href="responses.html">Responses</a>
+    <a href="example.html">Example</a>
+  </nav>
 </header>
 
+<main class="layout">
 
-  <main class="container">
-    <section class="builder">
-      <input
-        type="text"
-        id="formTitle"
-        placeholder="Form Title"
-      />
+  <!-- LEFT -->
+  <aside class="palette">
+    <h3>Field Types</h3>
 
-      <div class="buttons">
-        <button onclick="addField('text')">Text</button>
-        <button onclick="addField('email')">Email</button>
-        <button onclick="addField('number')">Number</button>
-        <button onclick="addField('textarea')">Textarea</button>
-        <button onclick="addField('select')">Dropdown</button>
-        <button onclick="addField('checkbox')">Checkbox Group</button>
-        <button onclick="addField('radio')">Radio Group</button>
-        <button onclick="clearForm()" style="background:#ef4444;color:white;">
-          Clear Form
-        </button>
-      </div>
+    <div class="palette-item" draggable="true" data-type="text">Text</div>
+    <div class="palette-item" draggable="true" data-type="email">Email</div>
+    <div class="palette-item" draggable="true" data-type="number">Number</div>
+    <div class="palette-item" draggable="true" data-type="textarea">Textarea</div>
+    <div class="palette-item" draggable="true" data-type="radio">Radio Group</div>
+    <div class="palette-item" draggable="true" data-type="checkbox">Checkbox Group</div>
+    <div class="palette-item" draggable="true" data-type="select">Dropdown</div>
+  </aside>
 
-      <div id="fieldsList"></div>
-    </section>
-  </main>
+  <!-- RIGHT -->
+  <section class="canvas" id="dropZone">
+    <div id="fields">
+      <p class="empty">Drag fields from the left to build your form</p>
+    </div>
+  </section>
 
-  <script src="js/theme.js"></script>
-  <script src="js/builder.js"></script>
+</main>
+
+<script>
+let form = { fields: [] };
+
+const fieldsEl = document.getElementById("fields");
+const dropZone = document.getElementById("dropZone");
+
+/* LOAD SAVED */
+const saved = localStorage.getItem("form");
+if(saved){
+  form = JSON.parse(saved);
+  render();
+}
+
+/* DRAG START */
+document.querySelectorAll(".palette-item").forEach(item=>{
+  item.addEventListener("dragstart",e=>{
+    e.dataTransfer.setData("type",item.dataset.type);
+  });
+});
+
+/* DROP */
+dropZone.addEventListener("dragover",e=>e.preventDefault());
+dropZone.addEventListener("drop",e=>{
+  e.preventDefault();
+  addField(e.dataTransfer.getData("type"));
+});
+
+/* ADD FIELD */
+function addField(type){
+  fieldsEl.querySelector(".empty")?.remove();
+
+  const field = {
+    id: Date.now(),
+    type,
+    label: "New Field",
+    options: ["Option 1","Option 2"]
+  };
+
+  form.fields.push(field);
+  save();
+  render();
+}
+
+/* RENDER */
+function render(){
+  fieldsEl.innerHTML = "";
+
+  if(!form.fields.length){
+    fieldsEl.innerHTML = `<p class="empty">Drag fields from the left to build your form</p>`;
+    return;
+  }
+
+  form.fields.forEach((f,index)=>{
+    const div = document.createElement("div");
+    div.className = "field";
+
+    div.innerHTML = `
+      <input class="field-label" value="${f.label}"
+        oninput="updateLabel(${index},this.value)">
+    `;
+
+    if(f.type === "radio" || f.type === "checkbox"){
+      f.options.forEach((opt,i)=>{
+        div.innerHTML += `
+          <div class="option">
+            <input type="${f.type}" disabled>
+            <input type="text" value="${opt}"
+              oninput="updateOption(${index},${i},this.value)">
+          </div>
+        `;
+      });
+
+      div.innerHTML += `
+        <button class="add-option"
+          onclick="addOption(${index})">+ Add option</button>
+      `;
+    }
+    else if(f.type === "select"){
+      div.innerHTML += `
+        <select disabled>
+          ${f.options.map(o=>`<option>${o}</option>`).join("")}
+        </select>
+      `;
+    }
+    else if(f.type === "textarea"){
+      div.innerHTML += `<textarea disabled></textarea>`;
+    }
+    else{
+      div.innerHTML += `<input type="${f.type}" disabled>`;
+    }
+
+    fieldsEl.appendChild(div);
+  });
+}
+
+/* UPDATE FUNCTIONS */
+function updateLabel(i,val){
+  form.fields[i].label = val;
+  save();
+}
+
+function updateOption(fieldIndex,optIndex,val){
+  form.fields[fieldIndex].options[optIndex] = val;
+  save();
+}
+
+function addOption(index){
+  form.fields[index].options.push("New Option");
+  save();
+  render();
+}
+
+function save(){
+  localStorage.setItem("form", JSON.stringify(form));
+}
+</script>
+
 </body>
 </html>

@@ -1,29 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Form Responses</title>
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+<title>Form Responses</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  background:#f1f5f9;
+  font-family:system-ui;
+}
+
+header{
+  background:#fff;
+  padding:1rem 2rem;
+  border-bottom:1px solid #e2e8f0;
+}
+
+header a{
+  text-decoration:none;
+  color:#2563eb;
+}
+
+.container{
+  max-width:900px;
+  margin:3rem auto;
+  background:#fff;
+  padding:2.5rem;
+  border-radius:18px;
+  border:1px solid #e2e8f0;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:1.5rem;
+}
+
+th, td{
+  border:1px solid #e2e8f0;
+  padding:.7rem;
+  text-align:left;
+}
+
+th{
+  background:#f1f5f9;
+  font-weight:600;
+}
+
+.empty{
+  text-align:center;
+  color:#64748b;
+  margin-top:2rem;
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>Form Builder</h1>
-    <button id="themeToggle" class="nav-btn nav-toggle">
-    🌙 Dark Mode
-  </button>
-  </header>
 
-  <main class="container">
-    <h2>Form Responses</h2>
+<header>
+  <a href="index.html">← Back to Builder</a>
+</header>
 
-    <p id="emptyResponses" class="empty-state hidden">
-      No responses have been submitted yet.
-    </p>
+<div class="container">
+  <h2>Form Responses</h2>
 
-    <table id="responsesTable" class="hidden"></table>
-  </main>
+  <p id="empty" class="empty">No responses submitted yet.</p>
+  <table id="table"></table>
+</div>
 
-  <script src="js/theme.js"></script>
-  <script src="js/responses.js"></script>
+<script>
+const responses = JSON.parse(localStorage.getItem("responses")) || [];
+const table = document.getElementById("table");
+const empty = document.getElementById("empty");
+
+if(responses.length > 0){
+  empty.style.display = "none";
+
+  // Table headers from first response keys
+  const headers = Object.keys(responses[0]);
+
+  table.innerHTML = `
+    <tr>
+      ${headers.map(h => `<th>${h}</th>`).join("")}
+    </tr>
+    ${responses.map(row => `
+      <tr>
+        ${headers.map(h => `
+          <td>${Array.isArray(row[h]) ? row[h].join(", ") : row[h]}</td>
+        `).join("")}
+      </tr>
+    `).join("")}
+  `;
+}
+</script>
+
 </body>
 </html>
