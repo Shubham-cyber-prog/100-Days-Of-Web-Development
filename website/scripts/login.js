@@ -14,14 +14,27 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
 
 // Your Firebase configuration - REPLACE WITH YOUR ACTUAL CONFIG
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY_HERE",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
+const firebaseConfig = (() => {
+    const defaultConfig = {
+        apiKey: "YOUR_API_KEY_HERE",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+    if (typeof __firebase_config === 'object' && __firebase_config !== null) {
+        return __firebase_config;
+    } else if (typeof __firebase_config === 'string' && __firebase_config.trim()) {
+        try {
+            return JSON.parse(__firebase_config);
+        } catch (e) {
+            return defaultConfig;
+        }
+    } else {
+        return defaultConfig;
+    }
+})();
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -52,13 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('userName', user.displayName || user.email.split('@')[0]);
             
             // If user is on login page, redirect to dashboard
-            if (window.location.pathname.includes('login.html') || 
+            if (window.location.pathname.includes('login.html') ||
                 window.location.pathname.includes('index.html') ||
                 window.location.pathname === '/') {
-                
+
                 console.log('Redirecting to dashboard...');
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = '/website/pages/dashboard.html';
                 }, 500);
             }
         } else {
@@ -315,10 +328,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userEmail', userCredential.user.email);
                 localStorage.setItem('userId', userCredential.user.uid);
-                
+
                 // Wait 1.5 seconds then redirect
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = '/website/pages/dashboard.html';
                 }, 1500);
                 
             } catch (error) {
@@ -396,9 +409,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Show success and redirect
                     showSuccessMessage('Google login successful! Redirecting...');
-                    
+
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
                     
                 } catch (error) {
@@ -440,9 +453,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Show success and redirect
                     showSuccessMessage('GitHub login successful! Redirecting...');
-                    
+
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
                     
                 } catch (error) {
@@ -483,9 +496,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Show success and redirect
                     showSuccessMessage('Welcome Guest! Redirecting...');
-                    
+
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
                 }
             });
