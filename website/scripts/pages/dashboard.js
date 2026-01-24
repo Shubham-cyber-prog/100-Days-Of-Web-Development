@@ -1,13 +1,19 @@
+/**
+ * Dashboard with Cloud Progress Sync
+ * Uses progressService for Firestore integration with localStorage fallback
+ */
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication (Mock / Local Storage)
-    // Upstream uses Firebase, but strictly adhering to "Frontend Only" request for now
-    // to prevent broken app due to missing API keys.
+// Import progress service (will be loaded dynamically for non-module scripts)
+let progressService = null;
 
-    /* 
-    // Firebase Import (Commented out until config is provided)
-    // import { auth } from './firebase-config.js'; 
-    */
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load progress service dynamically
+    try {
+        const module = await import('../core/progressService.js');
+        progressService = module.progressService;
+    } catch (error) {
+        console.warn('Progress service not available, using localStorage fallback:', error);
+    }
 
     const isGuest = sessionStorage.getItem('authGuest') === 'true';
     const authToken = sessionStorage.getItem('authToken') === 'true';
@@ -20,9 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User');
-    initializeDashboard({ email: userName, isGuest });
+    const userId = localStorage.getItem('user_id') || null;
+    
+    await initializeDashboard({ email: userName, isGuest, uid: userId });
 
-    function initializeDashboard(user) {
+    async function initializeDashboard(user) {
         // Set user name
         const userNameElement = document.getElementById('userName');
         if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
@@ -32,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
                 if (confirm('Abort mission?')) {
+                    if (progressService) progressService.cleanup();
                     sessionStorage.clear();
                     localStorage.removeItem('isAuthenticated');
                     window.location.href = 'login.html';
@@ -91,8 +100,31 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
         ];
 
-        // Load completed days from localStorage
-        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        // Initialize progress service and load completed days
+        let completedDays = [];
+        if (progressService) {
+            try {
+                completedDays = await progressService.initialize(user);
+                // Listen for real-time updates
+                progressService.listenToUpdates((updatedDays) => {
+                    completedDays = updatedDays;
+                    renderProgressGrid();
+                    updateStats();
+                });
+            } catch (error) {
+                console.warn('Failed to initialize progress service:', error);
+                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            }
+        } else {
+            completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Listen for progress updates from other tabs/windows
+        window.addEventListener('progressUpdated', (e) => {
+            completedDays = e.detail;
+            renderProgressGrid();
+            updateStats();
+        });
 
         // Render progress grid
         if (document.getElementById('progressGrid')) renderProgressGrid();
@@ -135,13 +167,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function toggleDay(day) {
-            if (completedDays.includes(day)) {
-                completedDays = completedDays.filter(d => d !== day);
+        async function toggleDay(day) {
+            if (progressService) {
+                await progressService.toggleDay(day);
+                completedDays = progressService.getCompletedDays();
             } else {
-                completedDays.push(day);
+                if (completedDays.includes(day)) {
+                    completedDays = completedDays.filter(d => d !== day);
+                } else {
+                    completedDays.push(day);
+                }
+                localStorage.setItem('completedDays', JSON.stringify(completedDays));
             }
-            localStorage.setItem('completedDays', JSON.stringify(completedDays));
             renderProgressGrid();
             updateStats();
         }
