@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/website/assets/images/logo.png" />
+    <title>Study Room | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/pages/study-room.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar glass-panel">
+        <div class="container nav-container">
+            <a href="/" class="nav-brand">
+                <span class="brand-icon">🚀</span>
+                <span class="brand-text">100 Days</span>
+            </a>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="projects.html">Projects</a>
+                <a href="study-room.html" class="active">Study Rooms</a>
+            </div>
+            <div class="nav-actions">
+                <button id="theme-toggle-btn" class="btn-icon" aria-label="Toggle theme">
+                    <svg class="icon sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <svg class="icon moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <a href="profile.html" class="nav-user">
+                    <div class="user-avatar" id="userAvatar">👤</div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="study-room-main">
+        <!-- Room Lobby View (shown when not in a room) -->
+        <section id="roomLobby" class="room-lobby">
+            <div class="container">
+                <div class="lobby-header">
+                    <h1>📚 Study Rooms</h1>
+                    <p>Join or create a collaborative study session with fellow developers</p>
+                </div>
+
+                <div class="lobby-actions">
+                    <button id="createRoomBtn" class="btn btn-primary btn-lg">
+                        <span class="btn-icon">➕</span>
+                        Create Room
+                    </button>
+                    <div class="join-room-form">
+                        <input type="text" id="inviteCodeInput" placeholder="Enter invite code" maxlength="6" class="invite-input" />
+                        <button id="joinRoomBtn" class="btn btn-secondary">Join</button>
+                    </div>
+                </div>
+
+                <div class="public-rooms">
+                    <h2>🌐 Public Rooms</h2>
+                    <div id="publicRoomsList" class="rooms-grid">
+                        <div class="loading-rooms">
+                            <div class="spinner"></div>
+                            <span>Loading rooms...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Room View (shown when inside a room) -->
+        <section id="roomView" class="room-view" style="display: none;">
+            <div class="room-container">
+                <!-- Room Header -->
+                <header class="room-header glass-panel">
+                    <div class="room-info">
+                        <h2 id="roomName">Study Room</h2>
+                        <div class="room-meta">
+                            <span class="invite-code" id="roomInviteCode" title="Click to copy">
+                                <span class="code-label">Code:</span>
+                                <span class="code-value">------</span>
+                                <svg class="copy-icon" viewBox="0 0 24 24" width="14" height="14">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </span>
+                            <span class="participant-count">
+                                <span id="participantCount">0</span>/10 participants
+                            </span>
+                        </div>
+                    </div>
+                    <div class="room-actions">
+                        <button id="settingsBtn" class="btn-icon" title="Room Settings">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                        </button>
+                        <button id="leaveRoomBtn" class="btn btn-danger">Leave Room</button>
+                    </div>
+                </header>
+
+                <!-- Main Room Content -->
+                <div class="room-content">
+                    <!-- Participants Sidebar -->
+                    <aside class="participants-sidebar glass-panel" id="participantsSidebar">
+                        <div class="sidebar-header">
+                            <h3>👥 Participants</h3>
+                        </div>
+                        <div id="participantsList" class="participants-list">
+                            <!-- Populated by ParticipantList.js -->
+                        </div>
+                    </aside>
+
+                    <!-- Center Content -->
+                    <div class="room-center">
+                        <!-- Pomodoro Timer -->
+                        <div class="pomodoro-section glass-panel">
+                            <div class="pomodoro-display">
+                                <div class="timer-ring">
+                                    <svg class="timer-svg" viewBox="0 0 100 100">
+                                        <circle class="timer-bg" cx="50" cy="50" r="45" />
+                                        <circle class="timer-progress" id="timerProgress" cx="50" cy="50" r="45" />
+                                    </svg>
+                                    <div class="timer-content">
+                                        <span class="timer-time" id="timerDisplay">25:00</span>
+                                        <span class="timer-label" id="timerLabel">Focus Time</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pomodoro-controls">
+                                <button id="pomodoroStartBtn" class="btn btn-primary">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                    </svg>
+                                    Start
+                                </button>
+                                <button id="pomodoroStopBtn" class="btn btn-secondary" style="display: none;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <rect x="6" y="4" width="4" height="16"></rect>
+                                        <rect x="14" y="4" width="4" height="16"></rect>
+                                    </svg>
+                                    Pause
+                                </button>
+                                <button id="breakBtn" class="btn btn-outline">
+                                    ☕ Break
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Working On Status -->
+                        <div class="working-on-section glass-panel">
+                            <h3>📝 What are you working on?</h3>
+                            <div class="working-on-form">
+                                <select id="daySelect" class="day-select">
+                                    <option value="">Select a day...</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                                <button id="updateStatusBtn" class="btn btn-primary">Update Status</button>
+                            </div>
+                            <div id="currentWorkingOn" class="current-working-on" style="display: none;">
+                                <span>Currently working on: </span>
+                                <strong id="workingOnText">Day X</strong>
+                                <button id="clearStatusBtn" class="btn-text">Clear</button>
+                            </div>
+                        </div>
+
+                        <!-- Activity Feed -->
+                        <div class="activity-section glass-panel">
+                            <h3>📢 Activity Feed</h3>
+                            <div id="activityFeed" class="activity-feed">
+                                <!-- Populated by room events -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Sidebar -->
+                    <aside class="chat-sidebar glass-panel" id="chatSidebar">
+                        <div class="chat-header">
+                            <h3>💬 Room Chat</h3>
+                        </div>
+                        <div id="chatMessages" class="chat-messages">
+                            <!-- Populated by RoomChat.js -->
+                        </div>
+                        <div class="chat-input-area">
+                            <div class="chat-input-wrapper">
+                                <textarea id="chatInput" placeholder="Type a message... (Markdown supported)" rows="1"></textarea>
+                                <button id="sendCodeBtn" class="btn-icon code-btn" title="Send code snippet">
+                                    <svg viewBox="0 0 24 24" width="18" height="18">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                            <button id="sendMessageBtn" class="btn btn-primary send-btn">
+                                <svg viewBox="0 0 24 24" width="18" height="18">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- Create Room Modal -->
+        <div id="createRoomModal" class="modal" style="display: none;">
+            <div class="modal-overlay"></div>
+            <div class="modal-content glass-panel">
+                <div class="modal-header">
+                    <h2>Create Study Room</h2>
+                    <button class="modal-close" id="closeCreateModal">&times;</button>
+                </div>
+                <form id="createRoomForm" class="modal-body">
+                    <div class="form-group">
+                        <label for="roomNameInput">Room Name</label>
+                        <input type="text" id="roomNameInput" placeholder="My Study Session" maxlength="50" />
+                    </div>
+                    <div class="form-group">
+                        <label for="roomDescInput">Description (optional)</label>
+                        <textarea id="roomDescInput" placeholder="What will you be studying?" rows="2"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pomodoroDuration">Pomodoro (min)</label>
+                            <input type="number" id="pomodoroDuration" value="25" min="5" max="60" />
+                        </div>
+                        <div class="form-group">
+                            <label for="breakDuration">Break (min)</label>
+                            <input type="number" id="breakDuration" value="5" min="1" max="30" />
+                        </div>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="isPrivateRoom" />
+                            <span>Private Room (invite only)</span>
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelCreateBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Room</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Code Snippet Modal -->
+        <div id="codeSnippetModal" class="modal" style="display: none;">
+            <div class="modal-overlay"></div>
+            <div class="modal-content glass-panel">
+                <div class="modal-header">
+                    <h2>Share Code Snippet</h2>
+                    <button class="modal-close" id="closeCodeModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="codeLanguage">Language</label>
+                        <select id="codeLanguage">
+                            <option value="javascript">JavaScript</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="python">Python</option>
+                            <option value="json">JSON</option>
+                            <option value="plaintext">Plain Text</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="codeContent">Code</label>
+                        <textarea id="codeContent" class="code-textarea" rows="10" placeholder="Paste your code here..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelCodeBtn">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="shareCodeBtn">Share Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connection Status -->
+        <div id="connectionStatus" class="connection-status" style="display: none;">
+            <span class="status-indicator"></span>
+            <span class="status-text">Reconnecting...</span>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script type="module" src="../scripts/pages/study-room.js"></script>
+</body>
+</html>
