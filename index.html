@@ -105,6 +105,14 @@
             width: 100%;
         }
 
+        /* Navbar in light mode */
+        html[data-theme="light"] .site-header {
+            background: var(--light-bg);
+            backdrop-filter: blur(0); /* remove glass mismatch */
+            -webkit-backdrop-filter: blur(0);
+            box-shadow: none;
+        
+        }
         /* Hero Section Enhancement */
         .zenith-hero {
             text-align: center;
@@ -158,6 +166,10 @@
             line-height: 1.6;
             position: relative;
             z-index: 1;
+        }
+
+        html[data-theme="light"] .hero-subtitle {
+            color: #333;
         }
 
         .hero-actions {
@@ -221,6 +233,10 @@
             border-color: rgba(102, 126, 234, 0.8);
             transform: translateY(-3px);
             box-shadow: var(--shadow-md);
+        }
+
+        html[data-theme="light"] .btn-zenith-secondary{
+            color:#333;
         }
 
         /* Feature Cards Enhancement */
