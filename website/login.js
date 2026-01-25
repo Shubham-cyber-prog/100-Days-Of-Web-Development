@@ -2,7 +2,7 @@
  * Local Authentication System
  * Firebase code commented out for future use
  */
-
+// done all the issues 
 /* ==========================================
    FIREBASE CODE - COMMENTED OUT FOR FUTURE USE
    ==========================================
