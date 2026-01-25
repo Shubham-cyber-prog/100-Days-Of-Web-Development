@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Checker Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ☰ Hamburger -->
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+    <!-- 🌸 Side Menu -->
+    <div class="side-menu" id="sideMenu">
+        <h3>Text Tools</h3>
+        <button onclick="loadTool('palindrome')">Palindrome</button>
+        <button onclick="loadTool('anagram')">Anagram</button>
+        <button onclick="loadTool('reverse')">Reverse</button>
+        <button onclick="loadTool('counter')">Word Counter</button>
+
+        <h3>Calculators</h3>
+        <button onclick="loadTool('age')">Age Calculator</button>
+        <button onclick="loadTool('bmi')">BMI Calculator</button>
+        <button onclick="loadTool('binary')">Binary → Decimal</button>
+    </div>
+
+    <!-- 🌸 Main Card -->
+    <div class="card">
+        <h1 id="title">Text Checker Hub</h1>
+        <p class="subtitle">Cute & Smart Tools ✨</p>
+
+        <!-- Dynamic Tool Area -->
+        <div id="toolArea"></div>
+
+        <div id="result"></div>
+    </div>
+
+    <!-- Confetti -->
+    <div id="confetti-container"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
