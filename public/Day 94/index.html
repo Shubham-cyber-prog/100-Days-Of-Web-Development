@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Offline Notes PWA</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ff9d00" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+  <h1>📝 Notes</h1>
+
+  <div class="header-actions">
+    <span id="status">🟢 Online</span>
+    <button id="installBtn" class="install-btn" disabled>
+      Install
+    </button>
+  </div>
+</header>
+
+  <main>
+    <div class="card">
+      <form id="noteForm">
+        <input id="title" type="text" placeholder="Note title" required />
+        <textarea id="content" placeholder="Write your note..." required></textarea>
+        <button type="submit">Add Note</button>
+      </form>
+
+      <p id="emptyState" class="empty">
+        No notes yet. Add your first note 👇
+      </p>
+
+      <section id="notesList"></section>
+    </div>
+  </main>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
