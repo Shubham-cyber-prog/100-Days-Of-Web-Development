@@ -23,6 +23,7 @@ import {
     arrayUnion,
     arrayRemove
 } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+import { offlineService } from './offlineService.js';
 
 class ProgressService {
     constructor() {
@@ -31,7 +32,7 @@ class ProgressService {
         this.listeners = [];
         this.isOnline = navigator.onLine;
         this.syncQueue = [];
-        
+
         // Listen to online/offline status
         window.addEventListener('online', () => this.handleOnline());
         window.addEventListener('offline', () => this.handleOffline());
@@ -44,7 +45,7 @@ class ProgressService {
      */
     async initialize(user) {
         this.currentUser = user;
-        
+
         if (!user || !user.uid) {
             // Use localStorage for anonymous/guest users
             return this.loadFromLocalStorage();
@@ -94,7 +95,7 @@ class ProgressService {
         try {
             const user = auth.currentUser;
             const userRef = doc(db, 'users', userId);
-            
+
             await setDoc(userRef, {
                 userId: userId,
                 email: user?.email || 'anonymous@example.com',
@@ -144,7 +145,7 @@ class ProgressService {
     async toggleDay(day) {
         try {
             const index = this.completedDays.indexOf(day);
-            
+
             if (index > -1) {
                 this.completedDays.splice(index, 1);
             } else {
@@ -152,13 +153,25 @@ class ProgressService {
             }
 
             this.syncLocalStorage();
-            
+
             // Sync to Firestore if user is authenticated
             if (this.currentUser && this.currentUser.uid && this.isOnline) {
                 await this.syncToFirestore();
             } else if (this.currentUser && this.currentUser.uid) {
-                // Queue for sync when back online
+                // Queue for sync when back online (PERSISTENT)
+                if (offlineService) {
+                    await offlineService.queueSyncAction({
+                        type: 'toggleDay',
+                        day,
+                        userId: this.currentUser.uid
+                    });
+                }
                 this.syncQueue.push({ action: 'toggle', day });
+            }
+
+            // Update local cache
+            if (this.currentUser && this.currentUser.uid && offlineService) {
+                await offlineService.cacheProgress(this.currentUser.uid, this.completedDays);
             }
 
             // Notify listeners
@@ -246,7 +259,7 @@ class ProgressService {
      */
     listenToUpdates(callback) {
         if (!this.currentUser || !this.currentUser.uid) {
-            return () => {}; // No-op for non-authenticated users
+            return () => { }; // No-op for non-authenticated users
         }
 
         try {
@@ -266,7 +279,7 @@ class ProgressService {
             return unsubscribe;
         } catch (error) {
             console.error('Error setting up listener:', error);
-            return () => {};
+            return () => { };
         }
     }
 
@@ -380,23 +393,21 @@ class ProgressService {
     async handleOnline() {
         this.isOnline = true;
         console.log('🟢 Back online - syncing data');
-        
-        // Process sync queue
-        for (const item of this.syncQueue) {
-            try {
-                if (item.action === 'toggle') {
-                    // Re-toggle to sync
-                } else if (item.action === 'complete') {
-                    // Re-complete to sync
-                }
-            } catch (error) {
-                console.error('Error processing sync queue:', error);
+
+        // 1. Process memory queue
+        this.syncQueue = [];
+
+        // 2. Process persistent IndexedDB queue
+        if (typeof offlineService !== 'undefined') {
+            const persistentQueue = await offlineService.getSyncQueue();
+            if (persistentQueue && persistentQueue.length > 0) {
+                console.log(`Processing ${persistentQueue.length} persistent sync actions...`);
+                await this.syncToFirestore();
+                await offlineService.clearSyncQueue();
             }
         }
 
-        this.syncQueue = [];
-        
-        // Sync all current data
+        // 3. Sync all current data
         if (this.currentUser && this.currentUser.uid) {
             await this.syncToFirestore();
         }
