@@ -1,48 +1,45 @@
-/**
- * Dashboard with Cloud Progress Sync
- * Uses progressService for Firestore integration with localStorage fallback
- */
 
-// Import progress service (will be loaded dynamically for non-module scripts)
-let progressService = null;
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // Load progress service dynamically
-    try {
-        const module = await import('../core/progressService.js');
-        progressService = module.progressService;
-    } catch (error) {
-        console.warn('Progress service not available, using localStorage fallback:', error);
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
     }
-
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const authToken = sessionStorage.getItem('authToken') === 'true';
-    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
-
-    // Auth Guard
-    if (!authToken && !localAuth && !isGuest) {
-        window.location.href = 'login.html';
-        return;
-    }
-
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User');
-    const userId = localStorage.getItem('user_id') || null;
     
-    await initializeDashboard({ email: userName, isGuest, uid: userId });
+    waitForAuthService();
 
-    async function initializeDashboard(user) {
-        // Set user name
-        const userNameElement = document.getElementById('userName');
-        if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
+            }
+        }
 
         // Logout functionality
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
                 if (confirm('Abort mission?')) {
-                    if (progressService) progressService.cleanup();
-                    sessionStorage.clear();
-                    localStorage.removeItem('isAuthenticated');
+                    auth.logout();
                     window.location.href = 'login.html';
                 }
             });
