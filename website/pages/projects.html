@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/website/assets/images/logo.png" />
+  <link rel="icon" href="/website/assets/images/logo.png" height="70px" width="100px"/>
   <title>Projects | 100 Days of Web Dev</title>
   <link rel="stylesheet" href="../styles/index.css" />
   <link rel="stylesheet" href="../styles/components/project-modal.css" />
@@ -21,7 +21,26 @@
       margin: 0 auto 40px;
       position: relative;
     }
+ header nav img {
+            width: 100px;
+            height: 70px;
+            border: 2px groove #cc2a01;
+            border-radius: 25%;
 
+        }
+        header nav img:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+               .nav-container{
+            height: 120px;
+            margin-top: 25px;
+        }  
+
+        .nav-links img:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+        }
     #projectSearch {
       background: var(--bg-surface);
       backdrop-filter: blur(12px);
@@ -70,7 +89,6 @@
 
     .tab-btn.active {
       background: var(--accent-core);
-      color: #000;
       border-color: var(--accent-core);
       font-weight: var(--weight-bold);
       box-shadow: 0 0 20px var(--accent-alpha);
