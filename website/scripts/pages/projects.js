@@ -1,9 +1,9 @@
-/**
- * Zenith Project Loader
- * Dynamically loads project cards based on the full 100-day curriculum.
- */
-
 const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/tree/main/public";
+
+// Import components
+import { projectModal } from '../components/ProjectModal.js';
+import { App } from '../core/app.js';
+import { Notify } from '../core/Notify.js';
 
 // Map of existing folders found in public/ to handle inconsistencies
 const folderMap = {
@@ -210,16 +210,24 @@ function renderProjects(filter = 'All') {
             window.open(codeLink, '_blank');
         };
 
-        // --- CRITICAL FIX START ---
+        // --- PROJECT SHOWCASE INTEGRATION ---
         if (!isDisabled) {
-            // Instead of window.open, we call our health check function
             card.addEventListener('click', (e) => {
-                handleProjectClick(e, liveLink);
+                // Prepare project data for modal
+                const projectData = {
+                    ...project,
+                    difficulty,
+                    liveLink,
+                    codeLink,
+                    time: project.day <= 30 ? '1-2 hours' : project.day <= 60 ? '3-5 hours' : '8+ hours'
+                };
+
+                projectModal.show(projectData);
             });
         } else {
             card.classList.add('is-disabled');
         }
-        // --- CRITICAL FIX END ---
+        // --- END INTEGRATION ---
 
         setupTiltEffect(card);
         grid.appendChild(card);

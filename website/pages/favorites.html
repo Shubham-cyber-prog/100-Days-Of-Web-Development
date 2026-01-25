@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/website/assets/images/logo.png" />
+    <title>My Favorites | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/components/project-modal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        .page-header {
+            text-align: center;
+            padding: 120px 0 60px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            color: var(--modal-accent);
+            opacity: 0.5;
+        }
+
+        /* Reuse project card styles from projects.html */
+        /* (In a real project, these would be in a shared CSS file) */
+        /* Copying minimal necessary styles for card appearance */
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            background: var(--bg-nebula);
+            padding: 1.5rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--modal-accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 4px;
+            margin-right: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-logo">
+                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="favorites.html" class="nav-link active">Favorites</a>
+                <a href="about.html" class="nav-link">About</a>
+            </nav>
+            <div class="nav-user">
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="user-avatar-wrapper">
+                    <button class="user-avatar" onclick="toggleUserMenu()">
+                        <img src="https://github.com/ntbnaren7.png" alt="User"
+                            style="width: 100%; height: 100%; border-radius: 50%" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container section">
+        <div class="page-header animate-enter">
+            <h1>Starred Missions</h1>
+            <p class="text-secondary">Your collection of favorite projects and benchmarks.</p>
+        </div>
+
+        <div id="favoritesGrid" class="grid grid-4 animate-enter delay-100">
+            <!-- Injected by scripts/pages/favorites.js -->
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <span class="empty-icon"><i class="far fa-star"></i></span>
+            <h3>No favorites yet</h3>
+            <p>Go to the <a href="projects.html">Projects Archive</a> to add some!</p>
+        </div>
+    </main>
+
+    <script type="module" src="../scripts/pages/favorites.js"></script>
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+</body>
+
+</html>
