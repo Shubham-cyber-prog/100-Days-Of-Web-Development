@@ -3,21 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
+    <link rel="icon" href="/website/assets/images/logo.png" height="70px" width="100px"/>
     <title>About & Leaderboard | 100 Days of Web Dev</title>
     <link rel="stylesheet" href="../styles/index.css" />
     <link rel="stylesheet" href="../styles/pages/about.css" />
+    <style>
+       header nav img {
+            width: 100px;
+            height: 70px;
+            border: 2px groove #cc2a01;
+            border-radius: 25%;
+
+        }
+        header nav img:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+         .nav-container{
+            height: 120px;
+            margin-top: 25px;
+        }
+    </style>
   </head>
 
   <body>
     <header class="site-header">
-      <div class="nav-container">
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
+    <div class="nav-container">
+      <a href="dashboard.html" class="nav-logo">
+        <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
+      </a>
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link">
+          <img src="../assets/images/dashboard.png" alt="Dashboard">
+        </a>
+        <a href="projects.html" class="nav-link active">
+
+          <img src="../assets/images/project.png" alt="Projects">
+        </a>
+        <a href="about.html" class="nav-link">
+          <img src="../assets/images/about.png" alt="About">
+        </a>
+        <a href="contributors.html" class="nav-link">
+          <img src="../assets/images/contributor.png" alt="Contributors">
+        </a>
+        <a href="contact.html" class="nav-link">
+          <img src="../assets/images/contact.png" alt="Contact">
         </a>
         <nav class="nav-links">
           <a href="dashboard.html" class="nav-link">Dashboard</a>
