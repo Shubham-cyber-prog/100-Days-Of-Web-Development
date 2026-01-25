@@ -129,14 +129,14 @@ class AuthService {
             // Save user
             const users = this.getUsers();
             users.push(newUser);
-            
+
             if (!this.saveUsers(users)) {
                 return { success: false, message: 'Failed to save user data' };
             }
 
             console.log('✅ User registered successfully:', email);
-            return { 
-                success: true, 
+            return {
+                success: true,
                 message: 'Registration successful!',
                 user: { id: newUser.id, email: newUser.email, name: newUser.name }
             };
@@ -166,8 +166,8 @@ class AuthService {
 
             // Find user
             const users = this.getUsers();
-            const user = users.find(u => 
-                u.email.toLowerCase() === email.toLowerCase() && 
+            const user = users.find(u =>
+                u.email.toLowerCase() === email.toLowerCase() &&
                 u.password === hashedPassword
             );
 
@@ -208,8 +208,8 @@ class AuthService {
             this.clearGuestMode();
 
             console.log('✅ Login successful:', email);
-            return { 
-                success: true, 
+            return {
+                success: true,
                 message: 'Login successful!',
                 user: userData
             };
@@ -237,13 +237,13 @@ class AuthService {
             sessionStorage.setItem(this.GUEST_KEY, 'true');
             sessionStorage.setItem(this.CURRENT_USER_KEY, JSON.stringify(guestData));
             sessionStorage.setItem('isAuthenticated', 'true');
-            
+
             localStorage.setItem(this.GUEST_KEY, 'true');
             localStorage.setItem('guestSession', Date.now().toString());
 
             console.log('✅ Guest login successful');
-            return { 
-                success: true, 
+            return {
+                success: true,
                 message: 'Welcome, Guest!',
                 user: guestData
             };
@@ -267,7 +267,7 @@ class AuthService {
         // Check localStorage if remember me was set
         const rememberMe = localStorage.getItem(this.REMEMBER_KEY) === 'true';
         const localAuth = localStorage.getItem('isAuthenticated') === 'true';
-        
+
         if (rememberMe && localAuth) {
             // Restore session from localStorage
             const userData = localStorage.getItem(this.CURRENT_USER_KEY);
@@ -285,8 +285,8 @@ class AuthService {
      * Check if current user is guest
      */
     isGuest() {
-        return sessionStorage.getItem(this.GUEST_KEY) === 'true' || 
-               localStorage.getItem(this.GUEST_KEY) === 'true';
+        const sessionGuest = sessionStorage.getItem(this.GUEST_KEY);
+        return sessionGuest !== null ? sessionGuest === 'true' : localStorage.getItem(this.GUEST_KEY) === 'true';
     }
 
     /**
@@ -296,7 +296,7 @@ class AuthService {
         try {
             // Try session storage first
             let userData = sessionStorage.getItem(this.CURRENT_USER_KEY);
-            
+
             // Fallback to localStorage if remember me
             if (!userData && localStorage.getItem(this.REMEMBER_KEY) === 'true') {
                 userData = localStorage.getItem(this.CURRENT_USER_KEY);
@@ -337,7 +337,7 @@ class AuthService {
                 localStorage.removeItem(this.CURRENT_USER_KEY);
                 localStorage.removeItem('isAuthenticated');
             }
-            
+
             // Always clear guest data
             this.clearGuestMode();
 
