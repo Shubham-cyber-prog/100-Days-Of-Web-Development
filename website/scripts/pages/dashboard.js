@@ -42,6 +42,65 @@ async function loadCoreModules() {
     }
 }
 
+
+    // Auth Guard is now handled by guard.js
+    // Removed conflicting check that caused infinite loop
+
+    // Get user data from AuthService storage pattern
+    // Fix: Prefer sessionStorage to avoid stale localStorage guest state
+    const sessionGuest = sessionStorage.getItem('is_guest');
+    const isGuest = sessionGuest !== null ? sessionGuest === 'true' : localStorage.getItem('is_guest') === 'true';
+
+    // Get user name (handle object parsing if needed)
+    let userName = 'User';
+    let userData = null;
+
+    if (isGuest) {
+        userName = 'Guest Pilot';
+    } else {
+        // robustly check session then local storage
+        try {
+            const sessionRaw = sessionStorage.getItem('current_user');
+            if (sessionRaw) {
+                userData = JSON.parse(sessionRaw);
+            }
+        } catch (e) {
+            console.warn('Error parsing session user data:', e);
+        }
+
+        if (!userData) {
+            try {
+                const localRaw = localStorage.getItem('current_user');
+                if (localRaw) {
+                    userData = JSON.parse(localRaw);
+                }
+            } catch (e) {
+                console.warn('Error parsing local user data:', e);
+            }
+        }
+
+        if (userData) {
+            if (userData.name) {
+                userName = userData.name;
+            } else if (userData.email) {
+                userName = userData.email.split('@')[0];
+            }
+        }
+    }
+
+    // Get user id from userData if available
+    let userId = null;
+    if (userData && userData.id) {
+        userId = userData.id;
+    }
+
+    // Fallback to upstream's simple check if needed (or if set by other means)
+    if (!userId) {
+        userId = localStorage.getItem('user_id');
+    }
+
+    await initializeDashboard({ displayName: userName, isGuest, uid: userId });
+
 document.addEventListener('DOMContentLoaded', async () => {
     // Load core modules first
     await loadCoreModules();
@@ -81,9 +140,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     initializeDashboard(currentUser);
 
+
     async function initializeDashboard(user) {
         // Set user name
         const userNameElement = document.getElementById('userName');
+
+        if (userNameElement) userNameElement.textContent = user.displayName;
+=======
         if (userNameElement) {
             const displayName = user.name || (user.email ? user.email.split('@')[0] : 'User');
             userNameElement.textContent = displayName;
@@ -122,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (guestBanner) {
                 guestBanner.style.display = 'block';
             }
+
 
         }
 
