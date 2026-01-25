@@ -431,10 +431,10 @@
             </a>
 
             <nav class="nav-links">
-                <a href="#" class="nav-link active">Home</a>
-                <a href="website/pages/projects.html" class="nav-link">Projects</a>
-                <a href="website/pages/about.html" class="nav-link">About</a>
-                <a href="website/pages/contributors.html" class="nav-link">Contributors</a>
+                <a href="#" class="nav-link active" onclick="closeMobileMenuInline()">Home</a>
+                <a href="website/pages/projects.html" class="nav-link" onclick="closeMobileMenuInline()">Projects</a>
+                <a href="website/pages/about.html" class="nav-link" onclick="closeMobileMenuInline()">About</a>
+                <a href="website/pages/contributors.html" class="nav-link" onclick="closeMobileMenuInline()">Contributors</a>
             </nav>
 
             <div class="nav-user">
@@ -570,6 +570,15 @@
     <!-- Scripts -->
     <script src="website/scripts/components/cursor.js"></script>
     <script src="website/scripts/components/navigation.js"></script>
+    <script>
+        // Inline function for main index.html mobile menu close
+        function closeMobileMenuInline() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                navLinks.classList.remove('open');
+            }
+        }
+    </script>
 </body>
 
 </html>

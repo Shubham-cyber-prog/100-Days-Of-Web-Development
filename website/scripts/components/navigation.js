@@ -9,6 +9,12 @@ function toggleMobileMenu() {
     navLinks.classList.toggle('open');
 }
 
+/* Close mobile menu when nav link is clicked */
+function closeMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.remove('open');
+}
+
 /* User Dropdown */
 function toggleUserMenu() {
     const dropdown = document.querySelector('.user-dropdown');
@@ -76,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
             links.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
         }
+        
+        // Add click event to close mobile menu
+        link.addEventListener('click', closeMobileMenu);
     });
 
     // 2. Avatar Logic (Guest checks)
