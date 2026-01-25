@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements | 100 Days of Web Dev</title>
+    <link rel="icon" type="image/png" href="/website/assets/images/logo.png">
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .page-header {
+            text-align: center;
+            padding: 120px 0 60px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            padding-bottom: 80px;
+        }
+
+        .achievement-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0.6;
+            filter: grayscale(1);
+        }
+
+        .achievement-card.unlocked {
+            opacity: 1;
+            filter: grayscale(0);
+            border-color: var(--accent-core);
+            background: linear-gradient(145deg, var(--bg-surface) 0%, rgba(102, 126, 234, 0.05) 100%);
+        }
+
+        .achievement-card.unlocked:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px var(--accent-alpha);
+        }
+
+        .achievement-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card.unlocked .achievement-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .achievement-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .achievement-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .unlock-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-core);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: none;
+        }
+
+        .achievement-card.unlocked .unlock-badge {
+            display: block;
+        }
+
+        .share-btn {
+            margin-top: 20px;
+            padding: 8px 20px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: none;
+        }
+
+        .achievement-card.unlocked .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-btn:hover {
+            background: var(--accent-core);
+            color: #000;
+            border-color: var(--accent-core);
+        }
+
+        .stats-banner {
+            background: var(--accent-alpha);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-core);
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent-core);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-logo">
+                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="achievements.html" class="nav-link active">Achievements</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+            </nav>
+            <div class="nav-user">
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="user-avatar-wrapper">
+                    <button class="user-avatar" onclick="toggleUserMenu()">
+                        <img src="https://github.com/ntbnaren7.png" alt="User"
+                            style="width: 100%; height: 100%; border-radius: 50%" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container section">
+        <div class="page-header animate-enter">
+            <h1 class="hero-title">Hall of Valor</h1>
+            <p class="text-secondary">Your mission milestones and earned badges.</p>
+        </div>
+
+        <div class="stats-banner animate-enter delay-100">
+            <div class="stat-item">
+                <h3 id="statUnlocked">0</h3>
+                <p>Badges Earned</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="statPoints">0</h3>
+                <p>Reputation Rank</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="statTotal">100%</h3>
+                <p>Collection</p>
+            </div>
+        </div>
+
+        <div id="achievementsGrid" class="achievements-grid animate-enter delay-200">
+            <!-- Achievements will be injected here -->
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script type="module" src="../scripts/pages/achievements.js"></script>
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script src="../scripts/auth/guard.js"></script>
+</body>
+
+</html>

@@ -1,581 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Academy</title>
+    <title>Pilot Profile | 100 Days of Web Dev</title>
+    <link rel="icon" type="image/png" href="/website/assets/images/logo.png">
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #64748b;
-            --light: #f8fafc;
-            --dark: #0f172a;
-            --success: #10b981;
-            --error: #ef4444;
-            --border: #e2e8f0;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --radius: 12px;
-        }
-
-        body {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            min-height: 100vh;
-            display: flex;
+        .profile-header {
+            padding: 120px 0 60px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 40px;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
 
-        .container {
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-core);
+            padding: 5px;
+            background: var(--bg-surface);
+            box-shadow: 0 0 30px var(--accent-alpha);
+        }
+
+        .profile-avatar img {
             width: 100%;
-            max-width: 440px;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
-        .login-card {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--success));
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo h1 {
-            color: var(--dark);
-            font-size: 28px;
-            font-weight: 700;
+        .profile-info h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 5px;
         }
 
-        .logo p {
-            color: var(--secondary);
-            font-size: 14px;
-        }
-
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--success));
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--secondary);
-            font-size: 16px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 14px 14px 14px 45px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .form-control.error {
-            border-color: var(--error);
-        }
-
-        .error-message {
-            color: var(--error);
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .forgot-password {
-            text-align: right;
-            margin-bottom: 25px;
-        }
-
-        .forgot-password a {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-
-        .forgot-password a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.2);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .divider {
-            text-align: center;
-            margin: 30px 0;
-            position: relative;
-            color: var(--secondary);
-            font-size: 14px;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 45%;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .divider::before {
-            left: 0;
-        }
-
-        .divider::after {
-            right: 0;
-        }
-
-        .social-login {
+        .profile-stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
         }
 
-        .social-btn {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
+        .stat-card-mini {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+            margin-top: 40px;
+        }
+
+        .mission-cell {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.2s;
+        }
+
+        .mission-cell.completed {
+            background: var(--accent-core);
+            box-shadow: 0 0 10px var(--accent-alpha);
+            border-color: var(--accent-core);
+        }
+
+        .achievement-showcase {
+            margin-top: 40px;
+            padding: 25px;
+            background: var(--accent-alpha);
+            border-radius: 20px;
+            border: 1px solid var(--accent-core);
+        }
+
+        .achievement-list-mini {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .achievement-badge-mini {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-surface);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            font-size: 1.5rem;
+            border: 1px solid var(--glass-border);
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            transition: all 0.2s;
         }
 
-        .social-btn:hover {
-            border-color: var(--primary);
-            transform: translateY(-1px);
+        .achievement-badge-mini:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-core);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .social-btn img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 14px;
-            color: var(--secondary);
-        }
-
-        .register-link a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 5px;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        .loading {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid white;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .message {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-            display: none;
-        }
-
-        .message.success {
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-        }
-
-        .message.error {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .remember-me input {
-            width: 16px;
-            height: 16px;
-        }
-
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 30px 20px;
+        @media (max-width: 768px) {
+            .profile-header {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            .social-login {
-                grid-template-columns: 1fr;
+            .profile-avatar {
+                margin: 0 auto;
+            }
+
+            .mission-grid {
+                grid-template-columns: repeat(5, 1fr);
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="login-card">
-            <div class="logo">
-                <div class="logo-icon">A</div>
-                <h1>Academy Login</h1>
-                <p>Welcome back! Please sign in to continue</p>
-            </div>
-
-            <div class="message" id="message"></div>
-
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" 
-                               id="email" 
-                               class="form-control" 
-                               placeholder="Enter your email"
-                               required>
-                    </div>
-                    <div class="error-message" id="email-error"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" 
-                               id="password" 
-                               class="form-control" 
-                               placeholder="Enter your password"
-                               required>
-                        <i class="fas fa-eye toggle-password" 
-                           style="position: absolute; right: 15px; left: auto; cursor: pointer;"></i>
-                    </div>
-                    <div class="error-message" id="password-error"></div>
-                </div>
-
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
-                </div>
-
-                <div class="forgot-password">
-                    <a href="#" id="forgotPassword">Forgot password?</a>
-                </div>
-
-                <button type="submit" class="btn btn-primary" id="submitBtn">
-                    <span id="btnText">Sign In</span>
-                    <div class="loading" id="loading"></div>
+    <!-- Navbar -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-logo">
+                <img src="../assets/images/logo.png" alt="Zenith" class="brand-logo-img">
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="achievements.html" class="nav-link">Achievements</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+            </nav>
+            <div class="nav-user">
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
                 </button>
-            </form>
-
-            <div class="divider">or continue with</div>
-
-            <div class="social-login">
-                <button class="social-btn" id="googleBtn">
-                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
-                    Google
-                </button>
-                <button class="social-btn" id="githubBtn">
-                    <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub">
-                    GitHub
-                </button>
-            </div>
-
-            <div class="register-link">
-                Don't have an account?
-                <a href="#" id="registerLink">Sign up now</a>
             </div>
         </div>
-    </div>
+    </header>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elements
-            const loginForm = document.getElementById('loginForm');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const loading = document.getElementById('loading');
-            const message = document.getElementById('message');
-            const togglePassword = document.querySelector('.toggle-password');
-            const googleBtn = document.getElementById('googleBtn');
-            const githubBtn = document.getElementById('githubBtn');
-            const forgotPassword = document.getElementById('forgotPassword');
-            const registerLink = document.getElementById('registerLink');
+    <main class="container section">
+        <div class="profile-header animate-enter">
+            <div class="profile-avatar">
+                <img src="https://avatars.githubusercontent.com/u/104505191?v=4" alt="Avatar" id="userAvatar">
+            </div>
+            <div class="profile-info">
+                <h1>Shubham Pandey</h1>
+                <p class="text-tertiary">@Shubham-cyber-prog</p>
+                <p class="text-secondary" style="margin-top: 10px;">Full-stack developer focused on creating premium
+                    digital experiences.</p>
+                <div style="margin-top: 20px; display: flex; gap: 15px;">
+                    <a href="#" class="btn btn-primary btn-sm">Edit Profile</a>
+                    <a href="#" class="btn btn-secondary btn-sm">Share Profile</a>
+                </div>
+            </div>
+            <div class="profile-ranks">
+                <div class="stat-card-mini">
+                    <span class="text-flame" style="font-size: 2rem; font-weight: 800;">45%</span>
+                    <p class="text-secondary text-xs uppercase">Progress</p>
+                </div>
+            </div>
+        </div>
 
-            // Toggle password visibility
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                this.classList.toggle('fa-eye');
-                this.classList.toggle('fa-eye-slash');
-            });
+        <div class="achievement-showcase animate-enter delay-100">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 1.1rem; font-weight: 700;">Earned Badges</h3>
+                <a href="achievements.html" class="text-flame text-sm">View All →</a>
+            </div>
+            <div id="achievementShowcase" class="achievement-list-mini">
+                <!-- Badges will be injected here -->
+            </div>
+        </div>
 
-            // Form validation
-            function validateEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
-            }
+        <section class="section animate-enter delay-200">
+            <div class="flex justify-between items-center">
+                <h3>100-Day Mission Log</h3>
+                <span class="text-secondary text-sm">Click a cell to toggle completion</span>
+            </div>
+            <div id="missionGrid" class="mission-grid">
+                <!-- Grid will be injected here -->
+            </div>
+        </section>
+    </main>
 
-            function validatePassword(password) {
-                return password.length >= 6;
-            }
-
-            function showError(inputId, message) {
-                const errorElement = document.getElementById(inputId + '-error');
-                const inputElement = document.getElementById(inputId);
-                errorElement.textContent = message;
-                errorElement.style.display = 'block';
-                inputElement.classList.add('error');
-            }
-
-            function clearError(inputId) {
-                const errorElement = document.getElementById(inputId + '-error');
-                const inputElement = document.getElementById(inputId);
-                errorElement.textContent = '';
-                errorElement.style.display = 'none';
-                inputElement.classList.remove('error');
-            }
-
-            function showMessage(type, text) {
-                message.textContent = text;
-                message.className = 'message ' + type;
-                message.style.display = 'block';
-                
-                // Auto hide after 5 seconds
-                setTimeout(() => {
-                    message.style.display = 'none';
-                }, 5000);
-            }
-
-            // Handle form submission
-            loginForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const email = emailInput.value.trim();
-                const password = passwordInput.value.trim();
-                let isValid = true;
-
-                // Clear previous errors
-                clearError('email');
-                clearError('password');
-                message.style.display = 'none';
-
-                // Validate email
-                if (!email) {
-                    showError('email', 'Email is required');
-                    isValid = false;
-                } else if (!validateEmail(email)) {
-                    showError('email', 'Please enter a valid email');
-                    isValid = false;
-                }
-
-                // Validate password
-                if (!password) {
-                    showError('password', 'Password is required');
-                    isValid = false;
-                } else if (!validatePassword(password)) {
-                    showError('password', 'Password must be at least 6 characters');
-                    isValid = false;
-                }
-
-                if (!isValid) return;
-
-                // Show loading state
-                btnText.style.display = 'none';
-                loading.style.display = 'block';
-                submitBtn.disabled = true;
-
-                // Simulate API call (replace with actual API call)
-                try {
-                    // This is a simulation - replace with real authentication
-                    await new Promise(resolve => setTimeout(resolve, 1500));
-                    
-                    // For demo purposes, accept any email/password
-                    // In real app, you would make an API call here
-                    
-                    showMessage('success', 'Login successful! Redirecting...');
-                    
-                    // Simulate redirect to dashboard
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1000);
-                    
-                } catch (error) {
-                    showMessage('error', 'Login failed. Please check your credentials.');
-                    console.error('Login error:', error);
-                } finally {
-                    // Reset button state
-                    btnText.style.display = 'block';
-                    loading.style.display = 'none';
-                    submitBtn.disabled = false;
-                }
-            });
-
-            // Social login buttons
-            googleBtn.addEventListener('click', function() {
-                showMessage('info', 'Redirecting to Google authentication...');
-                // In real app: window.location.href = '/auth/google';
-            });
-
-            githubBtn.addEventListener('click', function() {
-                showMessage('info', 'Redirecting to GitHub authentication...');
-                // In real app: window.location.href = '/auth/github';
-            });
-
-            // Forgot password
-            forgotPassword.addEventListener('click', function(e) {
-                e.preventDefault();
-                const email = prompt('Please enter your email to reset password:');
-                if (email && validateEmail(email)) {
-                    showMessage('success', `Password reset link sent to ${email}`);
-                } else if (email) {
-                    alert('Please enter a valid email address');
-                }
-            });
-
-            // Register link
-            registerLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                showMessage('info', 'Redirecting to registration page...');
-                // In real app: window.location.href = '/register';
-            });
-
-            // Auto-fill demo credentials for testing
-            window.demoLogin = function() {
-                emailInput.value = 'demo@academy.com';
-                passwordInput.value = 'password123';
-                loginForm.requestSubmit();
-            };
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'Enter') {
-                    loginForm.requestSubmit();
-                }
-                if (e.altKey && e.key === 'd') {
-                    window.demoLogin();
-                }
-            });
-
-            // Check for saved credentials
-            const savedEmail = localStorage.getItem('rememberedEmail');
-            if (savedEmail) {
-                emailInput.value = savedEmail;
-                document.getElementById('remember').checked = true;
-            }
-        });
-    </script>
+    <script type="module" src="../scripts/pages/profile.js"></script>
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script src="../scripts/auth/guard.js"></script>
 </body>
+
 </html>
