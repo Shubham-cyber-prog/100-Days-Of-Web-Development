@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  background: #050505;
+  color: white;
+  min-height: 100vh;
+}
+
+header {
+  padding: 1rem 1.5rem;
+  background: #0b0b0b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.install-btn {
+  background: #ff9d00;
+  color: black;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+main {
+  padding: 1.5rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+.card {
+  background: rgba(15, 15, 15, 0.9);
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+input,
+textarea {
+  padding: 0.7rem;
+  border-radius: 10px;
+  border: none;
+  background: #111;
+  color: white;
+}
+
+textarea {
+  min-height: 120px;
+}
+
+button {
+  padding: 0.7rem;
+  border-radius: 12px;
+  border: none;
+  background: #ff9d00;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#notesList {
+  margin-top: 1.2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.note {
+  background: #111;
+  padding: 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.note p {
+  color: #9ca3af;
+}
+
+.note button {
+  margin-top: 0.6rem;
+  background: #ef4444;
+  color: white;
+}
+
+.empty {
+  text-align: center;
+  margin-top: 1rem;
+  color: #6b7280;
+}
+
+.install-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
