@@ -32,6 +32,11 @@ async function loadCoreModules() {
         const module = await import('../core/progressService.js');
         progressService = module.progressService;
     } catch (error) {
+
+        console.warn('Achievement service not available');
+    }
+}
+
         console.warn('Progress service not available, using localStorage fallback');
 
 
@@ -85,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     await initializeDashboard({ displayName: userName, isGuest, uid: userId });
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Load core modules first
@@ -160,6 +166,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const userNameElement = document.getElementById('userName');
 
 
+
         if (userNameElement) userNameElement.textContent = user.displayName;
 
         if (userNameElement) {
@@ -171,7 +178,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
-
                 const handleLogout = async () => {
                     // Logout via App Core
                     if (App) {
@@ -200,11 +206,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
                 } else if (confirm('Abort mission?')) {
                     handleLogout();
-
-                if (confirm('Abort mission?')) {
-                    auth.logout();
-                    window.location.href = 'login.html';
-
                 }
             });
         }
