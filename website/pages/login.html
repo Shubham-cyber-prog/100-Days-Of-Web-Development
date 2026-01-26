@@ -13,13 +13,14 @@
 
     <style>
       :root {
-        --primary: #ff9d00;
-        --primary-glow: rgba(255, 157, 0, 0.35);
+        --primary: #006eff;
+        --primary-glow: rgba(0, 238, 255, 0.35);
         --bg: #050505;
         --card: rgba(20, 20, 20, 0.85);
         --text: #ffffff;
         --muted: #9ca3af;
         --border: rgba(255, 255, 255, 0.08);
+        --color:white;
       }
 
       * {
@@ -30,7 +31,7 @@
 
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
-        background: radial-gradient(circle at top, #1a1200, #050505);
+        background: radial-gradient(circle at top, #00021a, #050505);
         color: var(--text);
         min-height: 100vh;
         display: flex;
@@ -139,7 +140,7 @@
       input:focus {
         outline: none;
         border-color: var(--primary);
-        box-shadow: 0 0 0 2px rgba(255, 157, 0, 0.2);
+        box-shadow: 0 0 0 2px rgba(25, 0, 255, 0.2);
       }
 
       input::placeholder {
@@ -154,7 +155,7 @@
         border: none;
         font-weight: 800;
         background: var(--primary);
-        color: #000;
+        color: #000000;
         cursor: pointer;
         box-shadow: 0 12px 30px var(--primary-glow);
         font-size: 1rem;
@@ -226,6 +227,7 @@
       .social-btn svg {
         width: 20px;
         height: 20px;
+        color: aquamarine;
       }
 
       .guest-btn {
@@ -233,8 +235,8 @@
         margin-top: 1rem;
         padding: 0.9rem;
         border-radius: 14px;
-        border: 1px solid rgba(255, 157, 0, 0.3);
-        background: rgba(255, 157, 0, 0.1);
+        border: 1px solid rgba(0, 174, 255, 0.3);
+        background: rgba(0, 247, 255, 0.1);
         color: var(--primary);
         font-weight: 600;
         cursor: pointer;
@@ -246,7 +248,7 @@
       }
 
       .guest-btn:hover {
-        background: rgba(255, 157, 0, 0.2);
+        background: rgba(0, 132, 255, 0.2);
         border-color: var(--primary);
       }
 
@@ -260,7 +262,7 @@
       }
 
       .error-message {
-        color: #ff4444;
+        color: #44caff;
         font-size: 0.85rem;
         margin-top: 0.5rem;
         display: none;
@@ -414,7 +416,7 @@
         <button class="guest-btn" onclick="signInAsGuest()">
           <svg viewBox="0 0 24 24">
             <path
-              fill="#ff9d00"
+              fill="seegreen"
               d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
             />
           </svg>

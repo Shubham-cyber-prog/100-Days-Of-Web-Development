@@ -17,7 +17,14 @@
         rel="stylesheet">
 
     <link rel="icon" type="image/png" href="website/assets/images/logo.png">
-    
+
+    <!-- logo for nav bar -->
+    <link rel="stylesheet" href="website/assets/images/logo.png"> <!-- home-->
+
+
+
+        <!-- Enhanced Modern UI Styles -->
+
     <!-- Fire Cursor - Commented out as file is missing -->
     <!-- <link rel="stylesheet" href="firecursor.css"> -->
     
@@ -78,10 +85,28 @@
 
         .nav-logo {
             transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-logo-img {
+            height: 45px;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
 
         .nav-logo:hover {
             transform: scale(1.05) rotate(5deg);
+        }
+
+        .nav-logo:hover .brand-logo-img {
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
         }
 
         .nav-link {
