@@ -75,10 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-
-
-        if (userNameElement) userNameElement.textContent = user.displayName;
-
         if (userNameElement) {
             const displayName = user.name || (user.email ? user.email.split('@')[0] : 'User');
             userNameElement.textContent = displayName;
