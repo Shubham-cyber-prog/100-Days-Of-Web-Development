@@ -86,14 +86,20 @@
             transition: box-shadow 0.3s ease-in-out;
 
 
+        header nav img:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+
+
         .nav-logo:hover {
             transform: scale(1.05) rotate(5deg);
+
+        }
+        .nav-container{
+            height: 120px;
+            margin-top: 25px;
         }
 
-        .nav-link {
-            position: relative;
-            transition: all 0.3s ease;
-        }
 
         .nav-link::after {
             content: '';
@@ -111,11 +117,18 @@
             margin-top: 25px;
         }
 
+
         .nav-user a img {
             width: 100px;
             height: 70px;
             border: 2px groove #cc2a01;
             border-radius: 25%;
+
+        }
+        .nav-user a:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+        }
 
 
         /* Navbar in light mode */
@@ -137,6 +150,7 @@
             box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         
 
         @keyframes pulse-glow {
@@ -147,7 +161,11 @@
         .hero-title {
             font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 800;
+
+            background: linear-gradient(135deg, #fff 0%, #3748e4 50%, #f5576c 100%);
+
             background: linear-gradient(135deg, #e43601 20%, #e9c600 50%, #dd0220 100%);
+
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -444,6 +462,7 @@
                 <a href="website/pages/projects.html" class="nav-link"><img src="website/assets/images/project.png" alt=""></a>
                 <a href="website/pages/about.html" class="nav-link"><img src="website/assets/images/about.png" alt=""></a>
                 <a href="website/pages/contributors.html" class="nav-link"><img src="website/assets/images/contributor.png" alt=""></a>
+
 
                 <a href="#" class="nav-link active" onclick="closeMobileMenuInline()">Home</a>
                 <a href="website/pages/projects.html" class="nav-link" onclick="closeMobileMenuInline()">Projects</a>
