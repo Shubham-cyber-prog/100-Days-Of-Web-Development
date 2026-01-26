@@ -8,7 +8,6 @@
     margin-top: var(--space-12);
 }
 
-/* Leaderboard Panel - Cosmic Container */
 .leaderboard-panel {
     position: relative;
     border-radius: var(--radius-xl);
@@ -16,18 +15,8 @@
     isolation: isolate;
     padding: var(--space-8);
     background: var(--bg-void);
-    /* Adapted from #050505 */
     box-shadow: 0 4px 24px var(--shadow-depth);
-    /* Forcing dark mode context for the panel itself if desired, 
-       OR adapting it. The user likely wants it to adapt. 
-       Let's try to make it adapt but keep the "Cosmic" feel. */
 }
-
-/* Cosmic Energy Layer - We might want to keep this Dark even in Light Mode? 
-   No, the user wants it to "adapt". 
-   If we keep it dark, text needs to be white.
-   If we make it light, the nebula needs to be subtle.
-   Let's make it a "Glass Panel" in light mode. */
 
 .leaderboard-panel::before {
     content: "";
@@ -37,10 +26,6 @@
     width: 200%;
     height: 200%;
     z-index: -2;
-    background: var(--gradient-void);
-    /* Use the variable we defined */
-    /* If we want the animation, we need to ensure the gradient works. 
-       The original had a complex conic. */
     background: radial-gradient(circle at 50% 50%,
             var(--accent-alpha),
             rgba(99, 102, 241, 0.1),
@@ -65,22 +50,20 @@
     backdrop-filter: blur(40px);
 }
 
-.leaderboard-panel>* {
+.leaderboard-panel > * {
     position: relative;
     z-index: 10;
 }
 
 @keyframes cosmicDrift {
-    0% {
-        transform: rotate(0deg) translate(0, 0);
-    }
-
-    100% {
-        transform: rotate(360deg) translate(0, 0);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* Leaderboard Stats Cards */
+/* --- Leaderboard Stats Cards --- */
+
+/* --- Leaderboard Stats Cards --- */
+
 .stat-card {
     background: var(--bg-glass-panel);
     border: 1px solid var(--glass-border);
@@ -91,51 +74,46 @@
 }
 
 .stat-card:hover {
-    border-color: var(--glass-highlight);
     background: var(--bg-glass-hover);
     transform: translateY(-2px);
 }
 
 .stat-label {
     font-size: var(--text-xs);
-    color: var(--text-tertiary);
+    color: #059669; /* default green */
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
 }
 
+/* Force stat values to always be blue */
 .stat-value {
     font-family: var(--font-display);
     font-size: var(--text-4xl);
     font-weight: 800;
-    color: var(--text-primary);
     margin-top: var(--space-2);
+    color: #3b82f6 !important; /* <- this forces blue even if .points or light theme tries to override */
 }
 
-/* Specific Stat Card Colors - Using Variables where possible or transparent overlays */
+/* Points Card */
 .stat-card.points {
     background: rgba(99, 102, 241, 0.1);
     border-color: rgba(99, 102, 241, 0.2);
 }
-
-.stat-card.points .stat-label {
-    color: #a5b4fc;
+.points .stat-value {
+    color: #3b82f6;}
+/* remove any orange overrides */
+.stat-card.points .stat-value,
+[data-theme="light"] .stat-card.points .stat-value {
+    color: #3b82f6 !important;
 }
 
-/* Indigo-200 */
-
-[data-theme="light"] .stat-card.points {
-    background: rgba(99, 102, 241, 0.05);
-    border-color: rgba(99, 102, 241, 0.2);
-}
-
+/* Light theme adjustments for labels only */
 [data-theme="light"] .stat-card.points .stat-label {
-    color: #6366f1;
+    color: #6366f1; /* Indigo */
 }
 
-/* Indigo-500 */
-
-
+/* PRs Card */
 .stat-card.prs {
     background: rgba(16, 185, 129, 0.1);
     border-color: rgba(16, 185, 129, 0.2);
@@ -144,8 +122,6 @@
 .stat-card.prs .stat-label {
     color: #6ee7b7;
 }
-
-/* Emerald-300 */
 
 [data-theme="light"] .stat-card.prs {
     background: rgba(16, 185, 129, 0.05);
@@ -156,9 +132,8 @@
     color: #059669;
 }
 
-/* Emerald-600 */
 
-
+/* --- Live Indicator --- */
 .live-indicator {
     display: flex;
     align-items: center;
@@ -188,25 +163,23 @@
     box-shadow: 0 0 8px #3b82f6;
 }
 
-/* Tailwind Blue-500 */
 .dot-purple {
     background: #a855f7;
     box-shadow: 0 0 8px #a855f7;
 }
 
-/* Tailwind Purple-500 */
-
 .live-timestamp {
     color: var(--text-primary);
 }
 
+/* --- Responsive --- */
 @media (max-width: 900px) {
     .about-grid {
         grid-template-columns: 1fr;
     }
 }
 
-/* Mission Section Typography */
+/* --- Mission Section Typography --- */
 .mission-quote {
     padding: var(--space-6);
     border-left: 2px solid var(--accent-core);
