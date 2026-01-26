@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/website/assets/images/logo.png" />
+  <link rel="icon" href="/website/assets/images/logo.png" height="70px" width="100px"/>
   <title>Projects | 100 Days of Web Dev</title>
   <link rel="stylesheet" href="../styles/index.css" />
+  <link rel="stylesheet" href="../styles/components/project-modal.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
     .page-header {
@@ -20,7 +21,26 @@
       margin: 0 auto 40px;
       position: relative;
     }
+ header nav img {
+            width: 100px;
+            height: 70px;
+            border: 2px groove #cc2a01;
+            border-radius: 25%;
 
+        }
+        header nav img:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+               .nav-container{
+            height: 120px;
+            margin-top: 25px;
+        }  
+
+        .nav-links img:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+        }
     #projectSearch {
       background: var(--bg-surface);
       backdrop-filter: blur(12px);
@@ -69,7 +89,6 @@
 
     .tab-btn.active {
       background: var(--accent-core);
-      color: #000;
       border-color: var(--accent-core);
       font-weight: var(--weight-bold);
       box-shadow: 0 0 20px var(--accent-alpha);
@@ -188,6 +207,7 @@
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       line-height: 1.3;
       word-wrap: break-word;
@@ -349,6 +369,7 @@
       <nav class="nav-links">
         <a href="dashboard.html" class="nav-link">Dashboard</a>
         <a href="projects.html" class="nav-link active">Projects</a>
+        <a href="favorites.html" class="nav-link">Favorites</a>
         <a href="leaderboard.html" class="nav-link">Leaderboard</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="contributors.html" class="nav-link">Contributors</a>
@@ -385,6 +406,10 @@
           <div class="user-dropdown">
             <a href="profile.html" class="dropdown-item">View Profile</a>
             <a href="#" class="dropdown-item">Settings</a>
+            <button id="pwa-install-btn" class="dropdown-item"
+              style="display: none; color: var(--accent-core); font-weight: 600;">
+              ✨ Install App
+            </button>
             <div class="dropdown-divider"></div>
             <button class="dropdown-item text-danger" onclick="handleLogout()">
               Log Out
@@ -509,7 +534,7 @@
     <i class="fa-solid fa-arrow-up"></i>
   </button>
   <script src="../scripts/components/cursor.js"></script>
-  <script src="../scripts/pages/projects.js"></script>
+  <script type="module" src="../scripts/pages/projects.js"></script>
   <script src="../scripts/components/navigation.js"></script>
 </body>
 

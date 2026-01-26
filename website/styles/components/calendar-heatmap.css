@@ -1,0 +1,682 @@
+/**
+ * Calendar Heatmap Styles
+ * GitHub-style contribution calendar with streak tracking
+ */
+
+/* ============================================
+   CALENDAR HEATMAP CONTAINER
+   ============================================ */
+
+.calendar-heatmap {
+    background: rgba(13, 17, 23, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+.heatmap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.heatmap-title h3 {
+    margin: 0 0 4px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary, #c9d1d9);
+}
+
+.heatmap-title .contribution-count {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary, #8b949e);
+}
+
+.heatmap-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.color-scheme-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text-primary, #c9d1d9);
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.color-scheme-select:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.color-scheme-select:focus {
+    outline: none;
+    border-color: var(--accent-primary, #58a6ff);
+    box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+}
+
+.export-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text-secondary, #8b949e);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.export-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary, #c9d1d9);
+    transform: translateY(-1px);
+}
+
+.export-btn .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--text-primary, #c9d1d9);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* ============================================
+   HEATMAP BODY
+   ============================================ */
+
+.heatmap-body {
+    position: relative;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.month-labels {
+    position: relative;
+    height: 20px;
+    margin-left: 32px;
+    margin-bottom: 8px;
+}
+
+.month-label {
+    position: absolute;
+    font-size: 0.75rem;
+    color: var(--text-secondary, #8b949e);
+    white-space: nowrap;
+}
+
+.heatmap-grid-wrapper {
+    display: flex;
+    gap: 4px;
+}
+
+.day-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    padding: 6px 0;
+}
+
+.day-label {
+    font-size: 0.65rem;
+    color: var(--text-tertiary, #6e7681);
+    text-align: right;
+    padding-right: 4px;
+    height: 15px;
+    line-height: 15px;
+}
+
+.heatmap-cells {
+    display: flex;
+    gap: 3px;
+}
+
+.heatmap-week {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.heatmap-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    outline: 1px solid rgba(27, 31, 35, 0.06);
+    outline-offset: -1px;
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.3);
+    outline-color: var(--accent-secondary, #58a6ff);
+    outline-width: 2px;
+    z-index: 10;
+}
+
+.heatmap-cell.today {
+    outline: 2px solid var(--accent-primary, #58a6ff);
+    outline-offset: 1px;
+}
+
+.heatmap-cell.future {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.heatmap-cell.future:hover {
+    transform: none;
+}
+
+/* ============================================
+   FOOTER SECTION
+   ============================================ */
+
+.heatmap-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* ============================================
+   STREAK STATISTICS
+   ============================================ */
+
+.streak-stats {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.streak-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.streak-stat:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.streak-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.streak-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary, #c9d1d9);
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    line-height: 1;
+}
+
+.streak-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary, #8b949e);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Active Streak Animation */
+.streak-stat.active-streak {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(234, 88, 12, 0.05));
+    border-color: rgba(249, 115, 22, 0.3);
+}
+
+.streak-stat.active-streak .streak-icon {
+    animation: fireAnimation 1s ease-in-out infinite;
+}
+
+.streak-stat.active-streak .streak-value {
+    color: #f97316;
+    text-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+}
+
+@keyframes fireAnimation {
+    0%, 100% {
+        transform: scale(1) rotate(-5deg);
+    }
+    25% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    50% {
+        transform: scale(1) rotate(-3deg);
+    }
+    75% {
+        transform: scale(1.05) rotate(3deg);
+    }
+}
+
+/* ============================================
+   LEGEND
+   ============================================ */
+
+.legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary, #6e7681);
+}
+
+.legend-cells {
+    display: flex;
+    gap: 3px;
+}
+
+.legend-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    outline: 1px solid rgba(27, 31, 35, 0.06);
+    outline-offset: -1px;
+}
+
+/* ============================================
+   TOOLTIP
+   ============================================ */
+
+.heatmap-tooltip {
+    position: fixed;
+    background: #1f2937;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    color: var(--text-primary, #c9d1d9);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    pointer-events: none;
+    backdrop-filter: blur(8px);
+    animation: tooltipFadeIn 0.15s ease;
+}
+
+.heatmap-tooltip strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #fff;
+}
+
+.heatmap-tooltip span {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary, #8b949e);
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   NOTIFICATION
+   ============================================ */
+
+.heatmap-notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #fff;
+    z-index: 10000;
+    animation: notificationSlideIn 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.heatmap-notification.success {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.heatmap-notification.error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.heatmap-notification.info {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.heatmap-notification.fade-out {
+    animation: notificationFadeOut 0.3s ease forwards;
+}
+
+@keyframes notificationSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes notificationFadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+/* ============================================
+   STREAK WIDGET (Compact Version)
+   ============================================ */
+
+.streak-widget {
+    background: rgba(13, 17, 23, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(16px);
+}
+
+.streak-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.streak-widget-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary, #c9d1d9);
+}
+
+.streak-widget-content {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.streak-widget-stat {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+}
+
+.streak-widget-stat .value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary, #c9d1d9);
+    font-family: var(--font-mono, monospace);
+    line-height: 1.2;
+}
+
+.streak-widget-stat .label {
+    font-size: 0.7rem;
+    color: var(--text-secondary, #8b949e);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+
+.streak-widget-stat.fire .value {
+    color: #f97316;
+    animation: firePulse 2s ease-in-out infinite;
+}
+
+@keyframes firePulse {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
+    }
+}
+
+.streak-widget-mini-chart {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+}
+
+.streak-widget-mini-chart .day {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: var(--text-tertiary, #6e7681);
+}
+
+.streak-widget-mini-chart .day.active {
+    background: linear-gradient(135deg, #2ea043, #238636);
+    color: #fff;
+}
+
+.streak-widget-mini-chart .day.today {
+    outline: 2px solid var(--accent-primary, #58a6ff);
+    outline-offset: 1px;
+}
+
+/* ============================================
+   FREEZE INDICATOR
+   ============================================ */
+
+.streak-freeze-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #60a5fa;
+}
+
+.streak-freeze-indicator.used {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-tertiary, #6e7681);
+}
+
+.streak-freeze-indicator svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .calendar-heatmap {
+        padding: 16px;
+    }
+
+    .heatmap-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .heatmap-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .heatmap-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .streak-stats {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .streak-stat {
+        flex: 1;
+        min-width: 100px;
+        flex-direction: column;
+        text-align: center;
+        padding: 12px 8px;
+    }
+
+    .streak-stat .streak-value {
+        order: 1;
+    }
+
+    .streak-stat .streak-icon {
+        order: 0;
+    }
+
+    .streak-stat .streak-label {
+        order: 2;
+    }
+
+    .legend {
+        margin-top: 8px;
+    }
+
+    .heatmap-body {
+        margin: 0 -16px;
+        padding: 0 16px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .streak-stats {
+        flex-direction: column;
+    }
+
+    .streak-stat {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .heatmap-notification {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+    }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   DARK/LIGHT MODE SUPPORT
+   ============================================ */
+
+@media (prefers-color-scheme: light) {
+    .calendar-heatmap {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .heatmap-title h3 {
+        color: #24292f;
+    }
+
+    .heatmap-title .contribution-count {
+        color: #57606a;
+    }
+
+    .color-scheme-select {
+        background: rgba(0, 0, 0, 0.03);
+        border-color: rgba(0, 0, 0, 0.1);
+        color: #24292f;
+    }
+
+    .export-btn {
+        background: rgba(0, 0, 0, 0.03);
+        border-color: rgba(0, 0, 0, 0.1);
+        color: #57606a;
+    }
+
+    .month-label,
+    .day-label {
+        color: #57606a;
+    }
+
+    .streak-stat {
+        background: rgba(0, 0, 0, 0.02);
+        border-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .streak-value {
+        color: #24292f;
+    }
+
+    .legend-label {
+        color: #57606a;
+    }
+
+    .heatmap-tooltip {
+        background: #fff;
+        border-color: rgba(0, 0, 0, 0.1);
+        color: #24292f;
+    }
+
+    .heatmap-tooltip strong {
+        color: #24292f;
+    }
+
+    .heatmap-tooltip span {
+        color: #57606a;
+    }
+}
