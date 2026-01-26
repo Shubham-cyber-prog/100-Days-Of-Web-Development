@@ -113,9 +113,9 @@ class AppCore {
      */
     setState(updates) {
         const prevState = { ...this._state };
-
+        
         Object.keys(updates).forEach(key => {
-            if (Object.prototype.hasOwnProperty.call(this._state, key)) {
+            if (this._state.hasOwnProperty(key)) {
                 this._state[key] = updates[key];
             }
         });
@@ -193,10 +193,10 @@ class AppCore {
      */
     async loadUserSession() {
         try {
-            const sessionToken = sessionStorage.getItem(this.config.storageKeys.session) ||
-                sessionStorage.getItem('authToken');
+            const sessionToken = sessionStorage.getItem(this.config.storageKeys.session) || 
+                                 sessionStorage.getItem('authToken');
             const isGuest = sessionStorage.getItem(this.config.storageKeys.guest) === 'true' ||
-                sessionStorage.getItem('authGuest') === 'true';
+                           sessionStorage.getItem('authGuest') === 'true';
             const localAuth = localStorage.getItem(this.config.storageKeys.authenticated) === 'true';
             const storedUser = localStorage.getItem(this.config.storageKeys.user);
 
@@ -285,7 +285,7 @@ class AppCore {
 
         // Update state
         this._state.user = guestUser;
-        this._state.isAuthenticated = true; // Consider guests authenticated for access control
+        this._state.isAuthenticated = false;
         this._state.isGuest = true;
 
         // Persist to session
@@ -471,9 +471,9 @@ class AppCore {
      */
     getUserDisplayName() {
         if (this._state.user) {
-            return this._state.user.name ||
-                this._state.user.email?.split('@')[0] ||
-                'User';
+            return this._state.user.name || 
+                   this._state.user.email?.split('@')[0] || 
+                   'User';
         }
         return 'Guest';
     }
