@@ -4,33 +4,57 @@ const STORE_NAME = "notes";
 
 let db;
 
-const request = indexedDB.open(DB_NAME, DB_VERSION);
+function initDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-request.onupgradeneeded = e => {
-  db = e.target.result;
-  db.createObjectStore(STORE_NAME, {
-    keyPath: "id",
-    autoIncrement: true
+    request.onupgradeneeded = (e) => {
+      db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement: true });
+      }
+    };
+
+    request.onsuccess = (e) => {
+      db = e.target.result;
+      resolve(db);
+    };
+
+    request.onerror = (e) => {
+      reject("DB Error: " + e.target.errorCode);
+    };
   });
-};
-
-request.onsuccess = e => {
-  db = e.target.result;
-  displayNotes();
-};
-
-function addNote(note) {
-  const tx = db.transaction(STORE_NAME, "readwrite");
-  tx.objectStore(STORE_NAME).add(note);
 }
 
-function getNotes(cb) {
-  const tx = db.transaction(STORE_NAME, "readonly");
-  const req = tx.objectStore(STORE_NAME).getAll();
-  req.onsuccess = () => cb(req.result);
+function addNoteToDB(note) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    const store = tx.objectStore(STORE_NAME);
+    const request = store.add(note);
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
 }
 
-function deleteNote(id) {
-  const tx = db.transaction(STORE_NAME, "readwrite");
-  tx.objectStore(STORE_NAME).delete(id);
+function getNotesFromDB() {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readonly");
+    const store = tx.objectStore(STORE_NAME);
+    const request = store.getAll();
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function deleteNoteFromDB(id) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    const store = tx.objectStore(STORE_NAME);
+    const request = store.delete(id);
+
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
 }
