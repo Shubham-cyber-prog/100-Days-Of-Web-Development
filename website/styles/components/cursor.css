@@ -35,8 +35,6 @@ body {
     /* Optimized for movement */
 
     /* Center positioning relative to point */
-    margin-left: -10px;
-    margin-top: -10px;
     transform-origin: center center;
 
     /* Base Liquid Style */
@@ -140,4 +138,49 @@ body {
 #cursor-trail-container .trail-segment {
     display: none !important;
     pointer-events: none !important;
+}
+
+
+/* Cursor ring (outer circle) */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 36px;        /* adjust if needed */
+  height: 36px;
+  border-radius: 50%;
+
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+
+  /* 🔑 THIS IS THE CRITICAL PART */
+  transform: translate(-50%, -50%);
+
+  box-shadow: none;
+  filter: none;
+
+  pointer-events: none;
+  z-index: 1000000;
+}
+
+
+/* Cursor dot (inner orange point) */
+.cursor-dot {
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  background: orange;
+
+  /* CONTROLLED glow — not white */
+  box-shadow: 0 0 6px rgba(255, 165, 0, 0.6);
+
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1000001; /* above ring */
 }
