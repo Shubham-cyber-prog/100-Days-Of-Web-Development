@@ -19,7 +19,7 @@
             const path = window.location.pathname;
             let basePath = '../core/app.js';
             let notifyPath = '../core/Notify.js';
-
+            
             if (path.endsWith('/') || path.includes('index.html')) {
                 basePath = 'website/scripts/core/app.js';
                 notifyPath = 'website/scripts/core/Notify.js';
@@ -120,11 +120,11 @@
         // Try App Core first (unified auth)
         if (App && typeof App.isAuthenticated === 'function') {
             const isAuthenticated = App.isAuthenticated();
-            const user = App.getCurrentUser ? App.getCurrentUser() : null;
+            const user = App.getUser ? App.getUser() : null;
             const isGuest = user?.isGuest || false;
-
+            
             console.log('🔍 App Core auth check:', { isAuthenticated, isGuest, user: user?.email || 'none' });
-
+            
             return { isAuthenticated, isGuest, user };
         }
 
@@ -144,14 +144,14 @@
         // Final fallback - check storage directly
         console.warn('⚠️ No auth service available, checking storage directly');
         const sessionAuth = sessionStorage.getItem('authToken') === 'true';
-        const localAuth = localStorage.getItem('isLoggedIn') === 'true' ||
-            localStorage.getItem('isAuthenticated') === 'true';
+        const localAuth = localStorage.getItem('isLoggedIn') === 'true' || 
+                          localStorage.getItem('isAuthenticated') === 'true';
         const isGuest = localStorage.getItem('isGuest') === 'true';
-
-        return {
-            isAuthenticated: sessionAuth || localAuth || isGuest,
-            isGuest,
-            user: null
+        
+        return { 
+            isAuthenticated: sessionAuth || localAuth || isGuest, 
+            isGuest, 
+            user: null 
         };
     }
 
@@ -360,7 +360,7 @@
         // Only show once per session
         if (!sessionStorage.getItem('guestNotificationShown')) {
             sessionStorage.setItem('guestNotificationShown', 'true');
-
+            
             // Use Notify if available
             if (Notify) {
                 Notify.warning('You\'re in Guest Mode. Some features may be limited.', {
@@ -369,7 +369,7 @@
                 });
                 return;
             }
-
+            
             // Fallback to local notification
             setTimeout(() => {
                 const notification = document.createElement('div');

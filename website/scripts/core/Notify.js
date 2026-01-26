@@ -14,7 +14,7 @@ class NotificationService {
         this.maxNotifications = 5;
         this.defaultDuration = 4000;
         this.position = 'top-right'; // top-right, top-left, bottom-right, bottom-left, top-center, bottom-center
-
+        
         // Notification types with icons and colors
         this.types = {
             success: {
@@ -58,7 +58,7 @@ class NotificationService {
         this.container = document.createElement('div');
         this.container.id = 'notify-container';
         this.container.className = `notify-container notify-${this.position}`;
-
+        
         // Inject styles if not already present
         if (!document.getElementById('notify-styles')) {
             this.injectStyles();
@@ -384,7 +384,7 @@ class NotificationService {
      * Generate unique notification ID
      */
     generateId() {
-        return 'notify_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+        return 'notify_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
 
     /**
@@ -402,8 +402,7 @@ class NotificationService {
             showProgress = true,
             actions = [],
             onClose = null,
-            id = this.generateId(),
-            icon = null
+            id = this.generateId()
         } = options;
 
         // Check if we need to remove old notifications
@@ -437,7 +436,7 @@ class NotificationService {
 
         toast.innerHTML = `
             <div class="notify-icon" style="background: ${typeConfig.bgColor}; color: ${typeConfig.color}">
-                ${icon || typeConfig.icon}
+                ${typeConfig.icon}
             </div>
             <div class="notify-content">
                 ${title ? `<div class="notify-title">${this.escapeHtml(title)}</div>` : ''}
@@ -601,7 +600,7 @@ class NotificationService {
      */
     confirm(message, options = {}) {
         const { onConfirm, onCancel, confirmLabel = 'Confirm', cancelLabel = 'Cancel' } = options;
-
+        
         return this.show({
             type: 'warning',
             message,
