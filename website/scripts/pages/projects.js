@@ -32,7 +32,7 @@ const folderMap = {
     151: "Day 151",
     152: "Day 152 - Newsly",
     154: "Day 154 ",
-    155: "Day 155", 156: "Day 156"
+    155: "Day 155", 156: "Day 156", 167: "Day 167"
 };
 
 // Full 100-Day Project List
@@ -114,7 +114,8 @@ const allProjects = [
     // DAY 154
     { day: 154, title: "Snake Game", tech: ["HTML", "CSS", "JS"] },
     { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
-    { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] }
+    { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] },
+    { day: 167, title: "Time Fracture Arena", tech: ["HTML", "CSS", "JS", "Canvas"] }
 ];
 
 function getDifficulty(day) {
