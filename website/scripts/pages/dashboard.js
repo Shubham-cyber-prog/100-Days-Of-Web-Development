@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             setTimeout(waitForAuthService, 100);
         }
-
     }
     
     waitForAuthService();
@@ -76,95 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-    }
-
-    // Get user id from userData if available
-    let userId = null;
-    if (userData && userData.id) {
-        userId = userData.id;
-    }
-
-    // Fallback to upstream's simple check if needed (or if set by other means)
-    if (!userId) {
-        userId = localStorage.getItem('user_id');
-    }
-
-    await initializeDashboard({ displayName: userName, isGuest, uid: userId });
-
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // Load core modules first
-    await loadCoreModules();
-
-    // Check authentication via App Core or legacy methods
-    let isAuthenticated = false;
-    let currentUser = null;
-
-    if (App && App.isAuthenticated()) {
-        isAuthenticated = true;
-        currentUser = App.getCurrentUser();
-    } else {
-        // Legacy fallback
-        const isGuest = sessionStorage.getItem('authGuest') === 'true';
-        const authToken = sessionStorage.getItem('authToken') === 'true';
-        const localAuth = localStorage.getItem('isAuthenticated') === 'true';
-
-        isAuthenticated = authToken || localAuth || isGuest;
-
-    try {
-        if (!Notify) {
-            const notifyModule = await import('../core/Notify.js');
-            Notify = notifyModule.Notify || notifyModule.default;
-            window.Notify = Notify;
-        }
-    } catch (e) {
-        console.warn('Notify not available, using console fallback');
-    }
-}
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // Load core modules first
-    await loadCoreModules();
-
-    // Check authentication via App Core or legacy methods
-    let isAuthenticated = false;
-    let currentUser = null;
-
-    if (App && App.isAuthenticated()) {
-        isAuthenticated = true;
-        currentUser = App.getCurrentUser();
-    } else {
-        // Legacy fallback
-        const isGuest = sessionStorage.getItem('authGuest') === 'true';
-        const authToken = sessionStorage.getItem('authToken') === 'true';
-        const localAuth = localStorage.getItem('isAuthenticated') === 'true';
-
-        isAuthenticated = authToken || localAuth || isGuest;
-
-        if (isAuthenticated) {
-            currentUser = {
-                name: isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User'),
-                email: localStorage.getItem('userEmail') || 'user@example.com',
-                isGuest: isGuest
-            };
-        }
-    }
-
-    // Auth Guard - redirect if not authenticated
-    if (!isAuthenticated) {
-        if (Notify) {
-            Notify.warning('Please login to access the dashboard');
-        }
-        window.location.href = 'login.html';
-        return;
-    }
-
-    initializeDashboard(currentUser);
-
-    async function initializeDashboard(user) {
-        // Set user name
-        const userNameElement = document.getElementById('userName');
-
 
 
         if (userNameElement) userNameElement.textContent = user.displayName;
@@ -178,34 +88,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
-                const handleLogout = async () => {
-                    // Logout via App Core
-                    if (App) {
-                        await App.logout();
-                    }
-
-                    if (progressService) progressService.cleanup();
-                    sessionStorage.clear();
-                    localStorage.removeItem('isAuthenticated');
-
-                    if (Notify) {
-                        Notify.success('Logged out successfully');
-                    }
-
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 500);
-                };
-
-                // Use Notify for confirmation if available
-                if (Notify && Notify.confirm) {
-                    Notify.confirm('Abort mission?', {
-                        onConfirm: handleLogout,
-                        confirmLabel: 'Abort',
-                        cancelLabel: 'Stay'
-                    });
-                } else if (confirm('Abort mission?')) {
-                    handleLogout();
+                if (confirm('Abort mission?')) {
+                    auth.logout();
+                    window.location.href = 'login.html';
                 }
             });
         }
