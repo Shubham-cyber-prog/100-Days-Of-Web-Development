@@ -31,7 +31,7 @@
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
             --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
             --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
-            --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.3);
+            --shadow-glow: 0 15px 50px rgba(120, 115, 255, 0.35);
         }
 
         body {
@@ -69,9 +69,16 @@
         }
 
         /* Enhanced Header */
+
+        .site-header {
+            background: var(--bg-glass-nav);
+border-bottom: 1px solid var(--glass-border);
+backdrop-filter: blur(18px);
+            box-shadow: var(--shadow-glow);
+
         header{
             height: 150px;
-          
+
         }
         header nav img {
             width: 100px;
@@ -220,10 +227,16 @@
         }
 
         .btn-zenith-primary {
+
+            background: var(--gradient-glow);
+color: var(--text-on-dark);
+box-shadow: 0 10px 30px var(--accent-alpha);}
+
             background-image: linear-gradient(yellow , red, orange);
             color: white;
             box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
+
 
         .btn-zenith-primary::before {
             content: '';
@@ -242,7 +255,11 @@
 
         .btn-zenith-primary:hover {
             transform: translateY(-3px);
+
+            box-shadow: 0 15px 50px var(--accent-alpha);;
+
             box-shadow: 0 15px 50px rgba(252, 122, 2, 0.4);
+
         }
 
         .btn-zenith-secondary {
@@ -502,7 +519,7 @@
             </p>
             <div class="hero-actions">
                 <a href="website/pages/dashboard.html" class="btn-zenith-primary">Initialize Protocol</a>
-                <a href="website/pages/projects.html" class="btn-zenith-secondary">View Archive</a>
+                <a href="website/pages/projects.html" class="btn-zenith-primary">View Archive</a>
             </div>
         </section>
 

@@ -110,9 +110,12 @@ body.light-mode .navbar {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--text-primary);
-    background: var(--text-primary);
+    background: var(--gradient-glow);
+    
     transition: width var(--duration-normal) var(--ease-out-quad);
+    left: 50%;
+transform: translateX(-50%);
+background: var(--gradient-glow);
 }
 
 .nav-links a:hover::after,
@@ -156,4 +159,17 @@ body.light-mode .navbar {
     .nav-links {
         display: none;
     }
+}
+.nav-user .btn-primary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    box-shadow: none;
+}
+
+.nav-user .btn-primary:hover {
+    background: var(--gradient-glow);
+    border-color: transparent;
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
 }
