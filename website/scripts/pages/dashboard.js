@@ -75,11 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (userNameElement) {
-            const displayName = user.name || (user.email ? user.email.split('@')[0] : 'User');
-            userNameElement.textContent = displayName;
-        }
-
         // Logout functionality with Notify confirmation
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {

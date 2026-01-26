@@ -86,6 +86,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add click event to close mobile menu
         link.addEventListener('click', closeMobileMenu);
     });
+    
+    // Handle tutorials page active state
+    if (currentPath.includes('tutorials.html')) {
+        const tutorialsLink = document.querySelector('a[href="tutorials.html"]');
+        if (tutorialsLink) {
+            links.forEach(l => l.classList.remove('active'));
+            tutorialsLink.classList.add('active');
+        }
+    }
 
     // 2. Avatar Logic (Guest checks)
     if (sessionStorage.getItem('authGuest') === 'true') {
