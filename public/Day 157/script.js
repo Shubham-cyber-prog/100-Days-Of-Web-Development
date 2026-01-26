@@ -1,186 +1,216 @@
-/* ===============================
-   🌸 GLOBAL ELEMENTS
-================================ */
-const toolArea = document.getElementById("toolArea");
-const result = document.getElementById("result");
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
-/* ===============================
-   ☰ SIDEBAR TOGGLE
-================================ */
-function toggleMenu() {
-    document.getElementById("sideMenu").classList.toggle("show");
+const gravity = 0.8;
+const friction = 0.9;
+let keys = {};
+
+const player = {
+    x: 50,
+    y: 300,
+    w: 32,
+    h: 48,
+    vx: 0,
+    vy: 0,
+    speed: 4,
+    jumpPower: 14,
+    onGround: false
+};
+
+const platforms = [
+    { x: 0, y: 360, w: 800, h: 40 },
+    { x: 200, y: 290, w: 120, h: 12 },
+    { x: 380, y: 230, w: 140, h: 12 },
+    { x: 560, y: 180, w: 120, h: 12 }
+];
+
+let running = false;
+let recording = [];
+let ghostPath = null; // loaded from localStorage
+let frameIndex = 0;
+let ghostColor = 'rgba(0,0,0,0.35)';
+let lastTimestamp = null;
+let message = '';
+
+function rectsOverlap(a, b) {
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 }
 
-/* ===============================
-   🌸 LOAD TOOL
-================================ */
-function loadTool(tool) {
-    result.textContent = "";
-    result.className = "";
-    toggleMenu();
-
-    if (tool === "palindrome") {
-        toolArea.innerHTML = `
-            <input id="palInput" placeholder="Enter text">
-            <button onclick="checkPalindrome()">Check</button>
-        `;
-        title.textContent = "Palindrome Checker";
-    }
-
-    if (tool === "anagram") {
-        toolArea.innerHTML = `
-            <input id="a1" placeholder="First word">
-            <input id="a2" placeholder="Second word">
-            <button onclick="checkAnagram()">Check</button>
-        `;
-        title.textContent = "Anagram Checker";
-    }
-
-    if (tool === "reverse") {
-        toolArea.innerHTML = `
-            <input id="rev" placeholder="Enter text">
-            <button onclick="reverseText()">Reverse</button>
-        `;
-        title.textContent = "Reverse Text";
-    }
-
-    if (tool === "counter") {
-        toolArea.innerHTML = `
-            <input id="count" placeholder="Enter text">
-            <button onclick="countText()">Count</button>
-        `;
-        title.textContent = "Word Counter";
-    }
-
-    if (tool === "age") {
-        toolArea.innerHTML = `
-            <input type="date" id="dob">
-            <button onclick="calculateAge()">Calculate Age</button>
-        `;
-        title.textContent = "Age Calculator";
-    }
-
-    if (tool === "bmi") {
-        toolArea.innerHTML = `
-            <input id="weight" placeholder="Weight (kg)">
-            <input id="height" placeholder="Height (cm)">
-            <button onclick="calculateBMI()">Calculate BMI</button>
-        `;
-        title.textContent = "BMI Calculator";
-    }
-
-    if (tool === "binary") {
-        toolArea.innerHTML = `
-            <input id="binary" placeholder="Binary number">
-            <button onclick="convertBinary()">Convert</button>
-        `;
-        title.textContent = "Binary → Decimal";
+function loadShadow() {
+    const raw = localStorage.getItem('shadowPath');
+    if (raw) {
+        try {
+            ghostPath = JSON.parse(raw);
+        } catch (e) {
+            console.warn('Failed to parse saved shadow');
+            ghostPath = null;
+        }
     }
 }
 
-/* ===============================
-   🌸 TOOL FUNCTIONS
-================================ */
-
-function checkPalindrome() {
-    let t = palInput.value.replace(/[^a-z0-9]/gi, "").toLowerCase();
-    let r = t.split("").reverse().join("");
-
-    if (!t) return showError("Enter some text!");
-
-    if (t === r) {
-        result.textContent = "Palindrome 🎉💖";
-        result.className = "success";
-        launchConfetti();
-    } else {
-        showError("Not a palindrome ❌");
+function saveShadow(path) {
+    try {
+        localStorage.setItem('shadowPath', JSON.stringify(path));
+    } catch (e) {
+        console.warn('Failed to save shadow', e);
     }
 }
 
-function checkAnagram() {
-    if (!a1.value || !a2.value) return showError("Enter both words!");
+function resetPlayer() {
+    player.x = 50;
+    player.y = 300;
+    player.vx = 0;
+    player.vy = 0;
+    player.onGround = false;
+}
 
-    let f = s =>
-        s.replace(/[^a-z0-9]/gi, "").toLowerCase().split("").sort().join("");
+function startRun() {
+    resetPlayer();
+    recording = [];
+    running = true;
+    frameIndex = 0;
+    message = '';
+    lastTimestamp = null;
+    loadShadow();
+}
 
-    if (f(a1.value) === f(a2.value)) {
-        result.textContent = "Anagram 💕";
-        result.className = "success";
-        launchConfetti();
-    } else {
-        showError("Not an anagram ❌");
+function endRun(reason) {
+    running = false;
+    message = reason || 'Run ended';
+    if (recording.length) saveShadow(recording);
+}
+
+function resetShadow() {
+    localStorage.removeItem('shadowPath');
+    ghostPath = null;
+}
+
+function updatePhysics() {
+    // horizontal input
+    if (keys['ArrowLeft'] || keys['a']) player.vx = -player.speed;
+    else if (keys['ArrowRight'] || keys['d']) player.vx = player.speed;
+    else player.vx = 0;
+
+    // jump
+    if ((keys['ArrowUp'] || keys['w'] || keys[' ']) && player.onGround) {
+        player.vy = -player.jumpPower;
+        player.onGround = false;
+    }
+
+    // apply gravity
+    player.vy += gravity;
+
+    // apply velocity
+    player.x += player.vx;
+    player.y += player.vy;
+
+    // platform collisions
+    player.onGround = false;
+    for (let p of platforms) {
+        const platRect = { x: p.x, y: p.y, w: p.w, h: p.h };
+        const playerRect = { x: player.x, y: player.y, w: player.w, h: player.h };
+        // simple AABB resolution from top
+        if (player.vy >= 0 &&
+            player.x + player.w > p.x && player.x < p.x + p.w &&
+            player.y + player.h > p.y && player.y + player.h < p.y + p.h + player.vy) {
+            player.y = p.y - player.h;
+            player.vy = 0;
+            player.onGround = true;
+        }
+    }
+
+    // world bounds
+    if (player.x < 0) player.x = 0;
+    if (player.x + player.w > canvas.width) player.x = canvas.width - player.w;
+    if (player.y > canvas.height) {
+        // fell off
+        endRun('You fell!');
     }
 }
 
-function reverseText() {
-    if (!rev.value) return showError("Enter text!");
-    result.textContent = rev.value.split("").reverse().join("");
-    result.className = "success";
-}
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-function countText() {
-    let t = count.value.trim();
-    if (!t) return showError("Enter text!");
-
-    result.textContent = `Words: ${t.split(/\s+/).length} | Characters: ${t.length}`;
-    result.className = "success";
-}
-
-function calculateAge() {
-    if (!dob.value) return showError("Select date!");
-
-    let birth = new Date(dob.value);
-    let diff = Date.now() - birth.getTime();
-    let age = new Date(diff).getUTCFullYear() - 1970;
-
-    result.textContent = `Your Age: ${age} years 🎂`;
-    result.className = "success";
-}
-
-function calculateBMI() {
-    if (!weight.value || !height.value) return showError("Enter height & weight!");
-
-    let h = height.value / 100;
-    let bmi = (weight.value / (h * h)).toFixed(1);
-
-    result.textContent = `BMI: ${bmi}`;
-    result.className = "success";
-}
-
-function convertBinary() {
-    if (!binary.value) return showError("Enter binary number!");
-    result.textContent = `Decimal: ${parseInt(binary.value, 2)}`;
-    result.className = "success";
-}
-
-/* ===============================
-   ❌ ERROR DISPLAY
-================================ */
-function showError(msg) {
-    result.textContent = msg;
-    result.className = "error";
-}
-
-/* ===============================
-   🎉 CONFETTI ANIMATION
-================================ */
-function launchConfetti() {
-    const container = document.getElementById("confetti-container");
-    const pastelColors = [
-        "#ffafcc", "#bdb2ff", "#a2d2ff",
-        "#caffbf", "#ffd6a5", "#ffc8dd"
-    ];
-
-    for (let i = 0; i < 120; i++) {
-        const c = document.createElement("div");
-        c.className = "confetti";
-        c.style.left = Math.random() * 100 + "vw";
-        c.style.backgroundColor =
-            pastelColors[Math.floor(Math.random() * pastelColors.length)];
-        c.style.setProperty("--x", `${(Math.random() - 0.5) * 200}px`);
-        c.style.animationDuration = Math.random() * 2 + 2 + "s";
-
-        container.appendChild(c);
-        setTimeout(() => c.remove(), 4500);
+    // draw platforms
+    ctx.fillStyle = '#654321';
+    for (let p of platforms) {
+        ctx.fillRect(p.x, p.y, p.w, p.h);
     }
-} 
+
+    // draw finish flag
+    ctx.fillStyle = 'gold';
+    ctx.fillRect(canvas.width - 40, platforms[0].y - 80, 10, 80);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(canvas.width - 30, platforms[0].y - 80 + 10, 30, 20);
+
+    // draw ghost (previous run)
+    if (ghostPath && ghostPath.length > 0) {
+        const gp = ghostPath[Math.min(frameIndex, ghostPath.length - 1)];
+        if (gp) {
+            ctx.fillStyle = ghostColor;
+            ctx.fillRect(gp.x, gp.y, player.w, player.h);
+        }
+    }
+
+    // draw player
+    ctx.fillStyle = '#0066ff';
+    ctx.fillRect(player.x, player.y, player.w, player.h);
+
+    // HUD
+    ctx.fillStyle = 'black';
+    ctx.font = '16px Arial';
+    ctx.fillText('Controls: Arrow keys or A/D to move, Up/Space to jump', 10, 20);
+    if (message) ctx.fillText('Status: ' + message, 10, 40);
+    if (ghostPath) ctx.fillText('Shadow loaded (avoid colliding)', 10, 60);
+}
+
+function gameLoop(ts) {
+    if (!lastTimestamp) lastTimestamp = ts;
+    const dt = ts - lastTimestamp;
+    lastTimestamp = ts;
+
+    if (running) {
+        updatePhysics();
+
+        // record player position this frame
+        recording.push({ x: player.x, y: player.y });
+
+        // check collision with ghost
+        if (ghostPath && ghostPath.length > 0) {
+            const gp = ghostPath[Math.min(frameIndex, ghostPath.length - 1)];
+            if (gp) {
+                const playerRect = { x: player.x, y: player.y, w: player.w, h: player.h };
+                const ghostRect = { x: gp.x, y: gp.y, w: player.w, h: player.h };
+                if (rectsOverlap(playerRect, ghostRect)) {
+                    endRun('Hit by your shadow!');
+                }
+            }
+        }
+
+        // check finish
+        if (player.x + player.w >= canvas.width - 40 && player.y + player.h <= platforms[0].y) {
+            endRun('Finished! Shadow updated.');
+        }
+
+        frameIndex++;
+    }
+
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+
+// Input handlers
+window.addEventListener('keydown', (e) => {
+    keys[e.key] = true;
+});
+window.addEventListener('keyup', (e) => {
+    keys[e.key] = false;
+});
+
+// Buttons
+document.getElementById('start').addEventListener('click', () => startRun());
+document.getElementById('reset').addEventListener('click', () => { resetShadow(); message = 'Shadow reset'; });
+
+// init
+loadShadow();
+requestAnimationFrame(gameLoop);
