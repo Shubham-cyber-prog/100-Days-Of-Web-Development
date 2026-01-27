@@ -221,43 +221,68 @@ class ProfileManager {
     }
     
     bindEvents() {
-        // Edit profile button
-        document.getElementById('editProfileBtn').addEventListener('click', () => {
-            this.openEditModal();
-        });
-        
-        // Edit avatar button
-        document.getElementById('editAvatarBtn').addEventListener('click', () => {
-            this.changeAvatar();
-        });
-        
-        // Modal events
-        document.querySelector('.close').addEventListener('click', () => {
-            this.closeModal();
-        });
-        
-        document.getElementById('editModal').addEventListener('click', (e) => {
-            if (e.target.id === 'editModal') {
-                this.closeModal();
+        try {
+            // Edit profile button
+            const editProfileBtn = document.getElementById('editProfileBtn');
+            if (editProfileBtn) {
+                // Remove existing listeners to prevent duplicates
+                editProfileBtn.removeEventListener('click', this.openEditModal.bind(this));
+                editProfileBtn.addEventListener('click', () => {
+                    this.openEditModal();
+                });
             }
-        });
-        
-        document.getElementById('cancelEdit').addEventListener('click', () => {
-            this.closeModal();
-        });
-        
-        // Form submission
-        document.getElementById('editProfileForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveProfile();
-        });
-        
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                this.closeModal();
+            
+            // Edit avatar button
+            const editAvatarBtn = document.getElementById('editAvatarBtn');
+            if (editAvatarBtn) {
+                editAvatarBtn.addEventListener('click', () => {
+                    this.changeAvatar();
+                });
             }
-        });
+            
+            // Modal events
+            const closeBtn = document.querySelector('.close');
+            const editModal = document.getElementById('editModal');
+            const cancelBtn = document.getElementById('cancelEdit');
+            const editForm = document.getElementById('editProfileForm');
+            
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    this.closeModal();
+                });
+            }
+            
+            if (editModal) {
+                editModal.addEventListener('click', (e) => {
+                    if (e.target.id === 'editModal') {
+                        this.closeModal();
+                    }
+                });
+            }
+            
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', () => {
+                    this.closeModal();
+                });
+            }
+            
+            // Form submission
+            if (editForm) {
+                editForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveProfile();
+                });
+            }
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    this.closeModal();
+                }
+            });
+        } catch (error) {
+            console.error('Error binding events:', error);
+        }
     }
     
     openEditModal() {
@@ -281,42 +306,47 @@ class ProfileManager {
     }
     
     saveProfile() {
-        // Get form data
-        const formData = {
-            fullName: document.getElementById('editFullName').value.trim(),
-            email: document.getElementById('editEmail').value.trim(),
-            title: document.getElementById('editTitle').value.trim(),
-            location: document.getElementById('editLocation').value.trim(),
-            bio: document.getElementById('editBio').value.trim()
-        };
-        
-        // Validate required fields
-        if (!formData.fullName || !formData.email) {
-            alert('Please fill in all required fields');
-            return;
+        try {
+            // Get form data
+            const formData = {
+                fullName: document.getElementById('editFullName').value.trim(),
+                email: document.getElementById('editEmail').value.trim(),
+                title: document.getElementById('editTitle').value.trim(),
+                location: document.getElementById('editLocation').value.trim(),
+                bio: document.getElementById('editBio').value.trim()
+            };
+            
+            // Validate required fields
+            if (!formData.fullName || !formData.email) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Update user data
+            this.userData = { ...this.userData, ...formData };
+            
+            // Save to localStorage
+            localStorage.setItem('profileData', JSON.stringify(this.userData));
+            
+            // Update UI
+            this.renderProfile();
+            this.closeModal();
+            
+            // Add activity
+            this.addActivity({
+                title: 'Updated Profile',
+                description: 'Modified profile information and settings',
+                icon: 'fas fa-user-edit',
+                time: 'Just now',
+                type: 'profile'
+            });
+            
+            // Show success message
+            this.showNotification('Profile updated successfully!', 'success');
+        } catch (error) {
+            console.error('Error saving profile:', error);
+            alert('Error saving profile. Please try again.');
         }
-        
-        // Update user data
-        this.userData = { ...this.userData, ...formData };
-        
-        // Save to localStorage
-        localStorage.setItem('profileData', JSON.stringify(this.userData));
-        
-        // Update UI
-        this.renderProfile();
-        this.closeModal();
-        
-        // Add activity
-        this.addActivity({
-            title: 'Updated Profile',
-            description: 'Modified profile information and settings',
-            icon: 'fas fa-user-edit',
-            time: 'Just now',
-            type: 'profile'
-        });
-        
-        // Show success message
-        this.showNotification('Profile updated successfully!', 'success');
     }
     
     changeAvatar() {
@@ -340,44 +370,60 @@ class ProfileManager {
     }
     
     addActivity(activity) {
-        activity.id = Date.now();
-        this.activities.unshift(activity);
-        
-        // Keep only last 10 activities
-        this.activities = this.activities.slice(0, 10);
-        
-        // Save to localStorage
-        localStorage.setItem('profileActivities', JSON.stringify(this.activities));
-        
-        // Re-render activities
-        this.renderActivities();
+        try {
+            activity.id = Date.now();
+            this.activities.unshift(activity);
+            
+            // Keep only last 10 activities
+            this.activities = this.activities.slice(0, 10);
+            
+            // Save to localStorage
+            localStorage.setItem('profileActivities', JSON.stringify(this.activities));
+            
+            // Re-render activities
+            this.renderActivities();
+        } catch (error) {
+            console.error('Error adding activity:', error);
+        }
     }
     
     showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${type === 'success' ? '#4caf50' : '#2196f3'};
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-        `;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
+        try {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4caf50' : '#2196f3'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
             setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 300);
-        }, 3000);
+                try {
+                    if (notification && notification.parentNode) {
+                        notification.style.animation = 'slideOut 0.3s ease';
+                        setTimeout(() => {
+                            if (notification && notification.parentNode) {
+                                document.body.removeChild(notification);
+                            }
+                        }, 300);
+                    }
+                } catch (removeError) {
+                    console.log('Notification already removed');
+                }
+            }, 3000);
+        } catch (error) {
+            console.error('Error showing notification:', error);
+        }
     }
 }
 
