@@ -87,12 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', closeMobileMenu);
     });
     
-    // Handle tutorials page active state
-    if (currentPath.includes('tutorials.html')) {
-        const tutorialsLink = document.querySelector('a[href="tutorials.html"]');
-        if (tutorialsLink) {
+    // Handle leaderboard page active state
+    if (currentPath.includes('leaderboard.html')) {
+        const leaderboardLink = document.querySelector('a[href="leaderboard.html"]');
+        if (leaderboardLink) {
             links.forEach(l => l.classList.remove('active'));
-            tutorialsLink.classList.add('active');
+            leaderboardLink.classList.add('active');
         }
     }
 
