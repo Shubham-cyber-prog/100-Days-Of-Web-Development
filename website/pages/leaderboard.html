@@ -1,465 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/website/assets/images/logo.png">
     <title>Leaderboard | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/index.css">
     <style>
-        /* Leaderboard Specific Styles */
-        .leaderboard-hero {
-            min-height: 40vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .page-header {
             text-align: center;
-            padding-top: 100px;
-            padding-bottom: var(--space-8);
+            padding: 120px 0 60px;
         }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: var(--weight-black);
-            line-height: 1.1;
-            margin-bottom: var(--space-4);
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-core) 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .leaderboard-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
-
-        .hero-subtitle {
-            font-size: var(--text-lg);
+        .search-wrapper {
+            max-width: 400px;
+            flex: 1;
+            position: relative;
+        }
+        #searchInput {
+            background: var(--bg-surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            padding: 16px 24px;
+            font-size: var(--text-base);
+            width: 100%;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--accent-core);
+            box-shadow: 0 0 20px -5px var(--accent-alpha);
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: transparent;
             color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: var(--text-sm);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent-core);
+            color: var(--text-primary);
+        }
+        .filter-btn.active {
+            background: var(--accent-core);
+            color: #000;
+            border-color: var(--accent-core);
+            font-weight: var(--weight-bold);
+        }
+        .podium-section {
+            margin: 3rem 0;
+        }
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            gap: 1rem;
             max-width: 600px;
             margin: 0 auto;
         }
-
-        .leaderboard-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: var(--space-8) var(--space-4);
+        .podium-place {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
         }
-
-        .leaderboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-6);
-            flex-wrap: wrap;
-            gap: var(--space-4);
+        .podium-place:hover {
+            transform: translateY(-5px);
         }
-
-        .leaderboard-title {
-            font-size: var(--text-2xl);
-            font-weight: var(--weight-bold);
-            color: var(--text-primary);
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: var(--bg-glass-panel);
-            border-radius: var(--radius-full);
-            padding: 0.5rem 1rem;
-            gap: 0.5rem;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-primary);
-            font-size: var(--text-sm);
-            width: 200px;
-        }
-
-        .search-box input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        /* Podium Styles */
-        .podium-section {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: var(--space-4);
-            margin-bottom: var(--space-12);
-            padding: var(--space-8) 0;
-        }
-
-        .podium-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: var(--space-6);
-            background: var(--bg-glass-panel);
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--border-subtle);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            min-width: 180px;
-        }
-
-        .podium-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .podium-card.first {
+        .podium-place.first {
             order: 2;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
-            border-color: rgba(255, 215, 0, 0.3);
-            min-height: 280px;
+            transform: scale(1.1);
+            border-color: var(--accent-core);
         }
-
-        .podium-card.second {
+        .podium-place.second {
             order: 1;
-            background: linear-gradient(135deg, rgba(192, 192, 192, 0.15), rgba(192, 192, 192, 0.05));
-            border-color: rgba(192, 192, 192, 0.3);
-            min-height: 240px;
         }
-
-        .podium-card.third {
+        .podium-place.third {
             order: 3;
-            background: linear-gradient(135deg, rgba(205, 127, 50, 0.15), rgba(205, 127, 50, 0.05));
-            border-color: rgba(205, 127, 50, 0.3);
-            min-height: 200px;
         }
-
-        .podium-rank {
-            font-size: 3rem;
-            font-weight: var(--weight-black);
-            margin-bottom: var(--space-2);
-        }
-
-        .first .podium-rank { color: #FFD700; }
-        .second .podium-rank { color: #C0C0C0; }
-        .third .podium-rank { color: #CD7F32; }
-
-        .podium-avatar {
+        .podium-avatar img {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: var(--accent-core);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--text-2xl);
-            font-weight: var(--weight-bold);
-            color: white;
-            margin-bottom: var(--space-3);
-            text-transform: uppercase;
+            border: 3px solid var(--glass-border);
         }
-
-        .podium-name {
-            font-size: var(--text-lg);
-            font-weight: var(--weight-semibold);
-            color: var(--text-primary);
-            margin-bottom: var(--space-1);
-            text-align: center;
-            word-break: break-word;
-        }
-
-        .podium-score {
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-        }
-
-        .podium-score span {
-            font-weight: var(--weight-bold);
-            color: var(--accent-core);
-        }
-
-        /* Leaderboard Table */
         .leaderboard-table {
-            width: 100%;
-            background: var(--bg-glass-panel);
-            border-radius: var(--radius-xl);
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            border: 1px solid var(--border-subtle);
+            margin: 2rem 0;
         }
-
+        .table-header {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px 100px 80px 120px;
+            background: var(--bg-nebula);
+            padding: 1rem;
+            font-weight: var(--weight-bold);
+        }
         .leaderboard-row {
             display: grid;
-            grid-template-columns: 60px 1fr 120px 100px;
-            align-items: center;
-            padding: var(--space-4) var(--space-6);
-            border-bottom: 1px solid var(--border-subtle);
-            transition: background 0.2s ease;
+            grid-template-columns: 60px 1fr 100px 100px 80px 120px;
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            transition: background 0.3s ease;
+            cursor: pointer;
         }
-
-        .leaderboard-row:last-child {
-            border-bottom: none;
-        }
-
         .leaderboard-row:hover {
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--bg-nebula);
         }
-
-        .leaderboard-row.header {
-            background: rgba(0, 0, 0, 0.2);
-            font-weight: var(--weight-semibold);
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .leaderboard-row.current-user {
-            background: rgba(var(--accent-core-rgb), 0.1);
-            border-left: 3px solid var(--accent-core);
-        }
-
-        .rank-cell {
-            font-weight: var(--weight-bold);
-            font-size: var(--text-lg);
-            color: var(--text-secondary);
-        }
-
-        .user-cell {
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-        }
-
-        .user-avatar-sm {
+        .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--accent-core);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--text-sm);
-            font-weight: var(--weight-bold);
-            color: white;
-            text-transform: uppercase;
+            border: 2px solid var(--glass-border);
         }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-name {
-            font-weight: var(--weight-semibold);
-            color: var(--text-primary);
-        }
-
-        .user-email {
-            font-size: var(--text-xs);
-            color: var(--text-secondary);
-        }
-
-        .progress-cell {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-
-        .progress-bar {
-            flex: 1;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-core), var(--accent-flame));
-            border-radius: var(--radius-full);
-            transition: width 0.5s ease;
-        }
-
-        .progress-text {
-            font-size: var(--text-sm);
-            font-weight: var(--weight-semibold);
-            color: var(--text-primary);
-            min-width: 40px;
-            text-align: right;
-        }
-
-        .score-cell {
-            font-weight: var(--weight-bold);
-            font-size: var(--text-lg);
-            color: var(--accent-core);
-            text-align: center;
-        }
-
-        /* Loading State */
-        .loading-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-16);
-            color: var(--text-secondary);
-        }
-
-        .loading-spinner {
-            width: 48px;
-            height: 48px;
-            border: 3px solid var(--border-subtle);
-            border-top-color: var(--accent-core);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: var(--space-4);
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: var(--space-16);
-            color: var(--text-secondary);
-        }
-
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: var(--space-4);
-        }
-
-        /* Stats Card */
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-4);
-            margin-bottom: var(--space-8);
-        }
-
-        .stat-card {
-            background: var(--bg-glass-panel);
-            border-radius: var(--radius-lg);
-            padding: var(--space-6);
-            text-align: center;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .stat-value {
-            font-size: var(--text-3xl);
-            font-weight: var(--weight-black);
-            color: var(--accent-core);
-            margin-bottom: var(--space-1);
-        }
-
-        .stat-label {
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-        }
-
-        /* Your Rank Card */
         .your-rank-card {
-            background: linear-gradient(135deg, rgba(var(--accent-core-rgb), 0.2), rgba(var(--accent-core-rgb), 0.05));
-            border: 1px solid var(--accent-core);
-            border-radius: var(--radius-xl);
-            padding: var(--space-6);
-            margin-bottom: var(--space-8);
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background: var(--bg-surface);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid var(--glass-border);
+        }
+        .modal-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-4);
-        }
-
-        .your-rank-info {
-            display: flex;
             align-items: center;
-            gap: var(--space-4);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
         }
-
-        .your-rank-number {
-            font-size: var(--text-4xl);
-            font-weight: var(--weight-black);
-            color: var(--accent-core);
-        }
-
-        .your-rank-details h3 {
-            font-size: var(--text-lg);
-            font-weight: var(--weight-semibold);
-            color: var(--text-primary);
-            margin-bottom: var(--space-1);
-        }
-
-        .your-rank-details p {
-            font-size: var(--text-sm);
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
             color: var(--text-secondary);
         }
-
-        /* Responsive */
+        .modal-body {
+            padding: 1.5rem;
+        }
         @media (max-width: 768px) {
-            .podium-section {
+            .leaderboard-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .podium {
                 flex-direction: column;
                 align-items: center;
             }
-
-            .podium-card.first,
-            .podium-card.second,
-            .podium-card.third {
-                order: unset;
-                min-height: auto;
-                width: 100%;
-                max-width: 280px;
-            }
-
-            .leaderboard-row {
+            .table-header, .leaderboard-row {
                 grid-template-columns: 50px 1fr 80px;
             }
-
-            .leaderboard-row .progress-cell {
+            .header-cell.projects, .header-cell.streak, .header-cell.badges,
+            .projects-cell, .streak-cell, .badges-cell {
                 display: none;
             }
         }
-
-        /* Light Theme Overrides */
-        [data-theme="light"] .leaderboard-table {
-            background: #ffffff;
-        }
-
-        [data-theme="light"] .leaderboard-row.header {
-            background: #f1f5f9;
-        }
-
-        [data-theme="light"] .leaderboard-row:hover {
-            background: #f8fafc;
-        }
-
-        [data-theme="light"] .podium-card {
-            background: #ffffff;
-        }
-
-        [data-theme="light"] .stat-card {
-            background: #ffffff;
-        }
-
-        [data-theme="light"] .your-rank-card {
-            background: linear-gradient(135deg, rgba(234, 88, 12, 0.1), rgba(234, 88, 12, 0.02));
-        }
     </style>
 </head>
-
 <body>
-    <!-- Header -->
     <header class="site-header">
-        <div class="nav-container" style="filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)) drop-shadow(0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent));">
+        <div class="nav-container">
             <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
+                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
             </a>
-
             <nav class="nav-links">
                 <a href="dashboard.html" class="nav-link">Dashboard</a>
                 <a href="projects.html" class="nav-link">Projects</a>
                 <a href="leaderboard.html" class="nav-link active">Leaderboard</a>
+                <a href="profile.html" class="nav-link">Profile</a>
                 <a href="about.html" class="nav-link">About</a>
                 <a href="contributors.html" class="nav-link">Contributors</a>
+                <a href="contact.html" class="nav-link">Contact</a>
             </nav>
-
             <div class="nav-user">
                 <button class="mobile-toggle" onclick="toggleMobileMenu()">
                     <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -468,238 +218,110 @@
                         <line x1="3" y1="18" x2="21" y2="18"></line>
                     </svg>
                 </button>
-
                 <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="margin-right: 15px; background: none; border: none; cursor: pointer;">
-                    <svg id="theme-icon-sun" class="icon" viewBox="0 0 24 24" style="display: none">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg id="theme-icon-moon" class="icon" viewBox="0 0 24 24">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary)">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </button>
-
-                <a href="profile.html" class="user-avatar">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </a>
+                <div class="user-avatar-wrapper">
+                    <button class="user-avatar" onclick="toggleUserMenu()">
+                        <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%; border-radius: 50%">
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="profile.html" class="dropdown-item">View Profile</a>
+                        <a href="settings.html" class="dropdown-item">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item text-danger" onclick="handleLogout()">Log Out</button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <!-- <div class="mobile-menu" id="mobileMenu">
-        <a href="dashboard.html" class="mobile-link">Dashboard</a>
-        <a href="projects.html" class="mobile-link">Projects</a>
-        <a href="leaderboard.html" class="mobile-link active">Leaderboard</a>
-        <a href="about.html" class="mobile-link">About</a>
-        <a href="contributors.html" class="mobile-link">Contributors</a>
-        <a href="login.html" class="mobile-link" id="logoutBtn">Logout</a>
-    </div> -->
+    <main class="container section">
+        <div class="page-header animate-enter">
+            <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">Leaderboard</h1>
+            <p class="text-secondary">Compete with fellow developers and track your progress</p>
+        </div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="leaderboard-hero">
-            <h1 class="hero-title">🏆 Global Leaderboard</h1>
-            <p class="hero-subtitle">
-                See how you rank among fellow developers completing the 100 Days of Web Development challenge!
-            </p>
-        </section>
+        <div class="leaderboard-controls animate-enter delay-100">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Search users...">
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-period="all">All Time</button>
+                <button class="filter-btn" data-period="monthly">Monthly</button>
+                <button class="filter-btn" data-period="weekly">Weekly</button>
+            </div>
+        </div>
 
-        <div class="leaderboard-container">
-            <!-- Your Rank Card -->
-            <div class="your-rank-card" id="yourRankCard" style="display: none;">
-                <div class="your-rank-info">
-                    <div class="your-rank-number" id="yourRank">#--</div>
-                    <div class="your-rank-details">
-                        <h3>Your Current Rank</h3>
-                        <p id="yourProgress">Complete more projects to climb up!</p>
+        <div class="podium-section animate-enter delay-200">
+            <div class="podium">
+                <div class="podium-place second" id="secondPlace">
+                    <div class="podium-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=2" alt="2nd Place">
                     </div>
+                    <h3>Sarah Chen</h3>
+                    <p class="text-secondary">1,250 points</p>
                 </div>
-                <div class="progress-cell">
-                    <div class="progress-bar" style="width: 150px;">
-                        <div class="progress-fill" id="yourProgressBar" style="width: 0%"></div>
+                <div class="podium-place first" id="firstPlace">
+                    <div class="podium-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=1" alt="1st Place">
                     </div>
-                    <span class="progress-text" id="yourProgressText">0%</span>
+                    <h3>Alex Rodriguez</h3>
+                    <p class="text-secondary">1,580 points</p>
+                </div>
+                <div class="podium-place third" id="thirdPlace">
+                    <div class="podium-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=3" alt="3rd Place">
+                    </div>
+                    <h3>Mike Johnson</h3>
+                    <p class="text-secondary">980 points</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Stats Section -->
-            <div class="stats-section">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalParticipants">--</div>
-                    <div class="stat-label">Total Participants</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="avgCompletion">--</div>
-                    <div class="stat-label">Avg. Completion</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="topScore">--</div>
-                    <div class="stat-label">Highest Score</div>
-                </div>
+        <div class="leaderboard-table animate-enter delay-300">
+            <div class="table-header">
+                <div class="header-cell rank">Rank</div>
+                <div class="header-cell user">User</div>
+                <div class="header-cell points">Points</div>
+                <div class="header-cell projects">Projects</div>
+                <div class="header-cell streak">Streak</div>
+                <div class="header-cell badges">Badges</div>
             </div>
-
-            <!-- Search -->
-            <div class="leaderboard-header">
-                <h2 class="leaderboard-title">Top Contributors</h2>
-                <div class="search-box">
-                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" id="searchInput" placeholder="Search users..." />
-                </div>
+            <div class="table-body" id="leaderboardBody">
+                <!-- Leaderboard entries will be loaded here -->
             </div>
+        </div>
 
-            <!-- Podium Section -->
-            <div class="podium-section" id="podiumSection">
-                <!-- Will be populated by JS -->
-            </div>
-
-            <!-- Leaderboard Table -->
-            <div class="leaderboard-table" id="leaderboardTable">
-                <div class="leaderboard-row header">
-                    <div class="rank-cell">Rank</div>
-                    <div class="user-cell">User</div>
-                    <div class="progress-cell">Progress</div>
-                    <div class="score-cell">Days</div>
+        <div class="your-rank-card animate-enter delay-400" id="yourRankCard">
+            <h3>Your Ranking</h3>
+            <div class="rank-info">
+                <div class="rank-position">
+                    <span class="rank-number text-flame" id="yourRank" style="font-size: 3rem; font-weight: 900;">#15</span>
+                    <span class="text-secondary">Current Rank</span>
                 </div>
-                
-                <!-- Loading State -->
-                <div class="loading-state" id="loadingState">
-                    <div class="loading-spinner"></div>
-                    <p>Loading leaderboard...</p>
-                </div>
-
-                <!-- Table Rows will be populated by JS -->
-                <div id="leaderboardRows"></div>
-            </div>
-
-            <!-- Empty State -->
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <div class="empty-state-icon">🚀</div>
-                <h3>No participants yet!</h3>
-                <p>Be the first to join the challenge and climb the leaderboard.</p>
             </div>
         </div>
     </main>
 
-<!-- Footer -->
-<footer class="site-footer">
-    <div class="container footer-content">
-        <div class="footer-brand animate-enter">
-            <a href="#" class="footer-logo">
-                <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
-                <h2>100 Days of<br><span class="text-flame">Web Dev</span></h2>
-            </a>
-            <p class="footer-desc">
-                A hyper-intensive protocol designed to forge elite web engineers through daily deployment cycles.
-            </p>
-        </div>
-
-        <div class="footer-col animate-enter delay-100">
-            <h3>Navigation</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link">Home Base</a>
-                <a href="website/pages/projects.html" class="footer-link">Archive</a>
-                <a href="website/pages/about.html" class="footer-link">Leaderboard</a>
-                <a href="website/pages/contributors.html" class="footer-link">Crew</a>
-            </nav>
-        </div>
-
-        <div class="footer-col animate-enter delay-200">
-            <h3>Resources</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link" title="Coming soon">Documentation</a>
-                <a href="#" class="footer-link" title="Coming soon">API Status</a>
-                <a href="website/pages/contact.html" class="footer-link">Contact Comms</a>
-            </nav>
-        </div>
-
-        <div class="footer-col animate-enter delay-300">
-            <h3>Connect</h3>
-            <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-            <div class="footer-socials">
-                <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
-                    target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Github">
-                    <img src="website/assets/images/github.png" alt="GitHub" class="icon">
-                </a>
-
-                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Twitter (X)">
-                    <img src="website/assets/images/twitter.png" alt="Twitter/X" class="icon">
-                </a>
-
-                <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Discord">
-                    <img src="website/assets/images/discord.png" alt="Discord" class="icon">
-                </a>
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalUserName">User Profile</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent">
+                    <!-- Modal content will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container footer-bottom">
-        <p class="copyright">&copy; 2026 100 Days of Web Dev. All Systems Nominal.</p>
-        <p class="made-by">
-            Maintained by <span class="text-flame font-bold">Subham</span>
-            <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                </path>
-            </svg>
-        </p>
-    </div>
-</footer>
-
-
-    <!-- Scripts -->
-    <script src="../scripts/core/app.js"></script>
-    <script type="module" src="../scripts/pages/leaderboard.js"></script>
-    <script>
-        // Theme toggle
-        function toggleTheme() {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            updateThemeIcon(next);
-        }
-
-        function updateThemeIcon(theme) {
-            const sun = document.getElementById('theme-icon-sun');
-            const moon = document.getElementById('theme-icon-moon');
-            if (theme === 'light') {
-                sun.style.display = 'block';
-                moon.style.display = 'none';
-            } else {
-                sun.style.display = 'none';
-                moon.style.display = 'block';
-            }
-        }
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
-        }
-
-        // Initialize theme
-        document.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', saved);
-            updateThemeIcon(saved);
-        });
-    </script>
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script src="../scripts/pages/leaderboard.js"></script>
 </body>
 </html>
