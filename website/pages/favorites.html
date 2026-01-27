@@ -1,214 +1,299 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/website/assets/images/logo.png" />
     <title>My Favorites | 100 Days of Web Dev</title>
     <link rel="stylesheet" href="../styles/index.css" />
     <link rel="stylesheet" href="../styles/components/project-modal.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <style>
-        .page-header {
-            text-align: center;
-            padding: 120px 0 60px;
-        }
+      .page-header {
+        text-align: center;
+        padding: 120px 0 60px;
+      }
 
-        .empty-state {
-            text-align: center;
-            padding: 100px 20px;
-            color: var(--text-secondary);
-        }
+      .empty-state {
+        text-align: center;
+        padding: 100px 20px;
+        color: var(--text-secondary);
+      }
 
-        .empty-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: block;
-            color: var(--modal-accent);
-            opacity: 0.5;
-        }
+      .empty-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        display: block;
+        color: var(--modal-accent);
+        opacity: 0.5;
+      }
 
-        /* Reuse project card styles from projects.html */
-        /* (In a real project, these would be in a shared CSS file) */
-        /* Copying minimal necessary styles for card appearance */
-        .project-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            background: var(--bg-nebula);
-            padding: 1.5rem;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
+      /* Reuse project card styles from projects.html */
+      /* (In a real project, these would be in a shared CSS file) */
+      /* Copying minimal necessary styles for card appearance */
+      .project-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        background: var(--bg-nebula);
+        padding: 1.5rem;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--glass-border);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--modal-accent);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+      .project-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--modal-accent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
 
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
 
-        .tech-tag {
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            border-radius: 4px;
-            margin-right: 4px;
-        }
+      .tech-tag {
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        background: rgba(102, 126, 234, 0.1);
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        border-radius: 4px;
+        margin-right: 4px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Header -->
     <header class="site-header">
-        <div class="nav-container" style="filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)) drop-shadow(0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent));">
-            <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
-            </a>
+      <div
+        class="nav-container"
+        style="
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
+            drop-shadow(
+              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
+            )
+            drop-shadow(
+              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
+            );
+        "
+      >
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
 
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Dashboard</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="leaderboard.html" class="nav-link active">Leaderboard</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contributors.html" class="nav-link">Contributors</a>
-            </nav>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="favorites.html" class="nav-link active">Favorites</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Contributors</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
 
-            <div class="nav-user">
-                <button class="mobile-toggle" onclick="toggleMobileMenu()">
-                    <svg class="icon icon-lg" viewBox="0 0 24 24">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
 
-                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="margin-right: 15px; background: none; border: none; cursor: pointer;">
-                    <svg id="theme-icon-sun" class="icon" viewBox="0 0 24 24" style="display: none">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg id="theme-icon-moon" class="icon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+            style="
+              margin-right: 15px;
+              background: none;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--text-secondary)"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
 
-                <a href="profile.html" class="user-avatar">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </a>
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%"
+              />
+            </button>
+            <!-- Dropdown -->
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a>
+              <a href="settings.html" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
             </div>
+          </div>
         </div>
+      </div>
     </header>
 
     <main class="container section">
-        <div class="page-header animate-enter">
-            <h1>Starred Missions</h1>
-            <p class="text-secondary">Your collection of favorite projects and benchmarks.</p>
-        </div>
+      <div class="page-header animate-enter">
+        <h1>Starred Missions</h1>
+        <p class="text-secondary">
+          Your collection of favorite projects and benchmarks.
+        </p>
+      </div>
 
-        <div id="favoritesGrid" class="grid grid-4 animate-enter delay-100">
-            <!-- Injected by scripts/pages/favorites.js -->
-        </div>
+      <div id="favoritesGrid" class="grid grid-4 animate-enter delay-100">
+        <!-- Injected by scripts/pages/favorites.js -->
+      </div>
 
-        <div id="emptyState" class="empty-state" style="display: none;">
-            <span class="empty-icon"><i class="far fa-star"></i></span>
-            <h3>No favorites yet</h3>
-            <p>Go to the <a href="projects.html">Projects Archive</a> to add some!</p>
-        </div>
+      <div id="emptyState" class="empty-state" style="display: none">
+        <span class="empty-icon"><i class="far fa-star"></i></span>
+        <h3>No favorites yet</h3>
+        <p>
+          Go to the <a href="projects.html">Projects Archive</a> to add some!
+        </p>
+      </div>
     </main>
 
     <!-- Footer -->
-<footer class="site-footer">
-    <div class="container footer-content">
+    <footer class="site-footer">
+      <div class="container footer-content">
         <div class="footer-brand animate-enter">
-            <a href="#" class="footer-logo">
-                <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
-                <h2>100 Days of<br><span class="text-flame">Web Dev</span></h2>
-            </a>
-            <p class="footer-desc">
-                A hyper-intensive protocol designed to forge elite web engineers through daily deployment cycles.
-            </p>
+          <a href="#" class="footer-logo">
+            <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
+            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+          </a>
+          <p class="footer-desc">
+            A hyper-intensive protocol designed to forge elite web engineers
+            through daily deployment cycles.
+          </p>
         </div>
 
         <div class="footer-col animate-enter delay-100">
-            <h3>Navigation</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link">Home Base</a>
-                <a href="website/pages/projects.html" class="footer-link">Archive</a>
-                <a href="website/pages/about.html" class="footer-link">Leaderboard</a>
-                <a href="website/pages/contributors.html" class="footer-link">Crew</a>
-            </nav>
+          <h3>Navigation</h3>
+          <nav class="footer-links">
+            <a href="#" class="footer-link">Home Base</a>
+            <a href="website/pages/projects.html" class="footer-link"
+              >Archive</a
+            >
+            <a href="website/pages/about.html" class="footer-link"
+              >Leaderboard</a
+            >
+            <a href="website/pages/contributors.html" class="footer-link"
+              >Crew</a
+            >
+          </nav>
         </div>
 
         <div class="footer-col animate-enter delay-200">
-            <h3>Resources</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link" title="Coming soon">Documentation</a>
-                <a href="#" class="footer-link" title="Coming soon">API Status</a>
-                <a href="website/pages/contact.html" class="footer-link">Contact Comms</a>
-            </nav>
+          <h3>Resources</h3>
+          <nav class="footer-links">
+            <a href="documentation.html" class="footer-link">Documentation</a>
+            <a href="api-status.html" class="footer-link">API Status</a>
+            <a href="contact.html" class="footer-link">Contact Comms</a>
+            <a href="system-logic.html" class="footer-link">System Logic</a>
+          </nav>
         </div>
 
         <div class="footer-col animate-enter delay-300">
-            <h3>Connect</h3>
-            <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-            <div class="footer-socials">
-                <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
-                    target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Github">
-                    <img src="website/assets/images/github.png" alt="GitHub" class="icon">
-                </a>
+          <h3>Connect</h3>
+          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+          <div class="footer-socials">
+            <a
+              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Github"
+            >
+              <img
+                src="website/assets/images/github.png"
+                alt="GitHub"
+                class="icon"
+              />
+            </a>
 
-                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Twitter (X)">
-                    <img src="website/assets/images/twitter.png" alt="Twitter/X" class="icon">
-                </a>
+            <a
+              href="https://twitter.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Twitter (X)"
+            >
+              <img
+                src="website/assets/images/twitter.png"
+                alt="Twitter/X"
+                class="icon"
+              />
+            </a>
 
-                <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Discord">
-                    <img src="website/assets/images/discord.png" alt="Discord" class="icon">
-                </a>
-            </div>
+            <a
+              href="https://discord.gg/SW7puwEm"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Discord"
+            >
+              <img
+                src="website/assets/images/discord.png"
+                alt="Discord"
+                class="icon"
+              />
+            </a>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="container footer-bottom">
-        <p class="copyright">&copy; 2026 100 Days of Web Dev. All Systems Nominal.</p>
-        <p class="made-by">
-            Maintained by <span class="text-flame font-bold">Subham</span>
-            <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                </path>
-            </svg>
+      <div class="container footer-bottom">
+        <p class="copyright">
+          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
         </p>
-    </div>
-</footer>
-
+        <p class="made-by">
+          Maintained by <span class="text-flame font-bold">Subham</span>
+          <svg
+            class="icon icon-sm heart-pulse"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
+          </svg>
+        </p>
+      </div>
+    </footer>
 
     <script type="module" src="../scripts/pages/favorites.js"></script>
     <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/components/navigation.js"></script>
-</body>
-
+  </body>
 </html>
