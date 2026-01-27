@@ -1,305 +1,427 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Achievements | 100 Days of Web Dev</title>
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../styles/pages/acheivements.css">
-</head>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../styles/pages/acheivements.css" />
+  </head>
 
-<body>
+  <body>
     <!-- Navbar -->
     <header class="site-header">
-        <div class="nav-container">
-            <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
-            </a>
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Dashboard</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="achievements.html" class="nav-link active">Achievements</a>
-                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-            </nav>
-            <div class="nav-user">
-                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-                <div class="user-avatar-wrapper">
-                    <button class="user-avatar" onclick="toggleUserMenu()">
-                        <img src="https://github.com/ntbnaren7.png" alt="User"
-                            style="width: 100%; height: 100%; border-radius: 50%" />
-                    </button>
-                </div>
+      <div
+        class="nav-container"
+        style="
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
+            drop-shadow(
+              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
+            )
+            drop-shadow(
+              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
+            );
+        "
+      >
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Contributors</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+            style="
+              margin-right: 15px;
+              background: none;
+              border: none;
+              cursor: pointer;
+            "
+            aria-label="Toggle Theme"
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--text-secondary)"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%; border-radius: 50%"
+              />
+            </button>
+            <!-- Dropdown -->
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a>
+              <a href="settings.html" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
             </div>
+          </div>
         </div>
+      </div>
     </header>
 
     <main class="container section">
-        <div class="page-header animate-enter">
-            <h1 class="hero-title">Hall of Valor</h1>
-            <p class="text-secondary">Your mission milestones and earned badges. Complete challenges to unlock more!</p>
-        </div>
+      <div class="page-header animate-enter">
+        <h1 class="hero-title">Hall of Valor</h1>
+        <p class="text-secondary">
+          Your mission milestones and earned badges. Complete challenges to
+          unlock more!
+        </p>
+      </div>
 
-        <div class="stats-banner animate-enter delay-100">
-            <div class="stat-item">
-                <h3 id="statUnlocked">5</h3>
-                <p>Badges Earned</p>
-            </div>
-            <div class="stat-item">
-                <h3 id="statPoints">850</h3>
-                <p>Reputation Points</p>
-            </div>
-            <div class="stat-item">
-                <h3 id="statPercent">42%</h3>
-                <p>Collection Progress</p>
-            </div>
+      <div class="stats-banner animate-enter delay-100">
+        <div class="stat-item">
+          <h3 id="statUnlocked">5</h3>
+          <p>Badges Earned</p>
         </div>
+        <div class="stat-item">
+          <h3 id="statPoints">850</h3>
+          <p>Reputation Points</p>
+        </div>
+        <div class="stat-item">
+          <h3 id="statPercent">42%</h3>
+          <p>Collection Progress</p>
+        </div>
+      </div>
 
-        <div id="achievementsGrid" class="achievements-grid animate-enter delay-200">
-            <!-- Achievements will be injected here -->
-        </div>
+      <div
+        id="achievementsGrid"
+        class="achievements-grid animate-enter delay-200"
+      >
+        <!-- Achievements will be injected here -->
+      </div>
     </main>
 
     <!-- Footer -->
-<footer class="site-footer">
-    <div class="container footer-content">
+    <footer class="site-footer">
+      <div class="container footer-content">
         <div class="footer-brand animate-enter">
-            <a href="#" class="footer-logo">
-                <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
-                <h2>100 Days of<br><span class="text-flame">Web Dev</span></h2>
-            </a>
-            <p class="footer-desc">
-                A hyper-intensive protocol designed to forge elite web engineers through daily deployment cycles.
-            </p>
+          <a href="#" class="footer-logo">
+            <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
+            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+          </a>
+          <p class="footer-desc">
+            A hyper-intensive protocol designed to forge elite web engineers
+            through daily deployment cycles.
+          </p>
         </div>
 
         <div class="footer-col animate-enter delay-100">
-            <h3>Navigation</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link">Home Base</a>
-                <a href="website/pages/projects.html" class="footer-link">Archive</a>
-                <a href="website/pages/about.html" class="footer-link">Leaderboard</a>
-                <a href="website/pages/contributors.html" class="footer-link">Crew</a>
-            </nav>
+          <h3>Navigation</h3>
+          <nav class="footer-links">
+            <a href="#" class="footer-link">Home Base</a>
+            <a href="website/pages/projects.html" class="footer-link"
+              >Archive</a
+            >
+            <a href="website/pages/about.html" class="footer-link"
+              >Leaderboard</a
+            >
+            <a href="website/pages/contributors.html" class="footer-link"
+              >Crew</a
+            >
+          </nav>
         </div>
 
         <div class="footer-col animate-enter delay-200">
-            <h3>Resources</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link" title="Coming soon">Documentation</a>
-                <a href="#" class="footer-link" title="Coming soon">API Status</a>
-                <a href="website/pages/contact.html" class="footer-link">Contact Comms</a>
-            </nav>
+          <h3>Resources</h3>
+          <nav class="footer-links">
+            <a href=\"documentation.html\" class=\"footer-link\"
+              >Documentation</a
+            >
+            <a href=\"api-status.html\" class=\"footer-link\">API Status</a>
+            <a href=\"contact.html\" class=\"footer-link\"
+              >Contact Comms</a
+            >
+            <a href=\"system-logic.html\" class=\"footer-link\"
+              >System Logic</a
+            >
+          </nav>
         </div>
 
         <div class="footer-col animate-enter delay-300">
-            <h3>Connect</h3>
-            <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-            <div class="footer-socials">
-                <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
-                    target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Github">
-                    <img src="website/assets/images/github.png" alt="GitHub" class="icon">
-                </a>
+          <h3>Connect</h3>
+          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+          <div class="footer-socials">
+            <a
+              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Github"
+            >
+              <img
+                src="website/assets/images/github.png"
+                alt="GitHub"
+                class="icon"
+              />
+            </a>
 
-                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Twitter (X)">
-                    <img src="website/assets/images/twitter.png" alt="Twitter/X" class="icon">
-                </a>
+            <a
+              href="https://twitter.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Twitter (X)"
+            >
+              <img
+                src="website/assets/images/twitter.png"
+                alt="Twitter/X"
+                class="icon"
+              />
+            </a>
 
-                <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Discord">
-                    <img src="website/assets/images/discord.png" alt="Discord" class="icon">
-                </a>
-            </div>
+            <a
+              href="https://discord.gg/SW7puwEm"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Discord"
+            >
+              <img
+                src="website/assets/images/discord.png"
+                alt="Discord"
+                class="icon"
+              />
+            </a>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="container footer-bottom">
-        <p class="copyright">&copy; 2026 100 Days of Web Dev. All Systems Nominal.</p>
-        <p class="made-by">
-            Maintained by <span class="text-flame font-bold">Subham</span>
-            <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                </path>
-            </svg>
+      <div class="container footer-bottom">
+        <p class="copyright">
+          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
         </p>
-    </div>
-</footer>
+        <p class="made-by">
+          Maintained by <span class="text-flame font-bold">Subham</span>
+          <svg
+            class="icon icon-sm heart-pulse"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
+          </svg>
+        </p>
+      </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
-        // Theme toggle function
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
+      // Theme toggle function
+      function toggleTheme() {
+        const body = document.body;
+        const currentTheme = body.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        body.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      }
 
-        // Initialize theme
-        (function initTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.body.setAttribute('data-theme', savedTheme);
-        })();
+      // Initialize theme
+      (function initTheme() {
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        document.body.setAttribute("data-theme", savedTheme);
+      })();
 
-        // Achievement data
-        const achievements = [
-            {
-                id: 1,
-                title: "First Steps",
-                description: "Complete your first day of the 100 Days challenge",
-                icon: "fas fa-footsteps",
-                unlocked: true,
-                date: "2024-01-15",
-                points: 50
-            },
-            {
-                id: 2,
-                title: "HTML Master",
-                description: "Complete all HTML-related projects and exercises",
-                icon: "fab fa-html5",
-                unlocked: true,
-                date: "2024-01-20",
-                points: 100
-            },
-            {
-                id: 3,
-                title: "CSS Wizard",
-                description: "Master advanced CSS concepts and animations",
-                icon: "fab fa-css3-alt",
-                unlocked: true,
-                date: "2024-01-28",
-                points: 150
-            },
-            {
-                id: 4,
-                title: "JavaScript Ninja",
-                description: "Build 5 interactive JavaScript projects",
-                icon: "fab fa-js",
-                unlocked: true,
-                date: "2024-02-05",
-                points: 200
-            },
-            {
-                id: 5,
-                title: "Framework Explorer",
-                description: "Complete a project using a modern framework",
-                icon: "fas fa-code",
-                unlocked: true,
-                date: "2024-02-12",
-                points: 250
-            },
-            {
-                id: 6,
-                title: "API Integrator",
-                description: "Successfully integrate 3 different APIs in your projects",
-                icon: "fas fa-plug",
-                unlocked: false,
-                progress: 2,
-                required: 3,
-                points: 150
-            },
-            {
-                id: 7,
-                title: "Responsive Guru",
-                description: "Create 10 fully responsive websites",
-                icon: "fas fa-mobile-alt",
-                unlocked: false,
-                progress: 7,
-                required: 10,
-                points: 200
-            },
-            {
-                id: 8,
-                title: "Git Committer",
-                description: "Make 100 meaningful commits to your projects",
-                icon: "fab fa-git-alt",
-                unlocked: false,
-                progress: 65,
-                required: 100,
-                points: 100
-            },
-            {
-                id: 9,
-                title: "Deployment Pro",
-                description: "Deploy 5 projects to live servers",
-                icon: "fas fa-rocket",
-                unlocked: false,
-                progress: 3,
-                required: 5,
-                points: 250
-            },
-            {
-                id: 10,
-                title: "Full Stack",
-                description: "Complete both frontend and backend projects",
-                icon: "fas fa-layer-group",
-                unlocked: false,
-                progress: 0,
-                required: 1,
-                points: 300
-            },
-            {
-                id: 11,
-                title: "Open Source",
-                description: "Contribute to an open source project",
-                icon: "fas fa-hands-helping",
-                unlocked: false,
-                progress: 0,
-                required: 1,
-                points: 200
-            },
-            {
-                id: 12,
-                title: "100 Days Complete",
-                description: "Finish the entire 100 Days of Web Dev challenge",
-                icon: "fas fa-trophy",
-                unlocked: false,
-                progress: 35,
-                required: 100,
-                points: 1000
-            }
-        ];
+      // Achievement data
+      const achievements = [
+        {
+          id: 1,
+          title: "First Steps",
+          description: "Complete your first day of the 100 Days challenge",
+          icon: "fas fa-footsteps",
+          unlocked: true,
+          date: "2024-01-15",
+          points: 50,
+        },
+        {
+          id: 2,
+          title: "HTML Master",
+          description: "Complete all HTML-related projects and exercises",
+          icon: "fab fa-html5",
+          unlocked: true,
+          date: "2024-01-20",
+          points: 100,
+        },
+        {
+          id: 3,
+          title: "CSS Wizard",
+          description: "Master advanced CSS concepts and animations",
+          icon: "fab fa-css3-alt",
+          unlocked: true,
+          date: "2024-01-28",
+          points: 150,
+        },
+        {
+          id: 4,
+          title: "JavaScript Ninja",
+          description: "Build 5 interactive JavaScript projects",
+          icon: "fab fa-js",
+          unlocked: true,
+          date: "2024-02-05",
+          points: 200,
+        },
+        {
+          id: 5,
+          title: "Framework Explorer",
+          description: "Complete a project using a modern framework",
+          icon: "fas fa-code",
+          unlocked: true,
+          date: "2024-02-12",
+          points: 250,
+        },
+        {
+          id: 6,
+          title: "API Integrator",
+          description:
+            "Successfully integrate 3 different APIs in your projects",
+          icon: "fas fa-plug",
+          unlocked: false,
+          progress: 2,
+          required: 3,
+          points: 150,
+        },
+        {
+          id: 7,
+          title: "Responsive Guru",
+          description: "Create 10 fully responsive websites",
+          icon: "fas fa-mobile-alt",
+          unlocked: false,
+          progress: 7,
+          required: 10,
+          points: 200,
+        },
+        {
+          id: 8,
+          title: "Git Committer",
+          description: "Make 100 meaningful commits to your projects",
+          icon: "fab fa-git-alt",
+          unlocked: false,
+          progress: 65,
+          required: 100,
+          points: 100,
+        },
+        {
+          id: 9,
+          title: "Deployment Pro",
+          description: "Deploy 5 projects to live servers",
+          icon: "fas fa-rocket",
+          unlocked: false,
+          progress: 3,
+          required: 5,
+          points: 250,
+        },
+        {
+          id: 10,
+          title: "Full Stack",
+          description: "Complete both frontend and backend projects",
+          icon: "fas fa-layer-group",
+          unlocked: false,
+          progress: 0,
+          required: 1,
+          points: 300,
+        },
+        {
+          id: 11,
+          title: "Open Source",
+          description: "Contribute to an open source project",
+          icon: "fas fa-hands-helping",
+          unlocked: false,
+          progress: 0,
+          required: 1,
+          points: 200,
+        },
+        {
+          id: 12,
+          title: "100 Days Complete",
+          description: "Finish the entire 100 Days of Web Dev challenge",
+          icon: "fas fa-trophy",
+          unlocked: false,
+          progress: 35,
+          required: 100,
+          points: 1000,
+        },
+      ];
 
-        // Calculate statistics
-        function calculateStats() {
-            const unlocked = achievements.filter(a => a.unlocked).length;
-            const totalPoints = achievements.filter(a => a.unlocked).reduce((sum, a) => sum + a.points, 0);
-            const percent = Math.round((unlocked / achievements.length) * 100);
-            
-            document.getElementById('statUnlocked').textContent = unlocked;
-            document.getElementById('statPoints').textContent = totalPoints;
-            document.getElementById('statPercent').textContent = `${percent}%`;
-        }
+      // Calculate statistics
+      function calculateStats() {
+        const unlocked = achievements.filter((a) => a.unlocked).length;
+        const totalPoints = achievements
+          .filter((a) => a.unlocked)
+          .reduce((sum, a) => sum + a.points, 0);
+        const percent = Math.round((unlocked / achievements.length) * 100);
 
-        // Create achievement card
-        function createAchievementCard(achievement) {
-            const card = document.createElement('div');
-            card.className = `achievement-card ${achievement.unlocked ? 'unlocked' : ''}`;
-            
-            card.innerHTML = `
-                ${achievement.unlocked ? '<span class="unlock-badge">Unlocked</span>' : ''}
+        document.getElementById("statUnlocked").textContent = unlocked;
+        document.getElementById("statPoints").textContent = totalPoints;
+        document.getElementById("statPercent").textContent = `${percent}%`;
+      }
+
+      // Create achievement card
+      function createAchievementCard(achievement) {
+        const card = document.createElement("div");
+        card.className = `achievement-card ${achievement.unlocked ? "unlocked" : ""}`;
+
+        card.innerHTML = `
+                ${achievement.unlocked ? '<span class="unlock-badge">Unlocked</span>' : ""}
                 <div class="achievement-icon">
                     <i class="${achievement.icon}"></i>
                 </div>
                 <h3 class="achievement-title">${achievement.title}</h3>
                 <p class="achievement-desc">${achievement.description}</p>
                 
-                ${achievement.unlocked ? `
-                    <p class="achievement-date">Unlocked on ${new Date(achievement.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                ${
+                  achievement.unlocked
+                    ? `
+                    <p class="achievement-date">Unlocked on ${new Date(achievement.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</p>
                     <button class="share-btn" onclick="shareAchievement(${achievement.id})">
                         <i class="fas fa-share-alt"></i> Share
                     </button>
-                ` : `
+                `
+                    : `
                     <div class="progress-wrapper">
                         <div class="progress-text">Progress: ${achievement.progress}/${achievement.required}</div>
                         <div class="progress-bar">
@@ -307,77 +429,77 @@
                         </div>
                     </div>
                     <p class="achievement-date">${achievement.points} points</p>
-                `}
+                `
+                }
             `;
-            
-            return card;
-        }
 
-        // Share achievement function
-        function shareAchievement(id) {
-            const achievement = achievements.find(a => a.id === id);
-            if (!achievement) return;
-            
-            const text = `I just unlocked the "${achievement.title}" achievement in 100 Days of Web Dev! 🎉`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'My Achievement',
-                    text: text,
-                    url: window.location.href
-                });
-            } else {
-                // Fallback to clipboard
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('Achievement text copied to clipboard!');
-                });
-            }
-        }
+        return card;
+      }
 
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            const grid = document.getElementById('achievementsGrid');
-            
-            // Create cards for each achievement
-            achievements.forEach(achievement => {
-                grid.appendChild(createAchievementCard(achievement));
-            });
-            
-            // Calculate and display statistics
-            calculateStats();
-            
-            // Add hover effects
-            const cards = document.querySelectorAll('.achievement-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    if (card.classList.contains('unlocked')) {
-                        const icon = card.querySelector('.achievement-icon i');
-                        icon.style.transform = 'scale(1.1) rotate(5deg)';
-                    }
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    const icon = card.querySelector('.achievement-icon i');
-                    icon.style.transform = '';
-                });
-                
-                // Add click effect for locked achievements
-                card.addEventListener('click', function() {
-                    if (!this.classList.contains('unlocked')) {
-                        this.style.transform = 'scale(0.95)';
-                        setTimeout(() => {
-                            this.style.transform = '';
-                        }, 200);
-                    }
-                });
-            });
+      // Share achievement function
+      function shareAchievement(id) {
+        const achievement = achievements.find((a) => a.id === id);
+        if (!achievement) return;
+
+        const text = `I just unlocked the "${achievement.title}" achievement in 100 Days of Web Dev! 🎉`;
+
+        if (navigator.share) {
+          navigator.share({
+            title: "My Achievement",
+            text: text,
+            url: window.location.href,
+          });
+        } else {
+          // Fallback to clipboard
+          navigator.clipboard.writeText(text).then(() => {
+            alert("Achievement text copied to clipboard!");
+          });
+        }
+      }
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        const grid = document.getElementById("achievementsGrid");
+
+        // Create cards for each achievement
+        achievements.forEach((achievement) => {
+          grid.appendChild(createAchievementCard(achievement));
         });
 
-        // User menu function
-        function toggleUserMenu() {
-            alert('User menu would open here. Implement user menu functionality.');
-        }
-    </script>
-</body>
+        // Calculate and display statistics
+        calculateStats();
 
+        // Add hover effects
+        const cards = document.querySelectorAll(".achievement-card");
+        cards.forEach((card) => {
+          card.addEventListener("mouseenter", () => {
+            if (card.classList.contains("unlocked")) {
+              const icon = card.querySelector(".achievement-icon i");
+              icon.style.transform = "scale(1.1) rotate(5deg)";
+            }
+          });
+
+          card.addEventListener("mouseleave", () => {
+            const icon = card.querySelector(".achievement-icon i");
+            icon.style.transform = "";
+          });
+
+          // Add click effect for locked achievements
+          card.addEventListener("click", function () {
+            if (!this.classList.contains("unlocked")) {
+              this.style.transform = "scale(0.95)";
+              setTimeout(() => {
+                this.style.transform = "";
+              }, 200);
+            }
+          });
+        });
+      });
+
+      // User menu function
+      function toggleUserMenu() {
+        alert("User menu would open here. Implement user menu functionality.");
+      }
+    </script>
+  </body>
 </html>

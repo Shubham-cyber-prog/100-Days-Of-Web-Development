@@ -1,471 +1,613 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Project Notes & Code Snippets - 100 Days Of Web Development">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Project Notes & Code Snippets - 100 Days Of Web Development"
+    />
     <title>Notes & Snippets | 100 Days Of Web Development</title>
-    
+
     <!-- Styles -->
-    <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/pages/notes.css">
-    
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/pages/notes.css" />
+
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Header -->
     <header class="site-header">
-        <div class="nav-container" style="filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)) drop-shadow(0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent));">
-            <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
-            </a>
+      <div
+        class="nav-container"
+        style="
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
+            drop-shadow(
+              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
+            )
+            drop-shadow(
+              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
+            );
+        "
+      >
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
 
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Dashboard</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="leaderboard.html" class="nav-link active">Leaderboard</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contributors.html" class="nav-link">Contributors</a>
-            </nav>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Contributors</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
 
-            <div class="nav-user">
-                <button class="mobile-toggle" onclick="toggleMobileMenu()">
-                    <svg class="icon icon-lg" viewBox="0 0 24 24">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
 
-                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="margin-right: 15px; background: none; border: none; cursor: pointer;">
-                    <svg id="theme-icon-sun" class="icon" viewBox="0 0 24 24" style="display: none">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg id="theme-icon-moon" class="icon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+            style="
+              margin-right: 15px;
+              background: none;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--text-secondary)"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
 
-                <a href="profile.html" class="user-avatar">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </a>
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%"
+              />
+            </button>
+            <!-- Dropdown -->
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a>
+              <a href="settings.html" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
             </div>
+          </div>
         </div>
+      </div>
     </header>
 
-    
     <main class="notes-page">
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="header-content">
-                <h1 style="padding-top: 50px;">Notes & Snippets</h1>
-                <p>Capture ideas and save reusable code</p>
-            </div>
-            
-            <!-- Search Bar -->
-            <div class="search-bar">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="search-input" placeholder="Search notes and snippets...">
-                <kbd class="search-shortcut">Ctrl+K</kbd>
-            </div>
-        </section>
-        
-        <!-- Tab Navigation -->
-        <div class="tab-container">
-            <div class="tabs">
-                <button class="tab active" data-tab="notes">
-                    <span class="tab-icon">📝</span>
-                    Notes
-                    <span class="tab-count" id="notes-count">0</span>
-                </button>
-                <button class="tab" data-tab="snippets">
-                    <span class="tab-icon">💻</span>
-                    Snippets
-                    <span class="tab-count" id="snippets-count">0</span>
-                </button>
-            </div>
-            
-            <div class="tab-actions">
-                <button class="btn-primary" id="btn-new">
-                    <span class="btn-icon">+</span>
-                    <span class="btn-text">New Note</span>
-                </button>
-                
-                <div class="dropdown" id="more-menu">
-                    <button class="btn-icon" id="btn-more">⋮</button>
-                    <div class="dropdown-menu">
-                        <button id="btn-import">📥 Import</button>
-                        <button id="btn-export">📤 Export</button>
-                        <hr>
-                        <button id="btn-refresh">🔄 Refresh</button>
-                    </div>
-                </div>
-            </div>
+      <!-- Page Header -->
+      <section class="page-header">
+        <div class="header-content">
+          <h1 style="padding-top: 50px">Notes & Snippets</h1>
+          <p>Capture ideas and save reusable code</p>
         </div>
-        
-        <!-- Notes Tab Content -->
-        <div class="tab-content active" id="notes-tab">
-            <!-- Filter Bar -->
-            <div class="filter-bar">
-                <div class="filter-group">
-                    <label>Day:</label>
-                    <select id="filter-day">
-                        <option value="">All Days</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label>Tags:</label>
-                    <div class="tags-filter" id="tags-filter">
-                        <button class="tag-pill active" data-tag="">All</button>
-                    </div>
-                </div>
-                
-                <div class="view-toggle">
-                    <button class="btn-icon active" data-view="grid" title="Grid view">⊞</button>
-                    <button class="btn-icon" data-view="list" title="List view">☰</button>
-                </div>
-            </div>
-            
-            <!-- Notes Grid -->
-            <div class="notes-container grid-view" id="notes-container">
-                <div class="loading-state" id="notes-loading">
-                    <div class="spinner"></div>
-                    <p>Loading notes...</p>
-                </div>
-                
-                <div class="empty-state hidden" id="notes-empty">
-                    <span class="empty-icon">📝</span>
-                    <h3>No notes yet</h3>
-                    <p>Start by creating your first note</p>
-                    <button class="btn-primary" id="btn-create-first-note">Create Note</button>
-                </div>
-            </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search notes and snippets..."
+          />
+          <kbd class="search-shortcut">Ctrl+K</kbd>
         </div>
-        
-        <!-- Snippets Tab Content -->
-        <div class="tab-content" id="snippets-tab">
-            <!-- Filter Bar -->
-            <div class="filter-bar">
-                <div class="filter-group">
-                    <label>Category:</label>
-                    <select id="filter-category">
-                        <option value="">All Categories</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label>Language:</label>
-                    <select id="filter-language">
-                        <option value="">All Languages</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="filter-favorites">
-                        <span>Favorites only</span>
-                    </label>
-                </div>
-                
-                <div class="view-toggle">
-                    <button class="btn-icon active" data-view="grid" title="Grid view">⊞</button>
-                    <button class="btn-icon" data-view="list" title="List view">☰</button>
-                </div>
-            </div>
-            
-            <!-- Snippets Grid -->
-            <div class="snippets-container grid-view" id="snippets-container">
-                <div class="loading-state" id="snippets-loading">
-                    <div class="spinner"></div>
-                    <p>Loading snippets...</p>
-                </div>
-                
-                <div class="empty-state hidden" id="snippets-empty">
-                    <span class="empty-icon">💻</span>
-                    <h3>No snippets yet</h3>
-                    <p>Save your first code snippet</p>
-                    <button class="btn-primary" id="btn-create-first-snippet">New Snippet</button>
-                </div>
-            </div>
+      </section>
+
+      <!-- Tab Navigation -->
+      <div class="tab-container">
+        <div class="tabs">
+          <button class="tab active" data-tab="notes">
+            <span class="tab-icon">📝</span>
+            Notes
+            <span class="tab-count" id="notes-count">0</span>
+          </button>
+          <button class="tab" data-tab="snippets">
+            <span class="tab-icon">💻</span>
+            Snippets
+            <span class="tab-count" id="snippets-count">0</span>
+          </button>
         </div>
+
+        <div class="tab-actions">
+          <button class="btn-primary" id="btn-new">
+            <span class="btn-icon">+</span>
+            <span class="btn-text">New Note</span>
+          </button>
+
+          <div class="dropdown" id="more-menu">
+            <button class="btn-icon" id="btn-more">⋮</button>
+            <div class="dropdown-menu">
+              <button id="btn-import">📥 Import</button>
+              <button id="btn-export">📤 Export</button>
+              <hr />
+              <button id="btn-refresh">🔄 Refresh</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes Tab Content -->
+      <div class="tab-content active" id="notes-tab">
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label>Day:</label>
+            <select id="filter-day">
+              <option value="">All Days</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Tags:</label>
+            <div class="tags-filter" id="tags-filter">
+              <button class="tag-pill active" data-tag="">All</button>
+            </div>
+          </div>
+
+          <div class="view-toggle">
+            <button class="btn-icon active" data-view="grid" title="Grid view">
+              ⊞
+            </button>
+            <button class="btn-icon" data-view="list" title="List view">
+              ☰
+            </button>
+          </div>
+        </div>
+
+        <!-- Notes Grid -->
+        <div class="notes-container grid-view" id="notes-container">
+          <div class="loading-state" id="notes-loading">
+            <div class="spinner"></div>
+            <p>Loading notes...</p>
+          </div>
+
+          <div class="empty-state hidden" id="notes-empty">
+            <span class="empty-icon">📝</span>
+            <h3>No notes yet</h3>
+            <p>Start by creating your first note</p>
+            <button class="btn-primary" id="btn-create-first-note">
+              Create Note
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Snippets Tab Content -->
+      <div class="tab-content" id="snippets-tab">
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label>Category:</label>
+            <select id="filter-category">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Language:</label>
+            <select id="filter-language">
+              <option value="">All Languages</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="filter-favorites" />
+              <span>Favorites only</span>
+            </label>
+          </div>
+
+          <div class="view-toggle">
+            <button class="btn-icon active" data-view="grid" title="Grid view">
+              ⊞
+            </button>
+            <button class="btn-icon" data-view="list" title="List view">
+              ☰
+            </button>
+          </div>
+        </div>
+
+        <!-- Snippets Grid -->
+        <div class="snippets-container grid-view" id="snippets-container">
+          <div class="loading-state" id="snippets-loading">
+            <div class="spinner"></div>
+            <p>Loading snippets...</p>
+          </div>
+
+          <div class="empty-state hidden" id="snippets-empty">
+            <span class="empty-icon">💻</span>
+            <h3>No snippets yet</h3>
+            <p>Save your first code snippet</p>
+            <button class="btn-primary" id="btn-create-first-snippet">
+              New Snippet
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
-    
+
     <!-- Note Editor Modal -->
     <div class="modal-overlay" id="note-modal">
-        <div class="modal note-editor-modal">
-            <div class="modal-header">
-                <input type="text" class="note-title-input" id="note-title" placeholder="Note title...">
-                <div class="modal-actions">
-                    <span class="autosave-indicator" id="autosave-indicator">
-                        <span class="saving">Saving...</span>
-                        <span class="saved">✓ Saved</span>
-                    </span>
-                    <button class="btn-icon" id="btn-pin-note" title="Pin note">📌</button>
-                    <button class="btn-icon btn-close-modal" title="Close">✕</button>
-                </div>
-            </div>
-            
-            <div class="modal-body">
-                <div class="editor-toolbar">
-                    <button data-action="bold" title="Bold (Ctrl+B)"><b>B</b></button>
-                    <button data-action="italic" title="Italic (Ctrl+I)"><i>I</i></button>
-                    <button data-action="code" title="Code (`)">&lt;/&gt;</button>
-                    <button data-action="link" title="Link">🔗</button>
-                    <span class="toolbar-divider"></span>
-                    <button data-action="h1" title="Heading 1">H1</button>
-                    <button data-action="h2" title="Heading 2">H2</button>
-                    <button data-action="h3" title="Heading 3">H3</button>
-                    <span class="toolbar-divider"></span>
-                    <button data-action="ul" title="Bullet list">•</button>
-                    <button data-action="ol" title="Numbered list">1.</button>
-                    <button data-action="quote" title="Quote">"</button>
-                    <span class="toolbar-divider"></span>
-                    <button data-action="preview" title="Preview" id="btn-preview">👁️</button>
-                </div>
-                
-                <div class="editor-container">
-                    <textarea id="note-content" placeholder="Start writing... (Markdown supported)"></textarea>
-                    <div class="note-preview hidden" id="note-preview"></div>
-                </div>
-                
-                <div class="editor-footer">
-                    <div class="note-day-select">
-                        <label>Day:</label>
-                        <select id="note-day">
-                            <option value="">No day linked</option>
-                        </select>
-                    </div>
-                    
-                    <div class="note-tags-input">
-                        <label>Tags:</label>
-                        <input type="text" id="note-tags" placeholder="Add tags (comma separated)">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button class="btn-danger" id="btn-delete-note">Delete</button>
-                <button class="btn-secondary btn-cancel-modal">Cancel</button>
-                <button class="btn-primary" id="btn-save-note">Save Note</button>
-            </div>
+      <div class="modal note-editor-modal">
+        <div class="modal-header">
+          <input
+            type="text"
+            class="note-title-input"
+            id="note-title"
+            placeholder="Note title..."
+          />
+          <div class="modal-actions">
+            <span class="autosave-indicator" id="autosave-indicator">
+              <span class="saving">Saving...</span>
+              <span class="saved">✓ Saved</span>
+            </span>
+            <button class="btn-icon" id="btn-pin-note" title="Pin note">
+              📌
+            </button>
+            <button class="btn-icon btn-close-modal" title="Close">✕</button>
+          </div>
         </div>
+
+        <div class="modal-body">
+          <div class="editor-toolbar">
+            <button data-action="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+            <button data-action="italic" title="Italic (Ctrl+I)">
+              <i>I</i>
+            </button>
+            <button data-action="code" title="Code (`)">&lt;/&gt;</button>
+            <button data-action="link" title="Link">🔗</button>
+            <span class="toolbar-divider"></span>
+            <button data-action="h1" title="Heading 1">H1</button>
+            <button data-action="h2" title="Heading 2">H2</button>
+            <button data-action="h3" title="Heading 3">H3</button>
+            <span class="toolbar-divider"></span>
+            <button data-action="ul" title="Bullet list">•</button>
+            <button data-action="ol" title="Numbered list">1.</button>
+            <button data-action="quote" title="Quote">"</button>
+            <span class="toolbar-divider"></span>
+            <button data-action="preview" title="Preview" id="btn-preview">
+              👁️
+            </button>
+          </div>
+
+          <div class="editor-container">
+            <textarea
+              id="note-content"
+              placeholder="Start writing... (Markdown supported)"
+            ></textarea>
+            <div class="note-preview hidden" id="note-preview"></div>
+          </div>
+
+          <div class="editor-footer">
+            <div class="note-day-select">
+              <label>Day:</label>
+              <select id="note-day">
+                <option value="">No day linked</option>
+              </select>
+            </div>
+
+            <div class="note-tags-input">
+              <label>Tags:</label>
+              <input
+                type="text"
+                id="note-tags"
+                placeholder="Add tags (comma separated)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-danger" id="btn-delete-note">Delete</button>
+          <button class="btn-secondary btn-cancel-modal">Cancel</button>
+          <button class="btn-primary" id="btn-save-note">Save Note</button>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Snippet Editor Modal -->
     <div class="modal-overlay" id="snippet-modal">
-        <div class="modal snippet-editor-modal">
-            <div class="modal-header">
-                <h2 id="snippet-modal-title">New Snippet</h2>
-                <button class="btn-icon btn-close-modal" title="Close">✕</button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="snippet-title">Title</label>
-                        <input type="text" id="snippet-title" placeholder="Snippet title...">
-                    </div>
-                    
-                    <div class="form-group form-group-small">
-                        <label for="snippet-language">Language</label>
-                        <select id="snippet-language">
-                            <option value="javascript">JavaScript</option>
-                            <option value="typescript">TypeScript</option>
-                            <option value="html">HTML</option>
-                            <option value="css">CSS</option>
-                            <option value="scss">SCSS</option>
-                            <option value="python">Python</option>
-                            <option value="json">JSON</option>
-                            <option value="markdown">Markdown</option>
-                            <option value="bash">Bash</option>
-                            <option value="sql">SQL</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="snippet-description">Description</label>
-                    <input type="text" id="snippet-description" placeholder="Brief description...">
-                </div>
-                
-                <div class="form-group">
-                    <label for="snippet-code">Code</label>
-                    <div class="code-editor-wrapper">
-                        <div class="code-line-numbers" id="snippet-line-numbers"></div>
-                        <textarea id="snippet-code" placeholder="Paste your code here..."></textarea>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="snippet-category">Category</label>
-                        <select id="snippet-category">
-                            <option value="js-utilities">⚡ JS Utilities</option>
-                            <option value="css-tricks">🎨 CSS Tricks</option>
-                            <option value="html-patterns">📄 HTML Patterns</option>
-                            <option value="api-examples">🔌 API Examples</option>
-                            <option value="algorithms">🧮 Algorithms</option>
-                            <option value="regex">🔍 Regex Patterns</option>
-                            <option value="responsive">📱 Responsive Design</option>
-                            <option value="animations">✨ Animations</option>
-                            <option value="debugging">🐛 Debugging</option>
-                            <option value="other">📁 Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="snippet-tags">Tags</label>
-                        <input type="text" id="snippet-tags" placeholder="Tags (comma separated)">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group form-group-small">
-                        <label for="snippet-day">Linked Day</label>
-                        <select id="snippet-day">
-                            <option value="">No day linked</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="checkbox-label favorite-checkbox">
-                            <input type="checkbox" id="snippet-favorite">
-                            <span>⭐ Add to Favorites</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button class="btn-danger" id="btn-delete-snippet">Delete</button>
-                <button class="btn-secondary btn-cancel-modal">Cancel</button>
-                <button class="btn-primary" id="btn-save-snippet">Save Snippet</button>
-            </div>
+      <div class="modal snippet-editor-modal">
+        <div class="modal-header">
+          <h2 id="snippet-modal-title">New Snippet</h2>
+          <button class="btn-icon btn-close-modal" title="Close">✕</button>
         </div>
+
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="snippet-title">Title</label>
+              <input
+                type="text"
+                id="snippet-title"
+                placeholder="Snippet title..."
+              />
+            </div>
+
+            <div class="form-group form-group-small">
+              <label for="snippet-language">Language</label>
+              <select id="snippet-language">
+                <option value="javascript">JavaScript</option>
+                <option value="typescript">TypeScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="scss">SCSS</option>
+                <option value="python">Python</option>
+                <option value="json">JSON</option>
+                <option value="markdown">Markdown</option>
+                <option value="bash">Bash</option>
+                <option value="sql">SQL</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="snippet-description">Description</label>
+            <input
+              type="text"
+              id="snippet-description"
+              placeholder="Brief description..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="snippet-code">Code</label>
+            <div class="code-editor-wrapper">
+              <div class="code-line-numbers" id="snippet-line-numbers"></div>
+              <textarea
+                id="snippet-code"
+                placeholder="Paste your code here..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="snippet-category">Category</label>
+              <select id="snippet-category">
+                <option value="js-utilities">⚡ JS Utilities</option>
+                <option value="css-tricks">🎨 CSS Tricks</option>
+                <option value="html-patterns">📄 HTML Patterns</option>
+                <option value="api-examples">🔌 API Examples</option>
+                <option value="algorithms">🧮 Algorithms</option>
+                <option value="regex">🔍 Regex Patterns</option>
+                <option value="responsive">📱 Responsive Design</option>
+                <option value="animations">✨ Animations</option>
+                <option value="debugging">🐛 Debugging</option>
+                <option value="other">📁 Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="snippet-tags">Tags</label>
+              <input
+                type="text"
+                id="snippet-tags"
+                placeholder="Tags (comma separated)"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group form-group-small">
+              <label for="snippet-day">Linked Day</label>
+              <select id="snippet-day">
+                <option value="">No day linked</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-label favorite-checkbox">
+                <input type="checkbox" id="snippet-favorite" />
+                <span>⭐ Add to Favorites</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-danger" id="btn-delete-snippet">Delete</button>
+          <button class="btn-secondary btn-cancel-modal">Cancel</button>
+          <button class="btn-primary" id="btn-save-snippet">
+            Save Snippet
+          </button>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Import Modal -->
     <div class="modal-overlay" id="import-modal">
-        <div class="modal import-modal">
-            <div class="modal-header">
-                <h2>Import Data</h2>
-                <button class="btn-icon btn-close-modal" title="Close">✕</button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="import-tabs">
-                    <button class="import-tab active" data-type="notes">Notes</button>
-                    <button class="import-tab" data-type="snippets">Snippets</button>
-                </div>
-                
-                <div class="import-drop-zone" id="import-drop-zone">
-                    <span class="drop-icon">📁</span>
-                    <p>Drop JSON file here or click to browse</p>
-                    <input type="file" id="import-file" accept=".json" hidden>
-                </div>
-                
-                <div class="import-preview hidden" id="import-preview">
-                    <h4>Preview</h4>
-                    <div class="preview-stats" id="preview-stats"></div>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button class="btn-secondary btn-cancel-modal">Cancel</button>
-                <button class="btn-primary" id="btn-confirm-import" disabled>Import</button>
-            </div>
+      <div class="modal import-modal">
+        <div class="modal-header">
+          <h2>Import Data</h2>
+          <button class="btn-icon btn-close-modal" title="Close">✕</button>
         </div>
-    </div>
-    
 
-    
+        <div class="modal-body">
+          <div class="import-tabs">
+            <button class="import-tab active" data-type="notes">Notes</button>
+            <button class="import-tab" data-type="snippets">Snippets</button>
+          </div>
+
+          <div class="import-drop-zone" id="import-drop-zone">
+            <span class="drop-icon">📁</span>
+            <p>Drop JSON file here or click to browse</p>
+            <input type="file" id="import-file" accept=".json" hidden />
+          </div>
+
+          <div class="import-preview hidden" id="import-preview">
+            <h4>Preview</h4>
+            <div class="preview-stats" id="preview-stats"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-secondary btn-cancel-modal">Cancel</button>
+          <button class="btn-primary" id="btn-confirm-import" disabled>
+            Import
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
-<footer class="site-footer">
-    <div class="container footer-content">
+    <footer class="site-footer">
+      <div class="container footer-content">
         <div class="footer-brand animate-enter">
-            <a href="#" class="footer-logo">
-                <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
-                <h2>100 Days of<br><span class="text-flame">Web Dev</span></h2>
-            </a>
-            <p class="footer-desc">
-                A hyper-intensive protocol designed to forge elite web engineers through daily deployment cycles.
-            </p>
+          <a href="#" class="footer-logo">
+            <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
+            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+          </a>
+          <p class="footer-desc">
+            A hyper-intensive protocol designed to forge elite web engineers
+            through daily deployment cycles.
+          </p>
         </div>
 
         <div class="footer-col animate-enter delay-100">
-            <h3>Navigation</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link">Home Base</a>
-                <a href="website/pages/projects.html" class="footer-link">Archive</a>
-                <a href="website/pages/about.html" class="footer-link">Leaderboard</a>
-                <a href="website/pages/contributors.html" class="footer-link">Crew</a>
-            </nav>
+          <h3>Navigation</h3>
+          <nav class="footer-links">
+            <a href="#" class="footer-link">Home Base</a>
+            <a href="website/pages/projects.html" class="footer-link"
+              >Archive</a
+            >
+            <a href="website/pages/about.html" class="footer-link"
+              >Leaderboard</a
+            >
+            <a href="website/pages/contributors.html" class="footer-link"
+              >Crew</a
+            >
+          </nav>
         </div>
 
         <div class="footer-col animate-enter delay-200">
-            <h3>Resources</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link" title="Coming soon">Documentation</a>
-                <a href="#" class="footer-link" title="Coming soon">API Status</a>
-                <a href="website/pages/contact.html" class="footer-link">Contact Comms</a>
-            </nav>
+          <h3>Resources</h3>
+          <nav class="footer-links">
+            <a href=\"documentation.html\" class=\"footer-link\"
+              >Documentation</a
+            >
+            <a href=\"api-status.html\" class=\"footer-link\">API Status</a>
+            <a href=\"contact.html\" class=\"footer-link\"
+              >Contact Comms</a
+            >
+            <a href=\"system-logic.html\" class=\"footer-link\"
+              >System Logic</a
+            >
+          </nav>
         </div>
 
         <div class="footer-col animate-enter delay-300">
-            <h3>Connect</h3>
-            <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-            <div class="footer-socials">
-                <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
-                    target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Github">
-                    <img src="website/assets/images/github.png" alt="GitHub" class="icon">
-                </a>
+          <h3>Connect</h3>
+          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+          <div class="footer-socials">
+            <a
+              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Github"
+            >
+              <img
+                src="website/assets/images/github.png"
+                alt="GitHub"
+                class="icon"
+              />
+            </a>
 
-                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Twitter (X)">
-                    <img src="website/assets/images/twitter.png" alt="Twitter/X" class="icon">
-                </a>
+            <a
+              href="https://twitter.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Twitter (X)"
+            >
+              <img
+                src="website/assets/images/twitter.png"
+                alt="Twitter/X"
+                class="icon"
+              />
+            </a>
 
-                <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Discord">
-                    <img src="website/assets/images/discord.png" alt="Discord" class="icon">
-                </a>
-            </div>
+            <a
+              href="https://discord.gg/SW7puwEm"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Discord"
+            >
+              <img
+                src="website/assets/images/discord.png"
+                alt="Discord"
+                class="icon"
+              />
+            </a>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="container footer-bottom">
-        <p class="copyright">&copy; 2026 100 Days of Web Dev. All Systems Nominal.</p>
-        <p class="made-by">
-            Maintained by <span class="text-flame font-bold">Subham</span>
-            <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                </path>
-            </svg>
+      <div class="container footer-bottom">
+        <p class="copyright">
+          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
         </p>
-    </div>
-</footer>
-
+        <p class="made-by">
+          Maintained by <span class="text-flame font-bold">Subham</span>
+          <svg
+            class="icon icon-sm heart-pulse"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
+          </svg>
+        </p>
+      </div>
+    </footer>
 
     <!-- Toast Notifications -->
     <div class="toast-container" id="toast-container"></div>
-    
+
     <!-- Scripts -->
     <script type="module" src="../scripts/pages/notes.js"></script>
-</body>
+  </body>
 </html>

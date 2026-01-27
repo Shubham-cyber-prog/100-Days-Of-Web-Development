@@ -1,134 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
     <title>Video Tutorials - 100 Days Web Dev</title>
-    <link rel="stylesheet" href="../styles/global.css">
-    <link rel="stylesheet" href="../styles/pages/tutorials.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
-            </a>
-            <ul class="nav-menu">
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="tutorials.html" class="active">Tutorials</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/pages/tutorials.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div
+        class="nav-container"
+        style="
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
+            drop-shadow(
+              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
+            )
+            drop-shadow(
+              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
+            );
+        "
+      >
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Contributors</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+            style="
+              margin-right: 15px;
+              background: none;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--text-secondary)"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%"
+              />
+            </button>
+            <!-- Dropdown -->
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a>
+              <a href="settings.html" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
             </div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </header>
 
     <main class="tutorials-main">
-        <div class="container">
-            <header class="page-header">
-                <h1><i class="fas fa-play-circle"></i> Video Tutorials</h1>
-                <p>Master web development with our comprehensive video library</p>
-            </header>
+      <div class="container">
+        <header class="page-header">
+          <h1><i class="fas fa-play-circle"></i> Video Tutorials</h1>
+          <p>Master web development with our comprehensive video library</p>
+        </header>
 
-            <div class="tutorials-controls">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search tutorials...">
-                </div>
-                <div class="filter-tabs">
-                    <button class="filter-btn active" data-level="all">All</button>
-                    <button class="filter-btn" data-level="beginner">Beginner</button>
-                    <button class="filter-btn" data-level="intermediate">Intermediate</button>
-                    <button class="filter-btn" data-level="advanced">Advanced</button>
-                </div>
-            </div>
-
-            <div class="progress-overview">
-                <div class="progress-card">
-                    <i class="fas fa-chart-line"></i>
-                    <div>
-                        <h3 id="watchedCount">0</h3>
-                        <p>Videos Watched</p>
-                    </div>
-                </div>
-                <div class="progress-card">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <h3 id="totalTime">0h 0m</h3>
-                        <p>Total Watch Time</p>
-                    </div>
-                </div>
-                <div class="progress-card">
-                    <i class="fas fa-trophy"></i>
-                    <div>
-                        <h3 id="completionRate">0%</h3>
-                        <p>Completion Rate</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tutorials-grid" id="tutorialsGrid">
-                <!-- Videos will be loaded here -->
-            </div>
-
-            <div class="resources-section">
-                <h2><i class="fas fa-download"></i> Downloadable Resources</h2>
-                <div class="resources-grid">
-                    <div class="resource-card">
-                        <i class="fas fa-file-pdf"></i>
-                        <h3>HTML Cheat Sheet</h3>
-                        <button class="download-btn">Download PDF</button>
-                    </div>
-                    <div class="resource-card">
-                        <i class="fas fa-file-code"></i>
-                        <h3>CSS Reference Guide</h3>
-                        <button class="download-btn">Download PDF</button>
-                    </div>
-                    <div class="resource-card">
-                        <i class="fas fa-file-alt"></i>
-                        <h3>JavaScript Snippets</h3>
-                        <button class="download-btn">Download ZIP</button>
-                    </div>
-                </div>
-            </div>
+        <div class="tutorials-controls">
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search tutorials..."
+            />
+          </div>
+          <div class="filter-tabs">
+            <button class="filter-btn active" data-level="all">All</button>
+            <button class="filter-btn" data-level="beginner">Beginner</button>
+            <button class="filter-btn" data-level="intermediate">
+              Intermediate
+            </button>
+            <button class="filter-btn" data-level="advanced">Advanced</button>
+          </div>
         </div>
+
+        <div class="progress-overview">
+          <div class="progress-card">
+            <i class="fas fa-chart-line"></i>
+            <div>
+              <h3 id="watchedCount">0</h3>
+              <p>Videos Watched</p>
+            </div>
+          </div>
+          <div class="progress-card">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h3 id="totalTime">0h 0m</h3>
+              <p>Total Watch Time</p>
+            </div>
+          </div>
+          <div class="progress-card">
+            <i class="fas fa-trophy"></i>
+            <div>
+              <h3 id="completionRate">0%</h3>
+              <p>Completion Rate</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorials-grid" id="tutorialsGrid">
+          <!-- Videos will be loaded here -->
+        </div>
+
+        <div class="resources-section">
+          <h2><i class="fas fa-download"></i> Downloadable Resources</h2>
+          <div class="resources-grid">
+            <div class="resource-card">
+              <i class="fas fa-file-pdf"></i>
+              <h3>HTML Cheat Sheet</h3>
+              <button class="download-btn">Download PDF</button>
+            </div>
+            <div class="resource-card">
+              <i class="fas fa-file-code"></i>
+              <h3>CSS Reference Guide</h3>
+              <button class="download-btn">Download PDF</button>
+            </div>
+            <div class="resource-card">
+              <i class="fas fa-file-alt"></i>
+              <h3>JavaScript Snippets</h3>
+              <button class="download-btn">Download ZIP</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- Video Modal -->
     <div id="videoModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle"></h3>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="video-container">
-                    <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-meta">
-                        <span class="duration" id="modalDuration"></span>
-                        <span class="difficulty" id="modalDifficulty"></span>
-                    </div>
-                    <p id="modalDescription"></p>
-                    <div class="video-notes">
-                        <h4>Your Notes</h4>
-                        <textarea id="videoNotes" placeholder="Add your notes here..."></textarea>
-                        <button id="saveNotes">Save Notes</button>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle"></h3>
+          <span class="close">&times;</span>
         </div>
+        <div class="modal-body">
+          <div class="video-container">
+            <iframe
+              id="videoFrame"
+              src=""
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-meta">
+              <span class="duration" id="modalDuration"></span>
+              <span class="difficulty" id="modalDifficulty"></span>
+            </div>
+            <p id="modalDescription"></p>
+            <div class="video-notes">
+              <h4>Your Notes</h4>
+              <textarea
+                id="videoNotes"
+                placeholder="Add your notes here..."
+              ></textarea>
+              <button id="saveNotes">Save Notes</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="../scripts/components/navigation.js"></script>
     <script src="../scripts/pages/tutorials.js"></script>
-</body>
+  </body>
 </html>

@@ -247,7 +247,18 @@
   <body>
     <!-- Header -->
     <header class="site-header">
-      <div class="nav-container">
+      <div
+        class="nav-container"
+        style="
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
+            drop-shadow(
+              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
+            )
+            drop-shadow(
+              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
+            );
+        "
+      >
         <a href="dashboard.html" class="nav-logo">
           <img
             src="../assets/images/logo.png"
@@ -258,6 +269,8 @@
         <nav class="nav-links">
           <a href="dashboard.html" class="nav-link">Dashboard</a>
           <a href="projects.html" class="nav-link">Projects</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
           <a href="about.html" class="nav-link">About</a>
           <a href="contributors.html" class="nav-link">Contributors</a>
           <a href="contact.html" class="nav-link">Contact</a>
@@ -307,7 +320,7 @@
             </button>
             <div class="user-dropdown">
               <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="#" class="dropdown-item">Settings</a>
+              <a href="settings.html" class="dropdown-item">Settings</a>
               <div class="dropdown-divider"></div>
               <button
                 class="dropdown-item text-danger"
