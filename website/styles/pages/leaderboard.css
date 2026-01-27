@@ -1,0 +1,608 @@
+/* Leaderboard Page Styles */
+.leaderboard-main {
+    padding: 2rem 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-header i {
+    margin-right: 0.5rem;
+    color: #ffd700;
+}
+
+/* Controls */
+.leaderboard-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.search-bar {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-bar i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    font-size: 1rem;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: white;
+    color: #667eea;
+}
+
+/* Podium Section */
+.podium-section {
+    margin-bottom: 3rem;
+}
+
+.podium {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.podium-place {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    color: white;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.podium-place:hover {
+    transform: translateY(-5px);
+}
+
+.podium-place.first {
+    order: 2;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+    transform: scale(1.1);
+}
+
+.podium-place.second {
+    order: 1;
+    background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+    color: #333;
+}
+
+.podium-place.third {
+    order: 3;
+    background: linear-gradient(135deg, #cd7f32, #daa520);
+    color: #333;
+}
+
+.podium-crown {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: #ffd700;
+}
+
+.podium-avatar {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.podium-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.podium-rank {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: #667eea;
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.podium-info h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.podium-info p {
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+/* Leaderboard Table */
+.leaderboard-table {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px 100px 80px 120px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+}
+
+.header-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-cell.user {
+    justify-content: flex-start;
+}
+
+.table-body {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.leaderboard-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px 100px 80px 120px;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.leaderboard-row:hover {
+    background: #f8f9fa;
+}
+
+.leaderboard-row.current-user {
+    background: rgba(102, 126, 234, 0.1);
+    border-left: 4px solid #667eea;
+}
+
+.rank-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+}
+
+.user-info h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.user-info p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.points-cell,
+.projects-cell,
+.streak-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #333;
+}
+
+.badges-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.badge-mini {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.7rem;
+}
+
+/* Your Rank Card */
+.your-rank-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    color: white;
+    text-align: center;
+}
+
+.your-rank-card h3 {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.rank-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.rank-position {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rank-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffd700;
+    line-height: 1;
+}
+
+.rank-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.rank-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.rank-stats .stat {
+    text-align: center;
+}
+
+.rank-stats .stat span {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+.rank-stats .stat label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    margin: 3% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.close {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-user-info {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.modal-avatar {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.modal-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #e0e0e0;
+}
+
+.modal-rank {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: #667eea;
+    color: white;
+    border-radius: 15px;
+    padding: 0.25rem 0.5rem;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.modal-details h4 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.modal-details p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.modal-stats {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.modal-stat {
+    text-align: center;
+}
+
+.modal-stat span {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.modal-stat label {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.modal-achievements h4,
+.modal-progress h4 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.modal-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.modal-badge {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.progress-comparison {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comparison-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.comparison-label {
+    min-width: 100px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.comparison-bars {
+    flex: 1;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.comparison-bar {
+    height: 8px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.comparison-bar.user {
+    background: #667eea;
+    flex: var(--user-progress);
+}
+
+.comparison-bar.other {
+    background: #e0e0e0;
+    flex: var(--other-progress);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .leaderboard-main {
+        padding: 1rem 0;
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .leaderboard-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-bar {
+        max-width: none;
+    }
+    
+    .filter-tabs {
+        justify-content: center;
+    }
+    
+    .podium {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .podium-place.first {
+        order: 1;
+    }
+    
+    .table-header,
+    .leaderboard-row {
+        grid-template-columns: 50px 1fr 80px 60px;
+    }
+    
+    .projects-cell,
+    .streak-cell,
+    .badges-cell {
+        display: none;
+    }
+    
+    .rank-info {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .rank-stats {
+        justify-content: center;
+    }
+    
+    .modal-user-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .modal-stats {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .podium-avatar img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .rank-number {
+        font-size: 2rem;
+    }
+    
+    .rank-stats {
+        gap: 1rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
+}

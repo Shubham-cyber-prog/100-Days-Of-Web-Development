@@ -1,45 +1,4 @@
 
-let App = window.App || null;
-let Notify = window.Notify || null;
-let progressService = null;
-let achievementService = null;
-
-// Try to load modules dynamically
-async function loadCoreModules() {
-    try {
-        if (!App) {
-            const appModule = await import('../core/app.js');
-            App = appModule.App || appModule.default;
-            window.App = App;
-        }
-    } catch (e) {
-        console.warn('AppCore not available, using localStorage fallback');
-    }
-
-// Try to load modules dynamically
-async function loadCoreModules() {
-    try {
-        if (!App) {
-            const appModule = await import('../core/app.js');
-            App = appModule.App || appModule.default;
-            window.App = App;
-        }
-    } catch (e) {
-        console.warn('AppCore not available, using localStorage fallback');
-    }
-
-    try {
-        const module = await import('../core/progressService.js');
-        progressService = module.progressService;
-    } catch (error) {
-
-        console.warn('Achievement service not available');
-    }
-}
-
-        console.warn('Progress service not available, using localStorage fallback');
-
-
 document.addEventListener('DOMContentLoaded', () => {
     // Wait for AuthService to load
     function waitForAuthService() {
