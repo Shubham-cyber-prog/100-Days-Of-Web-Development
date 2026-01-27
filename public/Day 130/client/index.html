@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Language Translator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>AI-Powered Language Translation</h1>
+    <button id="themeToggle">🌙</button>
+  </header>
+
+  <main class="translator">
+    <div class="panel">
+      <h3>Input</h3>
+      <textarea
+        id="inputText"
+        placeholder="Enter text to translate..."
+      ></textarea>
+    </div>
+
+    <div class="panel">
+      <h3>Output</h3>
+      <textarea
+        id="outputText"
+        placeholder="Translated text will appear here..."
+        readonly
+      ></textarea>
+    </div>
+  </main>
+
+  <div class="controls">
+    <select id="fromLang">
+      <option>English</option>
+      <option>Hindi</option>
+      <option>French</option>
+    </select>
+
+    <select id="toLang">
+      <option>Hindi</option>
+      <option>English</option>
+      <option>French</option>
+    </select>
+
+    <button id="translateBtn">Translate</button>
+    <button id="copyBtn">Copy</button>
+    <button id="clearBtn">Clear</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
