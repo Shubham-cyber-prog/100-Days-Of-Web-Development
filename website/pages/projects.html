@@ -106,6 +106,14 @@
         box-shadow: 0 0 20px var(--accent-alpha);
       }
 
+      body.light-mode .tab-btn.active{
+        background: var(--accent-core);
+      }
+      
+      body.light-mode .tab-btn {
+        background: #e4eaf5;
+      }
+
       /* ----------------------------------------------------
            PROJECT CARD COSMIC ANIMATION (Hover Effect) 
            ---------------------------------------------------- */
@@ -318,7 +326,9 @@
         /* Card Base Color */
         transition: background 0.3s;
       }
-
+      body.light-mode .project-card::after {
+        background: #e4eaf5;
+      }
       /* Lighten body slightly on hover for depth */
       .project-card:hover::after {
         background: var(--bg-surface);
@@ -481,7 +491,7 @@
     <!-- Main Content -->
     <main class="container section">
       <div class="page-header animate-enter">
-        <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
+        <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
           Projects Archive
         </h1>
         <p class="text-secondary">
@@ -497,13 +507,13 @@
         />
       </div>
       <div class="filter-tabs animate-enter delay-200">
-        <button class="tab-btn active" data-category="All">All Systems</button>
-        <button class="tab-btn" data-category="Beginner">Beginner</button>
-        <button class="tab-btn" data-category="Intermediate">
+        <button class="tab-btn active normal" data-category="All">All Systems</button>
+        <button class="tab-btn normal" data-category="Beginner">Beginner</button>
+        <button class="tab-btn normal" data-category="Intermediate">
           Intermediate
         </button>
-        <button class="tab-btn" data-category="Advanced">Advanced</button>
-        <button class="tab-btn" data-category="Capstone">Capstone</button>
+        <button class="tab-btn normal" data-category="Advanced">Advanced</button>
+        <button class="tab-btn normal" data-category="Capstone">Capstone</button>
       </div>
       <!-- Grid -->
       <div id="projectsGrid" class="grid grid-4 animate-enter delay-300">
