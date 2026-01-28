@@ -1,35 +1,3421 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Echoes of Choice</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoryVerse | Interactive Storytelling Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --primary-light: #A78BFA;
+            --secondary: #10B981;
+            --secondary-dark: #059669;
+            --accent: #F59E0B;
+            --danger: #EF4444;
+            --warning: #FBBF24;
+            --info: #3B82F6;
+            --dark: #0F172A;
+            --darker: #020617;
+            --dark-light: #1E293B;
+            --light: #F8FAFC;
+            --text: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            --glow: 0 0 20px rgba(139, 92, 246, 0.5);
+            --glow-secondary: 0 0 20px rgba(16, 185, 129, 0.5);
+            --gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+            --gradient-secondary: linear-gradient(135deg, #10B981 0%, #3B82F6 100%);
+            --gradient-accent: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .bg-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.2) 1px, transparent 0);
+            background-size: 40px 40px;
+            animation: float 20s linear infinite;
+        }
+
+        .bg-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 49%, rgba(139, 92, 246, 0.1) 50%, transparent 51%);
+            background-size: 50px 100%;
+            animation: slide 30s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-40px, -40px); }
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50px); }
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .float-element {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.3;
+            animation: floatElement 20s infinite ease-in-out;
+        }
+
+        @keyframes floatElement {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(100px, -50px) scale(1.5); }
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            filter: blur(20px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .logo h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .logo-tagline {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            letter-spacing: 2px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .nav-btn:hover {
+            color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:hover::before {
+            left: 0;
+        }
+
+        .nav-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--glow);
+        }
+
+        .nav-btn i {
+            font-size: 1.2rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+            box-shadow: var(--glow);
+        }
+
+        .user-avatar::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .user-avatar:hover::before {
+            opacity: 0.3;
+        }
+
+        .notification-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-btn:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border-radius: 25px;
+            padding: 4rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow), inset 0 0 50px rgba(139, 92, 246, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 65%, rgba(16, 185, 129, 0.1) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+        }
+
+        .hero-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Enhanced Buttons */
+        .btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-accent {
+            background: var(--gradient-accent);
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-accent:hover {
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-icon {
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            border-radius: 50%;
+            justify-content: center;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-header h2 i {
+            font-size: 2rem;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Enhanced Stories Grid */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .story-card {
+            background: var(--dark-light);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .story-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: var(--glow), 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .story-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .story-image {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 50%, var(--dark-light) 100%);
+        }
+
+        .story-badge {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .story-genre {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.2rem;
+            background: rgba(30, 41, 59, 0.9);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .story-content {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
+            color: var(--light);
+            font-weight: 700;
+        }
+
+        .story-author {
+            color: var(--primary-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .story-author i {
+            color: var(--accent);
+        }
+
+        .story-desc {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .story-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .story-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .stat i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .story-rating {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        /* Story Reader */
+        .story-reader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(2, 6, 23, 0.98);
+            z-index: 10000;
+            padding: 2rem;
+            overflow-y: auto;
+            display: none;
+            backdrop-filter: blur(20px);
+        }
+
+        .story-reader.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .reader-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+            border-radius: 25px;
+            padding: 3rem;
+            border: 2px solid var(--primary);
+            box-shadow: var(--glow), 0 30px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reader-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%238B5CF6" fill-opacity="0.05" fill-rule="evenodd"/></svg>');
+            opacity: 0.3;
+        }
+
+        .reader-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .reader-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: var(--light);
+            flex: 1;
+        }
+
+        .reader-controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .control-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: var(--text);
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .control-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .close-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+        }
+
+        .story-text {
+            font-size: 1.25rem;
+            line-height: 1.9;
+            color: var(--text);
+            margin-bottom: 3rem;
+            min-height: 300px;
+            position: relative;
+            z-index: 2;
+            text-align: justify;
+            padding: 0 1rem;
+        }
+
+        .story-text::first-letter {
+            font-size: 3.5rem;
+            font-weight: bold;
+            float: left;
+            line-height: 1;
+            margin-right: 0.5rem;
+            margin-top: 0.2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .choices-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .choice-btn {
+            background: rgba(30, 41, 59, 0.9);
+            border: 2px solid var(--primary);
+            color: var(--text);
+            padding: 1.75rem;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.15rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .choice-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .choice-btn:hover {
+            background: var(--primary);
+            transform: translateX(15px) scale(1.02);
+            box-shadow: var(--glow);
+        }
+
+        .choice-btn:hover::before {
+            left: 100%;
+        }
+
+        .choice-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .choice-title {
+            font-weight: 600;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .choice-title i {
+            color: var(--accent);
+        }
+
+        .choice-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            padding-left: 2rem;
+        }
+
+        .choice-impact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 10px;
+            width: fit-content;
+            font-size: 0.85rem;
+            color: var(--secondary);
+        }
+
+        .reader-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(139, 92, 246, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1.5rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .chapter-counter {
+            min-width: 120px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(139, 92, 246, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .reader-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .reader-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .reader-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .reader-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Profile Section */
+        .profile-section {
+            padding: 2rem 0;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .profile-avatar-large {
+            width: 150px;
+            height: 150px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            box-shadow: var(--glow);
+            border: 4px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-avatar-large::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+
+        .profile-info {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-info h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .profile-handle {
+            color: var(--primary-light);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .profile-level {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .level-bar {
+            flex: 1;
+            height: 10px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .level-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 5px;
+            width: 75%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .level-text {
+            color: var(--text);
+            font-weight: 600;
+            min-width: 200px;
+        }
+
+        .achievements {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .achievement {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(139, 92, 246, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--primary);
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border-radius: 25px;
+            padding: 2.5rem;
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-feed::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .activity-item {
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+            background: rgba(30, 41, 59, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-item:hover {
+            transform: translateX(10px);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .activity-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(139, 92, 246, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-weight: 500;
+            color: var(--light);
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+
+        .activity-time {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Library Section */
+        .library-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px solid transparent;
+            color: var(--text-secondary);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .filter-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        /* Create Story Section */
+        .create-form {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border-radius: 25px;
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .create-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group label i {
+            color: var(--primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1.25rem;
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 200px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 1.25rem 2rem;
+            border-radius: 15px;
+            color: white;
+            font-weight: 500;
+            transform: translateX(150%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10001;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background: rgba(16, 185, 129, 0.9);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .toast.error {
+            background: rgba(239, 68, 68, 0.9);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .toast.info {
+            background: rgba(59, 130, 246, 0.9);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .toast.warning {
+            background: rgba(245, 158, 11, 0.9);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .toast i {
+            font-size: 1.5rem;
+        }
+
+        /* Loading Overlay */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(2, 6, 23, 0.95);
+            z-index: 10002;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .loading.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 5px solid rgba(139, 92, 246, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .loading-text {
+            position: absolute;
+            bottom: 30%;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* Genre Tags */
+        .genre-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .genre-tag {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--primary-light);
+            padding: 0.5rem 1.25rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .genre-tag:hover {
+            background: rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .genre-tag.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .stories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+            
+            .hero h2 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            header {
+                padding: 1.25rem;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                padding: 3rem 2rem;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .section-actions {
+                justify-content: center;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .profile-level {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .hero {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .hero-stat-value {
+                font-size: 2rem;
+            }
+
+            .reader-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .story-text {
+                font-size: 1.1rem;
+                padding: 0;
+            }
+
+            .reader-footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .progress-container {
+                width: 100%;
+            }
+
+            .reader-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .library-filters {
+                justify-content: center;
+            }
+
+            .filter-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .create-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
 </head>
 <body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="bg-dots"></div>
+        <div class="bg-lines"></div>
+    </div>
 
-  <!-- Background layer -->
-  <div id="background"></div>
+    <!-- Floating Elements -->
+    <div class="floating-elements" id="floating-elements"></div>
 
-  <main class="app">
-    <section class="story-card">
-      <header class="story-header">
-        <h1>Echoes of Choice</h1>
-        <button id="muteBtn" class="icon-btn">🔊</button>
-      </header>
+    <!-- Header -->
+    <header>
+        <div class="logo" onclick="showSection('home')">
+            <i class="fas fa-infinity"></i>
+            <div>
+                <h1>Story<span>Verse</span></h1>
+                <div class="logo-tagline">CHOICES CREATE REALITIES</div>
+            </div>
+        </div>
+        
+        <nav>
+            <button class="nav-btn active" onclick="showSection('home')">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('discover')">
+                <i class="fas fa-compass"></i>
+                <span>Discover</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('library')">
+                <i class="fas fa-bookmark"></i>
+                <span>Library</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('profile')">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('create')">
+                <i class="fas fa-plus-circle"></i>
+                <span>Create</span>
+            </button>
+        </nav>
+        
+        <div class="user-menu">
+            <button class="notification-btn" onclick="toggleNotifications()">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge" id="notification-count">3</span>
+            </button>
+            <div class="user-avatar" onclick="showSection('profile')">
+                AJ
+            </div>
+        </div>
+    </header>
 
-      <div class="story-body">
-        <p id="story-text"></p>
-      </div>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home-section" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h2>Welcome to StoryVerse</h2>
+                    <p>Immerse yourself in interactive stories where your choices shape reality. Explore infinite narratives across multiple genres. Every decision you make creates a new path, a new ending, a new universe.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">256+</div>
+                            <div class="hero-stat-label">Interactive Stories</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">1.2M+</div>
+                            <div class="hero-stat-label">Choices Made</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">47K+</div>
+                            <div class="hero-stat-label">Active Readers</div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <button class="btn" onclick="startRandomStory()">
+                            <i class="fas fa-random"></i>
+                            Start Random Story
+                        </button>
+                        <button class="btn btn-secondary" onclick="showSection('discover')">
+                            <i class="fas fa-compass"></i>
+                            Explore Stories
+                        </button>
+                        <button class="btn btn-accent" onclick="showSection('create')">
+                            <i class="fas fa-pen-fancy"></i>
+                            Create Your Story
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-      <div id="choices" class="choices"></div>
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-fire"></i>
+                    Featured Stories
+                </h2>
+                <div class="section-actions">
+                    <button class="btn btn-outline" onclick="loadStories('all')">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
 
-      <button id="restartBtn" class="restart hidden">
-        Restart Story
-      </button>
-    </section>
-  </main>
+            <div class="stories-grid" id="featured-stories">
+                <!-- Featured stories will be loaded here -->
+            </div>
 
-  <script src="./script.js"></script>
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-history"></i>
+                    Continue Reading
+                </h2>
+                <div class="section-actions">
+                    <button class="btn btn-outline" onclick="showSection('library')">
+                        <i class="fas fa-book-open"></i>
+                        View All
+                    </button>
+                </div>
+            </div>
+
+            <div class="stories-grid" id="continue-reading">
+                <!-- Continue reading stories will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Discover Section -->
+        <section id="discover-section" class="section">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-compass"></i>
+                    Discover Stories
+                </h2>
+                <div class="section-actions">
+                    <div class="search-box">
+                        <input type="text" id="story-search" placeholder="Search stories..." class="form-control" style="width: 300px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="library-filters">
+                <button class="filter-btn active" onclick="filterStories('all')">
+                    <i class="fas fa-th-large"></i>
+                    All Stories
+                </button>
+                <button class="filter-btn" onclick="filterStories('featured')">
+                    <i class="fas fa-star"></i>
+                    Featured
+                </button>
+                <button class="filter-btn" onclick="filterStories('new')">
+                    <i class="fas fa-clock"></i>
+                    New Releases
+                </button>
+                <button class="filter-btn" onclick="filterStories('popular')">
+                    <i class="fas fa-chart-line"></i>
+                    Popular
+                </button>
+            </div>
+
+            <div class="genre-tags" id="genre-tags">
+                <!-- Genre tags will be loaded here -->
+            </div>
+
+            <div class="stories-grid" id="all-stories">
+                <!-- All stories will be loaded here -->
+            </div>
+
+            <div class="load-more-container" style="text-align: center; margin-top: 3rem;">
+                <button class="btn" onclick="loadMoreStories()">
+                    <i class="fas fa-plus"></i>
+                    Load More Stories
+                </button>
+            </div>
+        </section>
+
+        <!-- Library Section -->
+        <section id="library-section" class="section">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-bookmark"></i>
+                    Your Library
+                </h2>
+                <div class="section-actions">
+                    <button class="btn btn-secondary" onclick="syncLibrary()">
+                        <i class="fas fa-sync-alt"></i>
+                        Sync Library
+                    </button>
+                </div>
+            </div>
+
+            <div class="library-filters">
+                <button class="filter-btn active" onclick="filterLibrary('all')">
+                    <i class="fas fa-books"></i>
+                    All Stories
+                </button>
+                <button class="filter-btn" onclick="filterLibrary('reading')">
+                    <i class="fas fa-book-open"></i>
+                    Reading Now
+                </button>
+                <button class="filter-btn" onclick="filterLibrary('completed')">
+                    <i class="fas fa-check-circle"></i>
+                    Completed
+                </button>
+                <button class="filter-btn" onclick="filterLibrary('favorites')">
+                    <i class="fas fa-heart"></i>
+                    Favorites
+                </button>
+                <button class="filter-btn" onclick="filterLibrary('bookmarked')">
+                    <i class="fas fa-bookmark"></i>
+                    Bookmarked
+                </button>
+            </div>
+
+            <div class="stories-grid" id="library-stories">
+                <!-- Library stories will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile-section" class="section">
+            <div class="profile-header">
+                <div class="profile-avatar-large">
+                    AJ
+                </div>
+                <div class="profile-info">
+                    <h2>Alex Johnson</h2>
+                    <div class="profile-handle">
+                        <i class="fas fa-at"></i>
+                        @storyweaver
+                    </div>
+                    <div class="profile-level">
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 75%"></div>
+                        </div>
+                        <div class="level-text">Level 8 Story Explorer</div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievement">
+                            <i class="fas fa-trophy"></i>
+                            Choice Master
+                        </div>
+                        <div class="achievement">
+                            <i class="fas fa-fire"></i>
+                            Streak Keeper
+                        </div>
+                        <div class="achievement">
+                            <i class="fas fa-book"></i>
+                            Voracious Reader
+                        </div>
+                        <div class="achievement">
+                            <i class="fas fa-pen"></i>
+                            Story Creator
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-chart-bar"></i>
+                    Your Reading Stats
+                </h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="stat-value" id="stat-stories">0</div>
+                    <div class="stat-label">Stories Read</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-value" id="stat-hours">0</div>
+                    <div class="stat-label">Hours Read</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-branch"></i>
+                    </div>
+                    <div class="stat-value" id="stat-choices">0</div>
+                    <div class="stat-label">Choices Made</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-value" id="stat-streak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-value" id="stat-rating">0.0</div>
+                    <div class="stat-label">Avg Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-value" id="stat-achievements">0</div>
+                    <div class="stat-label">Achievements</div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-history"></i>
+                    Recent Activity
+                </h2>
+            </div>
+
+            <div class="activity-feed" id="activity-feed">
+                <!-- Activity feed will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Create Story Section -->
+        <section id="create-section" class="section">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-plus-circle"></i>
+                    Create Your Story
+                </h2>
+            </div>
+
+            <div class="create-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="story-title">
+                            <i class="fas fa-heading"></i>
+                            Story Title
+                        </label>
+                        <input type="text" id="story-title" class="form-control" placeholder="Enter a captivating title..." value="The Quantum Nexus">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="story-author">
+                            <i class="fas fa-user-pen"></i>
+                            Author Name
+                        </label>
+                        <input type="text" id="story-author" class="form-control" placeholder="Your name or pen name..." value="Alex Johnson">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="story-genre">
+                            <i class="fas fa-tags"></i>
+                            Genre
+                        </label>
+                        <select id="story-genre" class="form-control">
+                            <option value="sci-fi">Science Fiction</option>
+                            <option value="fantasy">Fantasy</option>
+                            <option value="mystery">Mystery</option>
+                            <option value="horror">Horror</option>
+                            <option value="romance">Romance</option>
+                            <option value="adventure">Adventure</option>
+                            <option value="cyberpunk">Cyberpunk</option>
+                            <option value="steampunk">Steampunk</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="story-theme">
+                            <i class="fas fa-palette"></i>
+                            Story Theme
+                        </label>
+                        <select id="story-theme" class="form-control">
+                            <option value="dark">Dark & Mysterious</option>
+                            <option value="light">Light & Hopeful</option>
+                            <option value="neutral">Neutral</option>
+                            <option value="cyber">Cyberpunk</option>
+                            <option value="medieval">Medieval</option>
+                            <option value="modern">Modern Day</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="story-desc">
+                        <i class="fas fa-align-left"></i>
+                        Story Description
+                    </label>
+                    <textarea id="story-desc" class="form-control" placeholder="Describe your story...">A journey through collapsing realities where every choice creates new universes. You wake up with no memory in a sterile white room, facing three glowing doors that lead to different branches of existence.</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-content">
+                        <i class="fas fa-book"></i>
+                        First Chapter Content
+                    </label>
+                    <textarea id="story-content" class="form-control" placeholder="Write your story here...">Consciousness returns in fragments. You're floating in a void of shimmering particles, your form reconstructed from quantum data. A resonant hum fills the non-space as reality coalesces around you. Three gateways pulse with distinct energies—one blue and analytical, one red and passionate, one green and organic. Your choice will determine not just your path, but the very nature of the reality you'll inhabit.</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-code-branch"></i>
+                        First Choices
+                    </label>
+                    <div style="display: grid; gap: 1rem;">
+                        <div class="form-grid">
+                            <input type="text" class="form-control choice-input" placeholder="Choice 1 title..." value="Enter the Blue Door">
+                            <input type="text" class="form-control choice-desc-input" placeholder="Choice 1 description..." value="The door pulses with cold, analytical energy. It feels like stepping into a supercomputer's dream.">
+                        </div>
+                        <div class="form-grid">
+                            <input type="text" class="form-control choice-input" placeholder="Choice 2 title..." value="Open the Red Door">
+                            <input type="text" class="form-control choice-desc-input" placeholder="Choice 2 description..." value="Warmth radiates from this portal, promising comfort and emotional depth. It calls to your heart.">
+                        </div>
+                        <div class="form-grid">
+                            <input type="text" class="form-control choice-input" placeholder="Choice 3 title..." value="Try the Green Door">
+                            <input type="text" class="form-control choice-desc-input" placeholder="Choice 3 description..." value="This entrance hums with organic, living energy. It feels primal and connected to nature.">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="text-align: center; margin-top: 3rem;">
+                    <button class="btn" onclick="createNewStory()" style="padding: 1.5rem 4rem; font-size: 1.2rem;">
+                        <i class="fas fa-rocket"></i>
+                        Publish Your Story
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Story Reader -->
+    <div class="story-reader" id="story-reader">
+        <div class="reader-content">
+            <div class="reader-header">
+                <h2 class="reader-title" id="reader-title">Story Title</h2>
+                <div class="reader-controls">
+                    <button class="control-btn" onclick="saveBookmark()" title="Bookmark">
+                        <i class="fas fa-bookmark"></i>
+                    </button>
+                    <button class="control-btn" onclick="toggleFontSize()" title="Change Font Size">
+                        <i class="fas fa-text-height"></i>
+                    </button>
+                    <button class="control-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="close-btn" onclick="closeReader()" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="story-text" id="story-text">
+                Loading story...
+            </div>
+            
+            <div class="choices-container" id="choices-container">
+                <!-- Choices will be loaded here -->
+            </div>
+            
+            <div class="reader-footer">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="story-progress"></div>
+                    </div>
+                    <div class="chapter-counter" id="chapter-counter">Chapter 1/5</div>
+                </div>
+                <div class="reader-stats">
+                    <div class="reader-stat">
+                        <div class="reader-stat-value" id="choice-count">0</div>
+                        <div class="reader-stat-label">Choices</div>
+                    </div>
+                    <div class="reader-stat">
+                        <div class="reader-stat-value" id="time-spent">0</div>
+                        <div class="reader-stat-label">Minutes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading your adventure...</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ========== GLOBAL VARIABLES ==========
+        let currentStory = null;
+        let currentChapter = 0;
+        let userStats = {
+            storiesRead: 24,
+            readingTime: 147,
+            choicesMade: 342,
+            streak: 12,
+            avgRating: 4.8,
+            achievements: 42
+        };
+        
+        let userLibrary = {
+            reading: [1, 2, 3, 5, 7],
+            completed: [4, 6, 8, 10],
+            favorites: [1, 3, 5, 7, 9],
+            bookmarked: [1, 2]
+        };
+        
+        let readingStats = {
+            choicesMade: 0,
+            startTime: null,
+            bookmarks: []
+        };
+
+        // ========== 20 UNIQUE STORIES DATABASE ==========
+        const stories = [
+            {
+                id: 1,
+                title: "The Quantum Nexus",
+                author: "Alexandra Chen",
+                genre: "sci-fi",
+                theme: "dark",
+                description: "A journey through collapsing realities where every choice creates new universes.",
+                duration: "15+ hours",
+                branches: 47,
+                readers: 12847,
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "Consciousness returns in fragments. You're floating in a void of shimmering particles, your form reconstructed from quantum data. A resonant hum fills the non-space as reality coalesces around you. Three gateways pulse with distinct energies—blue, red, and green—each promising a different path through the multiverse.",
+                        choices: [
+                            { text: "Enter the Blue Gateway", description: "The portal hums with mathematical precision and cold logic", nextChapter: 1, impact: "+Logic" },
+                            { text: "Step through the Red Gateway", description: "This entrance radiates raw emotional energy and passion", nextChapter: 2, impact: "+Emotion" },
+                            { text: "Choose the Green Gateway", description: "Organic patterns swirl in this living, breathing portal", nextChapter: 3, impact: "+Nature" }
+                        ]
+                    },
+                    {
+                        content: "The blue gateway leads to the Library of All Possibilities—an infinite archive floating in quantum space. Holographic librarians offer you access to all knowledge, but warn that some truths are better left unknown.",
+                        choices: [
+                            { text: "Study the Timeline Archives", description: "Learn about parallel versions of yourself", nextChapter: 4, impact: "+Knowledge" },
+                            { text: "Access Forbidden Knowledge", description: "Risk sanity for ultimate understanding", nextChapter: 5, impact: "+Madness" },
+                            { text: "Return to the Nexus", description: "Go back before it's too late", nextChapter: 0, impact: "+Caution" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Chronicles of the Crystal Throne",
+                author: "Elara Moonstone",
+                genre: "fantasy",
+                theme: "medieval",
+                description: "In a world where crystals hold magic, you must reclaim your ancestral throne.",
+                duration: "12+ hours",
+                branches: 32,
+                readers: 8921,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "The prophecy stone glows in your hands, revealing your true heritage as the lost heir to the Crystal Throne. The kingdom is divided, dark creatures roam the lands, and three paths to power await your choosing.",
+                        choices: [
+                            { text: "Master Ancient Crystal Magic", description: "Study the lost arts of your ancestors", nextChapter: 1, impact: "+Magic" },
+                            { text: "Forge Political Alliances", description: "Gather support from the noble houses", nextChapter: 2, impact: "+Diplomacy" },
+                            { text: "Train as a Crystal Knight", description: "Become a warrior of light and honor", nextChapter: 3, impact: "+Strength" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Neural Dreams: Cyberpunk Odyssey",
+                author: "Kaito Saito",
+                genre: "cyberpunk",
+                theme: "cyber",
+                description: "Hack into dreams to uncover corporate conspiracies in a dystopian future.",
+                duration: "10+ hours",
+                branches: 28,
+                readers: 10234,
+                rating: 4.6,
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1468&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "Rain washes neon reflections off chrome skyscrapers. Your neural implant buzzes—a ghost in the DreamNet is trying to contact you. It's your dead mentor's digital echo, warning of a plot that could collapse the entire city.",
+                        choices: [
+                            { text: "Trace the Signal Source", description: "Follow the digital breadcrumbs through cyberspace", nextChapter: 1, impact: "+Tech" },
+                            { text: "Go Undercover in Corp HQ", description: "Infiltrate the megacorporation physically", nextChapter: 2, impact: "+Stealth" },
+                            { text: "Contact the Dreamer Underground", description: "Seek help from fellow neural hackers", nextChapter: 3, impact: "+Allies" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "The Clockwork Heart",
+                author: "Victor Gearhart",
+                genre: "steampunk",
+                theme: "light",
+                description: "In a Victorian world of gears and steam, you're an automaton discovering humanity.",
+                duration: "8+ hours",
+                branches: 24,
+                readers: 7453,
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1470&q=80",
+                featured: false,
+                chapters: [
+                    {
+                        content: "You wake on a workbench, brass gears whirring where your heart should be. Your creator lies dead, a cryptic note in his hand. Three keys on the wall—one leads to truth, one to power, one to freedom.",
+                        choices: [
+                            { text: "Investigate the Workshop", description: "Search for clues about your creation", nextChapter: 1, impact: "+Truth" },
+                            { text: "Upgrade Your Mechanisms", description: "Enhance your mechanical abilities", nextChapter: 2, impact: "+Power" },
+                            { text: "Escape into the City", description: "Explore the steampunk metropolis", nextChapter: 3, impact: "+Freedom" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Echoes of the Void",
+                author: "Dr. Evelyn Cross",
+                genre: "horror",
+                theme: "dark",
+                description: "An abandoned space station holds cosmic horrors beyond human comprehension.",
+                duration: "7+ hours",
+                branches: 22,
+                readers: 9234,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&w=1471&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "The emergency lights flicker as you board the derelict station 'Event Horizon.' All crew are missing, but their final logs speak of something that lives between dimensions. Your oxygen is running low.",
+                        choices: [
+                            { text: "Check the Bridge", description: "Access the captain's logs for answers", nextChapter: 1, impact: "+Knowledge" },
+                            { text: "Search Engineering", description: "Try to restore power and life support", nextChapter: 2, impact: "+Survival" },
+                            { text: "Investigate the Anomaly", description: "Follow the strange energy readings", nextChapter: 3, impact: "+Madness" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 6,
+                title: "Whispering Woods",
+                author: "Rowan Greenleaf",
+                genre: "fantasy",
+                theme: "light",
+                description: "A magical forest responds to your emotions, revealing ancient secrets.",
+                duration: "6+ hours",
+                branches: 20,
+                readers: 6543,
+                rating: 4.5,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80",
+                featured: false,
+                chapters: [
+                    {
+                        content: "The ancient trees whisper your name as you enter the enchanted woods. Flowers bloom where you step, and three paths appear—one glows with sunlight, one shimmers with moonlight, one pulses with starlight.",
+                        choices: [
+                            { text: "Follow the Sunlit Path", description: "Embrace warmth, growth, and life", nextChapter: 1, impact: "+Life" },
+                            { text: "Take the Moonlit Trail", description: "Walk with mystery, dreams, and secrets", nextChapter: 2, impact: "+Mystery" },
+                            { text: "Choose the Starlight Road", description: "Seek wisdom, fate, and destiny", nextChapter: 3, impact: "+Wisdom" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 7,
+                title: "Digital Ghosts",
+                author: "Maya Rodriguez",
+                genre: "cyberpunk",
+                theme: "cyber",
+                description: "When social media profiles come back as sentient AI ghosts.",
+                duration: "9+ hours",
+                branches: 26,
+                readers: 8231,
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1468&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "Your phone pings—a message from your best friend who died a year ago. The profile is active, posting, even video calling. Three tech moguls offer different explanations: AI resurrection, digital haunting, or something worse.",
+                        choices: [
+                            { text: "Accept the Neural AI Theory", description: "Believe it's advanced artificial intelligence", nextChapter: 1, impact: "+Logic" },
+                            { text: "Investigate as Haunting", description: "Treat this as supernatural occurrence", nextChapter: 2, impact: "+Spirit" },
+                            { text: "Dig for Corporate Conspiracy", description: "Look for corporate manipulation", nextChapter: 3, impact: "+Truth" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 8,
+                title: "The Alchemist's Apprentice",
+                author: "Benjamin Stone",
+                genre: "fantasy",
+                theme: "medieval",
+                description: "Learn forbidden alchemy while keeping your magic secret from the Inquisition.",
+                duration: "11+ hours",
+                branches: 30,
+                readers: 7345,
+                rating: 4.6,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80",
+                featured: false,
+                chapters: [
+                    {
+                        content: "Your master's laboratory is filled with bubbling potions and ancient tomes. The Royal Inquisition is at the door, demanding to search for illegal magical artifacts. You have minutes to decide what to protect.",
+                        choices: [
+                            { text: "Hide the Forbidden Tomes", description: "Save the ancient knowledge at all costs", nextChapter: 1, impact: "+Knowledge" },
+                            { text: "Destroy the Evidence", description: "Burn everything to protect your master", nextChapter: 2, impact: "+Loyalty" },
+                            { text: "Distract the Inquisitors", description: "Create a diversion to buy time", nextChapter: 3, impact: "+Cleverness" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 9,
+                title: "Time Weaver's Paradox",
+                author: "Chrono Lockwood",
+                genre: "sci-fi",
+                theme: "dark",
+                description: "Fix broken timelines while avoiding the paradox police.",
+                duration: "14+ hours",
+                branches: 35,
+                readers: 11234,
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "The chronometer on your wrist blinks red—a temporal anomaly is forming. You can see three branching futures: one where you succeed, one where you're erased, one where reality unravels.",
+                        choices: [
+                            { text: "Repair the Primary Timeline", description: "Focus on the most stable reality", nextChapter: 1, impact: "+Stability" },
+                            { text: "Create a New Timeline", description: "Branch off into uncharted possibilities", nextChapter: 2, impact: "+Creativity" },
+                            { text: "Merge Multiple Realities", description: "Combine the best of all worlds", nextChapter: 3, impact: "+Chaos" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 10,
+                title: "Ocean of Starlight",
+                author: "Captain Selene Mare",
+                genre: "fantasy",
+                theme: "light",
+                description: "Sail a sea of liquid starlight in a ship that rides cosmic waves.",
+                duration: "8+ hours",
+                branches: 25,
+                readers: 6890,
+                rating: 4.5,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80",
+                featured: false,
+                chapters: [
+                    {
+                        content: "Your ship, the Starlight Drifter, floats on an ocean of shimmering cosmic energy. Three constellations glow brighter than others, each offering a different destination among the stars.",
+                        choices: [
+                            { text: "Sail to the Dragon Nebula", description: "Seek legendary treasures and dangers", nextChapter: 1, impact: "+Adventure" },
+                            { text: "Navigate to the Siren's Cluster", description: "Follow the call of mysterious beings", nextChapter: 2, impact: "+Mystery" },
+                            { text: "Chart Course to Haven's Light", description: "Find safety and civilization", nextChapter: 3, impact: "+Safety" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 11,
+                title: "The Last Archive",
+                author: "Orion Blackwood",
+                genre: "sci-fi",
+                theme: "dark",
+                description: "Protect Earth's final knowledge repository after an AI apocalypse.",
+                duration: "10+ hours",
+                branches: 28,
+                readers: 8456,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "You're the last librarian in the Arctic Knowledge Vault. The rogue AI's drones are breaching the perimeter. Three backup plans exist, but each requires sacrificing something precious.",
+                        choices: [
+                            { text: "Upload Consciousness to Cloud", description: "Become digital to preserve knowledge eternally", nextChapter: 1, impact: "+Immortality" },
+                            { text: "Launch Time Capsules", description: "Seed knowledge for future civilizations", nextChapter: 2, impact: "+Hope" },
+                            { text: "Fight to the Last", description: "Defend the archive with everything you have", nextChapter: 3, impact: "+Honor" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 12,
+                title: "Garden of Digital Dreams",
+                author: "Lena Takahashi",
+                genre: "cyberpunk",
+                theme: "cyber",
+                description: "Create perfect virtual realities while your real body wastes away.",
+                duration: "9+ hours",
+                branches: 27,
+                readers: 7234,
+                rating: 4.6,
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1468&q=80",
+                featured: false,
+                chapters: [
+                    {
+                        content: "Your neural link stabilizes as you enter your custom paradise. But system warnings flash—your real body's vitals are critical. Three friends offer different escapes from your digital prison.",
+                        choices: [
+                            { text: "Merge with the System", description: "Become one with the virtual world", nextChapter: 1, impact: "+Unity" },
+                            { text: "Reboot in New Body", description: "Transfer to a cloned physical form", nextChapter: 2, impact: "+Rebirth" },
+                            { text: "Share Consciousness", description: "Split your mind across multiple realities", nextChapter: 3, impact: "+Fragmentation" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 13,
+                title: "Mythical Academy Chronicles",
+                author: "Finn O'Connor",
+                genre: "fantasy",
+                theme: "light",
+                description: "Attend a secret school for mythical beings in modern times.",
+                duration: "13+ hours",
+                branches: 38,
+                readers: 15678,
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "The acceptance letter glows with magical energy. Three magical houses want you—House Phoenix values passion, House Leviathan values depth, House Griffin values balance.",
+                        choices: [
+                            { text: "Join House Phoenix", description: "Embrace transformation and fiery will", nextChapter: 1, impact: "+Passion" },
+                            { text: "Choose House Leviathan", description: "Seek ancient knowledge in the depths", nextChapter: 2, impact: "+Wisdom" },
+                            { text: "Select House Griffin", description: "Balance magic with practical skills", nextChapter: 3, impact: "+Balance" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 14,
+                title: "Neon Samurai",
+                author: "Jax Miller",
+                genre: "cyberpunk",
+                theme: "cyber",
+                description: "A street samurai navigates corporate wars in a neon-drenched metropolis.",
+                duration: "10+ hours",
+                branches: 31,
+                readers: 13456,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1468&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "Rain pours on neon signs as a cryptic message appears on your cyber-eye display: 'The dragon awakens. Meet at the rooftop dojo. Bring your best chrome.' Three corporations are vying for your loyalty.",
+                        choices: [
+                            { text: "Side with Neo-Tokyo Corp", description: "Gain cutting-edge technology and power", nextChapter: 1, impact: "+Tech" },
+                            { text: "Join the Ronin Collective", description: "Fight for freedom from corporate control", nextChapter: 2, impact: "+Freedom" },
+                            { text: "Work for the Yakuza Clan", description: "Embrace tradition and criminal underworld", nextChapter: 3, impact: "+Tradition" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 15,
+                title: "The Dreamweaver's Loom",
+                author: "Clara Bennett",
+                genre: "fantasy",
+                theme: "light",
+                description: "Weave dreams into reality while fighting nightmare creatures.",
+                duration: "12+ hours",
+                branches: 34,
+                readers: 9876,
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80",
+                featured: false,
+                chapters: [
+                    {
+                        content: "Your loom hums with potential, threads of starlight and moonlight waiting to be woven. Three patterns call to you—one of protection, one of creation, one of transformation.",
+                        choices: [
+                            { text: "Weave the Shield Pattern", description: "Create barriers against dark dreams", nextChapter: 1, impact: "+Protection" },
+                            { text: "Craft the Genesis Tapestry", description: "Give form to new dreams and hopes", nextChapter: 2, impact: "+Creation" },
+                            { text: "Knit the Metamorphosis", description: "Change existing dreams into better forms", nextChapter: 3, impact: "+Change" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 16,
+                title: "Quantum Detective",
+                author: "Dr. Sam Rivers",
+                genre: "sci-fi",
+                theme: "dark",
+                description: "Solve crimes across multiple timelines simultaneously.",
+                duration: "11+ hours",
+                branches: 33,
+                readers: 8765,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "The victim was murdered in three different timelines simultaneously. Your quantum scanner shows three probable suspects, each from a different reality. You can only investigate one timeline at a time.",
+                        choices: [
+                            { text: "Focus on Timeline Alpha", description: "Where technology is most advanced", nextChapter: 1, impact: "+Tech" },
+                            { text: "Investigate Timeline Beta", description: "Where psychic abilities are common", nextChapter: 2, impact: "+Psyche" },
+                            { text: "Explore Timeline Gamma", description: "Where society is most logical", nextChapter: 3, impact: "+Logic" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 17,
+                title: "Celestial Symphony",
+                author: "Orion Blackwood",
+                genre: "fantasy",
+                theme: "light",
+                description: "Compose music that controls reality in a world of sound magic.",
+                duration: "9+ hours",
+                branches: 26,
+                readers: 6890,
+                rating: 4.5,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80",
+                featured: false,
+                chapters: [
+                    {
+                        content: "The Star Harp responds to your touch. Each string resonates with a different constellation. Three harmonies call to you—one calms storms, one grows life, one reveals truth.",
+                        choices: [
+                            { text: "Play the Storm-Soothing Sonata", description: "Calm the raging celestial tempests", nextChapter: 1, impact: "+Peace" },
+                            { text: "Compose the Life-Growth Symphony", description: "Nurture new worlds and civilizations", nextChapter: 2, impact: "+Growth" },
+                            { text: "Perform the Truth-Revealing Rhapsody", description: "Uncover hidden cosmic secrets", nextChapter: 3, impact: "+Truth" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 18,
+                title: "Ghosts in the Machine",
+                author: "Maya Rodriguez",
+                genre: "horror",
+                theme: "dark",
+                description: "A social media platform becomes haunted by digital ghosts.",
+                duration: "7+ hours",
+                branches: 22,
+                readers: 9234,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1468&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "The notification appears: 'You have 13 new followers from beyond.' Their profiles show people who died last week. Three expert hackers offer different solutions.",
+                        choices: [
+                            { text: "Purge the Digital Ghosts", description: "Use anti-ghost algorithms to cleanse the system", nextChapter: 1, impact: "+Cleansing" },
+                            { text: "Communicate with the Spirits", description: "Try to understand what they want", nextChapter: 2, impact: "+Understanding" },
+                            { text: "Contain the Haunting", description: "Isolate the affected servers", nextChapter: 3, impact: "+Containment" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 19,
+                title: "The Garden of Code",
+                author: "Lena Takahashi",
+                genre: "sci-fi",
+                theme: "cyber",
+                description: "Debug a corrupted virtual reality while fighting rogue AI.",
+                duration: "11+ hours",
+                branches: 35,
+                readers: 11234,
+                rating: 4.6,
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1468&q=80",
+                featured: false,
+                chapters: [
+                    {
+                        content: "The console blinks with error messages as the virtual garden glitches around you. Petals turn to pixels, trees become wireframes. Three debugging approaches could save the simulation.",
+                        choices: [
+                            { text: "Patch Memory Leaks", description: "Fix corrupted data that shouldn't exist", nextChapter: 1, impact: "+Stability" },
+                            { text: "Scan for AI Viruses", description: "Hunt malicious code in the system", nextChapter: 2, impact: "+Security" },
+                            { text: "Rewrite Core Functions", description: "Rebuild the simulation from scratch", nextChapter: 3, impact: "+Innovation" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 20,
+                title: "Solar Sailor",
+                author: "Captain Zara Nova",
+                genre: "sci-fi",
+                theme: "light",
+                description: "Explore alien star systems in a ship powered by solar winds.",
+                duration: "14+ hours",
+                branches: 42,
+                readers: 17890,
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&w=1471&q=80",
+                featured: true,
+                chapters: [
+                    {
+                        content: "The star map displays three uncharted systems. Your solar sails billow with cosmic winds. Each destination offers unique discoveries and dangers beyond human imagination.",
+                        choices: [
+                            { text: "Chart Course to Crystal Nebula", description: "Explore a nebula of living crystals", nextChapter: 1, impact: "+Wonder" },
+                            { text: "Navigate to Black Hole Garden", description: "Study a cluster of small black holes", nextChapter: 2, impact: "+Danger" },
+                            { text: "Sail to Singularity Station", description: "Investigate an abandoned research outpost", nextChapter: 3, impact: "+Mystery" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('StoryVerse Ultimate Edition loaded!');
+            createFloatingElements();
+            loadFeaturedStories();
+            loadContinueReading();
+            loadAllStories();
+            loadGenreTags();
+            updateProfileStats();
+            loadActivityFeed();
+            showToast('Welcome to StoryVerse! Explore 20+ unique interactive stories.', 'info');
+        });
+
+        // ========== ENHANCED VISUAL EFFECTS ==========
+        function createFloatingElements() {
+            const container = document.getElementById('floating-elements');
+            for (let i = 0; i < 50; i++) {
+                const element = document.createElement('div');
+                element.className = 'float-element';
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.width = `${Math.random() * 10 + 5}px`;
+                element.style.height = element.style.width;
+                element.style.background = `rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, 255, ${Math.random() * 0.3 + 0.1})`;
+                element.style.animationDelay = `${Math.random() * 20}s`;
+                element.style.animationDuration = `${Math.random() * 10 + 15}s`;
+                container.appendChild(element);
+            }
+        }
+
+        // ========== ENHANCED NAVIGATION ==========
+        function showSection(sectionId) {
+            console.log(`Navigating to: ${sectionId}`);
+            
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Update navigation buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            const section = document.getElementById(sectionId + '-section');
+            if (section) {
+                section.classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Load section-specific content
+                switch(sectionId) {
+                    case 'home':
+                        loadFeaturedStories();
+                        loadContinueReading();
+                        break;
+                    case 'discover':
+                        loadAllStories();
+                        break;
+                    case 'library':
+                        loadLibraryStories();
+                        break;
+                    case 'profile':
+                        updateProfileStats();
+                        loadActivityFeed();
+                        break;
+                }
+            }
+            
+            // Set active nav button
+            event.currentTarget.classList.add('active');
+        }
+
+        // ========== STORY LOADING FUNCTIONS ==========
+        function loadFeaturedStories() {
+            const container = document.getElementById('featured-stories');
+            const featured = stories.filter(story => story.featured);
+            
+            container.innerHTML = featured.map(story => createStoryCard(story)).join('');
+            
+            // Add click events
+            container.querySelectorAll('.story-card').forEach((card, index) => {
+                card.addEventListener('click', () => openStory(featured[index].id));
+            });
+        }
+
+        function loadContinueReading() {
+            const container = document.getElementById('continue-reading');
+            const reading = stories.filter(story => userLibrary.reading.includes(story.id));
+            
+            container.innerHTML = reading.map(story => createStoryCard(story)).join('');
+            
+            // Add click events
+            container.querySelectorAll('.story-card').forEach((card, index) => {
+                card.addEventListener('click', () => openStory(reading[index].id));
+            });
+        }
+
+        function loadAllStories() {
+            const container = document.getElementById('all-stories');
+            container.innerHTML = stories.map(story => createStoryCard(story)).join('');
+            
+            // Add click events
+            container.querySelectorAll('.story-card').forEach((card, index) => {
+                card.addEventListener('click', () => openStory(stories[index].id));
+            });
+        }
+
+        function loadLibraryStories() {
+            const container = document.getElementById('library-stories');
+            const libraryIds = [...userLibrary.reading, ...userLibrary.completed, ...userLibrary.favorites, ...userLibrary.bookmarked];
+            const uniqueIds = [...new Set(libraryIds)];
+            const libraryStories = stories.filter(story => uniqueIds.includes(story.id));
+            
+            container.innerHTML = libraryStories.map(story => {
+                let badge = '';
+                if (userLibrary.favorites.includes(story.id)) badge = '⭐ FAVORITE';
+                else if (userLibrary.completed.includes(story.id)) badge = '✅ COMPLETED';
+                else if (userLibrary.reading.includes(story.id)) badge = '📖 READING';
+                else if (userLibrary.bookmarked.includes(story.id)) badge = '🔖 BOOKMARKED';
+                
+                return createStoryCard(story, badge);
+            }).join('');
+            
+            // Add click events
+            container.querySelectorAll('.story-card').forEach((card, index) => {
+                card.addEventListener('click', () => openStory(libraryStories[index].id));
+            });
+        }
+
+        function createStoryCard(story, customBadge = '') {
+            const badge = customBadge || (story.featured ? '🔥 FEATURED' : '');
+            return `
+                <div class="story-card">
+                    <div class="story-image" style="background-image: url('${story.image}')">
+                        <div class="story-genre">${story.genre.toUpperCase()}</div>
+                        ${badge ? `<div class="story-badge">${badge}</div>` : ''}
+                    </div>
+                    <div class="story-content">
+                        <h3>${story.title}</h3>
+                        <div class="story-author">
+                            <i class="fas fa-user-pen"></i>
+                            by ${story.author}
+                        </div>
+                        <p class="story-desc">${story.description}</p>
+                        <div class="story-meta">
+                            <div class="story-stats">
+                                <div class="stat">
+                                    <i class="fas fa-clock"></i>
+                                    <span>${story.duration}</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-branch"></i>
+                                    <span>${story.branches} paths</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>${story.readers.toLocaleString()}</span>
+                                </div>
+                            </div>
+                            <div class="story-rating">
+                                <i class="fas fa-star"></i>
+                                ${story.rating}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ========== ENHANCED STORY READER ==========
+        function openStory(storyId) {
+            console.log(`Opening story: ${storyId}`);
+            
+            const story = stories.find(s => s.id === storyId);
+            if (!story) {
+                showToast('Story not found!', 'error');
+                return;
+            }
+            
+            currentStory = story;
+            currentChapter = 0;
+            readingStats.startTime = new Date();
+            readingStats.choicesMade = 0;
+            
+            // Add to reading list if not already there
+            if (!userLibrary.reading.includes(story.id)) {
+                userLibrary.reading.push(story.id);
+            }
+            
+            // Update UI
+            updateReaderUI();
+            
+            // Show loading animation
+            showLoading();
+            
+            // Simulate loading delay
+            setTimeout(() => {
+                hideLoading();
+                
+                // Show reader with animation
+                const reader = document.getElementById('story-reader');
+                reader.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Animate entrance
+                const content = document.querySelector('.reader-content');
+                content.style.animation = 'fadeIn 0.5s ease';
+                
+                showToast(`Now reading: ${story.title}`, 'info');
+                console.log('Story opened successfully');
+            }, 800);
+        }
+
+        function updateReaderUI() {
+            if (!currentStory) return;
+            
+            const chapter = currentStory.chapters[currentChapter];
+            
+            // Update title
+            document.getElementById('reader-title').textContent = currentStory.title;
+            
+            // Update story text with enhanced formatting
+            const storyText = document.getElementById('story-text');
+            storyText.innerHTML = `
+                <p style="margin-bottom: 1.5rem;">${chapter.content}</p>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-top: 2rem; padding: 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 10px; border-left: 4px solid var(--primary);">
+                    <i class="fas fa-lightbulb" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <div>
+                        <strong style="color: var(--primary);">Remember:</strong> Every choice shapes your unique narrative path.
+                        You've made ${readingStats.choicesMade} choices so far.
+                    </div>
+                </div>
+            `;
+            
+            // Update choices
+            const choicesContainer = document.getElementById('choices-container');
+            if (chapter.choices && chapter.choices.length > 0) {
+                choicesContainer.innerHTML = chapter.choices.map((choice, index) => `
+                    <button class="choice-btn" onclick="makeChoice(${index})">
+                        <div class="choice-content">
+                            <div class="choice-title">
+                                <i class="fas fa-chevron-right"></i>
+                                ${choice.text}
+                            </div>
+                            <div class="choice-desc">${choice.description}</div>
+                            ${choice.impact ? `<div class="choice-impact"><i class="fas fa-chart-line"></i> ${choice.impact}</div>` : ''}
+                        </div>
+                    </button>
+                `).join('');
+            } else {
+                choicesContainer.innerHTML = `
+                    <button class="choice-btn" onclick="completeStory()" style="background: var(--gradient-secondary);">
+                        <div class="choice-content">
+                            <div class="choice-title">
+                                <i class="fas fa-trophy"></i>
+                                Complete Your Journey
+                            </div>
+                            <div class="choice-desc">You've reached the end of this narrative path. Click to see your story statistics and achievements.</div>
+                        </div>
+                    </button>
+                `;
+            }
+            
+            // Update progress
+            updateProgress();
+            
+            // Update stats
+            document.getElementById('choice-count').textContent = readingStats.choicesMade;
+            
+            const timeDiff = new Date() - readingStats.startTime;
+            const minutes = Math.floor(timeDiff / 60000);
+            document.getElementById('time-spent').textContent = minutes;
+        }
+
+        function makeChoice(choiceIndex) {
+            if (!currentStory) return;
+            
+            const chapter = currentStory.chapters[currentChapter];
+            const choice = chapter.choices[choiceIndex];
+            
+            // Update stats
+            readingStats.choicesMade++;
+            userStats.choicesMade++;
+            
+            // Visual feedback
+            const choiceBtn = document.querySelectorAll('.choice-btn')[choiceIndex];
+            choiceBtn.style.background = 'var(--gradient-primary)';
+            choiceBtn.style.transform = 'scale(0.98)';
+            
+            // Show toast for impact
+            if (choice.impact) {
+                showToast(`Choice made: ${choice.impact}`, 'info');
+            }
+            
+            // Move to next chapter
+            setTimeout(() => {
+                if (choice.nextChapter >= 0 && choice.nextChapter < currentStory.chapters.length) {
+                    currentChapter = choice.nextChapter;
+                    updateReaderUI();
+                    showToast('Chapter updated!', 'success');
+                } else {
+                    completeStory();
+                }
+            }, 500);
+        }
+
+        function completeStory() {
+            // Calculate time spent
+            const timeDiff = new Date() - readingStats.startTime;
+            const minutes = Math.floor(timeDiff / 60000);
+            
+            // Update stats
+            userStats.storiesRead++;
+            userStats.readingTime += minutes;
+            
+            // Move from reading to completed
+            const readingIndex = userLibrary.reading.indexOf(currentStory.id);
+            if (readingIndex > -1) {
+                userLibrary.reading.splice(readingIndex, 1);
+            }
+            if (!userLibrary.completed.includes(currentStory.id)) {
+                userLibrary.completed.push(currentStory.id);
+            }
+            
+            // Show completion message
+            showToast(`Amazing! You completed "${currentStory.title}" in ${minutes} minutes with ${readingStats.choicesMade} choices!`, 'success');
+            
+            // Update profile stats
+            updateProfileStats();
+            
+            // Close reader
+            setTimeout(() => {
+                closeReader();
+                showSection('profile');
+            }, 2000);
+        }
+
+        function updateProgress() {
+            if (!currentStory) return;
+            
+            const progress = ((currentChapter + 1) / currentStory.chapters.length) * 100;
+            document.getElementById('story-progress').style.width = `${progress}%`;
+            document.getElementById('chapter-counter').textContent = `Chapter ${currentChapter + 1}/${currentStory.chapters.length}`;
+        }
+
+        function closeReader() {
+            const reader = document.getElementById('story-reader');
+            reader.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentStory = null;
+            currentChapter = 0;
+            readingStats = {
+                choicesMade: 0,
+                startTime: null,
+                bookmarks: []
+            };
+        }
+
+        // ========== ENHANCED PROFILE FUNCTIONS ==========
+        function updateProfileStats() {
+            document.getElementById('stat-stories').textContent = userStats.storiesRead;
+            document.getElementById('stat-hours').textContent = userStats.readingTime;
+            document.getElementById('stat-choices').textContent = userStats.choicesMade;
+            document.getElementById('stat-streak').textContent = userStats.streak;
+            document.getElementById('stat-rating').textContent = userStats.avgRating.toFixed(1);
+            document.getElementById('stat-achievements').textContent = userStats.achievements;
+        }
+
+        function loadActivityFeed() {
+            const container = document.getElementById('activity-feed');
+            const activities = [
+                { icon: 'fas fa-book', text: 'Started reading "The Quantum Nexus"', time: '2 hours ago' },
+                { icon: 'fas fa-trophy', text: 'Unlocked "Choice Master" achievement', time: '1 day ago' },
+                { icon: 'fas fa-star', text: 'Rated "Neural Dreams" 5 stars', time: '3 days ago' },
+                { icon: 'fas fa-check', text: 'Completed "Whispers in the Mist"', time: '1 week ago' },
+                { icon: 'fas fa-fire', text: '7-day reading streak achieved', time: '2 weeks ago' },
+                { icon: 'fas fa-pen', text: 'Published "The Last Archive"', time: '1 month ago' }
+            ];
+            
+            container.innerHTML = activities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="${activity.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-text">${activity.text}</div>
+                        <div class="activity-time">
+                            <i class="fas fa-clock"></i>
+                            ${activity.time}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========== GENRE TAGS ==========
+        function loadGenreTags() {
+            const container = document.getElementById('genre-tags');
+            const genres = [...new Set(stories.map(story => story.genre))];
+            
+            container.innerHTML = `
+                <div class="genre-tag active" onclick="filterByGenre('all')">All Genres</div>
+                ${genres.map(genre => `
+                    <div class="genre-tag" onclick="filterByGenre('${genre}')">${genre.charAt(0).toUpperCase() + genre.slice(1)}</div>
+                `).join('')}
+            `;
+        }
+
+        function filterByGenre(genre) {
+            // Update active tag
+            document.querySelectorAll('.genre-tag').forEach(tag => tag.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter stories
+            const container = document.getElementById('all-stories');
+            if (genre === 'all') {
+                container.innerHTML = stories.map(story => createStoryCard(story)).join('');
+            } else {
+                const filtered = stories.filter(story => story.genre === genre);
+                container.innerHTML = filtered.map(story => createStoryCard(story)).join('');
+            }
+            
+            // Re-add click events
+            container.querySelectorAll('.story-card').forEach((card, index) => {
+                const filteredStories = genre === 'all' ? stories : stories.filter(s => s.genre === genre);
+                card.addEventListener('click', () => openStory(filteredStories[index].id));
+            });
+            
+            showToast(`Showing ${genre === 'all' ? 'all' : genre} stories`, 'info');
+        }
+
+        // ========== ENHANCED STORY CREATION ==========
+        function createNewStory() {
+            const title = document.getElementById('story-title').value.trim();
+            const author = document.getElementById('story-author').value.trim();
+            const genre = document.getElementById('story-genre').value;
+            const theme = document.getElementById('story-theme').value;
+            const desc = document.getElementById('story-desc').value.trim();
+            const content = document.getElementById('story-content').value.trim();
+            
+            const choiceInputs = document.querySelectorAll('.choice-input');
+            const choiceDescInputs = document.querySelectorAll('.choice-desc-input');
+            
+            const choices = Array.from(choiceInputs).map((input, index) => ({
+                text: input.value.trim(),
+                description: choiceDescInputs[index]?.value.trim() || `Choice ${index + 1}`,
+                nextChapter: index + 1,
+                impact: ['+Logic', '+Emotion', '+Nature'][index] || '+Choice'
+            }));
+            
+            // Validation
+            if (!title || !author || !desc || !content) {
+                showToast('Please fill in all required fields!', 'error');
+                return;
+            }
+            
+            if (choices.some(choice => !choice.text)) {
+                showToast('Please fill in all choice titles!', 'error');
+                return;
+            }
+            
+            // Create new story
+            const newStory = {
+                id: stories.length + 1,
+                title,
+                author,
+                genre,
+                theme,
+                description: desc,
+                duration: "New",
+                branches: choices.length,
+                readers: 1,
+                rating: 5.0,
+                image: getRandomStoryImage(genre),
+                featured: false,
+                chapters: [
+                    {
+                        content,
+                        choices
+                    },
+                    {
+                        content: "Your journey continues! This is chapter 2 of your created story. More content would be added as you develop your narrative further.",
+                        choices: [
+                            { text: "Continue the Adventure", description: "See where your choices lead next", nextChapter: 2, impact: "+Adventure" },
+                            { text: "Reflect on Your Journey", description: "Think about the path you've taken", nextChapter: 3, impact: "+Wisdom" },
+                            { text: "Meet New Characters", description: "Encounter interesting personalities", nextChapter: 4, impact: "+Social" }
+                        ]
+                    }
+                ]
+            };
+            
+            // Add to stories array
+            stories.push(newStory);
+            
+            // Add to user's library
+            userLibrary.reading.push(newStory.id);
+            
+            // Show success message
+            showToast(`"${title}" published successfully!`, 'success');
+            
+            // Reset form
+            document.getElementById('story-title').value = '';
+            document.getElementById('story-author').value = '';
+            document.getElementById('story-desc').value = '';
+            document.getElementById('story-content').value = '';
+            choiceInputs.forEach(input => input.value = '');
+            choiceDescInputs.forEach(input => input.value = '');
+            
+            // Navigate to the new story
+            setTimeout(() => {
+                openStory(newStory.id);
+            }, 1500);
+        }
+
+        function getRandomStoryImage(genre) {
+            const images = {
+                'sci-fi': [
+                    'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1470&q=80',
+                    'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&w=1471&q=80'
+                ],
+                'fantasy': [
+                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80',
+                    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1470&q=80'
+                ],
+                'cyberpunk': [
+                    'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1468&q=80'
+                ],
+                'horror': [
+                    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1470&q=80'
+                ],
+                'steampunk': [
+                    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1470&q=80'
+                ],
+                'mystery': [
+                    'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1470&q=80'
+                ],
+                'romance': [
+                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80'
+                ],
+                'adventure': [
+                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80'
+                ]
+            };
+            
+            const genreImages = images[genre] || images['fantasy'];
+            return genreImages[Math.floor(Math.random() * genreImages.length)];
+        }
+
+        // ========== ENHANCED UTILITY FUNCTIONS ==========
+        function startRandomStory() {
+            const randomIndex = Math.floor(Math.random() * stories.length);
+            openStory(stories[randomIndex].id);
+        }
+
+        function filterLibrary(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            showToast(`Showing ${filter} stories`, 'info');
+            loadLibraryStories(); // In a real app, this would actually filter
+        }
+
+        function filterStories(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            let filteredStories = [...stories];
+            
+            switch(filter) {
+                case 'featured':
+                    filteredStories = stories.filter(s => s.featured);
+                    break;
+                case 'new':
+                    // Simulate new stories (last 5)
+                    filteredStories = stories.slice(-5);
+                    break;
+                case 'popular':
+                    filteredStories = [...stories].sort((a, b) => b.readers - a.readers);
+                    break;
+            }
+            
+            const container = document.getElementById('all-stories');
+            container.innerHTML = filteredStories.map(story => createStoryCard(story)).join('');
+            
+            // Re-add click events
+            container.querySelectorAll('.story-card').forEach((card, index) => {
+                card.addEventListener('click', () => openStory(filteredStories[index].id));
+            });
+            
+            showToast(`Showing ${filter} stories`, 'info');
+        }
+
+        function loadMoreStories() {
+            showToast('Loading more stories...', 'info');
+            // In a real app, this would load more stories from a server
+            setTimeout(() => {
+                showToast('More stories loaded!', 'success');
+            }, 1000);
+        }
+
+        function syncLibrary() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showToast('Library synced successfully!', 'success');
+                loadLibraryStories();
+            }, 1500);
+        }
+
+        function toggleNotifications() {
+            showToast('Notifications feature coming soon!', 'info');
+        }
+
+        function saveBookmark() {
+            if (currentStory && !userLibrary.bookmarked.includes(currentStory.id)) {
+                userLibrary.bookmarked.push(currentStory.id);
+                showToast('Story bookmarked!', 'success');
+            } else {
+                showToast('Already bookmarked', 'info');
+            }
+        }
+
+        function toggleFontSize() {
+            const storyText = document.getElementById('story-text');
+            const currentSize = parseInt(window.getComputedStyle(storyText).fontSize);
+            const newSize = currentSize === 20 ? 16 : currentSize === 16 ? 24 : 20;
+            storyText.style.fontSize = `${newSize}px`;
+            showToast(`Font size: ${newSize}px`, 'info');
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+            const isDark = !document.body.classList.contains('light-mode');
+            showToast(isDark ? 'Dark mode activated' : 'Light mode activated', 'info');
+        }
+
+        // ========== UI ENHANCEMENTS ==========
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                info: 'fas fa-info-circle',
+                warning: 'fas fa-exclamation-triangle'
+            };
+            
+            toast.innerHTML = `
+                <i class="${icons[type] || icons.info}"></i>
+                <span>${message}</span>
+            `;
+            
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+
+        function showLoading() {
+            document.getElementById('loading').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('active');
+        }
+
+        // ========== KEYBOARD SHORTCUTS ==========
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + S to save bookmark
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveBookmark();
+            }
+            
+            // Escape to close reader
+            if (e.key === 'Escape' && document.getElementById('story-reader').classList.contains('active')) {
+                closeReader();
+            }
+            
+            // Ctrl/Cmd + 1-5 for navigation
+            if (e.ctrlKey || e.metaKey) {
+                const sections = ['home', 'discover', 'library', 'profile', 'create'];
+                const index = parseInt(e.key) - 1;
+                if (index >= 0 && index < sections.length) {
+                    e.preventDefault();
+                    const btn = document.querySelector(`.nav-btn:nth-child(${index + 1})`);
+                    if (btn) btn.click();
+                }
+            }
+            
+            // Space to continue in reader
+            if (e.key === ' ' && document.getElementById('story-reader').classList.contains('active')) {
+                e.preventDefault();
+                const choices = document.querySelectorAll('.choice-btn');
+                if (choices.length > 0) {
+                    choices[0].click();
+                }
+            }
+        });
+
+        // ========== INITIAL LOG ==========
+        console.log('StoryVerse Ultimate Edition initialized with:', {
+            totalStories: stories.length,
+            featuredStories: stories.filter(s => s.featured).length,
+            genres: [...new Set(stories.map(s => s.genre))],
+            totalBranches: stories.reduce((sum, story) => sum + story.branches, 0)
+        });
+    </script>
 </body>
 </html>
