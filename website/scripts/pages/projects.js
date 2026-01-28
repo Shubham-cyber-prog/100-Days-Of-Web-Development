@@ -196,7 +196,7 @@ function renderProjects(filter = 'All') {
                 <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
             <div class="card-divider"></div>
-            <h3 style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
+            <h3 class="project-title" style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
                 ${project.title}
             </h3>
             <div class="tech-stack" style="margin-bottom: 0.5rem;">
