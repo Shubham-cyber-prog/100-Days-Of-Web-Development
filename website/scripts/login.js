@@ -21,6 +21,7 @@ import {
     browserLocalPersistence,
     browserSessionPersistence
 } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+import { firestoreService } from './firestore.js';
 
 // Import App Core and Notify (will fallback to window globals if not module)
 let App, Notify;
@@ -49,63 +50,73 @@ const firebaseConfig = (() => {
 })();
 
 // Initialize Firebase
-let app, auth;
-try {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    // Set persistence to LOCAL
-    setPersistence(auth, browserLocalPersistence)
-        .then(() => console.log('Auth persistence set to LOCAL'))
-        .catch((error) => console.error('Error setting persistence:', error));
-} catch (error) {
-    console.warn('Firebase not configured, using local auth:', error.message);
-}
+// Set persistence to LOCAL (keeps user logged in)
+setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+        console.log('Auth persistence set to LOCAL');
+    })
+    .catch((error) => {
+        console.error('Error setting persistence:', error);
+    });
 
-document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🔐 Auth script loaded');
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Auth script loaded');
+    
+    // --- Check if user is already logged in ---
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            console.log('User already logged in:', user.email);
+            console.log('UID:', user.uid);
 
-    // Load App and Notify from window or import
-    try {
-        const appModule = await import('./core/app.js');
-        App = appModule.App;
-    } catch (e) {
-        App = window.App;
-    }
+            try {
+                // Initialize user data in Firestore
+                await firestoreService.initializeUserData(user.uid, {
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL
+                });
 
-    try {
-        const notifyModule = await import('./core/Notify.js');
-        Notify = notifyModule.Notify;
-    } catch (e) {
-        Notify = window.Notify;
-    }
+                // Migrate localStorage data if it exists
+                await firestoreService.migrateLocalStorageData(user.uid);
 
-    // Check if already authenticated - redirect to dashboard
-    if (App && App.isAuthenticated()) {
-        if (Notify) Notify.info('Already logged in! Redirecting...');
-        setTimeout(() => {
-            window.location.href = '/website/pages/dashboard.html';
-        }, 500);
-        return;
-    }
+                // Store user info in localStorage for easy access (keep for compatibility)
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', user.email);
+                localStorage.setItem('userId', user.uid);
+                localStorage.setItem('userName', user.displayName || user.email.split('@')[0]);
 
-    // Firebase auth state observer (if available)
-    if (auth) {
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                console.log('User already logged in:', user.email);
+                // If user is on login page, redirect to dashboard
+                if (window.location.pathname.includes('login.html') ||
+                    window.location.pathname.includes('index.html') ||
+                    window.location.pathname === '/') {
 
-                // Login via App Core
-                if (App) {
-                    await App.login({
-                        id: user.uid,
-                        email: user.email,
-                        name: user.displayName || user.email.split('@')[0]
-                    }, true);
+                    console.log('Redirecting to dashboard...');
+                    setTimeout(() => {
+                        window.location.href = '/website/pages/dashboard.html';
+                    }, 500);
                 }
+            } catch (error) {
+                console.error('Error initializing user data:', error);
+                // Still allow login even if Firestore fails
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', user.email);
+                localStorage.setItem('userId', user.uid);
+                localStorage.setItem('userName', user.displayName || user.email.split('@')[0]);
+            }
+        } else {
+            // User is not logged in
+            console.log('No user logged in');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userName');
 
-                if (Notify) Notify.success('Welcome back! Redirecting...');
-
+            // If user is on dashboard without auth, redirect to login
+            if (window.location.pathname.includes('dashboard.html')) {
+                console.log('Not authenticated, redirecting to login...');
                 setTimeout(() => {
                     window.location.href = '/website/pages/dashboard.html';
                 }, 500);
@@ -531,13 +542,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     localStorage.setItem('userEmail', userCredential.user.email || 'github-user@github.com');
                     localStorage.setItem('userId', userCredential.user.uid);
                     localStorage.setItem('userName', userCredential.user.displayName || 'GitHub User');
-
-                    // Show success via Notify or fallback
-                    if (Notify) {
-                        Notify.success('GitHub login successful! Redirecting...');
-                    } else {
-                        showSuccessMessage('GitHub login successful! Redirecting...');
-                    }
+                    
+                    // Show success and redirect
+                    showSuccessMessage('GitHub login successful! Redirecting...');
 
                     setTimeout(() => {
                         window.location.href = '/website/pages/dashboard.html';
@@ -617,6 +624,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     Notify.success('Welcome Guest! Redirecting...');
                 } else {
                     showSuccessMessage('Welcome Guest! Redirecting...');
+
+                    setTimeout(() => {
+                        window.location.href = '/website/pages/dashboard.html';
+                    }, 1500);
                 }
 
                 setTimeout(() => {
@@ -705,20 +716,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                     font-weight: 500;
                     width: 100%;
                 `;
+                
+            demoBtn.addEventListener('click', () => {
+                if (confirm('Use demo account? Email: demo@example.com, Password: demo123')) {
+                    // Simulate successful login without Firebase authentication
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', 'demo@example.com');
+                    localStorage.setItem('userId', 'demo_' + Date.now());
+                    localStorage.setItem('userName', 'Demo User');
 
-                demoBtn.addEventListener('click', () => {
-                    // Auto-fill demo credentials
-                    emailInput.value = 'demo@example.com';
-                    passwordInput.value = 'demo123';
+                    console.log('Demo login successful');
 
-                    if (confirm('Use demo account? Email: demo@example.com, Password: demo123')) {
-                        // Trigger form submission after 1 second
-                        setTimeout(() => {
-                            authForm.dispatchEvent(new Event('submit'));
-                        }, 1000);
-                    }
-                });
+                    // Show success and redirect
+                    showSuccessMessage('Demo login successful! Redirecting...');
 
+                    setTimeout(() => {
+                        window.location.href = '/website/pages/dashboard.html';
+                    }, 1500);
+                }
+            });
+                
                 authForm.parentNode.insertBefore(demoBtn, authForm.nextSibling);
             }
         }

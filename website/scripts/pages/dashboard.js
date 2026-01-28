@@ -1,38 +1,27 @@
 
+import { firestoreService } from '../firestore.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Wait for AuthService to load
-    function waitForAuthService() {
-        if (window.AuthService) {
-            initializeDashboard();
-        } else {
-            setTimeout(waitForAuthService, 100);
-        }
+    // Check authentication
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    // Auth Guard
+    if (!isLoggedIn && !isGuest) {
+        window.location.href = 'login.html';
+        return;
     }
     
     waitForAuthService();
 
-    function initializeDashboard() {
-        const auth = window.AuthService;
-        
-        // Check authentication using AuthService
-        if (!auth.isAuthenticated()) {
-            console.log('❌ Not authenticated, redirecting to login');
-            window.location.href = 'login.html';
-            return;
-        }
-        
-        const user = auth.getCurrentUser();
-        const isGuest = auth.isGuest();
-        
-        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
-        
-        // Show guest banner if guest user
-        if (isGuest) {
-            const guestBanner = document.getElementById('guestBanner');
-            if (guestBanner) {
-                guestBanner.style.display = 'block';
-            }
-        }
+    const userId = localStorage.getItem('userId');
+    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('userName') || 'User');
+    initializeDashboard({ email: userName, isGuest, userId });
+
+    function initializeDashboard(user) {
+        // Set user name
+        const userNameElement = document.getElementById('userName');
+        if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
 
         // Logout functionality with Notify confirmation
         const logoutBtn = document.getElementById('logoutBtn');
@@ -94,18 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 42, title: "HFT Market Tracker", folder: "Day 42", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
             { day: 43, title: "NewsWave - Your Daily News Aggregator", folder: "Day 43", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
             { day: 44, title: "AI Chatbot Interface", folder: "Day 44", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 45, title: "Project Day 45", folder: "Day 45", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 46, title: "Project Day 46", folder: "Day 46", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 47, title: "Project Day 47", folder: "Day 47", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 48, title: "Project Day 48", folder: "Day 48", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 49, title: "Project Day 49", folder: "Day 49", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 45, title: "Project Management Tool", folder: "Day 45", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 46, title: "ShopEase Pro", folder: "Day 46", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 47, title: "Banking Dashboard", folder: "Day 47", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 48, title: "Flight Booking System", folder: "Day 48", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 49, title: "RecipeShare", folder: "Day 49", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 50, title: "Interactive Resume Builder", folder: "Day 50", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 51, title: "Project Day 51", folder: "Day 51", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 51, title: "Portfolio & Blog", folder: "Day 51", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 52, title: "Project Day 52", folder: "Day 52", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 53, title: "Project Day 53", folder: "Day 53", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 54, title: "Project Day 54", folder: "Day 54", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 53, title: "File Uploader", folder: "Day 53", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 54, title: "CodeEditor Pro", folder: "Day 54", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 55, title: "Project Day 55", folder: "Day 55", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 56, title: "Project Day 56", folder: "Day 56", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 56, title: "Expense Splitter", folder: "Day 56", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
             { day: 57, title: "Project Day 57", folder: "Day 57", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 58, title: "Project Day 58", folder: "Day 58", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 59, title: "Project Day 59", folder: "Day 59", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
@@ -208,11 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render progress grid
         if (document.getElementById('progressGrid')) renderProgressGrid();
 
-        // Update stats
-        if (document.getElementById('completedDays')) updateStats();
+            // Render UI after loading data
+            if (document.getElementById('progressGrid')) renderProgressGrid();
+            if (document.getElementById('completedDays')) updateStats();
+            if (document.getElementById('recommendationsGrid')) renderRecommendations();
+        }
 
-        // Render recommendations
-        if (document.getElementById('recommendationsGrid')) renderRecommendations();
+        // Load user progress
+        loadUserProgress();
 
         function renderProgressGrid() {
             const progressGrid = document.getElementById('progressGrid');
