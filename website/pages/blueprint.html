@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueprint Modeler | 100 Days of Web Dev</title>
+    <link rel="icon" href="/website/assets/images/logo.png">
+    <link rel="stylesheet" href="../styles/index.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-logo">
+                <img src="../assets/images/logo.png" alt="Logo" class="brand-logo-img">
+            </a>
+            
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="blueprint.html" class="nav-link active">Blueprint</a>
+                <a href="achievements.html" class="nav-link">Achievements</a>
+            </nav>
+            
+            <div class="nav-user">
+                <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                
+                <div class="user-avatar-wrapper">
+                    <button class="user-avatar" onclick="toggleUserMenu()">
+                        <img src="https://github.com/ntbnaren7.png" alt="User">
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="profile.html" class="dropdown-item">View Profile</a>
+                        <a href="settings.html" class="dropdown-item">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item text-danger" onclick="handleLogout()">Log Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blueprint Modeler -->
+    <main class="blueprint-container">
+        <!-- Connection Status -->
+        <div id="connectionStatus" class="connection-status hidden">
+            <span class="status-indicator"></span>
+            <span class="status-text">Connecting...</span>
+        </div>
+
+        <!-- Toolbar -->
+        <aside id="blueprintToolbar" class="blueprint-sidebar"></aside>
+
+        <!-- Canvas Area -->
+        <div class="blueprint-main">
+            <div class="blueprint-header">
+                <h1 class="blueprint-title">Collaborative Blueprint</h1>
+                <div class="blueprint-info">
+                    <span class="room-id" id="roomId">Room: Loading...</span>
+                    <button class="btn btn-sm" id="shareRoomBtn">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        Share
+                    </button>
+                </div>
+            </div>
+
+            <div class="canvas-wrapper">
+                <canvas id="blueprintCanvas"></canvas>
+                
+                <!-- Zoom Controls -->
+                <div class="zoom-controls">
+                    <button class="zoom-btn" id="zoomInBtn" title="Zoom In">+</button>
+                    <span class="zoom-level" id="zoomLevel">100%</span>
+                    <button class="zoom-btn" id="zoomOutBtn" title="Zoom Out">−</button>
+                    <button class="zoom-btn" id="resetZoomBtn" title="Reset">⊙</button>
+                </div>
+
+                <!-- User Cursors -->
+                <div id="userCursors" class="user-cursors"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Share Room Modal -->
+    <div id="shareModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Blueprint Room</h2>
+                <button class="modal-close" onclick="closeShareModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Share this link with others to collaborate:</p>
+                <div class="share-link-container">
+                    <input type="text" id="shareLinkInput" readonly class="share-link-input">
+                    <button class="btn btn-primary" id="copyLinkBtn">Copy</button>
+                </div>
+                <p class="text-secondary text-sm" style="margin-top: 1rem;">
+                    All collaborators will see changes in real-time. Changes are automatically saved.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../scripts/components/navigation.js"></script>
+    <script type="module" src="../scripts/pages/blueprint.js"></script>
+</body>
+</html>
