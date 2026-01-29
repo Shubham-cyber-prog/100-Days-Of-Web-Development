@@ -1,738 +1,730 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>100 Days of Web Development | Command Center</title>
 
-    <!-- Design System -->
-    <link rel="stylesheet" href="website/styles/index.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>100 Days of Web Development | Command Center</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Design System -->
+  <link rel="stylesheet" href="website/styles/index.css" />
 
-    <link rel="icon" type="image/png" href="website/assets/images/logo.png" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
 
-    <!-- logo for nav bar -->
-    <link rel="stylesheet" href="website/assets/images/logo.png" />
-    <!-- home-->
+  <link rel="icon" type="image/png" href="website/assets/images/logo.png" />
 
-    <!-- Enhanced Modern UI Styles -->
+  <!-- logo for nav bar -->
+  <link rel="stylesheet" href="website/assets/images/logo.png" />
+  <!-- home-->
 
-    <!-- Fire Cursor - Commented out as file is missing -->
-    <!-- <link rel="stylesheet" href="firecursor.css"> -->
+  <!-- Enhanced Modern UI Styles -->
 
-    <style>
-      /* Enhanced Modern UI Styles */
-      :root {
-        --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        --gradient-dark: linear-gradient(135deg, #1e1e2e 0%, #2a2a40 100%);
-        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-        --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
-        --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
-        --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.3);
-      }
+  <!-- Fire Cursor - Commented out as file is missing -->
+  <!-- <link rel="stylesheet" href="firecursor.css"> -->
 
-      body {
-        background: linear-gradient(
-          135deg,
+  <style>
+    /* Enhanced Modern UI Styles */
+    :root {
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-dark: linear-gradient(135deg, #1e1e2e 0%, #2a2a40 100%);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
+      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
+      --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.3);
+    }
+
+    body {
+      background: linear-gradient(135deg,
           #0f0f23 0%,
           #1a1a2e 50%,
-          #0f0f23 100%
-        );
-        min-height: 100vh;
-        position: relative;
-        overflow-x: hidden;
+          #0f0f23 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background Particles */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 50%,
+          rgba(102, 126, 234, 0.1) 0%,
+          transparent 50%),
+        radial-gradient(circle at 80% 80%,
+          rgba(245, 87, 108, 0.1) 0%,
+          transparent 50%),
+        radial-gradient(circle at 40% 20%,
+          rgba(79, 172, 254, 0.1) 0%,
+          transparent 50%);
+      animation: particles 20s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes particles {
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: translateY(0);
       }
 
-      /* Animated Background Particles */
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background:
-          radial-gradient(
-            circle at 20% 50%,
-            rgba(102, 126, 234, 0.1) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 80% 80%,
-            rgba(245, 87, 108, 0.1) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 40% 20%,
-            rgba(79, 172, 254, 0.1) 0%,
-            transparent 50%
-          );
-        animation: particles 20s ease-in-out infinite;
-        pointer-events: none;
-        z-index: 0;
+      50% {
+        opacity: 0.8;
+        transform: translateY(-20px);
       }
+    }
 
-      @keyframes particles {
-        0%,
-        100% {
-          opacity: 0.5;
-          transform: translateY(0);
-        }
-        50% {
-          opacity: 0.8;
-          transform: translateY(-20px);
-        }
-      }
+    .container {
+      position: relative;
+      z-index: 1;
+    }
 
-      .container {
-        position: relative;
-        z-index: 1;
-      }
+    /* Enhanced Header */
+    .site-header {
+      background: rgba(15, 15, 35, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
 
-      /* Enhanced Header */
-      .site-header {
-        background: rgba(15, 15, 35, 0.8);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-      }
+    .nav-logo {
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-      .nav-logo {
-        transition: transform 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    .brand-logo-img {
+      height: 45px;
+      width: auto;
+      max-width: 150px;
+      object-fit: contain;
+      transition: all 0.3s ease;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
 
-      .brand-logo-img {
-        height: 45px;
-        width: auto;
-        max-width: 150px;
-        object-fit: contain;
-        transition: all 0.3s ease;
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
+    .nav-logo:hover {
+      transform: scale(1.05) rotate(5deg);
+    }
 
-      .nav-logo:hover {
-        transform: scale(1.05) rotate(5deg);
-      }
+    .nav-logo:hover .brand-logo-img {
+      filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
+    }
 
-      .nav-logo:hover .brand-logo-img {
-        filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
-      }
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+    }
 
-      .nav-link {
-        position: relative;
-        transition: all 0.3s ease;
-      }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
 
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        bottom: -2px;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: var(--gradient-primary);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-      }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
 
-      .nav-link:hover::after,
-      .nav-link.active::after {
-        width: 100%;
-      }
+    /* Hero Section Enhancement */
+    .zenith-hero {
+      text-align: center;
+      padding: 100px 20px 80px;
+      position: relative;
+    }
 
-      /* Hero Section Enhancement */
-      .zenith-hero {
-        text-align: center;
-        padding: 100px 20px 80px;
-        position: relative;
-      }
-
-      .zenith-hero::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(
-          circle,
+    .zenith-hero::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle,
           rgba(102, 126, 234, 0.15) 0%,
-          transparent 70%
-        );
-        border-radius: 50%;
-        animation: pulse-glow 4s ease-in-out infinite;
+          transparent 70%);
+      border-radius: 50%;
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
       }
 
-      @keyframes pulse-glow {
-        0%,
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 0.5;
-        }
-        50% {
-          transform: translate(-50%, -50%) scale(1.1);
-          opacity: 0.8;
-        }
+      50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, #667eea 50%, #f5576c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      animation: gradient-shift 3s ease infinite;
+      background-size: 200% 200%;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes gradient-shift {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
       }
 
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-zenith-primary,
+    .btn-zenith-secondary {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-zenith-primary {
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+    }
+
+    .btn-zenith-primary::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-zenith-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-zenith-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-zenith-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      border: 2px solid rgba(102, 126, 234, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-zenith-secondary:hover {
+      background: rgba(102, 126, 234, 0.2);
+      border-color: rgba(102, 126, 234, 0.8);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Feature Cards Enhancement */
+    .features-section {
+      padding: 60px 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+
+    .feature-card:hover::before {
+      opacity: 0.1;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(102, 126, 234, 0.6);
+      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+    }
+
+    .feature-icon {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+      animation: float 3s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Enhanced Footer */
+    .site-footer {
+      background: rgba(15, 15, 35, 0.95);
+      border-top: 1px solid rgba(102, 126, 234, 0.2);
+      margin-top: 80px;
+    }
+
+    .footer-content {
+      padding: 60px 20px 40px;
+    }
+
+    .social-btn {
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .social-btn:hover {
+      transform: translateY(-5px) scale(1.1);
+      background: var(--gradient-primary);
+      border-color: transparent;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .footer-link {
+      transition: all 0.3s ease;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .footer-link::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #667eea;
+      padding-left: 20px;
+    }
+
+    .footer-link:hover::before {
+      opacity: 1;
+    }
+
+    .heart-pulse {
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      10%,
+      30% {
+        transform: scale(1.1);
+      }
+
+      20%,
+      40% {
+        transform: scale(1);
+      }
+    }
+
+    /* Animations */
+    .animate-enter {
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
       .hero-title {
-        font-size: clamp(2.5rem, 6vw, 5rem);
-        font-weight: 800;
-        background: linear-gradient(135deg, #fff 0%, #667eea 50%, #f5576c 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 1.5rem;
-        line-height: 1.2;
-        animation: gradient-shift 3s ease infinite;
-        background-size: 200% 200%;
-        position: relative;
-        z-index: 1;
-      }
-
-      @keyframes gradient-shift {
-        0%,
-        100% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-      }
-
-      .hero-subtitle {
-        font-size: clamp(1rem, 2vw, 1.25rem);
-        color: rgba(255, 255, 255, 0.7);
-        max-width: 700px;
-        margin: 0 auto 3rem;
-        line-height: 1.6;
-        position: relative;
-        z-index: 1;
+        font-size: 2.5rem;
       }
 
       .hero-actions {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
+        flex-direction: column;
+        align-items: center;
       }
 
       .btn-zenith-primary,
       .btn-zenith-secondary {
-        padding: 1rem 2.5rem;
-        font-size: 1.1rem;
-        font-weight: 600;
-        border-radius: 12px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .btn-zenith-primary {
-        background: var(--gradient-primary);
-        color: white;
-        box-shadow: var(--shadow-lg), var(--shadow-glow);
-      }
-
-      .btn-zenith-primary::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
         width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.3),
-          transparent
-        );
-        transition: left 0.5s ease;
+        max-width: 300px;
       }
+    }
 
-      .btn-zenith-primary:hover::before {
-        left: 100%;
-      }
+    .nav-link::after {
+      display: none;
+    }
 
-      .btn-zenith-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
-      }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      display: none;
+    }
+  </style>
+</head>
+<!-- Fire Cursor -->
+<link rel="stylesheet" href="firecursor.css" />
 
-      .btn-zenith-secondary {
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-        border: 2px solid rgba(102, 126, 234, 0.5);
-        backdrop-filter: blur(10px);
-      }
+<body>
+  <!-- Navbar -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <img src="website/assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
+      </a>
 
-      .btn-zenith-secondary:hover {
-        background: rgba(102, 126, 234, 0.2);
-        border-color: rgba(102, 126, 234, 0.8);
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-md);
-      }
+      <nav class="nav-links">
+        <a href="#" class="nav-link active" onclick="closeMobileMenuInline()">Home</a>
+        <a href="website/pages/projects.html" class="nav-link" onclick="closeMobileMenuInline()">Projects</a>
+        <a href="website/pages/about.html" class="nav-link" onclick="closeMobileMenuInline()">About</a>
+        <a href="website/pages/contributors.html" class="nav-link" onclick="closeMobileMenuInline()">Contributors</a>
+      </nav>
 
-      /* Feature Cards Enhancement */
-      .features-section {
-        padding: 60px 20px;
-      }
+      <div class="nav-user">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
 
-      .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
+        <a href="website/pages/dashboard.html" class="btn btn-primary text-sm">Dashboard</a>
 
-      .feature-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(102, 126, 234, 0.2);
-        border-radius: 20px;
-        padding: 2.5rem;
-        text-align: center;
-        transition: all 0.4s ease;
-        backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .feature-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--gradient-primary);
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        z-index: 0;
-      }
-
-      .feature-card:hover::before {
-        opacity: 0.1;
-      }
-
-      .feature-card:hover {
-        transform: translateY(-10px);
-        border-color: rgba(102, 126, 234, 0.6);
-        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
-      }
-
-      .feature-icon {
-        font-size: 4rem;
-        display: block;
-        margin-bottom: 1.5rem;
-        filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
-        animation: float 3s ease-in-out infinite;
-        position: relative;
-        z-index: 1;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-      }
-
-      .feature-card h3 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #fff;
-        margin-bottom: 1rem;
-        position: relative;
-        z-index: 1;
-      }
-
-      .feature-card p {
-        color: rgba(255, 255, 255, 0.7);
-        line-height: 1.6;
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Enhanced Footer */
-      .site-footer {
-        background: rgba(15, 15, 35, 0.95);
-        border-top: 1px solid rgba(102, 126, 234, 0.2);
-        margin-top: 80px;
-      }
-
-      .footer-content {
-        padding: 60px 20px 40px;
-      }
-
-      .social-btn {
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(102, 126, 234, 0.3);
-      }
-
-      .social-btn:hover {
-        transform: translateY(-5px) scale(1.1);
-        background: var(--gradient-primary);
-        border-color: transparent;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-      }
-
-      .footer-link {
-        transition: all 0.3s ease;
-        position: relative;
-        padding-left: 15px;
-      }
-
-      .footer-link::before {
-        content: "→";
-        position: absolute;
-        left: 0;
-        opacity: 0;
-        transition: all 0.3s ease;
-      }
-
-      .footer-link:hover {
-        color: #667eea;
-        padding-left: 20px;
-      }
-
-      .footer-link:hover::before {
-        opacity: 1;
-      }
-
-      .heart-pulse {
-        animation: heartbeat 1.5s ease-in-out infinite;
-      }
-
-      @keyframes heartbeat {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        10%,
-        30% {
-          transform: scale(1.1);
-        }
-        20%,
-        40% {
-          transform: scale(1);
-        }
-      }
-
-      /* Animations */
-      .animate-enter {
-        animation: fadeInUp 0.8s ease forwards;
-        opacity: 0;
-      }
-
-      .delay-100 {
-        animation-delay: 0.1s;
-      }
-      .delay-200 {
-        animation-delay: 0.2s;
-      }
-      .delay-300 {
-        animation-delay: 0.3s;
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .hero-title {
-          font-size: 2.5rem;
-        }
-
-        .hero-actions {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .btn-zenith-primary,
-        .btn-zenith-secondary {
-          width: 100%;
-          max-width: 300px;
-        }
-      }
-
-      .nav-link::after {
-        display: none;
-      }
-
-      .nav-link:hover::after,
-      .nav-link.active::after {
-        display: none;
-      }
-
-    </style>
-  </head>
-  <!-- Fire Cursor -->
-  <link rel="stylesheet" href="firecursor.css" />
-
-  <body>
-    <!-- Navbar -->
-    <header class="site-header">
-      <div class="nav-container">
-        <a href="#" class="nav-logo">
-          <img
-            src="website/assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-
-        <nav class="nav-links">
-          <a href="#" class="nav-link active" onclick="closeMobileMenuInline()"
-            >Home</a
-          >
-          <a
-            href="website/pages/projects.html"
-            class="nav-link"
-            onclick="closeMobileMenuInline()"
-            >Projects</a
-          >
-          <a
-            href="website/pages/about.html"
-            class="nav-link"
-            onclick="closeMobileMenuInline()"
-            >About</a
-          >
-          <a
-            href="website/pages/contributors.html"
-            class="nav-link"
-            onclick="closeMobileMenuInline()"
-            >Contributors</a
-          >
-        </nav>
-
-        <div class="nav-user">
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            aria-label="Toggle Theme"
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
-
-          <a href="website/pages/dashboard.html" class="btn btn-primary text-sm"
-            >Dashboard</a
-          >
-
-          <button
-            class="mobile-toggle"
-            onclick="toggleMobileMenu()"
-            aria-label="Menu"
-          >
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-        </div>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+          <svg class="icon icon-lg" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="container section">
-      <!-- Hero Section -->
-      <section class="zenith-hero animate-enter">
-        <h1 class="hero-title">Forge Your Future<br />One Day at a Time</h1>
-        <p class="hero-subtitle">
-          Join the elite 100-day coding protocol. Master modern web development
-          through rigorous daily deployment cycles.
-        </p>
-        <div class="hero-actions">
-          <a href="website/pages/dashboard.html" class="btn-zenith-primary"
-            >Initialize Protocol</a
-          >
-          <a href="website/pages/projects.html" class="btn-zenith-secondary"
-            >View Archive</a
-          >
-        </div>
-      </section>
+  <main class="container section">
+    <!-- Hero Section -->
+    <section class="zenith-hero animate-enter">
+      <h1 class="hero-title">Forge Your Future<br />One Day at a Time</h1>
+      <p class="hero-subtitle">
+        Join the elite 100-day coding protocol. Master modern web development
+        through rigorous daily deployment cycles.
+      </p>
+      <div class="hero-actions">
+        <a href="website/pages/dashboard.html" class="btn-zenith-primary">Initialize Protocol</a>
+        <a href="website/pages/projects.html" class="btn-zenith-secondary">View Archive</a>
+      </div>
+    </section>
 
-      <!-- Features Grid -->
-      <section class="features-section animate-enter delay-100">
-        <div class="grid grid-3">
-          <div class="feature-card">
-            <span class="feature-icon">🚀</span>
-            <h3>Daily Deployments</h3>
-            <p>
-              Build and ship a new project every single day. From simple scripts
-              to complex full-stack applications.
-            </p>
-          </div>
-          <div class="feature-card">
-            <span class="feature-icon">⚡</span>
-            <h3>Modern Stack</h3>
-            <p>
-              Master the latest technologies including React, Next.js,
-              TailwindCSS, and serverless architecture.
-            </p>
-          </div>
-          <div class="feature-card">
-            <span class="feature-icon">🤝</span>
-            <h3>Community Driven</h3>
-            <p>
-              Join a squad of dedicated developers. Code reviews, pair
-              programming, and collaborative growth.
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!--  feature of fire-cursor -->
-
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="container footer-content">
-        <div class="footer-brand animate-enter">
-          <a href="#" class="footer-logo">
-            <img src="website/assets/images/logo.png" alt="Logo" />
-            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-          </a>
-          <p class="footer-desc">
-            A hyper-intensive protocol designed to forge elite web engineers
-            through daily deployment cycles.
+    <!-- Features Grid -->
+    <section class="features-section animate-enter delay-100">
+      <div class="grid grid-3">
+        <div class="feature-card">
+          <span class="feature-icon">🚀</span>
+          <h3>Daily Deployments</h3>
+          <p>
+            Build and ship a new project every single day. From simple scripts
+            to complex full-stack applications.
           </p>
         </div>
-
-        <div class="footer-col animate-enter delay-100">
-          <h3>Navigation</h3>
-          <nav class="footer-links">
-            <a href="#" class="footer-link">Home Base</a>
-            <a href="website/pages/projects.html" class="footer-link"
-              >Archive</a
-            >
-            <a href="website/pages/about.html" class="footer-link"
-              >Leaderboard</a
-            >
-            <a href="website/pages/contributors.html" class="footer-link"
-              >Crew</a
-            >
-          </nav>
+        <div class="feature-card">
+          <span class="feature-icon">⚡</span>
+          <h3>Modern Stack</h3>
+          <p>
+            Master the latest technologies including React, Next.js,
+            TailwindCSS, and serverless architecture.
+          </p>
         </div>
-
-        <div class="footer-col animate-enter delay-200">
-          <h3>Resources</h3>
-          <nav class="footer-links">
-            <a href="website/pages/documentation.html" class="footer-link"
-              >Documentation</a
-            >
-            <a href="website/pages/api-status.html" class="footer-link"
-              >API Status</a
-            >
-            <a href="website/pages/contact.html" class="footer-link"
-              >Contact Comms</a
-            >
-            <a href="website/pages/system-logic.html" class="footer-link"
-              >System Logic</a
-            >
-          </nav>
-        </div>
-
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Github"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Twitter"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path></svg
-            ></a>
-          </div>
+        <div class="feature-card">
+          <span class="feature-icon">🤝</span>
+          <h3>Community Driven</h3>
+          <p>
+            Join a squad of dedicated developers. Code reviews, pair
+            programming, and collaborative growth.
+          </p>
         </div>
       </div>
+    </section>
+  </main>
 
-      <div class="container footer-bottom">
-        <p class="copyright">
-          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
-        </p>
-        <p class="made-by">
-          Maintained by <span class="text-flame font-bold">Subham</span>
-          <svg
-            class="icon icon-sm heart-pulse"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            ></path>
-          </svg>
+  <!--  feature of fire-cursor -->
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-content">
+
+      <!-- ================= BRAND ================= -->
+      <div class="footer-brand animate-enter">
+        <a href="index.html" class="footer-logo" aria-label="Go to homepage">
+          <img src="website/assets/images/logo.png" alt="100 Days of Web Development project logo" />
+          <h2>
+            100 Days of<br />
+            <span class="text-flame">Web Dev</span>
+          </h2>
+        </a>
+
+        <p class="footer-desc">
+          A community-driven learning challenge focused on building real-world
+          frontend projects using HTML, CSS, and JavaScript.
         </p>
       </div>
-    </footer>
 
-    <!-- Scripts -->
-    <script src="website/scripts/components/cursor.js"></script>
-    <script src="website/scripts/components/navigation.js"></script>
-    <script>
-      // Inline function for main index.html mobile menu close
-      function closeMobileMenuInline() {
-        const navLinks = document.querySelector(".nav-links");
-        if (navLinks) {
-          navLinks.classList.remove("open");
-        }
+      <!-- ================= NAVIGATION ================= -->
+      <div class="footer-col animate-enter delay-100">
+        <h3 id="footer-nav-title">Navigation</h3>
+
+        <nav class="footer-links" aria-labelledby="footer-nav-title">
+          <a href="index.html" class="footer-link">Home</a>
+          <a href="website/pages/projects.html" class="footer-link">Projects</a>
+          <a href="website/pages/about.html" class="footer-link">Leaderboard</a>
+          <a href="website/pages/contributors.html" class="footer-link">
+            Contributors
+          </a>
+        </nav>
+      </div>
+
+      <!-- ================= RESOURCES ================= -->
+      <div class="footer-col animate-enter delay-200">
+        <h3 id="footer-resources-title">Resources</h3>
+
+        <nav class="footer-links" aria-labelledby="footer-resources-title">
+          <a href="website/pages/documentation.html" class="footer-link">
+            Documentation
+          </a>
+          <a href="website/pages/api-status.html" class="footer-link">
+            API Status
+          </a>
+          <a href="website/pages/contact.html" class="footer-link">
+            Contact
+          </a>
+          <a href="website/pages/system-logic.html" class="footer-link">
+            System Logic
+          </a>
+
+          <!-- ✅ Accessibility Tool -->
+          <a href="accessibility-checker.html" class="footer-link">
+            Accessibility Checker
+          </a>
+        </nav>
+      </div>
+
+      <!-- ================= SOCIAL ================= -->
+      <div class="footer-col animate-enter delay-300">
+        <h3 id="footer-social-title">Connect</h3>
+        <p class="text-secondary text-sm mb-4">
+          Join the community and contribute.
+        </p>
+
+        <nav class="footer-socials" aria-labelledby="footer-social-title">
+          <a href="https://github.com/" target="_blank" rel="noopener" class="social-btn"
+            aria-label="Visit our GitHub repository">
+            <!-- GitHub Icon -->
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37
+              3.37 0 0 0-.94-2.61c3.14-.35
+              6.44-1.54 6.44-7A5.44
+              5.44 0 0 0 20 4.77
+              5.07 5.07 0 0 0
+              19.91 1S18.73.65
+              16 2.48a13.38
+              13.38 0 0 0-7 0C6.27.65
+              5.09 1 5.09 1A5.07
+              5.07 0 0 0 5 4.77a5.44
+              5.44 0 0 0-1.5 3.78c0
+              5.42 3.3 6.61 6.44
+              7A3.37 3.37 0 0 0
+              9 18.13V22" />
+            </svg>
+          </a>
+
+          <a href="https://twitter.com/" target="_blank" rel="noopener" class="social-btn"
+            aria-label="Follow us on Twitter">
+            <!-- Twitter Icon -->
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M23 3a10.9 10.9 0 0 1-3.14
+              1.53 4.48 4.48 0 0 0-7.86
+              3v1A10.66 10.66 0 0 1 3
+              4s-4 9 5 13a11.64
+              11.64 0 0 1-7 2c9
+              5 20 0 20-11.5a4.5
+              4.5 0 0 0-.08-.83A7.72
+              7.72 0 0 0 23 3z" />
+            </svg>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ================= FOOTER BOTTOM ================= -->
+    <div class="container footer-bottom">
+      <p class="copyright">
+        © 2026 100 Days of Web Development. All rights reserved.
+      </p>
+
+      <p class="made-by">
+        Maintained by
+        <span class="text-flame font-bold">Subham</span>
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="website/scripts/components/cursor.js"></script>
+  <script src="website/scripts/components/navigation.js"></script>
+  <script>
+    // Inline function for main index.html mobile menu close
+    function closeMobileMenuInline() {
+      const navLinks = document.querySelector(".nav-links");
+      if (navLinks) {
+        navLinks.classList.remove("open");
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>
