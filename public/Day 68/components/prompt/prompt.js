@@ -3,9 +3,35 @@ import { loadChat } from "../chat/chat.js";
 import { askGemini } from "../../services/gemini.js";
 
 export async function loadPrompt() {
-  const res = await fetch("./components/prompt/prompt.html");
-  document.getElementById("prompt").innerHTML = await res.text();
-  attachEvents();
+  try {
+    const res = await fetch("./components/prompt/prompt.html");
+    
+    if (!res.ok) {
+      throw new Error(`Failed to load prompt component: ${res.status}`);
+    }
+    
+    const contentType = res.headers.get('content-type');
+    if (!contentType || !contentType.includes('text/html')) {
+      throw new Error('Invalid response format for prompt component');
+    }
+    
+    const html = await res.text();
+    const promptEl = document.getElementById("prompt");
+    
+    if (!promptEl) {
+      console.error('Prompt element not found in DOM');
+      return;
+    }
+    
+    promptEl.innerHTML = html;
+    attachEvents();
+  } catch (error) {
+    console.error('Error loading prompt:', error);
+    const promptEl = document.getElementById("prompt");
+    if (promptEl) {
+      promptEl.innerHTML = '<p style="color: #e74c3c; padding: 10px;">Failed to load prompt interface. Please refresh the page.</p>';
+    }
+  }
 }
 
 function attachEvents() {

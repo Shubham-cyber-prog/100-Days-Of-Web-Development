@@ -2,14 +2,42 @@ import { getStore, setStore, createChat } from "../../data/store.js";
 import { loadChat } from "../chat/chat.js";
 
 export async function loadSidebar() {
-  const res = await fetch("./components/sidebar/sidebar.html");
-  document.getElementById("sidebar").innerHTML = await res.text();
+  try {
+    const res = await fetch("./components/sidebar/sidebar.html");
+    
+    if (!res.ok) {
+      throw new Error(`Failed to load sidebar component: ${res.status}`);
+    }
+    
+    const contentType = res.headers.get('content-type');
+    if (!contentType || !contentType.includes('text/html')) {
+      throw new Error('Invalid response format for sidebar component');
+    }
+    
+    const html = await res.text();
+    const sidebarEl = document.getElementById("sidebar");
+    
+    if (!sidebarEl) {
+      console.error('Sidebar element not found in DOM');
+      return;
+    }
+    
+    sidebarEl.innerHTML = html;
 
-  document.getElementById("username").textContent =
-    getStore().user?.name || "User";
+    const usernameEl = document.getElementById("username");
+    if (usernameEl) {
+      usernameEl.textContent = getStore().user?.name || "User";
+    }
 
-  attachEvents();
-  renderChats();
+    attachEvents();
+    renderChats();
+  } catch (error) {
+    console.error('Error loading sidebar:', error);
+    const sidebarEl = document.getElementById("sidebar");
+    if (sidebarEl) {
+      sidebarEl.innerHTML = '<p style="color: #e74c3c; padding: 10px;">Failed to load sidebar. Please refresh the page.</p>';
+    }
+  }
 }
 
 function attachEvents() {

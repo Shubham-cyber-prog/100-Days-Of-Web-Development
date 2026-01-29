@@ -4,9 +4,36 @@ let chatMounted = false;
 
 export async function loadChat() {
   if (!chatMounted) {
-    const res = await fetch("./components/chat/chat.html");
-    document.getElementById("chat").innerHTML = await res.text();
-    chatMounted = true;
+    try {
+      const res = await fetch("./components/chat/chat.html");
+      
+      if (!res.ok) {
+        throw new Error(`Failed to load chat component: ${res.status}`);
+      }
+      
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('text/html')) {
+        throw new Error('Invalid response format for chat component');
+      }
+      
+      const html = await res.text();
+      const chatEl = document.getElementById("chat");
+      
+      if (!chatEl) {
+        console.error('Chat element not found in DOM');
+        return;
+      }
+      
+      chatEl.innerHTML = html;
+      chatMounted = true;
+    } catch (error) {
+      console.error('Error loading chat:', error);
+      const chatEl = document.getElementById("chat");
+      if (chatEl) {
+        chatEl.innerHTML = '<p style="color: #e74c3c; padding: 10px;">Failed to load chat interface. Please refresh the page.</p>';
+      }
+      return;
+    }
   }
   renderMessages();
 }
