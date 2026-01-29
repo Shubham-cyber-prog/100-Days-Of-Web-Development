@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robo Factory Escape</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Robo Factory Escape</h1>
+    <div id="hud">
+        <p>Score: <span id="score">0</span></p>
+        <p>Lives: <span id="lives">3</span></p>
+        <p>Time: <span id="time">0.00</span>s</p>
+        <p>Level: <span id="level">1</span></p>
+    </div>
+    <div id="game-container">
+        <canvas id="game-canvas" width="1000" height="500"></canvas>
+        <div id="start-screen" style="display:block;">
+            <h2>Welcome to Robo Factory Escape!</h2>
+            <p>Navigate the conveyors, disable machines, and escape!</p>
+            <button id="start-btn">Start Game</button>
+        </div>
+        <div id="message" style="display:none;">
+            <p>Game Over! Press R to restart.</p>
+        </div>
+        <div id="win-screen" style="display:none;">
+            <p>Level Complete! Press N for next level or R to restart.</p>
+        </div>
+        <div id="instructions">
+            <p>Use arrow keys to move, SPACE to jump, D to disable machines, P to pause.</p>
+            <p>Collect power-ups: Yellow for speed, Pink for extra life.</p>
+            <p>Escape the factory by reaching the exit!</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
