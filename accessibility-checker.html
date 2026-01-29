@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Accessibility Checker | 100 Days Of Web Development</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-dark: linear-gradient(135deg, #1e1e2e 0%, #2a2a40 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.3);
+
+            --text-primary: #f9fafb;
+            --text-secondary: #c7c9d3;
+            --border: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Reset */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--gradient-dark);
+            color: var(--text-primary);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            padding: 2.2rem 1.6rem 4rem;
+            line-height: 1.7;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.3rem;
+            letter-spacing: 0.4px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: var(--text-secondary);
+        }
+
+        /* Skip link */
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: 10px;
+            background: #000;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            left: 12px;
+            outline: 2px solid #fff;
+        }
+
+        /* Layout */
+        header {
+            max-width: 1100px;
+            margin: 0 auto 2.2rem;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.6rem;
+        }
+
+        /* Cards */
+        section {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        /* Form controls */
+        label {
+            display: block;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        input {
+            width: 100%;
+            margin-top: 6px;
+            padding: 0.6rem 0.65rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.25);
+            color: var(--text-primary);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.4);
+        }
+
+        /* Buttons */
+        button {
+            margin-top: 1rem;
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            border: none;
+            background: var(--gradient-primary);
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md), var(--shadow-glow);
+        }
+
+        button:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+
+        /* Lists */
+        ul {
+            padding-left: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 0.45rem;
+        }
+
+        /* Preview box */
+        #preview {
+            margin-top: 0.9rem;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.35);
+            font-weight: 500;
+        }
+
+        /* Status text */
+        #contrastResult,
+        #keyboardStatus {
+            margin-top: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 520px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <header>
+        <h1>Accessibility Checker</h1>
+        <p>
+            Validate accessibility compliance using simple tools aligned with
+            WCAG 2.1 guidelines.
+        </p>
+    </header>
+
+    <main id="main">
+
+        <!-- ================= IMAGE ALT VALIDATOR ================= -->
+        <section aria-labelledby="alt-title">
+            <h2 id="alt-title">Image Alt Text Validator</h2>
+            <button onclick="scanAlt()">Scan Images</button>
+            <ul id="altResults" aria-live="polite"></ul>
+        </section>
+
+        <!-- ================= COLOR CONTRAST ================= -->
+        <section aria-labelledby="contrast-title">
+            <h2 id="contrast-title">Color Contrast Checker</h2>
+
+            <label for="textColor">Text Color (HEX)</label>
+            <input id="textColor" value="#ffffff" />
+
+            <label for="bgColor">Background Color (HEX)</label>
+            <input id="bgColor" value="#020617" />
+
+            <button onclick="checkContrast()">Check Contrast</button>
+
+            <p id="contrastResult" aria-live="polite"></p>
+            <div id="preview">Preview Text</div>
+        </section>
+
+        <!-- ================= KEYBOARD TEST ================= -->
+        <section aria-labelledby="keyboard-title">
+            <h2 id="keyboard-title">Keyboard Navigation Tester</h2>
+
+            <p>
+                Navigate this section using
+                <strong>Tab</strong>, <strong>Enter</strong>,
+                and <strong>Shift + Tab</strong>.
+            </p>
+
+            <button>Focusable Button</button>
+            <input placeholder="Focusable input" />
+
+            <p id="keyboardStatus" aria-live="polite"></p>
+        </section>
+
+        <!-- ================= GUIDELINES ================= -->
+        <section aria-labelledby="guidelines-title">
+            <h2 id="guidelines-title">WCAG 2.1 Checklist</h2>
+            <ul>
+                <li>Images must include meaningful alt text.</li>
+                <li>Minimum contrast ratio: 4.5:1 for normal text.</li>
+                <li>All interactive elements must be keyboard accessible.</li>
+                <li>Use semantic HTML landmarks.</li>
+                <li>Provide skip navigation links.</li>
+                <li>Inputs must have associated labels.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script>
+        // -------- ALT VALIDATOR --------
+        function scanAlt() {
+            const images = document.querySelectorAll("img");
+            const output = document.getElementById("altResults");
+            output.innerHTML = "";
+
+            if (images.length === 0) {
+                output.innerHTML = "<li>No images found on this page.</li>";
+                return;
+            }
+
+            images.forEach((img, index) => {
+                const li = document.createElement("li");
+                const alt = img.getAttribute("alt");
+
+                li.textContent = alt && alt.trim()
+                    ? `Image ${index + 1}: ✅ Alt text present`
+                    : `Image ${index + 1}: ❌ Missing alt text`;
+
+                output.appendChild(li);
+            });
+        }
+
+        // -------- COLOR CONTRAST --------
+        function luminance(r, g, b) {
+            const a = [r, g, b].map(v => {
+                v /= 255;
+                return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+            });
+            return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+        }
+
+        function hexToRgb(hex) {
+            hex = hex.replace("#", "");
+            return {
+                r: parseInt(hex.slice(0, 2), 16),
+                g: parseInt(hex.slice(2, 4), 16),
+                b: parseInt(hex.slice(4, 6), 16)
+            };
+        }
+
+        function checkContrast() {
+            const text = hexToRgb(textColor.value);
+            const bg = hexToRgb(bgColor.value);
+
+            const L1 = luminance(text.r, text.g, text.b) + 0.05;
+            const L2 = luminance(bg.r, bg.g, bg.b) + 0.05;
+            const ratio = L1 > L2 ? (L1 / L2) : (L2 / L1);
+
+            preview.style.color = textColor.value;
+            preview.style.backgroundColor = bgColor.value;
+
+            contrastResult.textContent =
+                ratio >= 4.5
+                    ? `✅ Contrast Ratio: ${ratio.toFixed(2)} (Pass)`
+                    : `❌ Contrast Ratio: ${ratio.toFixed(2)} (Fail)`;
+        }
+
+        // -------- KEYBOARD DETECTOR --------
+        document.addEventListener("keydown", e => {
+            if (e.key === "Tab") {
+                keyboardStatus.textContent = "Keyboard navigation detected ✔";
+            }
+        });
+    </script>
+
+</body>
+
+</html>
