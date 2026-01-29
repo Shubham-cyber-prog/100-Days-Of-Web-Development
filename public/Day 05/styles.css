@@ -7,6 +7,7 @@
     --button-bg: #ffffff;
     --button-shadow: #d1d8e0;
     --operator-color: #fd79a8;
+    --scientific-color: #00b894;
 }
 
 [data-theme="dark"] {
@@ -18,6 +19,7 @@
     --button-bg: #3d4548;
     --button-shadow: #2d3436;
     --operator-color: #ff7675;
+    --scientific-color: #55efc4;
 }
 
 * {
@@ -58,11 +60,14 @@ h1 {
     background-color: var(--display-bg);
     padding: 20px;
     text-align: right;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .previous-operand {
     font-size: 1.2rem;
     opacity: 0.7;
+    min-height: 24px;
 }
 
 .current-operand {
@@ -81,11 +86,12 @@ h1 {
 button {
     border: none;
     border-radius: 10px;
-    padding: 20px;
-    font-size: 1.4rem;
+    padding: 15px;
+    font-size: 1.3rem;
     cursor: pointer;
     background-color: var(--button-bg);
     box-shadow: 0 4px 0 var(--button-shadow);
+    color: var(--text-color);
 }
 
 button:active {
@@ -98,13 +104,24 @@ button:active {
     color: white;
 }
 
+.scientific {
+    background-color: var(--scientific-color);
+    color: white;
+}
+
 .span-two {
     grid-column: span 2;
 }
 
+.span-two-vert {
+    grid-row: span 2;
+    background-color: var(--primary-color); 
+    color: white;
+    height: 100%;
+}
+
 #clear { background: #ff7675; color: white; }
 #delete { background: #74b9ff; color: white; }
-#equals { background: var(--primary-color); color: white; }
 
 .theme-toggle {
     margin-top: 20px;

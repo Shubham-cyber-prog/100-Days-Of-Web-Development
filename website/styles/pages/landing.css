@@ -55,8 +55,7 @@
 .btn-zenith-primary:hover {
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 20px 40px -10px var(--accent-alpha);
-    background: #ffb84d;
-    /* Lighten slightly */
+    background: var(--gradient-glow); /* keep theme gradient */
 }
 
 .btn-zenith-secondary {
@@ -93,8 +92,12 @@
 .feature-card:hover {
     border-color: var(--accent-core);
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        box-shadow:
+    0 0 0 1px rgba(255, 200, 120, 0.25),
+    0 18px 36px rgba(255, 180, 80, 0.30),
+    0 0 60px rgba(255, 210, 120, 0.20);
 }
+
 
 .feature-icon {
     font-size: 2.5rem;

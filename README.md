@@ -16,7 +16,7 @@ Level up your **frontend skills** with this **100 Days of Web Development Challe
 ![GitHub Repo Size](https://img.shields.io/github/repo-size/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)
 ![GitHub Stars](https://img.shields.io/github/stars/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)
 
-🔗 **Join our Discord community:** [Click Here](https://discord.gg/SW7puwEm)
+🔗 **Join our Discord community:** [Click Here](https://discord.gg/BFTWMU6p)
 
 ---
 
@@ -44,8 +44,9 @@ This repository documents my **100 Days of Web Development journey**, where I:
 
 ## 🔧 Tech Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript
+- **Frontend**: HTML5, CSS3, JavaScript, TypeScript
 - **Version Control**: Git & GitHub
+- **Backend**: NodeJS, ExpressJS, Python 
 
 ---
 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Powered Image Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="top-header">
+  <nav class="navbar">
+    <div class="nav-left">
+      <span class="logo">🖼 AI Image Editor</span>
+    </div>
+
+    <div class="nav-center">
+      <span id="status" class="status">Loading AI…</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Editor</a></li>
+      <li><a href="demo.html">Demo</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<main class="editor-section">
+
+  <div class="upload-box">
+    <input type="file" id="imageUpload" accept="image/*" />
+    <label for="imageUpload">📤 Upload Image</label>
+  </div>
+
+  <div class="editor">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <div class="controls">
+    <button id="grayscaleBtn" disabled>AI Grayscale</button>
+    <button id="edgeBtn" disabled>AI Edges</button>
+    <button id="cartoonBtn" disabled>AI Cartoon</button>
+    <button id="removeBgBtn" disabled>Remove BG</button>
+    <button id="resetBtn" disabled>Reset</button>
+    <button id="downloadBtn" disabled>Download</button>
+  </div>
+
+</main>
+
+<footer>
+  <p>Capstone • Day 108</p>
+</footer>
+
+<!-- AI LIBRARIES -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.16.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix"></script>
+
+<!-- APP -->
+<script src="script.js"></script>
+</body>
+</html>

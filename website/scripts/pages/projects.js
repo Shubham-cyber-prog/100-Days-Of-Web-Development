@@ -1,9 +1,9 @@
-/**
- * Zenith Project Loader
- * Dynamically loads project cards based on the full 100-day curriculum.
- */
-
 const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/tree/main/public";
+
+// Import components
+import { projectModal } from '../components/ProjectModal.js';
+import { App } from '../core/app.js';
+import { Notify } from '../core/Notify.js';
 
 // Map of existing folders found in public/ to handle inconsistencies
 const folderMap = {
@@ -27,9 +27,12 @@ const folderMap = {
     87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
+    102: "Day 102", 103: "Day 103", 105: "Day 105", 107: "Day 107", 111: "day-111",
     145: "Day 145",
     151: "Day 151",
-    153: "Day 153"
+    152: "Day 152 - Newsly",
+    154: "Day 154 ",
+    155: "Day 155", 156: "Day 156", 167: "Day 167"
 };
 
 // Full 100-Day Project List
@@ -106,7 +109,13 @@ const allProjects = [
     { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
     // DAY 151
     { day: 151, title: "Mini Geo Guesser", tech: ["HTML", "CSS", "JS"] },
-    { day: 153, title: "Stopwatch App", tech: ["HTML", "CSS", "JS"] }
+    // DAY 152
+    { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
+    // DAY 154
+    { day: 154, title: "Snake Game", tech: ["HTML", "CSS", "JS"] },
+    { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
+    { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] },
+    { day: 167, title: "Time Fracture Arena", tech: ["HTML", "CSS", "JS", "Canvas"] }
 ];
 
 function getDifficulty(day) {
@@ -132,14 +141,26 @@ function renderProjects(filter = 'All') {
         let codeLink = '#';
         let isDisabled = false;
 
-        if (folderName) {
-            // Updated path to ensure it points correctly from your projects page
+        /* SPECIAL CASE: README TOOL KIT (DAY 103) */
+        if (project.day === 103) {
+            liveLink = 'https://100dayswebdevelopment-ecwoc.netlify.app/public/Day%20103/index.html';
+            codeLink = `${REPO_URL}/${folderName}`;
+            isDisabled = false;
+        }
+        else if (project.day === 111) {
+            liveLink = `../../public/${folderName}/build/index.html`
+            codeLink = `${REPO_URL}/${folderName}`;
+            isDisabled = false;
+        }
+        else if (folderName) {
             liveLink = `../../public/${folderName}/index.html`;
             codeLink = `${REPO_URL}/${folderName}`;
-        } else {
+        }
+        else {
             isDisabled = true;
             codeLink = REPO_URL;
         }
+
 
         const dayLabel = project.endDay ? `DAYS ${project.day}-${project.endDay}` : `DAY ${project.day}`;
 
@@ -148,7 +169,24 @@ function renderProjects(filter = 'All') {
         card.style.animationDelay = `${Math.min(delay, 1000)}ms`;
         delay += 30;
 
-        const techTags = project.tech ? project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('') : '';
+        const techIconMap = {
+            HTML: 'fa-html5',
+            CSS: 'fa-css3-alt',
+            JS: 'fa-js',
+            'Node.js': 'fa-node',
+            React: 'fa-react',
+            API: 'fa-plug'
+        };
+
+        const techTags = project.tech
+            ? project.tech.map(t => `
+        <span class="tech-tag">
+            <i class="fa-brands ${techIconMap[t] || 'fa-code'}"></i>
+            ${t}
+        </span>
+      `).join('')
+            : '';
+
 
         card.innerHTML = `
             <div class="card-top">
@@ -158,7 +196,7 @@ function renderProjects(filter = 'All') {
                 <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
             <div class="card-divider"></div>
-            <h3 style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
+            <h3 class="project-title" style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
                 ${project.title}
             </h3>
             <div class="tech-stack" style="margin-bottom: 0.5rem;">
@@ -173,16 +211,24 @@ function renderProjects(filter = 'All') {
             window.open(codeLink, '_blank');
         };
 
-        // --- CRITICAL FIX START ---
+        // --- PROJECT SHOWCASE INTEGRATION ---
         if (!isDisabled) {
-            // Instead of window.open, we call our health check function
             card.addEventListener('click', (e) => {
-                handleProjectClick(e, liveLink);
+                // Prepare project data for modal
+                const projectData = {
+                    ...project,
+                    difficulty,
+                    liveLink,
+                    codeLink,
+                    time: project.day <= 30 ? '1-2 hours' : project.day <= 60 ? '3-5 hours' : '8+ hours'
+                };
+
+                projectModal.show(projectData);
             });
         } else {
             card.classList.add('is-disabled');
         }
-        // --- CRITICAL FIX END ---
+        // --- END INTEGRATION ---
 
         setupTiltEffect(card);
         grid.appendChild(card);

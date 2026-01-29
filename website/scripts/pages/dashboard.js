@@ -1,39 +1,34 @@
 
+import { firestoreService } from '../firestore.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication (Mock / Local Storage)
-    // Upstream uses Firebase, but strictly adhering to "Frontend Only" request for now
-    // to prevent broken app due to missing API keys.
-
-    /* 
-    // Firebase Import (Commented out until config is provided)
-    // import { auth } from './firebase-config.js'; 
-    */
-
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const authToken = sessionStorage.getItem('authToken') === 'true';
-    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+    // Check authentication
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
     // Auth Guard
-    if (!authToken && !localAuth && !isGuest) {
+    if (!isLoggedIn && !isGuest) {
         window.location.href = 'login.html';
         return;
     }
+    
+    waitForAuthService();
 
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User');
-    initializeDashboard({ email: userName, isGuest });
+    const userId = localStorage.getItem('userId');
+    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('userName') || 'User');
+    initializeDashboard({ email: userName, isGuest, userId });
 
     function initializeDashboard(user) {
         // Set user name
         const userNameElement = document.getElementById('userName');
         if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
 
-        // Logout functionality
+        // Logout functionality with Notify confirmation
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
                 if (confirm('Abort mission?')) {
-                    sessionStorage.clear();
-                    localStorage.removeItem('isAuthenticated');
+                    auth.logout();
                     window.location.href = 'login.html';
                 }
             });
@@ -84,24 +79,132 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 38, title: "Snake Game", folder: "Day 38", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 39, title: "Hangman Game", folder: "Day 39", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 40, title: "Simon Say Game", folder: "Day 40", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            // ... (truncated for brevity, logic remains)
+            { day: 41, title: "GitHub Profile Finder", folder: "Day 41", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
+            { day: 42, title: "HFT Market Tracker", folder: "Day 42", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
+            { day: 43, title: "NewsWave - Your Daily News Aggregator", folder: "Day 43", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
+            { day: 44, title: "AI Chatbot Interface", folder: "Day 44", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 45, title: "Project Management Tool", folder: "Day 45", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 46, title: "ShopEase Pro", folder: "Day 46", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 47, title: "Banking Dashboard", folder: "Day 47", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 48, title: "Flight Booking System", folder: "Day 48", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 49, title: "RecipeShare", folder: "Day 49", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 50, title: "Interactive Resume Builder", folder: "Day 50", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 51, title: "Portfolio & Blog", folder: "Day 51", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 52, title: "Project Day 52", folder: "Day 52", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 53, title: "File Uploader", folder: "Day 53", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 54, title: "CodeEditor Pro", folder: "Day 54", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 55, title: "Project Day 55", folder: "Day 55", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 56, title: "Expense Splitter", folder: "Day 56", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 57, title: "Project Day 57", folder: "Day 57", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 58, title: "Project Day 58", folder: "Day 58", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 59, title: "Project Day 59", folder: "Day 59", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
 
             { day: 60, title: "Travel Planner", folder: "Day 60", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 62, title: "Project Day 62", folder: "Day 62", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 63, title: "Project Day 63", folder: "Day 63", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 64, title: "Project Day 64", folder: "Day 64", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 65, title: "Project Day 65", folder: "Day 65", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 66, title: "Project Day 66", folder: "Day 66", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 67, title: "Project Day 67", folder: "Day 67", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 68, title: "Project Day 68", folder: "Day 68", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 69, title: "Project Day 69", folder: "Day 69", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 70, title: "Project Day 70", folder: "Day 70", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 71, title: "Project Day 71", folder: "Day 71", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 72, title: "Project Day 72", folder: "Day 72", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 73, title: "Project Day 73", folder: "Day 73", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 74, title: "Project Day 74", folder: "Day 74", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 75, title: "Project Day 75", folder: "Day 75", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 76, title: "Project Day 76", folder: "Day 76", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 77, title: "Project Day 77", folder: "Day 77", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 78, title: "Project Day 78", folder: "Day 78", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 79, title: "Project Day 79", folder: "Day 79", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 80, title: "Project Day 80", folder: "Day 80", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 81, title: "Project Day 81", folder: "Day 81", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 82, title: "Project Day 82", folder: "Day 82", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 83, title: "Project Day 83", folder: "Day 83", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 84, title: "Project Day 84", folder: "Day 84", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 85, title: "Project Day 85", folder: "Day 85", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 86, title: "Project Day 86", folder: "Day 86", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 87, title: "Project Day 87", folder: "Day 87", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 88, title: "Project Day 88", folder: "Day 88", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 89, title: "Project Day 89", folder: "Day 89", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 90, title: "Project Day 90", folder: "Day 90", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 91, title: "Project Day 91", folder: "Day 91", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 92, title: "Project Day 92", folder: "Day 92", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 93, title: "Project Day 93", folder: "Day 93", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 94, title: "Project Day 94", folder: "Day 94", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 95, title: "Project Day 95", folder: "Day 95", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 96, title: "Project Day 96", folder: "Day 96", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 97, title: "Project Day 97", folder: "Day 97", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 98, title: "Project Day 98", folder: "Day 98", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 99, title: "Project Day 99", folder: "Day 99", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
             { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
         ];
 
-        // Load completed days from localStorage
-        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        // Initialize progress service and load completed days
+        let completedDays = [];
+        if (progressService) {
+            try {
+                completedDays = await progressService.initialize(user);
+                // Listen for real-time updates
+                progressService.listenToUpdates((updatedDays) => {
+                    completedDays = updatedDays;
+                    renderProgressGrid();
+                    updateStats();
+                    checkAchievements();
+                });
+            } catch (error) {
+                console.warn('Failed to initialize progress service:', error);
+                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            }
+        } else {
+            completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Initial achievement check
+        checkAchievements();
+
+        function checkAchievements() {
+            if (achievementService) {
+                achievementService.checkAchievements({
+                    totalCompleted: completedDays.length,
+                    currentStreak: calculateStreak(completedDays),
+                    techCount: 3 // Hardcoded estimate for now
+                });
+            }
+        }
+
+        function calculateStreak(days) {
+            if (!days.length) return 0;
+            const sorted = [...days].sort((a, b) => b - a);
+            let streak = 0;
+            // Simple streak logic for day numbers (assumes consecutive days are consecutive ints)
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (sorted[i] - sorted[i + 1] === 1) streak++;
+                else break;
+            }
+            return streak + 1;
+        }
+
+        // Listen for progress updates from other tabs/windows
+        window.addEventListener('progressUpdated', (e) => {
+            completedDays = e.detail;
+            renderProgressGrid();
+            updateStats();
+        });
 
         // Render progress grid
         if (document.getElementById('progressGrid')) renderProgressGrid();
 
-        // Update stats
-        if (document.getElementById('completedDays')) updateStats();
+            // Render UI after loading data
+            if (document.getElementById('progressGrid')) renderProgressGrid();
+            if (document.getElementById('completedDays')) updateStats();
+            if (document.getElementById('recommendationsGrid')) renderRecommendations();
+        }
 
-        // Render recommendations
-        if (document.getElementById('recommendationsGrid')) renderRecommendations();
+        // Load user progress
+        loadUserProgress();
 
         function renderProgressGrid() {
             const progressGrid = document.getElementById('progressGrid');
@@ -135,13 +238,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function toggleDay(day) {
-            if (completedDays.includes(day)) {
-                completedDays = completedDays.filter(d => d !== day);
+        async function toggleDay(day) {
+            if (progressService) {
+                await progressService.toggleDay(day);
+                completedDays = progressService.getCompletedDays();
             } else {
-                completedDays.push(day);
+                if (completedDays.includes(day)) {
+                    completedDays = completedDays.filter(d => d !== day);
+                } else {
+                    completedDays.push(day);
+                }
+                localStorage.setItem('completedDays', JSON.stringify(completedDays));
             }
-            localStorage.setItem('completedDays', JSON.stringify(completedDays));
             renderProgressGrid();
             updateStats();
         }
@@ -151,7 +259,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.getElementById('completedDays');
             if (el) el.textContent = completedCount;
 
-            // Stats logic...
+            // Achievement Progress logic
+            if (achievementService) {
+                const nextAchievement = achievementService.getNextAchievement('milestone', completedCount);
+                const nextEl = document.getElementById('nextAchievementLabel');
+                if (nextEl && nextAchievement) {
+                    nextEl.textContent = `Next: ${nextAchievement.title}`;
+                }
+            }
         }
 
         function renderRecommendations() {
