@@ -241,20 +241,89 @@ function renderProjects(filter = 'All') {
 async function handleProjectClick(event, url) {
     event.preventDefault();
 
+    const card = event.currentTarget;
+    const originalHTML = card.innerHTML;
+
     try {
+        // Show loading state
+        card.style.opacity = '0.6';
+        card.style.pointerEvents = 'none';
+
         // Use 'no-cache' to ensure the browser doesn't give a fake "OK" 
-        const response = await fetch(url, { method: 'HEAD', cache: 'no-cache' });
+        const response = await fetch(url, { 
+            method: 'HEAD', 
+            cache: 'no-cache',
+            signal: AbortSignal.timeout(5000) // 5 second timeout
+        });
+
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
 
         if (response.ok) {
             window.open(url, '_blank', 'noopener,noreferrer');
         } else {
-            // If the folder isn't there, redirect to your mission recovery page
+            // Show error message
+            const errorMsg = `
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+                            background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                            justify-content: center; border-radius: 8px; color: #fee; font-size: 14px; padding: 16px;">
+                    Project not available (HTTP ${response.status})
+                </div>
+            `;
+            showErrorToast('Project folder not found. Showing available projects.');
             window.location.href = './404.html';
         }
     } catch (error) {
-        // This catches the "Cannot GET" scenario (network/file not found)
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
+        
+        console.error('Project click error:', error);
+        
+        // Provide specific error messages
+        const errorMsg = error.name === 'AbortError' 
+            ? 'Request timeout. Project server may be down.'
+            : error instanceof TypeError
+            ? 'Network error. Please check your connection.'
+            : 'Unable to access project.';
+        
+        showErrorToast(errorMsg);
         window.location.href = './404.html';
     }
+}
+
+/**
+ * Display user-friendly error toast notification
+ */
+function showErrorToast(message) {
+    const existingToast = document.querySelector('.error-toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'error-toast';
+    toast.setAttribute('role', 'alert');
+    toast.textContent = '⚠️ ' + message;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #c33;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 4px;
+        z-index: 9999;
+        max-width: 300px;
+        animation: slideIn 0.3s ease-out;
+    `;
+
+    document.body.appendChild(toast);
+
+    // Auto-dismiss after 5 seconds
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => toast.remove(), 300);
+    }, 5000);
 }
 /**
  * Applies a 3D Tilt effect based on cursor position.

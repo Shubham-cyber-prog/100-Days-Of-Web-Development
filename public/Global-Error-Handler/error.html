@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Something Went Wrong</title>
+    <link rel="stylesheet" href="error-styles.css">
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <!-- Error Icon -->
+            <div class="error-icon" id="errorIcon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+
+            <!-- Error Title -->
+            <h1 class="error-title" id="errorTitle">Oops! Something Went Wrong</h1>
+
+            <!-- Error Type Badge -->
+            <div class="error-badge" id="errorBadge">
+                <span id="errorType">UNKNOWN ERROR</span>
+            </div>
+
+            <!-- Error Message -->
+            <p class="error-message" id="errorMessage">
+                We encountered an unexpected error. Please try again later.
+            </p>
+
+            <!-- Error Details (Collapsible) -->
+            <details class="error-details">
+                <summary>Show Technical Details</summary>
+                <div class="error-details-content">
+                    <div class="error-detail-item">
+                        <strong>Error Code:</strong>
+                        <span id="errorCode">N/A</span>
+                    </div>
+                    <div class="error-detail-item">
+                        <strong>Status:</strong>
+                        <span id="errorStatus">N/A</span>
+                    </div>
+                    <div class="error-detail-item">
+                        <strong>Timestamp:</strong>
+                        <span id="errorTimestamp">N/A</span>
+                    </div>
+                    <div class="error-detail-item">
+                        <strong>Request URL:</strong>
+                        <span id="errorUrl">N/A</span>
+                    </div>
+                    <div class="error-detail-item">
+                        <strong>Connection Status:</strong>
+                        <span id="connectionStatus">
+                            <span class="status-indicator" id="statusIndicator"></span>
+                            <span id="statusText">Checking...</span>
+                        </span>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Action Buttons -->
+            <div class="error-actions">
+                <button class="btn btn-primary" id="retryBtn" onclick="retryAction()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 2v6h-6"></path>
+                        <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                        <path d="M3 22v-6h6"></path>
+                        <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+                    </svg>
+                    Retry
+                </button>
+
+                <button class="btn btn-secondary" onclick="goBack()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Go Back
+                </button>
+
+                <button class="btn btn-secondary" onclick="goHome()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    Go Home
+                </button>
+
+                <button class="btn btn-secondary" id="reportBtn" onclick="reportError()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                        <line x1="12" y1="9" x2="12.01" y2="9"></line>
+                    </svg>
+                    Report Issue
+                </button>
+            </div>
+
+            <!-- Suggestions -->
+            <div class="error-suggestions" id="errorSuggestions">
+                <h3>What you can try:</h3>
+                <ul id="suggestionsList">
+                    <li>Check your internet connection</li>
+                    <li>Refresh the page</li>
+                    <li>Clear your browser cache</li>
+                    <li>Try again in a few minutes</li>
+                </ul>
+            </div>
+
+            <!-- Offline Mode Indicator -->
+            <div class="offline-indicator" id="offlineIndicator" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                    <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+                    <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+                    <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+                    <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                </svg>
+                <span>You are currently offline</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Error data from ErrorHandler
+        let errorData = null;
+        let retryUrl = null;
+        let retryCount = 0;
+        const maxRetries = 3;
+
+        // Initialize error page
+        function initErrorPage() {
+            try {
+                // Get error data from sessionStorage
+                const storedError = sessionStorage.getItem('lastError');
+                if (storedError) {
+                    errorData = JSON.parse(storedError);
+                    displayError(errorData);
+                }
+
+                // Monitor connection status
+                updateConnectionStatus();
+                window.addEventListener('online', handleOnline);
+                window.addEventListener('offline', handleOffline);
+
+                // Check if we came from a specific page
+                const referrer = document.referrer;
+                if (referrer && !referrer.includes('error.html')) {
+                    retryUrl = referrer;
+                }
+            } catch (e) {
+                console.error('Failed to initialize error page:', e);
+            }
+        }
+
+        // Display error information
+        function displayError(error) {
+            const errorType = error.type || 'UNKNOWN_ERROR';
+            const errorStatus = error.status || '';
+            const errorMessage = error.message || 'An unexpected error occurred';
+
+            // Update title and message based on error type
+            const titleEl = document.getElementById('errorTitle');
+            const messageEl = document.getElementById('errorMessage');
+            const typeEl = document.getElementById('errorType');
+            const badgeEl = document.getElementById('errorBadge');
+            const iconEl = document.getElementById('errorIcon');
+
+            typeEl.textContent = errorType.replace(/_/g, ' ');
+            
+            // Customize based on error type
+            switch (errorType) {
+                case 'NETWORK_ERROR':
+                    titleEl.textContent = 'Connection Problem';
+                    messageEl.textContent = 'Unable to connect to the server. Please check your internet connection.';
+                    badgeEl.className = 'error-badge badge-network';
+                    iconEl.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                            <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+                            <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+                        </svg>
+                    `;
+                    updateSuggestions([
+                        'Check your internet connection',
+                        'Verify your WiFi or network settings',
+                        'Try using a different network',
+                        'Contact your network administrator'
+                    ]);
+                    break;
+
+                case 'API_ERROR':
+                    if (errorStatus === 404) {
+                        titleEl.textContent = 'Not Found';
+                        messageEl.textContent = 'The requested resource could not be found.';
+                        badgeEl.className = 'error-badge badge-notfound';
+                    } else if (errorStatus >= 500) {
+                        titleEl.textContent = 'Server Error';
+                        messageEl.textContent = 'The server encountered an error. Please try again later.';
+                        badgeEl.className = 'error-badge badge-server';
+                    } else if (errorStatus === 401 || errorStatus === 403) {
+                        titleEl.textContent = 'Access Denied';
+                        messageEl.textContent = 'You do not have permission to access this resource.';
+                        badgeEl.className = 'error-badge badge-auth';
+                    } else {
+                        titleEl.textContent = 'API Error';
+                        messageEl.textContent = errorMessage;
+                        badgeEl.className = 'error-badge badge-api';
+                    }
+                    iconEl.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    `;
+                    updateSuggestions([
+                        'Try refreshing the page',
+                        'Check if the service is available',
+                        'Wait a few minutes and try again',
+                        'Contact support if the problem persists'
+                    ]);
+                    break;
+
+                case 'RUNTIME_ERROR':
+                case 'PROMISE_REJECTION':
+                    titleEl.textContent = 'Application Error';
+                    messageEl.textContent = errorMessage || 'An error occurred while running the application.';
+                    badgeEl.className = 'error-badge badge-runtime';
+                    iconEl.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                    `;
+                    updateSuggestions([
+                        'Refresh the page to restart the application',
+                        'Clear your browser cache',
+                        'Try using a different browser',
+                        'Report this issue to the development team'
+                    ]);
+                    break;
+
+                default:
+                    messageEl.textContent = errorMessage;
+            }
+
+            // Update technical details
+            document.getElementById('errorCode').textContent = errorType;
+            document.getElementById('errorStatus').textContent = errorStatus || 'N/A';
+            document.getElementById('errorTimestamp').textContent = 
+                error.timestamp ? new Date(error.timestamp).toLocaleString() : 'N/A';
+            document.getElementById('errorUrl').textContent = error.url || window.location.href;
+
+            // Show offline indicator if offline
+            if (!error.isOnline || !navigator.onLine) {
+                document.getElementById('offlineIndicator').style.display = 'flex';
+            }
+        }
+
+        // Update suggestions list
+        function updateSuggestions(suggestions) {
+            const listEl = document.getElementById('suggestionsList');
+            listEl.innerHTML = suggestions.map(s => `<li>${s}</li>`).join('');
+        }
+
+        // Update connection status
+        function updateConnectionStatus() {
+            const statusIndicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            const isOnline = navigator.onLine;
+
+            if (isOnline) {
+                statusIndicator.className = 'status-indicator status-online';
+                statusText.textContent = 'Online';
+            } else {
+                statusIndicator.className = 'status-indicator status-offline';
+                statusText.textContent = 'Offline';
+            }
+        }
+
+        // Handle online event
+        function handleOnline() {
+            updateConnectionStatus();
+            document.getElementById('offlineIndicator').style.display = 'none';
+            showNotification('Connection restored! You can try again now.', 'success');
+        }
+
+        // Handle offline event
+        function handleOffline() {
+            updateConnectionStatus();
+            document.getElementById('offlineIndicator').style.display = 'flex';
+            showNotification('You are offline. Please check your connection.', 'error');
+        }
+
+        // Retry action
+        function retryAction() {
+            const retryBtn = document.getElementById('retryBtn');
+            
+            if (!navigator.onLine) {
+                showNotification('Cannot retry while offline', 'error');
+                return;
+            }
+
+            if (retryCount >= maxRetries) {
+                showNotification('Maximum retry attempts reached', 'error');
+                retryBtn.disabled = true;
+                return;
+            }
+
+            retryCount++;
+            retryBtn.innerHTML = `
+                <svg class="spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                </svg>
+                Retrying...
+            `;
+            retryBtn.disabled = true;
+
+            // Try to go back to previous page or reload
+            setTimeout(() => {
+                if (retryUrl) {
+                    window.location.href = retryUrl;
+                } else if (document.referrer && !document.referrer.includes('error.html')) {
+                    window.location.href = document.referrer;
+                } else {
+                    window.location.reload();
+                }
+            }, 1000);
+        }
+
+        // Go back to previous page
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                goHome();
+            }
+        }
+
+        // Go to home page
+        function goHome() {
+            // Try to find index.html in parent directories
+            const currentPath = window.location.pathname;
+            const pathParts = currentPath.split('/');
+            
+            // Remove current file and Global-Error-Handler folder
+            pathParts.pop(); // Remove error.html
+            pathParts.pop(); // Remove Global-Error-Handler
+            
+            const homePath = pathParts.join('/') + '/index.html';
+            window.location.href = homePath;
+        }
+
+        // Report error
+        function reportError() {
+            const reportBtn = document.getElementById('reportBtn');
+            
+            // Create error report
+            const report = {
+                ...errorData,
+                userAgent: navigator.userAgent,
+                screenResolution: `${window.screen.width}x${window.screen.height}`,
+                viewport: `${window.innerWidth}x${window.innerHeight}`,
+                reportedAt: new Date().toISOString()
+            };
+
+            // Copy to clipboard
+            const reportText = JSON.stringify(report, null, 2);
+            navigator.clipboard.writeText(reportText).then(() => {
+                showNotification('Error report copied to clipboard!', 'success');
+                reportBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Copied!
+                `;
+                
+                setTimeout(() => {
+                    reportBtn.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                            <line x1="12" y1="9" x2="12.01" y2="9"></line>
+                        </svg>
+                        Report Issue
+                    `;
+                }, 2000);
+            }).catch(() => {
+                showNotification('Failed to copy report', 'error');
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', initErrorPage);
+
+        // Add CSS for spin animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            .spin { animation: spin 1s linear infinite; }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

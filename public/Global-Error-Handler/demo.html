@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Handler Demo</title>
+    <script src="../Global-Error-Handler/ErrorHandler.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .demo-card h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+
+        .demo-card p {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .demo-button {
+            width: 100%;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 8px;
+        }
+
+        .btn-error {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-error:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .status-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .status-box h3 {
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .status-box pre {
+            font-size: 12px;
+            color: #64748b;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 24px;
+        }
+
+        .info-section h2 {
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            padding: 8px 0;
+            color: #64748b;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .info-section li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .error-history {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .error-history h2 {
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .error-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .error-item {
+            background: #f8fafc;
+            border-left: 4px solid #ef4444;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .error-item strong {
+            color: #1e293b;
+        }
+
+        .error-item span {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Global Error Handler Demo</h1>
+            <p>Test different error scenarios and see how they're handled</p>
+        </div>
+
+        <div class="info-section">
+            <h2>ℹ️ What This Demonstrates</h2>
+            <ul>
+                <li>Automatic error catching and logging</li>
+                <li>Network connectivity monitoring</li>
+                <li>API error handling with retry logic</li>
+                <li>User-friendly toast notifications</li>
+                <li>Error page redirection</li>
+                <li>Error history tracking</li>
+            </ul>
+        </div>
+
+        <div class="demo-grid">
+            <!-- API Error Demo -->
+            <div class="demo-card">
+                <h2>🌐 API Error (404)</h2>
+                <p>Simulate a failed API call with 404 Not Found response.</p>
+                <button class="demo-button btn-error" onclick="testAPIError404()">
+                    Trigger 404 Error
+                </button>
+                <button class="demo-button btn-info" onclick="testAPIErrorWithRetry()">
+                    Test with Retry (3 attempts)
+                </button>
+            </div>
+
+            <!-- Network Error Demo -->
+            <div class="demo-card">
+                <h2>📡 Network Error</h2>
+                <p>Simulate a network connectivity issue.</p>
+                <button class="demo-button btn-error" onclick="testNetworkError()">
+                    Trigger Network Error
+                </button>
+                <button class="demo-button btn-warning" onclick="simulateOffline()">
+                    Simulate Offline Mode
+                </button>
+            </div>
+
+            <!-- Runtime Error Demo -->
+            <div class="demo-card">
+                <h2>⚠️ Runtime Error</h2>
+                <p>Trigger a JavaScript runtime error.</p>
+                <button class="demo-button btn-error" onclick="testRuntimeError()">
+                    Trigger Runtime Error
+                </button>
+                <button class="demo-button btn-error" onclick="testPromiseRejection()">
+                    Unhandled Promise
+                </button>
+            </div>
+
+            <!-- Toast Notifications Demo -->
+            <div class="demo-card">
+                <h2>🔔 Toast Notifications</h2>
+                <p>Display different types of toast messages.</p>
+                <button class="demo-button btn-success" onclick="showSuccessToast()">
+                    Show Success Toast
+                </button>
+                <button class="demo-button btn-warning" onclick="showWarningToast()">
+                    Show Warning Toast
+                </button>
+                <button class="demo-button btn-error" onclick="showErrorToast()">
+                    Show Error Toast
+                </button>
+            </div>
+
+            <!-- Connection Status Demo -->
+            <div class="demo-card">
+                <h2>📶 Connection Status</h2>
+                <p>Check current connection status.</p>
+                <button class="demo-button btn-info" onclick="checkConnection()">
+                    Check Connection
+                </button>
+                <div class="status-box">
+                    <h3>Status:</h3>
+                    <pre id="connectionStatus">Click to check...</pre>
+                </div>
+            </div>
+
+            <!-- Error History Demo -->
+            <div class="demo-card">
+                <h2>📋 Error History</h2>
+                <p>View and manage error history.</p>
+                <button class="demo-button btn-info" onclick="showErrorHistory()">
+                    Show History
+                </button>
+                <button class="demo-button btn-warning" onclick="clearHistory()">
+                    Clear History
+                </button>
+                <div class="status-box">
+                    <h3>Recent Errors:</h3>
+                    <pre id="errorHistoryDisplay">No errors yet...</pre>
+                </div>
+            </div>
+
+            <!-- Custom Error Demo -->
+            <div class="demo-card">
+                <h2>🔧 Custom Error</h2>
+                <p>Trigger a custom application error.</p>
+                <button class="demo-button btn-warning" onclick="testCustomError()">
+                    Trigger Custom Error
+                </button>
+            </div>
+
+            <!-- Error Page Redirect Demo -->
+            <div class="demo-card">
+                <h2>🚨 Error Page</h2>
+                <p>View the full error page with details.</p>
+                <button class="demo-button btn-error" onclick="goToErrorPage()">
+                    Go to Error Page
+                </button>
+                <button class="demo-button btn-info" onclick="testServerError()">
+                    Trigger 500 Error
+                </button>
+            </div>
+        </div>
+
+        <div class="error-history">
+            <h2>📊 Live Error Log</h2>
+            <div class="error-list" id="liveErrorLog">
+                <p style="color: #94a3b8; text-align: center;">No errors logged yet. Try the demos above!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize error handler
+        const errorHandler = new ErrorHandler({
+            enableLogging: true,
+            redirectToErrorPage: false, // Don't redirect for demo
+            errorPageUrl: '../Global-Error-Handler/error.html'
+        });
+
+        // Listen to global errors for live log
+        window.addEventListener('globalError', (event) => {
+            addToLiveLog(event.detail);
+        });
+
+        // Test API 404 Error
+        async function testAPIError404() {
+            try {
+                await fetch('https://jsonplaceholder.typicode.com/posts/999999');
+            } catch (error) {
+                console.log('404 error handled');
+            }
+        }
+
+        // Test API Error with Retry
+        async function testAPIErrorWithRetry() {
+            errorHandler.showToast('Attempting with 3 retries...', 'info');
+            try {
+                await errorHandler.handleAPIError(
+                    'https://jsonplaceholder.typicode.com/posts/999999',
+                    { maxRetries: 3, retryDelay: 500 }
+                );
+            } catch (error) {
+                errorHandler.showToast('All retry attempts failed', 'error');
+            }
+        }
+
+        // Test Network Error
+        async function testNetworkError() {
+            try {
+                await fetch('https://this-domain-does-not-exist-12345.com/api');
+            } catch (error) {
+                console.log('Network error handled');
+            }
+        }
+
+        // Simulate Offline
+        function simulateOffline() {
+            errorHandler.showToast('Simulating offline mode...', 'warning');
+            errorHandler.handleError({
+                type: 'NETWORK_ERROR',
+                message: 'No internet connection (simulated)',
+                timestamp: new Date().toISOString()
+            }, false);
+        }
+
+        // Test Runtime Error
+        function testRuntimeError() {
+            // This will be caught by the global error handler
+            nonExistentFunction();
+        }
+
+        // Test Promise Rejection
+        function testPromiseRejection() {
+            Promise.reject(new Error('Unhandled promise rejection test'));
+        }
+
+        // Show Success Toast
+        function showSuccessToast() {
+            errorHandler.showToast('Operation completed successfully!', 'success');
+        }
+
+        // Show Warning Toast
+        function showWarningToast() {
+            errorHandler.showToast('This is a warning message', 'warning');
+        }
+
+        // Show Error Toast
+        function showErrorToast() {
+            errorHandler.showToast('An error occurred!', 'error');
+        }
+
+        // Check Connection
+        function checkConnection() {
+            const isOnline = errorHandler.checkOnlineStatus();
+            const status = isOnline ? '✅ Online' : '❌ Offline';
+            document.getElementById('connectionStatus').textContent = status;
+            errorHandler.showToast(status, isOnline ? 'success' : 'error');
+        }
+
+        // Show Error History
+        function showErrorHistory() {
+            const history = errorHandler.getErrorHistory();
+            const display = document.getElementById('errorHistoryDisplay');
+            
+            if (history.length === 0) {
+                display.textContent = 'No errors in history';
+            } else {
+                display.textContent = `Total Errors: ${history.length}\n\n` +
+                    history.slice(0, 5).map((err, idx) => 
+                        `${idx + 1}. ${err.type}: ${err.message}`
+                    ).join('\n');
+            }
+        }
+
+        // Clear History
+        function clearHistory() {
+            errorHandler.clearErrorHistory();
+            document.getElementById('errorHistoryDisplay').textContent = 'History cleared!';
+            document.getElementById('liveErrorLog').innerHTML = 
+                '<p style="color: #94a3b8; text-align: center;">No errors logged yet.</p>';
+            errorHandler.showToast('Error history cleared', 'success');
+        }
+
+        // Test Custom Error
+        function testCustomError() {
+            errorHandler.handleError({
+                type: 'CUSTOM_ERROR',
+                message: 'This is a custom application error',
+                source: 'demo.html',
+                timestamp: new Date().toISOString()
+            }, false);
+        }
+
+        // Go to Error Page
+        function goToErrorPage() {
+            errorHandler.storeErrorDetails({
+                type: 'DEMO_ERROR',
+                message: 'This is a demo error to show the error page',
+                status: 500,
+                url: window.location.href,
+                timestamp: new Date().toISOString(),
+                isOnline: true
+            });
+            window.location.href = '../Global-Error-Handler/error.html';
+        }
+
+        // Test Server Error
+        function testServerError() {
+            errorHandler.storeErrorDetails({
+                type: 'API_ERROR',
+                message: 'Internal Server Error',
+                status: 500,
+                statusText: 'Internal Server Error',
+                url: 'https://api.example.com/data',
+                timestamp: new Date().toISOString(),
+                isOnline: true
+            });
+            window.location.href = '../Global-Error-Handler/error.html';
+        }
+
+        // Add to Live Log
+        function addToLiveLog(error) {
+            const logContainer = document.getElementById('liveErrorLog');
+            
+            // Clear "no errors" message
+            if (logContainer.querySelector('p')) {
+                logContainer.innerHTML = '';
+            }
+
+            const errorItem = document.createElement('div');
+            errorItem.className = 'error-item';
+            errorItem.innerHTML = `
+                <strong>${error.type || 'UNKNOWN'}</strong><br>
+                <span>${error.message || 'No message'}</span><br>
+                <span style="font-size: 11px; color: #94a3b8;">
+                    ${new Date(error.timestamp).toLocaleTimeString()}
+                </span>
+            `;
+
+            logContainer.insertBefore(errorItem, logContainer.firstChild);
+
+            // Keep only last 10 errors
+            while (logContainer.children.length > 10) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+
+        // Initialize connection status
+        checkConnection();
+    </script>
+</body>
+</html>
