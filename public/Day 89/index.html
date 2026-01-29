@@ -761,38 +761,4 @@
         }
     </script>
 </body>
-
-            const icons = {
-                Light: '💡',
-                Fan: '🌀',
-                Thermostat: '🌡️',
-                Security: '🔒',
-                Appliance: '🔌'
-            };
-
-            const newDevice = {
-                id: Date.now(),
-                name,
-                type,
-                room,
-                icon: icons[type],
-                status: false,
-                brightness: type === 'Light' ? 50 : undefined,
-                temperature: type === 'Thermostat' ? 22 : undefined,
-                speed: type === 'Fan' ? 'Low' : undefined,
-                locked: type === 'Security'
-            };
-
-            devices.push(newDevice);
-            renderDevices();
-            modal.style.display = 'none';
-
-            document.getElementById('deviceName').value = '';
-            document.getElementById('deviceRoom').value = '';
-
-            showNotification(`${name} added successfully`);
-        });
-
-    </script>
-</body>
 </html>

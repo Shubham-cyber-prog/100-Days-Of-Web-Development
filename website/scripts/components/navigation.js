@@ -9,6 +9,12 @@ function toggleMobileMenu() {
     navLinks.classList.toggle('open');
 }
 
+/* Close mobile menu when nav link is clicked */
+function closeMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.remove('open');
+}
+
 /* User Dropdown */
 function toggleUserMenu() {
     const dropdown = document.querySelector('.user-dropdown');
@@ -76,7 +82,19 @@ document.addEventListener('DOMContentLoaded', () => {
             links.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
         }
+        
+        // Add click event to close mobile menu
+        link.addEventListener('click', closeMobileMenu);
     });
+    
+    // Handle leaderboard page active state
+    if (currentPath.includes('leaderboard.html')) {
+        const leaderboardLink = document.querySelector('a[href="leaderboard.html"]');
+        if (leaderboardLink) {
+            links.forEach(l => l.classList.remove('active'));
+            leaderboardLink.classList.add('active');
+        }
+    }
 
     // 2. Avatar Logic (Guest checks)
     if (sessionStorage.getItem('authGuest') === 'true') {
@@ -97,13 +115,58 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apply immediately to avoid flash
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
+
+    // 4. Connection Status Init
+    import('./ConnectionStatus.js').then(({ ConnectionStatus }) => {
+        new ConnectionStatus();
+    }).catch(e => console.warn('ConnectionStatus component not loaded:', e));
+
+    // 5. PWA Install Prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Show install button if it exists
+        const installBtn = document.getElementById('pwa-install-btn');
+        if (installBtn) {
+            installBtn.style.display = 'flex';
+            installBtn.addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                    installBtn.style.display = 'none';
+                });
+            });
+        }
+    });
 });
 
-/* Logout Logic */
+/* Logout Logic - Using Local Auth Service */
 function handleLogout() {
     if (confirm('Abort mission and logout?')) {
-        sessionStorage.removeItem('authToken');
-        sessionStorage.removeItem('authGuest');
-        window.location.href = window.location.pathname.includes('/pages/') ? '../pages/login.html' : 'website/pages/login.html';
+        console.log('🚪 Logout initiated...');
+
+        // Use AuthService if available
+        if (window.AuthService) {
+            window.AuthService.logout();
+        } else {
+            // Fallback: Clear all auth data manually
+            sessionStorage.clear();
+            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('current_user');
+            localStorage.removeItem('is_guest');
+            localStorage.removeItem('guestSession');
+        }
+
+        // Determine correct login path
+        const loginPath = window.location.pathname.includes('/pages/')
+            ? 'login.html'
+            : 'website/pages/login.html';
+
+        console.log('✅ Logged out, redirecting to:', loginPath);
+        window.location.href = loginPath;
     }
 }

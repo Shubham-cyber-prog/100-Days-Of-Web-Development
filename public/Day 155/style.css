@@ -1,70 +1,112 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+*{
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-.game-container {
-    text-align: center;
+body{
+  margin:0;
+  background:#0f172a;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
-h1 {
-    color: #333;
+/* ===== BLUR WRAPPER ===== */
+.blur-wrapper{
+  transition: filter 0.3s ease;
 }
 
-.game-info {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
-    font-size: 18px;
+.blur-wrapper.blurred{
+  filter: blur(6px);
+  pointer-events:none;
 }
 
-.info-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* ===== GAME UI ===== */
+.game-container{
+  text-align:center;
 }
 
-#gameCanvas {
-    border: 2px solid #333;
-    background-color: #000;
+h1{
+  margin-bottom:10px;
 }
 
-.controls {
-    margin: 20px 0;
-    font-size: 14px;
+.game-info{
+  display:flex;
+  justify-content:space-between;
+  margin:15px 0;
 }
 
-.game-over {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
+.info-item{
+  display:flex;
+  flex-direction:column;
+  font-size:14px;
 }
 
-.hidden {
-    display: none;
+canvas{
+  border:2px solid #fff;
+  background:black;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
+/* ===== CONTROLS ===== */
+.controls{
+  margin-top:15px;
 }
 
-button:hover {
-    background-color: #45a049;
+button{
+  padding:10px 20px;
+  font-size:16px;
+  background:#3b82f6;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#2563eb;
+}
+
+/* ===== START OVERLAY ===== */
+.start-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+
+.start-card{
+  background:#020617;
+  padding:30px;
+  border-radius:16px;
+  width:320px;
+  text-align:center;
+}
+
+.instructions{
+  text-align:left;
+  margin:20px 0;
+}
+
+.instructions ul{
+  padding-left:18px;
+}
+
+/* ===== GAME OVER ===== */
+.game-over{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.hidden{
+  display:none;
 }

@@ -4,22 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Music Player</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1 class="app-title">Music Player</h1>
+<h1 class="app-title">🎵 Music Player</h1>
 
 <main class="container">
 
-  <!-- PLAYER CARD -->
+  <!-- PLAYER -->
   <section class="player-card">
-
-    <input
-      type="text"
-      id="search"
-      placeholder="Search song or artist (press Enter)"
-    />
+    <input id="search" type="text" placeholder="Search song or artist (Enter)">
 
     <div class="recommended">
       <h4>Recommended</h4>
@@ -27,42 +22,37 @@
     </div>
 
     <div class="current placeholder" id="current">
-      <img id="cover" alt="Album Art" />
-      <h3 id="title">Nothing playing</h3>
-      <p id="artist">Search or select a recommendation</p>
+      <img id="cover" />
+      <h3 id="title">Nothing Playing</h3>
+      <p id="artist">Search a song</p>
     </div>
 
-    <!-- CONTROLS -->
     <div class="controls">
       <button id="prev" disabled>⏮</button>
       <button id="play" disabled>▶</button>
       <button id="next" disabled>⏭</button>
     </div>
 
-    <!-- TIME -->
     <div class="time">
       <span id="currentTime">0:00</span>
       <span id="duration">0:00</span>
     </div>
 
-    <!-- PROGRESS -->
     <input type="range" id="progress" value="0">
 
-    <!-- VOLUME -->
     <div class="volume">
-      🔊
-      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+      🔊 <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
     </div>
 
     <audio id="audio"></audio>
   </section>
 
-  <!-- RESULTS CARD -->
+  <!-- PLAYLIST -->
   <section class="playlist-card">
     <h3>Search Results</h3>
 
-    <div class="results-placeholder" id="resultsPlaceholder">
-      <p>🎵 Search for a song to see results here</p>
+    <div id="resultsPlaceholder" class="results-placeholder">
+      🎶 Search to load songs
     </div>
 
     <ul id="playlist"></ul>

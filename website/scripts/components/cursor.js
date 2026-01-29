@@ -173,6 +173,8 @@
         // Apply heat gradient
         const heatLevel = Math.min(4, Math.floor((i / SEGMENT_COUNT) * 5));
         seg.classList.add(`heat-${heatLevel}`);
+
+        seg.style.transform = 'translate(-50%, -50%)'; //FINAL FIX--
         
         container.appendChild(seg);
         
@@ -189,6 +191,7 @@
     for (let i = 0; i < MAX_PARTICLES; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
+        particle.style.transform = 'translate(-50%, -50%)'; //FIX: centers glow
         container.appendChild(particle);
         
         particles.push({
@@ -206,6 +209,7 @@
     for (let i = 0; i < MAX_SPARKLES; i++) {
         const sparkle = document.createElement('div');
         sparkle.className = 'sparkle';
+        sparkle.style.transform = 'translate(-50%, -50%)'; //FIX
         container.appendChild(sparkle);
         
         sparkles.push({
@@ -360,15 +364,21 @@
         }
         
         // Update cursor dot (immediate)
-        cursorDot.style.left = mouse.x + 'px';
-        cursorDot.style.top = mouse.y + 'px';
+         cursorDot.style.transform =
+            `translate3d(${mouse.x}px, ${mouse.y}px, 0) translate(-50%, -50%)`;
         
         // Update cursor ring (smooth follow)
-        const ringX = parseFloat(cursorRing.style.left || mouse.x);
-        const ringY = parseFloat(cursorRing.style.top || mouse.y);
+        const ringX = parseFloat(cursorRing.dataset.x || mouse.x);
+        const ringY = parseFloat(cursorRing.dataset.y || mouse.y);
         
-        cursorRing.style.left = (ringX + (mouse.x - ringX) * 0.15) + 'px';
-        cursorRing.style.top = (ringY + (mouse.y - ringY) * 0.15) + 'px';
+        const newX = ringX + (mouse.x - ringX) * 0.15;
+        const newY = ringY + (mouse.y - ringY) * 0.15;
+
+        cursorRing.dataset.x = newX;
+        cursorRing.dataset.y = newY;
+
+        cursorRing.style.transform =
+            `translate3d(${newX}px, ${newY}px, 0) translate(-50%, -50%)`;
         
         // Update trail segments
         let prevX = mouse.x;
@@ -395,6 +405,7 @@
             // Apply transformation
             seg.element.style.transform = `
                 translate3d(${seg.x}px, ${seg.y}px, 0)
+                translate(-50%, -50%)
                 rotate(${angle}deg)
                 scale(${1 + stretch}, ${squeeze})
             `;
@@ -428,7 +439,8 @@
                 p.vx *= 0.95;
                 p.vy *= 0.95;
                 
-                p.element.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+                p.element.style.transform = 
+                  `translate3d(${p.x}px, ${p.y}px, 0) translate(-50%, -50%)`;
                 p.element.style.opacity = (p.life / p.maxLife * 0.8).toString();
             }
         }
@@ -438,7 +450,8 @@
             const s = sparkles[i];
             if (s.life > 0) {
                 s.life--;
-                s.element.style.transform = `translate3d(${s.x}px, ${s.y}px, 0)`;
+                s.element.style.transform =
+                 `translate3d(${s.x}px, ${s.y}px, 0) translate(-50%, -50%)`;
                 s.element.style.opacity = (s.life / s.maxLife).toString();
             }
         }
