@@ -17,10 +17,29 @@
             --transition: all 0.3s ease;
         }
 
+        /* =====================
+        THEME OVERRIDES
+        ===================== */
+
+        /* Light Theme */
+        [data-theme="light"] {
+        --text-main: #1f2937;     /* dark text */
+        --text-muted: #374151;
+        --bg-main: #ffffff;
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
+        --text-main: #e5e7eb;     /* light text */
+        --text-muted: #9ca3af;
+        --bg-main: #0f172a;
+        }
+         
         body {
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-            color: var(--text-dark);
+            background-color: var(--bg-main);
+            color: var(--text-main);
             overflow-x: hidden;
         }
 

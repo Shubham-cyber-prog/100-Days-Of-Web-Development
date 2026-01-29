@@ -2,115 +2,164 @@
 
 /* Base Hero Setup */
 .zenith-hero {
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-top: 80px;
-    background: radial-gradient(circle at center, rgba(255, 157, 0, 0.05) 0%, transparent 70%);
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 80px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 157, 0, 0.05) 0%,
+    transparent 70%
+  );
 }
 
+/* =========================
+   HERO TITLE
+========================= */
 .hero-title {
-    font-size: clamp(3.5rem, 8vw, 6rem);
-    font-weight: var(--weight-black);
-    line-height: 1.1;
-    margin-bottom: var(--space-6);
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-core) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -2px;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-weight: var(--weight-black);
+  line-height: 1.1;
+  margin-bottom: var(--space-6);
+  background: linear-gradient(
+    135deg,
+    var(--text-primary) 0%,
+    var(--accent-core) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -2px;
 }
 
+/* Fix hero title visibility in LIGHT theme */
+[data-theme="light"] .hero-title {
+  -webkit-text-fill-color: #1f2937;
+  color: #1f2937;
+}
+
+/* Ensure gradient remains in DARK theme */
+[data-theme="dark"] .hero-title {
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   HERO SUBTITLE
+========================= */
 .hero-subtitle {
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
-    color: var(--text-secondary);
-    max-width: 700px;
-    margin: 0 auto var(--space-8);
-    line-height: 1.6;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto var(--space-8);
+  line-height: 1.6;
 }
 
-/* Call to Action Buttons */
+/* Fix subtitle visibility in LIGHT theme */
+[data-theme="light"] .hero-subtitle {
+  color: #374151;
+}
+
+/* =========================
+   HERO ACTIONS
+========================= */
 .hero-actions {
-    display: flex;
-    gap: var(--space-4);
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
+/* =========================
+   BUTTONS
+========================= */
 .btn-zenith-primary {
-    background: var(--accent-core);
-    color: #000;
-    border-radius: 100px;
-    padding: 1rem 3rem;
-    font-weight: 800;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s;
-    box-shadow: 0 10px 30px -5px var(--accent-alpha);
+  background: var(--accent-core);
+  color: #000;
+  border-radius: 100px;
+  padding: 1rem 3rem;
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.25s ease;
+  box-shadow: 0 10px 30px -5px var(--accent-alpha);
 }
 
 .btn-zenith-primary:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 20px 40px -10px var(--accent-alpha);
-    background: var(--gradient-glow); /* keep theme gradient */
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 20px 40px -10px var(--accent-alpha);
+  background: var(--gradient-glow);
 }
 
+/* Secondary / Outline Button */
 .btn-zenith-secondary {
-    background: transparent;
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 100px;
-    padding: 1rem 3rem;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: all 0.2s ease;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 100px;
+  padding: 1rem 3rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+/* Fix SECONDARY BUTTON text in LIGHT theme (YOUR MAIN ISSUE) */
+[data-theme="light"] .btn-zenith-secondary {
+  color: #1f2937;
+  border-color: #1f2937;
 }
 
 .btn-zenith-secondary:hover {
-    border-color: var(--accent-core);
-    color: var(--accent-core);
-    transform: translateY(-3px);
+  border-color: var(--accent-core);
+  color: var(--accent-core);
+  transform: translateY(-3px);
 }
 
-/* Features Grid */
+/* =========================
+   FEATURES SECTION
+========================= */
 .features-section {
-    padding: var(--space-12) 0;
+  padding: var(--space-12) 0;
 }
 
 .feature-card {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    padding: var(--space-8);
-    border-radius: var(--radius-lg);
-    transition: all 0.3s ease;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: var(--space-8);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
 }
 
 .feature-card:hover {
-    border-color: var(--accent-core);
-    transform: translateY(-5px);
-        box-shadow:
-    0 0 0 1px rgba(255, 200, 120, 0.25),
+  border-color: var(--accent-core);
+  transform: translateY(-5px);
+  box-shadow:
+    0 0 1px rgba(255, 200, 120, 0.25),
     0 18px 36px rgba(255, 180, 80, 0.30),
     0 0 60px rgba(255, 210, 120, 0.20);
 }
 
-
 .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: var(--space-4);
-    display: inline-block;
+  font-size: 2.5rem;
+  margin-bottom: var(--space-4);
+  display: inline-block;
 }
 
 .feature-card h3 {
-    margin-bottom: var(--space-3);
-    font-size: 1.5rem;
+  margin-bottom: var(--space-3);
+  font-size: 1.5rem;
 }
 
 .feature-card p {
-    color: var(--text-secondary);
-    line-height: 1.6;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Safety net: never allow invisible text in LIGHT theme */
+[data-theme="light"] {
+  -webkit-text-fill-color: initial;
 }
