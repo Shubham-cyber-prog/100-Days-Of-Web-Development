@@ -1,9 +1,9 @@
-/**
- * Zenith Project Loader
- * Dynamically loads project cards based on the full 100-day curriculum.
- */
-
 const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/tree/main/public";
+
+// Import components
+import { projectModal } from '../components/ProjectModal.js';
+import { App } from '../core/app.js';
+import { Notify } from '../core/Notify.js';
 
 // Map of existing folders found in public/ to handle inconsistencies
 const folderMap = {
@@ -28,11 +28,13 @@ const folderMap = {
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
     102: "Day 102", 103: "Day 103", 105: "Day 105", 107: "Day 107", 111: "day-111",
+    129: "Day 129",
+    141: "Day 141",
     145: "Day 145",
     151: "Day 151",
     152: "Day 152 - Newsly",
     154: "Day 154 ",
-    155: "Day 155", 156: "Day 156"
+    155: "Day 155", 156: "Day 156", 167: "Day 167"
 };
 
 // Full 100-Day Project List
@@ -96,13 +98,13 @@ const allProjects = [
     { day: 123, title: "Advanced Blogging Platform", tech: ["Next.js", "GraphQL"] }, { day: 124, title: "AI-Powered Chat Application", tech: ["OpenAI API", "Socket.io"] },
     { day: 125, title: "Sustainable Development Platform", tech: ["React", "Firebase"] }, { day: 126, title: "AI-Powered Code Review Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 127, title: "Advanced Social Media Platform", tech: ["React", "Node.js"] }, { day: 128, title: "AI-Powered Image Recognition App", tech: ["TensorFlow.js", "JS"] },
-    { day: 129, title: "Custom Project Management Tool", tech: ["React", "Node.js"] }, { day: 130, title: "AI-Powered Language Translation App", tech: ["OpenAI API", "JS"] },
+    { day: 129, title: "Ultimate Kanban Board", tech: ["HTML", "CSS", "JS"] }, { day: 130, title: "AI-Powered Language Translation App", tech: ["OpenAI API", "JS"] },
     { day: 131, title: "Advanced CRM System", tech: ["Next.js", "Prisma"] }, { day: 132, title: "AI-Powered Virtual Assistant", tech: ["OpenAI API", "Node.js"] },
     { day: 133, title: "Custom Inventory Management System", tech: ["React", "Node.js"] }, { day: 134, title: "AI-Powered Sentiment Analysis Tool", tech: ["Python", "Flask"] },
     { day: 135, title: "Advanced Event Management Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 136, title: "AI-Powered Content Moderation Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 137, title: "Custom Helpdesk Ticketing System", tech: ["React", "Node.js"] }, { day: 138, title: "AI-Powered Market Research Tool", tech: ["Python", "Django"] },
     { day: 139, title: "Advanced Learning Management System", tech: ["Next.js", "PostgreSQL"] }, { day: 140, title: "AI-Powered Email Marketing Tool", tech: ["OpenAI API", "Node.js"] },
-    { day: 141, title: "Custom Time Tracking Application", tech: ["React", "Node.js"] }, { day: 142, title: "AI-Powered SEO Optimization Tool", tech: ["Python", "Flask"] },
+    { day: 141, title: "TimeFlow - Premium Time Tracking", tech: ["HTML", "CSS", "JS", "ApexCharts"] }, { day: 142, title: "AI-Powered SEO Optimization Tool", tech: ["Python", "Flask"] },
     { day: 143, title: "Advanced Recruitment Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 144, title: "AI-Powered Social Media Management Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 145, title: "Chess Game", tech: ["React", "Node.js"] }, { day: 146, title: "AI-Powered Customer Support Chatbot", tech: ["OpenAI API", "JS"] },
     { day: 147, title: "Advanced Financial Planning Tool", tech: ["Next.js", "Prisma"] }, { day: 148, title: "AI-Powered Document Summarization Tool", tech: ["OpenAI API", "Node.js"] },
@@ -114,7 +116,8 @@ const allProjects = [
     // DAY 154
     { day: 154, title: "Snake Game", tech: ["HTML", "CSS", "JS"] },
     { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
-    { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] }
+    { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] },
+    { day: 167, title: "Time Fracture Arena", tech: ["HTML", "CSS", "JS", "Canvas"] }
 ];
 
 function getDifficulty(day) {
@@ -195,7 +198,7 @@ function renderProjects(filter = 'All') {
                 <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
             <div class="card-divider"></div>
-            <h3 style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
+            <h3 class="project-title" style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
                 ${project.title}
             </h3>
             <div class="tech-stack" style="margin-bottom: 0.5rem;">
@@ -210,16 +213,24 @@ function renderProjects(filter = 'All') {
             window.open(codeLink, '_blank');
         };
 
-        // --- CRITICAL FIX START ---
+        // --- PROJECT SHOWCASE INTEGRATION ---
         if (!isDisabled) {
-            // Instead of window.open, we call our health check function
             card.addEventListener('click', (e) => {
-                handleProjectClick(e, liveLink);
+                // Prepare project data for modal
+                const projectData = {
+                    ...project,
+                    difficulty,
+                    liveLink,
+                    codeLink,
+                    time: project.day <= 30 ? '1-2 hours' : project.day <= 60 ? '3-5 hours' : '8+ hours'
+                };
+
+                projectModal.show(projectData);
             });
         } else {
             card.classList.add('is-disabled');
         }
-        // --- CRITICAL FIX END ---
+        // --- END INTEGRATION ---
 
         setupTiltEffect(card);
         grid.appendChild(card);

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -360,6 +360,105 @@
                 flex-direction: column;
             }
         }
+      }
+
+      .modal-header {
+        padding: var(--space-6);
+        border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-header h3 {
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .close {
+        color: var(--text-secondary);
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        line-height: 1;
+      }
+
+      .close:hover {
+        color: var(--text-primary);
+      }
+
+      .modal-body {
+        padding: var(--space-6);
+      }
+
+      .form-group {
+        margin-bottom: var(--space-4);
+      }
+
+      .form-group label {
+        display: block;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-2);
+        font-weight: var(--weight-medium);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: var(--space-3);
+        background: rgba(139, 92, 246, 0.05);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: var(--radius-lg);
+        color: var(--text-primary);
+        font-family: inherit;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--accent-core);
+        background: rgba(139, 92, 246, 0.1);
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-3);
+        margin-top: var(--space-6);
+      }
+
+      .btn {
+        padding: var(--space-3) var(--space-6);
+        border: none;
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        font-weight: var(--weight-medium);
+        transition: all 0.3s ease;
+      }
+
+      .btn-secondary {
+        background: rgba(139, 92, 246, 0.1);
+        color: var(--text-secondary);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(139, 92, 246, 0.2);
+        color: var(--text-primary);
+      }
+
+      .btn-primary {
+        background: var(--accent-core);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-glow);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      }
     </style>
 </head>
 <body>
@@ -535,7 +634,9 @@
                     </div>
                 </form>
             </div>
+          </form>
         </div>
+      </div>
     </div>
 
     <script src="../scripts/components/cursor.js"></script>

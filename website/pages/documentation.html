@@ -157,11 +157,131 @@
         color: var(--accent-core);
       }
     </style>
+
+    <style>
+    /* Fix light theme text visibility - dark theme remains unchanged */
+    [data-theme="light"] .docs-container,
+    [data-theme="light"] .docs-section,
+    [data-theme="light"] .toc,
+    [data-theme="light"] .doc-card {
+      color: #1a1a2e !important;
+    }
+
+    [data-theme="light"] .docs-header h1 {
+      color: #1a1a2e !important;
+      background: linear-gradient(135deg, #1a1a2e 0%, #667eea 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    [data-theme="light"] .docs-header p.text-secondary,
+    [data-theme="light"] .docs-section p,
+    [data-theme="light"] .docs-section li,
+    [data-theme="light"] .toc p,
+    [data-theme="light"] .toc a,
+    [data-theme="light"] .doc-card p.text-secondary {
+      color: #4a5568 !important;
+    }
+
+    [data-theme="light"] .docs-section h2 {
+      color: #667eea !important;
+      border-bottom: 2px solid rgba(102, 126, 234, 0.2) !important;
+    }
+
+    [data-theme="light"] .docs-section h3 {
+      color: #2d3748 !important;
+    }
+
+    [data-theme="light"] .doc-card {
+      background: rgba(255, 255, 255, 0.9) !important;
+      border: 1px solid rgba(102, 126, 234, 0.2) !important;
+    }
+
+    [data-theme="light"] .doc-card:hover {
+      border-color: #667eea !important;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15) !important;
+    }
+
+    [data-theme="light"] .doc-card i {
+      color: #667eea !important;
+    }
+
+    [data-theme="light"] .doc-card h3 {
+      color: #1a1a2e !important;
+    }
+
+    [data-theme="light"] .toc {
+      background: rgba(102, 126, 234, 0.05) !important;
+      border: 1px solid rgba(102, 126, 234, 0.1) !important;
+    }
+
+    [data-theme="light"] .toc h3 {
+      color: #667eea !important;
+    }
+
+    [data-theme="light"] .toc a:hover {
+      color: #667eea !important;
+    }
+
+    [data-theme="light"] .code-block {
+      background: rgba(31, 41, 55, 0.05) !important;
+      border: 1px solid rgba(31, 41, 55, 0.1) !important;
+      color: #1a1a2e !important;
+    }
+
+    [data-theme="light"] .info-box {
+      background: rgba(102, 126, 234, 0.08) !important;
+      border-left: 4px solid #667eea !important;
+    }
+
+    [data-theme="light"] .info-box strong {
+      color: #667eea !important;
+    }
+
+    [data-theme="light"] .info-box a {
+      color: #667eea !important;
+    }
+
+    [data-theme="light"] .text-flame {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    /* Fix footer text in light theme */
+    [data-theme="light"] .footer-desc,
+    [data-theme="light"] .footer-links a,
+    [data-theme="light"] .footer-col p,
+    [data-theme="light"] .footer-col h3,
+    [data-theme="light"] .copyright,
+    [data-theme="light"] .made-by {
+      color: #4a5568 !important;
+    }
+
+    [data-theme="light"] .footer-brand h2,
+    [data-theme="light"] .footer-col h3 {
+      color: #1a1a2e !important;
+    }
+  </style>
+
   </head>
   <body>
     <!-- Header -->
     <header class="site-header">
-      <div class="nav-container">
+      <div
+        class="nav-container"
+        style="
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
+            drop-shadow(
+              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
+            )
+            drop-shadow(
+              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
+            );
+        "
+      >
         <a href="dashboard.html" class="nav-logo">
           <img
             src="../assets/images/logo.png"
@@ -172,6 +292,8 @@
         <nav class="nav-links">
           <a href="dashboard.html" class="nav-link">Dashboard</a>
           <a href="projects.html" class="nav-link">Projects</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
           <a href="about.html" class="nav-link">About</a>
           <a href="contributors.html" class="nav-link">Contributors</a>
           <a href="contact.html" class="nav-link">Contact</a>
@@ -221,7 +343,7 @@
             </button>
             <div class="user-dropdown">
               <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="#" class="dropdown-item">Settings</a>
+              <a href="settings.html" class="dropdown-item">Settings</a>
               <div class="dropdown-divider"></div>
               <button
                 class="dropdown-item text-danger"
@@ -661,5 +783,39 @@
 
     <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/components/navigation.js"></script>
+
+    <script>
+    // Ensure text colors update when theme changes
+    function updateDocumentationColors() {
+      const isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
+      
+      // Add or remove light theme class to body
+      if (isLightTheme) {
+        document.body.classList.add('light-theme-docs');
+      } else {
+        document.body.classList.remove('light-theme-docs');
+      }
+    }
+
+    // Run on page load
+    document.addEventListener('DOMContentLoaded', updateDocumentationColors);
+
+    // Listen for theme changes
+    const themeObserver = new MutationObserver(updateDocumentationColors);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+
+    // Override theme toggle to trigger update
+    const originalToggleTheme = window.toggleTheme;
+    if (originalToggleTheme) {
+      window.toggleTheme = function() {
+        originalToggleTheme();
+        setTimeout(updateDocumentationColors, 100);
+      };
+    }
+  </script>
+
   </body>
 </html>
