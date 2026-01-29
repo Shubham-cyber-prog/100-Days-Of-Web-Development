@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../styles/components/webauthn.css" />
 
     <style>
       :root {
@@ -336,8 +337,20 @@
           </div>
           <div class="error-message" id="login-error"></div>
           <button type="submit" class="btn-primary">Join Now</button>
+          
+          <!-- Biometric Login Button -->
+          <button type="button" class="biometric-login-btn" id="biometric-login-btn" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 10v4m0-8a6 6 0 0 1 6 6v1m-6-7a6 6 0 0 0-6 6v1m6-7c.34 0 .68.02 1.01.07M18 13a6 6 0 0 1-6 6 6 6 0 0 1-6-6m6 6v2"/>
+            </svg>
+            Sign in with Biometrics
+          </button>
+          
           <a href="#" class="forgot-link" onclick="forgotPassword()"
             >Forgot Access Code?</a
+          >
+          <a href="#" class="forgot-link" onclick="recoverAccount()" style="margin-top: 0.5rem; display: block;">
+            🔑 Use Recovery Key</a
           >
         </form>
 
@@ -379,6 +392,19 @@
         </form>
 
         <div class="divider">External Links</div>
+
+        <!-- Biometric Setup Prompt (only shown after registration) -->
+        <div id="biometric-setup-prompt" style="display: none; margin-bottom: 1rem; padding: 1rem; background: rgba(0, 238, 255, 0.1); border: 1px solid rgba(0, 238, 255, 0.3); border-radius: 12px;">
+          <p style="margin: 0 0 0.75rem; color: rgba(255, 255, 255, 0.9); font-size: 0.9rem;">
+            🔐 <strong>Secure your account</strong> - Enable biometric login for passwordless access
+          </p>
+          <button class="biometric-login-btn" onclick="setupBiometricAuth()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 10v4m0-8a6 6 0 0 1 6 6v1m-6-7a6 6 0 0 0-6 6v1m6-7c.34 0 .68.02 1.01.07M18 13a6 6 0 0 1-6 6 6 6 0 0 1-6-6m6 6v2"/>
+            </svg>
+            Setup Biometric Login
+          </button>
+        </div>
 
         <div class="social-buttons">
           <button class="social-btn" onclick="signInWithGoogle()">
@@ -632,6 +658,12 @@
                 );
                 switchTab("login");
               }
+              
+              // Show biometric setup prompt after successful registration
+              const biometricPrompt = document.getElementById('biometric-setup-prompt');
+              if (biometricPrompt && result.success) {
+                biometricPrompt.style.display = 'block';
+              }
             } else {
               showError("register", result.message || "Registration failed");
             }
@@ -654,6 +686,133 @@
           "GitHub Sign-In: Coming Soon!\n\nCurrently using local authentication system.",
         );
         console.log("GitHub login - Not implemented in local mode");
+      }
+
+      // Biometric Authentication Functions
+      let biometricModal, recoveryKeyManager, webauthnService;
+      
+      // Load biometric modules dynamically
+      async function loadBiometricModules() {
+        if (!biometricModal) {
+          const { biometricModal: modal } = await import('../scripts/components/BiometricAuthModal.js');
+          const { recoveryKeyManager: recovery } = await import('../scripts/core/RecoveryKeyManager.js');
+          const { WebAuthnService } = await import('../scripts/core/webauthn.js');
+          
+          biometricModal = modal;
+          recoveryKeyManager = recovery;
+          webauthnService = new WebAuthnService();
+        }
+        return { biometricModal, recoveryKeyManager, webauthnService };
+      }
+
+      // Check if biometric login available on page load
+      window.addEventListener('DOMContentLoaded', async () => {
+        try {
+          const { webauthnService } = await loadBiometricModules();
+          const isSupported = webauthnService.isSupported();
+          const biometricBtn = document.getElementById('biometric-login-btn');
+          
+          if (isSupported && biometricBtn) {
+            biometricBtn.style.display = 'flex';
+          }
+        } catch (error) {
+          console.log('Biometric check failed:', error);
+        }
+      });
+
+      // Biometric login button handler
+      document.addEventListener('DOMContentLoaded', () => {
+        const biometricBtn = document.getElementById('biometric-login-btn');
+        if (biometricBtn) {
+          biometricBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            
+            if (!email) {
+              showError('login', 'Please enter your email address first');
+              return;
+            }
+            
+            try {
+              const { biometricModal } = await loadBiometricModules();
+              await biometricModal.showAuthenticationModal(email);
+            } catch (error) {
+              showError('login', error.message);
+            }
+          });
+        }
+      });
+
+      // Setup biometric auth after registration
+      async function setupBiometricAuth() {
+        try {
+          const { biometricModal, recoveryKeyManager } = await loadBiometricModules();
+          const user = auth?.getCurrentUser?.();
+          
+          if (!user) {
+            alert('Please complete registration first');
+            return;
+          }
+          
+          // Show biometric registration modal
+          await biometricModal.showRegistrationModal(user.id, user.name, user.email);
+          
+          // Listen for successful registration
+          window.addEventListener('biometric-registered', async () => {
+            // Generate and show recovery key
+            await recoveryKeyManager.showRecoveryKeyModal(user.id);
+            document.getElementById('biometric-setup-prompt').style.display = 'none';
+          }, { once: true });
+          
+        } catch (error) {
+          console.error('Biometric setup failed:', error);
+          alert('Failed to setup biometric authentication: ' + error.message);
+        }
+      }
+
+      // Account recovery with recovery key
+      async function recoverAccount() {
+        try {
+          const { recoveryKeyManager, webauthnService } = await loadBiometricModules();
+          
+          // Show recovery key input modal
+          const recoveryKey = await recoveryKeyManager.showRecoveryKeyInputModal();
+          
+          if (!recoveryKey) {
+            return; // User cancelled
+          }
+          
+          const email = document.getElementById('login-email').value;
+          if (!email) {
+            alert('Please enter your email address first');
+            return;
+          }
+          
+          // Get user from auth system
+          const users = JSON.parse(localStorage.getItem('users') || '[]');
+          const user = users.find(u => u.email === email);
+          
+          if (!user) {
+            alert('No account found with this email');
+            return;
+          }
+          
+          // Verify recovery key
+          const isValid = await recoveryKeyManager.verifyRecoveryKey(user.id, recoveryKey);
+          
+          if (isValid) {
+            // Show biometric re-registration
+            alert('✅ Recovery key verified! Please register a new biometric credential.');
+            const { biometricModal } = await loadBiometricModules();
+            await biometricModal.showRegistrationModal(user.id, user.name, user.email);
+          } else {
+            alert('❌ Invalid recovery key. Please try again.');
+          }
+          
+        } catch (error) {
+          console.error('Account recovery failed:', error);
+          alert('Recovery failed: ' + error.message);
+        }
       }
 
       // Guest login
