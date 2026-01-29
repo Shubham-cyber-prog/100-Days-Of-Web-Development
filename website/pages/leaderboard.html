@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/website/assets/images/logo.png">
+    <title>Leaderboard | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <style>
+        .page-header {
+            text-align: center;
+            padding: 120px 0 60px;
+        }
+        .leaderboard-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .search-wrapper {
+            max-width: 400px;
+            flex: 1;
+            position: relative;
+        }
+        #searchInput {
+            background: var(--bg-surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            padding: 16px 24px;
+            font-size: var(--text-base);
+            width: 100%;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--accent-core);
+            box-shadow: 0 0 20px -5px var(--accent-alpha);
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: var(--text-sm);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent-core);
+            color: var(--text-primary);
+        }
+        .filter-btn.active {
+            background: var(--accent-core);
+            color: #000;
+            border-color: var(--accent-core);
+            font-weight: var(--weight-bold);
+        }
+        .podium-section {
+            margin: 3rem 0;
+        }
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .podium-place {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .podium-place:hover {
+            transform: translateY(-5px);
+        }
+        .podium-place.first {
+            order: 2;
+            transform: scale(1.1);
+            border-color: var(--accent-core);
+        }
+        .podium-place.second {
+            order: 1;
+        }
+        .podium-place.third {
+            order: 3;
+        }
+        .podium-avatar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--glass-border);
+        }
+        .leaderboard-table {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+        .table-header {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px 100px 80px 120px;
+            background: var(--bg-nebula);
+            padding: 1rem;
+            font-weight: var(--weight-bold);
+        }
+        .leaderboard-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px 100px 80px 120px;
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+        .leaderboard-row:hover {
+            background: var(--bg-nebula);
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--glass-border);
+        }
+        .your-rank-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background: var(--bg-surface);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid var(--glass-border);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .leaderboard-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .podium {
+                flex-direction: column;
+                align-items: center;
+            }
+            .table-header, .leaderboard-row {
+                grid-template-columns: 50px 1fr 80px;
+            }
+            .header-cell.projects, .header-cell.streak, .header-cell.badges,
+            .projects-cell, .streak-cell, .badges-cell {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-logo">
+                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="leaderboard.html" class="nav-link active">Leaderboard</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contributors.html" class="nav-link">Contributors</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-user">
+                <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="margin-right: 15px; background: none; border: none; cursor: pointer;">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary)">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="user-avatar-wrapper">
+                    <button class="user-avatar" onclick="toggleUserMenu()">
+                        <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%; border-radius: 50%">
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="profile.html" class="dropdown-item">View Profile</a>
+                        <a href="settings.html" class="dropdown-item">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item text-danger" onclick="handleLogout()">Log Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container section">
+        <div class="page-header animate-enter">
+            <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">Leaderboard</h1>
+            <p class="text-secondary">Compete with fellow developers and track your progress</p>
+        </div>
+
+        <div class="leaderboard-controls animate-enter delay-100">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Search users...">
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-period="all">All Time</button>
+                <button class="filter-btn" data-period="monthly">Monthly</button>
+                <button class="filter-btn" data-period="weekly">Weekly</button>
+            </div>
+        </div>
+
+        <div class="podium-section animate-enter delay-200">
+            <div class="podium">
+                <div class="podium-place second" id="secondPlace">
+                    <div class="podium-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=2" alt="2nd Place">
+                    </div>
+                    <h3>Sarah Chen</h3>
+                    <p class="text-secondary">1,250 points</p>
+                </div>
+                <div class="podium-place first" id="firstPlace">
+                    <div class="podium-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=1" alt="1st Place">
+                    </div>
+                    <h3>Alex Rodriguez</h3>
+                    <p class="text-secondary">1,580 points</p>
+                </div>
+                <div class="podium-place third" id="thirdPlace">
+                    <div class="podium-avatar">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=3" alt="3rd Place">
+                    </div>
+                    <h3>Mike Johnson</h3>
+                    <p class="text-secondary">980 points</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="leaderboard-table animate-enter delay-300">
+            <div class="table-header">
+                <div class="header-cell rank">Rank</div>
+                <div class="header-cell user">User</div>
+                <div class="header-cell points">Points</div>
+                <div class="header-cell projects">Projects</div>
+                <div class="header-cell streak">Streak</div>
+                <div class="header-cell badges">Badges</div>
+            </div>
+            <div class="table-body" id="leaderboardBody">
+                <!-- Leaderboard entries will be loaded here -->
+            </div>
+        </div>
+
+        <div class="your-rank-card animate-enter delay-400" id="yourRankCard">
+            <h3>Your Ranking</h3>
+            <div class="rank-info">
+                <div class="rank-position">
+                    <span class="rank-number text-flame" id="yourRank" style="font-size: 3rem; font-weight: 900;">#15</span>
+                    <span class="text-secondary">Current Rank</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalUserName">User Profile</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent">
+                    <!-- Modal content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script src="../scripts/pages/leaderboard.js"></script>
+</body>
+</html>

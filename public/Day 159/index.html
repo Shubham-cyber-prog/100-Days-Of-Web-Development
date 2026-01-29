@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alien Zoo Architect - Day 159</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🛸 Alien Zoo Architect</h1>
+            <div class="stats">
+                <div class="stat">
+                    <span class="label">Zoo Happiness:</span>
+                    <span class="value" id="overallHappiness">0%</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Credits:</span>
+                    <span class="value" id="credits">1000</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Visitors:</span>
+                    <span class="value" id="visitors">0</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="panel-section">
+                    <h3>🏗️ Habitat Builder</h3>
+                    <div class="build-categories">
+                        <div class="category">
+                            <h4>🌿 Environment</h4>
+                            <button class="build-btn" data-type="forest" data-cost="200">
+                                🌲 Forest Biome (200💰)
+                            </button>
+                            <button class="build-btn" data-type="desert" data-cost="150">
+                                🏜️ Desert Biome (150💰)
+                            </button>
+                            <button class="build-btn" data-type="ocean" data-cost="300">
+                                🌊 Ocean Biome (300💰)
+                            </button>
+                            <button class="build-btn" data-type="crystal" data-cost="400">
+                                💎 Crystal Cavern (400💰)
+                            </button>
+                        </div>
+                        
+                        <div class="category">
+                            <h4>🏠 Structures</h4>
+                            <button class="build-btn" data-type="shelter" data-cost="100">
+                                🏕️ Shelter (100💰)
+                            </button>
+                            <button class="build-btn" data-type="feeding" data-cost="80">
+                                🍖 Feeding Station (80💰)
+                            </button>
+                            <button class="build-btn" data-type="playground" data-cost="120">
+                                🎪 Playground (120💰)
+                            </button>
+                            <button class="build-btn" data-type="healing" data-cost="250">
+                                🏥 Healing Pod (250💰)
+                            </button>
+                        </div>
+
+                        <div class="category">
+                            <h4>👽 Creatures</h4>
+                            <button class="build-btn" data-type="flubber" data-cost="500">
+                                🟢 Flubber (500💰)
+                            </button>
+                            <button class="build-btn" data-type="crystaling" data-cost="600">
+                                💎 Crystaling (600💰)
+                            </button>
+                            <button class="build-btn" data-type="skydancer" data-cost="700">
+                                ☁️ Sky Dancer (700💰)
+                            </button>
+                            <button class="build-btn" data-type="voidwhisper" data-cost="800">
+                                🌌 Void Whisper (800💰)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="clearBtn" class="action-btn">🗑️ Clear All</button>
+                        <button id="randomBtn" class="action-btn">🎲 Random Zoo</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>📊 Creature Status</h3>
+                    <div id="creatureList" class="creature-list">
+                        <p class="empty-state">No creatures yet. Add some aliens to get started!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="viewport">
+                <canvas id="gameCanvas"></canvas>
+                <div class="viewport-ui">
+                    <div class="mode-selector">
+                        <button class="mode-btn active" data-mode="build">🏗️ Build</button>
+                        <button class="mode-btn" data-mode="inspect">🔍 Inspect</button>
+                        <button class="mode-btn" data-mode="observe">👁️ Observe</button>
+                    </div>
+                    
+                    <div class="placement-guide" id="placementGuide">
+                        <p>Select an item from the left panel to place it</p>
+                        <p class="controls">Left click to place • Right click to cancel</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="panel-section">
+                    <h3>🎯 Challenge Scenarios</h3>
+                    <div class="challenges">
+                        <div class="challenge">
+                            <h4>🌱 Beginner Zoo</h4>
+                            <p>Make 5 creatures happy</p>
+                            <div class="reward">Reward: +500 Credits</div>
+                        </div>
+                        <div class="challenge">
+                            <h4>🏆 Master Architect</h4>
+                            <p>Achieve 90% overall happiness</p>
+                            <div class="reward">Reward: +1000 Credits</div>
+                        </div>
+                        <div class="challenge">
+                            <h4>🎪 Tourist Attraction</h4>
+                            <p>Get 50+ visitors</p>
+                            <div class="reward">Reward: New creature types</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>ℹ️ Selection Info</h3>
+                    <div id="selectionInfo" class="selection-info">
+                        <p>Click on objects to see their information</p>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>💡 Tips</h3>
+                    <div class="tips">
+                        <div class="tip">
+                            <strong>🟢 Flubbers</strong> love forest biomes and playgrounds
+                        </div>
+                        <div class="tip">
+                            <strong>💎 Crystalings</strong> need crystal caverns and healing pods
+                        </div>
+                        <div class="tip">
+                            <strong>☁️ Sky Dancers</strong> prefer open spaces and feeding stations
+                        </div>
+                        <div class="tip">
+                            <strong>🌌 Void Whispers</strong> are mysterious and need special care
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

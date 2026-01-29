@@ -1,581 +1,646 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Academy</title>
+    <link rel="icon" href="/website/assets/images/logo.png">
+    <title>Profile | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .page-header {
+            text-align: center;
+            padding: 120px 0 60px;
         }
-
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #64748b;
-            --light: #f8fafc;
-            --dark: #0f172a;
-            --success: #10b981;
-            --error: #ef4444;
-            --border: #e2e8f0;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --radius: 12px;
+        .profile-header {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
         }
-
-        body {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            min-height: 100vh;
+        .profile-avatar {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .profile-avatar img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--glass-border);
+            object-fit: cover;
+        }
+        .avatar-edit-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: var(--accent-core);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        .container {
-            width: 100%;
-            max-width: 440px;
+        .avatar-edit-btn:hover {
+            transform: scale(1.1);
         }
-
-        .login-card {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 40px;
+        .profile-info {
+            flex: 1;
+        }
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-core);
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .edit-profile-btn {
+            background: var(--bg-nebula);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .edit-profile-btn:hover {
+            background: var(--accent-core);
+            color: #000;
+            transform: translateY(-2px);
+        }
+        .profile-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .profile-section h2 {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .info-item label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-item span {
+            color: var(--text-primary);
+            font-size: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-nebula);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-core);
+        }
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .achievement-badge {
+            background: var(--bg-nebula);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
         }
-
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--success));
+        .achievement-badge:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-core);
         }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
+        .achievement-badge.unlocked {
+            border-color: var(--accent-core);
         }
-
-        .logo h1 {
-            color: var(--dark);
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 5px;
+        .achievement-badge.locked {
+            opacity: 0.6;
         }
-
-        .logo p {
-            color: var(--secondary);
-            font-size: 14px;
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-core);
         }
-
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--success));
+        .progress-cards {
+            display: grid;
+            gap: 1rem;
+        }
+        .progress-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-nebula);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-core);
+        }
+        .progress-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-core);
             border-radius: 50%;
-            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
+            color: #000;
+            font-size: 1.2rem;
+            flex-shrink: 0;
         }
-
+        .progress-info {
+            flex: 1;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--glass-border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-core);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-nebula);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent-core);
+        }
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-core);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            flex-shrink: 0;
+        }
+        .activity-content {
+            flex: 1;
+        }
+        .activity-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .activity-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .activity-time {
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background: var(--bg-surface);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--glass-border);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
-
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 14px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--secondary);
-            font-size: 16px;
-        }
-
         .form-control {
             width: 100%;
-            padding: 14px 14px 14px 45px;
-            border: 2px solid var(--border);
+            padding: 0.75rem;
+            border: 2px solid var(--glass-border);
             border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: white;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: var(--bg-nebula);
+            color: var(--text-primary);
         }
-
         .form-control:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: var(--accent-core);
         }
-
-        .form-control.error {
-            border-color: var(--error);
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
         }
-
-        .error-message {
-            color: var(--error);
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .forgot-password {
-            text-align: right;
-            margin-bottom: 25px;
-        }
-
-        .forgot-password a {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-
-        .forgot-password a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
-
         .btn {
-            width: 100%;
-            padding: 14px;
+            padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
+            font-weight: 500;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
-
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
+            background: var(--accent-core);
+            color: #000;
         }
-
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.2);
         }
-
-        .btn-primary:active {
-            transform: translateY(0);
+        .btn-secondary {
+            background: var(--bg-nebula);
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
         }
-
-        .divider {
-            text-align: center;
-            margin: 30px 0;
-            position: relative;
-            color: var(--secondary);
-            font-size: 14px;
+        .btn-secondary:hover {
+            background: var(--glass-border);
         }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 45%;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .divider::before {
-            left: 0;
-        }
-
-        .divider::after {
-            right: 0;
-        }
-
-        .social-login {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .social-btn {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .social-btn:hover {
-            border-color: var(--primary);
-            transform: translateY(-1px);
-        }
-
-        .social-btn img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 14px;
-            color: var(--secondary);
-        }
-
-        .register-link a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 5px;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        .loading {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid white;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .message {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-            display: none;
-        }
-
-        .message.success {
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-        }
-
-        .message.error {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .remember-me input {
-            width: 16px;
-            height: 16px;
-        }
-
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 30px 20px;
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
             }
-
-            .social-login {
+            .profile-stats {
+                justify-content: center;
+            }
+            .edit-profile-btn {
+                align-self: center;
+            }
+            .info-grid {
                 grid-template-columns: 1fr;
             }
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            .progress-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .activity-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .form-actions {
+                flex-direction: column;
+            }
         }
+      }
+
+      .modal-header {
+        padding: var(--space-6);
+        border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-header h3 {
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .close {
+        color: var(--text-secondary);
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        line-height: 1;
+      }
+
+      .close:hover {
+        color: var(--text-primary);
+      }
+
+      .modal-body {
+        padding: var(--space-6);
+      }
+
+      .form-group {
+        margin-bottom: var(--space-4);
+      }
+
+      .form-group label {
+        display: block;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-2);
+        font-weight: var(--weight-medium);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: var(--space-3);
+        background: rgba(139, 92, 246, 0.05);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: var(--radius-lg);
+        color: var(--text-primary);
+        font-family: inherit;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--accent-core);
+        background: rgba(139, 92, 246, 0.1);
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-3);
+        margin-top: var(--space-6);
+      }
+
+      .btn {
+        padding: var(--space-3) var(--space-6);
+        border: none;
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        font-weight: var(--weight-medium);
+        transition: all 0.3s ease;
+      }
+
+      .btn-secondary {
+        background: rgba(139, 92, 246, 0.1);
+        color: var(--text-secondary);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(139, 92, 246, 0.2);
+        color: var(--text-primary);
+      }
+
+      .btn-primary {
+        background: var(--accent-core);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-glow);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="login-card">
-            <div class="logo">
-                <div class="logo-icon">A</div>
-                <h1>Academy Login</h1>
-                <p>Welcome back! Please sign in to continue</p>
-            </div>
-
-            <div class="message" id="message"></div>
-
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" 
-                               id="email" 
-                               class="form-control" 
-                               placeholder="Enter your email"
-                               required>
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-logo">
+                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="profile.html" class="nav-link active">Profile</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contributors.html" class="nav-link">Contributors</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-user">
+                <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="margin-right: 15px; background: none; border: none; cursor: pointer;">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary)">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="user-avatar-wrapper">
+                    <button class="user-avatar" onclick="toggleUserMenu()">
+                        <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%; border-radius: 50%">
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="profile.html" class="dropdown-item">View Profile</a>
+                        <a href="settings.html" class="dropdown-item">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item text-danger" onclick="handleLogout()">Log Out</button>
                     </div>
-                    <div class="error-message" id="email-error"></div>
                 </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" 
-                               id="password" 
-                               class="form-control" 
-                               placeholder="Enter your password"
-                               required>
-                        <i class="fas fa-eye toggle-password" 
-                           style="position: absolute; right: 15px; left: auto; cursor: pointer;"></i>
-                    </div>
-                    <div class="error-message" id="password-error"></div>
-                </div>
-
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
-                </div>
-
-                <div class="forgot-password">
-                    <a href="#" id="forgotPassword">Forgot password?</a>
-                </div>
-
-                <button type="submit" class="btn btn-primary" id="submitBtn">
-                    <span id="btnText">Sign In</span>
-                    <div class="loading" id="loading"></div>
-                </button>
-            </form>
-
-            <div class="divider">or continue with</div>
-
-            <div class="social-login">
-                <button class="social-btn" id="googleBtn">
-                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
-                    Google
-                </button>
-                <button class="social-btn" id="githubBtn">
-                    <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub">
-                    GitHub
-                </button>
-            </div>
-
-            <div class="register-link">
-                Don't have an account?
-                <a href="#" id="registerLink">Sign up now</a>
             </div>
         </div>
+    </header>
+
+    <main class="container section">
+        <div class="profile-header animate-enter">
+            <div class="profile-avatar">
+                <img id="avatarImg" src="../assets/images/pilot_avatar.png" alt="Profile Avatar">
+                <button class="avatar-edit-btn" id="editAvatarBtn">📷</button>
+            </div>
+            <div class="profile-info">
+                <h1 id="userName">Web Developer</h1>
+                <p id="userTitle" class="text-secondary">Frontend Enthusiast</p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="projectsCompleted">0</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="daysActive">0</span>
+                        <span class="stat-label">Days Active</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="currentStreak">0</span>
+                        <span class="stat-label">Streak</span>
+                    </div>
+                </div>
+            </div>
+            <button class="edit-profile-btn" id="editProfileBtn">✏️ Edit Profile</button>
+        </div>
+
+        <div class="profile-section animate-enter delay-100">
+            <h2>👤 Personal Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Full Name</label>
+                    <span id="fullName">Web Developer</span>
+                </div>
+                <div class="info-item">
+                    <label>Email</label>
+                    <span id="userEmail">developer@example.com</span>
+                </div>
+                <div class="info-item">
+                    <label>Join Date</label>
+                    <span id="joinDate">January 2024</span>
+                </div>
+                <div class="info-item">
+                    <label>Location</label>
+                    <span id="userLocation">Global</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-section animate-enter delay-200">
+            <h2>🏆 Achievements</h2>
+            <div class="achievements-grid" id="achievementsGrid">
+                <!-- Achievements will be loaded here -->
+            </div>
+        </div>
+
+        <div class="profile-section animate-enter delay-300">
+            <h2>📊 Progress Overview</h2>
+            <div class="progress-cards">
+                <div class="progress-card">
+                    <div class="progress-icon">💻</div>
+                    <div class="progress-info">
+                        <h3>HTML/CSS</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%"></div>
+                        </div>
+                        <span class="text-secondary">85% Complete</span>
+                    </div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-icon">⚡</div>
+                    <div class="progress-info">
+                        <h3>JavaScript</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 70%"></div>
+                        </div>
+                        <span class="text-secondary">70% Complete</span>
+                    </div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-icon">📱</div>
+                    <div class="progress-info">
+                        <h3>Responsive Design</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%"></div>
+                        </div>
+                        <span class="text-secondary">90% Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-section animate-enter delay-400">
+            <h2>📈 Recent Activity</h2>
+            <div class="activity-list" id="activityList">
+                <!-- Activity items will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label for="editFullName">Full Name</label>
+                        <input type="text" id="editFullName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editTitle">Title</label>
+                        <input type="text" id="editTitle" class="form-control" placeholder="e.g., Frontend Developer">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLocation">Location</label>
+                        <input type="text" id="editLocation" class="form-control" placeholder="e.g., New York, USA">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elements
-            const loginForm = document.getElementById('loginForm');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const loading = document.getElementById('loading');
-            const message = document.getElementById('message');
-            const togglePassword = document.querySelector('.toggle-password');
-            const googleBtn = document.getElementById('googleBtn');
-            const githubBtn = document.getElementById('githubBtn');
-            const forgotPassword = document.getElementById('forgotPassword');
-            const registerLink = document.getElementById('registerLink');
-
-            // Toggle password visibility
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                this.classList.toggle('fa-eye');
-                this.classList.toggle('fa-eye-slash');
-            });
-
-            // Form validation
-            function validateEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
-            }
-
-            function validatePassword(password) {
-                return password.length >= 6;
-            }
-
-            function showError(inputId, message) {
-                const errorElement = document.getElementById(inputId + '-error');
-                const inputElement = document.getElementById(inputId);
-                errorElement.textContent = message;
-                errorElement.style.display = 'block';
-                inputElement.classList.add('error');
-            }
-
-            function clearError(inputId) {
-                const errorElement = document.getElementById(inputId + '-error');
-                const inputElement = document.getElementById(inputId);
-                errorElement.textContent = '';
-                errorElement.style.display = 'none';
-                inputElement.classList.remove('error');
-            }
-
-            function showMessage(type, text) {
-                message.textContent = text;
-                message.className = 'message ' + type;
-                message.style.display = 'block';
-                
-                // Auto hide after 5 seconds
-                setTimeout(() => {
-                    message.style.display = 'none';
-                }, 5000);
-            }
-
-            // Handle form submission
-            loginForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const email = emailInput.value.trim();
-                const password = passwordInput.value.trim();
-                let isValid = true;
-
-                // Clear previous errors
-                clearError('email');
-                clearError('password');
-                message.style.display = 'none';
-
-                // Validate email
-                if (!email) {
-                    showError('email', 'Email is required');
-                    isValid = false;
-                } else if (!validateEmail(email)) {
-                    showError('email', 'Please enter a valid email');
-                    isValid = false;
-                }
-
-                // Validate password
-                if (!password) {
-                    showError('password', 'Password is required');
-                    isValid = false;
-                } else if (!validatePassword(password)) {
-                    showError('password', 'Password must be at least 6 characters');
-                    isValid = false;
-                }
-
-                if (!isValid) return;
-
-                // Show loading state
-                btnText.style.display = 'none';
-                loading.style.display = 'block';
-                submitBtn.disabled = true;
-
-                // Simulate API call (replace with actual API call)
-                try {
-                    // This is a simulation - replace with real authentication
-                    await new Promise(resolve => setTimeout(resolve, 1500));
-                    
-                    // For demo purposes, accept any email/password
-                    // In real app, you would make an API call here
-                    
-                    showMessage('success', 'Login successful! Redirecting...');
-                    
-                    // Simulate redirect to dashboard
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1000);
-                    
-                } catch (error) {
-                    showMessage('error', 'Login failed. Please check your credentials.');
-                    console.error('Login error:', error);
-                } finally {
-                    // Reset button state
-                    btnText.style.display = 'block';
-                    loading.style.display = 'none';
-                    submitBtn.disabled = false;
-                }
-            });
-
-            // Social login buttons
-            googleBtn.addEventListener('click', function() {
-                showMessage('info', 'Redirecting to Google authentication...');
-                // In real app: window.location.href = '/auth/google';
-            });
-
-            githubBtn.addEventListener('click', function() {
-                showMessage('info', 'Redirecting to GitHub authentication...');
-                // In real app: window.location.href = '/auth/github';
-            });
-
-            // Forgot password
-            forgotPassword.addEventListener('click', function(e) {
-                e.preventDefault();
-                const email = prompt('Please enter your email to reset password:');
-                if (email && validateEmail(email)) {
-                    showMessage('success', `Password reset link sent to ${email}`);
-                } else if (email) {
-                    alert('Please enter a valid email address');
-                }
-            });
-
-            // Register link
-            registerLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                showMessage('info', 'Redirecting to registration page...');
-                // In real app: window.location.href = '/register';
-            });
-
-            // Auto-fill demo credentials for testing
-            window.demoLogin = function() {
-                emailInput.value = 'demo@academy.com';
-                passwordInput.value = 'password123';
-                loginForm.requestSubmit();
-            };
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'Enter') {
-                    loginForm.requestSubmit();
-                }
-                if (e.altKey && e.key === 'd') {
-                    window.demoLogin();
-                }
-            });
-
-            // Check for saved credentials
-            const savedEmail = localStorage.getItem('rememberedEmail');
-            if (savedEmail) {
-                emailInput.value = savedEmail;
-                document.getElementById('remember').checked = true;
-            }
-        });
-    </script>
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script src="../scripts/pages/profile.js"></script>
 </body>
 </html>

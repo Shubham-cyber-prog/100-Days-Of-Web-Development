@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Icebreaker Pilot - Day 160</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>❄️ Icebreaker Pilot</h1>
+    <div class="hud">
+      <div>Speed: <span id="hudSpeed">0</span></div>
+      <div>Hull: <span id="hudHull">100%</span></div>
+      <div>Waypoints: <span id="hudWaypoints">0</span></div>
+    </div>
+  </header>
+
+  <main class="main">
+    <canvas id="gameCanvas"></canvas>
+    <aside class="controls">
+      <h2>Controls</h2>
+      <ul>
+        <li><strong>W / ↑</strong> accelerate</li>
+        <li><strong>S / ↓</strong> brake / reverse</li>
+        <li><strong>A / ←</strong> turn left</li>
+        <li><strong>D / →</strong> turn right</li>
+        <li><strong>Space</strong> toggle autopilot</li>
+        <li><strong>Click</strong> set waypoint</li>
+        <li><strong>R</strong> reset scene</li>
+      </ul>
+
+      <h2>Scenario</h2>
+      <p>Create routes through drifting ice fields, break ice to clear a path and manage hull damage.</p>
+
+      <div class="buttons">
+        <button id="resetBtn">Reset</button>
+        <button id="randomBtn">Random Ice</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <small>Day 160 — Navigate a ship through frozen seas. Planner + hull damage + ice physics.</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
