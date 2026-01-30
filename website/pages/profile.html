@@ -555,6 +555,174 @@
         background: var(--accent-glow);
         box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
       }
+
+      /* Light Theme Overrides */
+      [data-theme="light"] .profile-hero::before {
+        background: radial-gradient(
+          circle,
+          rgba(139, 92, 246, 0.08) 0%,
+          transparent 70%
+        );
+      }
+
+      [data-theme="light"] .stat-card {
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      [data-theme="light"] .stat-card:hover {
+        border-color: var(--accent-core);
+        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.15);
+      }
+
+      [data-theme="light"] .section-card {
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      [data-theme="light"] .section-card:hover {
+        border-color: var(--accent-core);
+        transform: translateY(-2px);
+      }
+
+      [data-theme="light"] .progress-item {
+        background: #f8fafc;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      [data-theme="light"] .progress-bar {
+        background: rgba(0, 0, 0, 0.06);
+      }
+
+      [data-theme="light"] .achievement-badge {
+        background: #ffffff;
+        border: 1px solid rgba(139, 92, 246, 0.1);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      }
+
+      [data-theme="light"] .achievement-badge:hover {
+        border-color: var(--accent-core);
+        box-shadow: 0 6px 16px rgba(139, 92, 246, 0.12);
+      }
+
+      [data-theme="light"] .activity-item {
+        background: #f8fafc;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      [data-theme="light"] .activity-item:hover {
+        border-color: rgba(139, 92, 246, 0.3);
+      }
+
+      /* Text Colors for Light Theme */
+      [data-theme="light"] .profile-title {
+        background: linear-gradient(
+          135deg,
+          #1f2937 0%,
+          var(--accent-core) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      [data-theme="light"] .profile-subtitle,
+      [data-theme="light"] .stat-label,
+      [data-theme="light"] .info-label,
+      [data-theme="light"] .progress-text,
+      [data-theme="light"] .achievement-description,
+      [data-theme="light"] .achievement-date,
+      [data-theme="light"] .activity-time {
+        color: #6b7280;
+      }
+
+      [data-theme="light"] .section-header h2,
+      [data-theme="light"] .info-value,
+      [data-theme="light"] .progress-title,
+      [data-theme="light"] .achievement-name,
+      [data-theme="light"] .activity-title {
+        color: #1f2937;
+      }
+
+      /* Modal Adjustments for Light Theme */
+      [data-theme="light"] .modal-content {
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme="light"] .modal-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      [data-theme="light"] .form-control {
+        background: #f8fafc;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        color: #1f2937;
+      }
+
+      [data-theme="light"] .form-control:focus {
+        border-color: var(--accent-core);
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+      }
+
+      [data-theme="light"] .btn-secondary {
+        background: rgba(0, 0, 0, 0.04);
+        color: #4b5563;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme="light"] .btn-secondary:hover {
+        background: rgba(0, 0, 0, 0.08);
+        color: #1f2937;
+      }
+
+      /* Footer Adjustments */
+      [data-theme="light"] .footer {
+        background: #f8fafc;
+        color: #4b5563;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      [data-theme="light"] .footer h3 {
+        color: #1f2937;
+      }
+
+      [data-theme="light"] .footer-links a {
+        color: #6b7280;
+      }
+
+      [data-theme="light"] .footer-links a:hover {
+        color: var(--accent-core);
+      }
+
+      [data-theme="light"] .social-link {
+        color: #6b7280;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme="light"] .social-link:hover {
+        background: var(--accent-core);
+        color: white;
+        border-color: var(--accent-core);
+      }
+
+      /* Fix for avatar border in light mode */
+      [data-theme="light"] .profile-avatar-main img {
+        border: 4px solid var(--accent-core);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+      }
+
+      /* Enhanced button visibility */
+      [data-theme="light"] .edit-profile-btn {
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+      }
+
+      [data-theme="light"] .edit-profile-btn:hover {
+        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+      }
+
     </style>
   </head>
 
@@ -648,6 +816,59 @@
     </header>
 
     <main class="container section">
+        <div class="profile-header animate-enter">
+            <div class="profile-avatar">
+                <img id="avatarImg" src="../assets/images/pilot_avatar.png" alt="Profile Avatar">
+                <button class="avatar-edit-btn" id="editAvatarBtn">📷</button>
+            </div>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Call Sign</span>
+                <span class="info-value" id="fullName">Alex Rodriguez</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Communications</span>
+                <span class="info-value" id="userEmail"
+                  >alex.rodriguez@webdev.academy</span
+                >
+              </div>
+              <div class="info-item">
+                <span class="info-label">Deployment Date</span>
+                <span class="info-value" id="joinDate">March 2026</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Base Location</span>
+                <span class="info-value" id="userLocation"
+                  >San Francisco, CA</span
+                >
+              </div>
+              <div class="info-item">
+                <span class="info-label">Mission Status</span>
+                <span class="info-value">Active Development</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Specialization</span>
+                <span class="info-value">Full-Stack Engineering</span>
+              </div>
+            <div class="profile-info">
+                <h1 id="userName">Web Developer</h1>
+                <p id="userTitle" class="text-secondary">Frontend Enthusiast</p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="projectsCompleted">0</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="daysActive">0</span>
+                        <span class="stat-label">Days Active</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="currentStreak">0</span>
+                        <span class="stat-label">Streak</span>
+                    </div>
+                </div>
+            </div>
+            <button class="edit-profile-btn" id="editProfileBtn">✏️ Edit Profile</button>
       <!-- Profile Hero Section -->
       <section class="profile-hero animate-enter">
         <div class="profile-avatar-main">
