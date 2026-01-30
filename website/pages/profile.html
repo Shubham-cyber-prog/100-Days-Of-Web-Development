@@ -290,12 +290,13 @@
 
       .achievement-badge {
         background: var(--bg-glass-panel);
-        border: 1px solid rgba(139, 92, 246, 0.2);
+         border: 1px solid var(--border-glass);
+          color: var(--text-primary);
         border-radius: 12px;
         padding: 16px 12px;
         text-align: center;
         transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
+       backdrop-filter: blur(6px);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -535,7 +536,7 @@
       }
 
       .btn-secondary {
-        background: rgba(139, 92, 246, 0.1);
+        background: var(--bg-muted);
         color: var(--text-secondary);
         border: 1px solid rgba(139, 92, 246, 0.2);
       }
@@ -978,6 +979,15 @@
     </footer>
 
     <!-- Edit Profile Modal -->
+
+        <div class="profile-section animate-enter delay-400">
+            <h2>📈 Recent Activity</h2>
+            <div class="activity-list" id="activityList">
+                <!-- Activity items will be loaded here -->
+            </div>
+        </div>
+    </main>
+
     <div id="editModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -1021,22 +1031,43 @@
                 placeholder="Tell us about yourself..."
               ></textarea>
             </div>
-            <div class="form-actions">
-              <button type="button" class="btn btn-secondary" id="cancelEdit">
-                Cancel
-              </button>
-              <button type="submit" class="btn btn-primary">
-                Save Changes
-              </button>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label for="editFullName">Full Name</label>
+                        <input type="text" id="editFullName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editTitle">Title</label>
+                        <input type="text" id="editTitle" class="form-control" placeholder="e.g., Frontend Developer">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLocation">Location</label>
+                        <input type="text" id="editLocation" class="form-control" placeholder="e.g., New York, USA">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
             </div>
           </form>
         </div>
       </div>
     </div>
 
+    <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/components/navigation.js"></script>
     <script src="../scripts/pages/profile.js"></script>
+issue/resolved-the-profile-page-display-wrong-navbar
     <script src="../scripts/profile-data.js"></script>
-    <script src="../scripts/profile-data.js"></script>
+   
   </body>
 </html>
+
+
+
