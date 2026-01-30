@@ -242,91 +242,82 @@
 
     <!-- Zenith Hero -->
     <section class="zenith-hero animate-enter">
-      <h1 class="hero-title">Master the Art<br />of Web Development</h1>
+      <h1 class="hero-title">Welcome back,<br /><span id="userName">Developer</span></h1>
       <p class="hero-subtitle">
-        Day 45 of 100. Systems are nominal. Continue your mission to conquer
-        the digital frontier.
+        <span id="currentDay">Day 0</span> of 100. <span id="streakText">Keep building!</span>
       </p>
       <div class="hero-actions">
-        <a href="projects.html" class="btn-zenith-primary">Resume Mission</a>
+        <a href="projects.html" class="btn-zenith-primary">Continue Mission</a>
+        <button class="btn-secondary" onclick="openProfileModal()">Edit Profile</button>
       </div>
     </section>
 
-    <!-- Stats Grid (Floating) -->
-    <div class="grid grid-3" style="margin-top: 40px; position: relative; z-index: 2">
-      <!-- Stat Card 1 -->
-      <div class="card stat-card glow-active">
-        <h3 class="text-secondary" style="
-              font-size: var(--text-xs);
-              letter-spacing: 2px;
-              text-transform: uppercase;
-              margin-bottom: 1rem;
-            ">
-          Progress
-        </h3>
-        <div class="flex flex-col items-center">
-          <span class="text-flame" style="font-size: 3.5rem; font-weight: 900; line-height: 1">45%</span>
-          <p class="text-secondary" style="font-size: var(--text-sm)">
-            Orbit Achieved
-          </p>
+    <!-- Stats Grid -->
+    <div class="grid grid-4 stats-grid" style="margin-top: 40px; position: relative; z-index: 2">
+      <!-- Progress Card -->
+      <div class="card stat-card progress-card">
+        <h3 class="text-secondary stat-label">Progress</h3>
+        <div class="stat-value">
+          <span id="progressPercent" class="text-flame">0%</span>
+        </div>
+        <p class="stat-desc"><span id="completedDays">0</span>/100 Days</p>
+        <div class="progress-bar">
+          <div id="progressBar" class="progress-fill" style="width: 0%"></div>
         </div>
       </div>
 
-      <!-- Stat Card 2 -->
-      <div class="card stat-card">
-        <h3 class="text-secondary" style="
-              font-size: var(--text-xs);
-              letter-spacing: 2px;
-              text-transform: uppercase;
-              margin-bottom: 1rem;
-            ">
-          Streak
-        </h3>
-        <div class="flex flex-col items-center">
-          <span class="text-primary" style="font-size: 3.5rem; font-weight: 900; line-height: 1">12</span>
-          <p class="text-secondary" style="font-size: var(--text-sm)">
-            Days Active
-          </p>
+      <!-- Streak Card -->
+      <div class="card stat-card streak-card">
+        <h3 class="text-secondary stat-label">Current Streak</h3>
+        <div class="stat-value">
+          <span id="currentStreak" class="text-primary">0</span>
         </div>
+        <p class="stat-desc">Days Active</p>
+        <div class="streak-flame">🔥</div>
       </div>
 
-      <!-- Stat Card 3 -->
-      <div class="card stat-card">
-        <h3 class="text-secondary" style="
-              font-size: var(--text-xs);
-              letter-spacing: 2px;
-              text-transform: uppercase;
-              margin-bottom: 1rem;
-            ">
-          Status
-        </h3>
-        <div class="flex flex-col items-center justify-center" style="height: 100%">
-          <span class="text-success" style="
-                font-size: 2rem;
-                font-weight: 700;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-              ">
-            Online
-            <span style="
-                  width: 12px;
-                  height: 12px;
-                  background: var(--accent-success);
-                  border-radius: 50%;
-                  box-shadow: 0 0 15px var(--accent-success);
-                "></span>
-          </span>
+      <!-- Best Streak Card -->
+      <div class="card stat-card best-streak-card">
+        <h3 class="text-secondary stat-label">Best Streak</h3>
+        <div class="stat-value">
+          <span id="longestStreak" class="text-accent">0</span>
         </div>
+        <p class="stat-desc">Personal Record</p>
+        <div class="trophy-icon">🏆</div>
+      </div>
+
+      <!-- Status Card -->
+      <div class="card stat-card status-card">
+        <h3 class="text-secondary stat-label">Status</h3>
+        <div class="stat-value status-indicator">
+          <span id="userStatus" class="text-success">Active</span>
+          <span class="status-dot"></span>
+        </div>
+        <p class="stat-desc">Mission Status</p>
       </div>
     </div>
 
-    <!-- Recent Projects Preview -->
-    <section class="section recent-deployments-section">
+    <!-- Progress Heatmap -->
+    <section class="section progress-heatmap-section">
+      <div class="section-header">
+        <h2 class="dynamic-text">Progress Heatmap</h2>
+        <p class="text-secondary">Click on days to mark as completed</p>
+      </div>
+      <div id="progressGrid" class="progress-grid">
+        <!-- Progress grid will be populated by JS -->
+      </div>
+    </section>
+
+    <!-- Recent Projects -->
+    <section class="section recent-projects-section">
       <div class="flex justify-between items-center section-header">
-        <h2 class="dynamic-text">Recent Deployments</h2>
+        <h2 class="dynamic-text">Recent Projects</h2>
         <a href="projects.html" class="text-flame view-all-link">View All →</a>
       </div>
+      <div id="recentProjects" class="grid grid-3">
+        <!-- Recent projects will be populated by JS -->
+      </div>
+    </section>
 
 
       <!-- Progress Tracker Section -->
@@ -383,32 +374,29 @@
               </path>
             </svg>
           </div>
-          <h4 class="dynamic-text">Survival Protocol</h4>
-          <span class="text-flame project-tag">CAPSTONE • DAY 100</span>
-        </a>
-
-        <a href="/public/Day 101/index.html" class="card project-card">
-          <div class="project-preview-box">
-            <svg class="icon icon-xl" viewBox="0 0 24 24">
-              <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-            </svg>
+          <div class="form-group">
+            <label for="profileBio">Bio</label>
+            <textarea id="profileBio" name="bio" rows="3"></textarea>
           </div>
-          <h4 class="dynamic-text">Canvas Image Particle Animation</h4>
-          <span class="text-flame project-tag">CAPSTONE • DAY 101</span>
-        </a>
-
-        <a href="/public/Day 56/index.html" class="card project-card">
-          <div class="project-preview-box">
-            <svg class="icon icon-xl" viewBox="0 0 24 24">
-              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
-            </svg>
+          <div class="form-group">
+            <label for="profileLocation">Location</label>
+            <input type="text" id="profileLocation" name="location">
           </div>
-          <h4 class="dynamic-text">Expense Splitter</h4>
-          <span class="text-flame project-tag">INTERMEDIATE • DAY 56</span>
-        </a>
+          <div class="form-group">
+            <label for="profileWebsite">Website</label>
+            <input type="url" id="profileWebsite" name="website">
+          </div>
+          <div class="form-group">
+            <label for="profileGithub">GitHub</label>
+            <input type="url" id="profileGithub" name="github">
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="closeProfileModal()">Cancel</button>
+            <button type="submit" class="btn-zenith-primary">Save Changes</button>
+          </div>
+        </form>
       </div>
-    </section>
+    </div>
   </main>
 
   <!-- Professional Footer -->
