@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Terraformer Lite - Day 178</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Planet Terraformer Lite</h1>
+        <p>Modify terrain to sustain life. Use mouse to deform terrain in real-time. Balance atmosphere, water, heat, population, and resources.</p>
+    </header>
+    <main>
+        <aside id="stats-panel">
+            <h2>Planet Stats</h2>
+            <div id="meters">
+                <div id="atmosphere-meter">
+                    <label>Atmosphere: <span id="atmosphere-value">50</span>%</label>
+                    <progress id="atmosphere-bar" value="50" max="100"></progress>
+                </div>
+                <div id="water-meter">
+                    <label>Water: <span id="water-value">50</span>%</label>
+                    <progress id="water-bar" value="50" max="100"></progress>
+                </div>
+                <div id="heat-meter">
+                    <label>Heat: <span id="heat-value">50</span>%</label>
+                    <progress id="heat-bar" value="50" max="100"></progress>
+                </div>
+                <div id="population-meter">
+                    <label>Population: <span id="population-value">0</span></label>
+                    <progress id="population-bar" value="0" max="1000"></progress>
+                </div>
+                <div id="happiness-meter">
+                    <label>Happiness: <span id="happiness-value">50</span>%</label>
+                    <progress id="happiness-bar" value="50" max="100"></progress>
+                </div>
+            </div>
+            <div id="resources">
+                <h3>Resources</h3>
+                <div id="food-resource">
+                    <label>Food: <span id="food-value">100</span></label>
+                    <progress id="food-bar" value="100" max="500"></progress>
+                </div>
+                <div id="energy-resource">
+                    <label>Energy: <span id="energy-value">100</span></label>
+                    <progress id="energy-bar" value="100" max="500"></progress>
+                </div>
+                <div id="minerals-resource">
+                    <label>Minerals: <span id="minerals-value">100</span></label>
+                    <progress id="minerals-bar" value="100" max="500"></progress>
+                </div>
+            </div>
+            <div id="events-log">
+                <h3>Events Log</h3>
+                <ul id="events-list">
+                    <li>Welcome to Planet Terraformer!</li>
+                </ul>
+            </div>
+        </aside>
+        <section id="game-area">
+            <div id="tool-panel">
+                <h2>Tools</h2>
+                <div id="terrain-tools">
+                    <button id="raise-terrain" class="tool-btn active">Raise Terrain</button>
+                    <button id="lower-terrain" class="tool-btn">Lower Terrain</button>
+                    <button id="flatten-terrain" class="tool-btn">Flatten Terrain</button>
+                    <button id="add-water" class="tool-btn">Add Water</button>
+                    <button id="plant-forest" class="tool-btn">Plant Forest</button>
+                    <button id="build-city" class="tool-btn">Build City</button>
+                </div>
+                <div id="special-tools">
+                    <button id="disaster-mode" class="tool-btn">Disaster Mode</button>
+                    <button id="terraform-wave" class="tool-btn">Terraform Wave</button>
+                    <button id="save-game" class="tool-btn">Save Game</button>
+                    <button id="load-game" class="tool-btn">Load Game</button>
+                </div>
+                <div id="brush-size">
+                    <label>Brush Size: <span id="brush-size-value">20</span></label>
+                    <input type="range" id="brush-slider" min="5" max="50" value="20">
+                </div>
+            </div>
+            <canvas id="terrain-canvas" width="800" height="600"></canvas>
+            <div id="instructions">
+                <p>Use mouse to apply selected tool. Keyboard: R (Raise), L (Lower), F (Flatten), W (Water), T (Forest), C (City), D (Disaster), S (Save), O (Load)</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Day 178 - 100 Days of Web Development</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
