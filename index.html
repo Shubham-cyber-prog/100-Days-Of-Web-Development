@@ -18,10 +18,6 @@
 
     <link rel="icon" type="image/png" href="website/assets/images/logo.png" />
 
-    <!-- logo for nav bar -->
-    <link rel="stylesheet" href="website/assets/images/logo.png" />
-    <!-- home-->
-
     <!-- Enhanced Modern UI Styles -->
 
     <!-- Fire Cursor - Commented out as file is missing -->
@@ -100,10 +96,19 @@
 
       /* Enhanced Header */
       .site-header {
-        background: rgba(15, 15, 35, 0.8);
+        background: rgba(15, 15, 35, 0.95);
         backdrop-filter: blur(20px);
         border-bottom: 1px solid rgba(102, 126, 234, 0.2);
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
       }
 
       .nav-logo {
@@ -111,17 +116,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        background: none;
+        border: none;
+        padding: 0;
       }
 
       .brand-logo-img {
-        height: 45px;
+        height: 40px;
         width: auto;
-        max-width: 150px;
+        max-width: 180px;
         object-fit: contain;
         transition: all 0.3s ease;
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
+        display: block;
+        visibility: visible;
+        opacity: 1;
+        filter: brightness(0) invert(1);
       }
 
       .nav-logo:hover {
@@ -129,12 +138,29 @@
       }
 
       .nav-logo:hover .brand-logo-img {
-        filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
+        filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
       }
 
       .nav-link {
         position: relative;
         transition: all 0.3s ease;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none !important;
+        font-weight: 500;
+        font-size: 1rem;
+        padding: 0.5rem 0;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        color: #fff;
+        text-decoration: none !important;
       }
 
       .nav-link::after {
@@ -143,7 +169,7 @@
         bottom: -2px;
         left: 50%;
         width: 0;
-        height: 2px;
+        height: 0;
         background: var(--gradient-primary);
         transition: all 0.3s ease;
         transform: translateX(-50%);
@@ -152,6 +178,12 @@
       .nav-link:hover::after,
       .nav-link.active::after {
         width: 100%;
+      }
+
+      .nav-user {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
       }
 
       /* Hero Section Enhancement */
@@ -316,6 +348,10 @@
         backdrop-filter: blur(10px);
         position: relative;
         overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .feature-card::before {
@@ -375,6 +411,7 @@
         line-height: 1.6;
         position: relative;
         z-index: 1;
+        margin: 0;
       }
 
       /* Enhanced Footer */
@@ -386,6 +423,11 @@
 
       .footer-content {
         padding: 60px 20px 40px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto;
       }
 
       .social-btn {
@@ -478,6 +520,239 @@
 
       /* Responsive Design */
       @media (max-width: 768px) {
+        .nav-container {
+          padding: 1rem;
+          flex-wrap: wrap;
+        }
+        
+        .nav-links {
+          order: 3;
+          width: 100%;
+          justify-content: center;
+          margin-top: 1rem;
+          gap: 1rem;
+        }
+        
+        .nav-user {
+          margin-left: auto;
+        }
+
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn-zenith-primary,
+        .btn-zenith-secondary {
+          width: 100%;
+          max-width: 300px;
+        }
+        
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+
+      /* Mobile Menu Toggle */
+      .mobile-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .mobile-toggle {
+          display: block;
+        }
+        
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: rgba(15, 15, 35, 0.95);
+          backdrop-filter: blur(20px);
+          padding: 1rem;
+          z-index: 1000;
+        }
+        
+        .nav-links.open {
+          display: flex;
+        }
+      }
+
+      /* Light theme text visibility fix */
+      @media (prefers-color-scheme: light) {
+          body {
+              background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 50%, #f5f7fa 100%) !important;
+          }
+          
+          .site-header {
+              background: rgba(255, 255, 255, 0.95) !important;
+              border-bottom: 1px solid rgba(102, 126, 234, 0.1) !important;
+          }
+          
+          .nav-link {
+              color: rgba(0, 0, 0, 0.8) !important;
+          }
+          
+          .nav-link:hover,
+          .nav-link.active {
+              color: #667eea !important;
+          }
+          
+          .brand-logo-img {
+              filter: none !important;
+          }
+          
+          .nav-logo:hover .brand-logo-img {
+              filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6)) !important;
+          }
+          
+          .feature-card {
+              background: rgba(255, 255, 255, 0.8) !important;
+              border: 1px solid rgba(102, 126, 234, 0.1) !important;
+          }
+          
+          .feature-card h3 {
+              color: #1a1a2e !important;
+          }
+          
+          .feature-card p {
+              color: rgba(26, 26, 46, 0.7) !important;
+          }
+          
+          .hero-subtitle {
+              color: rgba(0, 0, 0, 0.7) !important;
+          }
+          
+          .footer-link {
+              color: rgba(0, 0, 0, 0.8) !important;
+          }
+          
+          .social-btn {
+              background: rgba(255, 255, 255, 0.9) !important;
+              border: 1px solid rgba(102, 126, 234, 0.2) !important;
+          }
+          
+          .site-footer {
+              background: rgba(255, 255, 255, 0.95) !important;
+              border-top: 1px solid rgba(102, 126, 234, 0.1) !important;
+          }
+          
+          .text-secondary {
+              color: rgba(0, 0, 0, 0.6) !important;
+          }
+      }
+
+      /* OR if you have a theme toggle system, add these classes */
+      body.light-theme {
+          background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 50%, #f5f7fa 100%) !important;
+      }
+
+      body.light-theme .site-header {
+          background: rgba(255, 255, 255, 0.95) !important;
+          border-bottom: 1px solid rgba(102, 126, 234, 0.1) !important;
+      }
+
+      body.light-theme .nav-link {
+          color: rgba(0, 0, 0, 0.8) !important;
+      }
+
+      body.light-theme .nav-link:hover,
+      body.light-theme .nav-link.active {
+          color: #667eea !important;
+      }
+
+      body.light-theme .brand-logo-img {
+          filter: none !important;
+      }
+
+      body.light-theme .nav-logo:hover .brand-logo-img {
+          filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6)) !important;
+      }
+
+      body.light-theme .feature-card {
+          background: rgba(255, 255, 255, 0.8) !important;
+          border: 1px solid rgba(102, 126, 234, 0.1) !important;
+      }
+
+      body.light-theme .feature-card h3 {
+          color: #1a1a2e !important;
+      }
+
+      body.light-theme .feature-card p {
+          color: rgba(26, 26, 46, 0.7) !important;
+      }
+
+      body.light-theme .hero-subtitle {
+          color: rgba(0, 0, 0, 0.7) !important;
+      }
+
+      body.light-theme .footer-link {
+          color: rgba(0, 0, 0, 0.8) !important;
+      }
+
+      body.light-theme .social-btn {
+          background: rgba(255, 255, 255, 0.9) !important;
+          border: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+
+      body.light-theme .site-footer {
+          background: rgba(255, 255, 255, 0.95) !important;
+          border-top: 1px solid rgba(102, 126, 234, 0.1) !important;
+      }
+
+      body.light-theme .text-secondary {
+          color: rgba(0, 0, 0, 0.6) !important;
+      }
+            /* Scroll To Top Button */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-lg);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        z-index: 9999;
+      }
+
+      .scroll-to-top.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .scroll-to-top:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
         .hero-title {
           font-size: 2.5rem;
         }
@@ -503,10 +778,16 @@
         display: none;
       }
 
+      @media (max-width: 768px) {
+        .scroll-to-top {
+          bottom: 20px;
+          right: 20px;
+          width: 45px;
+          height: 45px;
+        }
+      }
     </style>
   </head>
-  <!-- Fire Cursor -->
-  <link rel="stylesheet" href="firecursor.css" />
 
   <body>
     <!-- Navbar -->
@@ -633,8 +914,6 @@
       </section>
     </main>
 
-    <!--  feature of fire-cursor -->
-
     <!-- Footer -->
     <footer class="site-footer">
       <div class="container footer-content">
@@ -721,6 +1000,16 @@
         </p>
       </div>
     </footer>
+        <!-- Scroll To Top Button -->
+    <button
+      id="scrollToTopBtn"
+      class="scroll-to-top"
+      aria-label="Scroll to top"
+      title="Back to top"
+    >
+      ↑
+    </button>
+
 
     <!-- Scripts -->
     <script src="website/scripts/components/cursor.js"></script>
@@ -732,6 +1021,47 @@
         if (navLinks) {
           navLinks.classList.remove("open");
         }
+      }
+      
+      function toggleMobileMenu() {
+        const navLinks = document.querySelector(".nav-links");
+        if (navLinks) {
+          navLinks.classList.toggle("open");
+        }
+      }
+
+      function toggleTheme() {
+        document.body.classList.toggle('light-theme');
+        // Save theme preference to localStorage if needed
+        const isLightTheme = document.body.classList.contains('light-theme');
+        localStorage.setItem('theme', isLightTheme ? 'light' : 'dark');
+      }
+
+      // Load saved theme on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.body.classList.add('light-theme');
+        }
+      });
+      // Scroll To Top Button Logic
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+          
+      if (scrollToTopBtn) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollToTopBtn.classList.add("show");
+          } else {
+            scrollToTopBtn.classList.remove("show");
+          }
+        });
+      
+        scrollToTopBtn.addEventListener("click", () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
       }
     </script>
   </body>
