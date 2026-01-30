@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../assets/images/logo.png" />
+    <title>Project Submissions | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/pages/submissions.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a
+          ><a href="projects.html" class="nav-link">Projects</a
+          ><a href="submissions.html" class="nav-link active">Submissions</a
+          ><a href="forum.html" class="nav-link">Forum</a
+          ><a href="about.html" class="nav-link">About</a>
+        </nav>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%; border-radius: 50%"
+              />
+            </button>
+            <!-- Dropdown -->
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a
+              ><a href="#" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container section">
+      <div class="page-header animate-enter">
+        <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
+          Project Submissions
+        </h1>
+        <p class="text-secondary">
+          Share your projects and get feedback from the community.
+        </p>
+      </div>
+
+      <!-- Submit Project Button -->
+      <div class="submit-section animate-enter delay-100">
+        <button id="submitProjectBtn" class="btn btn-primary">
+          <i class="fas fa-plus"></i> Submit Your Project
+        </button>
+      </div>
+
+      <!-- Search and Filters -->
+      <div class="controls-section animate-enter delay-200">
+        <div class="search-wrapper">
+          <input
+            type="text"
+            id="submissionSearch"
+            placeholder="Search submissions..."
+          />
+        </div>
+        <div class="filter-tabs">
+          <button class="tab-btn active" data-filter="all">All Submissions</button>
+          <button class="tab-btn" data-filter="featured">Featured</button>
+          <button class="tab-btn" data-filter="recent">Recent</button>
+        </div>
+      </div>
+
+      <!-- Submissions Grid -->
+      <div id="submissionsGrid" class="submissions-grid animate-enter delay-300">
+        <!-- Submissions will be loaded here -->
+      </div>
+
+      <!-- Load More Button -->
+      <div class="load-more-section">
+        <button id="loadMoreBtn" class="btn btn-secondary" style="display: none;">
+          Load More Submissions
+        </button>
+      </div>
+    </main>
+
+    <!-- Submission Modal -->
+    <div id="submissionModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Submit Your Project</h2>
+          <button class="modal-close">&times;</button>
+        </div>
+        <form id="submissionForm" class="modal-body">
+          <div class="form-group">
+            <label for="projectTitle">Project Title *</label>
+            <input
+              type="text"
+              id="projectTitle"
+              required
+              placeholder="Enter your project title"
+            />
+          </div>
+          <div class="form-group">
+            <label for="projectDescription">Description *</label>
+            <textarea
+              id="projectDescription"
+              required
+              placeholder="Describe your project..."
+              rows="4"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="projectLink">Project Link *</label>
+            <input
+              type="url"
+              id="projectLink"
+              required
+              placeholder="https://your-project-link.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="projectRepo">Repository Link (Optional)</label>
+            <input
+              type="url"
+              id="projectRepo"
+              placeholder="https://github.com/username/repo"
+            />
+          </div>
+          <div class="form-group">
+            <label>Tech Stack *</label>
+            <div class="tech-stack-input">
+              <input
+                type="text"
+                id="techInput"
+                placeholder="Add technologies (press Enter)"
+              />
+              <div id="techTags" class="tech-tags"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="projectImage">Project Image (Optional)</label>
+            <input type="url" id="projectImage" placeholder="Image URL" />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeSubmissionModal()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Submit Project
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Leave a Review</h2>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="reviewProjectInfo" class="review-project-info">
+            <!-- Project info will be loaded here -->
+          </div>
+          <form id="reviewForm">
+            <div class="form-group">
+              <label>Rating</label>
+              <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" />
+                <label for="star5" title="5 stars">★</label>
+                <input type="radio" id="star4" name="rating" value="4" />
+                <label for="star4" title="4 stars">★</label>
+                <input type="radio" id="star3" name="rating" value="3" />
+                <label for="star3" title="3 stars">★</label>
+                <input type="radio" id="star2" name="rating" value="2" />
+                <label for="star2" title="2 stars">★</label>
+                <input type="radio" id="star1" name="rating" value="1" />
+                <label for="star1" title="1 star">★</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reviewText">Your Review</label>
+              <textarea
+                id="reviewText"
+                placeholder="Share your thoughts about this project..."
+                rows="4"
+              ></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" onclick="closeReviewModal()">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Submit Review
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Professional Footer -->
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <!-- Brand -->
+        <div class="footer-brand animate-enter">
+          <a href="dashboard.html" class="footer-logo">
+            <img src="../assets/images/logo.png" alt="Logo" />
+            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+          </a>
+          <p class="footer-desc">
+            A hyper-intensive protocol designed to forge elite web engineers
+            through daily deployment cycles.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col animate-enter delay-100">
+          <h3>Navigation</h3>
+          <nav class="footer-links">
+            <a href="dashboard.html" class="footer-link">Home Base</a>
+            <a href="projects.html" class="footer-link">Archive</a>
+            <a href="submissions.html" class="footer-link">Submissions</a>
+            <a href="about.html" class="footer-link">Leaderboard</a>
+          </nav>
+        </div>
+
+        <!-- Resources -->
+        <div class="footer-col animate-enter delay-200">
+          <h3>Resources</h3>
+          <nav class="footer-links">
+            <a href="#" class="footer-link">Documentation</a>
+            <a href="#" class="footer-link">API Status</a>
+            <a href="contact.html" class="footer-link">Contact Comms</a>
+            <a href="#" class="footer-link">System Logic</a>
+          </nav>
+        </div>
+
+        <!-- Connect -->
+        <div class="footer-col animate-enter delay-300">
+          <h3>Connect</h3>
+          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" aria-label="Github"
+              ><svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                ></path></svg
+            ></a>
+            <a href="#" class="social-btn" aria-label="Twitter"
+              ><svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                ></path></svg
+            ></a>
+            <a href="#" class="social-btn" aria-label="Discord"
+              ><svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
+                ></path></svg
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <p class="copyright">
+          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
+        </p>
+        <p class="made-by">
+          Maintained by <span class="text-flame font-bold">Subham</span>
+          <svg
+            class="icon icon-sm heart-pulse"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
+          </svg>
+        </p>
+      </div>
+    </footer>
+
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/pages/submissions.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+  </body>
+</html>
