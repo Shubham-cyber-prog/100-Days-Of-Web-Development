@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-orange: #d29922;
+            --accent-red: #f85149;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .mission-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            height: 48px;
+        }
+
+        .mission-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .mission-logo i {
+            color: var(--accent-blue);
+            font-size: 20px;
+        }
+
+        .mission-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mission-nav-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .mission-nav-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .mission-nav-btn.primary {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: white;
+        }
+
+        .mission-nav-btn.primary:hover {
+            background: #2ea043;
+        }
+
+        .project-selector {
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .mission-main {
+            display: flex;
+            height: calc(100vh - 48px);
+        }
+
+        /* IDE Panel */
+        .ide-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            min-width: 400px;
+        }
+
+        #ideContainer {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Preview Panel */
+        .preview-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 300px;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .preview-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .preview-action-btn {
+            width: 28px;
+            height: 28px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-action-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .preview-action-btn.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .device-buttons {
+            display: flex;
+            gap: 2px;
+            background: var(--bg-tertiary);
+            padding: 2px;
+            border-radius: 6px;
+        }
+
+        .device-btn {
+            padding: 4px 8px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .device-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .device-btn.active {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Preview Frame Container */
+        .preview-frame-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2d2d2d;
+            padding: 16px;
+            overflow: auto;
+        }
+
+        .preview-frame-wrapper {
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .preview-frame-wrapper.desktop {
+            width: 100%;
+            height: 100%;
+        }
+
+        .preview-frame-wrapper.tablet {
+            width: 768px;
+            height: 1024px;
+            max-height: 100%;
+        }
+
+        .preview-frame-wrapper.mobile {
+            width: 375px;
+            height: 667px;
+            max-height: 100%;
+        }
+
+        #previewFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        /* Console Panel */
+        .console-panel {
+            height: 200px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .console-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .console-tabs {
+            display: flex;
+            gap: 4px;
+        }
+
+        .console-tab {
+            padding: 4px 10px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .console-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .console-tab.active {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .console-clear-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .console-clear-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .console-output {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 12px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .console-line {
+            padding: 2px 0;
+            display: flex;
+            gap: 8px;
+        }
+
+        .console-line.log { color: var(--text-primary); }
+        .console-line.warn { color: var(--accent-orange); }
+        .console-line.error { color: var(--accent-red); }
+        .console-line.info { color: var(--accent-blue); }
+
+        .console-line-prefix {
+            color: var(--text-secondary);
+            user-select: none;
+        }
+
+        .console-empty {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Resize Handle */
+        .resize-handle {
+            width: 4px;
+            background: var(--border-color);
+            cursor: col-resize;
+            transition: background 0.2s;
+        }
+
+        .resize-handle:hover {
+            background: var(--accent-blue);
+        }
+
+        /* Loading State */
+        .preview-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+        }
+
+        .preview-loading i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .mission-main {
+                flex-direction: column;
+            }
+
+            .ide-panel {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                min-height: 50vh;
+            }
+
+            .preview-panel {
+                min-height: 300px;
+            }
+
+            .resize-handle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="mission-header">
+        <a href="dashboard.html" class="mission-logo">
+            <i class="fas fa-rocket"></i>
+            <span>Mission Control</span>
+        </a>
+
+        <div class="mission-nav">
+            <select class="project-selector" id="projectSelector">
+                <option value="">Select Project...</option>
+                <option value="day-01">Day 01 - Landing Page</option>
+                <option value="day-02">Day 02 - Todo List</option>
+                <option value="day-03">Day 03 - Weather App</option>
+                <option value="custom">+ New Project</option>
+            </select>
+
+            <button class="mission-nav-btn" id="saveAllBtn" title="Save All (Ctrl+S)">
+                <i class="fas fa-save"></i>
+                <span>Save</span>
+            </button>
+
+            <button class="mission-nav-btn" id="syncCloudBtn" title="Sync to Cloud">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+
+            <button class="mission-nav-btn primary" id="runBtn" title="Run Preview">
+                <i class="fas fa-play"></i>
+                <span>Run</span>
+            </button>
+
+            <a href="dashboard.html" class="mission-nav-btn" title="Back to Dashboard">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mission-main">
+        <!-- IDE Panel -->
+        <section class="ide-panel">
+            <div id="ideContainer"></div>
+        </section>
+
+        <!-- Resize Handle -->
+        <div class="resize-handle" id="resizeHandle"></div>
+
+        <!-- Preview Panel -->
+        <section class="preview-panel">
+            <div class="preview-header">
+                <span class="preview-title">
+                    <i class="fas fa-eye"></i> Live Preview
+                </span>
+
+                <div class="preview-actions">
+                    <div class="device-buttons">
+                        <button class="device-btn active" data-device="desktop" title="Desktop">
+                            <i class="fas fa-desktop"></i>
+                        </button>
+                        <button class="device-btn" data-device="tablet" title="Tablet">
+                            <i class="fas fa-tablet-alt"></i>
+                        </button>
+                        <button class="device-btn" data-device="mobile" title="Mobile">
+                            <i class="fas fa-mobile-alt"></i>
+                        </button>
+                    </div>
+
+                    <button class="preview-action-btn" id="refreshPreviewBtn" title="Refresh Preview">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+
+                    <button class="preview-action-btn" id="openExternalBtn" title="Open in New Tab">
+                        <i class="fas fa-external-link-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="preview-frame-container">
+                <div class="preview-frame-wrapper desktop" id="previewWrapper">
+                    <iframe id="previewFrame" sandbox="allow-scripts allow-modals" title="Live Preview"></iframe>
+                </div>
+            </div>
+
+            <!-- Console -->
+            <div class="console-panel" id="consolePanel">
+                <div class="console-header">
+                    <div class="console-tabs">
+                        <button class="console-tab active" data-tab="console">Console</button>
+                        <button class="console-tab" data-tab="problems">Problems</button>
+                    </div>
+                    <button class="console-clear-btn" id="clearConsoleBtn">
+                        <i class="fas fa-ban"></i> Clear
+                    </button>
+                </div>
+                <div class="console-output" id="consoleOutput">
+                    <div class="console-empty">Console output will appear here...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script type="module" src="../scripts/pages/missionControl.js"></script>
+</body>
+</html>
