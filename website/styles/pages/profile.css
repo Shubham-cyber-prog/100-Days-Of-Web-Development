@@ -118,14 +118,16 @@
 }
 
 .profile-section {
-    background: white;
+ background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-glass);   
     border-radius: 15px;
     padding: 2rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .profile-section h2 {
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
@@ -152,19 +154,21 @@
 
 .info-item label {
     font-weight: 600;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .info-item span {
-    color: #333;
+   color: var(--text-primary);
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent-primary);
+
     font-size: 1rem;
     padding: 0.75rem;
-    background: #f8f9fa;
     border-radius: 8px;
-    border-left: 3px solid #667eea;
+    
 }
 
 /* Achievements */
@@ -229,13 +233,14 @@
 }
 
 .achievement-badge.locked {
-    background: #e0e0e0;
-    color: #999;
+  background: var(--bg-muted);
+  color: var(--text-tertiary);
+  border: 1px dashed var(--border-glass);
 }
 
 .achievement-badge.locked .achievement-icon {
-    color: #ccc;
-}
+   color: var(--text-tertiary);
+  opacity: 0.7;}
 
 /* Progress Cards */
 .progress-cards {
