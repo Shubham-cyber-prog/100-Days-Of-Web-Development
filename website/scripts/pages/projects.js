@@ -27,7 +27,7 @@ const folderMap = {
     87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
-    102: "Day 102", 103: "Day 103", 105: "Day 105", 107: "Day 107", 111: "day-111",
+    102: "Day 102", 103: "Day 103", 104: "Day 104", 105: "Day 105", 107: "Day 107", 108: "Day 108", 111: "day-111",
     129: "Day 129",
     141: "Day 141",
     145: "Day 145",
@@ -250,8 +250,8 @@ async function handleProjectClick(event, url) {
         card.style.pointerEvents = 'none';
 
         // Use 'no-cache' to ensure the browser doesn't give a fake "OK" 
-        const response = await fetch(url, { 
-            method: 'HEAD', 
+        const response = await fetch(url, {
+            method: 'HEAD',
             cache: 'no-cache',
             signal: AbortSignal.timeout(5000) // 5 second timeout
         });
@@ -276,16 +276,16 @@ async function handleProjectClick(event, url) {
     } catch (error) {
         card.style.opacity = '1';
         card.style.pointerEvents = 'auto';
-        
+
         console.error('Project click error:', error);
-        
+
         // Provide specific error messages
-        const errorMsg = error.name === 'AbortError' 
+        const errorMsg = error.name === 'AbortError'
             ? 'Request timeout. Project server may be down.'
             : error instanceof TypeError
-            ? 'Network error. Please check your connection.'
-            : 'Unable to access project.';
-        
+                ? 'Network error. Please check your connection.'
+                : 'Unable to access project.';
+
         showErrorToast(errorMsg);
         window.location.href = './404.html';
     }

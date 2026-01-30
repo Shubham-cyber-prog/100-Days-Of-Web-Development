@@ -716,6 +716,49 @@
       body.light-theme .text-secondary {
           color: rgba(0, 0, 0, 0.6) !important;
       }
+            /* Scroll To Top Button */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-lg);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        z-index: 9999;
+      }
+
+      .scroll-to-top.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .scroll-to-top:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+      }
+
+      @media (max-width: 768px) {
+        .scroll-to-top {
+          bottom: 20px;
+          right: 20px;
+          width: 45px;
+          height: 45px;
+        }
+      }
     </style>
   </head>
 
@@ -930,6 +973,16 @@
         </p>
       </div>
     </footer>
+        <!-- Scroll To Top Button -->
+    <button
+      id="scrollToTopBtn"
+      class="scroll-to-top"
+      aria-label="Scroll to top"
+      title="Back to top"
+    >
+      ↑
+    </button>
+
 
     <!-- Scripts -->
     <script src="website/scripts/components/cursor.js"></script>
@@ -964,6 +1017,25 @@
           document.body.classList.add('light-theme');
         }
       });
+      // Scroll To Top Button Logic
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+          
+      if (scrollToTopBtn) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollToTopBtn.classList.add("show");
+          } else {
+            scrollToTopBtn.classList.remove("show");
+          }
+        });
+      
+        scrollToTopBtn.addEventListener("click", () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+      }
     </script>
   </body>
 </html>
