@@ -1,27 +1,38 @@
 
-import { firestoreService } from '../firestore.js';
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication
-    const isGuest = localStorage.getItem('isGuest') === 'true';
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-    // Auth Guard
-    if (!isLoggedIn && !isGuest) {
-        window.location.href = 'login.html';
-        return;
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
     }
     
     waitForAuthService();
 
-    const userId = localStorage.getItem('userId');
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('userName') || 'User');
-    initializeDashboard({ email: userName, isGuest, userId });
-
-    function initializeDashboard(user) {
-        // Set user name
-        const userNameElement = document.getElementById('userName');
-        if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
+            }
+        }
 
         // Logout functionality with Notify confirmation
         const logoutBtn = document.getElementById('logoutBtn');
