@@ -751,6 +751,33 @@
         box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
       }
 
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn-zenith-primary,
+        .btn-zenith-secondary {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+
+      .nav-link::after {
+        display: none;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        display: none;
+      }
+
       @media (max-width: 768px) {
         .scroll-to-top {
           bottom: 20px;
