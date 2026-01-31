@@ -197,6 +197,72 @@ class FirestoreService {
         }
     }
 
+    // Get aggregated user statistics
+    async getUserStats(userId) {
+        try {
+            const [progress, profile] = await Promise.all([
+                this.getUserProgress(userId),
+                this.getUserProfile(userId)
+            ]);
+
+            if (!progress || !profile) {
+                return null;
+            }
+
+            const completedDays = progress.completedDays || [];
+            const totalProjects = 100;
+            const progressPercent = Math.round((completedDays.length / totalProjects) * 100);
+
+            // Calculate current day in the challenge
+            const startDate = new Date('2024-01-01'); // Assuming challenge starts Jan 1, 2024
+            const today = new Date();
+            const currentDay = Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) + 1;
+            currentDay = Math.min(currentDay, 100); // Cap at 100
+
+            // Get recent projects (last 3 completed)
+            const recentProjects = completedDays
+                .sort((a, b) => b - a)
+                .slice(0, 3)
+                .map(day => {
+                    // Find project by day (simplified - you might want to fetch from a projects collection)
+                    return {
+                        day,
+                        title: `Day ${day} Project`,
+                        completedAt: new Date(startDate.getTime() + (day - 1) * 24 * 60 * 60 * 1000)
+                    };
+                });
+
+            return {
+                // Progress stats
+                progressPercent,
+                completedDays: completedDays.length,
+                totalProjects,
+                currentDay,
+                currentStreak: progress.currentStreak || 0,
+                longestStreak: progress.longestStreak || 0,
+
+                // User info
+                username: profile.username,
+                avatar: profile.avatar,
+                bio: profile.bio,
+                location: profile.location,
+                website: profile.website,
+                github: profile.github,
+
+                // Recent activity
+                recentProjects,
+                lastCompletedDate: progress.lastCompletedDate,
+
+                // Status
+                status: completedDays.length >= 100 ? 'Completed' :
+                       completedDays.length >= currentDay ? 'On Track' : 'Behind'
+            };
+        } catch (error) {
+            console.error('Error getting user stats:', error);
+            throw error;
+        }
+    }
+
     // Real-time listeners
     listenToUserProgress(userId, callback) {
         const progressRef = doc(this.db, 'progress', userId);
