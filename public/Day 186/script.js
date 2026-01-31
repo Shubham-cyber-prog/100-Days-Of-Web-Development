@@ -150,12 +150,18 @@ document.addEventListener('DOMContentLoaded',()=>{
             showResult();
         }
     })
+    /**
+ * Starts the quiz
+ */
     function startQuiz(){
         start.classList.add('hidden');
         quesc.classList.remove('hidden');
         res.classList.add('hidden');
         showQuestion();
     }
+    /**
+ * Displays the current question and its options
+ */
     function showQuestion(){
 
         next.classList.add('hidden');
@@ -164,18 +170,33 @@ document.addEventListener('DOMContentLoaded',()=>{
         questions[currentindex].options.forEach((choice)=>{
             const button=document.createElement('button');
             button.textContent=choice;
-            button.addEventListener('click',()=>{selectAnswer(choice)});
+            button.addEventListener('click',(e)=>{selectAnswer(choice,e.target)});
             list.appendChild(button);
         });
 
     }
-    function selectAnswer(choice){
+    /**
+ * Performs whether the answer is correct
+ */
+    function selectAnswer(choice, clickedButton){
         let c=questions[currentindex].answer;
-        if(choice==c){
+        const buttons = list.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            if(btn.textContent === c){
+                btn.style.background = 'green'; // green for correct
+            }
+        });
+        if(choice !== c){
+            clickedButton.style.background = 'red'; // red for wrong
+        } else {
             tscore++;
         }
         next.classList.remove('hidden');
     }
+    /**
+ * Displays the final score of the quiz
+ */
     function showResult(){
         quesc.classList.add('hidden');
         res.classList.remove('hidden');
