@@ -1,42 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetris Game</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tetris Game</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <div class="game-container">
-        <h1>Tetris</h1>
-        <div class="game-info">
-            <div class="info-item">
-                <span>Score:</span>
-                <span id="score">0</span>
-            </div>
-            <div class="info-item">
-                <span>Level:</span>
-                <span id="level">1</span>
-            </div>
-            <div class="info-item">
-                <span>Lines:</span>
-                <span id="lines">0</span>
-            </div>
-        </div>
-        <canvas id="gameCanvas" width="300" height="600"></canvas>
-        <div class="controls">
-            <p>Use arrow keys: ← → ↓ to move, ↑ to rotate</p>
-            <p>Spacebar: Drop piece</p>
-            <button id="restartBtn">Restart Game</button>
-        </div>
-        <div id="gameOver" class="game-over hidden">
-            <h2>Game Over!</h2>
-            <p>Final Score: <span id="finalScore">0</span></p>
-            <p>Level: <span id="finalLevel">1</span></p>
-            <p>Lines: <span id="finalLines">0</span></p>
-            <button id="playAgainBtn">Play Again</button>
-        </div>
+
+<!-- ===== START OVERLAY ===== -->
+<div class="start-overlay" id="startOverlay">
+  <div class="start-card">
+    <h1>🎮 Tetris</h1>
+
+    <div class="instructions">
+      <h3>How to Play</h3>
+      <ul>
+        <li>← → : Move Left / Right</li>
+        <li>↓ : Soft Drop</li>
+        <li>↑ : Rotate Block</li>
+        <li>Space : Hard Drop</li>
+      </ul>
     </div>
-    <script src="script.js"></script>
+
+    <button onclick="startUI()">Start Game</button>
+  </div>
+</div>
+
+<!-- ===== GAME WRAPPER (BLUR ENABLED) ===== -->
+<div class="blur-wrapper blurred" id="blurWrapper">
+  <div class="game-container">
+
+    <h1>Tetris</h1>
+
+    <div class="game-info">
+      <div class="info-item">
+        <span>Score</span>
+        <span id="score">0</span>
+      </div>
+      <div class="info-item">
+        <span>Level</span>
+        <span id="level">1</span>
+      </div>
+      <div class="info-item">
+        <span>Lines</span>
+        <span id="lines">0</span>
+      </div>
+    </div>
+
+    <canvas id="gameCanvas" width="300" height="600"></canvas>
+
+    <div class="controls">
+      <p>← → ↓ ↑ to move | Space to drop</p>
+      <button id="restartBtn">Restart Game</button>
+    </div>
+
+    <div id="gameOver" class="game-over hidden">
+      <h2>Game Over!</h2>
+      <p>Final Score: <span id="finalScore">0</span></p>
+      <p>Level: <span id="finalLevel">1</span></p>
+      <p>Lines: <span id="finalLines">0</span></p>
+      <button id="playAgainBtn">Play Again</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- UI-ONLY SCRIPT -->
+<script>
+function startUI(){
+  document.getElementById("startOverlay").style.display = "none";
+  document.getElementById("blurWrapper").classList.remove("blurred");
+}
+</script>
+
+<!-- ORIGINAL GAME LOGIC (UNCHANGED) -->
+<script src="script.js"></script>
 </body>
 </html>

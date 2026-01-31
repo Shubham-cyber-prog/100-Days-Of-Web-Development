@@ -1,37 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Form Preview</title>
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+<title>Form Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  background:#f1f5f9;
+  font-family:system-ui;
+}
+
+header{
+  background:#fff;
+  padding:1rem 2rem;
+  border-bottom:1px solid #e2e8f0;
+  display:flex;
+  justify-content:space-between;
+}
+
+header a{
+  text-decoration:none;
+  color:#2563eb;
+}
+
+.container{
+  max-width:720px;
+  margin:3rem auto;
+  background:#fff;
+  padding:2.5rem;
+  border-radius:18px;
+  border:1px solid #e2e8f0;
+}
+
+label{
+  display:block;
+  margin:.8rem 0 .3rem;
+  font-weight:500;
+}
+
+input,textarea,select{
+  width:100%;
+  border-radius:10px;
+  border:1px solid #e2e8f0;
+  margin:.8rem 0 .3rem;
+}
+
+button{
+  margin-top:1.5rem;
+  padding:.75rem 1.2rem;
+  border:none;
+  border-radius:12px;
+  background:#2563eb;
+  color:#fff;
+  cursor:pointer;
+}
+
+.hidden{display:none}
+.success{color:green;margin-top:1rem}
+button:disabled{
+  background:#94a3b8;
+  cursor:not-allowed;
+}
+
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>Form Builder</h1>
-    <button id="themeToggle" class="nav-btn nav-toggle">
-    🌙 Dark Mode
-  </button>
-  </header>
 
-  <main class="container">
-    <h2 id="previewTitle"></h2>
+<header>
+  <a href="index.html">← Back to Builder</a>
+  <a href="responses.html">View Responses</a>
+</header>
 
-    <p id="emptyPreview" class="empty-state hidden">
-      No form has been created yet.<br />
-      Please build a form first.
-    </p>
+<div class="container">
+  <h2>Form Preview</h2>
 
-    <form id="previewForm" class="hidden">
-      <div id="previewFields"></div>
-      <button type="submit">Submit</button>
-    </form>
+  <p id="empty">No form created yet.</p>
 
-    <p id="successMsg" class="success hidden">
-      Form submitted successfully!
-    </p>
-  </main>
+  <form id="form" class="hidden">
+    <div id="fields"></div>
+    <button type="submit">Submit</button>
+  </form>
 
-  <script src="js/theme.js"></script>
-  <script src="js/preview.js"></script>
+  <p id="success" class="success hidden">
+    Form submitted successfully!
+  </p>
+</div>
+<script>
+const formData = JSON.parse(localStorage.getItem("form"));
+const formEl = document.getElementById("form");
+const fieldsEl = document.getElementById("fields");
+const empty = document.getElementById("empty");
+const success = document.getElementById("success");
+const submitBtn = formEl?.querySelector("button");
+
+if(formData && formData.fields.length){
+  empty.classList.add("hidden");
+  formEl.classList.remove("hidden");
+
+  formData.fields.forEach(field=>{
+    const wrap = document.createElement("div");
+
+    const label = document.createElement("label");
+    label.textContent = field.label;
+    wrap.appendChild(label);
+
+    if(field.type === "radio" || field.type === "checkbox"){
+      field.options.forEach(opt=>{
+        const optLabel = document.createElement("label");
+        optLabel.style.display = "block";
+
+        const input = document.createElement("input");
+        input.type = field.type;
+        input.name = field.label;
+        input.value = opt;
+
+        optLabel.appendChild(input);
+        optLabel.append(" " + opt);
+        wrap.appendChild(optLabel);
+      });
+    }
+    else if(field.type === "select"){
+      const select = document.createElement("select");
+      select.name = field.label;
+
+      field.options.forEach(opt=>{
+        const option = document.createElement("option");
+        option.textContent = opt;
+        select.appendChild(option);
+      });
+
+      wrap.appendChild(select);
+    }
+    else if(field.type === "textarea"){
+      const textarea = document.createElement("textarea");
+      textarea.name = field.label;
+      wrap.appendChild(textarea);
+    }
+    else{
+      const input = document.createElement("input");
+      input.type = field.type;
+      input.name = field.label;
+      wrap.appendChild(input);
+    }
+
+    fieldsEl.appendChild(wrap);
+  });
+}
+
+formEl.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const responses = JSON.parse(localStorage.getItem("responses")) || [];
+  const entry = {};
+
+  new FormData(formEl).forEach((value, key) => {
+    if(entry[key]){
+      entry[key] = [].concat(entry[key], value);
+    } else {
+      entry[key] = value;
+    }
+  });
+
+  responses.push(entry);
+  localStorage.setItem("responses", JSON.stringify(responses));
+
+  /* UX FIXES */
+  success.classList.remove("hidden");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitted ✓";
+
+  success.scrollIntoView({ behavior: "smooth" });
+});
+</script>
+
+
 </body>
 </html>
