@@ -44,8 +44,9 @@ This repository documents my **100 Days of Web Development journey**, where I:
 
 ## 🔧 Tech Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript
+- **Frontend**: HTML5, CSS3, JavaScript, TypeScript
 - **Version Control**: Git & GitHub
+- **Backend**: NodeJS, ExpressJS, Python
 
 ---
 
@@ -363,7 +364,7 @@ service cloud.firestore {
 
 ## 🏆 Hall of Fame
 
-Thank you to everyone who has contributed to this project! 🙌  
+Thank you to everyone who has contributed to this project! 🙌
 We appreciate your support, commits, issues, ideas, and pull requests 💜
 
 <p align="center">
@@ -372,6 +373,19 @@ We appreciate your support, commits, issues, ideas, and pull requests 💜
     <img src="https://contrib.rocks/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" />
   </a>
 </p>
+
+## Accessibility
+
+This project includes a built-in accessibility checker tool:
+
+- Image alt text validator
+- Color contrast checker
+- Keyboard navigation testing
+- WCAG 2.1 checklist
+
+Open in browser:
+accessibility-checker.html
+
 
 > *Every contributor brings this project closer to excellence!*
 

@@ -1,33 +1,45 @@
 
-import { firestoreService } from '../firestore.js';
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication
-    const isGuest = localStorage.getItem('isGuest') === 'true';
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-    // Auth Guard
-    if (!isLoggedIn && !isGuest) {
-        window.location.href = 'login.html';
-        return;
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
     }
+    
+    waitForAuthService();
 
-    const userId = localStorage.getItem('userId');
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('userName') || 'User');
-    initializeDashboard({ email: userName, isGuest, userId });
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
+            }
+        }
 
-    function initializeDashboard(user) {
-        // Set user name
-        const userNameElement = document.getElementById('userName');
-        if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
-
-        // Logout functionality
+        // Logout functionality with Notify confirmation
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
                 if (confirm('Abort mission?')) {
-                    sessionStorage.clear();
-                    localStorage.removeItem('isAuthenticated');
+                    auth.logout();
                     window.location.href = 'login.html';
                 }
             });
@@ -141,9 +153,57 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
         ];
 
-        // Load user stats from Firestore
-        let userStats = null;
+        // Initialize progress service and load completed days
         let completedDays = [];
+        if (progressService) {
+            try {
+                completedDays = await progressService.initialize(user);
+                // Listen for real-time updates
+                progressService.listenToUpdates((updatedDays) => {
+                    completedDays = updatedDays;
+                    renderProgressGrid();
+                    updateStats();
+                    checkAchievements();
+                });
+            } catch (error) {
+                console.warn('Failed to initialize progress service:', error);
+                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            }
+        } else {
+            completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Initial achievement check
+        checkAchievements();
+
+        function checkAchievements() {
+            if (achievementService) {
+                achievementService.checkAchievements({
+                    totalCompleted: completedDays.length,
+                    currentStreak: calculateStreak(completedDays),
+                    techCount: 3 // Hardcoded estimate for now
+                });
+            }
+        }
+
+        function calculateStreak(days) {
+            if (!days.length) return 0;
+            const sorted = [...days].sort((a, b) => b - a);
+            let streak = 0;
+            // Simple streak logic for day numbers (assumes consecutive days are consecutive ints)
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (sorted[i] - sorted[i + 1] === 1) streak++;
+                else break;
+            }
+            return streak + 1;
+        }
+
+        // Listen for progress updates from other tabs/windows
+        window.addEventListener('progressUpdated', (e) => {
+            completedDays = e.detail;
+            renderProgressGrid();
+            updateStats();
+        });
 
         async function loadUserStats() {
             if (!user.isGuest && user.userId) {
@@ -215,11 +275,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Render UI after loading data
-            updateUI();
+            if (document.getElementById('progressGrid')) renderProgressGrid();
+            if (document.getElementById('completedDays')) updateStats();
+            if (document.getElementById('recommendationsGrid')) renderRecommendations();
         }
 
-        // Load user stats
-        loadUserStats();
+        // Load user progress
+        loadUserProgress();
 
         function renderProgressGrid() {
             const progressGrid = document.getElementById('progressGrid');
@@ -253,13 +315,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function toggleDay(day) {
-            if (completedDays.includes(day)) {
-                completedDays = completedDays.filter(d => d !== day);
+        async function toggleDay(day) {
+            if (progressService) {
+                await progressService.toggleDay(day);
+                completedDays = progressService.getCompletedDays();
             } else {
-                completedDays.push(day);
+                if (completedDays.includes(day)) {
+                    completedDays = completedDays.filter(d => d !== day);
+                } else {
+                    completedDays.push(day);
+                }
+                localStorage.setItem('completedDays', JSON.stringify(completedDays));
             }
-            localStorage.setItem('completedDays', JSON.stringify(completedDays));
             renderProgressGrid();
             updateStats();
         }
@@ -285,13 +352,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Render progress heatmap
             renderProgressGrid();
 
-            // Render recent projects
-            renderRecentProjects();
-
-            // Show/hide guest banner
-            const guestBanner = document.getElementById('guestBanner');
-            if (guestBanner) {
-                guestBanner.style.display = user.isGuest ? 'block' : 'none';
+            // Achievement Progress logic
+            if (achievementService) {
+                const nextAchievement = achievementService.getNextAchievement('milestone', completedCount);
+                const nextEl = document.getElementById('nextAchievementLabel');
+                if (nextEl && nextAchievement) {
+                    nextEl.textContent = `Next: ${nextAchievement.title}`;
+                }
             }
         }
 

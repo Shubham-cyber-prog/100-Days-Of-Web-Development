@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stegano-Vault | Image Steganography</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="cyber-header">
+            <div class="logo">
+                <i class="fas fa-user-secret"></i> Stegano<span class="accent">Vault</span>
+            </div>
+            <div class="mode-switch">
+                <button id="mode-encode" class="active">Encode</button>
+                <button id="mode-decode">Decode</button>
+            </div>
+        </header>
+
+        <main class="workspace">
+            <div class="panel upload-panel">
+                <div class="drop-zone" id="drop-zone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & Drop Image or Click to Upload</p>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                </div>
+                
+                <div class="preview-area hidden" id="preview-container">
+                    <img id="image-preview" src="" alt="Preview">
+                    <div class="image-meta" id="image-meta">
+                        <span id="res-info">0 x 0 px</span>
+                        <span id="capacity-info">Capacity: 0 chars</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel control-panel">
+                
+                <div id="controls-encode" class="control-group">
+                    <h3><i class="fas fa-lock"></i> Hide Secret</h3>
+                    <div class="input-group">
+                        <label>Secret Message</label>
+                        <textarea id="secret-text" placeholder="Enter your confidential message here..."></textarea>
+                        <div class="char-count"><span id="char-used">0</span> / <span id="char-max">0</span></div>
+                    </div>
+                    
+                    <button id="btn-encode" class="btn primary" disabled>
+                        <i class="fas fa-file-export"></i> Encode & Download
+                    </button>
+                </div>
+
+                <div id="controls-decode" class="control-group hidden">
+                    <h3><i class="fas fa-unlock"></i> Reveal Secret</h3>
+                    <div class="output-group">
+                        <label>Decoded Message</label>
+                        <div id="decoded-output" class="output-box" placeholder="No hidden message found."></div>
+                    </div>
+                    
+                    <button id="btn-decode" class="btn primary" disabled>
+                        <i class="fas fa-search"></i> Extract Data
+                    </button>
+                </div>
+
+                <div class="status-log" id="status-log">
+                    <span class="log-item">System Ready...</span>
+                </div>
+            </div>
+        </main>
+        
+        <canvas id="process-canvas" hidden></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
