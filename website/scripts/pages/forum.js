@@ -383,6 +383,12 @@ function showSuccess(message) {
     alert('Success: ' + message);
 }
 
+// Close modal functions
+function closeCreatePostModal() {
+    document.getElementById('createPostModal').style.display = 'none';
+    document.getElementById('createPostForm').reset();
+}
+
 // Close modal when clicking outside
 window.onclick = function(event) {
     const modal = document.getElementById('createPostModal');
