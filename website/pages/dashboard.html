@@ -102,6 +102,28 @@
       color: var(--text-primary);
     }
 
+    /* Utility Classes */
+    .text-primary {
+        color: var(--text-primary);
+    }
+
+    .text-secondary {
+        color: var(--text-secondary);
+    }
+
+    .text-tertiary {
+        color: var(--text-tertiary);
+    }
+
+    .text-success {
+        color: var(--accent-success);
+        margin-left: 2em;
+    }
+
+    .text-accent {
+        color: var(--accent-glow);
+    }
+
     .btn-zenith-primary {
       background: var(--text-primary);
       color: var(--bg-void);
@@ -111,6 +133,329 @@
       text-decoration: none;
       margin-top: var(--space-8);
       display: inline-block;
+    }
+
+    .btn-tertiary {
+      background: var(--accent-core);
+      color: white;
+      border: 2px solid var(--accent-core);
+      border-radius: 100px;
+      padding: 1rem 2rem;
+      font-weight: var(--weight-bold);
+      text-decoration: none;
+      margin-top: var(--space-8);
+      margin-left: var(--space-4);
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-tertiary:hover {
+      background: transparent;
+      color: var(--accent-core);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 122, 24, 0.3);
+    }
+
+    /* Profile Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      background: var(--bg-nebula);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .modal-header h2 {
+      color: var(--text-primary);
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: var(--space-2);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--bg-glass-hover);
+      color: var(--text-primary);
+    }
+
+    .profile-form .form-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .profile-form label {
+      display: block;
+      color: var(--text-primary);
+      font-weight: var(--weight-medium);
+      margin-bottom: var(--space-2);
+      font-size: var(--text-sm);
+    }
+
+    .profile-form input,
+    .profile-form textarea {
+      width: 100%;
+      padding: var(--space-3);
+      background: var(--bg-surface);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: var(--text-base);
+      transition: all 0.2s ease;
+    }
+
+    .profile-form input:focus,
+    .profile-form textarea:focus {
+      outline: none;
+      border-color: var(--accent-core);
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: flex-end;
+      margin-top: var(--space-6);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--glass-border);
+    }
+
+    /* Light theme overrides for modal */
+    [data-theme="light"] .modal-content {
+      background: #ffffff;
+      border-color: #e2e8f0;
+    }
+
+    [data-theme="light"] .modal-header {
+      border-color: #e2e8f0;
+    }
+
+    [data-theme="light"] .profile-form input,
+    [data-theme="light"] .profile-form textarea {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: #1e293b;
+    }
+
+    /* Dashboard Layout Improvements */
+    .hero-subtitle {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+      justify-content: center;
+      margin-top: var(--space-6);
+      flex-wrap: nowrap;
+    }
+
+    .hero-actions .btn-zenith-primary,
+    .hero-actions .btn-secondary {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--glass-border);
+      border-radius: 100px;
+      padding: 1rem 2rem;
+      font-weight: var(--weight-medium);
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-core);
+      color: var(--accent-core);
+      background: rgba(139, 92, 246, 0.1);
+      transform: translateY(-1px);
+    }
+
+    /* Stats Grid Improvements */
+    .stats-grid {
+      gap: var(--space-6);
+    }
+
+    .stat-card {
+      background: var(--bg-glass-panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent-core);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
+    }
+
+    .stat-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-bold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: var(--space-2);
+    }
+
+    .stat-value {
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-black);
+      margin-bottom: var(--space-2);
+    }
+
+    .stat-desc {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--bg-surface);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: var(--space-3);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-core), var(--accent-glow));
+      border-radius: 2px;
+      transition: width 0.8s ease;
+    }
+
+    .streak-flame,
+    .trophy-icon {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      font-size: var(--text-2xl);
+      opacity: 0.3;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-success);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Project Cards Improvements */
+    .project-card {
+      background: var(--bg-glass-panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent-core);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 48px rgba(139, 92, 246, 0.3);
+    }
+
+    .project-card h3 {
+      color: var(--text-primary);
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      margin: var(--space-3) 0;
+    }
+
+    .project-tag {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-bold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: var(--space-2);
+      display: block;
+    }
+
+    .card-hint {
+      color: var(--text-tertiary);
+      font-size: var(--text-sm);
+      margin-top: var(--space-3);
+    }
+
+    /* Light theme improvements */
+    [data-theme="light"] .stat-card,
+    [data-theme="light"] .project-card {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(139, 92, 246, 0.2);
+    }
+
+    [data-theme="light"] .stat-card:hover,
+    [data-theme="light"] .project-card:hover {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
     }
 
     /* ================================
@@ -141,6 +486,19 @@
       [data-theme="light"] #theme-toggle-btn svg {
         stroke: #0f172a !important;
         color: #0f172a !important;
+      }
+
+      /* Ensure hero actions stay horizontal even on mobile */
+      .hero-actions {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+      }
+
+      .hero-actions .btn-zenith-primary,
+      .hero-actions .btn-secondary {
+        min-width: 120px;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -294,7 +652,6 @@
           <span id="userStatus" class="text-success">Active</span>
           <span class="status-dot"></span>
         </div>
-        <p class="stat-desc">Mission Status</p>
       </div>
     </div>
 
@@ -317,54 +674,12 @@
       </a>
     </section>
 
-    <!-- Recent Projects Preview -->
-    <section class="section recent-deployments-section">
-      <div class="flex justify-between items-center section-header">
-        <h2 class="dynamic-text">Recent Projects</h2>
-        <a href="projects.html" class="text-flame view-all-link">View All →</a>
-      </div>
-      <div id="recentProjects" class="grid grid-3">
-        <!-- Recent projects will be populated by JS -->
-      </div>
-    </section>
-
-
       <!-- Progress Tracker Section -->
       <section class="section">
         <div id="progress-tracker-container"></div>
       </section>
 
-      <!-- Progress Tracker Section -->
-      <section class="section">
-        <div id="progress-tracker-container"></div>
-      </section>
-
-      <!-- Progress Tracker Section -->
-      <section class="section">
-        <div id="progress-tracker-container"></div>
-      </section>
-
-      <!-- Progress Tracker Section -->
-      <section class="section">
-        <div id="progress-tracker-container"></div>
-      </section>
-
-      <!-- Progress Tracker Section -->
-      <section class="section">
-        <div id="progress-tracker-container"></div>
-      </section>
-
-      <!-- Progress Tracker Section -->
-      <section class="section">
-        <div id="progress-tracker-container"></div>
-      </section>
-
-      <!-- Progress Tracker Section -->
-      <section class="section">
-        <div id="progress-tracker-container"></div>
-      </section>
-
-      <!-- Recent Projects Preview -->
+      <!-- Recent Deployments -->
       <section class="section recent-deployments-section">
         <div class="flex justify-between items-center section-header">
           <h2 class="dynamic-text">Recent Deployments</h2>
@@ -383,21 +698,66 @@
               </path>
             </svg>
           </div>
+          <h4 class="project-tag text-flame">CAPSTONE • DAY 100</h4>
+          <h3>Personal Portfolio</h3>
+          <span class="card-hint">Click to deploy →</span>
+        </a>
+
+        <a href="/public/Day 50/index.html" class="card project-card">
+          <div class="project-preview-box">
+            <svg class="icon icon-xl" viewBox="0 0 24 24">
+              <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"></path>
+            </svg>
+          </div>
+          <h4 class="project-tag text-flame">INTERMEDIATE • DAY 50</h4>
+          <h3>Secure Dashboard</h3>
+          <span class="card-hint">Click to deploy →</span>
+        </a>
+
+        <a href="/public/Day 25/index.html" class="card project-card">
+          <div class="project-preview-box">
+            <svg class="icon icon-xl" viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="9" cy="9" r="2"></circle>
+              <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+            </svg>
+          </div>
+          <h4 class="project-tag text-flame">BEGINNER • DAY 25</h4>
+          <h3>Image Gallery</h3>
+          <span class="card-hint">Click to deploy →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal" style="display: none;">
+      <div class="modal-backdrop" onclick="closeProfileModal()"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Profile</h2>
+          <button class="modal-close" onclick="closeProfileModal()">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <form class="profile-form">
           <div class="form-group">
             <label for="profileBio">Bio</label>
-            <textarea id="profileBio" name="bio" rows="3"></textarea>
+            <textarea id="profileBio" name="bio" rows="3" placeholder="Tell us about yourself..."></textarea>
           </div>
           <div class="form-group">
             <label for="profileLocation">Location</label>
-            <input type="text" id="profileLocation" name="location">
+            <input type="text" id="profileLocation" name="location" placeholder="City, Country">
           </div>
           <div class="form-group">
             <label for="profileWebsite">Website</label>
-            <input type="url" id="profileWebsite" name="website">
+            <input type="url" id="profileWebsite" name="website" placeholder="https://yoursite.com">
           </div>
           <div class="form-group">
             <label for="profileGithub">GitHub</label>
-            <input type="url" id="profileGithub" name="github">
+            <input type="url" id="profileGithub" name="github" placeholder="https://github.com/username">
           </div>
           <div class="form-actions">
             <button type="button" class="btn-secondary" onclick="closeProfileModal()">Cancel</button>
@@ -405,6 +765,7 @@
           </div>
         </form>
       </div>
+    </div>
     </div>
   </main>
 
@@ -445,14 +806,6 @@
         </nav>
       </div>
 
-      <!-- Resources -->
-      <div class="footer-col animate-enter delay-200">
-        <h3>Resources</h3>
-        <nav class="footer-links">
-            <a href="documentation.html" class="footer-link">Documentation</a>
-            <a href="api-status.html" class="footer-link">API Status</a>
-            <a href="contact.html" class="footer-link">Contact Comms</a>
-            <a href="system-logic.html" class="footer-link">System Logic</a>
       <!-- Connect -->
       <div class="footer-col animate-enter delay-300">
         <h3>Connect</h3>
@@ -474,7 +827,7 @@
               </path>
             </svg>
           </a>
-          <a href="https://discord.gg/UzPBtXqMr" target="_blank" rel="noopener noreferrer" class="social-btn"
+          <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
             aria-label="Discord">
             <svg class="icon" viewBox="0 0 24 24">
               <path
@@ -484,7 +837,8 @@
           </a>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
 
     <!-- Scripts -->
     <script src="../scripts/components/cursor.js"></script>
@@ -492,5 +846,30 @@
     <script src="../scripts/components/navigation.js"></script>
     <script src="../scripts/components/progress-tracker.js"></script>
     <script src="../scripts/pages/dashboard.js"></script>
+    <script>
+      // Profile Modal Functions
+      function openProfileModal() {
+        const modal = document.getElementById('profileModal');
+        if (modal) {
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeProfileModal() {
+        const modal = document.getElementById('profileModal');
+        if (modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      }
+
+      // Close modal when clicking outside
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeProfileModal();
+        }
+      });
+    </script>
   </body>
 </html>
