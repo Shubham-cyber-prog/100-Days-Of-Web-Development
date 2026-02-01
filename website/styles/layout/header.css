@@ -1,16 +1,19 @@
 /* --- Zenith Layout: Header & Nav ("The Capsule") --- */
 
 .site-header {
-    position: fixed;
-    /* Floating */
-    top: var(--space-4);
-    left: 0;
-    right: 0;
-    z-index: var(--z-sticky);
-    pointer-events: none;
-    /* Let clicks pass through outside the pill */
-    display: flex;
-    justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+
+  /* Make header a real visible container */
+  height: 80px;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-container {
