@@ -103,7 +103,6 @@
 
     // Public routes (always accessible)
     const publicRoutes = [
-        'login.html',
         'index.html',
         ''
     ];
@@ -245,20 +244,20 @@
         );
     }
 
-    // Get correct login path
-    function getLoginPath() {
+    // Get correct home path
+    function getHomePath() {
         // Check if we're in pages directory
         if (currentPath.includes('/pages/')) {
-            return 'login.html';
+            return '../index.html';
         }
 
         // Check if we're in root
         if (currentPath.endsWith('/') || currentPath.includes('index.html')) {
-            return 'pages/login.html';
+            return 'index.html';
         }
 
         // Default (relative to current location)
-        return '../login.html';
+        return '../index.html';
     }
 
     // Get correct dashboard path
@@ -285,32 +284,19 @@
         // Determine if current page needs protection
         const needsProtection = isProtectedRoute(currentPage);
         const isPublicPage = isPublicRoute(currentPage);
-        const isLoginPage = currentPage === 'login.html' || currentPage.includes('login');
 
         console.log('📊 Page analysis:', {
             currentPage,
             needsProtection,
             isPublicPage,
-            isLoginPage,
             isAuthenticated,
             isGuest
         });
 
-        // Case 1: User is authenticated but on login page → redirect to dashboard
-        if ((isAuthenticated || isGuest) && isLoginPage) {
-            console.log('✅ Authenticated user on login page, redirecting to dashboard');
-            if (Notify) {
-                Notify.info('You are already logged in');
-            }
-            const dashboardPath = getDashboardPath();
-            window.location.href = dashboardPath;
-            return;
-        }
-
-        // Case 2: User not authenticated and trying to access protected page → redirect to login
+        // Case 1: User not authenticated and trying to access protected page → redirect to home
         if (!isAuthenticated && !isGuest && needsProtection) {
-            console.log('❌ Unauthenticated access to protected page, redirecting to login');
-            const loginPath = getLoginPath();
+            console.log('❌ Unauthenticated access to protected page, redirecting to home');
+            const homePath = getHomePath();
 
             // Clear any stale auth data
             if (App && App.logout) {
@@ -321,10 +307,10 @@
 
             // Show notification if available
             if (Notify) {
-                Notify.warning('Please login to access this page');
+                Notify.warning('Please authenticate to access this page');
             }
 
-            window.location.href = loginPath;
+            window.location.href = homePath;
             return;
         }
 
@@ -446,10 +432,10 @@
             localStorage.removeItem('userId');
             localStorage.removeItem('userName');
 
-            // Redirect to login
-            window.location.href = getLoginPath();
+            // Redirect to home page
+            window.location.href = getHomePath();
         },
-        getLoginPath,
+        getHomePath,
         getDashboardPath
     };
 })();

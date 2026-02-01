@@ -18,8 +18,8 @@ async function initializeAuth() {
     // Check if user is logged in
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) {
-        // Redirect to login if not authenticated
-        window.location.href = 'login.html';
+        // Redirect to home if not authenticated
+        window.location.href = '../index.html';
         return;
     }
     currentUser = user;
@@ -409,5 +409,5 @@ function toggleUserMenu() {
 
 function handleLogout() {
     localStorage.removeItem('user');
-    window.location.href = 'login.html';
+    window.location.href = '../index.html';
 }

@@ -216,12 +216,11 @@ function handleLogout() {
             localStorage.removeItem('guestSession');
         }
 
-        // Determine correct login path
-        const loginPath = window.location.pathname.includes('/pages/')
-            ? 'login.html'
-            : 'website/pages/login.html';
-
-        console.log('✅ Logged out, redirecting to:', loginPath);
-        window.location.href = loginPath;
+        // Redirect to home page after logout
+        console.log('✅ Logged out, redirecting to home');
+        const homePath = window.location.pathname.includes('/pages/')
+            ? '../index.html'
+            : 'index.html';
+        window.location.href = homePath;
     }
 }

@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Check authentication using AuthService
         if (!auth.isAuthenticated()) {
-            console.log('❌ Not authenticated, redirecting to login');
-            window.location.href = 'login.html';
+            console.log('❌ Not authenticated, redirecting to home');
+            window.location.href = '../index.html';
             return;
         }
 
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             logoutBtn.addEventListener('click', async () => {
                 if (confirm('Abort mission?')) {
                     auth.logout();
-                    window.location.href = 'login.html';
+                    window.location.href = '../index.html';
                 }
             });
         }
