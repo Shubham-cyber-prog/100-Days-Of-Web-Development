@@ -1,163 +1,191 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Global Arena - 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/base.css">
-    <link rel="stylesheet" href="../styles/components.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../styles/arena.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <!-- Header -->
+    <div id="header-placeholder"></div>
     <header class="page-header">
-        <div class="header-content">
-            <div class="header-left">
-                <a href="dashboard.html" class="back-btn">
-                    <span>←</span>
-                    <span>Dashboard</span>
-                </a>
-                <h1 class="page-title">
-                    <span class="page-title-icon">🌐</span>
-                    Global Arena
-                </h1>
-            </div>
-            <div class="online-indicator">
-                <span class="online-dot"></span>
-                <span id="online-count">0 online</span>
-            </div>
+      <div class="header-content">
+        <div class="header-left">
+          <a href="dashboard.html" class="back-btn">
+            <span>←</span>
+            <span>Dashboard</span>
+          </a>
+          <h1 class="page-title">
+            <span class="page-title-icon">🌐</span>
+            Global Arena
+          </h1>
         </div>
+        <div class="online-indicator">
+          <span class="online-dot"></span>
+          <span id="online-count">0 online</span>
+        </div>
+      </div>
     </header>
 
     <!-- Main Arena Layout -->
     <div class="arena-container">
-        <!-- Left Sidebar - War Rooms -->
-        <aside class="sidebar-left">
-            <div class="sidebar-header">
-                <h2 class="sidebar-title">⚔️ War Rooms</h2>
-            </div>
-            <div class="rooms-list" id="rooms-list">
-                <div class="loading-container">
-                    <div class="spinner"></div>
-                </div>
-            </div>
-        </aside>
+      <!-- Left Sidebar - War Rooms -->
+      <aside class="sidebar-left">
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">⚔️ War Rooms</h2>
+        </div>
+        <div class="rooms-list" id="rooms-list">
+          <div class="loading-container">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </aside>
 
-        <!-- Main Chat Area -->
-        <main class="main-chat" id="main-chat">
-            <div class="chat-welcome">
-                <span class="welcome-icon">🌐</span>
-                <h2 class="welcome-title">Welcome to Global Arena</h2>
-                <p class="welcome-text">
-                    Join a War Room to connect with fellow developers, share code,
-                    and collaborate in real-time. Select a room from the sidebar to get started!
-                </p>
-                <div class="welcome-actions">
-                    <button class="welcome-btn welcome-btn-primary" onclick="joinRoom('general')">
-                        💬 Join General Chat
-                    </button>
-                    <button class="welcome-btn welcome-btn-secondary" onclick="showSOSModal()">
-                        🆘 Request Help
-                    </button>
-                </div>
+      <!-- Main Chat Area -->
+      <main class="main-chat" id="main-chat">
+        <div class="chat-welcome">
+          <span class="welcome-icon">🌐</span>
+          <h2 class="welcome-title">Welcome to Global Arena</h2>
+          <p class="welcome-text">
+            Join a War Room to connect with fellow developers, share code, and
+            collaborate in real-time. Select a room from the sidebar to get
+            started!
+          </p>
+          <div class="welcome-actions">
+            <button
+              class="welcome-btn welcome-btn-primary"
+              onclick="joinRoom('general')"
+            >
+              💬 Join General Chat
+            </button>
+            <button
+              class="welcome-btn welcome-btn-secondary"
+              onclick="showSOSModal()"
+            >
+              🆘 Request Help
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Sidebar - Users & SOS -->
+      <aside class="sidebar-right">
+        <!-- Online Users -->
+        <section class="users-section">
+          <div class="sidebar-header">
+            <h2 class="sidebar-title">👥 Online Now</h2>
+          </div>
+          <div class="users-list" id="users-list">
+            <div class="loading-container">
+              <div class="spinner"></div>
             </div>
-        </main>
+          </div>
+        </section>
 
-        <!-- Right Sidebar - Users & SOS -->
-        <aside class="sidebar-right">
-            <!-- Online Users -->
-            <section class="users-section">
-                <div class="sidebar-header">
-                    <h2 class="sidebar-title">👥 Online Now</h2>
-                </div>
-                <div class="users-list" id="users-list">
-                    <div class="loading-container">
-                        <div class="spinner"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SOS Alerts -->
-            <section class="sos-section">
-                <div class="sos-header">
-                    <h2 class="sos-title">
-                        <span>🆘</span>
-                        <span>SOS Alerts</span>
-                    </h2>
-                    <span class="sos-count" id="sos-count">0</span>
-                </div>
-                <div class="sos-list" id="sos-list">
-                    <!-- SOS cards rendered here -->
-                </div>
-                <button class="sos-broadcast-btn" onclick="showSOSModal()">
-                    <span>📡</span>
-                    <span>Broadcast SOS</span>
-                </button>
-            </section>
-        </aside>
+        <!-- SOS Alerts -->
+        <section class="sos-section">
+          <div class="sos-header">
+            <h2 class="sos-title">
+              <span>🆘</span>
+              <span>SOS Alerts</span>
+            </h2>
+            <span class="sos-count" id="sos-count">0</span>
+          </div>
+          <div class="sos-list" id="sos-list">
+            <!-- SOS cards rendered here -->
+          </div>
+          <button class="sos-broadcast-btn" onclick="showSOSModal()">
+            <span>📡</span>
+            <span>Broadcast SOS</span>
+          </button>
+        </section>
+      </aside>
     </div>
 
     <!-- Mobile Tabs -->
     <nav class="mobile-tabs">
-        <button class="mobile-tab active" data-tab="chat">💬 Chat</button>
-        <button class="mobile-tab" data-tab="rooms">⚔️ Rooms</button>
-        <button class="mobile-tab" data-tab="users">👥 Users</button>
-        <button class="mobile-tab" data-tab="sos">🆘 SOS</button>
+      <button class="mobile-tab active" data-tab="chat">💬 Chat</button>
+      <button class="mobile-tab" data-tab="rooms">⚔️ Rooms</button>
+      <button class="mobile-tab" data-tab="users">👥 Users</button>
+      <button class="mobile-tab" data-tab="sos">🆘 SOS</button>
     </nav>
 
     <!-- SOS Modal -->
     <div class="modal-overlay" id="sos-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title">
-                    <span>🆘</span>
-                    <span>Broadcast SOS</span>
-                </h3>
-                <button class="modal-close" onclick="hideSOSModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Which day are you stuck on?</label>
-                    <input type="number" class="form-input" id="sos-day" placeholder="e.g., 45" min="1" max="100">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Describe your problem</label>
-                    <textarea class="form-input form-textarea" id="sos-problem"
-                        placeholder="What are you struggling with?"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Related tags</label>
-                    <div class="form-tags" id="sos-tags">
-                        <span class="form-tag" data-tag="HTML">HTML</span>
-                        <span class="form-tag" data-tag="CSS">CSS</span>
-                        <span class="form-tag" data-tag="JavaScript">JavaScript</span>
-                        <span class="form-tag" data-tag="React">React</span>
-                        <span class="form-tag" data-tag="Node.js">Node.js</span>
-                        <span class="form-tag" data-tag="API">API</span>
-                        <span class="form-tag" data-tag="Bug">Bug</span>
-                        <span class="form-tag" data-tag="Logic">Logic</span>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <button class="modal-btn modal-btn-secondary" onclick="hideSOSModal()">
-                        Cancel
-                    </button>
-                    <button class="modal-btn modal-btn-primary" onclick="broadcastSOS()">
-                        📡 Send SOS
-                    </button>
-                </div>
-            </div>
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            <span>🆘</span>
+            <span>Broadcast SOS</span>
+          </h3>
+          <button class="modal-close" onclick="hideSOSModal()">×</button>
         </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Which day are you stuck on?</label>
+            <input
+              type="number"
+              class="form-input"
+              id="sos-day"
+              placeholder="e.g., 45"
+              min="1"
+              max="100"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Describe your problem</label>
+            <textarea
+              class="form-input form-textarea"
+              id="sos-problem"
+              placeholder="What are you struggling with?"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Related tags</label>
+            <div class="form-tags" id="sos-tags">
+              <span class="form-tag" data-tag="HTML">HTML</span>
+              <span class="form-tag" data-tag="CSS">CSS</span>
+              <span class="form-tag" data-tag="JavaScript">JavaScript</span>
+              <span class="form-tag" data-tag="React">React</span>
+              <span class="form-tag" data-tag="Node.js">Node.js</span>
+              <span class="form-tag" data-tag="API">API</span>
+              <span class="form-tag" data-tag="Bug">Bug</span>
+              <span class="form-tag" data-tag="Logic">Logic</span>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button
+              class="modal-btn modal-btn-secondary"
+              onclick="hideSOSModal()"
+            >
+              Cancel
+            </button>
+            <button
+              class="modal-btn modal-btn-primary"
+              onclick="broadcastSOS()"
+            >
+              📡 Send SOS
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Scripts -->
     <script type="module" src="../scripts/pages/arena.js"></script>
-</body>
-
+  </body>
 </html>
