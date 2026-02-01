@@ -9,11 +9,11 @@ class AIService {
         // Gemini API configuration
         this.apiKey = null;
         this.apiEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-        
+
         // Cache for AI responses (avoid repeated API calls)
         this.responseCache = new Map();
         this.cacheDuration = 30 * 60 * 1000; // 30 minutes
-        
+
         // Burnout detection thresholds
         this.burnoutThresholds = {
             velocityDrop: 0.5,      // 50% drop in completion rate
@@ -56,7 +56,7 @@ class AIService {
      */
     async analyzeProgress(progressData) {
         const cacheKey = `progress_${JSON.stringify(progressData).slice(0, 100)}`;
-        
+
         // Check cache
         const cached = this.getFromCache(cacheKey);
         if (cached) return cached;
@@ -69,14 +69,56 @@ class AIService {
         try {
             const prompt = this.buildProgressPrompt(progressData);
             const response = await this.callGeminiAPI(prompt);
-            
+
             const result = this.parseAIResponse(response);
             this.setCache(cacheKey, result);
-            
+
+            // Trigger Neural Nexus events if progress is significant
+            this.triggerNexusEvents(result, data);
+
             return result;
         } catch (error) {
             console.warn('AI API error, falling back to local analysis:', error.message);
-            return this.localProgressAnalysis(progressData);
+            const localResult = this.localProgressAnalysis(data);
+            this.triggerNexusEvents(localResult, data);
+            return localResult;
+        }
+    }
+
+    /**
+     * Trigger Neural Nexus specific events like Quest generation
+     */
+    triggerNexusEvents(analysis, rawData) {
+        if (window.Quests && analysis.pathCorrections) {
+            const suggestions = analysis.pathCorrections.map(c => ({
+                title: 'Neural Side Quest',
+                description: c,
+                difficulty: analysis.riskLevel === 'high' ? 'bronze' : 'silver',
+                tech: analysis.focusAreas
+            }));
+            window.Quests.generateDynamicQuests(suggestions);
+        }
+
+        if (window.NexusHUD) {
+            window.NexusHUD.updateAITip(analysis.motivationalMessage);
+        }
+    }
+
+    /**
+     * Get real-time pair-programming advice for a specific mission
+     * @param {number} day - Current project day
+     */
+    async getHUDAdvice(day) {
+        if (!this.apiKey) return "Tip: Focus on clean code and DRY principles for today's mission.";
+
+        try {
+            const prompt = `Provide 1 punchy, expert pair-programming tip for day ${day} of a 100-day web dev challenge. 
+            Keep it under 15 words. Focus on a common mistake or best practice for that stage of learning.`;
+
+            const response = await this.callGeminiAPI(prompt);
+            return response.replace(/"/g, '').trim();
+        } catch (e) {
+            return "Modularize your code today for better maintainability.";
         }
     }
 
@@ -148,7 +190,7 @@ Respond ONLY with valid JSON, no markdown formatting.`;
                 .replace(/```json\n?/g, '')
                 .replace(/```\n?/g, '')
                 .trim();
-            
+
             return JSON.parse(cleaned);
         } catch (e) {
             console.warn('Failed to parse AI response:', e);
@@ -180,7 +222,7 @@ Respond ONLY with valid JSON, no markdown formatting.`;
         // Generate path corrections based on gaps
         const pathCorrections = [];
         const techDist = data.techDistribution || {};
-        
+
         if (!techDist.API || techDist.API < 5) {
             pathCorrections.push('Try more API-based projects to strengthen backend skills');
         }
@@ -272,7 +314,7 @@ Respond ONLY with valid JSON, no markdown formatting.`;
         if (streak >= 7) {
             return `🔥 ${streak}-day streak! You're on fire! ${messages[Math.floor(Math.random() * messages.length)]}`;
         }
-        
+
         return messages[Math.floor(Math.random() * messages.length)];
     }
 
@@ -308,7 +350,7 @@ Respond ONLY with valid JSON, no markdown formatting.`;
      */
     analyzeBurnoutRisk(activityData) {
         const { recentActivity, currentStreak, completedDays, lastActiveDate } = activityData;
-        
+
         const warnings = [];
         let riskScore = 0;
 
@@ -397,9 +439,9 @@ Respond ONLY with valid JSON, no markdown formatting.`;
      */
     detectOverloadDays(recentActivity) {
         const dayCounts = {};
-        
+
         if (!recentActivity) return [];
-        
+
         recentActivity.forEach(item => {
             if (item && item.date) {
                 const date = new Date(item.date).toDateString();
@@ -461,9 +503,9 @@ Respond ONLY with valid JSON, no markdown formatting.`;
             if (!project) return;
 
             const techStack = project.tech || [];
-            
+
             for (const [category, data] of Object.entries(categories)) {
-                const hasSkill = techStack.some(tech => 
+                const hasSkill = techStack.some(tech =>
                     data.skills.some(skill => tech.toLowerCase().includes(skill.toLowerCase()))
                 );
                 if (hasSkill) {
