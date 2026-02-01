@@ -22,6 +22,16 @@
       /* Space for floating header */
     }
 
+    @media (max-width: 640px) {
+      .page-header {
+        padding: 100px 1rem 40px;
+      }
+
+      .page-header .heading {
+        font-size: 2rem;
+      }
+    }
+
     .search-wrapper {
       max-width: 600px;
       margin: 0 auto 40px;
@@ -69,6 +79,13 @@
       color: var(--text-primary);
     }
 
+    @media (max-width: 640px) {
+      #projectSearch {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
     #projectSearch:focus {
       outline: none;
       border-color: var(--accent-core);
@@ -81,6 +98,19 @@
       gap: 12px;
       margin-bottom: 60px;
       flex-wrap: wrap;
+      padding: 0 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .filter-tabs {
+        gap: 8px;
+        margin-bottom: 40px;
+      }
+
+      .tab-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
     }
 
     .tab-btn {
@@ -204,17 +234,11 @@
     }
 
     .code-chip:hover {
-      background: var(--accent-glow);
-      color: var(--accent-core);
-      border-color: var(--accent-glow);
-      box-shadow: 0 6px 18px -6px var(--accent-glow);
-    }
-
-    .code-chip:hover {
       background: var(--accent-core);
       color: #000;
       border-color: var(--accent-core);
       transform: translateY(-2px);
+      box-shadow: 0 6px 18px -6px var(--accent-glow);
     }
 
     .card-hint {
@@ -339,6 +363,31 @@
       z-index: 2;
     }
 
+    /* Disable heavy animations on mobile for better performance */
+    @media (max-width: 640px) {
+      .project-card::before {
+        animation: rotateCosmos 12s linear infinite;
+        /* Slower rotation on mobile */
+        filter: blur(2px);
+        /* Slightly more blur to reduce processing */
+      }
+
+      .project-card {
+        perspective: none;
+        /* Disable 3D perspective on mobile */
+      }
+
+      .project-card:hover {
+        transform: scale(1.01);
+        /* Simpler scale only, no 3D rotation */
+      }
+
+      .tech-tag {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.6rem;
+      }
+    }
+
     @keyframes rotateCosmos {
       from {
         transform: rotate(0deg);
@@ -352,38 +401,41 @@
 </head>
 <script>
   // 1. Intercept all clicks on the project grid
-  document
-    .getElementById("projectsGrid")
-    .addEventListener("click", async (e) => {
-      // Find if the clicked element (or its parent) is a link or a project card
-      const card = e.target.closest(".project-card");
-      if (!card) return;
+  document.addEventListener('DOMContentLoaded', () => {
+    const projectsGrid = document.getElementById("projectsGrid");
+    if (projectsGrid) {
+      projectsGrid.addEventListener("click", async (e) => {
+        // Find if the clicked element (or its parent) is a link or a project card
+        const card = e.target.closest(".project-card");
+        if (!card) return;
 
-      // Get the destination URL from your data (adjust if your property name is different)
-      const targetUrl =
-        card.getAttribute("data-url") ||
-        card.querySelector("a")?.getAttribute("href");
+        // Get the destination URL from your data (adjust if your property name is different)
+        const targetUrl =
+          card.getAttribute("data-url") ||
+          card.querySelector("a")?.getAttribute("href");
 
-      if (targetUrl) {
-        e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
+        if (targetUrl) {
+          e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
 
-        try {
-          // 2. Perform a "Health Check" on the URL
-          const response = await fetch(targetUrl, { method: "HEAD" });
+          try {
+            // 2. Perform a "Health Check" on the URL
+            const response = await fetch(targetUrl, { method: "HEAD" });
 
-          if (response.ok) {
-            // Milestone exists! Proceed to the project.
-            window.location.href = targetUrl;
-          } else {
-            // milestone folder missing (404), show your custom 404 page
+            if (response.ok) {
+              // Milestone exists! Proceed to the project.
+              window.location.href = targetUrl;
+            } else {
+              // milestone folder missing (404), show your custom 404 page
+              window.location.href = "./404.html";
+            }
+          } catch (error) {
+            // Network error or folder completely missing
             window.location.href = "./404.html";
           }
-        } catch (error) {
-          // Network error or folder completely missing
-          window.location.href = "./404.html";
         }
-      }
-    );
+      });
+    }
+  });
 </script>
 
 <body>

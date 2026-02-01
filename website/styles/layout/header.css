@@ -153,7 +153,7 @@
 }
 
 /* Mobile Nav Styles */
-@media (max-width: 850px) {
+@media (max-width: 640px) {
 
     /* Hide desktop nav inside usage */
     .nav-links {
@@ -163,7 +163,7 @@
         left: 50%;
         transform: translateX(-50%);
         width: 90%;
-        max-width: 300px;
+        max-width: 400px;
         flex-direction: column;
         background: var(--bg-nebula);
         border: 1px solid var(--glass-border);
@@ -176,6 +176,12 @@
     .nav-links.open {
         display: flex;
         animation: slideDown 0.3s ease;
+    }
+
+    .nav-link {
+        text-align: center;
+        width: 100%;
+        padding: 0.75rem 1rem;
     }
 
     .nav-link.active {
@@ -191,6 +197,18 @@
     .nav-container {
         padding: 0 var(--space-4);
         /* Ensure padding on small screens */
+    }
+}
+
+/* slideDown animation for mobile menu */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
     }
 }
 
