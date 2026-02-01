@@ -284,25 +284,16 @@
         // Determine if current page needs protection
         const needsProtection = isProtectedRoute(currentPage);
         const isPublicPage = isPublicRoute(currentPage);
-        const isLoginPage = false; // Login page no longer exists
 
         console.log('📊 Page analysis:', {
             currentPage,
             needsProtection,
             isPublicPage,
-            isLoginPage,
             isAuthenticated,
             isGuest
         });
 
-        // Case 1: User is authenticated on public page → allow access
-        // (login page removed, no redirect needed)
-        if ((isAuthenticated || isGuest) && isPublicPage) {
-            console.log('✅ Authenticated user on public page');
-            return;
-        }
-
-        // Case 2: User not authenticated and trying to access protected page → redirect to home
+        // Case 1: User not authenticated and trying to access protected page → redirect to home
         if (!isAuthenticated && !isGuest && needsProtection) {
             console.log('❌ Unauthenticated access to protected page, redirecting to home');
             const homePath = getHomePath();
