@@ -281,6 +281,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             }
 
+
+            // Render UI after loading data
+            if (document.getElementById('progressGrid')) renderProgressGrid();
+            if (document.getElementById('completedDays')) updateStats();
+            if (document.getElementById('recommendationsGrid')) renderRecommendations();
+        }
+
+
         // Render UI after loading data
         if (document.getElementById('progressGrid')) renderProgressGrid();
         if (document.getElementById('completedDays')) updateStats();
