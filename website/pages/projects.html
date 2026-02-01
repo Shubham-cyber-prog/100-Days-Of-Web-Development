@@ -100,18 +100,20 @@
            ---------------------------------------------------- */
       .project-card {
         position: relative;
-        /* Hard containment for effects */
         overflow: hidden;
-        border: none;
-        /* Glassmorphism background */
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
         cursor: pointer;
         padding: 1rem;
         min-height: 220px;
         display: flex;
         flex-direction: column;
+
+        /* Proper Glassmorphism Effect */
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 
         /* 3D Context */
         perspective: 1000px;
@@ -123,16 +125,13 @@
         --tx: 0px;
         --ty: 0px;
 
-        /* 
-               CRITICAL: Transform transition must be VERY fast or instant 
-               for cursor tracking to feel responsive. 0.1s is a good balance.
-               Box-shadow can be slower.
-            */
+        /* Smooth transitions */
         transition:
           transform 0.05s ease-out,
           box-shadow 0.4s ease,
           background 0.3s ease,
-          backdrop-filter 0.3s ease;
+          backdrop-filter 0.3s ease,
+          border-color 0.3s ease;
         transform: rotateX(var(--rx)) rotateY(var(--ry))
           translate3d(var(--tx), var(--ty), 0);
 
@@ -248,95 +247,40 @@
 
       /* Hover Lift + Tilt */
       .project-card:hover {
-        /* 
-               We add a scale to "lift" it up, but rely on JS for rotation.
-               The Z-index ensures it pops above neighbors. 
-            */
         transform: rotateX(var(--rx)) rotateY(var(--ry))
           translate3d(var(--tx), var(--ty), 0) scale(1.02);
-        /* Enhanced glassmorphism hover */
-        background: rgba(255, 255, 255, 0.08);
+        /* Enhanced white glassmorphism on hover */
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         box-shadow:
-          0 15px 35px -5px rgba(0, 0, 0, 0.6),
-          0 0 20px rgba(255, 159, 28, 0.3),
-          inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        /* Stronger accent glow on hover */
+          0 15px 35px -5px rgba(0, 0, 0, 0.5),
+          0 0 20px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
         z-index: 10;
       }
 
+      body.light-mode .project-card {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+      }
+
       body.light-mode .project-card:hover {
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.4);
+        border-color: rgba(255, 255, 255, 0.6);
         box-shadow:
           0 15px 35px -5px rgba(0, 0, 0, 0.15),
-          0 0 20px rgba(255, 159, 28, 0.2),
+          0 0 20px rgba(255, 255, 255, 0.3),
           inset 0 1px 0 rgba(255, 255, 255, 0.5);
       }
 
-      /* Layer 1: The Cosmic Source (Always Active) */
-      .project-card::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        z-index: -2;
+      /* Remove the cosmic gradient - not needed for clean glassmorphism */
+      /* .project-card::before removed for clean white glass effect */
 
-        /* The Cosmic Gradient */
-        background: conic-gradient(
-          from 0deg,
-          transparent 0%,
-          var(--accent-core) 25%,
-          var(--accent-glow) 50%,
-          var(--accent-core) 75%,
-          transparent 100%
-        );
-
-        /* PERMANENT STATE: Always Awake */
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0px);
-
-        /* Always rotating */
-        animation: rotateCosmos 8s linear infinite;
-      }
-
-      /* Removed :hover::before as it's now always active */
-
-      /* Layer 2: The Card Body (Mask) 
-           - Creates the 1px border effect by obscuring the center
-           - Enhanced glassmorphism with subtle backdrop
-        */
-      .project-card::after {
-        content: "";
-        position: absolute;
-        inset: 1px;
-        /* Border width */
-        border-radius: inherit;
-        z-index: -1;
-        /* Glassmorphism dark background */
-        background: rgba(20, 20, 30, 0.6);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        /* Card Base Color */
-        transition: background 0.3s, backdrop-filter 0.3s;
-      }
-
-      body.light-mode .project-card::after {
-        /* Glassmorphism light background */
-        background: rgba(228, 234, 245, 0.7);
-      }
-
-      /* Enhance glass effect on hover for depth */
-      .project-card:hover::after {
-        background: rgba(30, 30, 40, 0.8);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-      }
-
-      body.light-mode .project-card:hover::after {
-        background: rgba(255, 255, 255, 0.9);
-      }
+      /* Remove the dark background mask - glassmorphism works without it */
+      /* .project-card::after removed for clean glassmorphism */
 
       /* Layer 3: Ensure Content is Above */
       .project-card > * {
