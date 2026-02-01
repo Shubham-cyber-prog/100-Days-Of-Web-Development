@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     waitForAuthService();
 
     async function initializeDashboard() {
+        // Dynamic imports for components
+        const { PresenceIndicator } = await import('../components/PresenceIndicator.js');
+        const { Arena } = await import('../core/arenaService.js');
+
         const auth = window.AuthService;
 
         // Check authentication using AuthService
@@ -205,6 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateStats();
         });
 
+        // Render progress grid
+        if (document.getElementById('progressGrid')) renderProgressGrid();
+
 
 
         // Initial render
@@ -225,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (document.getElementById('completedDays')) updateStats();
             if (document.getElementById('recommendationsGrid')) renderRecommendations();
         }
+
 
 
         // Render UI after loading data
@@ -256,11 +264,38 @@ document.addEventListener('DOMContentLoaded', () => {
                             `Day ${day}: Locked`;
 
                         dayElement.setAttribute('title', tooltipText);
+
+                        // Add Presence Container
+                        const presenceCont = document.createElement('div');
+                        presenceCont.className = 'day-presence-hub';
+                        dayElement.appendChild(presenceCont);
+
+                        // Initialize Presence for this specific day
+                        new PresenceIndicator(presenceCont, { day, compact: true, showAvatars: true, maxAvatars: 2 });
+
                         dayElement.addEventListener('click', () => toggleDay(day));
                         quarterBlock.appendChild(dayElement);
                     }
                 }
                 progressGrid.appendChild(quarterBlock);
+            }
+
+            // Injects styles for presence hub positioning
+            if (!document.getElementById('dashboard-presence-styles')) {
+                const style = document.createElement('style');
+                style.id = 'dashboard-presence-styles';
+                style.textContent = `
+                    .day-cell { position: relative; overflow: visible !important; }
+                    .day-presence-hub {
+                        position: absolute;
+                        bottom: -12px;
+                        right: -12px;
+                        z-index: 10;
+                        transform: scale(0.6);
+                        pointer-events: none;
+                    }
+                `;
+                document.head.appendChild(style);
             }
         }
 

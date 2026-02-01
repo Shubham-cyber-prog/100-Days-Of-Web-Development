@@ -7,6 +7,9 @@
  * @author 100 Days of Web Dev Team
  */
 
+import { Arena } from './arenaService.js';
+import { Notify } from './Notify.js';
+
 class AppCore {
     constructor() {
         // State containers
@@ -74,6 +77,11 @@ class AppCore {
             // Load user session
             await this.loadUserSession();
 
+            // Initialize Global Arena & Presence if authenticated
+            if (this.isAuthenticated()) {
+                this.initArena();
+            }
+
             // Mark as initialized
             this._state.isInitialized = true;
             this.emit('app:initialized', this._state);
@@ -113,7 +121,7 @@ class AppCore {
      */
     setState(updates) {
         const prevState = { ...this._state };
-        
+
         Object.keys(updates).forEach(key => {
             if (this._state.hasOwnProperty(key)) {
                 this._state[key] = updates[key];
@@ -193,10 +201,10 @@ class AppCore {
      */
     async loadUserSession() {
         try {
-            const sessionToken = sessionStorage.getItem(this.config.storageKeys.session) || 
-                                 sessionStorage.getItem('authToken');
+            const sessionToken = sessionStorage.getItem(this.config.storageKeys.session) ||
+                sessionStorage.getItem('authToken');
             const isGuest = sessionStorage.getItem(this.config.storageKeys.guest) === 'true' ||
-                           sessionStorage.getItem('authGuest') === 'true';
+                sessionStorage.getItem('authGuest') === 'true';
             const localAuth = localStorage.getItem(this.config.storageKeys.authenticated) === 'true';
             const storedUser = localStorage.getItem(this.config.storageKeys.user);
 
@@ -471,9 +479,9 @@ class AppCore {
      */
     getUserDisplayName() {
         if (this._state.user) {
-            return this._state.user.name || 
-                   this._state.user.email?.split('@')[0] || 
-                   'User';
+            return this._state.user.name ||
+                this._state.user.email?.split('@')[0] ||
+                'User';
         }
         return 'Guest';
     }
@@ -494,6 +502,67 @@ class AppCore {
     /**
      * Debug: Print current state
      */
+    /**
+     * Initialize Global Arena Presence and SOS Relay
+     */
+    async initArena() {
+        try {
+            console.log('🌐 Arena: Initializing Global Relay...');
+
+            // Register for SOS Alerts globally
+            Arena.onSOSReceived((alerts) => {
+                this.handleGlobalSOS(alerts);
+            });
+
+            // Start presence tracking
+            // Use current day from progress if available
+            let currentDay = 1;
+            try {
+                const progress = localStorage.getItem('completedDays');
+                if (progress) {
+                    currentDay = Math.max(...JSON.parse(progress), 0) + 1;
+                }
+            } catch (e) { }
+
+            await Arena.updateStatus('online', { currentDay });
+
+        } catch (error) {
+            console.warn('Arena initialization failed:', error);
+        }
+    }
+
+    /**
+     * Handle incoming SOS alerts globally
+     */
+    handleGlobalSOS(alerts) {
+        // Only show alerts created in the last 60 seconds that we haven't seen
+        const now = Date.now();
+        const freshAlerts = alerts.filter(a => {
+            const time = typeof a.createdAt === 'number' ? a.createdAt : (a.createdAt?.toMillis?.() || now);
+            return (now - time) < 60000 && a.userId !== this._state.user?.id;
+        });
+
+        freshAlerts.forEach(alert => {
+            // Check if user is a "Senior" (Day > 50) to offer help
+            const myDay = this.getState('currentDay') || 0;
+            const isSenior = myDay > 50;
+
+            Notify.show({
+                type: 'warning',
+                title: `🆘 SOS: Day ${alert.dayNumber}`,
+                message: `${alert.userName} is stuck: "${alert.problemDescription.substring(0, 50)}..."`,
+                actions: [
+                    {
+                        label: isSenior ? '👑 Offer Mentorship' : '💬 View in Arena',
+                        primary: true,
+                        onClick: () => window.location.href = `arena.html?sos=${alert.id}`
+                    }
+                ],
+                duration: 10000
+            });
+        });
+    }
+
     debug() {
         console.table({
             'Initialized': this._state.isInitialized,
