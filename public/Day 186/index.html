@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Doodle Study Buddy Interactive</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+/* 🌈 Pastel Doodle Background */
+body {
+  margin: 0;
+  font-family: 'Patrick Hand', cursive;
+  background: linear-gradient(135deg, #ffd6e0, #d0f4de, #cdb4db);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+  position: relative;
+  transition: 0.4s;
+}
+
+/* ✏️ Floating blobs */
+body::before, body::after {
+  content:"";
+  position:fixed;
+  width:300px; height:300px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  animation: float 10s infinite alternate ease-in-out;
+  z-index:0;
+}
+body::before { top:-50px; left:-50px; }
+body::after { bottom:-50px; right:-50px; animation-delay:5s; }
+@keyframes float { to { transform:translateY(60px); } }
+
+/* ✨ Stars background */
+.stars {
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0; left:0;
+  pointer-events:none;
+  z-index:0;
+}
+.star {
+  position:absolute;
+  width:2px; height:2px;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+  animation: twinkle linear infinite;
+}
+@keyframes twinkle { 0%,100%{opacity:0.3;}50%{opacity:1;} }
+
+h1 { text-align:center; font-size:3rem; margin:20px; }
+
+.container {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+  padding:20px;
+  position:relative;
+  z-index:1;
+}
+
+.card {
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  width:300px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  text-align:center;
+}
+
+button {
+  background:linear-gradient(45deg,#ff9a9e,#fad0c4);
+  border:none;
+  padding:8px 15px;
+  border-radius:20px;
+  margin:5px;
+  font-family:inherit;
+  cursor:pointer;
+}
+
+textarea, input {
+  width:100%;
+  border-radius:10px;
+  padding:8px;
+  border:none;
+  margin-top:10px;
+  font-family:inherit;
+}
+
+/* 🌌 Cursor */
+.magic-cursor {
+  position:fixed;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:10000;
+  background:radial-gradient(circle,#fff,#ffb3c6,#cdb4db);
+  box-shadow:0 0 20px #fff,0 0 35px #ffb3c6,0 0 50px #cdb4db;
+  transform:translate(-50%,-50%);
+}
+
+/* ✨ Trail */
+.trail {
+  position:fixed;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle,#fff,#ffd6e0,transparent);
+  animation:fadeOut 1.2s linear forwards;
+  z-index:9999;
+}
+
+/* 🦋 Butterfly Trail */
+.butterfly {
+  position:fixed;
+  font-size:18px;
+  pointer-events:none;
+  animation:butterflyFly 1.5s ease-out forwards;
+  z-index:9998;
+  filter:drop-shadow(0 0 6px white);
+}
+
+/* 🌟 Click Ripple */
+.ripple {
+  position:absolute;
+  border-radius:50%;
+  width:20px; height:20px;
+  background:radial-gradient(circle, #fff, #ff9a9e, transparent);
+  animation: rippleAnim 0.6s linear forwards;
+  pointer-events:none;
+  z-index:9999;
+}
+
+/* 🌙 Dark Mode */
+.dark {
+  background:linear-gradient(135deg,#1e1e2f,#2b2b40,#3a3a55);
+  color:#eee;
+}
+.dark .card { background:#2c2c3d; }
+.dark textarea, .dark input { background:#3a3a55; color:white; }
+
+/* 🧠 Mini AI Popups */
+.ai-popup {
+  position:absolute;
+  background:white;
+  padding:10px 15px;
+  border-radius:15px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+  font-size:14px;
+  animation:popupAnim 1s forwards;
+  pointer-events:none;
+  max-width:200px;
+}
+.dark .ai-popup { background:#2c2c3d; color:white; }
+@keyframes popupAnim { 0%{opacity:0; transform:translateY(-10px);}50%{opacity:1;}100%{opacity:0; transform:translateY(-40px);} }
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="magic-cursor" id="cursor"></div>
+<div id="trail-container"></div>
+
+<h1>Doodle Study Buddy Interactive</h1>
+<div style="text-align:center;">
+  <button onclick="toggleDark()">Toggle Dark Mode</button>
+</div>
+
+<div class="container">
+
+<div class="card">
+  <h2>Pomodoro Timer</h2>
+  <h1 id="timer">25:00</h1>
+  <button onclick="startPomodoro()">Start</button>
+  <button onclick="resetTimer()">Reset</button>
+</div>
+
+<div class="card">
+  <h2>Task List</h2>
+  <input type="text" id="taskInput" placeholder="Add a task..."/>
+  <button onclick="addTask()">Add</button>
+  <ul id="taskList"></ul>
+</div>
+
+</div>
+
+<script>
+/* 🌌 Cursor + Trail */
+const cursor=document.getElementById("cursor");
+const container=document.getElementById("trail-container");
+
+document.addEventListener("mousemove", e=>{
+  const x=e.clientX, y=e.clientY;
+  cursor.style.left=x+"px"; cursor.style.top=y+"px";
+
+  for(let i=0;i<3;i++){
+    const t=document.createElement("div");
+    t.className="trail";
+    t.style.left=x+(Math.random()*10-5)+"px";
+    t.style.top=y+(Math.random()*10-5)+"px";
+    container.appendChild(t);
+    setTimeout(()=>t.remove(),1200);
+  }
+
+  const b=document.createElement("div");
+  b.className="butterfly";
+  b.textContent="🦋";
+  b.style.left=x+"px";
+  b.style.top=y+"px";
+  container.appendChild(b);
+  setTimeout(()=>b.remove(),1500);
+});
+
+/* 🌟 Click Ripple */
+document.addEventListener("click", e=>{
+  const r=document.createElement("div");
+  r.className="ripple";
+  r.style.left=e.clientX+"px";
+  r.style.top=e.clientY+"px";
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),600);
+
+  /* 🧠 Mini AI popup on click */
+  const popup=document.createElement("div");
+  popup.className="ai-popup";
+  popup.style.left=(e.clientX+15)+"px";
+  popup.style.top=(e.clientY-10)+"px";
+  popup.textContent=getAIPopup();
+  document.body.appendChild(popup);
+  setTimeout(()=>popup.remove(),2000);
+});
+
+/* 🌙 Dark Mode */
+function toggleDark(){ document.body.classList.toggle("dark"); }
+
+/* ⏳ Pomodoro */
+let time=1500, interval;
+function startPomodoro(){ if(interval) return;
+  interval=setInterval(()=>{
+    time--; let m=Math.floor(time/60), s=time%60;
+    timer.innerText=`${m<10?"0":""}${m}:${s<10?"0":""}${s}`;
+    if(time<=0){ clearInterval(interval); interval=null; alert("Done!"); }
+  },1000);
+}
+function resetTimer(){ clearInterval(interval); interval=null; time=1500; timer.innerText="25:00"; }
+const timer=document.getElementById("timer");
+
+/* Task List */
+function addTask(){
+  const li=document.createElement("li");
+  li.textContent=taskInput.value;
+  li.onclick=()=>li.remove();
+  taskList.appendChild(li);
+  taskInput.value="";
+}
+
+/* 🌟 Stars background */
+const starsContainer=document.getElementById("stars");
+for(let i=0;i<100;i++){
+  const s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.width=s.style.height=Math.random()*2+1+"px";
+  s.style.animationDuration=(Math.random()*3+2)+"s";
+  starsContainer.appendChild(s);
+}
+
+/* 🧠 Mini AI logic */
+function getAIPopup(){
+  const messages=[
+    "Focus for 25 min! ⏳",
+    "Take a deep breath 😌",
+    "Small steps = Big progress",
+    "Remember to stretch 🧘‍♂️",
+    "Hydrate! 💧",
+    "Review past notes 📚",
+    "Try active recall 📝",
+    "You can do it! 🌟"
+  ];
+  return messages[Math.floor(Math.random()*messages.length)];
+}
+</script>
+
+</body>
+</html>
