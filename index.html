@@ -1531,22 +1531,22 @@
               </ul>
             </div>
 
-            <button class="carousel-button carousel-button--left">
+            <button class="carousel-button carousel-button--left" aria-label="Previous slide">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-            <button class="carousel-button carousel-button--right">
+            <button class="carousel-button carousel-button--right" aria-label="Next slide">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
 
             <div class="carousel-nav">
-              <button class="carousel-indicator current-slide"></button>
-              <button class="carousel-indicator"></button>
-              <button class="carousel-indicator"></button>
-              <button class="carousel-indicator"></button>
+              <button class="carousel-indicator current-slide" aria-label="Go to slide 1"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 2"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 3"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 4"></button>
             </div>
           </div>
         </div>
@@ -1814,7 +1814,7 @@
       const dotsNav = document.querySelector('.carousel-nav');
       const dots = Array.from(document.querySelectorAll('.carousel-indicator'));
       
-      if (track && slides.length > 0) {
+      if (track && slides.length > 0 && nextButton && prevButton && dotsNav && dots.length > 0) {
         let currentSlide = 0;
         const slideCount = slides.length;
         let autoplayInterval;
@@ -1825,6 +1825,7 @@
           });
           dots.forEach((dot, index) => {
             dot.classList.toggle('current-slide', index === currentSlide);
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}${index === currentSlide ? ' (current)' : ''}`);
           });
         };
 
@@ -1862,13 +1863,8 @@
         };
 
         // Event listeners
-        if (nextButton) {
-          nextButton.addEventListener('click', nextSlide);
-        }
-
-        if (prevButton) {
-          prevButton.addEventListener('click', prevSlide);
-        }
+        nextButton.addEventListener('click', nextSlide);
+        prevButton.addEventListener('click', prevSlide);
 
         dots.forEach((dot, index) => {
           dot.addEventListener('click', () => moveToSlide(index));
@@ -1903,11 +1899,9 @@
           carousel.addEventListener('mouseleave', startAutoplay);
         }
 
-        // Start autoplay
-        startAutoplay();
-
-        // Initialize
+        // Initialize - set initial state first, then start autoplay
         updateSlides();
+        startAutoplay();
       }
     </script>
   </body>
