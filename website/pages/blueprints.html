@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueprint Architect | 100 Days Of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/blueprints.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="blueprint-page">
+    <header class="blueprint-header">
+        <a href="dashboard.html" class="tool-btn" title="Back to Dashboard">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <h1 style="font-size: 1.2rem; margin: 0;">Collaborative Blueprint</h1>
+                <span class="blueprint-badge">L3 Feature</span>
+            </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin: 2px 0 0 0;">CRDT-Powered Journey Planning</p>
+        </div>
+        <div id="active-users"
+            style="margin-left: auto; display: flex; -webkit-mask-image: linear-gradient(to right, transparent, black 20%); mask-image: linear-gradient(to right, transparent, black 20%);">
+            <!-- User avatars added here -->
+        </div>
+    </header>
+
+    <main id="canvas-container">
+        <!-- SVG Canvas injected here -->
+    </main>
+
+    <nav class="blueprint-toolbar">
+        <button class="tool-btn active" id="tool-select" title="Select & Drag">
+            <i class="fas fa-mouse-pointer"></i>
+        </button>
+        <button class="tool-btn" id="tool-node" title="Double Click Canvas to Add Node">
+            <i class="fas fa-plus-square"></i>
+        </button>
+        <button class="tool-btn" id="tool-link" title="Link Nodes (Experimental)">
+            <i class="fas fa-project-diagram"></i>
+        </button>
+        <div style="width: 1px; height: 24px; background: rgba(255,255,255,0.1); align-self: center; margin: 0 5px;">
+        </div>
+        <button class="tool-btn" id="tool-save" title="Export Image">
+            <i class="fas fa-download"></i>
+        </button>
+        <button class="tool-btn" id="tool-clear" title="Clear Canvas">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+    </nav>
+
+    <div id="sync-status"
+        style="position: absolute; top: 20px; right: 20px; font-size: 0.7rem; color: #10b981; display: flex; align-items: center; gap: 5px;">
+        <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
+        <span>Live Sync Active</span>
+    </div>
+
+    <!-- Core Services -->
+    <script type="module">
+        import { blueprintService } from '../scripts/core/blueprintService.js';
+        import { BlueprintCanvas } from '../scripts/components/BlueprintCanvas.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = new BlueprintCanvas('canvas-container');
+
+            // Handle Tool Clicks
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (btn.id === 'tool-clear') {
+                        if (confirm('Wipe the blueprint?')) {
+                            localStorage.removeItem('blueprint_global-journey');
+                            location.reload();
+                        }
+                        return;
+                    }
+                    if (btn.id === 'tool-save') {
+                        alert('Blueprint exported to console (JSON)');
+                        console.log(window.Blueprint.getNodes());
+                        return;
+                    }
+                    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Handle Sync Events
+            window.addEventListener('blueprint_sync', (e) => {
+                const status = document.getElementById('sync-status');
+                status.style.color = '#8b5cf6';
+                setTimeout(() => status.style.color = '#10b981', 500);
+            });
+        });
+    </script>
+</body>
+
+</html>

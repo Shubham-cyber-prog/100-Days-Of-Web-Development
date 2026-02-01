@@ -1,388 +1,386 @@
+<nav class="nav-links">
+  <a href="dashboard.html" class="nav-link">Dashboard</a><a href="projects.html" class="nav-link active">Projects</a><a
+    href="submissions.html" class="nav-link">Submissions</a><a href="about.html" class="nav-link">About</a><a
+    href="contributors.html" class="nav-link">Contributors</a><a href="contact.html" class="nav-link">Contact</a>
+  <a href="blueprints.html" class="nav-link">Blueprints</a>
+</nav>
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      href="/website/assets/images/logo.png"
-      height="70px"
-      width="100px"
-    />
-    <title>Projects | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <link rel="stylesheet" href="../styles/components/project-modal.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <style>
-      .page-header {
-        text-align: center;
-        padding: 120px 0 60px;
-        /* Space for floating header */
-      }
 
-      .search-wrapper {
-        max-width: 600px;
-        margin: 0 auto 40px;
-        position: relative;
-      }
-      header nav img {
-        width: 100px;
-        height: 70px;
-        border: 2px groove #cc2a01;
-        border-radius: 25%;
-      }
-      header nav img:hover {
-        box-shadow:
-          0 0 15px #ff5733,
-          0 0 30px #ff5733,
-          0 0 45px #ff5733;
-        transition: box-shadow 0.3s ease-in-out;
-      }
-      .nav-container {
-        height: 120px;
-        margin-top: 25px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/website/assets/images/logo.png" height="70px" width="100px" />
+  <title>Projects | 100 Days of Web Dev</title>
+  <link rel="stylesheet" href="../styles/index.css" />
+  <link rel="stylesheet" href="../styles/components/project-modal.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    .page-header {
+      text-align: center;
+      padding: 120px 0 60px;
+      /* Space for floating header */
+    }
 
-      .nav-links img:hover {
-        box-shadow:
-          0 0 15px #ff5733,
-          0 0 30px #ff5733,
-          0 0 45px #ff5733;
-        transition: box-shadow 0.3s ease-in-out;
-      }
-      #projectSearch {
-        background: var(--bg-surface);
-        backdrop-filter: blur(12px);
-        border: 1px solid var(--glass-border);
-        border-radius: 100px;
-        padding: 16px 24px;
-        font-size: var(--text-base);
-        width: 100%;
-        transition: all 0.2s;
-        text-align: center;
-        color: var(--text-primary);
-      }
+    .search-wrapper {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
 
-      #projectSearch:focus {
-        outline: none;
-        border-color: var(--accent-core);
-        box-shadow: 0 0 20px -5px var(--accent-alpha);
-      }
+    header nav img {
+      width: 100px;
+      height: 70px;
+      border: 2px groove #cc2a01;
+      border-radius: 25%;
+    }
 
-      .filter-tabs {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-bottom: 60px;
-        flex-wrap: wrap;
-      }
+    header nav img:hover {
+      box-shadow:
+        0 0 15px #ff5733,
+        0 0 30px #ff5733,
+        0 0 45px #ff5733;
+      transition: box-shadow 0.3s ease-in-out;
+    }
 
-      .tab-btn {
-        background: transparent;
-        color: var(--text-secondary);
-        border: 1px solid var(--glass-border);
-        padding: 10px 24px;
-        border-radius: 100px;
-        font-size: var(--text-sm);
-        cursor: pointer;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-      }
+    .nav-container {
+      height: 120px;
+      margin-top: 25px;
+    }
 
-      .tab-btn:hover {
-        border-color: var(--accent-core);
-        color: var(--text-primary);
-        text-shadow: 0 0 8px var(--accent-core);
-      }
+    .nav-links img:hover {
+      box-shadow:
+        0 0 15px #ff5733,
+        0 0 30px #ff5733,
+        0 0 45px #ff5733;
+      transition: box-shadow 0.3s ease-in-out;
+    }
 
-      .tab-btn.active {
-        background: var(--accent-core);
-        border-color: var(--accent-core);
-        font-weight: var(--weight-bold);
-        box-shadow: 0 0 20px var(--accent-alpha);
-      }
+    #projectSearch {
+      background: var(--bg-surface);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      padding: 16px 24px;
+      font-size: var(--text-base);
+      width: 100%;
+      transition: all 0.2s;
+      text-align: center;
+      color: var(--text-primary);
+    }
 
-      body.light-mode .tab-btn.active{
-        background: var(--accent-core);
-      }
-      
-      body.light-mode .tab-btn {
-        background: #e4eaf5;
-      }
+    #projectSearch:focus {
+      outline: none;
+      border-color: var(--accent-core);
+      box-shadow: 0 0 20px -5px var(--accent-alpha);
+    }
 
-      /* ----------------------------------------------------
+    .filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--glass-border);
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-size: var(--text-sm);
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--accent-core);
+      color: var(--text-primary);
+      text-shadow: 0 0 8px var(--accent-core);
+    }
+
+    .tab-btn.active {
+      background: var(--accent-core);
+      border-color: var(--accent-core);
+      font-weight: var(--weight-bold);
+      box-shadow: 0 0 20px var(--accent-alpha);
+    }
+
+    body.light-mode .tab-btn.active {
+      background: var(--accent-core);
+    }
+
+    body.light-mode .tab-btn {
+      background: #e4eaf5;
+    }
+
+    /* ----------------------------------------------------
            PROJECT CARD COSMIC ANIMATION (Hover Effect) 
            ---------------------------------------------------- */
-      /* ----------------------------------------------------
+    /* ----------------------------------------------------
            PROJECT CARD COSMIC ANIMATION (Hover Effect) 
            ---------------------------------------------------- */
-      /* ----------------------------------------------------
+    /* ----------------------------------------------------
            PROJECT CARD COSMIC ANIMATION (Permanent & Tilt) 
            ---------------------------------------------------- */
-      .project-card {
-        position: relative;
-        /* Hard containment for effects */
-        overflow: hidden;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        padding: 1rem;
-        min-height: 220px;
-        display: flex;
-        flex-direction: column;
+    .project-card {
+      position: relative;
+      /* Hard containment for effects */
+      overflow: hidden;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 1rem;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
 
-        /* 3D Context */
-        perspective: 1000px;
-        transform-style: preserve-3d;
+      /* 3D Context */
+      perspective: 1000px;
+      transform-style: preserve-3d;
 
-        /* Init Variables */
-        --rx: 0deg;
-        --ry: 0deg;
-        --tx: 0px;
-        --ty: 0px;
+      /* Init Variables */
+      --rx: 0deg;
+      --ry: 0deg;
+      --tx: 0px;
+      --ty: 0px;
 
-        /* 
+      /* 
                CRITICAL: Transform transition must be VERY fast or instant 
                for cursor tracking to feel responsive. 0.1s is a good balance.
                Box-shadow can be slower.
             */
-        transition:
-          transform 0.05s ease-out,
-          box-shadow 0.4s ease;
-        transform: rotateX(var(--rx)) rotateY(var(--ry))
-          translate3d(var(--tx), var(--ty), 0);
+      transition:
+        transform 0.05s ease-out,
+        box-shadow 0.4s ease;
+      transform: rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0);
 
-        /* Clean hardware acceleration */
-        will-change: transform;
-      }
+      /* Clean hardware acceleration */
+      will-change: transform;
+    }
 
-      .card-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
-        margin-bottom: 0.25rem;
-        flex-wrap: nowrap;
-      }
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.25rem;
+      flex-wrap: nowrap;
+    }
 
-      .card-divider {
-        width: 100%;
-        height: 1px;
-        background: var(--glass-border);
-        margin: 0.5rem 0 0.75rem;
-      }
+    .card-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--glass-border);
+      margin: 0.5rem 0 0.75rem;
+    }
 
-      .code-chip {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(
-          135deg,
+    .code-chip {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg,
           var(--accent-core) 60%,
-          var(--accent-glow) 100%
-        );
-        border: 1.5px solid var(--accent-core);
-        color: #fff;
-        font-weight: 700;
-        font-size: 1.05rem;
-        box-shadow: 0 4px 12px -6px rgba(255, 122, 24, 0.25);
-        cursor: pointer;
-        transition: all 0.18s cubic-bezier(0.4, 1.3, 0.6, 1);
-        z-index: 3;
-        outline: none;
-      }
+          var(--accent-glow) 100%);
+      border: 1.5px solid var(--accent-core);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 12px -6px rgba(255, 122, 24, 0.25);
+      cursor: pointer;
+      transition: all 0.18s cubic-bezier(0.4, 1.3, 0.6, 1);
+      z-index: 3;
+      outline: none;
+    }
 
-      .code-chip:active {
-        transform: scale(0.93);
-      }
+    .code-chip:active {
+      transform: scale(0.93);
+    }
 
-      .code-chip:hover {
-        background: var(--accent-glow);
-        color: var(--accent-core);
-        border-color: var(--accent-glow);
-        box-shadow: 0 6px 18px -6px var(--accent-glow);
-      }
+    .code-chip:hover {
+      background: var(--accent-glow);
+      color: var(--accent-core);
+      border-color: var(--accent-glow);
+      box-shadow: 0 6px 18px -6px var(--accent-glow);
+    }
 
-      .code-chip:hover {
-        background: var(--accent-core);
-        color: #000;
-        border-color: var(--accent-core);
-        transform: translateY(-2px);
-      }
+    .code-chip:hover {
+      background: var(--accent-core);
+      color: #000;
+      border-color: var(--accent-core);
+      transform: translateY(-2px);
+    }
 
-      .card-hint {
-        margin-top: auto;
-        font-size: var(--text-sm);
-        color: var(--text-tertiary);
-        opacity: 0.9;
-        padding-top: var(--space-2);
-      }
+    .card-hint {
+      margin-top: auto;
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      opacity: 0.9;
+      padding-top: var(--space-2);
+    }
 
-      .project-card h3 {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-height: 1.3;
-        word-wrap: break-word;
-      }
+    .project-card h3 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-height: 1.3;
+      word-wrap: break-word;
+    }
 
-      .tech-stack {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        margin-top: auto;
-      }
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
 
-      .tech-tag {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.5rem;
-        background: var(--accent-alpha);
-        border: 1px solid var(--accent-core);
-        border-radius: 4px;
-        color: var(--text-secondary);
-        white-space: nowrap;
-      }
+    .tech-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      background: var(--accent-alpha);
+      border: 1px solid var(--accent-core);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
 
-      .card-hint.muted {
-        color: var(--text-secondary);
-      }
+    .card-hint.muted {
+      color: var(--text-secondary);
+    }
 
-      .project-card.is-disabled {
-        cursor: default;
-      }
+    .project-card.is-disabled {
+      cursor: default;
+    }
 
-      .project-card.is-disabled .code-chip {
-        pointer-events: none;
-        opacity: 0.6;
-      }
+    .project-card.is-disabled .code-chip {
+      pointer-events: none;
+      opacity: 0.6;
+    }
 
-      /* Hover Lift + Tilt */
-      .project-card:hover {
-        /* 
+    /* Hover Lift + Tilt */
+    .project-card:hover {
+      /* 
                We add a scale to "lift" it up, but rely on JS for rotation.
                The Z-index ensures it pops above neighbors. 
             */
-        transform: rotateX(var(--rx)) rotateY(var(--ry))
-          translate3d(var(--tx), var(--ty), 0) scale(1.02);
-        box-shadow:
-          0 15px 35px -5px rgba(0, 0, 0, 0.6),
-          0 0 10px rgba(255, 159, 28, 0.2);
-        /* Stronger accent glow on hover */
-        z-index: 10;
-      }
+      transform: rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0) scale(1.02);
+      box-shadow:
+        0 15px 35px -5px rgba(0, 0, 0, 0.6),
+        0 0 10px rgba(255, 159, 28, 0.2);
+      /* Stronger accent glow on hover */
+      z-index: 10;
+    }
 
-      /* Layer 1: The Cosmic Source (Always Active) */
-      .project-card::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        z-index: -2;
+    /* Layer 1: The Cosmic Source (Always Active) */
+    .project-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      z-index: -2;
 
-        /* The Cosmic Gradient */
-        background: conic-gradient(
-          from 0deg,
+      /* The Cosmic Gradient */
+      background: conic-gradient(from 0deg,
           transparent 0%,
           var(--accent-core) 25%,
           var(--accent-glow) 50%,
           var(--accent-core) 75%,
-          transparent 100%
-        );
+          transparent 100%);
 
-        /* PERMANENT STATE: Always Awake */
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0px);
+      /* PERMANENT STATE: Always Awake */
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px);
 
-        /* Always rotating */
-        animation: rotateCosmos 8s linear infinite;
-      }
+      /* Always rotating */
+      animation: rotateCosmos 8s linear infinite;
+    }
 
-      /* Removed :hover::before as it's now always active */
+    /* Removed :hover::before as it's now always active */
 
-      /* Layer 2: The Card Body (Mask) 
+    /* Layer 2: The Card Body (Mask) 
            - Creates the 1px border effect by obscuring the center
         */
-      .project-card::after {
-        content: "";
-        position: absolute;
-        inset: 1px;
-        /* Border width */
-        border-radius: inherit;
-        z-index: -1;
-        background: var(--bg-nebula);
-        /* Card Base Color */
-        transition: background 0.3s;
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      /* Border width */
+      border-radius: inherit;
+      z-index: -1;
+      background: var(--bg-nebula);
+      /* Card Base Color */
+      transition: background 0.3s;
+    }
+
+    body.light-mode .project-card::after {
+      background: #e4eaf5;
+    }
+
+    /* Lighten body slightly on hover for depth */
+    .project-card:hover::after {
+      background: var(--bg-surface);
+    }
+
+    /* Layer 3: Ensure Content is Above */
+    .project-card>* {
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes rotateCosmos {
+      from {
+        transform: rotate(0deg);
       }
-      body.light-mode .project-card::after {
-        background: #e4eaf5;
+
+      to {
+        transform: rotate(360deg);
       }
-      /* Lighten body slightly on hover for depth */
-      .project-card:hover::after {
-        background: var(--bg-surface);
-      }
+    }
+  </style>
+</head>
+<script>
+  // 1. Intercept all clicks on the project grid
+  document
+    .getElementById("projectsGrid")
+    .addEventListener("click", async (e) => {
+      // Find if the clicked element (or its parent) is a link or a project card
+      const card = e.target.closest(".project-card");
+      if (!card) return;
 
-      /* Layer 3: Ensure Content is Above */
-      .project-card > * {
-        position: relative;
-        z-index: 2;
-      }
+      // Get the destination URL from your data (adjust if your property name is different)
+      const targetUrl =
+        card.getAttribute("data-url") ||
+        card.querySelector("a")?.getAttribute("href");
 
-      @keyframes rotateCosmos {
-        from {
-          transform: rotate(0deg);
-        }
+      if (targetUrl) {
+        e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
 
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-  </head>
-  <script>
-    // 1. Intercept all clicks on the project grid
-    document
-      .getElementById("projectsGrid")
-      .addEventListener("click", async (e) => {
-        // Find if the clicked element (or its parent) is a link or a project card
-        const card = e.target.closest(".project-card");
-        if (!card) return;
+        try {
+          // 2. Perform a "Health Check" on the URL
+          const response = await fetch(targetUrl, { method: "HEAD" });
 
-        // Get the destination URL from your data (adjust if your property name is different)
-        const targetUrl =
-          card.getAttribute("data-url") ||
-          card.querySelector("a")?.getAttribute("href");
-
-        if (targetUrl) {
-          e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
-
-          try {
-            // 2. Perform a "Health Check" on the URL
-            const response = await fetch(targetUrl, { method: "HEAD" });
-
-            if (response.ok) {
-              // Milestone exists! Proceed to the project.
-              window.location.href = targetUrl;
-            } else {
-              // milestone folder missing (404), show your custom 404 page
-              window.location.href = "./404.html";
-            }
-          } catch (error) {
-            // Network error or folder completely missing
+          if (response.ok) {
+            // Milestone exists! Proceed to the project.
+            window.location.href = targetUrl;
+          } else {
+            // milestone folder missing (404), show your custom 404 page
             window.location.href = "./404.html";
           }
+        } catch (error) {
+          // Network error or folder completely missing
+          window.location.href = "./404.html";
         }
       }
     );
@@ -395,16 +393,17 @@
       <a href="dashboard.html" class="nav-logo">
         <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
       </a>
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Dashboard</a>
-                <a href="projects.html" class="nav-link active">Projects</a>
-                <a href="arena.html" class="nav-link">Arena</a>
-                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-                <a href="profile.html" class="nav-link">Profile</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contributors.html" class="nav-link">Contributors</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </nav>
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="projects.html" class="nav-link active">Projects</a>
+        <a href="mission-control.html" class="nav-link">Mission Control</a>
+        <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contributors.html" class="nav-link">Contributors</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="blueprints.html" class="nav-link">Blueprints</a>
+      </nav>
       <div class="nav-user">
         <button class="mobile-toggle" onclick="toggleMobileMenu()">
           <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -414,200 +413,163 @@
           </svg>
         </button>
 
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="
               margin-right: 15px;
               background: none;
               border: none;
               cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
+            ">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary)">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
 
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%; border-radius: 50%"
-              />
-            </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="#" class="dropdown-item">Settings</a>
-              <button
-                id="pwa-install-btn"
-                class="dropdown-item"
-                style="
+        <div class="user-avatar-wrapper">
+          <button class="user-avatar" onclick="toggleUserMenu()">
+            <img src="https://github.com/ntbnaren7.png" alt="User"
+              style="width: 100%; height: 100%; border-radius: 50%" />
+          </button>
+          <!-- Dropdown -->
+          <div class="user-dropdown">
+            <a href="profile.html" class="dropdown-item">View Profile</a>
+            <a href="#" class="dropdown-item">Settings</a>
+            <button id="pwa-install-btn" class="dropdown-item" style="
                   display: none;
                   color: var(--accent-core);
                   font-weight: 600;
-                "
-              >
-                ✨ Install App
-              </button>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
-            </div>
-        </div>
-    </header>
-
-    <main class="container section">
-      <div class="page-header animate-enter">
-        <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
-          Projects Archive
-        </h1>
-        <p class="text-secondary">
-          Access all mission logs and deployment records.
-        </p>
-      </div>
-      <!-- Controls -->
-      <div class="search-wrapper animate-enter delay-100">
-        <input
-          type="text"
-          id="projectSearch"
-          placeholder="Search mission name or day..."
-        />
-      </div>
-      <div class="filter-tabs animate-enter delay-200">
-        <button class="tab-btn active normal" data-category="All">All Systems</button>
-        <button class="tab-btn normal" data-category="Beginner">Beginner</button>
-        <button class="tab-btn normal" data-category="Intermediate">
-          Intermediate
-        </button>
-        <button class="tab-btn normal" data-category="Advanced">Advanced</button>
-        <button class="tab-btn normal" data-category="Capstone">Capstone</button>
-      </div>
-      <!-- Grid -->
-      <div id="projectsGrid" class="grid grid-4 animate-enter delay-300">
-        <!-- Injected by scripts/pages/projects.js -->
-      </div>
-    </main>
-
-    <!-- Professional Footer -->
-    <footer class="site-footer">
-        <div class="container footer-content">
-            <!-- Brand -->
-            <div class="footer-brand animate-enter">
-                <a href="dashboard.html" class="footer-logo">
-                    <img src="../assets/images/logo.png" alt="Logo">
-                    <h2>100 Days of<br><span class="text-flame">Web Dev</span></h2>
-                </a>
-                <p class="footer-desc">
-                    A hyper-intensive protocol designed to forge elite web engineers through daily deployment cycles.
-                </p>
-            </div>
-
-        <!-- Quick Links -->
-        <div class="footer-col animate-enter delay-100">
-          <h3>Navigation</h3>
-          <nav class="footer-links">
-            <a href="dashboard.html" class="footer-link">Home Base</a>
-            <a href="projects.html" class="footer-link">Archive</a>
-            <a href="leaderboard.html" class="footer-link">Leaderboard</a>
-            <a href="contributors.html" class="footer-link">Crew</a>
-          </nav>
-        </div>
-
-        <!-- Resources -->
-        <div class="footer-col animate-enter delay-200">
-          <h3>Resources</h3>
-          <nav class="footer-links">
-            <a href=\"documentation.html\" class=\"footer-link\"
-              >Documentation</a
-            >
-            <a href=\"api-status.html\" class=\"footer-link\">API Status</a>
-            <a href=\"contact.html\" class=\"footer-link\">Contact Comms</a>
-            <a href=\"system-logic.html\" class=\"footer-link\">System Logic</a>
-          </nav>
-        </div>
-
-        <!-- Connect -->
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a
-              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Github"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path>
-              </svg>
-            </a>
-            <a
-              href="https://twitter.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Twitter"
-              title="Coming soon"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path>
-              </svg>
-            </a>
-            <a
-              href="https://discord.gg/SW7puwEm"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Discord"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
-                ></path>
-              </svg>
-            </a>
+                ">
+              ✨ Install App
+            </button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item text-danger" onclick="handleLogout()">
+              Log Out
+            </button>
           </div>
         </div>
+      </div>
+    </div>
+  </header>
+  <!-- Main Content -->
+  <main class="container section">
+    <div class="page-header animate-enter">
+      <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
+        Projects Archive
+      </h1>
+      <p class="text-secondary">
+        Access all mission logs and deployment records.
+      </p>
+    </div>
+    <!-- Controls -->
+    <div class="search-wrapper animate-enter delay-100">
+      <input type="text" id="projectSearch" placeholder="Search mission name or day..." />
+    </div>
+    <div class="filter-tabs animate-enter delay-200">
+      <button class="tab-btn active normal" data-category="All">All Systems</button>
+      <button class="tab-btn normal" data-category="Beginner">Beginner</button>
+      <button class="tab-btn normal" data-category="Intermediate">
+        Intermediate
+      </button>
+      <button class="tab-btn normal" data-category="Advanced">Advanced</button>
+      <button class="tab-btn normal" data-category="Capstone">Capstone</button>
+    </div>
+    <!-- Grid -->
+    <div id="projectsGrid" class="grid grid-4 animate-enter delay-300">
+      <!-- Injected by scripts/pages/projects.js -->
+    </div>
+  </main>
 
-        <div class="container footer-bottom">
-            <p class="copyright">&copy; 2026 100 Days of Web Dev. All Systems Nominal.</p>
-            <p class="made-by">
-                Maintained by <span class="text-flame font-bold">Subham</span>
-                <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                    </path>
-                </svg>
-            </p>
+  <!-- Professional Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <!-- Brand -->
+      <div class="footer-brand animate-enter">
+        <a href="dashboard.html" class="footer-logo">
+          <img src="../assets/images/logo.png" alt="Logo" />
+          <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+        </a>
+        <p class="footer-desc">
+          A hyper-intensive protocol designed to forge elite web engineers
+          through daily deployment cycles.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col animate-enter delay-100">
+        <h3>Navigation</h3>
+        <nav class="footer-links">
+          <a href="dashboard.html" class="footer-link">Home Base</a>
+          <a href="projects.html" class="footer-link">Archive</a>
+          <a href="about.html" class="footer-link">Leaderboard</a>
+          <a href="contributors.html" class="footer-link">Crew</a>
+        </nav>
+      </div>
+
+      <!-- Resources -->
+      <div class="footer-col animate-enter delay-200">
+        <h3>Resources</h3>
+        <nav class="footer-links">
+          <a href=\"documentation.html\" class=\"footer-link\">Documentation</a>
+          <a href=\"api-status.html\" class=\"footer-link\">API Status</a>
+          <a href=\"contact.html\" class=\"footer-link\">Contact Comms</a>
+          <a href=\"system-logic.html\" class=\"footer-link\">System Logic</a>
+        </nav>
+      </div>
+
+      <!-- Connect -->
+      <div class="footer-col animate-enter delay-300">
+        <h3>Connect</h3>
+        <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+        <div class="footer-socials">
+          <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" target="_blank"
+            rel="noopener noreferrer" class="social-btn" aria-label="Github">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+              </path>
+            </svg>
+          </a>
+          <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
+            aria-label="Twitter" title="Coming soon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path
+                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+              </path>
+            </svg>
+          </a>
+          <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
+            aria-label="Discord">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path
+                d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z">
+              </path>
+            </svg>
+          </a>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script src="../scripts/components/cursor.js"></script>
-    <script type="module" src="../scripts/pages/projects.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
+    <div class="container footer-bottom">
+      <p class="copyright">
+        &copy; 2026 100 Days of Web Dev. All Systems Nominal.
+      </p>
+      <p class="made-by">
+        Maintained by <span class="text-flame font-bold">Subham</span>
+        <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+      </p>
+    </div>
+  </footer>
+  <button id="scrollToTopBtn" aria-label="Scroll to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+  <script src="../scripts/components/cursor.js"></script>
+  <script type="module" src="../scripts/pages/projects.js"></script>
+  <script src="../scripts/components/navigation.js"></script>
 </body>
 
 </html>

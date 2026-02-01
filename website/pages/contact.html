@@ -1,292 +1,227 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
-    <title>Contact | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <style>
-      .contact-wrapper {
-        padding-top: 120px;
-        max-width: 600px;
-        margin: 0 auto;
-      }
 
-      .form-glass {
-        background: var(--bg-surface);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--glass-border);
-        border-radius: 24px;
-        padding: 40px;
-        box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/website/assets/images/logo.png" />
+  <title>Contact | 100 Days of Web Dev</title>
+  <link rel="stylesheet" href="../styles/index.css" />
+  <style>
+    .contact-wrapper {
+      padding-top: 120px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-  <body>
-    <header class="site-header">
-      <div
-        class="nav-container"
-        style="
-          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
-            drop-shadow(
-              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
-            )
-            drop-shadow(
-              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
-            );
-        "
-      >
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="contributors.html" class="nav-link">Contributors</a>
-          <a href="contact.html" class="nav-link active">Contact</a>
-        </nav>
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
+    .form-glass {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
 
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
+<body>
+  <header class="site-header">
+    <div class="nav-container"
+      style="filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)) drop-shadow(0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent));">
+      <a href="dashboard.html" class="nav-logo">
+        <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
+      </a>
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="favorites.html" class="nav-link">Favorites</a>
+        <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contributors.html" class="nav-link">Contributors</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="blueprints.html" class="nav-link">Blueprints</a>
+      </nav>
+      <div class="nav-user">
+        <button class="mobile-toggle" onclick="toggleMobileMenu()">
+          <svg class="icon icon-lg" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="
               margin-right: 15px;
               background: none;
               border: none;
               cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
+            ">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary)">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
 
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%; border-radius: 50%"
-              />
+        <div class="user-avatar-wrapper">
+          <button class="user-avatar" onclick="toggleUserMenu()">
+            <img src="https://github.com/ntbnaren7.png" alt="User"
+              style="width: 100%; height: 100%; border-radius: 50%" />
+          </button>
+          <!-- Dropdown -->
+          <div class="user-dropdown">
+            <a href="profile.html" class="dropdown-item">View Profile</a>
+            <a href="settings.html" class="dropdown-item">Settings</a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item text-danger" onclick="handleLogout()">
+              Log Out
             </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="contact-wrapper animate-enter">
+      <div class="text-center mb-10">
+        <h1 style="font-size: var(--text-4xl); color:black; margin-bottom: 8px">
+          Establish Contact
+        </h1>
+        <p class="text-secondary">Send a transmission to the core team.</p>
+      </div>
+
+      <form class="form-glass flex flex-col gap-5">
+        <div class="form-group">
+          <label class="form-label" style="margin-left: 4px">Identity</label>
+          <input type="text" class="form-input" placeholder="Commander Name" style="
+                background: rgba(0, 0, 0, 0.3);
+                border-color: var(--glass-border);
+              " />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="margin-left: 4px">Coordinates (Email)</label>
+          <input type="email" class="form-input" placeholder="user@domain.com" style="
+                background: rgba(0, 0, 0, 0.3);
+                border-color: var(--glass-border);
+              " />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="margin-left: 4px">Transmission</label>
+          <textarea class="form-input" rows="5" placeholder="Message content..." style="
+                background: rgba(0, 0, 0, 0.3);
+                border-color: var(--glass-border);
+              "></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px">
+          Send Transmission
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Professional Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <!-- Brand -->
+      <div class="footer-brand animate-enter">
+        <a href="dashboard.html" class="footer-logo">
+          <img src="../assets/images/logo.png" alt="Logo" />
+          <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+        </a>
+        <p class="footer-desc">
+          A hyper-intensive protocol designed to forge elite web engineers
+          through daily deployment cycles.
+        </p>
+      </div>
+
+      <!-- Resources -->
+      <div class="footer-col animate-enter delay-200">
+        <h3>Resources</h3>
+        <nav class="footer-links">
+          <a href="documentation.html" class="footer-link">Documentation</a>
+          <a href="api-status.html" class="footer-link">API Status</a>
+          <a href="contact.html" class="footer-link">Contact Comms</a>
+          <a href="system-logic.html" class="footer-link">System Logic</a>
+          <!-- Connect -->
+          <div class="footer-col animate-enter delay-300">
+            <h3>Connect</h3>
+            <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+            <div class="footer-socials">
+              <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" target="_blank"
+                rel="noopener noreferrer" class="social-btn" aria-label="Github">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                  </path>
+                </svg>
+              </a>
+              <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
+                aria-label="Twitter" title="Coming soon">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                  </path>
+                </svg>
+              </a>
+              <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
+                aria-label="Discord">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z">
+                  </path>
+                </svg>
+              </a>
             </div>
           </div>
-        </div>
-      </div>
-    </header>
-
-    <main class="container">
-      <div class="contact-wrapper animate-enter">
-        <div class="text-center mb-10">
-          <h1
-            style="font-size: var(--text-4xl); color: black; margin-bottom: 8px"
-          >
-            Establish Contact
-          </h1>
-          <p class="text-secondary">Send a transmission to the core team.</p>
-        </div>
-
-        <form class="form-glass flex flex-col gap-5">
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px">Identity</label>
-            <input
-              type="text"
-              class="form-input"
-              placeholder="Commander Name"
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px"
-              >Coordinates (Email)</label
-            >
-            <input
-              type="email"
-              class="form-input"
-              placeholder="user@domain.com"
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px"
-              >Transmission</label
-            >
-            <textarea
-              class="form-input"
-              rows="5"
-              placeholder="Message content..."
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            class="btn btn-primary"
-            style="margin-top: 10px"
-          >
-            Send Transmission
-          </button>
-        </form>
-      </div>
-    </main>
-
-    <!-- Professional Footer -->
-    <footer class="site-footer">
-      <div class="container footer-content">
-        <!-- Brand -->
-        <div class="footer-brand animate-enter">
-          <a href="dashboard.html" class="footer-logo">
-            <img src="../assets/images/logo.png" alt="Logo" />
-            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-          </a>
-          <p class="footer-desc">
-            A hyper-intensive protocol designed to forge elite web engineers
-            through daily deployment cycles.
-          </p>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="footer-col animate-enter delay-100">
-          <h3>Navigation</h3>
-          <nav class="footer-links">
-            <a href="dashboard.html" class="footer-link">Home Base</a>
-            <a href="projects.html" class="footer-link">Archive</a>
-            <a href="about.html" class="footer-link">Leaderboard</a>
-            <a href="contributors.html" class="footer-link">Crew</a>
-          </nav>
-        </div>
-
-        <!-- Resources -->
-        <div class="footer-col animate-enter delay-200">
-          <h3>Resources</h3>
-          <nav class="footer-links">
-            <a href="documentation.html" class="footer-link">Documentation</a>
-            <a href="api-status.html" class="footer-link">API Status</a>
-            <a href="contact.html" class="footer-link">Contact Comms</a>
-            <a href="system-logic.html" class="footer-link">System Logic</a>
-          </nav>
-        </div>
-
-        <!-- Connect -->
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a
-              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Github"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path>
-              </svg>
-            </a>
-            <a
-              href="https://twitter.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Twitter"
-              title="Coming soon"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path>
-              </svg>
-            </a>
-            <a
-              href="https://discord.gg/SW7puwEm"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Discord"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
-                ></path>
-              </svg>
-            </a>
-          </div>
-        </div>
       </div>
 
-      <div class="container footer-bottom">
-        <p class="copyright">
-          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
-        </p>
-        <p class="made-by">
-          Maintained by <span class="text-flame font-bold">Subham</span>
-          <svg
-            class="icon icon-sm heart-pulse"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            ></path>
-          </svg>
-        </p>
+      <!-- Connect -->
+      <div class="footer-col animate-enter delay-300">
+        <h3>Connect</h3>
+        <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="Github"><svg class="icon" viewBox="0 0 24 24">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+              </path>
+            </svg></a>
+          <a href="#" class="social-btn" aria-label="Twitter"><svg class="icon" viewBox="0 0 24 24">
+              <path
+                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+              </path>
+            </svg></a>
+          <a href="#" class="social-btn" aria-label="Discord"><svg class="icon" viewBox="0 0 24 24">
+              <path
+                d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z">
+              </path>
+            </svg></a>
+        </div>
       </div>
-    </footer>
+    </div>
 
-    <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/auth/guard.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
-  </body>
+    <div class="container footer-bottom">
+      <p class="copyright">
+        &copy; 2026 100 Days of Web Dev. All Systems Nominal.
+      </p>
+      <p class="made-by">
+        Maintained by <span class="text-flame font-bold">Subham</span>
+        <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+      </p>
+    </div>
+  </footer>
+
+  <script src="../scripts/components/cursor.js"></script>
+  <script src="../scripts/auth/guard.js"></script>
+  <script src="../scripts/components/navigation.js"></script>
+</body>
+
 </html>
