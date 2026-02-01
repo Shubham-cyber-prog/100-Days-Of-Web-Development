@@ -20,6 +20,268 @@
       padding-top: calc(64px + var(--space-4));
     }
 
+    /* Search Bar Styles */
+    .search-bar-wrapper {
+      margin-bottom: var(--space-6);
+      margin-top: var(--space-4);
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4) var(--space-5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .search-bar:hover,
+    .search-bar:focus-within {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(102, 126, 234, 0.4);
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .search-icon {
+      width: 20px;
+      height: 20px;
+      color: rgba(255, 255, 255, 0.6);
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: rgba(255, 255, 255, 0.95);
+      font-size: var(--text-base);
+      font-weight: var(--weight-medium);
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    [data-theme="light"] .search-bar {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] .search-bar:hover,
+    [data-theme="light"] .search-bar:focus-within {
+      background: rgba(255, 255, 255, 1);
+      border-color: rgba(102, 126, 234, 0.4);
+    }
+
+    [data-theme="light"] .search-icon {
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    [data-theme="light"] .search-input {
+      color: rgba(0, 0, 0, 0.95);
+    }
+
+    [data-theme="light"] .search-input::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Featured Banner Styles */
+    .featured-banner {
+      margin-bottom: var(--space-8);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .featured-content {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      overflow: hidden;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .featured-content::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+      animation: glow 8s ease infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { opacity: 0.5; transform: rotate(0deg); }
+      50% { opacity: 1; transform: rotate(180deg); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .featured-content:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .featured-image {
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .featured-image img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .featured-content:hover .featured-image img {
+      transform: scale(1.05) rotate(2deg);
+    }
+
+    .featured-info {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent-core), var(--accent-glow));
+      color: white;
+      font-size: var(--text-xs);
+      font-weight: var(--weight-bold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-3);
+    }
+
+    .featured-title {
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-black);
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+      line-height: 1.2;
+    }
+
+    .featured-description {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-6);
+      line-height: 1.6;
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .btn-featured-primary,
+    .btn-featured-secondary {
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-lg);
+      font-weight: var(--weight-bold);
+      font-size: var(--text-sm);
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .btn-featured-primary {
+      background: linear-gradient(135deg, var(--accent-core), var(--accent-glow));
+      color: white;
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-featured-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-featured-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-featured-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--accent-core);
+      color: var(--accent-core);
+    }
+
+    [data-theme="light"] .featured-content {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(219, 39, 119, 0.08) 100%);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] .featured-title {
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .featured-description {
+      color: #475569;
+    }
+
+    [data-theme="light"] .btn-featured-secondary {
+      color: #0f172a;
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    [data-theme="light"] .btn-featured-secondary:hover {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: var(--accent-core);
+      color: var(--accent-core);
+    }
+
+    /* Responsive Featured Banner */
+    @media (max-width: 768px) {
+      .featured-content {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--space-6);
+      }
+
+      .featured-image img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .featured-actions {
+        justify-content: center;
+      }
+    }
+
     .hero-title {
       font-size: clamp(3rem, 6vw, 5rem);
       font-weight: var(--weight-black);
@@ -509,6 +771,17 @@
 <body>
   <!-- Main Dashboard -->
   <main class="container section">
+    <!-- Search Bar -->
+    <div class="search-bar-wrapper">
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" class="search-input" placeholder="Search projects, contributors..." />
+      </div>
+    </div>
+
     <!-- Guest Mode Banner (hidden by default, shown via JS) -->
     <div id="guestBanner" class="guest-banner" style="display: none">
       <div class="guest-banner-content">
@@ -525,6 +798,27 @@
         </button>
       </div>
     </div>
+
+    <!-- Featured Banner -->
+    <section class="featured-banner animate-enter">
+      <div class="featured-content">
+        <div class="featured-image">
+          <img src="../assets/images/logo.png" alt="Featured" />
+        </div>
+        <div class="featured-info">
+          <span class="featured-badge">Featured</span>
+          <h2 class="featured-title">100 Days of Web Development</h2>
+          <p class="featured-description">
+            Master web development with daily projects, challenges, and real-world applications.
+            Join thousands of developers on this transformative journey.
+          </p>
+          <div class="featured-actions">
+            <a href="projects.html" class="btn-featured-primary">Explore Projects</a>
+            <a href="about.html" class="btn-featured-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Zenith Hero -->
     <section class="zenith-hero animate-enter">

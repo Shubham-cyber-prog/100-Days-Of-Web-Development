@@ -193,3 +193,26 @@ async function fetchContributors() {
 }
 
 document.addEventListener('DOMContentLoaded', fetchContributors);
+
+// Search functionality for contributors
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('contributorSearch');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('#contributorsGrid .card');
+
+        cards.forEach(card => {
+            const username = card.querySelector('h4')?.textContent.toLowerCase() || '';
+            const matches = username.includes(searchTerm);
+            
+            if (matches || searchTerm === '') {
+                card.style.display = '';
+                card.classList.add('animate-enter');
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});

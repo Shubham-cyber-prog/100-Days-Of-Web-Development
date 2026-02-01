@@ -27,6 +27,30 @@
         transition: box-shadow 0.3s ease-in-out;
       }
 
+      .search-wrapper {
+        max-width: 600px;
+        margin: 0 auto 40px;
+      }
+
+      .search-input-field {
+        background: var(--bg-surface);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 100px;
+        padding: 16px 24px;
+        font-size: var(--text-base);
+        width: 100%;
+        transition: all 0.2s;
+        text-align: center;
+        color: var(--text-primary);
+      }
+
+      .search-input-field:focus {
+        outline: none;
+        border-color: var(--accent-core);
+        box-shadow: 0 0 20px -5px var(--accent-alpha);
+      }
+
       .crew-header {
         text-align: center;
         padding: 120px 0 60px;
@@ -72,6 +96,16 @@
         <p class="text-secondary">
           Engineers of the 100 Days of Web Dev Initiative.
         </p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-wrapper animate-enter delay-50">
+        <input
+          type="text"
+          id="contributorSearch"
+          class="search-input-field"
+          placeholder="Search contributors..."
+        />
       </div>
 
       <div id="contributorsGrid" class="grid grid-4 animate-enter delay-100">
