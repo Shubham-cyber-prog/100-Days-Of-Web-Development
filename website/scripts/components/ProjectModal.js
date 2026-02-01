@@ -4,6 +4,8 @@
  */
 
 import { CodeViewer } from './CodeViewer.js';
+import graderService from '../core/graderService.js';
+import graderUI from './GraderUI.js';
 
 export class ProjectModal {
     constructor() {
@@ -57,6 +59,9 @@ export class ProjectModal {
                         </a>
                         <button class="favorite-btn" id="modalFavBtn">
                             <i class="far fa-star"></i>
+                        </button>
+                        <button class="grade-action-btn" id="modalGradeBtn">
+                            <i class="fas fa-microchip"></i> Grade
                         </button>
                     </div>
                 </div>
@@ -122,6 +127,26 @@ export class ProjectModal {
 
         // Favorite
         this.overlay.querySelector('#modalFavBtn').addEventListener('click', () => this.toggleFavorite());
+
+        // Grade
+        this.overlay.querySelector('#modalGradeBtn').addEventListener('click', () => this.gradeCurrentProject());
+    }
+
+    async gradeCurrentProject() {
+        if (!this.currentProject) return;
+
+        try {
+            if (window.Notify) window.Notify.info(`Analyzing Mission ${this.currentProject.day}...`);
+            const report = await graderService.gradeProject(this.currentProject.day);
+            graderUI.showReport(report);
+
+            if (report.status === 'PASSED') {
+                if (window.Notify) window.Notify.success('Mission Analysis Passed! 🚀');
+                // You could automatically trigger completion here if progressService is available
+            }
+        } catch (error) {
+            console.error('Grading failed:', error);
+        }
     }
 
     show(project) {
