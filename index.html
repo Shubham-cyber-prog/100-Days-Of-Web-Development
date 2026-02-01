@@ -1314,12 +1314,15 @@
     <script src="website/scripts/components/cursor.js"></script>
     <script src="website/scripts/components/navigation.js"></script>
     <script>
+      // Constants
+      const LOADER_HIDE_DELAY = 500;
+
       // Page Loader
-      window.addEventListener('load', function() {
+      window.addEventListener('load', () => {
         const loader = document.getElementById('page-loader');
         setTimeout(() => {
           loader.classList.add('hidden');
-        }, 500);
+        }, LOADER_HIDE_DELAY);
       });
 
       // Sidebar functionality
@@ -1364,21 +1367,6 @@
           }
         }
       });
-
-      // Inline function for main index.html mobile menu close
-      function closeMobileMenuInline() {
-        const navLinks = document.querySelector(".nav-links");
-        if (navLinks) {
-          navLinks.classList.remove("open");
-        }
-      }
-      
-      function toggleMobileMenu() {
-        const navLinks = document.querySelector(".nav-links");
-        if (navLinks) {
-          navLinks.classList.toggle("open");
-        }
-      }
 
       function toggleTheme() {
         document.body.classList.toggle('light-theme');
