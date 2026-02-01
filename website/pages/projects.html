@@ -103,7 +103,10 @@
         /* Hard containment for effects */
         overflow: hidden;
         border: none;
-        background: transparent;
+        /* Glassmorphism background */
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         cursor: pointer;
         padding: 1rem;
         min-height: 220px;
@@ -127,7 +130,9 @@
             */
         transition:
           transform 0.05s ease-out,
-          box-shadow 0.4s ease;
+          box-shadow 0.4s ease,
+          background 0.3s ease,
+          border-color 0.3s ease;
         transform: rotateX(var(--rx)) rotateY(var(--ry))
           translate3d(var(--tx), var(--ty), 0);
 
@@ -249,11 +254,22 @@
             */
         transform: rotateX(var(--rx)) rotateY(var(--ry))
           translate3d(var(--tx), var(--ty), 0) scale(1.02);
+        /* Enhanced glassmorphism hover */
+        background: rgba(255, 255, 255, 0.08);
         box-shadow:
           0 15px 35px -5px rgba(0, 0, 0, 0.6),
-          0 0 10px rgba(255, 159, 28, 0.2);
+          0 0 20px rgba(255, 159, 28, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.15);
         /* Stronger accent glow on hover */
         z-index: 10;
+      }
+
+      body.light-mode .project-card:hover {
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 15px 35px -5px rgba(0, 0, 0, 0.15),
+          0 0 20px rgba(255, 159, 28, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5);
       }
 
       /* Layer 1: The Cosmic Source (Always Active) */
@@ -289,6 +305,7 @@
 
       /* Layer 2: The Card Body (Mask) 
            - Creates the 1px border effect by obscuring the center
+           - Enhanced glassmorphism with subtle backdrop
         */
       .project-card::after {
         content: "";
@@ -297,18 +314,28 @@
         /* Border width */
         border-radius: inherit;
         z-index: -1;
-        background: var(--bg-nebula);
+        /* Glassmorphism dark background */
+        background: rgba(20, 20, 30, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         /* Card Base Color */
-        transition: background 0.3s;
+        transition: background 0.3s, backdrop-filter 0.3s;
       }
 
       body.light-mode .project-card::after {
-        background: #e4eaf5;
+        /* Glassmorphism light background */
+        background: rgba(228, 234, 245, 0.7);
       }
 
-      /* Lighten body slightly on hover for depth */
+      /* Enhance glass effect on hover for depth */
       .project-card:hover::after {
-        background: var(--bg-surface);
+        background: rgba(30, 30, 40, 0.8);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+      }
+
+      body.light-mode .project-card:hover::after {
+        background: rgba(255, 255, 255, 0.9);
       }
 
       /* Layer 3: Ensure Content is Above */
