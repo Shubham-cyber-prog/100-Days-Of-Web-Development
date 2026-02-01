@@ -174,6 +174,25 @@ export class ProjectModal {
         // Show overlay
         this.overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
+
+        // Trigger Neural Nexus mission advice
+        this.triggerNexusMission(project);
+    }
+
+    async triggerNexusMission(project) {
+        if (!window.AI || !window.NexusHUD) return;
+
+        const advice = await window.AI.getHUDAdvice(project.day);
+        window.NexusHUD.updateAITip(advice);
+
+        // Occasionally generate a dynamic quest when starting a mission
+        if (Math.random() > 0.7 && window.Quests) {
+            const analysis = await window.AI.analyzeProgress({
+                completedDays: [project.day],
+                techDistribution: { [project.tech[0]]: 1 },
+                currentStreak: 1
+            });
+        }
     }
 
     hide() {
