@@ -102,12 +102,7 @@ function initCardHoverEffects() {
             const rotateX = ((y - centerY) / centerY) * -5;
             const rotateY = ((x - centerX) / centerX) * 5;
             
-            card.style.transform = `
-                perspective(1000px)
-                rotateX(${rotateX}deg)
-                rotateY(${rotateY}deg)
-                translateZ(10px)
-            `;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
         });
         
         card.addEventListener('mouseleave', () => {
@@ -169,16 +164,42 @@ function initStatsPulse() {
     const stats = document.querySelectorAll('.stat-value');
     
     stats.forEach((stat) => {
-        setInterval(() => {
+        const pulseAnimation = () => {
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 return;
             }
             
             stat.style.animation = 'none';
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 stat.style.animation = 'gentlePulse 1s ease-in-out';
-            }, 10);
-        }, 5000);
+            });
+        };
+        
+        // Use IntersectionObserver to only animate when visible
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    pulseAnimation();
+                    const interval = setInterval(() => {
+                        if (entries[0].isIntersecting) {
+                            pulseAnimation();
+                        }
+                    }, 5000);
+                    
+                    // Store interval for cleanup
+                    stat.dataset.pulseInterval = interval;
+                } else {
+                    // Clear interval when not visible
+                    if (stat.dataset.pulseInterval) {
+                        clearInterval(parseInt(stat.dataset.pulseInterval));
+                        delete stat.dataset.pulseInterval;
+                    }
+                }
+            },
+            { threshold: 0.1 }
+        );
+        
+        observer.observe(stat);
     });
 }
 
