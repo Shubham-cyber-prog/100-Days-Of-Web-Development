@@ -83,6 +83,11 @@ function toggleTheme() {
     localStorage.setItem('theme', newTheme);
 
     updateThemeIcon(newTheme);
+    
+    // Update sidebar theme icon if available
+    if (typeof window.updateSidebarThemeIcon === 'function') {
+        window.updateSidebarThemeIcon();
+    }
 }
 
 function updateThemeIcon(theme) {
