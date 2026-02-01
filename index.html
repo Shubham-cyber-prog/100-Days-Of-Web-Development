@@ -1,28 +1,3 @@
-            <nav class="nav-links">
-                <a href="#" class="nav-link active">Home</a>
-                <a href="website/pages/projects.html" class="nav-link">Projects</a>
-                <a href="website/pages/dashboard.html" class="nav-link dashboard-link" id="dashboardLink" style="display: none;">Dashboard</a>
-                <a href="website/pages/about.html" class="nav-link">About</a>
-                <a href="website/pages/contributors.html" class="nav-link">Contributors</a>
-                <a href="website/pages/forum.html" class="nav-link">Forum</a>
-            </nav>
-
-            <script>
-                // Show/hide dashboard link based on authentication
-                document.addEventListener('DOMContentLoaded', () => {
-                    const dashboardLink = document.getElementById('dashboardLink');
-                    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-                    const isGuest = localStorage.getItem('isGuest') === 'true';
-
-                    if (dashboardLink) {
-                        if (isLoggedIn && !isGuest) {
-                            dashboardLink.style.display = 'inline-block';
-                        } else {
-                            dashboardLink.style.display = 'none';
-                        }
-                    }
-                });
-            </script>
 <!doctype html>
 <html lang="en">
   <head>
@@ -131,96 +106,393 @@
         z-index: 1;
       }
 
-      /* Enhanced Header */
-      .site-header {
-        background: rgba(15, 15, 35, 0.95);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      /* Page Loader Styles - Enhanced Modern Design */
+      .page-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
       }
 
-      .nav-container {
+      .page-loader::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          radial-gradient(
+            circle at 20% 50%,
+            rgba(102, 126, 234, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 50%,
+            rgba(118, 75, 162, 0.15) 0%,
+            transparent 50%
+          );
+        animation: bgPulse 3s ease-in-out infinite;
+      }
+
+      @keyframes bgPulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+
+      .page-loader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader-content {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .loader-spinner {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        margin: 0 auto 30px;
+      }
+
+      .loader-spinner::before,
+      .loader-spinner::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+      }
+
+      .loader-spinner::before {
+        width: 100%;
+        height: 100%;
+        border: 4px solid transparent;
+        border-top-color: #667eea;
+        border-right-color: #667eea;
+        animation: spinOuter 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+      }
+
+      .loader-spinner::after {
+        width: 60px;
+        height: 60px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 4px solid transparent;
+        border-bottom-color: #764ba2;
+        border-left-color: #764ba2;
+        animation: spinInner 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse;
+        box-shadow: 0 0 15px rgba(118, 75, 162, 0.5);
+      }
+
+      @keyframes spinOuter {
+        0% { 
+          transform: rotate(0deg);
+        }
+        100% { 
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes spinInner {
+        0% { 
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% { 
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      .loader-text {
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% auto;
+        animation: shimmer 2s linear infinite;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      @keyframes shimmer {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100vh;
+        background: rgba(15, 15, 35, 0.98);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(102, 126, 234, 0.2);
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .sidebar-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 2rem;
-        max-width: 1400px;
-        margin: 0 auto;
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2);
       }
 
-      .nav-logo {
-        transition: transform 0.3s ease;
+      .sidebar-logo {
         display: flex;
         align-items: center;
-        justify-content: center;
-        background: none;
-        border: none;
-        padding: 0;
+        transition: transform 0.3s ease;
       }
 
-      .brand-logo-img {
+      .sidebar-logo-img {
         height: 40px;
         width: auto;
-        max-width: 180px;
+        max-width: 150px;
         object-fit: contain;
-        transition: all 0.3s ease;
-        display: block;
-        visibility: visible;
-        opacity: 1;
         filter: brightness(0) invert(1);
       }
 
-      .nav-logo:hover {
-        transform: scale(1.05) rotate(5deg);
+      .sidebar-logo:hover {
+        transform: scale(1.05);
       }
 
-      .nav-logo:hover .brand-logo-img {
-        filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 2rem;
-        align-items: center;
-      }
-
-      .nav-link {
-        position: relative;
-        transition: all 0.3s ease;
+      .sidebar-close {
+        background: none;
+        border: none;
         color: rgba(255, 255, 255, 0.8);
-        text-decoration: none !important;
-        font-weight: 500;
-        font-size: 1rem;
-        padding: 0.5rem 0;
-      }
-
-      .nav-link:hover,
-      .nav-link.active {
-        color: #fff;
-        text-decoration: none !important;
-      }
-
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        bottom: -2px;
-        left: 50%;
-        width: 0;
-        height: 0;
-        background: var(--gradient-primary);
+        cursor: pointer;
+        padding: 0.5rem;
         transition: all 0.3s ease;
-        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .nav-link:hover::after,
-      .nav-link.active::after {
-        width: 100%;
+      .sidebar-close:hover {
+        color: #fff;
+        transform: rotate(90deg);
       }
 
-      .nav-user {
+      .sidebar-nav {
+        flex: 1;
+        padding: 1rem 0;
+      }
+
+      .sidebar-link {
         display: flex;
         align-items: center;
         gap: 1rem;
+        padding: 0.875rem 1.5rem;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-link:hover {
+        background: rgba(102, 126, 234, 0.1);
+        color: #fff;
+        padding-left: 2rem;
+      }
+
+      .sidebar-link.active {
+        background: var(--gradient-primary);
+        color: #fff;
+        border-left: 4px solid #fff;
+      }
+
+      .sidebar-link .icon {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2;
+      }
+
+      .sidebar-footer {
+        padding: 1rem;
+        border-top: 1px solid rgba(102, 126, 234, 0.2);
+      }
+
+      .sidebar-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.875rem 1rem;
+        background: rgba(102, 126, 234, 0.1);
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-btn:hover {
+        background: rgba(102, 126, 234, 0.2);
+        color: #fff;
+      }
+
+      .sidebar-btn .icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Sidebar Toggle Button */
+      .sidebar-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 999;
+        background: rgba(102, 126, 234, 0.9);
+        border: none;
+        color: #fff;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        transition: all 0.3s ease;
+      }
+
+      .sidebar-toggle:hover {
+        background: rgba(102, 126, 234, 1);
+        transform: scale(1.05);
+        box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
+      }
+
+      .sidebar-toggle .icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* Sidebar Overlay */
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Mobile Bottom Navigation */
+      .mobile-bottom-nav {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(15, 15, 35, 0.98);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(102, 126, 234, 0.3);
+        box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+      }
+
+      .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        padding: 8px 4px;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .mobile-nav-item:active {
+        transform: scale(0.95);
+      }
+
+      .mobile-nav-item.active {
+        color: #667eea;
+      }
+
+      .mobile-nav-item.active::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 0 0 3px 3px;
+      }
+
+      .mobile-nav-icon {
+        width: 24px;
+        height: 24px;
+        stroke-width: 2;
+        margin-bottom: 4px;
+      }
+
+      .mobile-nav-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+      }
+
+      /* Mobile styles */
+      @media (max-width: 768px) {
+        .mobile-bottom-nav {
+          display: flex;
+          justify-content: space-around;
+        }
+
+        .sidebar-toggle {
+          display: none;
+        }
+
+        /* Add padding to body for bottom nav */
+        body {
+          padding-bottom: 70px;
+        }
+
+        main {
+          padding-bottom: 20px;
+        }
       }
 
       /* Hero Section Enhancement */
@@ -451,6 +723,216 @@
         margin: 0;
       }
 
+      /* Carousel Styles */
+      .carousel-section {
+        padding: 80px 20px;
+        overflow: hidden;
+      }
+
+      .carousel-container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .carousel-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 3rem;
+        background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .carousel {
+        position: relative;
+        width: 100%;
+        height: 350px;
+      }
+
+      .carousel-track-container {
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+        border-radius: 20px;
+      }
+
+      .carousel-track {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        position: relative;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .carousel-slide {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+      }
+
+      .carousel-slide.current-slide {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .carousel-content {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        border-radius: 20px;
+        padding: 3rem 2.5rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .carousel-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-primary);
+        opacity: 0.05;
+        z-index: 0;
+      }
+
+      .carousel-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+        position: relative;
+        z-index: 1;
+      }
+
+      .carousel-content h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .carousel-content p {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.8;
+        max-width: 600px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(102, 126, 234, 0.2);
+        border: 1px solid rgba(102, 126, 234, 0.4);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+      }
+
+      .carousel-button:hover {
+        background: rgba(102, 126, 234, 0.4);
+        border-color: rgba(102, 126, 234, 0.8);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .carousel-button--left {
+        left: -25px;
+      }
+
+      .carousel-button--right {
+        right: -25px;
+      }
+
+      .carousel-nav {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 2rem;
+      }
+
+      .carousel-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(102, 126, 234, 0.3);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+      }
+
+      .carousel-indicator:hover {
+        background: rgba(102, 126, 234, 0.5);
+        transform: scale(1.2);
+      }
+
+      .carousel-indicator.current-slide {
+        background: var(--gradient-primary);
+        width: 30px;
+        border-radius: 6px;
+      }
+
+      @media (max-width: 768px) {
+        .carousel {
+          height: 400px;
+        }
+
+        .carousel-button {
+          width: 40px;
+          height: 40px;
+        }
+
+        .carousel-button--left {
+          left: 10px;
+        }
+
+        .carousel-button--right {
+          right: 10px;
+        }
+
+        .carousel-content {
+          padding: 2rem 1.5rem;
+        }
+
+        .carousel-content h3 {
+          font-size: 1.5rem;
+        }
+
+        .carousel-content p {
+          font-size: 1rem;
+        }
+
+        .carousel-icon {
+          font-size: 3rem;
+        }
+      }
+
       /* Enhanced Footer */
       .site-footer {
         background: rgba(15, 15, 35, 0.95);
@@ -618,23 +1100,6 @@
 
       /* Responsive Design */
       @media (max-width: 768px) {
-        .nav-container {
-          padding: 1rem;
-          flex-wrap: wrap;
-        }
-        
-        .nav-links {
-          order: 3;
-          width: 100%;
-          justify-content: center;
-          margin-top: 1rem;
-          gap: 1rem;
-        }
-        
-        .nav-user {
-          margin-left: auto;
-        }
-
         .hero-title {
           font-size: 2.5rem;
         }
@@ -656,39 +1121,6 @@
         }
       }
 
-      /* Mobile Menu Toggle */
-      .mobile-toggle {
-        display: none;
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-        padding: 0.5rem;
-      }
-
-      @media (max-width: 768px) {
-        .mobile-toggle {
-          display: block;
-        }
-        
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          width: 100%;
-          background: rgba(15, 15, 35, 0.95);
-          backdrop-filter: blur(20px);
-          padding: 1rem;
-          z-index: 1000;
-        }
-        
-        .nav-links.open {
-          display: flex;
-        }
-      }
-
       /* Light theme text visibility fix */
       @media (prefers-color-scheme: light) {
           body {
@@ -698,15 +1130,6 @@
           .site-header {
               background: rgba(255, 255, 255, 0.95) !important;
               border-bottom: 1px solid rgba(102, 126, 234, 0.1) !important;
-          }
-          
-          .nav-link {
-              color: rgba(0, 0, 0, 0.8) !important;
-          }
-          
-          .nav-link:hover,
-          .nav-link.active {
-              color: #667eea !important;
           }
           
           .brand-logo-img {
@@ -917,80 +1340,140 @@
   </head>
 
   <body>
-    <!-- Navbar -->
-    <header class="site-header">
-      <div class="nav-container">
-        <a href="#" class="nav-logo">
+    <!-- Loader -->
+    <div id="page-loader" class="page-loader">
+      <div class="loader-content">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Sidebar Toggle Button -->
+    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle Sidebar">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
           <img
             src="website/assets/images/logo.png"
             alt="100 Days of Web Dev"
-            class="brand-logo-img"
+            class="sidebar-logo-img"
           />
         </a>
-
-        <nav class="nav-links">
-          <a href="#" class="nav-link active" onclick="closeMobileMenuInline()"
-            >Home</a
-          >
-          <a
-            href="website/pages/projects.html"
-            class="nav-link"
-            onclick="closeMobileMenuInline()"
-            >Projects</a
-          >
-          <a
-            href="website/pages/about.html"
-            class="nav-link"
-            onclick="closeMobileMenuInline()"
-            >About</a
-          >
-          <a
-            href="website/pages/contributors.html"
-            class="nav-link"
-            onclick="closeMobileMenuInline()"
-            >Contributors</a
-          >
-        </nav>
-
-        <div class="nav-user">
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            aria-label="Toggle Theme"
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
-
-          <a href="website/pages/dashboard.html" class="btn btn-primary text-sm"
-            >Dashboard</a
-          >
-
-          <button
-            class="mobile-toggle"
-            onclick="toggleMobileMenu()"
-            aria-label="Menu"
-          >
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-        </div>
+        <button id="sidebar-close" class="sidebar-close" aria-label="Close Sidebar">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       </div>
-    </header>
+
+      <nav class="sidebar-nav">
+        <a href="index.html" class="sidebar-link active">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Home</span>
+        </a>
+        <a href="website/pages/projects.html" class="sidebar-link">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Projects</span>
+        </a>
+        <a href="website/pages/dashboard.html" class="sidebar-link dashboard-link" id="sidebarDashboardLink" style="display: none;">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="website/pages/about.html" class="sidebar-link">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>About</span>
+        </a>
+        <a href="website/pages/contributors.html" class="sidebar-link">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Contributors</span>
+        </a>
+        <a href="website/pages/forum.html" class="sidebar-link">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Forum</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="theme-toggle-btn" class="sidebar-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <span>Toggle Theme</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
+      <a href="index.html" class="mobile-nav-item active" data-page="home">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span class="mobile-nav-label">Home</span>
+      </a>
+      <a href="website/pages/projects.html" class="mobile-nav-item" data-page="projects">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span class="mobile-nav-label">Projects</span>
+      </a>
+      <a href="website/pages/dashboard.html" class="mobile-nav-item mobile-dashboard-link" id="mobileDashboardLink" style="display: none;" data-page="dashboard">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="9" y1="3" x2="9" y2="21"></line>
+        </svg>
+        <span class="mobile-nav-label">Dashboard</span>
+      </a>
+      <a href="website/pages/about.html" class="mobile-nav-item" data-page="about">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span class="mobile-nav-label">About</span>
+      </a>
+      <a href="website/pages/contributors.html" class="mobile-nav-item" data-page="contributors">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span class="mobile-nav-label">Team</span>
+      </a>
+    </nav>
 
     <main class="container section">
       <!-- Hero Section -->
@@ -1007,6 +1490,65 @@
           <a href="website/pages/projects.html" class="btn-zenith-secondary"
             >View Archive</a
           >
+        </div>
+      </section>
+
+      <!-- Carousel Section -->
+      <section class="carousel-section animate-enter delay-50">
+        <div class="carousel-container">
+          <h2 class="carousel-title">Journey Highlights</h2>
+          <div class="carousel">
+            <div class="carousel-track-container">
+              <ul class="carousel-track">
+                <li class="carousel-slide current-slide">
+                  <div class="carousel-content">
+                    <div class="carousel-icon">🎯</div>
+                    <h3>Day 1-30: Foundation</h3>
+                    <p>Master HTML, CSS, and JavaScript fundamentals. Build your first 30 projects and establish a solid coding routine.</p>
+                  </div>
+                </li>
+                <li class="carousel-slide">
+                  <div class="carousel-content">
+                    <div class="carousel-icon">⚡</div>
+                    <h3>Day 31-60: Advanced Concepts</h3>
+                    <p>Dive into React, APIs, and modern frameworks. Create interactive web applications with real-world features.</p>
+                  </div>
+                </li>
+                <li class="carousel-slide">
+                  <div class="carousel-content">
+                    <div class="carousel-icon">🚀</div>
+                    <h3>Day 61-100: Full-Stack Projects</h3>
+                    <p>Build complete full-stack applications. Deploy to production and showcase your portfolio-worthy projects.</p>
+                  </div>
+                </li>
+                <li class="carousel-slide">
+                  <div class="carousel-content">
+                    <div class="carousel-icon">🏆</div>
+                    <h3>Success Stories</h3>
+                    <p>Join hundreds of developers who transformed their careers through consistent daily practice and dedication.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <button class="carousel-button carousel-button--left" aria-label="Previous slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="carousel-button carousel-button--right" aria-label="Next slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div class="carousel-nav">
+              <button class="carousel-indicator current-slide" aria-label="Go to slide 1"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 2"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 3"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 4"></button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1046,7 +1588,7 @@
       <div class="container footer-content">
         <!-- Brand -->
         <div class="footer-brand">
-          <a href="#" class="footer-logo">
+          <a href="index.html" class="footer-logo">
             <img src="website/assets/images/logo.png" alt="Logo" />
             <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
           </a>
@@ -1060,7 +1602,7 @@
         <div class="footer-col">
           <h3>Quick Links</h3>
           <nav class="footer-links">
-            <a href="#" class="footer-link">Home</a>
+            <a href="index.html" class="footer-link">Home</a>
             <a href="website/pages/projects.html" class="footer-link">Projects</a>
             <a href="website/pages/contributors.html" class="footer-link">Contributors</a>
             <a href="website/pages/about.html" class="footer-link">About</a>
@@ -1151,20 +1693,84 @@
     <script src="website/scripts/components/cursor.js"></script>
     <script src="website/scripts/components/navigation.js"></script>
     <script>
-      // Inline function for main index.html mobile menu close
-      function closeMobileMenuInline() {
-        const navLinks = document.querySelector(".nav-links");
-        if (navLinks) {
-          navLinks.classList.remove("open");
-        }
+      // Constants
+      const LOADER_HIDE_DELAY = 500;
+
+      // Page Loader
+      window.addEventListener('load', () => {
+        const loader = document.getElementById('page-loader');
+        setTimeout(() => {
+          loader.classList.add('hidden');
+        }, LOADER_HIDE_DELAY);
+      });
+
+      // Sidebar functionality
+      const sidebar = document.getElementById('sidebar');
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const sidebarClose = document.getElementById('sidebar-close');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+      function openSidebar() {
+        sidebar.classList.add('active');
+        sidebarOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
       }
+
+      function closeSidebar() {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      sidebarToggle.addEventListener('click', openSidebar);
+      sidebarClose.addEventListener('click', closeSidebar);
+      sidebarOverlay.addEventListener('click', closeSidebar);
+
+      // Close sidebar when clicking on a link
+      const sidebarLinks = document.querySelectorAll('.sidebar-link');
+      sidebarLinks.forEach(link => {
+        link.addEventListener('click', closeSidebar);
+      });
+
+      // Show/hide dashboard link based on authentication
+      document.addEventListener('DOMContentLoaded', () => {
+        const dashboardLink = document.getElementById('sidebarDashboardLink');
+        const mobileDashboardLink = document.getElementById('mobileDashboardLink');
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const isGuest = localStorage.getItem('isGuest') === 'true';
+
+        if (dashboardLink) {
+          if (isLoggedIn && !isGuest) {
+            dashboardLink.style.display = 'flex';
+          } else {
+            dashboardLink.style.display = 'none';
+          }
+        }
+
+        if (mobileDashboardLink) {
+          if (isLoggedIn && !isGuest) {
+            mobileDashboardLink.style.display = 'flex';
+          } else {
+            mobileDashboardLink.style.display = 'none';
+          }
+        }
+      });
+
+      // Mobile bottom navigation active state
+      const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+      const currentPath = window.location.pathname;
       
-      function toggleMobileMenu() {
-        const navLinks = document.querySelector(".nav-links");
-        if (navLinks) {
-          navLinks.classList.toggle("open");
+      mobileNavItems.forEach(item => {
+        const href = item.getAttribute('href');
+        // Check if current page matches the nav item
+        if (currentPath === '/' || currentPath.includes('index.html')) {
+          if (href === '#' || href === '/') {
+            item.classList.add('active');
+          }
+        } else if (href && currentPath.includes(href)) {
+          item.classList.add('active');
         }
-      }
+      });
 
       function toggleTheme() {
         document.body.classList.toggle('light-theme');
@@ -1198,6 +1804,104 @@
             behavior: "smooth",
           });
         });
+      }
+
+      // Carousel Functionality
+      const track = document.querySelector('.carousel-track');
+      const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+      const nextButton = document.querySelector('.carousel-button--right');
+      const prevButton = document.querySelector('.carousel-button--left');
+      const dotsNav = document.querySelector('.carousel-nav');
+      const dots = Array.from(document.querySelectorAll('.carousel-indicator'));
+      
+      if (track && slides.length > 0 && nextButton && prevButton && dotsNav && dots.length > 0) {
+        let currentSlide = 0;
+        const slideCount = slides.length;
+        let autoplayInterval;
+
+        const updateSlides = () => {
+          slides.forEach((slide, index) => {
+            slide.classList.toggle('current-slide', index === currentSlide);
+          });
+          dots.forEach((dot, index) => {
+            dot.classList.toggle('current-slide', index === currentSlide);
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}${index === currentSlide ? ' (current)' : ''}`);
+          });
+        };
+
+        const moveToSlide = (slideIndex) => {
+          currentSlide = slideIndex;
+          updateSlides();
+          resetAutoplay();
+        };
+
+        const nextSlide = () => {
+          currentSlide = (currentSlide + 1) % slideCount;
+          updateSlides();
+          resetAutoplay();
+        };
+
+        const prevSlide = () => {
+          currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+          updateSlides();
+          resetAutoplay();
+        };
+
+        const startAutoplay = () => {
+          autoplayInterval = setInterval(nextSlide, 5000);
+        };
+
+        const stopAutoplay = () => {
+          if (autoplayInterval) {
+            clearInterval(autoplayInterval);
+          }
+        };
+
+        const resetAutoplay = () => {
+          stopAutoplay();
+          startAutoplay();
+        };
+
+        // Event listeners
+        nextButton.addEventListener('click', nextSlide);
+        prevButton.addEventListener('click', prevSlide);
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => moveToSlide(index));
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+
+        track.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+        });
+
+        const handleSwipe = () => {
+          if (touchEndX < touchStartX - 50) {
+            nextSlide();
+          }
+          if (touchEndX > touchStartX + 50) {
+            prevSlide();
+          }
+        };
+
+        // Pause autoplay on hover
+        const carousel = document.querySelector('.carousel');
+        if (carousel) {
+          carousel.addEventListener('mouseenter', stopAutoplay);
+          carousel.addEventListener('mouseleave', startAutoplay);
+        }
+
+        // Initialize - set initial state first, then start autoplay
+        updateSlides();
+        startAutoplay();
       }
     </script>
   </body>
