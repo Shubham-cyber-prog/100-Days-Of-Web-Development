@@ -162,7 +162,8 @@
     transition: all 0.2s;
 }
 
-.viewport-btn:hover, .viewport-btn.active {
+.viewport-btn:hover,
+.viewport-btn.active {
     background: rgba(255, 255, 255, 0.1);
     color: var(--modal-accent);
     border-color: var(--modal-accent);
@@ -197,6 +198,32 @@
     color: #f59e0b;
 }
 
+.grade-action-btn {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border: none;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.grade-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    filter: brightness(1.1);
+}
+
+.grade-action-btn i {
+    font-size: 0.9rem;
+}
+
 /* Content Area */
 .modal-content {
     flex: 1;
@@ -223,7 +250,7 @@
     height: 100%;
     border: none;
     background: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -260,7 +287,7 @@
 .code-header {
     display: flex;
     padding: 8px 16px;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255, 255, 255, 0.03);
     border-bottom: 1px solid var(--modal-border);
     gap: 8px;
 }
@@ -275,7 +302,7 @@
 }
 
 .code-file-tab.active {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     color: white;
 }
 
@@ -296,10 +323,10 @@
     right: 20px;
     padding: 8px 16px;
     border-radius: 6px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     color: white;
     font-size: 0.75rem;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -316,7 +343,7 @@
     justify-content: space-between;
     font-size: 0.75rem;
     color: var(--modal-text-muted);
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .meta-item {
@@ -331,7 +358,7 @@
         border-radius: 0;
         border: none;
     }
-    
+
     .viewport-toggles {
         display: none;
     }
@@ -340,10 +367,10 @@
 body.light-mode .heading,
 body.light-mode .tab-btn,
 body.light-mode .project-title,
-body.light-mode .tech-tag{
-    color:#050505;
+body.light-mode .tech-tag {
+    color: #050505;
 }
 
-body.light-mode #projectSearch{
+body.light-mode #projectSearch {
     background: #e4eaf5;
 }

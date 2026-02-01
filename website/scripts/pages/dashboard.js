@@ -8,24 +8,31 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(waitForAuthService, 100);
         }
     }
-    
+
     waitForAuthService();
 
-    function initializeDashboard() {
+    async function initializeDashboard() {
         const auth = window.AuthService;
-        
+
         // Check authentication using AuthService
         if (!auth.isAuthenticated()) {
             console.log('❌ Not authenticated, redirecting to login');
             window.location.href = 'login.html';
             return;
         }
-        
+
+        // Dynamically import services since this script is loaded via <script> tag
+        const { progressService } = await import('../core/progressService.js');
+        const { achievementService } = await import('../core/achievementService.js');
+        const { default: graderService } = await import('../core/graderService.js');
+        const { default: graderUI } = await import('../components/GraderUI.js');
+        const { Notify } = await import('../core/Notify.js');
+
         const user = auth.getCurrentUser();
         const isGuest = auth.isGuest();
-        
+
         console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
-        
+
         // Show guest banner if guest user
         if (isGuest) {
             const guestBanner = document.getElementById('guestBanner');
@@ -208,14 +215,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render progress grid
         if (document.getElementById('progressGrid')) renderProgressGrid();
 
-            // Render UI after loading data
-            if (document.getElementById('progressGrid')) renderProgressGrid();
-            if (document.getElementById('completedDays')) updateStats();
-            if (document.getElementById('recommendationsGrid')) renderRecommendations();
-        }
-
-        // Load user progress
-        loadUserProgress();
+        // Render UI after loading data
+        if (document.getElementById('progressGrid')) renderProgressGrid();
+        if (document.getElementById('completedDays')) updateStats();
+        if (document.getElementById('recommendationsGrid')) renderRecommendations();
 
         function renderProgressGrid() {
             const progressGrid = document.getElementById('progressGrid');
@@ -250,6 +253,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         async function toggleDay(day) {
+            const isMarkingComplete = !completedDays.includes(day);
+
+            if (isMarkingComplete) {
+                try {
+                    // Trigger automated grading
+                    Notify.info(`Analyzing Mission ${day} Project...`);
+                    const report = await graderService.gradeProject(day);
+
+                    // Show report UI
+                    graderUI.showReport(report);
+
+                    if (report.status !== 'PASSED') {
+                        Notify.warning('Mission requirements not met. Check report for details.');
+                        return; // Prevent completion if failed
+                    }
+
+                    Notify.success('Mission Analysis Passed! 🚀');
+                } catch (error) {
+                    console.error('Grader failed, allowing manual completion fallback:', error);
+                }
+            }
+
             if (progressService) {
                 await progressService.toggleDay(day);
                 completedDays = progressService.getCompletedDays();
