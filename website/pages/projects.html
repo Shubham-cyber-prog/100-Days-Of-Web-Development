@@ -22,6 +22,16 @@
       /* Space for floating header */
     }
 
+    @media (max-width: 640px) {
+      .page-header {
+        padding: 100px 1rem 40px;
+      }
+
+      .page-header h1 {
+        font-size: 2rem !important;
+      }
+    }
+
     .search-wrapper {
       max-width: 600px;
       margin: 0 auto 40px;
@@ -69,6 +79,13 @@
       color: var(--text-primary);
     }
 
+    @media (max-width: 640px) {
+      #projectSearch {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
     #projectSearch:focus {
       outline: none;
       border-color: var(--accent-core);
@@ -81,6 +98,19 @@
       gap: 12px;
       margin-bottom: 60px;
       flex-wrap: wrap;
+      padding: 0 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .filter-tabs {
+        gap: 8px;
+        margin-bottom: 40px;
+      }
+
+      .tab-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
     }
 
     .tab-btn {
@@ -204,17 +234,11 @@
     }
 
     .code-chip:hover {
-      background: var(--accent-glow);
-      color: var(--accent-core);
-      border-color: var(--accent-glow);
-      box-shadow: 0 6px 18px -6px var(--accent-glow);
-    }
-
-    .code-chip:hover {
       background: var(--accent-core);
       color: #000;
       border-color: var(--accent-core);
       transform: translateY(-2px);
+      box-shadow: 0 6px 18px -6px var(--accent-glow);
     }
 
     .card-hint {
@@ -337,6 +361,31 @@
     .project-card>* {
       position: relative;
       z-index: 2;
+    }
+
+    /* Disable heavy animations on mobile for better performance */
+    @media (max-width: 640px) {
+      .project-card::before {
+        animation: rotateCosmos 12s linear infinite;
+        /* Slower rotation on mobile */
+        filter: blur(2px);
+        /* Slightly more blur to reduce processing */
+      }
+
+      .project-card {
+        perspective: none;
+        /* Disable 3D perspective on mobile */
+      }
+
+      .project-card:hover {
+        transform: scale(1.01);
+        /* Simpler scale only, no 3D rotation */
+      }
+
+      .tech-tag {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.6rem;
+      }
     }
 
     @keyframes rotateCosmos {
