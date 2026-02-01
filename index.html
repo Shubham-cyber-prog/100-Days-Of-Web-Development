@@ -1498,22 +1498,27 @@
             mobileDashboardLink.style.display = 'none';
           }
         }
-      });
 
-      // Mobile bottom navigation active state
-      const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
-      const currentPath = window.location.pathname;
-      
-      mobileNavItems.forEach(item => {
-        const href = item.getAttribute('href');
-        // Check if current page matches the nav item
-        if (currentPath === '/' || currentPath.includes('index.html')) {
-          if (href === '#' || href === '/') {
+        // Mobile bottom navigation active state
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        const currentPath = window.location.pathname;
+        
+        // Remove active class from all items first
+        mobileNavItems.forEach(item => item.classList.remove('active'));
+        
+        // Add active class to matching item
+        mobileNavItems.forEach(item => {
+          const href = item.getAttribute('href');
+          
+          // Check if current page matches the nav item
+          if (currentPath === '/' || currentPath.endsWith('index.html')) {
+            if (href === '#' || href === '/') {
+              item.classList.add('active');
+            }
+          } else if (href && href !== '#' && currentPath.endsWith(href)) {
             item.classList.add('active');
           }
-        } else if (href && currentPath.includes(href)) {
-          item.classList.add('active');
-        }
+        });
       });
 
       function toggleTheme() {
