@@ -12,307 +12,227 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <style>
-  /* Fix navbar text visibility in light theme */
-  [data-theme="light"] .nav-links .nav-link {
-    color: #1a1a2e !important;
-  }
+      /* Fix navbar text visibility in light theme */
+      [data-theme="light"] .nav-links .nav-link {
+        color: #1a1a2e !important;
+      }
 
-  [data-theme="light"] .nav-links .nav-link:hover,
-  [data-theme="light"] .nav-links .nav-link.active {
-    color: #667eea !important;
-  }
+      [data-theme="light"] .nav-links .nav-link:hover,
+      [data-theme="light"] .nav-links .nav-link.active {
+        color: #667eea !important;
+      }
 
-  [data-theme="light"] .site-header {
-    background: rgba(255, 255, 255, 0.95) !important;
-    border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
-  }
+      [data-theme="light"] .site-header {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
 
-  [data-theme="light"] .nav-container {
-    background: transparent !important;
-  }
+      [data-theme="light"] .nav-container {
+        background: transparent !important;
+      }
 
-  [data-theme="light"] .nav-user .icon-btn svg {
-    color: #4a5568 !important;
-  }
+      [data-theme="light"] .nav-user .icon-btn svg {
+        color: #4a5568 !important;
+      }
 
-  [data-theme="light"] .user-avatar {
-    border: 2px solid rgba(102, 126, 234, 0.3) !important;
-  }
+      [data-theme="light"] .user-avatar {
+        border: 2px solid rgba(102, 126, 234, 0.3) !important;
+      }
 
-  /* Fix dropdown menu in light theme */
-  [data-theme="light"] .user-dropdown {
-    background: rgba(255, 255, 255, 0.98) !important;
-    border: 1px solid rgba(102, 126, 234, 0.2) !important;
-    backdrop-filter: blur(10px) !important;
-  }
+      /* Fix dropdown menu in light theme */
+      [data-theme="light"] .user-dropdown {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-item {
-    color: #1a1a2e !important;
-  }
+      [data-theme="light"] .user-dropdown .dropdown-item {
+        color: #1a1a2e !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-item:hover {
-    background: rgba(102, 126, 234, 0.1) !important;
-  }
+      [data-theme="light"] .user-dropdown .dropdown-item:hover {
+        background: rgba(102, 126, 234, 0.1) !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-divider {
-    border-color: rgba(102, 126, 234, 0.1) !important;
-  }
+      [data-theme="light"] .user-dropdown .dropdown-divider {
+        border-color: rgba(102, 126, 234, 0.1) !important;
+      }
 
-  [data-theme="light"] .text-danger {
-    color: #e53e3e !important;
-  }
+      [data-theme="light"] .text-danger {
+        color: #e53e3e !important;
+      }
 
-  /* Mobile menu fix for light theme */
-  [data-theme="light"] .nav-links.open {
-    background: rgba(255, 255, 255, 0.98) !important;
-    backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(102, 126, 234, 0.2) !important;
-  }
-</style>
+      /* Mobile menu fix for light theme */
+      [data-theme="light"] .nav-links.open {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+    </style>
 
-<style>
-  /* Navbar styling from first file */
-  header nav img {
-    width: 100px;
-    height: 70px;
-    border: 2px groove #cc2a01;
-    border-radius: 25%;
-  }
-  
-  header nav img:hover {
-    box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
-    transition: box-shadow 0.3s ease-in-out;
-  }
-  
-  .nav-container {
-    height: 120px;
-    margin-top: 25px;
-  }
+    <style>
+      /* Navbar styling from first file */
+      header nav img {
+        width: 100px;
+        height: 70px;
+        border: 2px groove #cc2a01;
+        border-radius: 25%;
+      }
 
-  /* Fix navbar text visibility in light theme */
-  [data-theme="light"] .nav-links .nav-link {
-    color: #1a1a2e !important;
-  }
+      header nav img:hover {
+        box-shadow:
+          0 0 15px #ff5733,
+          0 0 30px #ff5733,
+          0 0 45px #ff5733;
+        transition: box-shadow 0.3s ease-in-out;
+      }
 
-  [data-theme="light"] .nav-links .nav-link:hover,
-  [data-theme="light"] .nav-links .nav-link.active {
-    color: #667eea !important;
-  }
+      .nav-container {
+        height: 120px;
+        margin-top: 25px;
+      }
 
-  [data-theme="light"] .site-header {
-    background: rgba(255, 255, 255, 0.95) !important;
-    border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
-  }
+      /* Fix navbar text visibility in light theme */
+      [data-theme="light"] .nav-links .nav-link {
+        color: #1a1a2e !important;
+      }
 
-  [data-theme="light"] .nav-container {
-    background: transparent !important;
-  }
+      [data-theme="light"] .nav-links .nav-link:hover,
+      [data-theme="light"] .nav-links .nav-link.active {
+        color: #667eea !important;
+      }
 
-  [data-theme="light"] .nav-user .icon-btn svg {
-    color: #4a5568 !important;
-  }
+      [data-theme="light"] .site-header {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
 
-  [data-theme="light"] .user-avatar {
-    border: 2px solid rgba(102, 126, 234, 0.3) !important;
-  }
+      [data-theme="light"] .nav-container {
+        background: transparent !important;
+      }
 
-  /* Fix dropdown menu in light theme */
-  [data-theme="light"] .user-dropdown {
-    background: rgba(255, 255, 255, 0.98) !important;
-    border: 1px solid rgba(102, 126, 234, 0.2) !important;
-    backdrop-filter: blur(10px) !important;
-  }
+      [data-theme="light"] .nav-user .icon-btn svg {
+        color: #4a5568 !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-item {
-    color: #1a1a2e !important;
-  }
+      [data-theme="light"] .user-avatar {
+        border: 2px solid rgba(102, 126, 234, 0.3) !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-item:hover {
-    background: rgba(102, 126, 234, 0.1) !important;
-  }
+      /* Fix dropdown menu in light theme */
+      [data-theme="light"] .user-dropdown {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-divider {
-    border-color: rgba(102, 126, 234, 0.1) !important;
-  }
+      [data-theme="light"] .user-dropdown .dropdown-item {
+        color: #1a1a2e !important;
+      }
 
-  [data-theme="light"] .text-danger {
-    color: #e53e3e !important;
-  }
+      [data-theme="light"] .user-dropdown .dropdown-item:hover {
+        background: rgba(102, 126, 234, 0.1) !important;
+      }
 
-  /* Mobile menu fix for light theme */
-  [data-theme="light"] .nav-links.open {
-    background: rgba(255, 255, 255, 0.98) !important;
-    backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(102, 126, 234, 0.2) !important;
-  }
-</style>
+      [data-theme="light"] .user-dropdown .dropdown-divider {
+        border-color: rgba(102, 126, 234, 0.1) !important;
+      }
 
-<style>
-  /* Navbar styling from first file */
-  header nav img {
-    width: 100px;
-    height: 70px;
-    border: 2px groove #cc2a01;
-    border-radius: 25%;
-  }
-  
-  header nav img:hover {
-    box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
-    transition: box-shadow 0.3s ease-in-out;
-  }
-  
-  .nav-container {
-    height: 120px;
-    margin-top: 25px;
-  }
+      [data-theme="light"] .text-danger {
+        color: #e53e3e !important;
+      }
 
-  /* Fix navbar text visibility in light theme */
-  [data-theme="light"] .nav-links .nav-link {
-    color: #1a1a2e !important;
-  }
+      /* Mobile menu fix for light theme */
+      [data-theme="light"] .nav-links.open {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+    </style>
 
-  [data-theme="light"] .nav-links .nav-link:hover,
-  [data-theme="light"] .nav-links .nav-link.active {
-    color: #667eea !important;
-  }
+    <style>
+      /* Navbar styling from first file */
+      header nav img {
+        width: 100px;
+        height: 70px;
+        border: 2px groove #cc2a01;
+        border-radius: 25%;
+      }
 
-  [data-theme="light"] .site-header {
-    background: rgba(255, 255, 255, 0.95) !important;
-    border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
-  }
+      header nav img:hover {
+        box-shadow:
+          0 0 15px #ff5733,
+          0 0 30px #ff5733,
+          0 0 45px #ff5733;
+        transition: box-shadow 0.3s ease-in-out;
+      }
 
-  [data-theme="light"] .nav-container {
-    background: transparent !important;
-  }
+      .nav-container {
+        height: 120px;
+        margin-top: 25px;
+      }
 
-  [data-theme="light"] .nav-user .icon-btn svg {
-    color: #4a5568 !important;
-  }
+      /* Fix navbar text visibility in light theme */
+      [data-theme="light"] .nav-links .nav-link {
+        color: #1a1a2e !important;
+      }
 
-  [data-theme="light"] .user-avatar {
-    border: 2px solid rgba(102, 126, 234, 0.3) !important;
-  }
+      [data-theme="light"] .nav-links .nav-link:hover,
+      [data-theme="light"] .nav-links .nav-link.active {
+        color: #667eea !important;
+      }
 
-  /* Fix dropdown menu in light theme */
-  [data-theme="light"] .user-dropdown {
-    background: rgba(255, 255, 255, 0.98) !important;
-    border: 1px solid rgba(102, 126, 234, 0.2) !important;
-    backdrop-filter: blur(10px) !important;
-  }
+      [data-theme="light"] .site-header {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-item {
-    color: #1a1a2e !important;
-  }
+      [data-theme="light"] .nav-container {
+        background: transparent !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-item:hover {
-    background: rgba(102, 126, 234, 0.1) !important;
-  }
+      [data-theme="light"] .nav-user .icon-btn svg {
+        color: #4a5568 !important;
+      }
 
-  [data-theme="light"] .user-dropdown .dropdown-divider {
-    border-color: rgba(102, 126, 234, 0.1) !important;
-  }
+      [data-theme="light"] .user-avatar {
+        border: 2px solid rgba(102, 126, 234, 0.3) !important;
+      }
 
-  [data-theme="light"] .text-danger {
-    color: #e53e3e !important;
-  }
+      /* Fix dropdown menu in light theme */
+      [data-theme="light"] .user-dropdown {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+      }
 
-  /* Mobile menu fix for light theme */
-  [data-theme="light"] .nav-links.open {
-    background: rgba(255, 255, 255, 0.98) !important;
-    backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(102, 126, 234, 0.2) !important;
-  }
-</style>
+      [data-theme="light"] .user-dropdown .dropdown-item {
+        color: #1a1a2e !important;
+      }
 
+      [data-theme="light"] .user-dropdown .dropdown-item:hover {
+        background: rgba(102, 126, 234, 0.1) !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-divider {
+        border-color: rgba(102, 126, 234, 0.1) !important;
+      }
+
+      [data-theme="light"] .text-danger {
+        color: #e53e3e !important;
+      }
+
+      /* Mobile menu fix for light theme */
+      [data-theme="light"] .nav-links.open {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+    </style>
   </head>
   <body>
-    <header class="site-header">
-      <div
-        class="nav-container"
-        style="
-          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
-            drop-shadow(
-              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
-            )
-            drop-shadow(
-              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
-            );
-        "
-      >
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="contributors.html" class="nav-link">Contributors</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
-              margin-right: 15px;
-              background: none;
-              border: none;
-              cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
-
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%"
-              />
-            </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <div id="header-placeholder"></div>
+    <!-- Dynamic header will be loaded here -->
 
     <main class="tutorials-main">
       <div class="container">
@@ -430,50 +350,56 @@
     <script src="../scripts/pages/tutorials.js"></script>
 
     <script>
-  // Function to fix navbar colors based on theme
-  function fixNavbarTheme() {
-    const isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
-    
-    if (isLightTheme) {
-      // Add light theme class to header
-      document.querySelector('.site-header').classList.add('light-theme');
-      
-      // Update all nav links
-      const navLinks = document.querySelectorAll('.nav-link');
-      navLinks.forEach(link => {
-        link.style.color = '#1a1a2e';
+      // Function to fix navbar colors based on theme
+      function fixNavbarTheme() {
+        const isLightTheme =
+          document.documentElement.getAttribute("data-theme") === "light";
+
+        if (isLightTheme) {
+          // Add light theme class to header
+          document.querySelector(".site-header").classList.add("light-theme");
+
+          // Update all nav links
+          const navLinks = document.querySelectorAll(".nav-link");
+          navLinks.forEach((link) => {
+            link.style.color = "#1a1a2e";
+          });
+        } else {
+          // Remove light theme class
+          document
+            .querySelector(".site-header")
+            .classList.remove("light-theme");
+
+          // Reset nav links (they'll use CSS variables)
+          const navLinks = document.querySelectorAll(".nav-link");
+          navLinks.forEach((link) => {
+            link.style.color = "";
+          });
+        }
+      }
+
+      // Run on page load
+      document.addEventListener("DOMContentLoaded", fixNavbarTheme);
+
+      // Override theme toggle to update navbar
+      const originalToggleTheme = window.toggleTheme;
+      if (originalToggleTheme) {
+        window.toggleTheme = function () {
+          originalToggleTheme();
+          setTimeout(fixNavbarTheme, 100);
+        };
+      }
+
+      // Also listen for theme attribute changes
+      const observer = new MutationObserver(fixNavbarTheme);
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
       });
-    } else {
-      // Remove light theme class
-      document.querySelector('.site-header').classList.remove('light-theme');
-      
-      // Reset nav links (they'll use CSS variables)
-      const navLinks = document.querySelectorAll('.nav-link');
-      navLinks.forEach(link => {
-        link.style.color = '';
-      });
-    }
-  }
+    </script>
 
-  // Run on page load
-  document.addEventListener('DOMContentLoaded', fixNavbarTheme);
-
-  // Override theme toggle to update navbar
-  const originalToggleTheme = window.toggleTheme;
-  if (originalToggleTheme) {
-    window.toggleTheme = function() {
-      originalToggleTheme();
-      setTimeout(fixNavbarTheme, 100);
-    };
-  }
-
-  // Also listen for theme attribute changes
-  const observer = new MutationObserver(fixNavbarTheme);
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['data-theme']
-  });
-</script>
-
+    <script src="../scripts/components/header-loader.js"></script>
+    <script src="../scripts/components/footer-loader.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
   </body>
 </html>

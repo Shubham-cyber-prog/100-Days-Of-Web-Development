@@ -1,0 +1,145 @@
+<header class="site-header">
+  <div class="nav-container">
+    <a href="dashboard.html" class="nav-logo">
+      <img
+        src="../assets/images/logo.png"
+        alt="100 Days of Web Dev"
+        class="brand-logo-img"
+      />
+    </a>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="nav-link" data-page="dashboard"
+        >Dashboard</a
+      >
+      <a href="projects.html" class="nav-link" data-page="projects">Projects</a>
+
+      <!-- Features Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-link dropdown-trigger" data-page="features">
+          Features
+          <svg
+            class="dropdown-icon"
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            stroke="currentColor"
+            fill="none"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="dropdown-menu">
+          <a
+            href="mission-control.html"
+            class="dropdown-item"
+            data-page="mission-control"
+            >Mission Control</a
+          >
+          <a href="blueprints.html" class="dropdown-item" data-page="blueprints"
+            >Blueprints</a
+          >
+          <a href="arena.html" class="dropdown-item" data-page="arena">Arena</a>
+          <a
+            href="ai-insights.html"
+            class="dropdown-item"
+            data-page="ai-insights"
+            >AI Insights</a
+          >
+          <a href="study-room.html" class="dropdown-item" data-page="study-room"
+            >Study Room</a
+          >
+          <a href="notes.html" class="dropdown-item" data-page="notes"
+            >Notes & Snippets</a
+          >
+        </div>
+      </div>
+
+      <a href="about.html" class="nav-link" data-page="about">About</a>
+      <a href="contributors.html" class="nav-link" data-page="contributors"
+        >Contributors</a
+      >
+      <a href="contact.html" class="nav-link" data-page="contact">Contact</a>
+    </nav>
+    <div class="nav-user">
+      <button class="mobile-toggle" onclick="toggleMobileMenu()">
+        <svg class="icon icon-lg" viewBox="0 0 24 24">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
+      <!-- Profile Icon -->
+      <div class="user-avatar-wrapper">
+        <button class="user-avatar" onclick="toggleUserMenu()">
+          <img src="https://github.com/ntbnaren7.png" alt="User" />
+        </button>
+        <!-- Dropdown -->
+        <div class="user-menu" id="user-menu">
+          <a href="profile.html" class="user-menu-item">
+            <svg
+              class="menu-icon"
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              stroke="currentColor"
+              fill="none"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            View Profile
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="settings.html" class="user-menu-item">
+            <svg
+              class="menu-icon"
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              stroke="currentColor"
+              fill="none"
+            >
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="m12 1 0 6m0 6v6"></path>
+            </svg>
+            Settings
+          </a>
+          <button
+            class="user-menu-item logout-btn text-danger"
+            onclick="handleLogout()"
+          >
+            <svg
+              class="menu-icon"
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              stroke="currentColor"
+              fill="none"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

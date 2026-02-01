@@ -1,465 +1,494 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Help & FAQ | 100 Days of Web Dev</title>
     <link rel="stylesheet" href="../styles/index.css" />
-    <link rel="stylesheet" href="../styles/pages/help.css">
-    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/pages/help.css" />
+    <link rel="stylesheet" href="../styles/index.css" />
     <style>
+      .help-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .help-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .help-header h1 {
+        font-size: 2.5rem;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto 3rem;
+        padding: 1rem;
+        background: var(--bg-glass-panel);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        color: var(--text-primary);
+        font-size: 1rem;
+      }
+
+      .help-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .category-card {
+        background: var(--bg-glass-panel);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .category-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-core);
+      }
+
+      .category-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .faq-section {
+        background: var(--bg-glass-panel);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .faq-item {
+        border-bottom: 1px solid var(--glass-border);
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .faq-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .faq-question {
+        font-weight: 600;
+        color: var(--text-primary);
+        cursor: pointer;
+        padding: 1rem;
+        background: var(--bg-void);
+        border-radius: var(--radius-md);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s;
+      }
+
+      .faq-question:hover {
+        background: var(--bg-glass-panel);
+      }
+
+      .faq-answer {
+        padding: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        display: none;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 0 0 var(--radius-md) var(--radius-md);
+      }
+
+      .faq-answer.show {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .expand-icon {
+        transition: transform 0.3s;
+      }
+
+      .faq-item.active .expand-icon {
+        transform: rotate(180deg);
+      }
+
+      .contact-section {
+        background: linear-gradient(
+          135deg,
+          var(--accent-core),
+          var(--accent-glow)
+        );
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        text-align: center;
+        color: white;
+      }
+
+      .contact-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .contact-btn {
+        padding: 0.75rem 1.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .contact-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
         .help-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .help-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .help-header h1 {
-            font-size: 2.5rem;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .search-box {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 3rem;
-            padding: 1rem;
-            background: var(--bg-glass-panel);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            color: var(--text-primary);
-            font-size: 1rem;
+          padding: 1rem;
         }
 
         .help-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .category-card {
-            background: var(--bg-glass-panel);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-core);
-        }
-
-        .category-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .faq-section {
-            background: var(--bg-glass-panel);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--glass-border);
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-        }
-
-        .faq-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .faq-question {
-            font-weight: 600;
-            color: var(--text-primary);
-            cursor: pointer;
-            padding: 1rem;
-            background: var(--bg-void);
-            border-radius: var(--radius-md);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-        }
-
-        .faq-question:hover {
-            background: var(--bg-glass-panel);
-        }
-
-        .faq-answer {
-            padding: 1rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            display: none;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 0 0 var(--radius-md) var(--radius-md);
-        }
-
-        .faq-answer.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .expand-icon {
-            transition: transform 0.3s;
-        }
-
-        .faq-item.active .expand-icon {
-            transform: rotate(180deg);
-        }
-
-        .contact-section {
-            background: linear-gradient(135deg, var(--accent-core), var(--accent-glow));
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-            color: white;
+          grid-template-columns: 1fr;
         }
 
         .contact-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
+          flex-direction: column;
+          align-items: center;
         }
-
-        .contact-btn {
-            padding: 0.75rem 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: var(--radius-md);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .contact-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .help-container {
-                padding: 1rem;
-            }
-
-            .help-categories {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Header -->
-    <header class="site-header">
-        <div class="nav-container">
-            <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
-            </a>
-
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Dashboard</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contributors.html" class="nav-link">Contributors</a>
-                <a href="help.html" class="nav-link active">Help</a>
-            </nav>
-
-            <div class="nav-user">
-                <button class="mobile-toggle" onclick="toggleMobileMenu()">
-                    <svg class="icon icon-lg" viewBox="0 0 24 24">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
-
-                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-
-                <div class="user-avatar-wrapper">
-                    <button class="user-avatar" onclick="toggleUserMenu()">
-                        <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%">
-                    </button>
-                    <div class="user-dropdown">
-                        <a href="profile.html" class="dropdown-item">View Profile</a>
-                        <a href="settings.html" class="dropdown-item">Settings</a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item text-danger" onclick="handleLogout()">Log Out</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
+    <!-- Dynamic header will be loaded here -->
 
     <main class="container section">
-        <div class="help-container">
-            <div class="help-header">
-                <h1>❓ Help & FAQ</h1>
-                <p class="text-secondary">Find answers to common questions and get help with your journey</p>
-            </div>
-
-            <!-- Search -->
-            <input type="text" class="search-box" placeholder="Search for help..." id="searchInput" onkeyup="searchFAQ()">
-
-            <!-- Help Categories -->
-            <div class="help-categories">
-                <div class="category-card" onclick="scrollToSection('getting-started')">
-                    <div class="category-icon">🚀</div>
-                    <h3>Getting Started</h3>
-                    <p>Learn the basics and begin your journey</p>
-                </div>
-                <div class="category-card" onclick="scrollToSection('progress-tracking')">
-                    <div class="category-icon">📊</div>
-                    <h3>Progress Tracking</h3>
-                    <p>Understanding your dashboard and stats</p>
-                </div>
-                <div class="category-card" onclick="scrollToSection('technical-issues')">
-                    <div class="category-icon">🔧</div>
-                    <h3>Technical Issues</h3>
-                    <p>Troubleshooting common problems</p>
-                </div>
-                <div class="category-card" onclick="scrollToSection('account-settings')">
-                    <div class="category-icon">⚙️</div>
-                    <h3>Account & Settings</h3>
-                    <p>Managing your profile and preferences</p>
-                </div>
-            </div>
-
-            <!-- Getting Started FAQ -->
-            <div class="faq-section" id="getting-started">
-                <h2 class="section-title">
-                    🚀 Getting Started
-                </h2>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What is the 100 Days of Web Development Challenge?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        The 100 Days of Web Development Challenge is a structured learning program designed to help you master web development through daily practice. Each day focuses on building projects, learning new concepts, and improving your coding skills.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How do I start the challenge?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Simply create an account, explore the dashboard, and start with Day 1. Each project includes instructions, code examples, and learning objectives to guide you through the process.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Do I need prior coding experience?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        No! The challenge is designed for all skill levels. We start with basic HTML, CSS, and JavaScript concepts and gradually progress to more advanced topics.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Progress Tracking FAQ -->
-            <div class="faq-section" id="progress-tracking">
-                <h2 class="section-title">
-                    📊 Progress Tracking
-                </h2>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How does the progress tracker work?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        The progress tracker uses a GitHub-style heatmap to visualize your daily activity. Green squares indicate completed days, with darker colors showing higher activity levels. Click on any day to mark it as complete.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What counts as completing a day?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        A day is considered complete when you finish the assigned project, understand the concepts, and can demonstrate the functionality. You can mark days as complete using the "Mark Today Complete" button.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How are streaks calculated?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Streaks count consecutive days of activity. Your current streak shows how many days in a row you've been active, while your best streak shows your longest achievement.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Technical Issues FAQ -->
-            <div class="faq-section" id="technical-issues">
-                <h2 class="section-title">
-                    🔧 Technical Issues
-                </h2>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>The website is not loading properly</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Try refreshing the page, clearing your browser cache, or using a different browser. Make sure JavaScript is enabled in your browser settings.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>My progress is not saving</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Progress is saved locally in your browser. Make sure you're not in incognito/private mode and that your browser allows local storage. You can export your progress from Settings as a backup.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Projects are not working on mobile</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Most projects are optimized for mobile, but some advanced features may work better on desktop. Try using a modern mobile browser like Chrome or Safari for the best experience.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Account Settings FAQ -->
-            <div class="faq-section" id="account-settings">
-                <h2 class="section-title">
-                    ⚙️ Account & Settings
-                </h2>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How do I change my profile information?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Go to Settings from the user menu, update your display name, email, and bio, then click "Save Changes" to update your profile.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Can I export my progress data?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Yes! In Settings > Data Management, you can export all your progress data as a JSON file. This includes your completed days, settings, and statistics.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How do I reset my progress?</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        In Settings > Data Management, click "Reset All Progress". You'll need to type "RESET" to confirm. This action cannot be undone, so make sure to export your data first if needed.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact Section -->
-            <div class="contact-section">
-                <h2>Still Need Help?</h2>
-                <p>Can't find what you're looking for? Get in touch with our community!</p>
-                <div class="contact-buttons">
-                    <a href="https://discord.gg/SW7puwEm" class="contact-btn" target="_blank">💬 Join Discord</a>
-                    <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/issues" class="contact-btn" target="_blank">🐛 Report Issue</a>
-                    <a href="mailto:support@100daysofwebdev.com" class="contact-btn">📧 Email Support</a>
-                </div>
-            </div>
+      <div class="help-container">
+        <div class="help-header">
+          <h1>❓ Help & FAQ</h1>
+          <p class="text-secondary">
+            Find answers to common questions and get help with your journey
+          </p>
         </div>
+
+        <!-- Search -->
+        <input
+          type="text"
+          class="search-box"
+          placeholder="Search for help..."
+          id="searchInput"
+          onkeyup="searchFAQ()"
+        />
+
+        <!-- Help Categories -->
+        <div class="help-categories">
+          <div
+            class="category-card"
+            onclick="scrollToSection('getting-started')"
+          >
+            <div class="category-icon">🚀</div>
+            <h3>Getting Started</h3>
+            <p>Learn the basics and begin your journey</p>
+          </div>
+          <div
+            class="category-card"
+            onclick="scrollToSection('progress-tracking')"
+          >
+            <div class="category-icon">📊</div>
+            <h3>Progress Tracking</h3>
+            <p>Understanding your dashboard and stats</p>
+          </div>
+          <div
+            class="category-card"
+            onclick="scrollToSection('technical-issues')"
+          >
+            <div class="category-icon">🔧</div>
+            <h3>Technical Issues</h3>
+            <p>Troubleshooting common problems</p>
+          </div>
+          <div
+            class="category-card"
+            onclick="scrollToSection('account-settings')"
+          >
+            <div class="category-icon">⚙️</div>
+            <h3>Account & Settings</h3>
+            <p>Managing your profile and preferences</p>
+          </div>
+        </div>
+
+        <!-- Getting Started FAQ -->
+        <div class="faq-section" id="getting-started">
+          <h2 class="section-title">🚀 Getting Started</h2>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>What is the 100 Days of Web Development Challenge?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              The 100 Days of Web Development Challenge is a structured learning
+              program designed to help you master web development through daily
+              practice. Each day focuses on building projects, learning new
+              concepts, and improving your coding skills.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>How do I start the challenge?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              Simply create an account, explore the dashboard, and start with
+              Day 1. Each project includes instructions, code examples, and
+              learning objectives to guide you through the process.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>Do I need prior coding experience?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              No! The challenge is designed for all skill levels. We start with
+              basic HTML, CSS, and JavaScript concepts and gradually progress to
+              more advanced topics.
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Tracking FAQ -->
+        <div class="faq-section" id="progress-tracking">
+          <h2 class="section-title">📊 Progress Tracking</h2>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>How does the progress tracker work?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              The progress tracker uses a GitHub-style heatmap to visualize your
+              daily activity. Green squares indicate completed days, with darker
+              colors showing higher activity levels. Click on any day to mark it
+              as complete.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>What counts as completing a day?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              A day is considered complete when you finish the assigned project,
+              understand the concepts, and can demonstrate the functionality.
+              You can mark days as complete using the "Mark Today Complete"
+              button.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>How are streaks calculated?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              Streaks count consecutive days of activity. Your current streak
+              shows how many days in a row you've been active, while your best
+              streak shows your longest achievement.
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Issues FAQ -->
+        <div class="faq-section" id="technical-issues">
+          <h2 class="section-title">🔧 Technical Issues</h2>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>The website is not loading properly</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              Try refreshing the page, clearing your browser cache, or using a
+              different browser. Make sure JavaScript is enabled in your browser
+              settings.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>My progress is not saving</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              Progress is saved locally in your browser. Make sure you're not in
+              incognito/private mode and that your browser allows local storage.
+              You can export your progress from Settings as a backup.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>Projects are not working on mobile</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              Most projects are optimized for mobile, but some advanced features
+              may work better on desktop. Try using a modern mobile browser like
+              Chrome or Safari for the best experience.
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Settings FAQ -->
+        <div class="faq-section" id="account-settings">
+          <h2 class="section-title">⚙️ Account & Settings</h2>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>How do I change my profile information?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              Go to Settings from the user menu, update your display name,
+              email, and bio, then click "Save Changes" to update your profile.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>Can I export my progress data?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              Yes! In Settings > Data Management, you can export all your
+              progress data as a JSON file. This includes your completed days,
+              settings, and statistics.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>How do I reset my progress?</span>
+              <span class="expand-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+              In Settings > Data Management, click "Reset All Progress". You'll
+              need to type "RESET" to confirm. This action cannot be undone, so
+              make sure to export your data first if needed.
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+          <h2>Still Need Help?</h2>
+          <p>
+            Can't find what you're looking for? Get in touch with our community!
+          </p>
+          <div class="contact-buttons">
+            <a
+              href="https://discord.gg/SW7puwEm"
+              class="contact-btn"
+              target="_blank"
+              >💬 Join Discord</a
+            >
+            <a
+              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/issues"
+              class="contact-btn"
+              target="_blank"
+              >🐛 Report Issue</a
+            >
+            <a href="mailto:support@100daysofwebdev.com" class="contact-btn"
+              >📧 Email Support</a
+            >
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- Scripts -->
     <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/components/navigation.js"></script>
     <script>
-        function toggleFAQ(element) {
-            const faqItem = element.parentElement;
-            const answer = faqItem.querySelector('.faq-answer');
-            
-            faqItem.classList.toggle('active');
-            answer.classList.toggle('show');
-        }
+      function toggleFAQ(element) {
+        const faqItem = element.parentElement;
+        const answer = faqItem.querySelector(".faq-answer");
 
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
+        faqItem.classList.toggle("active");
+        answer.classList.toggle("show");
+      }
 
-        function searchFAQ() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
-                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
-                
-                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = searchTerm === '' ? 'block' : 'none';
-                }
-            });
-        }
+      function scrollToSection(sectionId) {
+        document.getElementById(sectionId).scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+
+      function searchFAQ() {
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const faqItems = document.querySelectorAll(".faq-item");
+
+        faqItems.forEach((item) => {
+          const question = item
+            .querySelector(".faq-question span")
+            .textContent.toLowerCase();
+          const answer = item
+            .querySelector(".faq-answer")
+            .textContent.toLowerCase();
+
+          if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+            item.style.display = "block";
+          } else {
+            item.style.display = searchTerm === "" ? "block" : "none";
+          }
+        });
+      }
     </script>
 
+    <script src="../scripts/components/header-loader.js"></script>
+    <script src="../scripts/components/footer-loader.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
     <script src="../scripts/pages/help.js"></script>
   </body>
-</body>
 </html>
