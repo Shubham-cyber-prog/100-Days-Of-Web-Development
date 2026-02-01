@@ -36,16 +36,45 @@ function initializeSidebar() {
     const href = link.getAttribute('href');
     const dataPage = link.getAttribute('data-page');
     
-    // Check if current path includes the link's href or data-page
-    if (href && currentPath.includes(href)) {
+    // Check if current path ends with the link's href or includes data-page
+    if (href && currentPath.endsWith(href)) {
       link.classList.add('active');
     } else if (dataPage && currentPath.includes(dataPage)) {
       link.classList.add('active');
     }
   });
   
+  // Update user avatar if available
+  updateUserAvatar();
+  
   // Update theme icon in sidebar
   updateSidebarThemeIcon();
+}
+
+function updateUserAvatar() {
+  const avatarImg = document.querySelector('.sidebar-user-avatar');
+  if (!avatarImg) return;
+  
+  // Check if guest mode
+  if (sessionStorage.getItem('authGuest') === 'true') {
+    const currentPath = window.location.pathname;
+    const isPages = currentPath.includes('/pages/');
+    avatarImg.src = isPages ? '../assets/images/pilot_avatar.png' : 'website/assets/images/pilot_avatar.png';
+    avatarImg.style.padding = '0';
+  } else {
+    // Try to get user info from session/local storage
+    const userDataStr = sessionStorage.getItem('current_user') || localStorage.getItem('current_user');
+    if (userDataStr) {
+      try {
+        const userData = JSON.parse(userDataStr);
+        if (userData.photoURL) {
+          avatarImg.src = userData.photoURL;
+        }
+      } catch (e) {
+        console.warn('Could not parse user data:', e);
+      }
+    }
+  }
 }
 
 function updateSidebarThemeIcon() {
