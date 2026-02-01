@@ -323,6 +323,7 @@
       hyphens: auto;
       display: -webkit-box;
       -webkit-line-clamp: 3;
+      line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -334,6 +335,7 @@
       margin-top: 4px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -615,6 +617,7 @@
           #1f2937 0%,
           var(--accent-core) 100%);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -713,114 +716,6 @@
     [data-theme="light"] .edit-profile-btn:hover {
       box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
     }
-
-    /* Mentor Mode Styles */
-    .mentor-card {
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      border-radius: var(--radius-xl);
-      padding: var(--space-6) var(--space-8);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-6);
-      max-width: 800px;
-      margin: 2rem auto 0;
-      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
-    }
-
-    .mentor-badge {
-      display: inline-block;
-      background: var(--accent-core);
-      color: white;
-      font-size: 10px;
-      font-weight: var(--weight-bold);
-      padding: 4px 10px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .mentor-title {
-      font-size: var(--text-lg);
-      font-weight: var(--weight-bold);
-      color: var(--text-primary);
-      margin: 0 0 4px 0;
-    }
-
-    .mentor-description {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      margin: 0;
-      max-width: 450px;
-    }
-
-    /* Toggle Switch */
-    .toggle-switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
-
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .toggle-slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: var(--bg-muted);
-      transition: .4s;
-      border-radius: 34px;
-      border: 1px solid var(--glass-border);
-    }
-
-    .toggle-slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 3px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    input:checked+.toggle-slider {
-      background-color: var(--accent-core);
-      border-color: var(--accent-glow);
-    }
-
-    input:focus+.toggle-slider {
-      box-shadow: 0 0 1px var(--accent-core);
-    }
-
-    input:checked+.toggle-slider:before {
-      transform: translateX(26px);
-    }
-
-    @media (max-width: 600px) {
-      .mentor-card {
-        flex-direction: column;
-        text-align: center;
-        padding: var(--space-6);
-      }
-
-      .mentor-description {
-        margin-bottom: var(--space-4);
-      }
-    }
   </style>
 </head>
 
@@ -846,6 +741,7 @@
         <a href="about.html" class="nav-link">About</a>
         <a href="contributors.html" class="nav-link">Contributors</a>
         <a href="contact.html" class="nav-link">Contact</a>
+        <a href="blueprints.html" class="nav-link">Blueprints</a>
       </nav>
       <div class="nav-user">
         <button class="mobile-toggle" onclick="toggleMobileMenu()">
@@ -950,34 +846,16 @@
               <span class="stat-label">Projects</span>
             </div>
             <div class="stat-card">
-              <span class="stat-number" id="daysActiveCounter">0</span>
+              <span class="stat-number" id="daysActive">73</span>
               <span class="stat-label">Days Active</span>
             </div>
             <div class="stat-card">
-              <span class="stat-number" id="currentStreak">0</span>
+              <span class="stat-number" id="currentStreak">12</span>
               <span class="stat-label">Current Streak</span>
             </div>
             <div class="stat-card">
-              <span class="stat-number" id="completionRateCounter">0%</span>
+              <span class="stat-number">97%</span>
               <span class="stat-label">Completion</span>
-            </div>
-          </div>
-
-          <!-- Mentor Mode Toggle (Visible for Day 50+) -->
-          <div class="mentor-mode-section" id="mentorModeContainer" style="display: none; margin-top: 2rem;">
-            <div class="mentor-card">
-              <div class="mentor-info">
-                <span class="mentor-badge">👑 Senior Developer</span>
-                <h3 class="mentor-title">Mentor Mode</h3>
-                <p class="mentor-description">Toggle availability to receive global SOS alerts and help junior
-                  developers.</p>
-              </div>
-              <div class="mentor-action">
-                <label class="toggle-switch">
-                  <input type="checkbox" id="mentorToggle">
-                  <span class="toggle-slider"></span>
-                </label>
-              </div>
             </div>
           </div>
         </section>

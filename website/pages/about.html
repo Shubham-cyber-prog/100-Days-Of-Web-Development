@@ -1,34 +1,49 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      href="/website/assets/images/logo.png"
-      height="70px"
-      width="100px"
-    />
-    <title>About & Leaderboard | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <link rel="stylesheet" href="../styles/pages/about.css" />
 
-    <style>
-      /* Force text colors for light theme */
-      [data-theme="light"] .mission-panel h1,
-      [data-theme="light"] .mission-panel .text-flame,
-      [data-theme="light"] .mission-panel .text-xl,
-      [data-theme="light"] .mission-panel .text-lg,
-      [data-theme="light"] .mission-panel .mission-phase h4,
-      [data-theme="light"] .mission-panel .mission-phase p,
-      [data-theme="light"] .mission-panel .text-secondary {
-        color: #1a1a2e !important;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/website/assets/images/logo.png" height="70px" width="100px" />
+  <title>About & Leaderboard | 100 Days of Web Dev</title>
+  <link rel="stylesheet" href="../styles/index.css" />
+  <link rel="stylesheet" href="../styles/pages/about.css" />
 
-      /* Specific override for the quote text */
-      [data-theme="light"] .mission-quote p {
-        color: #2d3748 !important;
-      }
+  <style>
+    /* Force text colors for light theme */
+    [data-theme="light"] .mission-panel h1,
+    [data-theme="light"] .mission-panel .text-flame,
+    [data-theme="light"] .mission-panel .text-xl,
+    [data-theme="light"] .mission-panel .text-lg,
+    [data-theme="light"] .mission-panel .mission-phase h4,
+    [data-theme="light"] .mission-panel .mission-phase p,
+    [data-theme="light"] .mission-panel .text-secondary {
+      color: #1a1a2e !important;
+    }
+
+    /* Specific override for the quote text */
+    [data-theme="light"] .mission-quote p {
+      color: #2d3748 !important;
+    }
+
+    /* Override for the subtitle */
+    [data-theme="light"] .mission-panel .text-xl.text-secondary {
+      color: #4a5568 !important;
+    }
+
+    /* Make the flame text stand out */
+    [data-theme="light"] .text-flame {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Make sure the button text is visible in light theme */
+    [data-theme="light"] .btn-primary {
+      color: white !important;
+    }
+  </style>
 
       /* Override for the subtitle */
       [data-theme="light"] .mission-panel .text-xl.text-secondary {
@@ -49,85 +64,78 @@
       }
     </style>
 
-    <style>
-      header nav img {
-        width: 100px;
-        height: 70px;
-        border: 2px groove #0401cc;
-        border-radius: 25%;
-      }
-      header nav img:hover {
-        box-shadow:
-          0 0 15px #4133ff,
-          0 0 30px #7033ff,
-          0 0 45px #4733ff;
-        transition: box-shadow 0.3s ease-in-out;
-      }
-      .nav-container {
-        height: 120px;
-        margin-top: 25px;
-      }
-    </style>
+  <style>
+    header nav img {
+      width: 100px;
+      height: 70px;
+      border: 2px groove #0401cc;
+      border-radius: 25%;
+    }
 
-    <style>
-      /* Fix light theme text visibility - dark theme remains unchanged */
-      [data-theme="light"] .mission-panel h1,
-      [data-theme="light"] .mission-panel h2,
-      [data-theme="light"] .mission-panel h3,
-      [data-theme="light"] .mission-panel h4 {
-        color: #1a1a2e !important;
-      }
+    header nav img:hover {
+      box-shadow:
+        0 0 15px #4133ff,
+        0 0 30px #7033ff,
+        0 0 45px #4733ff;
+      transition: box-shadow 0.3s ease-in-out;
+    }
 
-      [data-theme="light"] .mission-panel p,
-      [data-theme="light"] .mission-panel .text-xl,
-      [data-theme="light"] .mission-panel .text-lg,
-      [data-theme="light"] .mission-panel .text-secondary {
-        color: #2d3748 !important;
-      }
+    .nav-container {
+      height: 120px;
+      margin-top: 25px;
+    }
+  </style>
 
-      [data-theme="light"] .mission-panel .mission-phase h4 {
-        color: #1a1a2e !important;
-      }
+  <style>
+    /* Fix light theme text visibility - dark theme remains unchanged */
+    [data-theme="light"] .mission-panel h1,
+    [data-theme="light"] .mission-panel h2,
+    [data-theme="light"] .mission-panel h3,
+    [data-theme="light"] .mission-panel h4 {
+      color: #1a1a2e !important;
+    }
 
-      [data-theme="light"] .mission-panel .mission-phase p {
-        color: #4a5568 !important;
-      }
+    [data-theme="light"] .mission-panel p,
+    [data-theme="light"] .mission-panel .text-xl,
+    [data-theme="light"] .mission-panel .text-lg,
+    [data-theme="light"] .mission-panel .text-secondary {
+      color: #2d3748 !important;
+    }
 
-      [data-theme="light"] .mission-quote p {
-        color: #2d3748 !important;
-        font-style: italic;
-      }
+    [data-theme="light"] .mission-panel .mission-phase h4 {
+      color: #1a1a2e !important;
+    }
 
-      /* Fix the flame text in light theme */
-      [data-theme="light"] .text-flame {
-        background: linear-gradient(
-          135deg,
-          #667eea 0%,
-          #764ba2 100%
-        ) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        background-clip: text !important;
-      }
+    [data-theme="light"] .mission-panel .mission-phase p {
+      color: #4a5568 !important;
+    }
 
-      /* Make sure the button text is visible in light theme */
-      [data-theme="light"] .btn-primary {
-        color: white !important;
-        background: linear-gradient(
-          135deg,
-          #667eea 0%,
-          #764ba2 100%
-        ) !important;
-      }
-    </style>
-  </head>
+    [data-theme="light"] .mission-quote p {
+      color: #2d3748 !important;
+      font-style: italic;
+    }
 
-  <body>
-    <!-- Header -->
-    <header class="site-header">
-      <div
-        class="nav-container"
-        style="
+    /* Fix the flame text in light theme */
+    [data-theme="light"] .text-flame {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    /* Make sure the button text is visible in light theme */
+    [data-theme="light"] .btn-primary {
+      color: white !important;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container" style="
           filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
             drop-shadow(
               0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
@@ -135,313 +143,231 @@
             drop-shadow(
               0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
             );
-        "
-      >
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
+        ">
+      <a href="dashboard.html" class="nav-logo">
+        <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
+      </a>
 
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="arena.html" class="nav-link">Arena</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="profile.html" class="nav-link">Profile</a>
-          <a href="about.html" class="nav-link active">About</a>
-          <a href="contributors.html" class="nav-link">Contributors</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="favorites.html" class="nav-link">Favorites</a>
+        <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+        <a href="about.html" class="nav-link active">About</a>
+        <a href="contributors.html" class="nav-link">Contributors</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="blueprints.html" class="nav-link">Blueprints</a>
+      </nav>
 
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
+      <div class="nav-user">
+        <button class="mobile-toggle" onclick="toggleMobileMenu()">
+          <svg class="icon icon-lg" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
 
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
+        <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="
               margin-right: 15px;
               background: none;
               border: none;
               cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
+            ">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary)">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
 
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%"
-              />
+        <div class="user-avatar-wrapper">
+          <button class="user-avatar" onclick="toggleUserMenu()">
+            <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%" />
+          </button>
+          <!-- Dropdown -->
+          <div class="user-dropdown">
+            <a href="profile.html" class="dropdown-item">View Profile</a>
+            <a href="settings.html" class="dropdown-item">Settings</a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item text-danger" onclick="handleLogout()">
+              Log Out
             </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
-            </div>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="container section" style="padding-top: 150px">
-      <div class="about-grid">
-        <!-- LEFT: Leaderboard -->
-        <div class="leaderboard-panel animate-enter">
-          <div style="margin-bottom: var(--space-6)">
-            <h2 style="font-size: var(--text-3xl)">ECWoC 2026</h2>
-            <h2 class="text-flame italic" style="font-size: var(--text-3xl)">
-              Leaderboard.
-            </h2>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">Contributors</div>
-            <p class="stat-value" id="statContributors" style="color: #4133ff">
-              30
-            </p>
-          </div>
-
-          <div class="stat-card points">
-            <div class="stat-label">Total Points</div>
-            <p class="stat-value" id="statPoints" style="color: #4133ff">
-              5,867
-            </p>
-          </div>
+  <main class="container section" style="padding-top: 150px">
+    <div class="about-grid">
+      <!-- LEFT: Leaderboard -->
+      <div class="leaderboard-panel animate-enter">
+        <div style="margin-bottom: var(--space-6)">
+          <h2 style="font-size: var(--text-3xl)">ECWoC 2026</h2>
+          <h2 class="text-flame italic" style="font-size: var(--text-3xl)">
+            Leaderboard.
+          </h2>
         </div>
 
-        <!-- RIGHT: Mission -->
-        <div class="mission-panel animate-enter delay-200">
-          <h1
-            style="
+        <div class="stat-card">
+          <div class="stat-label">Contributors</div>
+          <p class="stat-value" id="statContributors" style="color: #4133ff">
+            30
+          </p>
+        </div>
+
+        <div class="stat-card points">
+          <div class="stat-label">Total Points</div>
+          <p class="stat-value" id="statPoints" style="color: #4133ff">
+            5,867
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Mission -->
+      <div class="mission-panel animate-enter delay-200">
+        <h1 style="
               font-size: var(--text-5xl);
               margin-bottom: var(--space-6);
               line-height: 1.1;
-            "
-          >
-            100 Days of <br />
-            <span class="text-flame">Web Dev</span>
-          </h1>
+            ">
+          100 Days of <br />
+          <span class="text-flame">Web Dev</span>
+        </h1>
 
-          <p
-            class="text-xl text-secondary"
-            style="margin-bottom: var(--space-6)"
-          >
-            A 100-day hyper-intensive protocol designed to forge elite web
-            engineers through daily deployment cycles.
+        <p class="text-xl text-secondary" style="margin-bottom: var(--space-6)">
+          A 100-day hyper-intensive protocol designed to forge elite web
+          engineers through daily deployment cycles.
+        </p>
+
+        <div class="mission-quote">
+          <p class="text-lg italic">
+            "We do not build to pass time. We build to conquer the unknown."
           </p>
+        </div>
 
-          <div class="mission-quote">
-            <p class="text-lg italic">
-              "We do not build to pass time. We build to conquer the unknown."
-            </p>
+        <div class="grid grid-2" style="gap: var(--space-4)">
+          <div class="mission-phase">
+            <h4>Phase 1: Foundation</h4>
+            <p>HTML5, CSS3, Modern Layouts</p>
           </div>
-
-          <div class="grid grid-2" style="gap: var(--space-4)">
-            <div class="mission-phase">
-              <h4>Phase 1: Foundation</h4>
-              <p>HTML5, CSS3, Modern Layouts</p>
-            </div>
-            <div class="mission-phase">
-              <h4>Phase 2: Logic</h4>
-              <p>Vanilla JS, DOM Manipulation</p>
-            </div>
-            <div class="mission-phase">
-              <h4>Phase 3: Reactor</h4>
-              <p>React, State, Component Architecture</p>
-            </div>
-            <div class="mission-phase">
-              <h4>Phase 4: Mastery</h4>
-              <p>Full Stack Integration & Capstone</p>
-            </div>
+          <div class="mission-phase">
+            <h4>Phase 2: Logic</h4>
+            <p>Vanilla JS, DOM Manipulation</p>
           </div>
+          <div class="mission-phase">
+            <h4>Phase 3: Reactor</h4>
+            <p>React, State, Component Architecture</p>
+          </div>
+          <div class="mission-phase">
+            <h4>Phase 4: Mastery</h4>
+            <p>Full Stack Integration & Capstone</p>
+          </div>
+        </div>
 
-          <div style="margin-top: var(--space-8); color: yellow">
-            <a
-              href="projects.html"
-              class="btn btn-primary"
-              style="
+        <div style="margin-top: var(--space-8); color: yellow;">
+          <a href="projects.html" class="btn btn-primary" style="
                 color: yellow;
                 background: var(--accent);
                 display: inline-block;
                 text-decoration: none;
-              "
-            >
-              Inspect All Projects
-            </a>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <!-- Professional Footer -->
-    <footer class="site-footer">
-      <div class="container footer-content">
-        <!-- Brand -->
-        <div class="footer-brand animate-enter">
-          <a href="dashboard.html" class="footer-logo">
-            <img src="../assets/images/logo.png" alt="Logo" />
-            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+              ">
+            Inspect All Projects
           </a>
-          <p class="footer-desc">
-            A hyper-intensive protocol designed to forge elite web engineers
-            through daily deployment cycles.
-          </p>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="footer-col animate-enter delay-100">
-          <h3>Navigation</h3>
-          <nav class="footer-links">
-            <a href="dashboard.html" class="footer-link">Home Base</a>
-            <a href="projects.html" class="footer-link">Archive</a>
-            <a href="about.html" class="footer-link">Leaderboard</a>
-            <a href="contributors.html" class="footer-link">Crew</a>
-          </nav>
-        </div>
-
-        <!-- Resources -->
-        <div class="footer-col animate-enter delay-200">
-          <h3>Resources</h3>
-          <nav class="footer-links">
-            <a href="documentation.html" class="footer-link">Documentation</a>
-            <a href="api-status.html" class="footer-link">API Status</a>
-            <a href="contact.html" class="footer-link">Contact Comms</a>
-            <a href="system-logic.html" class="footer-link">System Logic</a>
-          </nav>
-        </div>
-
-        <!-- Connect -->
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a
-              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Github"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path>
-              </svg>
-            </a>
-            <a
-              href="https://twitter.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Twitter"
-              title="Coming soon"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path>
-              </svg>
-            </a>
-            <a
-              href="https://discord.gg/SW7puwEm"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Discord"
-            >
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
-                ></path>
-              </svg>
-            </a>
-          </div>
         </div>
       </div>
+    </div>
+  </main>
 
-      <div class="container footer-bottom">
-        <p class="copyright">
-          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
-        </p>
-        <p class="made-by">
-          Maintained by <span class="text-flame font-bold">Subham</span>
-          <svg
-            class="icon icon-sm heart-pulse"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            ></path>
-          </svg>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand animate-enter">
+        <a href="#" class="footer-logo">
+          <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
+          <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+        </a>
+        <p class="footer-desc">
+          A hyper-intensive protocol designed to forge elite web engineers
+          through daily deployment cycles.
         </p>
       </div>
-    </footer>
 
-    <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/pages/about.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
+      <div class="footer-col animate-enter delay-100">
+        <h3>Navigation</h3>
+        <nav class="footer-links">
+          <a href="#" class="footer-link">Home Base</a>
+          <a href="website/pages/projects.html" class="footer-link">Archive</a>
+          <a href="website/pages/about.html" class="footer-link">Leaderboard</a>
+          <a href="website/pages/contributors.html" class="footer-link">Crew</a>
+        </nav>
+      </div>
 
-    <script>
-      // Theme detection and text color adjustment
-      document.addEventListener("DOMContentLoaded", function () {
-        // Check current theme
-        function checkAndFixTextColors() {
-          const isLightTheme =
-            document.documentElement.getAttribute("data-theme") === "light";
+      <div class="footer-col animate-enter delay-200">
+        <h3>Resources</h3>
+        <nav class="footer-links">
+          <a href=\"documentation.html\" class=\"footer-link\">Documentation</a>
+          <a href=\"api-status.html\" class=\"footer-link\">API Status</a>
+          <a href=\"contact.html\" class=\"footer-link\">Contact Comms</a>
+          <a href=\"system-logic.html\" class=\"footer-link\">System Logic</a>
+        </nav>
+      </div>
 
-          if (isLightTheme) {
-            // Apply light theme text colors
-            const missionPanel = document.querySelector(".mission-panel");
-            if (missionPanel) {
-              missionPanel.style.setProperty(
-                "--text-primary",
-                "#1a1a2e",
-                "important",
-              );
-              missionPanel.style.setProperty(
-                "--text-secondary",
-                "#4a5568",
-                "important",
-              );
-              missionPanel.style.setProperty(
-                "--text-tertiary",
-                "#718096",
-                "important",
-              );
-            }
+      <div class="footer-col animate-enter delay-300">
+        <h3>Connect</h3>
+        <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
+        <div class="footer-socials">
+          <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git" target="_blank"
+            rel="noopener noreferrer" class="social-btn" aria-label="Github">
+            <img src="website/assets/images/github.png" alt="GitHub" class="icon" />
+          </a>
+
+          <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
+            aria-label="Twitter (X)">
+            <img src="website/assets/images/twitter.png" alt="Twitter/X" class="icon" />
+          </a>
+
+          <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
+            aria-label="Discord">
+            <img src="website/assets/images/discord.png" alt="Discord" class="icon" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p class="copyright">
+        &copy; 2026 100 Days of Web Dev. All Systems Nominal.
+      </p>
+      <p class="made-by">
+        Maintained by <span class="text-flame font-bold">Subham</span>
+        <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+      </p>
+    </div>
+  </footer>
+
+  <script src="../scripts/components/cursor.js"></script>
+  <script src="../scripts/pages/about.js"></script>
+  <script src="../scripts/components/navigation.js"></script>
+
+  <script>
+    // Theme detection and text color adjustment
+    document.addEventListener('DOMContentLoaded', function () {
+      // Check current theme
+      function checkAndFixTextColors() {
+        const isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
+
+        if (isLightTheme) {
+          // Apply light theme text colors
+          const missionPanel = document.querySelector('.mission-panel');
+          if (missionPanel) {
+            missionPanel.style.setProperty('--text-primary', '#1a1a2e', 'important');
+            missionPanel.style.setProperty('--text-secondary', '#4a5568', 'important');
+            missionPanel.style.setProperty('--text-tertiary', '#718096', 'important');
           }
         }
 
@@ -473,23 +399,52 @@
         }
       }
 
-      // Run on page load
-      document.addEventListener("DOMContentLoaded", fixLightThemeTextColors);
+      // Check on load
+      checkAndFixTextColors();
 
-      // Run when theme toggle is clicked (assuming your toggle function exists)
-      const originalToggleTheme = window.toggleTheme || function () {};
-      window.toggleTheme = function () {
-        originalToggleTheme();
-        // Wait a moment for theme to switch, then check colors
-        setTimeout(fixLightThemeTextColors, 100);
-      };
+      // Also check when theme changes
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function () {
+          // Wait a moment for theme to switch, then check colors
+          setTimeout(checkAndFixTextColors, 100);
+        });
+      }
+    });
+  </script>
 
-      // Alternative: Listen for theme attribute changes
-      const observer = new MutationObserver(fixLightThemeTextColors);
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["data-theme"],
-      });
-    </script>
-  </body>
+  <script>
+    // Listen for theme changes and fix text colors in light theme only
+    function fixLightThemeTextColors() {
+      const isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
+
+      if (isLightTheme) {
+        // Add a class to body when in light theme for specific targeting
+        document.body.classList.add('light-theme-active');
+      } else {
+        document.body.classList.remove('light-theme-active');
+      }
+    }
+
+    // Run on page load
+    document.addEventListener('DOMContentLoaded', fixLightThemeTextColors);
+
+    // Run when theme toggle is clicked (assuming your toggle function exists)
+    const originalToggleTheme = window.toggleTheme || function () { };
+    window.toggleTheme = function () {
+      originalToggleTheme();
+      // Wait a moment for theme to switch, then check colors
+      setTimeout(fixLightThemeTextColors, 100);
+    };
+
+    // Alternative: Listen for theme attribute changes
+    const observer = new MutationObserver(fixLightThemeTextColors);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+  </script>
+
+</body>
+
 </html>
