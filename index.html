@@ -723,6 +723,216 @@
         margin: 0;
       }
 
+      /* Carousel Styles */
+      .carousel-section {
+        padding: 80px 20px;
+        overflow: hidden;
+      }
+
+      .carousel-container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .carousel-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 3rem;
+        background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .carousel {
+        position: relative;
+        width: 100%;
+        height: 350px;
+      }
+
+      .carousel-track-container {
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+        border-radius: 20px;
+      }
+
+      .carousel-track {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        position: relative;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .carousel-slide {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+      }
+
+      .carousel-slide.current-slide {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .carousel-content {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        border-radius: 20px;
+        padding: 3rem 2.5rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .carousel-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-primary);
+        opacity: 0.05;
+        z-index: 0;
+      }
+
+      .carousel-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+        position: relative;
+        z-index: 1;
+      }
+
+      .carousel-content h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .carousel-content p {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.8;
+        max-width: 600px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(102, 126, 234, 0.2);
+        border: 1px solid rgba(102, 126, 234, 0.4);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+      }
+
+      .carousel-button:hover {
+        background: rgba(102, 126, 234, 0.4);
+        border-color: rgba(102, 126, 234, 0.8);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .carousel-button--left {
+        left: -25px;
+      }
+
+      .carousel-button--right {
+        right: -25px;
+      }
+
+      .carousel-nav {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 2rem;
+      }
+
+      .carousel-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(102, 126, 234, 0.3);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+      }
+
+      .carousel-indicator:hover {
+        background: rgba(102, 126, 234, 0.5);
+        transform: scale(1.2);
+      }
+
+      .carousel-indicator.current-slide {
+        background: var(--gradient-primary);
+        width: 30px;
+        border-radius: 6px;
+      }
+
+      @media (max-width: 768px) {
+        .carousel {
+          height: 400px;
+        }
+
+        .carousel-button {
+          width: 40px;
+          height: 40px;
+        }
+
+        .carousel-button--left {
+          left: 10px;
+        }
+
+        .carousel-button--right {
+          right: 10px;
+        }
+
+        .carousel-content {
+          padding: 2rem 1.5rem;
+        }
+
+        .carousel-content h3 {
+          font-size: 1.5rem;
+        }
+
+        .carousel-content p {
+          font-size: 1rem;
+        }
+
+        .carousel-icon {
+          font-size: 3rem;
+        }
+      }
+
       /* Enhanced Footer */
       .site-footer {
         background: rgba(15, 15, 35, 0.95);
@@ -1283,6 +1493,65 @@
         </div>
       </section>
 
+      <!-- Carousel Section -->
+      <section class="carousel-section animate-enter delay-50">
+        <div class="carousel-container">
+          <h2 class="carousel-title">Journey Highlights</h2>
+          <div class="carousel">
+            <div class="carousel-track-container">
+              <ul class="carousel-track">
+                <li class="carousel-slide current-slide">
+                  <div class="carousel-content">
+                    <div class="carousel-icon">🎯</div>
+                    <h3>Day 1-30: Foundation</h3>
+                    <p>Master HTML, CSS, and JavaScript fundamentals. Build your first 30 projects and establish a solid coding routine.</p>
+                  </div>
+                </li>
+                <li class="carousel-slide">
+                  <div class="carousel-content">
+                    <div class="carousel-icon">⚡</div>
+                    <h3>Day 31-60: Advanced Concepts</h3>
+                    <p>Dive into React, APIs, and modern frameworks. Create interactive web applications with real-world features.</p>
+                  </div>
+                </li>
+                <li class="carousel-slide">
+                  <div class="carousel-content">
+                    <div class="carousel-icon">🚀</div>
+                    <h3>Day 61-100: Full-Stack Projects</h3>
+                    <p>Build complete full-stack applications. Deploy to production and showcase your portfolio-worthy projects.</p>
+                  </div>
+                </li>
+                <li class="carousel-slide">
+                  <div class="carousel-content">
+                    <div class="carousel-icon">🏆</div>
+                    <h3>Success Stories</h3>
+                    <p>Join hundreds of developers who transformed their careers through consistent daily practice and dedication.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <button class="carousel-button carousel-button--left" aria-label="Previous slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="carousel-button carousel-button--right" aria-label="Next slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div class="carousel-nav">
+              <button class="carousel-indicator current-slide" aria-label="Go to slide 1"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 2"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 3"></button>
+              <button class="carousel-indicator" aria-label="Go to slide 4"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Features Grid -->
       <section class="features-section animate-enter delay-100">
         <div class="grid grid-3">
@@ -1535,6 +1804,104 @@
             behavior: "smooth",
           });
         });
+      }
+
+      // Carousel Functionality
+      const track = document.querySelector('.carousel-track');
+      const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+      const nextButton = document.querySelector('.carousel-button--right');
+      const prevButton = document.querySelector('.carousel-button--left');
+      const dotsNav = document.querySelector('.carousel-nav');
+      const dots = Array.from(document.querySelectorAll('.carousel-indicator'));
+      
+      if (track && slides.length > 0 && nextButton && prevButton && dotsNav && dots.length > 0) {
+        let currentSlide = 0;
+        const slideCount = slides.length;
+        let autoplayInterval;
+
+        const updateSlides = () => {
+          slides.forEach((slide, index) => {
+            slide.classList.toggle('current-slide', index === currentSlide);
+          });
+          dots.forEach((dot, index) => {
+            dot.classList.toggle('current-slide', index === currentSlide);
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}${index === currentSlide ? ' (current)' : ''}`);
+          });
+        };
+
+        const moveToSlide = (slideIndex) => {
+          currentSlide = slideIndex;
+          updateSlides();
+          resetAutoplay();
+        };
+
+        const nextSlide = () => {
+          currentSlide = (currentSlide + 1) % slideCount;
+          updateSlides();
+          resetAutoplay();
+        };
+
+        const prevSlide = () => {
+          currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+          updateSlides();
+          resetAutoplay();
+        };
+
+        const startAutoplay = () => {
+          autoplayInterval = setInterval(nextSlide, 5000);
+        };
+
+        const stopAutoplay = () => {
+          if (autoplayInterval) {
+            clearInterval(autoplayInterval);
+          }
+        };
+
+        const resetAutoplay = () => {
+          stopAutoplay();
+          startAutoplay();
+        };
+
+        // Event listeners
+        nextButton.addEventListener('click', nextSlide);
+        prevButton.addEventListener('click', prevSlide);
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => moveToSlide(index));
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+
+        track.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+        });
+
+        const handleSwipe = () => {
+          if (touchEndX < touchStartX - 50) {
+            nextSlide();
+          }
+          if (touchEndX > touchStartX + 50) {
+            prevSlide();
+          }
+        };
+
+        // Pause autoplay on hover
+        const carousel = document.querySelector('.carousel');
+        if (carousel) {
+          carousel.addEventListener('mouseenter', stopAutoplay);
+          carousel.addEventListener('mouseleave', startAutoplay);
+        }
+
+        // Initialize - set initial state first, then start autoplay
+        updateSlides();
+        startAutoplay();
       }
     </script>
   </body>
