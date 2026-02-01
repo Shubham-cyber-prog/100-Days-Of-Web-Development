@@ -21,13 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Dynamically import services since this script is loaded via <script> tag
-        const { progressService } = await import('../core/progressService.js');
-        const { achievementService } = await import('../core/achievementService.js');
-        const { default: graderService } = await import('../core/graderService.js');
-        const { default: graderUI } = await import('../components/GraderUI.js');
-        const { Notify } = await import('../core/Notify.js');
-
         const user = auth.getCurrentUser();
         const isGuest = auth.isGuest();
 
@@ -212,74 +205,19 @@ document.addEventListener('DOMContentLoaded', () => {
             updateStats();
         });
 
-        async function loadUserStats() {
-            if (!user.isGuest && user.userId) {
-                try {
-                    userStats = await firestoreService.getUserStats(user.userId);
-                    if (userStats) {
-                        completedDays = userStats.completedDays || [];
-                        console.log('Loaded user stats from Firestore:', userStats);
-                    } else {
-                        // Initialize default stats
-                        userStats = {
-                            progressPercent: 0,
-                            completedDays: 0,
-                            totalProjects: 100,
-                            currentDay: 1,
-                            currentStreak: 0,
-                            longestStreak: 0,
-                            username: user.email.split('@')[0],
-                            avatar: '',
-                            bio: '',
-                            location: '',
-                            website: '',
-                            github: '',
-                            recentProjects: [],
-                            status: 'Active'
-                        };
-                        completedDays = [];
-                    }
-                } catch (error) {
-                    console.error('Error loading user stats from Firestore:', error);
-                    // Fallback to localStorage
-                    completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
-                    userStats = {
-                        progressPercent: Math.round((completedDays.length / 100) * 100),
-                        completedDays: completedDays.length,
-                        totalProjects: 100,
-                        currentDay: 1,
-                        currentStreak: 0,
-                        longestStreak: 0,
-                        username: user.email.split('@')[0],
-                        avatar: '',
-                        bio: '',
-                        location: '',
-                        website: '',
-                        github: '',
-                        recentProjects: [],
-                        status: 'Active'
-                    };
-                }
-            } else {
-                // Guest user - use localStorage
-                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
-                userStats = {
-                    progressPercent: Math.round((completedDays.length / 100) * 100),
-                    completedDays: completedDays.length,
-                    totalProjects: 100,
-                    currentDay: 1,
-                    currentStreak: 0,
-                    longestStreak: 0,
-                    username: 'Guest',
-                    avatar: '',
-                    bio: '',
-                    location: '',
-                    website: '',
-                    github: '',
-                    recentProjects: [],
-                    status: 'Active'
-                };
-            }
+
+
+        // Initial render
+        updateUI();
+
+        function updateUI() {
+            if (document.getElementById('progressGrid')) renderProgressGrid();
+            if (document.getElementById('completedDays')) updateStats();
+            if (document.getElementById('recommendationsGrid')) renderRecommendations();
+
+            // Trigger Neural Nexus analysis
+            initializeNeuralNexus(projects);
+        }
 
 
             // Render UI after loading data
@@ -520,13 +458,52 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Handle logout
-        window.handleLogout = async function() {
-            if (confirm('Are you sure you want to log out?')) {
-                localStorage.clear();
-                sessionStorage.clear();
-                window.location.href = 'login.html';
+
+
+        async function initializeNeuralNexus(projectsList) {
+            if (!window.AI || !window.NexusHUD) return;
+
+            // Start progress analysis
+            const progressData = JSON.parse(localStorage.getItem('progressData')) || {};
+            const completedDaysList = Object.keys(progressData).map(Number);
+
+            const analysis = await window.AI.analyzeProgress({
+                completedDays: completedDaysList,
+                techDistribution: calculateTechDistribution(completedDaysList, projectsList),
+                currentStreak: parseInt(document.getElementById('currentStreak')?.textContent || 0)
+            });
+
+            // Update HUD with AI advice for the next mission
+            const maxDay = completedDaysList.length > 0 ? Math.max(...completedDaysList) : 0;
+            const nextDayNumber = maxDay + 1;
+            const adviceText = await window.AI.getHUDAdvice(nextDayNumber);
+
+            if (window.NexusHUD) {
+                window.NexusHUD.updateAITip(adviceText);
             }
-        };
+
+            // Show AI notification
+            if (window.Notify) {
+                window.Notify.show({
+                    title: 'Neural Nexus Link Established',
+                    message: 'AI Pair-Programmer is online. Click the brain icon for insights.',
+                    type: 'neural',
+                    duration: 5000
+                });
+            }
+        }
+
+        function calculateTechDistribution(completed, allProjects) {
+            const dist = {};
+            completed.forEach(dayNumber => {
+                const project = allProjects.find(p => p.day === dayNumber);
+                if (project && project.tech) {
+                    project.tech.forEach(t => {
+                        dist[t] = (dist[t] || 0) + 1;
+                    });
+                }
+            });
+            return dist;
+        }
     }
 });
