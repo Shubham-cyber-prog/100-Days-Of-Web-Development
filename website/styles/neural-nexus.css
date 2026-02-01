@@ -1,0 +1,161 @@
+/**
+ * Neural Nexus - Premium Cyber-grid Styling
+ * Advanced styles for AI-driven platform features
+ * Issue #1174
+ */
+
+:root {
+    --nexus-glow: rgba(139, 92, 246, 0.5);
+    --nexus-bg: rgba(13, 17, 23, 0.95);
+    --cyber-grid-color: rgba(139, 92, 246, 0.05);
+}
+
+/* Global Cyber Grid Background (Optional activation per page) */
+.neural-nexus-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(var(--cyber-grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--cyber-grid-color) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* AI HUD Specific Styles (Beyond what's in JS) */
+.neural-nexus-hud {
+    /* Base styles are in AIOverlay.js, but these add depth */
+    animation: nexus-slide-up 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes nexus-slide-up {
+    from {
+        transform: translateY(100px) scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Special "Neural" Notification Style */
+.notify-item.notify-neural {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.notify-item.notify-neural::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(139, 92, 246, 0.2),
+            transparent);
+    animation: neural-scan 3s infinite linear;
+}
+
+@keyframes neural-scan {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Quest Reward Animation */
+.quest-complete-anim {
+    animation: quest-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes quest-pop {
+    0% {
+        transform: scale(0.8);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Radar/Pulse effect for the HUD Orb when minimized */
+.neural-nexus-hud.minimized::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(139, 92, 246, 0.5);
+    animation: nexus-pulse 2s infinite;
+}
+
+@keyframes nexus-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* AI Suggestion Typing Effect */
+.typing-effect {
+    overflow: hidden;
+    border-right: 2px solid var(--accent-core);
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: var(--accent-core);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .neural-nexus-hud {
+        width: calc(100% - 48px);
+        height: 60vh;
+        bottom: 12px;
+        right: 24px;
+    }
+}
