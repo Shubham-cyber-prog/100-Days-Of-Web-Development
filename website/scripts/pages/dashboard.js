@@ -212,6 +212,29 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render progress grid
         if (document.getElementById('progressGrid')) renderProgressGrid();
 
+
+
+        // Initial render
+        updateUI();
+
+        function updateUI() {
+            if (document.getElementById('progressGrid')) renderProgressGrid();
+            if (document.getElementById('completedDays')) updateStats();
+            if (document.getElementById('recommendationsGrid')) renderRecommendations();
+
+            // Trigger Neural Nexus analysis
+            initializeNeuralNexus(projects);
+        }
+
+
+            // Render UI after loading data
+            if (document.getElementById('progressGrid')) renderProgressGrid();
+            if (document.getElementById('completedDays')) updateStats();
+            if (document.getElementById('recommendationsGrid')) renderRecommendations();
+        }
+
+
+
         // Render UI after loading data
         if (document.getElementById('progressGrid')) renderProgressGrid();
         if (document.getElementById('completedDays')) updateStats();
@@ -470,13 +493,52 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Handle logout
-        window.handleLogout = async function() {
-            if (confirm('Are you sure you want to log out?')) {
-                localStorage.clear();
-                sessionStorage.clear();
-                window.location.href = 'login.html';
+
+
+        async function initializeNeuralNexus(projectsList) {
+            if (!window.AI || !window.NexusHUD) return;
+
+            // Start progress analysis
+            const progressData = JSON.parse(localStorage.getItem('progressData')) || {};
+            const completedDaysList = Object.keys(progressData).map(Number);
+
+            const analysis = await window.AI.analyzeProgress({
+                completedDays: completedDaysList,
+                techDistribution: calculateTechDistribution(completedDaysList, projectsList),
+                currentStreak: parseInt(document.getElementById('currentStreak')?.textContent || 0)
+            });
+
+            // Update HUD with AI advice for the next mission
+            const maxDay = completedDaysList.length > 0 ? Math.max(...completedDaysList) : 0;
+            const nextDayNumber = maxDay + 1;
+            const adviceText = await window.AI.getHUDAdvice(nextDayNumber);
+
+            if (window.NexusHUD) {
+                window.NexusHUD.updateAITip(adviceText);
             }
-        };
+
+            // Show AI notification
+            if (window.Notify) {
+                window.Notify.show({
+                    title: 'Neural Nexus Link Established',
+                    message: 'AI Pair-Programmer is online. Click the brain icon for insights.',
+                    type: 'neural',
+                    duration: 5000
+                });
+            }
+        }
+
+        function calculateTechDistribution(completed, allProjects) {
+            const dist = {};
+            completed.forEach(dayNumber => {
+                const project = allProjects.find(p => p.day === dayNumber);
+                if (project && project.tech) {
+                    project.tech.forEach(t => {
+                        dist[t] = (dist[t] || 0) + 1;
+                    });
+                }
+            });
+            return dist;
+        }
     }
 });
