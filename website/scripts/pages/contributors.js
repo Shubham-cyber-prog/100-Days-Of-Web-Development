@@ -126,29 +126,29 @@ async function fetchContributors() {
                 <div style="position: relative; display: inline-block;">
                     <img class="avatar" src="${user.avatar_url}" 
                          alt="${user.login}" 
-                         style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 16px; border: 2px solid var(--glass-border);"
                          onerror="this.src='https://api.github.com/identicons/${user.login}'">
-                    ${index < 3 ? `<span style="position: absolute; bottom: 10px; right: -5px; background: var(--accent-core); color: black; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold;">#${index + 1}</span>` : ''}
+                    ${index < 3 ? `<span class="top-contributor-badge">#${index + 1}</span>` : ''}
                 </div>
                 
-                <h4 style="margin-bottom: 8px;">${user.login}</h4>
+                <h4 style="margin-bottom: 4px; font-size: 1.1rem;">${user.login}</h4>
+                <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 12px;">Contributor</p>
                 
-                <div style="display: flex; justify-content: center; gap: 12px; margin: 12px 0; font-size: var(--text-xs);">
-                    <div style="text-align: center;">
-                        <div style="font-weight: bold; color: var(--accent-core);" id="prs-${user.login}">...</div>
-                        <div style="color: var(--text-secondary);">PRs</div>
+                <div class="contributor-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="prs-${user.login}">...</span>
+                        <span class="stat-label">PRs</span>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-weight: bold; color: var(--accent-core);" id="issues-${user.login}">...</div>
-                        <div style="color: var(--text-secondary);">Issues</div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="issues-${user.login}">...</span>
+                        <span class="stat-label">Issues</span>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-weight: bold; color: var(--accent-core);">${user.contributions}</div>
-                        <div style="color: var(--text-secondary);">Commits</div>
+                    <div class="stat-item">
+                        <span class="stat-value">${user.contributions}</span>
+                        <span class="stat-label">Commits</span>
                     </div>
                 </div>
                 
-                <a href="${user.html_url}" target="_blank" class="btn btn-social" style="margin-top: 12px; width: 100%; justify-content: center; font-size: 0.8rem;">
+                <a href="${user.html_url}" target="_blank" rel="noopener noreferrer" class="btn btn-social" style="margin-top: 12px; width: 100%; justify-content: center; font-size: 0.85rem;">
                     👤 View Profile
                 </a>
             `;
