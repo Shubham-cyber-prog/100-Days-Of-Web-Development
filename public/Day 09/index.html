@@ -1,65 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickNotes App</title>
-    <link rel="stylesheet" href="style.css">
-    </head>
-<body>
-    <header>
-        <h1>⚡ QuickNotes</h1>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search notes...">
-        </div>
-    </header>
-
-    <main class="notes-grid" id="app">
-        </main>
-
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="modal">
-            <h2 id="modal-title">Add Note</h2>
-            <div class="form-group">
-                <input type="text" id="note-title" class="form-input" placeholder="Title">
-            </div>
-            <div class="form-group">
-                <textarea id="note-body" class="form-textarea" placeholder="Write your thought here..."></textarea>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-cancel" id="cancel-btn">Cancel</button>
-                <button class="btn btn-save" id="save-btn">Save Note</button>
-            </div>
-        </div>
-    </div>
-
-</body>
-<script src="script.js"></script>
-</html>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌙 Smart Recipe Book</title>
-<link rel="stylesheet" href="style.css" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickNotes</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
 <header>
-<h1>🍲 Smart Recipe Book</h1>
-<div>
-<button onclick="toggleTheme()">🌙 Toggle</button>
-<button onclick="openAdd()">➕ Add</button>
-</div>
+  <h1>⚡ QuickNotes</h1>
+  <div class="search-bar">
+    <input type="text" id="search-input" placeholder="Search notes..." />
+  </div>
 </header>
 
-<div class="grid" id="recipes"></div>
+<section class="intro">
+  <h2>Your personal space for quick thoughts 📝</h2>
+  <p>
+    Create, edit, search, and manage your notes easily.
+    All notes are saved locally in your browser.
+  </p>
+</section>
 
-<div class="modal" id="modal"></div>
+<main class="notes-grid" id="app"></main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h2 id="modal-title">Add Note</h2>
+
+    <input type="text" id="note-title" placeholder="Title" />
+    <textarea id="note-body" placeholder="Write your note here..."></textarea>
+
+    <div class="modal-actions">
+      <button class="btn cancel" id="cancel-btn">Cancel</button>
+      <button class="btn save" id="save-btn">Save</button>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
 </html>
-

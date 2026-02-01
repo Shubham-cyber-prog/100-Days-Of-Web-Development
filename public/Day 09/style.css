@@ -1,254 +1,344 @@
-
- :root {
-            --primary: #6c5ce7;
-            --bg: #f3f4f6;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
-            --card-bg: #ffffff;
-            --danger: #ef4444;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-dark);
-            padding: 2rem;
-        }
-
-        /* --- Header & Search --- */
-        header {
-            max-width: 1200px;
-            margin: 0 auto 2rem auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        h1 {
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .search-bar {
-            flex-grow: 1;
-            max-width: 400px;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 10px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .search-bar input:focus {
-            border-color: var(--primary);
-        }
-
-        /* --- Grid Layout --- */
-        .notes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* --- Note Card --- */
-        .note-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 200px;
-            position: relative;
-        }
-
-        .note-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .note-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .note-body {
-            color: var(--text-light);
-            line-height: 1.5;
-            flex-grow: 1;
-            white-space: pre-wrap; /* Preserves line breaks */
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 6; /* Limit visible lines */
-            -webkit-box-orient: vertical;
-        }
-
-        .note-footer {
-            margin-top: 1rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: #9ca3af;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 5px;
-            border-radius: 5px;
-            transition: background 0.2s;
-        }
-
-        .icon-btn:hover {
-            background-color: #f3f4f6;
-        }
-
-        .delete-btn:hover {
-            color: var(--danger);
-            background-color: #fee2e2;
-        }
-
-        /* --- Add New Note Button (First Item in Grid) --- */
-        .add-note-card {
-            background: rgba(108, 92, 231, 0.1);
-            border: 2px dashed var(--primary);
-            color: var(--primary);
-            cursor: pointer;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .add-note-card:hover {
-            background: rgba(108, 92, 231, 0.2);
-        }
-
-        .add-icon {
-            font-size: 3rem;
-        }
-
-        /* --- Modal (Popup) --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none; /* Hidden by default */
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(3px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: white;
-            width: 90%;
-            max-width: 500px;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal h2 {
-            margin-bottom: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-input, .form-textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .form-textarea {
-            height: 150px;
-            resize: vertical;
-        }
-
-        .form-input:focus, .form-textarea:focus {
-            border-color: var(--primary);
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-cancel {
-            background: #e5e7eb;
-            color: var(--text-dark);
-        }
-
-        .btn-save {
-            background: var(--primary);
-            color: white;
-        }
-
-:root{
-  --bg:#fdf6ec;--card:#fff;--text:#333;--primary:#ff7043;--shadow:0 20px 40px rgba(0,0,0,.1)
+:root {
+  --primary: #6c5ce7;
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --danger: #ef4444;
 }
-body.dark{
-  --bg:#121212;--card:#1f1f1f;--text:#f5f5f5;--primary:#ffab91
-}
-body{margin:0;font-family:Poppins;background:var(--bg);color:var(--text);transition:.3s}
-header{display:flex;justify-content:space-between;align-items:center;padding:25px}
-button{border:none;border-radius:20px;padding:10px 16px;cursor:pointer;background:var(--primary);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;padding:25px}
-.card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;transition:.3s}
-.card:hover{transform:translateY(-6px)}
-.card img{width:100%;height:160px;object-fit:cover}
-.card .info{padding:15px}
-.modal{position:fixed;inset:0;display:none;background:rgba(0,0,0,.6);align-items:center;justify-content:center}
-.modal-content{background:var(--card);padding:25px;border-radius:20px;width:90%;max-width:650px;max-height:85vh;overflow:auto}
-input,textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin:6px 0}
-.timer{font-size:1.2rem;margin:10px 0}
-.favorite{font-size:1.3rem;cursor:pointer}
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  padding: 32px;
+  color: var(--text);
+}
+
+/* Header */
+header {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.6rem;
+}
+
+.search-bar input {
+  width: 280px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Intro */
+.intro {
+  max-width: 1100px;
+  margin: 0 auto 30px;
+}
+
+.intro h2 {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.intro p {
+  color: var(--muted);
+  max-width: 600px;
+}
+
+/* Grid */
+.notes-grid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Note Card */
+.note-card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: 0.2s;
+}
+
+.note-card:hover {
+  transform: translateY(-4px);
+}
+
+.note-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.note-body {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  flex-grow: 1;
+}
+
+/* Footer */
+.note-footer {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.icon-btn.delete:hover {
+  color: var(--danger);
+}
+
+/* Add Card */
+.add-card {
+  border: 2px dashed var(--primary);
+  background: #f4f3ff;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: white;
+  width: 90%;
+  max-width: 480px;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+}
+
+.modal textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.modal input:focus,
+.modal textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn.save {
+  background: var(--primary);
+  color: white;
+}
+
+.btn.cancel {
+  background: #e5e7eb;
+}
+/* ---------- PAGE LAYOUT IMPROVEMENTS ---------- */
+
+body {
+  background: #f8f9fd;
+}
+
+/* Better spacing between header & content */
+header {
+  margin-bottom: 32px;
+}
+
+/* ---------- INTRO TEXT POLISH ---------- */
+
+.intro h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.intro p {
+  margin-top: 8px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+/* ---------- ADD NOTE CARD (DASHED) ---------- */
+
+.add-card {
+  min-height: 160px;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+}
+
+.add-card:hover {
+  background: #ede9fe;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(108,92,231,0.15);
+}
+
+/* ---------- NOTE CARDS POLISH ---------- */
+
+.note-card {
+  min-height: 160px;
+  border-radius: 16px;
+}
+
+.note-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.note-body {
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+/* Divider line inside card */
+.note-footer {
+  margin-top: 16px;
+  padding-top: 12px;
+}
+
+/* ---------- ICON BUTTONS ---------- */
+
+.icon-btn {
+  transition: transform 0.2s, background 0.2s;
+  border-radius: 6px;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+  background: #f1f5f9;
+}
+
+.icon-btn.delete:hover {
+  background: #fee2e2;
+}
+
+/* ---------- SEARCH INPUT POLISH ---------- */
+
+.search-bar input {
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+/* ---------- MODAL POLISH ---------- */
+
+.modal {
+  animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* Inputs look modern */
+.modal input,
+.modal textarea {
+  background: #f9fafb;
+}
+
+/* Buttons */
+.btn.save {
+  box-shadow: 0 6px 16px rgba(108,92,231,0.35);
+}
+
+.btn.save:hover {
+  opacity: 0.95;
+}
+
+/* ---------- RESPONSIVE TWEAK ---------- */
+
+@media (max-width: 600px) {
+  body {
+    padding: 20px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+}
