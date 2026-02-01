@@ -13,6 +13,9 @@ const RETRY_CONFIG = {
     backoffMultiplier: 2
 };
 
+// Cache for contributor stats to avoid rate limiting
+const statsCache = new Map();
+
 /**
  * Fetches with exponential backoff retry mechanism
  */
@@ -46,12 +49,48 @@ async function fetchWithRetry(url, options = {}, retries = 0) {
     }
 }
 
+/**
+ * Fetches PR and issue counts for a contributor
+ */
+async function fetchContributorStats(username) {
+    // Check cache first
+    if (statsCache.has(username)) {
+        return statsCache.get(username);
+    }
+
+    try {
+        // Fetch PRs and Issues in parallel
+        const [prs, issues] = await Promise.all([
+            fetchWithRetry(
+                `https://api.github.com/search/issues?q=type:pr+author:${username}+repo:${REPO_OWNER}/${REPO_NAME}`,
+                { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+            ),
+            fetchWithRetry(
+                `https://api.github.com/search/issues?q=type:issue+author:${username}+repo:${REPO_OWNER}/${REPO_NAME}`,
+                { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+            )
+        ]);
+
+        const stats = {
+            prs: prs.total_count || 0,
+            issues: issues.total_count || 0
+        };
+
+        // Cache the results
+        statsCache.set(username, stats);
+        return stats;
+    } catch (error) {
+        console.warn(`Failed to fetch stats for ${username}:`, error);
+        return { prs: 0, issues: 0 };
+    }
+}
+
 async function fetchContributors() {
     const grid = document.getElementById('contributorsGrid');
 
     try {
         // Show loading state
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);"><p>Loading crew manifest...</p></div>';
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);"><p>🚀 Loading crew manifest...</p></div>';
 
         const contributors = await fetchWithRetry(
             `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors`,
@@ -63,12 +102,13 @@ async function fetchContributors() {
             throw new Error('Invalid response: no contributors found');
         }
 
-        // Clear placeholder
-        grid.innerHTML = '';
-
         // Sort by contributions (descending)
         contributors.sort((a, b) => b.contributions - a.contributions);
 
+        // Clear placeholder and show initial cards
+        grid.innerHTML = '';
+
+        // Render cards immediately with loading placeholders for stats
         contributors.forEach((user, index) => {
             // Validate required fields
             if (!user.login || !user.avatar_url || !user.html_url) {
@@ -80,6 +120,7 @@ async function fetchContributors() {
             card.className = 'card animate-enter';
             card.style.textAlign = 'center';
             card.style.animationDelay = `${index * 50}ms`;
+            card.id = `contributor-${user.login}`;
 
             card.innerHTML = `
                 <div style="position: relative; display: inline-block;">
@@ -90,16 +131,37 @@ async function fetchContributors() {
                     ${index < 3 ? `<span style="position: absolute; bottom: 10px; right: -5px; background: var(--accent-core); color: black; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold;">#${index + 1}</span>` : ''}
                 </div>
                 
-                <h4 style="margin-bottom: 4px;">${user.login}</h4>
-                <p class="text-flame" style="font-size: var(--text-sm); font-weight: bold;">
-                    ${user.contributions} Contributions
-                </p>
+                <h4 style="margin-bottom: 8px;">${user.login}</h4>
+                
+                <div style="display: flex; justify-content: center; gap: 12px; margin: 12px 0; font-size: var(--text-xs);">
+                    <div style="text-align: center;">
+                        <div style="font-weight: bold; color: var(--accent-core);" id="prs-${user.login}">...</div>
+                        <div style="color: var(--text-secondary);">PRs</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-weight: bold; color: var(--accent-core);" id="issues-${user.login}">...</div>
+                        <div style="color: var(--text-secondary);">Issues</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-weight: bold; color: var(--accent-core);">${user.contributions}</div>
+                        <div style="color: var(--text-secondary);">Commits</div>
+                    </div>
+                </div>
+                
                 <a href="${user.html_url}" target="_blank" class="btn btn-social" style="margin-top: 12px; width: 100%; justify-content: center; font-size: 0.8rem;">
-                    View Profile
+                    👤 View Profile
                 </a>
             `;
 
             grid.appendChild(card);
+
+            // Fetch stats asynchronously
+            fetchContributorStats(user.login).then(stats => {
+                const prsEl = document.getElementById(`prs-${user.login}`);
+                const issuesEl = document.getElementById(`issues-${user.login}`);
+                if (prsEl) prsEl.textContent = stats.prs;
+                if (issuesEl) issuesEl.textContent = stats.issues;
+            });
         });
 
     } catch (error) {
