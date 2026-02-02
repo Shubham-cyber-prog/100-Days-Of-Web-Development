@@ -65,6 +65,15 @@ class SettingsManager {
         document.getElementById('displayName').value = this.settings.displayName;
         document.getElementById('email').value = this.settings.email;
         document.getElementById('bio').value = this.settings.bio;
+        
+        // Load profile picture
+        const profileData = JSON.parse(localStorage.getItem('profileData'));
+        if (profileData && profileData.avatar) {
+            const avatarImg = document.getElementById('settingsAvatar');
+            if (avatarImg) {
+                avatarImg.src = profileData.avatar;
+            }
+        }
     }
 
     // Apply settings to UI
@@ -326,6 +335,48 @@ function exportData() {
 
 function resetProgress() {
     window.settingsManager.resetProgress();
+}
+
+function changeSettingsAvatar() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                window.settingsManager.showNotification('Image size must be less than 5MB', 'error');
+                return;
+            }
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                window.settingsManager.showNotification('Please select an image file', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                // Update profile data
+                const profileData = JSON.parse(localStorage.getItem('profileData')) || {};
+                profileData.avatar = event.target.result;
+                localStorage.setItem('profileData', JSON.stringify(profileData));
+                
+                // Update display
+                const avatarImg = document.getElementById('settingsAvatar');
+                if (avatarImg) {
+                    avatarImg.src = event.target.result;
+                }
+                
+                window.settingsManager.showNotification('Profile picture updated successfully!', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    
+    input.click();
 }
 
 // Initialize when DOM is loaded

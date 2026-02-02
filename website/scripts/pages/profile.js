@@ -135,6 +135,12 @@ class ProfileManager {
         document.getElementById('userLocation').textContent = this.userData.location;
         document.getElementById('avatarImg').src = this.userData.avatar;
         
+        // Update cover photo if saved
+        const coverImg = document.getElementById('coverImg');
+        if (coverImg && this.userData.coverPhoto) {
+            coverImg.src = this.userData.coverPhoto;
+        }
+        
         // Update bio if element exists
         const bioElement = document.getElementById('userBio');
         if (bioElement) {
@@ -256,6 +262,14 @@ class ProfileManager {
         document.getElementById('editAvatarBtn').addEventListener('click', () => {
             this.changeAvatar();
         });
+
+        // Edit cover button
+        const editCoverBtn = document.getElementById('editCoverBtn');
+        if (editCoverBtn) {
+            editCoverBtn.addEventListener('click', () => {
+                this.changeCoverPhoto();
+            });
+        }
 
         // Modal events
         document.querySelector('.close').addEventListener('click', () => {
@@ -389,23 +403,94 @@ class ProfileManager {
     }
 
     changeAvatar() {
-        const avatars = [
-            '../assets/images/pilot_avatar.png',
-            'https://api.dicebear.com/7.x/avataaars/svg?seed=1',
-            'https://api.dicebear.com/7.x/avataaars/svg?seed=2',
-            'https://api.dicebear.com/7.x/avataaars/svg?seed=3',
-            'https://api.dicebear.com/7.x/avataaars/svg?seed=4'
-        ];
+        // Create file input for avatar upload
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    this.showNotification('Image size must be less than 5MB', 'error');
+                    return;
+                }
 
-        const currentIndex = avatars.indexOf(this.userData.avatar);
-        const nextIndex = (currentIndex + 1) % avatars.length;
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    this.showNotification('Please select an image file', 'error');
+                    return;
+                }
 
-        this.userData.avatar = avatars[nextIndex];
-        localStorage.setItem('profileData', JSON.stringify(this.userData));
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    this.userData.avatar = event.target.result;
+                    localStorage.setItem('profileData', JSON.stringify(this.userData));
+                    document.getElementById('avatarImg').src = this.userData.avatar;
+                    this.showNotification('Avatar updated successfully!', 'success');
+                    
+                    this.addActivity({
+                        title: 'Changed Profile Picture',
+                        description: 'Updated profile avatar with new image',
+                        icon: 'fas fa-image',
+                        time: 'Just now',
+                        type: 'profile'
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        
+        input.click();
+    }
 
-        document.getElementById('avatarImg').src = this.userData.avatar;
+    changeCoverPhoto() {
+        // Create file input for cover photo upload
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    this.showNotification('Image size must be less than 5MB', 'error');
+                    return;
+                }
 
-        this.showNotification('Avatar updated!', 'success');
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    this.showNotification('Please select an image file', 'error');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    this.userData.coverPhoto = event.target.result;
+                    localStorage.setItem('profileData', JSON.stringify(this.userData));
+                    
+                    const coverImg = document.getElementById('coverImg');
+                    if (coverImg) {
+                        coverImg.src = this.userData.coverPhoto;
+                    }
+                    
+                    this.showNotification('Cover photo updated successfully!', 'success');
+                    
+                    this.addActivity({
+                        title: 'Changed Cover Photo',
+                        description: 'Updated profile cover with new image',
+                        icon: 'fas fa-image',
+                        time: 'Just now',
+                        type: 'profile'
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        
+        input.click();
     }
 
     addActivity(activity) {
@@ -426,11 +511,16 @@ class ProfileManager {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
         notification.textContent = message;
+        
+        let bgColor = '#2196f3'; // info
+        if (type === 'success') bgColor = '#4caf50';
+        if (type === 'error') bgColor = '#f44336';
+        
         notification.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background: ${type === 'success' ? '#4caf50' : '#2196f3'};
+            background: ${bgColor};
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 8px;
