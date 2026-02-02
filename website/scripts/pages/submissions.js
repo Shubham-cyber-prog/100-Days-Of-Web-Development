@@ -410,4 +410,3 @@ function toggleUserMenu() {
 function handleLogout() {
     localStorage.removeItem('user');
     window.location.href = '../index.html';
-}
