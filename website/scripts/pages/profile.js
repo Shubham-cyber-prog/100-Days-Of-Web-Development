@@ -134,6 +134,12 @@ class ProfileManager {
         document.getElementById('joinDate').textContent = this.userData.joinDate;
         document.getElementById('userLocation').textContent = this.userData.location;
         document.getElementById('avatarImg').src = this.userData.avatar;
+        
+        // Update bio if element exists
+        const bioElement = document.getElementById('userBio');
+        if (bioElement) {
+            bioElement.textContent = this.userData.bio || 'Passionate web developer dedicated to creating beautiful and functional web applications.';
+        }
     }
 
     renderAchievements() {
@@ -185,11 +191,13 @@ class ProfileManager {
 
         // Calculate projects completed (from progress tracker)
         const projectsCompleted = Object.keys(progressData).length;
-        document.getElementById('projectsCompleted').textContent = projectsCompleted;
+        const projectsEl = document.getElementById('projectsCompleted');
+        if (projectsEl) projectsEl.textContent = projectsCompleted;
 
         // Calculate current streak (simplified)
         const currentStreak = this.calculateStreak();
-        document.getElementById('currentStreak').textContent = currentStreak;
+        const streakEl = document.getElementById('currentStreak');
+        if (streakEl) streakEl.textContent = currentStreak;
 
         // Calculate days active
         const joinDate = new Date(this.userData.joinDate);
@@ -200,7 +208,7 @@ class ProfileManager {
 
         // Calculate completion rate
         const completionRate = Math.round((projectsCompleted / 100) * 100);
-        const completionRateEl = document.getElementById('completionRateCounter');
+        const completionRateEl = document.getElementById('completionRate') || document.getElementById('completionRateCounter');
         if (completionRateEl) completionRateEl.textContent = `${completionRate}%`;
 
         // Eligibility check for Mentor Mode (past Day 50)

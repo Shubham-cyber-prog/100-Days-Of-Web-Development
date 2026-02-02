@@ -7,716 +7,8 @@
   <link rel="icon" type="image/png" href="../assets/images/logo.png" />
   <title>Profile | 100 Days of Web Dev</title>
   <link rel="stylesheet" href="../styles/index.css" />
+  <link rel="stylesheet" href="../styles/pages/profile.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <style>
-    /* Profile-specific styles using site's design system */
-    .profile-hero {
-      text-align: center;
-      padding: 120px 20px 60px;
-      position: relative;
-    }
-
-    .profile-hero::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle,
-          rgba(139, 92, 246, 0.15) 0%,
-          transparent 70%);
-      border-radius: 50%;
-      animation: pulse-glow 4s ease-in-out infinite;
-    }
-
-    @keyframes pulse-glow {
-
-      0%,
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.5;
-      }
-
-      50% {
-        transform: translate(-50%, -50%) scale(1.1);
-        opacity: 0.8;
-      }
-    }
-
-    .profile-avatar-main {
-      position: relative;
-      margin: 0 auto 2rem;
-      width: 150px;
-      height: 150px;
-      z-index: 1;
-    }
-
-    .profile-avatar-main img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 4px solid var(--accent-core);
-      object-fit: cover;
-      box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
-    }
-
-    .profile-title {
-      font-size: var(--text-3xl);
-      font-weight: var(--weight-black);
-      margin-bottom: var(--space-2);
-      background: linear-gradient(135deg,
-          var(--text-primary) 0%,
-          var(--accent-core) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      position: relative;
-      z-index: 1;
-    }
-
-    .profile-subtitle {
-      color: var(--text-secondary);
-      font-size: var(--text-lg);
-      margin-bottom: var(--space-8);
-      position: relative;
-      z-index: 1;
-    }
-
-    .profile-stats {
-      display: flex;
-      gap: var(--space-8);
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stat-card {
-      background: var(--bg-glass-panel);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-6);
-      text-align: center;
-      min-width: 120px;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent-core);
-      box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
-    }
-
-    .stat-number {
-      display: block;
-      font-size: var(--text-2xl);
-      font-weight: var(--weight-bold);
-      color: var(--accent-core);
-      margin-bottom: var(--space-1);
-    }
-
-    .stat-label {
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-      font-weight: var(--weight-medium);
-    }
-
-    .profile-content {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .profile-section {
-      margin-bottom: var(--space-8);
-    }
-
-    .section-card {
-      background: var(--bg-glass-panel);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-xl);
-      padding: var(--space-8);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .section-card:hover {
-      border-color: var(--accent-alpha);
-      transform: translateY(-2px);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      margin-bottom: var(--space-6);
-    }
-
-    .section-header h2 {
-      font-size: var(--text-xl);
-      font-weight: var(--weight-semibold);
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    .section-header i {
-      color: var(--accent-core);
-      font-size: var(--text-lg);
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-6);
-    }
-
-    .info-item {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-
-    .info-label {
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-      font-weight: var(--weight-medium);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .info-value {
-      color: var(--text-primary);
-      font-size: var(--text-base);
-      font-weight: var(--weight-medium);
-    }
-
-    .progress-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--space-6);
-    }
-
-    .progress-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
-      padding: var(--space-4);
-      background: var(--bg-surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--glass-border);
-    }
-
-    .progress-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--accent-core);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: var(--text-lg);
-    }
-
-    .progress-info {
-      flex: 1;
-    }
-
-    .progress-title {
-      color: var(--text-primary);
-      font-weight: var(--weight-semibold);
-      margin-bottom: var(--space-2);
-    }
-
-    .progress-bar {
-      height: 6px;
-      background: var(--bg-surface);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: var(--space-1);
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg,
-          var(--accent-core),
-          var(--accent-glow));
-      border-radius: 3px;
-      transition: width 0.8s ease;
-    }
-
-    .progress-text {
-      color: var(--text-secondary);
-      font-size: var(--text-xs);
-    }
-
-    .edit-profile-btn {
-      background: var(--accent-core);
-      color: white;
-      border: none;
-      padding: var(--space-3) var(--space-6);
-      border-radius: var(--radius-lg);
-      font-weight: var(--weight-semibold);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      margin: var(--space-6) auto 0;
-    }
-
-    .edit-profile-btn:hover {
-      background: var(--accent-glow);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
-    }
-
-    .achievements-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .achievement-badge {
-      background: var(--bg-glass-panel);
-      border: 1px solid var(--border-glass);
-      color: var(--text-primary);
-      border-radius: 12px;
-      padding: 16px 12px;
-      text-align: center;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(6px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 120px;
-      height: auto;
-      overflow: hidden;
-    }
-
-    .achievement-badge:hover {
-      border-color: var(--accent-core);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
-    }
-
-    .achievement-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-      flex-shrink: 0;
-    }
-
-    .achievement-name {
-      color: var(--text-primary);
-      font-size: 11px;
-      font-weight: var(--weight-medium);
-      line-height: 1.3;
-      text-align: center;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      hyphens: auto;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .achievement-description {
-      color: var(--text-secondary);
-      font-size: 9px;
-      line-height: 1.2;
-      margin-top: 4px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .achievement-date {
-      color: var(--text-tertiary);
-      font-size: 8px;
-      margin-top: 4px;
-      opacity: 0.7;
-      font-weight: var(--weight-medium);
-    }
-
-    .activity-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-4);
-    }
-
-    .activity-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
-      padding: var(--space-4);
-      background: var(--bg-surface);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      transition: all 0.3s ease;
-    }
-
-    .activity-item:hover {
-      border-color: var(--accent-alpha);
-      transform: translateX(4px);
-    }
-
-    .activity-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--accent-alpha);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-core);
-    }
-
-    .activity-details {
-      flex: 1;
-    }
-
-    .activity-title {
-      color: var(--text-primary);
-      font-weight: var(--weight-medium);
-      margin-bottom: var(--space-1);
-    }
-
-    .activity-time {
-      color: var(--text-secondary);
-      font-size: var(--text-xs);
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-      .profile-stats {
-        gap: var(--space-4);
-      }
-
-      .stat-card {
-        min-width: 100px;
-        padding: var(--space-4);
-      }
-
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .progress-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 10000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
-      overflow-y: auto;
-    }
-
-    .modal-content {
-      background: var(--bg-glass-panel);
-      margin: 5% auto;
-      padding: 0;
-      border-radius: var(--radius-xl);
-      width: 90%;
-      max-width: 500px;
-      border: 1px solid rgba(139, 92, 246, 0.2);
-      backdrop-filter: blur(20px);
-      animation: modalSlideIn 0.3s ease;
-    }
-
-    @keyframes modalSlideIn {
-      from {
-        transform: translateY(-50px);
-        opacity: 0;
-      }
-
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .modal-header {
-      padding: var(--space-6);
-      border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .modal-header h3 {
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    .close {
-      color: var(--text-secondary);
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      line-height: 1;
-    }
-
-    .close:hover {
-      color: var(--text-primary);
-    }
-
-    .modal-body {
-      padding: var(--space-6);
-    }
-
-    .form-group {
-      margin-bottom: var(--space-4);
-    }
-
-    .form-group label {
-      display: block;
-      color: var(--text-secondary);
-      margin-bottom: var(--space-2);
-      font-weight: var(--weight-medium);
-    }
-
-    .form-control {
-      width: 100%;
-      padding: var(--space-3);
-      background: rgba(139, 92, 246, 0.05);
-      border: 1px solid rgba(139, 92, 246, 0.2);
-      border-radius: var(--radius-lg);
-      color: var(--text-primary);
-      font-family: inherit;
-      transition: all 0.3s ease;
-      box-sizing: border-box;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: var(--accent-core);
-      background: rgba(139, 92, 246, 0.1);
-    }
-
-    .form-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: var(--space-3);
-      margin-top: var(--space-6);
-    }
-
-    .btn {
-      padding: var(--space-3) var(--space-6);
-      border: none;
-      border-radius: var(--radius-lg);
-      cursor: pointer;
-      font-weight: var(--weight-medium);
-      transition: all 0.3s ease;
-    }
-
-    .btn-secondary {
-      background: var(--bg-muted);
-      color: var(--text-secondary);
-      border: 1px solid rgba(139, 92, 246, 0.2);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(139, 92, 246, 0.2);
-      color: var(--text-primary);
-    }
-
-    .btn-primary {
-      background: var(--accent-core);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-glow);
-      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-    }
-
-    /* Light Theme Overrides */
-    [data-theme="light"] .profile-hero::before {
-      background: radial-gradient(circle,
-          rgba(139, 92, 246, 0.08) 0%,
-          transparent 70%);
-    }
-
-    [data-theme="light"] .stat-card {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    [data-theme="light"] .stat-card:hover {
-      border-color: var(--accent-core);
-      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.15);
-    }
-
-    [data-theme="light"] .section-card {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    [data-theme="light"] .section-card:hover {
-      border-color: var(--accent-core);
-      transform: translateY(-2px);
-    }
-
-    [data-theme="light"] .progress-item {
-      background: #f8fafc;
-      border: 1px solid rgba(0, 0, 0, 0.06);
-    }
-
-    [data-theme="light"] .progress-bar {
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    [data-theme="light"] .achievement-badge {
-      background: #ffffff;
-      border: 1px solid rgba(139, 92, 246, 0.1);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    }
-
-    [data-theme="light"] .achievement-badge:hover {
-      border-color: var(--accent-core);
-      box-shadow: 0 6px 16px rgba(139, 92, 246, 0.12);
-    }
-
-    [data-theme="light"] .activity-item {
-      background: #f8fafc;
-      border: 1px solid rgba(0, 0, 0, 0.06);
-    }
-
-    [data-theme="light"] .activity-item:hover {
-      border-color: rgba(139, 92, 246, 0.3);
-    }
-
-    /* Text Colors for Light Theme */
-    [data-theme="light"] .profile-title {
-      background: linear-gradient(135deg,
-          #1f2937 0%,
-          var(--accent-core) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    [data-theme="light"] .profile-subtitle,
-    [data-theme="light"] .stat-label,
-    [data-theme="light"] .info-label,
-    [data-theme="light"] .progress-text,
-    [data-theme="light"] .achievement-description,
-    [data-theme="light"] .achievement-date,
-    [data-theme="light"] .activity-time {
-      color: #6b7280;
-    }
-
-    [data-theme="light"] .section-header h2,
-    [data-theme="light"] .info-value,
-    [data-theme="light"] .progress-title,
-    [data-theme="light"] .achievement-name,
-    [data-theme="light"] .activity-title {
-      color: #1f2937;
-    }
-
-    /* Modal Adjustments for Light Theme */
-    [data-theme="light"] .modal-content {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    [data-theme="light"] .modal-header {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
-
-    [data-theme="light"] .form-control {
-      background: #f8fafc;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      color: #1f2937;
-    }
-
-    [data-theme="light"] .form-control:focus {
-      border-color: var(--accent-core);
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-    }
-
-    [data-theme="light"] .btn-secondary {
-      background: rgba(0, 0, 0, 0.04);
-      color: #4b5563;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    [data-theme="light"] .btn-secondary:hover {
-      background: rgba(0, 0, 0, 0.08);
-      color: #1f2937;
-    }
-
-    /* Footer Adjustments */
-    [data-theme="light"] .footer {
-      background: #f8fafc;
-      color: #4b5563;
-      border-top: 1px solid rgba(0, 0, 0, 0.06);
-    }
-
-    [data-theme="light"] .footer h3 {
-      color: #1f2937;
-    }
-
-    [data-theme="light"] .footer-links a {
-      color: #6b7280;
-    }
-
-    [data-theme="light"] .footer-links a:hover {
-      color: var(--accent-core);
-    }
-
-    [data-theme="light"] .social-link {
-      color: #6b7280;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    [data-theme="light"] .social-link:hover {
-      background: var(--accent-core);
-      color: white;
-      border-color: var(--accent-core);
-    }
-
-    /* Fix for avatar border in light mode */
-    [data-theme="light"] .profile-avatar-main img {
-      border: 4px solid var(--accent-core);
-      box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
-    }
-
-    /* Enhanced button visibility */
-    [data-theme="light"] .edit-profile-btn {
-      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
-    }
-
-    [data-theme="light"] .edit-profile-btn:hover {
-      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
-    }
-  </style>
   <script src="../scripts/components/sidebar-loader.js"></script>
 </head>
 
@@ -784,316 +76,294 @@
   </header>
 
   <main class="container section">
-    <div class="profile-header animate-enter">
-      <div class="profile-avatar">
-        <img id="avatarImg" src="../assets/images/pilot_avatar.png" alt="Profile Avatar">
-        <button class="avatar-edit-btn" id="editAvatarBtn">📷</button>
+    <!-- Cover Photo Section -->
+    <div class="profile-cover animate-enter">
+      <div class="cover-image">
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=300&fit=crop" alt="Cover" id="coverImg">
+        <button class="cover-edit-btn" id="editCoverBtn" title="Change cover photo">
+          <i class="fas fa-camera"></i>
+        </button>
       </div>
-      <div class="info-grid">
-        <div class="info-item">
-          <span class="info-label">Call Sign</span>
-          <span class="info-value" id="fullName">Alex Rodriguez</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Communications</span>
-          <span class="info-value" id="userEmail">alex.rodriguez@webdev.academy</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Deployment Date</span>
-          <span class="info-value" id="joinDate">March 2026</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Base Location</span>
-          <span class="info-value" id="userLocation">San Francisco, CA</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Mission Status</span>
-          <span class="info-value">Active Development</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Specialization</span>
-          <span class="info-value">Full-Stack Engineering</span>
-        </div>
-        <div class="profile-info">
-          <h1 id="userName">Web Developer</h1>
-          <p id="userTitle" class="text-secondary">Frontend Enthusiast</p>
-          <div class="profile-stats">
-            <div class="stat">
-              <span class="stat-number" id="projectsCompleted">0</span>
-              <span class="stat-label">Projects</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number" id="daysActive">0</span>
-              <span class="stat-label">Days Active</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number" id="currentStreak">0</span>
-              <span class="stat-label">Streak</span>
-            </div>
-          </div>
-        </div>
-        <button class="edit-profile-btn" id="editProfileBtn">✏️ Edit Profile</button>
-        <!-- Profile Hero Section -->
-        <section class="profile-hero animate-enter">
-          <div class="profile-avatar-main">
-            <img id="avatarImg" src="../assets/images/pilot_avatar.png" alt="Profile Avatar" />
-          </div>
-          <h1 class="profile-title" id="userName">Mission Commander</h1>
-          <p class="profile-subtitle" id="userTitle">Frontend Code Architect</p>
+    </div>
 
-          <div class="profile-stats">
-            <div class="stat-card">
-              <span class="stat-number" id="projectsCompleted">0</span>
-              <span class="stat-label">Projects</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-number" id="daysActive">73</span>
-              <span class="stat-label">Days Active</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-number" id="currentStreak">12</span>
-              <span class="stat-label">Current Streak</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-number">97%</span>
-              <span class="stat-label">Completion</span>
-            </div>
+    <!-- Profile Header with Avatar -->
+    <div class="profile-header animate-enter">
+      <div class="profile-header-content">
+        <div class="profile-avatar">
+          <img id="avatarImg" src="../assets/images/pilot_avatar.png" alt="Profile Avatar">
+          <button class="avatar-edit-btn" id="editAvatarBtn" title="Change avatar">
+            <i class="fas fa-camera"></i>
+          </button>
+        </div>
+        <div class="profile-basic-info">
+          <div class="profile-name-section">
+            <h1 id="userName">Web Developer</h1>
+            <p id="userTitle" class="profile-headline">Frontend Enthusiast | Full-Stack Developer</p>
+            <p class="profile-location">
+              <i class="fas fa-map-marker-alt"></i>
+              <span id="userLocation">San Francisco, CA</span>
+            </p>
           </div>
-        </section>
+          <div class="profile-actions">
+            <button class="btn-primary edit-profile-btn" id="editProfileBtn">
+              <i class="fas fa-edit"></i>
+              Edit Profile
+            </button>
+            <button class="btn-secondary share-profile-btn" id="shareProfileBtn">
+              <i class="fas fa-share-alt"></i>
+              Share
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Social Links -->
+      <div class="social-links-section">
+        <a href="#" class="social-link" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="#" class="social-link" title="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="#" class="social-link" title="Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="social-link" title="Portfolio">
+          <i class="fas fa-globe"></i>
+        </a>
+      </div>
+    </div>
 
-        <!-- Profile Content -->
-        <div class="profile-content">
-          <!-- Personal Information -->
-          <div class="profile-section animate-enter delay-100">
-            <div class="section-card">
-              <div class="section-header">
+    <!-- Stats Cards -->
+    <div class="profile-stats-cards animate-enter delay-100">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-project-diagram"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number" id="projectsCompleted">0</span>
+          <span class="stat-label">Projects</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number" id="daysActive">73</span>
+          <span class="stat-label">Days Active</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-fire"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number" id="currentStreak">12</span>
+          <span class="stat-label">Current Streak</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number" id="completionRate">97%</span>
+          <span class="stat-label">Completion</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="profile-main-grid">
+      <!-- Left Column -->
+      <div class="profile-left-column">
+        <!-- About Section -->
+        <div class="profile-section animate-enter delay-200">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>
                 <i class="fas fa-user"></i>
-                <h2>Mission Profile</h2>
-              </div>
-              <div class="info-grid">
-                <div class="info-item">
-                  <span class="info-label">Call Sign</span>
+                About
+              </h2>
+            </div>
+            <div class="about-content">
+              <p id="userBio">Passionate web developer dedicated to creating beautiful and functional web applications. Constantly learning and improving my skills through the 100 Days of Web Development challenge.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="profile-section animate-enter delay-300">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>
+                <i class="fas fa-info-circle"></i>
+                Personal Information
+              </h2>
+            </div>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-item-icon">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="info-item-content">
+                  <span class="info-label">Full Name</span>
                   <span class="info-value" id="fullName">Alex Rodriguez</span>
                 </div>
-                <div class="info-item">
-                  <span class="info-label">Communications</span>
+              </div>
+              <div class="info-item">
+                <div class="info-item-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-item-content">
+                  <span class="info-label">Email</span>
                   <span class="info-value" id="userEmail">alex.rodriguez@webdev.academy</span>
                 </div>
-                <div class="info-item">
-                  <span class="info-label">Deployment Date</span>
+              </div>
+              <div class="info-item">
+                <div class="info-item-icon">
+                  <i class="fas fa-calendar"></i>
+                </div>
+                <div class="info-item-content">
+                  <span class="info-label">Member Since</span>
                   <span class="info-value" id="joinDate">March 2024</span>
                 </div>
-                <div class="info-item">
-                  <span class="info-label">Base Location</span>
-                  <span class="info-value" id="userLocation">San Francisco, CA</span>
+              </div>
+              <div class="info-item">
+                <div class="info-item-icon">
+                  <i class="fas fa-briefcase"></i>
                 </div>
-                <div class="info-item">
-                  <span class="info-label">Mission Status</span>
-                  <span class="info-value">Active Development</span>
-                </div>
-                <div class="info-item">
+                <div class="info-item-content">
                   <span class="info-label">Specialization</span>
                   <span class="info-value">Full-Stack Engineering</span>
                 </div>
               </div>
-              <button class="edit-profile-btn" id="editProfileBtn">
-                <i class="fas fa-edit"></i>
-                <span>Update Profile</span>
-              </button>
             </div>
           </div>
+        </div>
 
-          <!-- Skills Progress -->
-          <div class="profile-section animate-enter delay-200">
-            <div class="section-card">
-              <div class="section-header">
-                <i class="fas fa-chart-line"></i>
-                <h2>Skill Progression</h2>
-              </div>
-              <div class="progress-grid">
-                <div class="progress-item">
-                  <div class="progress-icon">
+        <!-- Skills Progress -->
+        <div class="profile-section animate-enter delay-400">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>
+                <i class="fas fa-code"></i>
+                Skills & Progress
+              </h2>
+            </div>
+            </div>
+            <div class="skills-list">
+              <div class="skill-item">
+                <div class="skill-header">
+                  <div class="skill-icon">
                     <i class="fab fa-html5"></i>
                   </div>
-                  <div class="progress-info">
-                    <div class="progress-title">HTML/CSS Mastery</div>
-                    <div class="progress-bar">
-                      <div class="progress-fill" style="width: 95%"></div>
-                    </div>
-                    <div class="progress-text">95% Complete</div>
-                  </div>
+                  <span class="skill-name">HTML/CSS</span>
+                  <span class="skill-percentage">95%</span>
                 </div>
-                <div class="progress-item">
-                  <div class="progress-icon">
-                    <i class="fab fa-js-square"></i>
-                  </div>
-                  <div class="progress-info">
-                    <div class="progress-title">JavaScript Engine</div>
-                    <div class="progress-bar">
-                      <div class="progress-fill" style="width: 87%"></div>
-                    </div>
-                    <div class="progress-text">87% Complete</div>
-                  </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" style="width: 95%"></div>
                 </div>
-                <div class="progress-item">
-                  <div class="progress-icon">
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <div class="skill-icon">
+                    <i class="fab fa-js"></i>
+                  </div>
+                  <span class="skill-name">JavaScript</span>
+                  <span class="skill-percentage">87%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" style="width: 87%"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <div class="skill-icon">
                     <i class="fab fa-react"></i>
                   </div>
-                  <div class="progress-info">
-                    <div class="progress-title">React Framework</div>
-                    <div class="progress-bar">
-                      <div class="progress-fill" style="width: 78%"></div>
-                    </div>
-                    <div class="progress-text">78% Complete</div>
-                  </div>
+                  <span class="skill-name">React</span>
+                  <span class="skill-percentage">78%</span>
                 </div>
-                <div class="progress-item">
-                  <div class="progress-icon">
-                    <i class="fas fa-database"></i>
-                  </div>
-                  <div class="progress-info">
-                    <div class="progress-title">Database Systems</div>
-                    <div class="progress-bar">
-                      <div class="progress-fill" style="width: 72%"></div>
-                    </div>
-                    <div class="progress-text">72% Complete</div>
-                  </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" style="width: 78%"></div>
                 </div>
-                <div class="progress-item">
-                  <div class="progress-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                  </div>
-                  <div class="progress-info">
-                    <div class="progress-title">Responsive Design</div>
-                    <div class="progress-bar">
-                      <div class="progress-fill" style="width: 92%"></div>
-                    </div>
-                    <div class="progress-text">92% Complete</div>
-                  </div>
-                </div>
-                <div class="progress-item">
-                  <div class="progress-icon">
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <div class="skill-icon">
                     <i class="fab fa-node-js"></i>
                   </div>
-                  <div class="progress-info">
-                    <div class="progress-title">Node.js Backend</div>
-                    <div class="progress-bar">
-                      <div class="progress-fill" style="width: 65%"></div>
-                    </div>
-                    <div class="progress-text">65% Complete</div>
-                  </div>
+                  <span class="skill-name">Node.js</span>
+                  <span class="skill-percentage">72%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" style="width: 72%"></div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Achievements -->
-          <div class="profile-section animate-enter delay-300">
-            <div class="section-card">
-              <div class="section-header">
-                <i class="fas fa-trophy"></i>
-                <h2>Mission Achievements</h2>
-              </div>
-              <div class="achievements-grid" id="achievementsGrid">
-                <div class="achievement-badge">
-                  <div class="achievement-icon">🏆</div>
-                  <div class="achievement-name">First Deploy</div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <div class="skill-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                  </div>
+                  <span class="skill-name">Responsive Design</span>
+                  <span class="skill-percentage">92%</span>
                 </div>
-                <div class="achievement-badge">
-                  <div class="achievement-icon">🔥</div>
-                  <div class="achievement-name">10 Day Streak</div>
-                </div>
-                <div class="achievement-badge">
-                  <div class="achievement-icon">⚡</div>
-                  <div class="achievement-name">Speed Coder</div>
-                </div>
-                <div class="achievement-badge">
-                  <div class="achievement-icon">🎯</div>
-                  <div class="achievement-name">Project Master</div>
-                </div>
-                <div class="achievement-badge">
-                  <div class="achievement-icon">🌟</div>
-                  <div class="achievement-name">Code Review</div>
-                </div>
-                <div class="achievement-badge">
-                  <div class="achievement-icon">🚀</div>
-                  <div class="achievement-name">Launch Pad</div>
-                </div>
-                <div class="achievement-badge">
-                  <div class="achievement-icon">💎</div>
-                  <div class="achievement-name">Elite Status</div>
-                </div>
-                <div class="achievement-badge">
-                  <div class="achievement-icon">🎨</div>
-                  <div class="achievement-name">Design Pro</div>
+                <div class="skill-bar">
+                  <div class="skill-fill" style="width: 92%"></div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Recent Activity -->
-          <div class="profile-section animate-enter delay-400">
-            <div class="section-card">
-              <div class="section-header">
-                <i class="fas fa-history"></i>
-                <h2>Recent Mission Logs</h2>
-              </div>
-              <div class="activity-list" id="activityList">
-                <div class="activity-item">
-                  <div class="activity-icon">
-                    <i class="fas fa-code"></i>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <div class="skill-icon">
+                    <i class="fas fa-database"></i>
                   </div>
-                  <div class="activity-details">
-                    <div class="activity-title">
-                      Completed JavaScript Advanced Modules
-                    </div>
-                    <div class="activity-time">2 hours ago</div>
-                  </div>
+                  <span class="skill-name">Database</span>
+                  <span class="skill-percentage">65%</span>
                 </div>
-                <div class="activity-item">
-                  <div class="activity-icon">
-                    <i class="fas fa-rocket"></i>
-                  </div>
-                  <div class="activity-details">
-                    <div class="activity-title">
-                      Deployed E-commerce Dashboard
-                    </div>
-                    <div class="activity-time">1 day ago</div>
-                  </div>
-                </div>
-                <div class="activity-item">
-                  <div class="activity-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="activity-details">
-                    <div class="activity-title">
-                      Earned "Speed Coder" Achievement
-                    </div>
-                    <div class="activity-time">3 days ago</div>
-                  </div>
-                </div>
-                <div class="activity-item">
-                  <div class="activity-icon">
-                    <i class="fas fa-users"></i>
-                  </div>
-                  <div class="activity-details">
-                    <div class="activity-title">Collaborated on Team Project</div>
-                    <div class="activity-time">5 days ago</div>
-                  </div>
-                </div>
-                <div class="activity-item">
-                  <div class="activity-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                  </div>
-                  <div class="activity-details">
-                    <div class="activity-title">Completed React Fundamentals</div>
-                    <div class="activity-time">1 week ago</div>
-                  </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" style="width: 65%"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="profile-right-column">
+        <!-- Achievements -->
+        <div class="profile-section animate-enter delay-300">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>
+                <i class="fas fa-trophy"></i>
+                Achievements
+              </h2>
+            </div>
+            <div class="achievements-grid" id="achievementsGrid">
+              <!-- Achievements will be dynamically loaded -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="profile-section animate-enter delay-400">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>
+                <i class="fas fa-history"></i>
+                Recent Activity
+              </h2>
+            </div>
+            <div class="activity-list" id="activityList">
+              <!-- Activity items will be dynamically loaded -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
@@ -1156,15 +426,6 @@
   </footer>
 
   <!-- Edit Profile Modal -->
-
-  <div class="profile-section animate-enter delay-400">
-    <h2>📈 Recent Activity</h2>
-    <div class="activity-list" id="activityList">
-      <!-- Activity items will be loaded here -->
-    </div>
-  </div>
-  </main>
-
   <div id="editModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -1175,11 +436,11 @@
         <form id="editProfileForm">
           <div class="form-group">
             <label for="editFullName">Full Name</label>
-            <input type="text" id="editFullName" class="form-control" />
+            <input type="text" id="editFullName" class="form-control" required />
           </div>
           <div class="form-group">
             <label for="editEmail">Email</label>
-            <input type="email" id="editEmail" class="form-control" />
+            <input type="email" id="editEmail" class="form-control" required />
           </div>
           <div class="form-group">
             <label for="editTitle">Title</label>
@@ -1191,31 +452,11 @@
           </div>
           <div class="form-group">
             <label for="editBio">Bio</label>
-            <textarea id="editBio" class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
+            <textarea id="editBio" class="form-control" rows="4" placeholder="Tell us about yourself..."></textarea>
           </div>
-          <div class="modal-body">
-            <form id="editProfileForm">
-              <div class="form-group">
-                <label for="editFullName">Full Name</label>
-                <input type="text" id="editFullName" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="editEmail">Email</label>
-                <input type="email" id="editEmail" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="editTitle">Title</label>
-                <input type="text" id="editTitle" class="form-control" placeholder="e.g., Frontend Developer">
-              </div>
-              <div class="form-group">
-                <label for="editLocation">Location</label>
-                <input type="text" id="editLocation" class="form-control" placeholder="e.g., New York, USA">
-              </div>
-              <div class="form-actions">
-                <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-              </div>
-            </form>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
           </div>
         </form>
       </div>
@@ -1225,7 +466,6 @@
   <script src="../scripts/components/cursor.js"></script>
   <script src="../scripts/components/navigation.js"></script>
   <script src="../scripts/pages/profile.js"></script>
-  issue/resolved-the-profile-page-display-wrong-navbar
   <script src="../scripts/profile-data.js"></script>
 
 </body>
