@@ -67,12 +67,16 @@ class SettingsManager {
         document.getElementById('bio').value = this.settings.bio;
         
         // Load profile picture
-        const profileData = JSON.parse(localStorage.getItem('profileData'));
-        if (profileData && profileData.avatar) {
-            const avatarImg = document.getElementById('settingsAvatar');
-            if (avatarImg) {
-                avatarImg.src = profileData.avatar;
+        try {
+            const profileData = JSON.parse(localStorage.getItem('profileData'));
+            if (profileData && profileData.avatar) {
+                const avatarImg = document.getElementById('settingsAvatar');
+                if (avatarImg) {
+                    avatarImg.src = profileData.avatar;
+                }
             }
+        } catch (error) {
+            console.error('Error loading profile data:', error);
         }
     }
 
@@ -359,18 +363,23 @@ function changeSettingsAvatar() {
 
             const reader = new FileReader();
             reader.onload = (event) => {
-                // Update profile data
-                const profileData = JSON.parse(localStorage.getItem('profileData')) || {};
-                profileData.avatar = event.target.result;
-                localStorage.setItem('profileData', JSON.stringify(profileData));
-                
-                // Update display
-                const avatarImg = document.getElementById('settingsAvatar');
-                if (avatarImg) {
-                    avatarImg.src = event.target.result;
+                try {
+                    // Update profile data
+                    const profileData = JSON.parse(localStorage.getItem('profileData') || '{}');
+                    profileData.avatar = event.target.result;
+                    localStorage.setItem('profileData', JSON.stringify(profileData));
+                    
+                    // Update display
+                    const avatarImg = document.getElementById('settingsAvatar');
+                    if (avatarImg) {
+                        avatarImg.src = event.target.result;
+                    }
+                    
+                    window.settingsManager.showNotification('Profile picture updated successfully!', 'success');
+                } catch (error) {
+                    console.error('Error saving profile picture:', error);
+                    window.settingsManager.showNotification('Failed to save profile picture', 'error');
                 }
-                
-                window.settingsManager.showNotification('Profile picture updated successfully!', 'success');
             };
             reader.readAsDataURL(file);
         }

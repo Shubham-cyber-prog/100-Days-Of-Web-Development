@@ -402,8 +402,13 @@ class ProfileManager {
         this.showNotification('Profile updated successfully!', 'success');
     }
 
-    changeAvatar() {
-        // Create file input for avatar upload
+    /**
+     * Generic method to handle image upload with validation
+     * @param {string} propertyName - The property name to save in userData (e.g., 'avatar', 'coverPhoto')
+     * @param {string} successMessage - Message to show on success
+     * @param {Function} updateCallback - Optional callback to update DOM element
+     */
+    uploadImage(propertyName, successMessage, updateCallback) {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
@@ -425,14 +430,19 @@ class ProfileManager {
 
                 const reader = new FileReader();
                 reader.onload = (event) => {
-                    this.userData.avatar = event.target.result;
+                    this.userData[propertyName] = event.target.result;
                     localStorage.setItem('profileData', JSON.stringify(this.userData));
-                    document.getElementById('avatarImg').src = this.userData.avatar;
-                    this.showNotification('Avatar updated successfully!', 'success');
+                    
+                    // Call update callback if provided
+                    if (updateCallback) {
+                        updateCallback(event.target.result);
+                    }
+                    
+                    this.showNotification(successMessage, 'success');
                     
                     this.addActivity({
-                        title: 'Changed Profile Picture',
-                        description: 'Updated profile avatar with new image',
+                        title: `Changed ${propertyName === 'avatar' ? 'Profile Picture' : 'Cover Photo'}`,
+                        description: `Updated profile ${propertyName === 'avatar' ? 'avatar' : 'cover'} with new image`,
                         icon: 'fas fa-image',
                         time: 'Just now',
                         type: 'profile'
@@ -445,52 +455,19 @@ class ProfileManager {
         input.click();
     }
 
+    changeAvatar() {
+        this.uploadImage('avatar', 'Avatar updated successfully!', (imageData) => {
+            document.getElementById('avatarImg').src = imageData;
+        });
+    }
+
     changeCoverPhoto() {
-        // Create file input for cover photo upload
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/*';
-        
-        input.onchange = (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                // Validate file size (max 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    this.showNotification('Image size must be less than 5MB', 'error');
-                    return;
-                }
-
-                // Validate file type
-                if (!file.type.startsWith('image/')) {
-                    this.showNotification('Please select an image file', 'error');
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    this.userData.coverPhoto = event.target.result;
-                    localStorage.setItem('profileData', JSON.stringify(this.userData));
-                    
-                    const coverImg = document.getElementById('coverImg');
-                    if (coverImg) {
-                        coverImg.src = this.userData.coverPhoto;
-                    }
-                    
-                    this.showNotification('Cover photo updated successfully!', 'success');
-                    
-                    this.addActivity({
-                        title: 'Changed Cover Photo',
-                        description: 'Updated profile cover with new image',
-                        icon: 'fas fa-image',
-                        time: 'Just now',
-                        type: 'profile'
-                    });
-                };
-                reader.readAsDataURL(file);
+        this.uploadImage('coverPhoto', 'Cover photo updated successfully!', (imageData) => {
+            const coverImg = document.getElementById('coverImg');
+            if (coverImg) {
+                coverImg.src = imageData;
             }
-        };
-        
-        input.click();
+        });
     }
 
     addActivity(activity) {
