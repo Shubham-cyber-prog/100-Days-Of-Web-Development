@@ -49,7 +49,6 @@ class AppCore {
                 'leaderboard.html'
             ],
             publicRoutes: [
-                'login.html',
                 'index.html',
                 ''
             ]
@@ -446,12 +445,12 @@ class AppCore {
     }
 
     /**
-     * Redirect to login if not authenticated
+     * Redirect to home if not authenticated
      */
     requireAuth() {
         if (!this.isAuthenticated() && this.isProtectedRoute()) {
-            console.log('🔒 Auth required, redirecting to login');
-            window.location.href = 'login.html';
+            console.log('🔒 Auth required, redirecting to home');
+            window.location.href = 'index.html';
             return false;
         }
         return true;
