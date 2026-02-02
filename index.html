@@ -1,3 +1,29 @@
+            <nav class="nav-links">
+                <a href="#" class="nav-link active">Home</a>
+                <a href="website/pages/projects.html" class="nav-link">Projects</a>
+                <a href="website/pages/dashboard.html" class="nav-link dashboard-link" id="dashboardLink" style="display: none;">Dashboard</a>
+                <a href="website/pages/about.html" class="nav-link">About</a>
+                <a href="website/pages/contributors.html" class="nav-link">Contributors</a>
+                <a href="website/pages/forum.html" class="nav-link">Forum</a>
+            </nav>
+
+            <script>
+                // Show/hide dashboard link based on authentication
+                document.addEventListener('DOMContentLoaded', () => {
+                    const dashboardLink = document.getElementById('dashboardLink');
+                    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                    const isGuest = localStorage.getItem('isGuest') === 'true';
+
+                    if (dashboardLink) {
+                        if (isLoggedIn && !isGuest) {
+                            dashboardLink.style.display = 'inline-block';
+                        } else {
+                            dashboardLink.style.display = 'none';
+                        }
+                    }
+                });
+            </script>
+=======
 <!doctype html>
 <html lang="en">
   <head>
