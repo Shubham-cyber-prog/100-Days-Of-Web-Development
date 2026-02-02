@@ -27,7 +27,9 @@ const folderMap = {
     87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
     96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
-    102: "Day 102", 103: "Day 103", 105: "Day 105", 107: "Day 107", 111: "day-111",
+    102: "Day 102", 103: "Day 103", 104: "Day 104", 105: "Day 105", 106: "Day 106", 107: "Day 107", 108: "Day 108", 111: "day-111",
+    129: "Day 129",
+    141: "Day 141",
     145: "Day 145",
     151: "Day 151",
     152: "Day 152 - Newsly",
@@ -96,13 +98,13 @@ const allProjects = [
     { day: 123, title: "Advanced Blogging Platform", tech: ["Next.js", "GraphQL"] }, { day: 124, title: "AI-Powered Chat Application", tech: ["OpenAI API", "Socket.io"] },
     { day: 125, title: "Sustainable Development Platform", tech: ["React", "Firebase"] }, { day: 126, title: "AI-Powered Code Review Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 127, title: "Advanced Social Media Platform", tech: ["React", "Node.js"] }, { day: 128, title: "AI-Powered Image Recognition App", tech: ["TensorFlow.js", "JS"] },
-    { day: 129, title: "Custom Project Management Tool", tech: ["React", "Node.js"] }, { day: 130, title: "AI-Powered Language Translation App", tech: ["OpenAI API", "JS"] },
+    { day: 129, title: "Ultimate Kanban Board", tech: ["HTML", "CSS", "JS"] }, { day: 130, title: "AI-Powered Language Translation App", tech: ["OpenAI API", "JS"] },
     { day: 131, title: "Advanced CRM System", tech: ["Next.js", "Prisma"] }, { day: 132, title: "AI-Powered Virtual Assistant", tech: ["OpenAI API", "Node.js"] },
     { day: 133, title: "Custom Inventory Management System", tech: ["React", "Node.js"] }, { day: 134, title: "AI-Powered Sentiment Analysis Tool", tech: ["Python", "Flask"] },
     { day: 135, title: "Advanced Event Management Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 136, title: "AI-Powered Content Moderation Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 137, title: "Custom Helpdesk Ticketing System", tech: ["React", "Node.js"] }, { day: 138, title: "AI-Powered Market Research Tool", tech: ["Python", "Django"] },
     { day: 139, title: "Advanced Learning Management System", tech: ["Next.js", "PostgreSQL"] }, { day: 140, title: "AI-Powered Email Marketing Tool", tech: ["OpenAI API", "Node.js"] },
-    { day: 141, title: "Custom Time Tracking Application", tech: ["React", "Node.js"] }, { day: 142, title: "AI-Powered SEO Optimization Tool", tech: ["Python", "Flask"] },
+    { day: 141, title: "TimeFlow - Premium Time Tracking", tech: ["HTML", "CSS", "JS", "ApexCharts"] }, { day: 142, title: "AI-Powered SEO Optimization Tool", tech: ["Python", "Flask"] },
     { day: 143, title: "Advanced Recruitment Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 144, title: "AI-Powered Social Media Management Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 145, title: "Chess Game", tech: ["React", "Node.js"] }, { day: 146, title: "AI-Powered Customer Support Chatbot", tech: ["OpenAI API", "JS"] },
     { day: 147, title: "Advanced Financial Planning Tool", tech: ["Next.js", "Prisma"] }, { day: 148, title: "AI-Powered Document Summarization Tool", tech: ["OpenAI API", "Node.js"] },
@@ -196,7 +198,7 @@ function renderProjects(filter = 'All') {
                 <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
             <div class="card-divider"></div>
-            <h3 style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
+            <h3 class="project-title" style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
                 ${project.title}
             </h3>
             <div class="tech-stack" style="margin-bottom: 0.5rem;">
@@ -239,20 +241,89 @@ function renderProjects(filter = 'All') {
 async function handleProjectClick(event, url) {
     event.preventDefault();
 
+    const card = event.currentTarget;
+    const originalHTML = card.innerHTML;
+
     try {
+        // Show loading state
+        card.style.opacity = '0.6';
+        card.style.pointerEvents = 'none';
+
         // Use 'no-cache' to ensure the browser doesn't give a fake "OK" 
-        const response = await fetch(url, { method: 'HEAD', cache: 'no-cache' });
+        const response = await fetch(url, {
+            method: 'HEAD',
+            cache: 'no-cache',
+            signal: AbortSignal.timeout(5000) // 5 second timeout
+        });
+
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
 
         if (response.ok) {
             window.open(url, '_blank', 'noopener,noreferrer');
         } else {
-            // If the folder isn't there, redirect to your mission recovery page
+            // Show error message
+            const errorMsg = `
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+                            background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                            justify-content: center; border-radius: 8px; color: #fee; font-size: 14px; padding: 16px;">
+                    Project not available (HTTP ${response.status})
+                </div>
+            `;
+            showErrorToast('Project folder not found. Showing available projects.');
             window.location.href = './404.html';
         }
     } catch (error) {
-        // This catches the "Cannot GET" scenario (network/file not found)
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
+
+        console.error('Project click error:', error);
+
+        // Provide specific error messages
+        const errorMsg = error.name === 'AbortError'
+            ? 'Request timeout. Project server may be down.'
+            : error instanceof TypeError
+                ? 'Network error. Please check your connection.'
+                : 'Unable to access project.';
+
+        showErrorToast(errorMsg);
         window.location.href = './404.html';
     }
+}
+
+/**
+ * Display user-friendly error toast notification
+ */
+function showErrorToast(message) {
+    const existingToast = document.querySelector('.error-toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'error-toast';
+    toast.setAttribute('role', 'alert');
+    toast.textContent = '⚠️ ' + message;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #c33;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 4px;
+        z-index: 9999;
+        max-width: 300px;
+        animation: slideIn 0.3s ease-out;
+    `;
+
+    document.body.appendChild(toast);
+
+    // Auto-dismiss after 5 seconds
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => toast.remove(), 300);
+    }, 5000);
 }
 /**
  * Applies a 3D Tilt effect based on cursor position.
