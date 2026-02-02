@@ -112,6 +112,7 @@ async function fetchContributors() {
             allContributors = allContributors.concat(contributors);
 
             // Check if there are more pages
+            // If we got less than 100, we've reached the last page
             hasMorePages = contributors.length === 100;
             page++;
         }
