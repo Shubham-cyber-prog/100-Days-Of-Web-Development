@@ -14,6 +14,9 @@ class ProfileManager {
         this.bindEvents();
         await this.updateStats();
         this.initMentorMode();
+
+        // Initialize Mission Logs (encrypted notes)
+        await this.initMissionLogs();
     }
 
     loadUserData() {
@@ -134,6 +137,18 @@ class ProfileManager {
         document.getElementById('joinDate').textContent = this.userData.joinDate;
         document.getElementById('userLocation').textContent = this.userData.location;
         document.getElementById('avatarImg').src = this.userData.avatar;
+        
+        // Update cover photo if saved
+        const coverImg = document.getElementById('coverImg');
+        if (coverImg && this.userData.coverPhoto) {
+            coverImg.src = this.userData.coverPhoto;
+        }
+        
+        // Update bio if element exists
+        const bioElement = document.getElementById('userBio');
+        if (bioElement) {
+            bioElement.textContent = this.userData.bio || 'Passionate web developer dedicated to creating beautiful and functional web applications.';
+        }
     }
 
     renderAchievements() {
@@ -185,11 +200,13 @@ class ProfileManager {
 
         // Calculate projects completed (from progress tracker)
         const projectsCompleted = Object.keys(progressData).length;
-        document.getElementById('projectsCompleted').textContent = projectsCompleted;
+        const projectsEl = document.getElementById('projectsCompleted');
+        if (projectsEl) projectsEl.textContent = projectsCompleted;
 
         // Calculate current streak (simplified)
         const currentStreak = this.calculateStreak();
-        document.getElementById('currentStreak').textContent = currentStreak;
+        const streakEl = document.getElementById('currentStreak');
+        if (streakEl) streakEl.textContent = currentStreak;
 
         // Calculate days active
         const joinDate = new Date(this.userData.joinDate);
@@ -200,7 +217,7 @@ class ProfileManager {
 
         // Calculate completion rate
         const completionRate = Math.round((projectsCompleted / 100) * 100);
-        const completionRateEl = document.getElementById('completionRateCounter');
+        const completionRateEl = document.getElementById('completionRate') || document.getElementById('completionRateCounter');
         if (completionRateEl) completionRateEl.textContent = `${completionRate}%`;
 
         // Eligibility check for Mentor Mode (past Day 50)
@@ -248,6 +265,14 @@ class ProfileManager {
         document.getElementById('editAvatarBtn').addEventListener('click', () => {
             this.changeAvatar();
         });
+
+        // Edit cover button
+        const editCoverBtn = document.getElementById('editCoverBtn');
+        if (editCoverBtn) {
+            editCoverBtn.addEventListener('click', () => {
+                this.changeCoverPhoto();
+            });
+        }
 
         // Modal events
         document.querySelector('.close').addEventListener('click', () => {
@@ -380,24 +405,72 @@ class ProfileManager {
         this.showNotification('Profile updated successfully!', 'success');
     }
 
+    /**
+     * Generic method to handle image upload with validation
+     * @param {string} propertyName - The property name to save in userData (e.g., 'avatar', 'coverPhoto')
+     * @param {string} successMessage - Message to show on success
+     * @param {Function} updateCallback - Optional callback to update DOM element
+     */
+    uploadImage(propertyName, successMessage, updateCallback) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    this.showNotification('Image size must be less than 5MB', 'error');
+                    return;
+                }
+
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    this.showNotification('Please select an image file', 'error');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    this.userData[propertyName] = event.target.result;
+                    localStorage.setItem('profileData', JSON.stringify(this.userData));
+                    
+                    // Call update callback if provided
+                    if (updateCallback) {
+                        updateCallback(event.target.result);
+                    }
+                    
+                    this.showNotification(successMessage, 'success');
+                    
+                    this.addActivity({
+                        title: `Changed ${propertyName === 'avatar' ? 'Profile Picture' : 'Cover Photo'}`,
+                        description: `Updated profile ${propertyName === 'avatar' ? 'avatar' : 'cover'} with new image`,
+                        icon: 'fas fa-image',
+                        time: 'Just now',
+                        type: 'profile'
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        
+        input.click();
+    }
+
     changeAvatar() {
-        const avatars = [
-            '../assets/images/pilot_avatar.png',
-            'https://api.dicebear.com/7.x/avataaars/svg?seed=1',
-            'https://api.dicebear.com/7.x/avataaars/svg?seed=2',
-            'https://api.dicebear.com/7.x/avataaars/svg?seed=3',
-            'https://api.dicebear.com/7.x/avataaars/svg?seed=4'
-        ];
+        this.uploadImage('avatar', 'Avatar updated successfully!', (imageData) => {
+            document.getElementById('avatarImg').src = imageData;
+        });
+    }
 
-        const currentIndex = avatars.indexOf(this.userData.avatar);
-        const nextIndex = (currentIndex + 1) % avatars.length;
-
-        this.userData.avatar = avatars[nextIndex];
-        localStorage.setItem('profileData', JSON.stringify(this.userData));
-
-        document.getElementById('avatarImg').src = this.userData.avatar;
-
-        this.showNotification('Avatar updated!', 'success');
+    changeCoverPhoto() {
+        this.uploadImage('coverPhoto', 'Cover photo updated successfully!', (imageData) => {
+            const coverImg = document.getElementById('coverImg');
+            if (coverImg) {
+                coverImg.src = imageData;
+            }
+        });
     }
 
     addActivity(activity) {
@@ -418,11 +491,16 @@ class ProfileManager {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
         notification.textContent = message;
+        
+        let bgColor = '#2196f3'; // info
+        if (type === 'success') bgColor = '#4caf50';
+        if (type === 'error') bgColor = '#f44336';
+        
         notification.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background: ${type === 'success' ? '#4caf50' : '#2196f3'};
+            background: ${bgColor};
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 8px;
@@ -439,6 +517,33 @@ class ProfileManager {
                 document.body.removeChild(notification);
             }, 300);
         }, 3000);
+    }
+
+    /**
+     * Initialize Mission Logs (Encrypted Private Notes)
+     */
+    async initMissionLogs() {
+        try {
+            // Dynamically import Mission Logs UI component
+            const { default: missionLogsUI } = await import('../components/MissionLogsUI.js');
+
+            // Initialize the component
+            await missionLogsUI.initialize('missionLogsContainer');
+
+            console.log('✅ Mission Logs initialized');
+        } catch (error) {
+            console.error('Failed to initialize Mission Logs:', error);
+            // Show fallback message
+            const container = document.getElementById('missionLogsContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        <p>Mission Logs feature is currently unavailable.</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Please refresh the page to try again.</p>
+                    </div>
+                `;
+            }
+        }
     }
 }
 

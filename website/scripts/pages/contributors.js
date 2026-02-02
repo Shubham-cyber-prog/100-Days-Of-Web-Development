@@ -92,24 +92,62 @@ async function fetchContributors() {
         // Show loading state
         grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);"><p>🚀 Loading crew manifest...</p></div>';
 
-        const contributors = await fetchWithRetry(
-            `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors`,
-            { headers: { 'Accept': 'application/vnd.github.v3+json' } }
-        );
+        // Fetch all contributors with pagination
+        let allContributors = [];
+        let page = 1;
+        const perPage = 100; // GitHub's max
+        let hasMorePages = true;
 
-        // Validate response data
-        if (!Array.isArray(contributors) || contributors.length === 0) {
+        while (hasMorePages) {
+            const contributors = await fetchWithRetry(
+                `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=${perPage}&page=${page}&anon=1`,
+                { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+            );
+
+            // Validate response data
+            if (!Array.isArray(contributors)) {
+                throw new Error('Invalid response: expected array of contributors');
+            }
+
+            // If we got no contributors, stop
+            if (contributors.length === 0) {
+                break;
+            }
+
+            // Add contributors to the list
+            allContributors = allContributors.concat(contributors);
+
+            // Check if there are more pages
+            // Continue fetching as long as we get the max per_page amount
+            // If we got less than per_page, we've reached the last page
+            hasMorePages = contributors.length === perPage;
+            page++;
+            
+            // Safety check to prevent infinite loops (50 pages * 100 = 5000 max contributors)
+            if (page > 50) {
+                console.warn('Reached maximum page limit (50), stopping pagination');
+                break;
+            }
+        }
+
+        // Validate we have contributors
+        if (allContributors.length === 0) {
             throw new Error('Invalid response: no contributors found');
         }
 
+        // Log total count for debugging (can be disabled in production if needed)
+        if (typeof console !== 'undefined' && console.log) {
+            console.log(`✅ Successfully loaded ${allContributors.length} contributors`);
+        }
+
         // Sort by contributions (descending)
-        contributors.sort((a, b) => b.contributions - a.contributions);
+        allContributors.sort((a, b) => b.contributions - a.contributions);
 
         // Clear placeholder and show initial cards
         grid.innerHTML = '';
 
         // Render cards immediately with loading placeholders for stats
-        contributors.forEach((user, index) => {
+        allContributors.forEach((user, index) => {
             // Validate required fields
             if (!user.login || !user.avatar_url || !user.html_url) {
                 console.warn('Skipping contributor with missing data:', user);
