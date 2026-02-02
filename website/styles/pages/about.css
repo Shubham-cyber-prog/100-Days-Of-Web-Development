@@ -298,8 +298,10 @@
 
 /* --- Mission Section Typography --- */
 .mission-quote {
+    --quote-border-width: 3px;
+    --quote-border-width-hover: 5px;
     padding: var(--space-6);
-    border-left: 3px solid var(--accent-core);
+    border-left: var(--quote-border-width) solid var(--accent-core);
     background: linear-gradient(90deg, var(--accent-alpha) 0%, transparent 100%);
     margin-bottom: var(--space-8);
     border-radius: var(--radius-md);
@@ -307,7 +309,7 @@
 }
 
 .mission-quote:hover {
-    border-left-width: 5px;
+    border-left-width: var(--quote-border-width-hover);
     transform: translateX(5px);
 }
 
@@ -568,17 +570,30 @@
 /* --- Enhanced Responsive Design --- */
 
 /* Performance Optimizations */
-.stat-card,
-.achievement-card,
-.tech-item,
-.mission-phase,
-.timeline-content {
+.stat-card:hover,
+.achievement-card:hover,
+.tech-item:hover,
+.mission-phase:hover,
+.timeline-content:hover {
     will-change: transform;
-    backface-visibility: hidden;
 }
 
 .animate-enter {
     will-change: opacity, transform;
+}
+
+.animate-enter.delay-200,
+.animate-enter.delay-400,
+.animate-enter.delay-600,
+.animate-enter.delay-800 {
+    animation-fill-mode: forwards;
+}
+
+/* Remove will-change after animation completes */
+@media (prefers-reduced-motion: no-preference) {
+    .animate-enter {
+        animation-play-state: running;
+    }
 }
 
 /* Button Enhancement */
