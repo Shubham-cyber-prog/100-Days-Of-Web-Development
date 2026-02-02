@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identicon-Gen | Avatar Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="brand">
+                <i class="fas fa-id-card-alt"></i> Identicon<span class="highlight">Gen</span>
+            </div>
+            <p class="subtitle">Procedural Avatar Generator</p>
+        </header>
+
+        <main class="card">
+            <div class="canvas-wrapper">
+                <canvas id="identicon-canvas" width="420" height="420"></canvas>
+            </div>
+
+            <div class="controls">
+                <div class="input-group">
+                    <input type="text" id="username-input" placeholder="Enter username..." value="saiusesgithub" spellcheck="false">
+                    <button id="btn-random" title="Randomize"><i class="fas fa-dice"></i></button>
+                </div>
+
+                <div class="info-row">
+                    <div class="hash-display" id="hash-val">Hash: 0x000000</div>
+                    <div class="color-display">
+                        <span class="color-dot" id="color-preview"></span>
+                        <span id="color-hex">#FFFFFF</span>
+                    </div>
+                </div>
+
+                <button id="btn-download" class="btn primary">
+                    <i class="fas fa-download"></i> Download PNG
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            <i class="fas fa-info-circle"></i> 5x5 Symmetric Pattern based on String Hash
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

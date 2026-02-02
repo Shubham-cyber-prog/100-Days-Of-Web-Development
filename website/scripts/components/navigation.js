@@ -9,19 +9,69 @@ function toggleMobileMenu() {
     navLinks.classList.toggle('open');
 }
 
-/* User Dropdown */
-function toggleUserMenu() {
-    const dropdown = document.querySelector('.user-dropdown');
-    dropdown.classList.toggle('show');
+/* Close mobile menu when nav link is clicked */
+function closeMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.remove('open');
 }
 
-// Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
+
+// Features Dropdown (works for dynamically loaded header)
+function setupFeaturesDropdown() {
+    const navDropdown = document.querySelector('.nav-dropdown');
+    const dropdownTrigger = navDropdown?.querySelector('.dropdown-trigger');
+    const dropdownMenu = navDropdown?.querySelector('.dropdown-menu');
+    if (!navDropdown || !dropdownTrigger || !dropdownMenu) return;
+
+    // Toggle on click
+    dropdownTrigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        navDropdown.classList.toggle('active');
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!navDropdown.contains(e.target)) {
+            navDropdown.classList.remove('active');
+        }
+    });
+
+    // Close on dropdown item click
+    const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach((item) => {
+        item.addEventListener('click', function () {
+            navDropdown.classList.remove('active');
+        });
+    });
+}
+
+// User Menu Dropdown (profile)
+function toggleUserMenu() {
+    const dropdown = document.querySelector('.user-menu');
+    if (dropdown) dropdown.classList.toggle('show');
+}
+
+function setupUserMenuDropdown() {
     const wrapper = document.querySelector('.user-avatar-wrapper');
-    if (wrapper && !wrapper.contains(e.target)) {
-        document.querySelector('.user-dropdown')?.classList.remove('show');
+    const dropdown = document.querySelector('.user-menu');
+    if (!wrapper || !dropdown) return;
+
+    // Toggle on avatar click
+    const avatarBtn = wrapper.querySelector('.user-avatar');
+    if (avatarBtn) {
+        avatarBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
     }
-});
+
+    // Close when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!wrapper.contains(e.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+}
 
 /* Theme Logic */
 function toggleTheme() {
@@ -33,6 +83,11 @@ function toggleTheme() {
     localStorage.setItem('theme', newTheme);
 
     updateThemeIcon(newTheme);
+    
+    // Update sidebar theme icon if available
+    if (typeof window.updateSidebarThemeIcon === 'function') {
+        window.updateSidebarThemeIcon();
+    }
 }
 
 function updateThemeIcon(theme) {
@@ -76,7 +131,19 @@ document.addEventListener('DOMContentLoaded', () => {
             links.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
         }
+        
+        // Add click event to close mobile menu
+        link.addEventListener('click', closeMobileMenu);
     });
+    
+    // Handle leaderboard page active state
+    if (currentPath.includes('leaderboard.html')) {
+        const leaderboardLink = document.querySelector('a[href="leaderboard.html"]');
+        if (leaderboardLink) {
+            links.forEach(l => l.classList.remove('active'));
+            leaderboardLink.classList.add('active');
+        }
+    }
 
     // 2. Avatar Logic (Guest checks)
     if (sessionStorage.getItem('authGuest') === 'true') {
@@ -97,13 +164,63 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apply immediately to avoid flash
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
+
+    // 6. Setup Features Dropdown and User Menu Dropdown (after header is loaded)
+    setTimeout(() => {
+        setupFeaturesDropdown();
+        setupUserMenuDropdown();
+    }, 0);
+
+    // 4. Connection Status Init
+    import('./ConnectionStatus.js').then(({ ConnectionStatus }) => {
+        new ConnectionStatus();
+    }).catch(e => console.warn('ConnectionStatus component not loaded:', e));
+
+    // 5. PWA Install Prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Show install button if it exists
+        const installBtn = document.getElementById('pwa-install-btn');
+        if (installBtn) {
+            installBtn.style.display = 'flex';
+            installBtn.addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                    installBtn.style.display = 'none';
+                });
+            });
+        }
+    });
 });
 
-/* Logout Logic */
+/* Logout Logic - Using Local Auth Service */
 function handleLogout() {
     if (confirm('Abort mission and logout?')) {
-        sessionStorage.removeItem('authToken');
-        sessionStorage.removeItem('authGuest');
-        window.location.href = window.location.pathname.includes('/pages/') ? '../pages/login.html' : 'website/pages/login.html';
+        console.log('🚪 Logout initiated...');
+
+        // Use AuthService if available
+        if (window.AuthService) {
+            window.AuthService.logout();
+        } else {
+            // Fallback: Clear all auth data manually
+            sessionStorage.clear();
+            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('current_user');
+            localStorage.removeItem('is_guest');
+            localStorage.removeItem('guestSession');
+        }
+
+        // Redirect to home page after logout
+        console.log('✅ Logged out, redirecting to home');
+        const homePath = window.location.pathname.includes('/pages/')
+            ? '../index.html'
+            : 'index.html';
+        window.location.href = homePath;
     }
 }

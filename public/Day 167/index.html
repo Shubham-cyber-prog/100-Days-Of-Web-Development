@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Fracture Arena v2</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #111; color: #fff; font-family: 'Courier New', monospace; }
+        canvas { display: block; }
+        
+        #ui { position: absolute; top: 20px; left: 20px; pointer-events: none; width: 300px; }
+        .hud-row { margin-bottom: 15px; }
+        .label { font-size: 14px; color: #aaa; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        
+        .meter-container { width: 100%; height: 15px; border: 2px solid #555; position: relative; background: #000; }
+        .meter-fill { height: 100%; width: 100%; transition: width 0.1s linear; }
+        
+        #timeMeter { background: #0ff; box-shadow: 0 0 10px #0ff; }
+        #healthMeter { background: #f00; box-shadow: 0 0 10px #f00; }
+        
+        #scoreDisplay { font-size: 20px; color: #ff0; text-shadow: 0 0 5px #ff0; font-weight: bold; }
+        #status { font-size: 20px; font-weight: bold; color: #fff; text-shadow: 0 0 5px #fff; }
+        #controls { margin-top: 20px; font-size: 12px; color: #666; border-top: 1px solid #333; padding-top: 10px; }
+
+        #gameOverScreen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        button { padding: 10px 20px; font-family: 'Courier New'; font-size: 20px; cursor: pointer; background: #0ff; border: none; }
+    </style>
+</head>
+<body>
+
+<div id="ui">
+    <div class="hud-row">
+        <div class="label"><span>SCORE</span> <span id="scoreDisplay">0</span></div>
+    </div>
+
+    <div class="hud-row">
+        <div class="label">STRUCTURAL INTEGRITY</div>
+        <div class="meter-container"><div class="meter-fill" id="healthMeter"></div></div>
+    </div>
+
+    <div class="hud-row">
+        <div class="label">CHRONO STABILITY</div>
+        <div class="meter-container"><div class="meter-fill" id="timeMeter"></div></div>
+    </div>
+
+    <div id="status">STATUS: STABLE</div>
+    <div id="controls">WASD: Move | Mouse: Shoot<br>Objective: Survive the fractures.</div>
+</div>
+
+<div id="gameOverScreen">
+    <h1 style="color: #f00; font-size: 50px;">TIMELINE COLLAPSED</h1>
+    <p id="finalScore" style="font-size: 24px;">Score: 0</p>
+    <button onclick="location.reload()">REBOOT SYSTEM</button>
+</div>
+
+<canvas id="gameCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+const uiTime = document.getElementById('timeMeter');
+const uiHealth = document.getElementById('healthMeter');
+const uiScore = document.getElementById('scoreDisplay');
+const uiStatus = document.getElementById('status');
+const uiGameOver = document.getElementById('gameOverScreen');
+const uiFinalScore = document.getElementById('finalScore');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const state = {
+    entities: [],
+    bullets: [],
+    history: [],
+    frameIndex: 0,
+    score: 0,
+    gameOver: false,
+    
+    timeMode: 'NORMAL',
+    timeStability: 100,
+    fractureTimer: 0
+};
+
+const input = { keys: {}, mouse: { x: 0, y: 0, down: false } };
+window.addEventListener('keydown', e => input.keys[e.key.toLowerCase()] = true);
+window.addEventListener('keyup', e => input.keys[e.key.toLowerCase()] = false);
+window.addEventListener('mousemove', e => { input.mouse.x = e.clientX; input.mouse.y = e.clientY; });
+window.addEventListener('mousedown', () => input.mouse.down = true);
+window.addEventListener('mouseup', () => input.mouse.down = false);
+
+class Entity {
+    constructor(x, y, color, speed) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.speed = speed;
+        this.vx = 0;
+        this.vy = 0;
+        this.radius = 15;
+        this.dead = false;
+    }
+}
+
+class Player extends Entity {
+    constructor() {
+        super(canvas.width/2, canvas.height/2, '#0ff', 4);
+        this.maxHp = 100;
+        this.hp = 100;
+        this.invulnTimer = 0;
+    }
+    
+    update() {
+        if (state.gameOver) return;
+
+        if (input.keys['w']) this.y -= this.speed;
+        if (input.keys['s']) this.y += this.speed;
+        if (input.keys['a']) this.x -= this.speed;
+        if (input.keys['d']) this.x += this.speed;
+
+        this.x = Math.max(this.radius, Math.min(canvas.width - this.radius, this.x));
+        this.y = Math.max(this.radius, Math.min(canvas.height - this.radius, this.y));
+
+        if (input.mouse.down && state.frameIndex % 10 === 0) {
+            const angle = Math.atan2(input.mouse.y - this.y, input.mouse.x - this.x);
+            state.bullets.push(new Bullet(this.x, this.y, angle));
+        }
+
+        if (this.invulnTimer > 0) this.invulnTimer--;
+    }
+
+    takeDamage(amount) {
+        if (this.invulnTimer > 0 || state.gameOver) return;
+        
+        this.hp = Math.max(0, this.hp - amount);
+        this.invulnTimer = 60;
+        
+        uiHealth.style.width = (this.hp / this.maxHp * 100) + '%';
+
+        if (this.hp <= 0) {
+            endGame();
+        }
+    }
+
+    draw(ctx) {
+        if (this.invulnTimer > 0 && Math.floor(Date.now() / 50) % 2 === 0) return;
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#fff';
+        ctx.stroke();
+    }
+}
+
+class Enemy extends Entity {
+    constructor() {
+        super(
+            Math.random() < 0.5 ? 0 : canvas.width, 
+            Math.random() * canvas.height, 
+            '#f00', 
+            2 + Math.random()
+        );
+    }
+
+    update(target) {
+        const angle = Math.atan2(target.y - this.y, target.x - this.x);
+        this.vx = Math.cos(angle) * this.speed;
+        this.vy = Math.sin(angle) * this.speed;
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+
+    draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+
+    drawPrediction(ctx, framesAhead) {
+        const ghostX = this.x + (this.vx * framesAhead);
+        const ghostY = this.y + (this.vy * framesAhead);
+        
+        ctx.beginPath();
+        ctx.arc(ghostX, ghostY, this.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+        ctx.setLineDash([5, 5]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(ghostX, ghostY);
+        ctx.strokeStyle = 'rgba(255, 0, 0, 0.2)';
+        ctx.stroke();
+    }
+}
+
+class Bullet {
+    constructor(x, y, angle) {
+        this.x = x;
+        this.y = y;
+        this.vx = Math.cos(angle) * 12;
+        this.vy = Math.sin(angle) * 12;
+        this.dead = false;
+    }
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if(this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.dead = true;
+    }
+    draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#ff0';
+        ctx.fill();
+    }
+}
+
+const player = new Player();
+state.entities.push(player);
+
+function spawnEnemy() {
+    state.entities.push(new Enemy());
+}
+
+function endGame() {
+    state.gameOver = true;
+    uiGameOver.style.display = 'flex';
+    uiFinalScore.innerText = "Final Score: " + state.score;
+}
+
+function recordState() {
+    if (state.history.length > 300) state.history.shift();
+    
+    const frameSnapshot = {
+        player: { 
+            x: player.x, 
+            y: player.y, 
+            hp: player.hp,
+            invuln: player.invulnTimer
+        },
+        score: state.score,
+        entities: state.entities.map(e => ({ 
+            x: e.x, y: e.y, dead: e.dead, vx: e.vx, vy: e.vy,
+            speed: e.speed, radius: e.radius, color: e.color,
+            type: e instanceof Player ? 'p' : 'e' 
+        })),
+        bullets: state.bullets.map(b => ({ x: b.x, y: b.y, vx: b.vx, vy: b.vy, dead: b.dead }))
+    };
+    state.history.push(frameSnapshot);
+}
+
+function restoreState() {
+    if (state.history.length === 0) {
+        state.timeMode = 'NORMAL';
+        return;
+    }
+    const snap = state.history.pop();
+    
+    player.x = snap.player.x;
+    player.y = snap.player.y;
+    player.hp = snap.player.hp;
+    player.invulnTimer = snap.player.invuln;
+    
+    state.score = snap.score;
+    uiScore.innerText = state.score;
+    uiHealth.style.width = (player.hp / player.maxHp * 100) + '%';
+    
+    state.entities = snap.entities.map(e => {
+        if (e.type === 'p') return player;
+        const enemy = new Enemy();
+        enemy.x = e.x;
+        enemy.y = e.y;
+        enemy.vx = e.vx;
+        enemy.vy = e.vy;
+        enemy.speed = e.speed;
+        enemy.radius = e.radius;
+        enemy.color = e.color;
+        enemy.dead = e.dead;
+        return enemy;
+    });
+
+    state.bullets = snap.bullets.map(b => {
+        const bullet = new Bullet(b.x, b.y, 0);
+        bullet.vx = b.vx;
+        bullet.vy = b.vy;
+        return bullet;
+    });
+}
+
+function manageTimeEvents() {
+    if (state.gameOver) return;
+
+    state.timeStability -= 0.15;
+    if (state.timeStability <= 0) {
+        triggerFracture();
+        state.timeStability = 100;
+    }
+    
+    uiTime.style.width = state.timeStability + '%';
+    
+    if (state.timeMode !== 'NORMAL') {
+        state.fractureTimer--;
+        if (state.fractureTimer <= 0) {
+            state.timeMode = 'NORMAL';
+            uiStatus.innerText = "STATUS: STABLE";
+            uiStatus.style.color = "#0f0";
+        }
+    }
+}
+
+function triggerFracture() {
+    const rand = Math.random();
+    state.fractureTimer = 180;
+    
+    if (rand < 0.5) {
+        state.timeMode = 'PAUSED';
+        uiStatus.innerText = "STATUS: TIME FREEZE (DANGER PREDICTED)";
+        uiStatus.style.color = "#0ff";
+    } else {
+        state.timeMode = 'REVERSE';
+        uiStatus.innerText = "STATUS: REALITY REVERSAL";
+        uiStatus.style.color = "#f0f";
+    }
+}
+
+function loop() {
+    if (!state.gameOver) {
+        ctx.fillStyle = 'rgba(17, 17, 17, 0.3)'; // Trails
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        manageTimeEvents();
+
+        if (state.timeMode === 'NORMAL') {
+            player.update();
+            
+            const spawnRate = Math.max(20, 60 - Math.floor(state.score / 500));
+            if (state.frameIndex % spawnRate === 0) spawnEnemy();
+
+            state.entities.forEach(e => {
+                if (e instanceof Enemy) {
+                    e.update(player);
+                    
+                    const dx = player.x - e.x;
+                    const dy = player.y - e.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    
+                    if (dist < player.radius + e.radius) {
+                        player.takeDamage(20);
+                    }
+                }
+            });
+            
+            state.bullets.forEach(b => b.update());
+            
+            state.bullets.forEach(b => {
+                state.entities.forEach(e => {
+                    if (e instanceof Enemy && !e.dead && !b.dead) {
+                        const dx = e.x - b.x;
+                        const dy = e.y - b.y;
+                        if (Math.sqrt(dx*dx + dy*dy) < e.radius + 5) {
+                            e.dead = true;
+                            b.dead = true;
+                            
+                            state.score += 100;
+                            uiScore.innerText = state.score;
+                        }
+                    }
+                });
+            });
+
+            state.entities = state.entities.filter(e => !e.dead);
+            state.bullets = state.bullets.filter(b => !b.dead);
+            
+            recordState();
+
+        } else if (state.timeMode === 'PAUSED') {
+            player.update();
+            
+            state.entities.forEach(e => {
+                if (e instanceof Enemy) e.drawPrediction(ctx, 30);
+            });
+
+        } else if (state.timeMode === 'REVERSE') {
+            restoreState();
+        }
+    }
+
+    if(!state.gameOver) {
+        player.draw(ctx);
+        state.entities.forEach(e => {
+            if (e instanceof Enemy) e.draw(ctx);
+        });
+        state.bullets.forEach(b => b.draw(ctx));
+    }
+
+    state.frameIndex++;
+    if(!state.gameOver) requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>
