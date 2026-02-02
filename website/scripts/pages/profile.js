@@ -14,6 +14,9 @@ class ProfileManager {
         this.bindEvents();
         await this.updateStats();
         this.initMentorMode();
+
+        // Initialize Mission Logs (encrypted notes)
+        await this.initMissionLogs();
     }
 
     loadUserData() {
@@ -514,6 +517,33 @@ class ProfileManager {
                 document.body.removeChild(notification);
             }, 300);
         }, 3000);
+    }
+
+    /**
+     * Initialize Mission Logs (Encrypted Private Notes)
+     */
+    async initMissionLogs() {
+        try {
+            // Dynamically import Mission Logs UI component
+            const { default: missionLogsUI } = await import('../components/MissionLogsUI.js');
+
+            // Initialize the component
+            await missionLogsUI.initialize('missionLogsContainer');
+
+            console.log('✅ Mission Logs initialized');
+        } catch (error) {
+            console.error('Failed to initialize Mission Logs:', error);
+            // Show fallback message
+            const container = document.getElementById('missionLogsContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        <p>Mission Logs feature is currently unavailable.</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Please refresh the page to try again.</p>
+                    </div>
+                `;
+            }
+        }
     }
 }
 
