@@ -123,9 +123,9 @@ async function fetchContributors() {
             hasMorePages = contributors.length === perPage;
             page++;
             
-            // Safety check to prevent infinite loops
-            if (page > 10) {
-                console.warn('Reached maximum page limit (10), stopping pagination');
+            // Safety check to prevent infinite loops (50 pages * 100 = 5000 max contributors)
+            if (page > 50) {
+                console.warn('Reached maximum page limit (50), stopping pagination');
                 break;
             }
         }
@@ -135,7 +135,10 @@ async function fetchContributors() {
             throw new Error('Invalid response: no contributors found');
         }
 
-        console.log(`✅ Successfully loaded ${allContributors.length} contributors`);
+        // Log total count for debugging (can be disabled in production if needed)
+        if (typeof console !== 'undefined' && console.log) {
+            console.log(`✅ Successfully loaded ${allContributors.length} contributors`);
+        }
 
         // Sort by contributions (descending)
         allContributors.sort((a, b) => b.contributions - a.contributions);
