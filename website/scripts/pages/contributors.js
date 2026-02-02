@@ -191,7 +191,7 @@ async function fetchContributors() {
                 
                 <a href="${user.html_url}" target="_blank" class="btn btn-social view-profile">
                     <span>View Profile</span>
-                    <i style="font-style: normal;">→</i>
+                    <span>→</span>
                 </a>
             `;
 
