@@ -95,11 +95,12 @@ async function fetchContributors() {
         // Fetch all contributors with pagination
         let allContributors = [];
         let page = 1;
+        const perPage = 100; // GitHub's max
         let hasMorePages = true;
 
         while (hasMorePages) {
             const contributors = await fetchWithRetry(
-                `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=100&page=${page}`,
+                `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=${perPage}&page=${page}&anon=1`,
                 { headers: { 'Accept': 'application/vnd.github.v3+json' } }
             );
 
@@ -108,18 +109,35 @@ async function fetchContributors() {
                 throw new Error('Invalid response: expected array of contributors');
             }
 
+            // If we got no contributors, stop
+            if (contributors.length === 0) {
+                break;
+            }
+
             // Add contributors to the list
             allContributors = allContributors.concat(contributors);
 
             // Check if there are more pages
-            // If we got less than 100, we've reached the last page
-            hasMorePages = contributors.length === 100;
+            // Continue fetching as long as we get the max per_page amount
+            // If we got less than per_page, we've reached the last page
+            hasMorePages = contributors.length === perPage;
             page++;
+            
+            // Safety check to prevent infinite loops (50 pages * 100 = 5000 max contributors)
+            if (page > 50) {
+                console.warn('Reached maximum page limit (50), stopping pagination');
+                break;
+            }
         }
 
         // Validate we have contributors
         if (allContributors.length === 0) {
             throw new Error('Invalid response: no contributors found');
+        }
+
+        // Log total count for debugging (can be disabled in production if needed)
+        if (typeof console !== 'undefined' && console.log) {
+            console.log(`✅ Successfully loaded ${allContributors.length} contributors`);
         }
 
         // Sort by contributions (descending)
