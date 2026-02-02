@@ -1,217 +1,96 @@
 :root {
-    --primary-color: #6c5ce7;
-    --secondary-color: #a29bfe;
-    --background-color: #f5f6fa;
-    --text-color: #2d3436;
-    --display-bg: #dfe6e9;
-    --button-bg: #ffffff;
-    --button-shadow: #d1d8e0;
-    --operator-color: #fd79a8;
-    --scientific-color: #00b894;
+  --bg: #f5f6fa;
+  --text: #2d3436;
+  --display: #dfe6e9;
+  --btn: #ffffff;
+  --shadow: #d1d8e0;
+  --primary: #6c5ce7;
+  --operator: #fd79a8;
+  --scientific: #00b894;
 }
 
 [data-theme="dark"] {
-    --primary-color: #a29bfe;
-    --secondary-color: #6c5ce7;
-    --background-color: #2d3436;
-    --text-color: #f5f6fa;
-    --display-bg: #636e72;
-    --button-bg: #3d4548;
-    --button-shadow: #2d3436;
-    --operator-color: #ff7675;
-    --scientific-color: #55efc4;
+  --bg: #2d3436;
+  --text: #f5f6fa;
+  --display: #636e72;
+  --btn: #3d4548;
+  --shadow: #2d3436;
+  --operator: #ff7675;
+  --scientific: #55efc4;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: background-color 0.3s, color 0.3s;
+  box-sizing: border-box;
+  font-family: 'Orbitron', sans-serif;
 }
 
 body {
-    font-family: 'Orbitron', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .calculator-container {
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-}
-
-h1 {
-    margin-bottom: 20px;
-    color: var(--primary-color);
+  width: 380px;
+  text-align: center;
 }
 
 .calculator {
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+  overflow: hidden;
 }
 
 .display {
-    background-color: var(--display-bg);
-    padding: 20px;
-    text-align: right;
-    word-wrap: break-word;
-    word-break: break-all;
+  background: var(--display);
+  padding: 20px;
+  text-align: right;
 }
 
 .previous-operand {
-    font-size: 1.2rem;
-    opacity: 0.7;
-    min-height: 24px;
+  opacity: 0.7;
+  min-height: 20px;
 }
 
 .current-operand {
-    font-size: 2.5rem;
-    font-weight: bold;
+  font-size: 2.5rem;
 }
 
 .buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    padding: 20px;
-    background-color: var(--button-shadow);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 20px;
+  background: var(--shadow);
 }
 
 button {
-    border: none;
-    border-radius: 10px;
-    padding: 15px;
-    font-size: 1.3rem;
-    cursor: pointer;
-    background-color: var(--button-bg);
-    box-shadow: 0 4px 0 var(--button-shadow);
-    color: var(--text-color);
+  padding: 15px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 14px;
+  background: var(--btn);
+  cursor: pointer;
+  transition: 0.25s;
 }
-
-button:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 var(--button-shadow);
-}
-
-.operator {
-    background-color: var(--operator-color);
-    color: white;
-}
-
-.scientific {
-    background-color: var(--scientific-color);
-    color: white;
-}
-
-.span-two {
-    grid-column: span 2;
-}
-
-.span-two-vert {
-    grid-row: span 2;
-    background-color: var(--primary-color); 
-    color: white;
-    height: 100%;
-}
-
-#clear { background: #ff7675; color: white; }
-#delete { background: #74b9ff; color: white; }
-
-.theme-toggle {
-    margin-top: 20px;
-}
-
-
-/* ================= BUTTON HOVER EFFECTS ================= */
 
 button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
-    filter: brightness(1.05);
+  transform: translateY(-3px);
 }
 
-/* Operator buttons hover */
-.operator:hover {
-    background: linear-gradient(135deg, #ff9ff3, #fd79a8);
-}
+.operator { background: var(--operator); color: #fff; }
+.scientific { background: var(--scientific); color: #fff; }
+#equals { background: var(--primary); color: #fff; }
 
-/* Scientific buttons hover */
-.scientific:hover {
-    background: linear-gradient(135deg, #55efc4, #00b894);
-}
+.span-two { grid-column: span 2; }
+.span-two-vert { grid-row: span 2; }
 
-/* Equals button hover */
-#equals:hover {
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-    box-shadow: 0 10px 25px rgba(108,92,231,0.5);
-}
+#clear { background: #ff7675; color: #fff; }
+#delete { background: #74b9ff; color: #fff; }
 
-/* Clear button hover */
-#clear:hover {
-    background: linear-gradient(135deg, #ff6b6b, #ee5253);
-}
-
-/* Delete button hover */
-#delete:hover {
-    background: linear-gradient(135deg, #74b9ff, #0984e3);
-}
-
-/* Smooth active press */
-button:active {
-    transform: scale(0.97);
-}
-
-
-/* ================= BUTTON COLOR ENHANCEMENT ================= */
-
-/* Default buttons */
-button {
-    background: linear-gradient(135deg, #f1f3f6, #ffffff);
-    color: #2d3436;
-    font-weight: 600;
-    border-radius: 14px;
-    transition: all 0.3s ease;
-}
-
-/* Number buttons */
-.number {
-    background: linear-gradient(135deg, #e3f2fe, #ffffff);
-    color: #1e272e;
-}
-
-/* Operator buttons (+ - × ÷) */
-.operator {
-    background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-    color: #213135;
-}
-
-/* Scientific buttons */
-.scientific {
-    background: linear-gradient(135deg, #dff9fb, #c7ecee);
-    color: #130f40;
-}
-
-/* Equals button */
-#equals {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    color: #ffffff;
-    font-size: 1.2rem;
-}
-
-/* Clear button */
-#clear {
-    background: linear-gradient(135deg, #ff7675, #ff6b6b);
-    color: #ffffff;
-}
-
-/* Delete button */
-#delete {
-    background: linear-gradient(135deg, #74b9ff, #0984e3);
-    color: #ffffff;
+.theme-toggle {
+  margin-top: 20px;
 }
