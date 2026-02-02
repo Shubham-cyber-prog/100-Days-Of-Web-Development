@@ -1,4 +1,6 @@
 
+import { firestoreService } from '../firestore.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // Wait for AuthService to load
     function waitForAuthService() {
@@ -157,22 +159,22 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
         ];
 
-        // Initialize progress service and load completed days
+<<<<<<< HEAD
+        // Load user stats from Firestore
+        let userStats = null;
         let completedDays = [];
-        if (progressService) {
-            try {
-                completedDays = await progressService.initialize(user);
-                // Listen for real-time updates
-                progressService.listenToUpdates((updatedDays) => {
-                    completedDays = updatedDays;
-                    renderProgressGrid();
-                    updateStats();
-                    checkAchievements();
-                });
-            } catch (error) {
-                console.warn('Failed to initialize progress service:', error);
-                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
-            }
+
+        async function loadUserStats() {
+            if (!user.isGuest && user.userId) {
+                try {
+                    userStats = await firestoreService.getUserStats(user.userId);
+                    if (userStats) {
+                        completedDays = userStats.completedDays || [];
+                        console.log('Loaded user stats from Firestore:', userStats);
+                    } else {
+                        // Initialize default stats
+                        userStats = {
+                            progressPercent: 0,
         } else {
             completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
         }
@@ -221,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Trigger Neural Nexus analysis
             initializeNeuralNexus(projects);
         }
+>>>>>>> ee23802683eb6efe8ad810849a6cde25e6df7907
 
         function renderProgressGrid() {
             const progressGrid = document.getElementById('progressGrid');
@@ -236,7 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     for (let dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++) {
                         const day = quarter * 10 + week * 5 + dayOfWeek + 1;
                         if (day > 100) break;
-
                         const dayElement = document.createElement('div');
                         dayElement.className = `day-cell ${completedDays.includes(day) ? 'completed' : ''}`;
 
@@ -464,63 +466,115 @@ document.addEventListener('DOMContentLoaded', () => {
                 try {
                     await firestoreService.updateUserProfile(user.userId, profileData);
                     // Reload stats to get updated profile
+            return dist;
+        }
+
+        function renderRecentProjects() {
+            const recentProjectsEl = document.getElementById('recentProjects');
+            if (!recentProjectsEl || !userStats) return;
+
+            recentProjectsEl.innerHTML = '';
+
+            if (userStats.recentProjects && userStats.recentProjects.length > 0) {
+                userStats.recentProjects.forEach(project => {
+                    const projectCard = document.createElement('div');
+                    projectCard.className = 'project-card';
+                    projectCard.innerHTML = `
+                        <h4>Day ${project.day}</h4>
+                        <span class="project-tag">Completed</span>
+                    `;
+                    recentProjectsEl.appendChild(projectCard);
+                });
+            } else {
+                recentProjectsEl.innerHTML = '<p class="text-secondary">No recent projects yet. Start building!</p>';
+            }
+        }
+
+        async function toggleDay(day) {
+            if (completedDays.includes(day)) {
+                completedDays = completedDays.filter(d => d !== day);
+            } else {
+                completedDays.push(day);
+            }
+
+            // Update localStorage
+            localStorage.setItem('completedDays', JSON.stringify(completedDays));
+
+            // Update Firestore if logged in
+            if (!user.isGuest && user.userId) {
+                try {
+                    await firestoreService.updateCompletedDays(user.userId, completedDays);
+                    // Reload stats to get updated streaks
+                    userStats = await firestoreService.getUserStats(user.userId);
+                    completedDays = userStats.completedDays || [];
+                } catch (error) {
+                    console.error('Error updating progress in Firestore:', error);
+                }
+            }
+
+            // Update UI
+            updateUI();
+        }
+
+        // Profile modal functions
+        window.openProfileModal = function() {
+            const modal = document.getElementById('profileModal');
+            if (modal && userStats) {
+                // Populate form with current data
+                document.getElementById('profileUsername').value = userStats.username || '';
+                document.getElementById('profileBio').value = userStats.bio || '';
+                document.getElementById('profileLocation').value = userStats.location || '';
+                document.getElementById('profileWebsite').value = userStats.website || '';
+                document.getElementById('profileGithub').value = userStats.github || '';
+                modal.style.display = 'flex';
+            }
+        };
+
+        window.closeProfileModal = function() {
+            const modal = document.getElementById('profileModal');
+            if (modal) modal.style.display = 'none';
+        };
+
+        // Handle profile form submission
+        const profileForm = document.getElementById('profileForm');
+        if (profileForm) {
+            profileForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (user.isGuest || !user.userId) {
+                    alert('Please log in to edit your profile.');
+                    return;
+                }
+
+                const formData = new FormData(profileForm);
+                const profileData = {
+                    username: formData.get('username'),
+                    bio: formData.get('bio'),
+                    location: formData.get('location'),
+                    website: formData.get('website'),
+                    github: formData.get('github')
+                };
+
+                try {
+                    await firestoreService.updateUserProfile(user.userId, profileData);
+                    // Reload stats to get updated profile
                     userStats = await firestoreService.getUserStats(user.userId);
                     updateUI();
                     closeProfileModal();
                     alert('Profile updated successfully!');
                 } catch (error) {
                     console.error('Error updating profile:', error);
-                    alert('Error updating profile. Please try again.');
                 }
             });
         }
 
-
-
-        async function initializeNeuralNexus(projectsList) {
-            if (!window.AI || !window.NexusHUD) return;
-
-            // Start progress analysis
-            const progressData = JSON.parse(localStorage.getItem('progressData')) || {};
-            const completedDaysList = Object.keys(progressData).map(Number);
-
-            const analysis = await window.AI.analyzeProgress({
-                completedDays: completedDaysList,
-                techDistribution: calculateTechDistribution(completedDaysList, projectsList),
-                currentStreak: parseInt(document.getElementById('currentStreak')?.textContent || 0)
-            });
-
-            // Update HUD with AI advice for the next mission
-            const maxDay = completedDaysList.length > 0 ? Math.max(...completedDaysList) : 0;
-            const nextDayNumber = maxDay + 1;
-            const adviceText = await window.AI.getHUDAdvice(nextDayNumber);
-
-            if (window.NexusHUD) {
-                window.NexusHUD.updateAITip(adviceText);
+        // Handle logout
+        window.handleLogout = async function() {
+            if (confirm('Are you sure you want to log out?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = 'login.html';
             }
-
-            // Show AI notification
-            if (window.Notify) {
-                window.Notify.show({
-                    title: 'Neural Nexus Link Established',
-                    message: 'AI Pair-Programmer is online. Click the brain icon for insights.',
-                    type: 'neural',
-                    duration: 5000
-                });
-            }
-        }
-
-        function calculateTechDistribution(completed, allProjects) {
-            const dist = {};
-            completed.forEach(dayNumber => {
-                const project = allProjects.find(p => p.day === dayNumber);
-                if (project && project.tech) {
-                    project.tech.forEach(t => {
-                        dist[t] = (dist[t] || 0) + 1;
-                    });
-                }
-            });
-            return dist;
-        }
+        };
     }
 });
