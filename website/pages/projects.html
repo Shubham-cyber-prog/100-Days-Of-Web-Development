@@ -59,9 +59,54 @@
     </header>
 
     <main class="container section">
-        <!-- Projects content will be loaded here by projects.js -->
-        <div id="projects-container">
-            <!-- Projects grid will be populated here -->
+        <!-- Featured Projects Section -->
+        <div class="featured-section animate-enter">
+            <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-4); color: var(--text-primary);">
+                Featured Projects
+            </h2>
+            <p class="text-secondary" style="margin-bottom: var(--space-6);">
+                Check out amazing projects submitted by our community members. Get inspired and share your own!
+            </p>
+            <div class="featured-actions" style="margin-bottom: var(--space-6);">
+                <a href="submissions.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Submit Your Project
+                </a>
+                <a href="submissions.html" class="btn btn-outline">
+                    <i class="fas fa-eye"></i> View All Submissions
+                </a>
+            </div>
+            <div id="featured-projects" class="featured-grid">
+                <!-- Featured projects will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Projects Archive Section -->
+        <div class="archive-section animate-enter delay-200">
+            <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-4); color: var(--text-primary);">
+                Project Archive
+            </h2>
+            <p class="text-secondary" style="margin-bottom: var(--space-6);">
+                Explore the complete 100-day web development curriculum with projects for every skill level.
+            </p>
+
+            <!-- Search and Filters -->
+            <div class="controls-section" style="margin-bottom: var(--space-6);">
+                <div class="search-wrapper">
+                    <input type="text" id="projectSearch" placeholder="Search projects..." />
+                </div>
+                <div class="filter-tabs">
+                    <button class="tab-btn active" data-category="All">All Projects</button>
+                    <button class="tab-btn" data-category="beginner">Beginner</button>
+                    <button class="tab-btn" data-category="intermediate">Intermediate</button>
+                    <button class="tab-btn" data-category="advanced">Advanced</button>
+                    <button class="tab-btn" data-category="capstone">Capstone</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div id="projectsGrid" class="projects-grid">
+                <!-- Projects will be populated here -->
+            </div>
         </div>
     </main>
 
