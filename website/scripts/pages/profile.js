@@ -36,50 +36,128 @@ class ProfileManager {
 
     loadAchievements() {
         return [
+            // Beginner Achievements
             {
                 id: 1,
-                title: 'First Steps',
+                title: 'Hello World',
                 description: 'Complete your first project',
-                icon: 'fas fa-baby',
+                icon: 'fas fa-rocket',
                 unlocked: true,
-                unlockedDate: '2024-01-15'
+                unlockedDate: '2024-01-15',
+                tier: 'bronze',
+                rarity: 'common'
             },
             {
                 id: 2,
-                title: 'Week Warrior',
-                description: 'Code for 7 consecutive days',
-                icon: 'fas fa-fire',
+                title: 'Quick Learner',
+                description: 'Complete 5 projects in a week',
+                icon: 'fas fa-bolt',
                 unlocked: true,
-                unlockedDate: '2024-01-22'
+                unlockedDate: '2024-01-22',
+                tier: 'bronze',
+                rarity: 'common'
             },
             {
                 id: 3,
+                title: 'Code Streak',
+                description: 'Code for 7 consecutive days',
+                icon: 'fas fa-fire',
+                unlocked: true,
+                unlockedDate: '2024-02-01',
+                tier: 'silver',
+                rarity: 'uncommon'
+            },
+            // Intermediate Achievements
+            {
+                id: 4,
                 title: 'HTML Master',
                 description: 'Complete 10 HTML projects',
                 icon: 'fab fa-html5',
                 unlocked: true,
-                unlockedDate: '2024-02-01'
-            },
-            {
-                id: 4,
-                title: 'CSS Wizard',
-                description: 'Master CSS animations',
-                icon: 'fab fa-css3-alt',
-                unlocked: false
+                unlockedDate: '2024-02-10',
+                tier: 'silver',
+                rarity: 'uncommon'
             },
             {
                 id: 5,
-                title: 'JS Ninja',
-                description: 'Build 5 JavaScript apps',
-                icon: 'fab fa-js',
-                unlocked: false
+                title: 'CSS Wizard',
+                description: 'Master CSS animations and advanced layouts',
+                icon: 'fab fa-css3-alt',
+                unlocked: false,
+                tier: 'gold',
+                rarity: 'rare',
+                progress: 70
             },
             {
                 id: 6,
+                title: 'JavaScript Ninja',
+                description: 'Build 10 interactive JavaScript apps',
+                icon: 'fab fa-js',
+                unlocked: false,
+                tier: 'gold',
+                rarity: 'rare',
+                progress: 40
+            },
+            // Advanced Achievements
+            {
+                id: 7,
+                title: 'React Developer',
+                description: 'Create 5 React applications',
+                icon: 'fab fa-react',
+                unlocked: false,
+                tier: 'gold',
+                rarity: 'rare',
+                progress: 20
+            },
+            {
+                id: 8,
+                title: 'Full Stack Hero',
+                description: 'Build a complete full-stack application',
+                icon: 'fas fa-layer-group',
+                unlocked: false,
+                tier: 'platinum',
+                rarity: 'epic',
+                progress: 15
+            },
+            {
+                id: 9,
                 title: 'Century Club',
-                description: 'Complete 100 days challenge',
+                description: 'Complete the 100 days challenge',
                 icon: 'fas fa-trophy',
-                unlocked: false
+                unlocked: false,
+                tier: 'platinum',
+                rarity: 'legendary',
+                progress: 73
+            },
+            // Special Achievements
+            {
+                id: 10,
+                title: 'Night Owl',
+                description: 'Code after midnight 10 times',
+                icon: 'fas fa-moon',
+                unlocked: true,
+                unlockedDate: '2024-02-05',
+                tier: 'silver',
+                rarity: 'uncommon'
+            },
+            {
+                id: 11,
+                title: 'Open Source Contributor',
+                description: 'Contribute to an open source project',
+                icon: 'fas fa-code-branch',
+                unlocked: false,
+                tier: 'gold',
+                rarity: 'rare'
+            },
+            {
+                id: 12,
+                title: 'Bug Hunter',
+                description: 'Fix 20 bugs in your projects',
+                icon: 'fas fa-bug',
+                unlocked: false,
+                tier: 'silver',
+                rarity: 'uncommon',
+                progress: 55
             }
         ];
     }
@@ -158,17 +236,51 @@ class ProfileManager {
 
     createAchievementBadge(achievement) {
         const lockedClass = achievement.unlocked ? '' : 'locked';
-        const lockIcon = achievement.unlocked ? '' : '<i class="fas fa-lock" style="position: absolute; top: 10px; right: 10px;"></i>';
+        const tierClass = `tier-${achievement.tier}`;
+        const rarityClass = `rarity-${achievement.rarity}`;
+        
+        // Progress bar for locked achievements with progress
+        let progressBar = '';
+        if (!achievement.unlocked && achievement.progress) {
+            // Validate progress is a safe number between 0-100
+            const safeProgress = Math.max(0, Math.min(100, Number(achievement.progress) || 0));
+            progressBar = `
+                <div class="achievement-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${safeProgress}%"></div>
+                    </div>
+                    <span class="progress-text">${safeProgress}%</span>
+                </div>
+            `;
+        }
+        
+        // Unlock date for unlocked achievements
+        let unlockDate = '';
+        if (achievement.unlocked) {
+            unlockDate = `<div class="achievement-date">Earned: ${achievement.unlockedDate}</div>`;
+        }
+        
+        // Lock icon for locked achievements
+        const lockIcon = achievement.unlocked ? '' : '<i class="fas fa-lock achievement-lock"></i>';
 
         return `
-            <div class="achievement-badge ${lockedClass}" title="${achievement.description}">
+            <div class="achievement-badge ${lockedClass} ${tierClass} ${rarityClass}" 
+                 data-tier="${achievement.tier}" 
+                 data-rarity="${achievement.rarity}"
+                 title="${achievement.description}">
                 ${lockIcon}
-                <div class="achievement-icon">
-                    <i class="${achievement.icon}"></i>
+                <div class="achievement-icon-wrapper">
+                    <div class="achievement-icon">
+                        <i class="${achievement.icon}"></i>
+                    </div>
+                    <div class="achievement-glow"></div>
                 </div>
-                <div class="achievement-title">${achievement.title}</div>
-                <div class="achievement-desc">${achievement.description}</div>
-                ${achievement.unlocked ? `<div style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.8;">Earned: ${achievement.unlockedDate}</div>` : ''}
+                <div class="achievement-info">
+                    <div class="achievement-title">${achievement.title}</div>
+                    <div class="achievement-desc">${achievement.description}</div>
+                    ${progressBar}
+                    ${unlockDate}
+                </div>
             </div>
         `;
     }
