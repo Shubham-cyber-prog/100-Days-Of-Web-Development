@@ -242,12 +242,14 @@ class ProfileManager {
         // Progress bar for locked achievements with progress
         let progressBar = '';
         if (!achievement.unlocked && achievement.progress) {
+            // Validate progress is a safe number between 0-100
+            const safeProgress = Math.max(0, Math.min(100, Number(achievement.progress) || 0));
             progressBar = `
                 <div class="achievement-progress">
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${achievement.progress}%"></div>
+                        <div class="progress-fill" style="width: ${safeProgress}%"></div>
                     </div>
-                    <span class="progress-text">${achievement.progress}%</span>
+                    <span class="progress-text">${safeProgress}%</span>
                 </div>
             `;
         }
