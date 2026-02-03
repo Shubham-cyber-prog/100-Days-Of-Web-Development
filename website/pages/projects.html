@@ -1,42 +1,49 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      href="/website/assets/images/logo.png"
-      height="70px"
-      width="100px"
-    />
-    <title>Projects | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/website/assets/images/logo.png" height="70px" width="100px">
+    <title>Projects Archive | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/pages/projects.css">
     <link rel="stylesheet" href="../styles/components/project-modal.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
       .page-header {
         text-align: center;
         padding: 120px 0 60px;
       }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/website/assets/images/logo.png">
-    <title>Projects Archive | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/pages/projects.css">
-</head>
+      .search-wrapper {
+        max-width: 600px;
+        margin: 0 auto 40px;
+        display: flex;
+        justify-content: center;
+        padding: 0 20px;
+      }
 
-<body>
+      .search-wrapper input {
+        width: 100%;
+        padding: 14px 20px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1.5px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 15px;
+        transition: all 0.3s ease;
+      }
 
-<<<<<<< HEAD
-    <header class="site-header">
-        <div class="nav-container">
-        box-shadow: 0 0 20px -5px var(--accent-alpha);
+      .search-wrapper input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--accent-core);
+        box-shadow: 0 0 0 3px var(--accent-alpha);
+      }
+
+      .search-wrapper input::placeholder {
+        color: var(--text-tertiary);
       }
 
       .filter-tabs {
@@ -45,6 +52,7 @@
         gap: 12px;
         margin-bottom: 60px;
         flex-wrap: wrap;
+        padding: 0 20px;
       }
 
       .tab-btn {
@@ -81,15 +89,7 @@
         background: #e4eaf5;
       }
 
-      /* ----------------------------------------------------
-           PROJECT CARD COSMIC ANIMATION (Hover Effect) 
-           ---------------------------------------------------- */
-      /* ----------------------------------------------------
-           PROJECT CARD COSMIC ANIMATION (Hover Effect) 
-           ---------------------------------------------------- */
-      /* ----------------------------------------------------
-           PROJECT CARD COSMIC ANIMATION (Permanent & Tilt) 
-           ---------------------------------------------------- */
+      /* Project Card Styling */
       .project-card {
         position: relative;
         overflow: hidden;
@@ -99,7 +99,7 @@
         display: flex;
         flex-direction: column;
 
-        /* Proper Glassmorphism Effect */
+        /* Glassmorphism Effect */
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
@@ -118,14 +118,9 @@
         --ty: 0px;
 
         /* Smooth transitions */
-        transition:
-          transform 0.05s ease-out,
-          box-shadow 0.4s ease,
-          background 0.3s ease,
-          backdrop-filter 0.3s ease,
-          border-color 0.3s ease;
-        transform: rotateX(var(--rx)) rotateY(var(--ry))
-          translate3d(var(--tx), var(--ty), 0);
+        transition: transform 0.05s ease-out, box-shadow 0.4s ease, background 0.3s ease,
+          backdrop-filter 0.3s ease, border-color 0.3s ease;
+        transform: rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0);
 
         /* Clean hardware acceleration */
         will-change: transform;
@@ -154,11 +149,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(
-          135deg,
-          var(--accent-core) 60%,
-          var(--accent-glow) 100%
-        );
+        background: linear-gradient(135deg, var(--accent-core) 60%, var(--accent-glow) 100%);
         border: 1.5px solid var(--accent-core);
         color: #fff;
         font-weight: 700;
@@ -179,13 +170,6 @@
         color: var(--accent-core);
         border-color: var(--accent-glow);
         box-shadow: 0 6px 18px -6px var(--accent-glow);
-      }
-
-      .code-chip:hover {
-        background: var(--accent-core);
-        color: #000;
-        border-color: var(--accent-core);
-        transform: translateY(-2px);
       }
 
       .card-hint {
@@ -237,18 +221,15 @@
         opacity: 0.6;
       }
 
-      /* Hover Lift + Tilt */
+      /* Hover Effects */
       .project-card:hover {
-        transform: rotateX(var(--rx)) rotateY(var(--ry))
-          translate3d(var(--tx), var(--ty), 0) scale(1.02);
-        /* Enhanced white glassmorphism on hover */
+        transform: rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0)
+          scale(1.02);
         background: rgba(255, 255, 255, 0.15);
         border-color: rgba(255, 255, 255, 0.3);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
-        box-shadow:
-          0 15px 35px -5px rgba(0, 0, 0, 0.5),
-          0 0 20px rgba(255, 255, 255, 0.1),
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1),
           inset 0 1px 0 rgba(255, 255, 255, 0.2);
         z-index: 10;
       }
@@ -262,13 +243,11 @@
       body.light-mode .project-card:hover {
         background: rgba(255, 255, 255, 0.4);
         border-color: rgba(255, 255, 255, 0.6);
-        box-shadow:
-          0 15px 35px -5px rgba(0, 0, 0, 0.15),
-          0 0 20px rgba(255, 255, 255, 0.3),
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 255, 255, 0.3),
           inset 0 1px 0 rgba(255, 255, 255, 0.5);
       }
 
-      /* Layer 3: Ensure Content is Above */
+      /* Ensure Content is Above */
       .project-card > * {
         position: relative;
         z-index: 2;
@@ -278,7 +257,6 @@
         from {
           transform: rotate(0deg);
         }
-
         to {
           transform: rotate(360deg);
         }
@@ -286,96 +264,77 @@
     </style>
     <script src="../scripts/components/sidebar-loader.js"></script>
 </head>
+
+<body>
+  <!-- Main Content -->
+  <main class="container section">
+    <div class="page-header animate-enter">
+      <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
+        Projects Archive
+      </h1>
+      <p class="text-secondary">Access all mission logs and deployment records.</p>
+    </div>
+
+    <!-- Search Bar - Centered with proper spacing -->
+    <div class="search-wrapper animate-enter delay-100">
+      <input
+        type="text"
+        id="projectSearch"
+        placeholder="Search mission name or day..."
+      />
+    </div>
+
+    <!-- Filter Tabs - Centered -->
+    <div class="filter-tabs animate-enter delay-200">
+      <button class="tab-btn active normal" data-category="All">All Systems</button>
+      <button class="tab-btn normal" data-category="Beginner">Beginner</button>
+      <button class="tab-btn normal" data-category="Intermediate">Intermediate</button>
+      <button class="tab-btn normal" data-category="Advanced">Advanced</button>
+      <button class="tab-btn normal" data-category="Capstone">Capstone</button>
+    </div>
+
+    <!-- Project Grid -->
+    <div id="projectsGrid" class="grid grid-4 animate-enter delay-300">
+      <!-- Injected by scripts/pages/projects.js -->
+    </div>
+  </main>
+
+  <!-- Professional Footer -->
+  <div id="footer-placeholder"></div>
+
+  <button id="scrollToTopBtn" aria-label="Scroll to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="../scripts/components/footer-loader.js"></script>
+  <script src="../scripts/components/cursor.js"></script>
+  <script type="module" src="../scripts/pages/projects.js"></script>
+
   <script>
-    // 1. Intercept all clicks on the project grid
-    document
-      .getElementById("projectsGrid")
-      .addEventListener("click", async (e) => {
-        // Find if the clicked element (or its parent) is a link or a project card
-        const card = e.target.closest(".project-card");
-        if (!card) return;
+    // Health Check for project URLs
+    document.getElementById("projectsGrid").addEventListener("click", async (e) => {
+      const card = e.target.closest(".project-card");
+      if (!card) return;
 
-        // Get the destination URL from your data (adjust if your property name is different)
-        const targetUrl =
-          card.getAttribute("data-url") ||
-          card.querySelector("a")?.getAttribute("href");
+      const targetUrl =
+        card.getAttribute("data-url") || card.querySelector("a")?.getAttribute("href");
 
-        if (targetUrl) {
-          e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
+      if (targetUrl) {
+        e.preventDefault();
 
-          try {
-            // 2. Perform a "Health Check" on the URL
-            const response = await fetch(targetUrl, { method: "HEAD" });
+        try {
+          const response = await fetch(targetUrl, { method: "HEAD" });
 
-            if (response.ok) {
-              // Milestone exists! Proceed to the project.
-              window.location.href = targetUrl;
-            } else {
-              // milestone folder missing (404), show your custom 404 page
-              window.location.href = "./404.html";
-            }
-          } catch (error) {
-            // Network error or folder completely missing
+          if (response.ok) {
+            window.location.href = targetUrl;
+          } else {
             window.location.href = "./404.html";
           }
+        } catch (error) {
+          window.location.href = "./404.html";
         }
-      });
+      }
+    });
   </script>
-
-  <body>
-    <!-- Main Content -->
-    <main class="container section">
-      <div class="page-header animate-enter">
-        <h1
-          class="heading"
-          style="font-size: var(--text-4xl); margin-bottom: var(--space-4)"
-        >
-          Projects Archive
-        </h1>
-        <p class="text-secondary">
-          Access all mission logs and deployment records.
-        </p>
-      </div>
-      <!-- Controls -->
-      <div class="search-wrapper animate-enter delay-100">
-        <input
-          type="text"
-          id="projectSearch"
-          placeholder="Search mission name or day..."
-        />
-      </div>
-      <div class="filter-tabs animate-enter delay-200">
-        <button class="tab-btn active normal" data-category="All">
-          All Systems
-        </button>
-        <button class="tab-btn normal" data-category="Beginner">
-          Beginner
-        </button>
-        <button class="tab-btn normal" data-category="Intermediate">
-          Intermediate
-        </button>
-        <button class="tab-btn normal" data-category="Advanced">
-          Advanced
-        </button>
-        <button class="tab-btn normal" data-category="Capstone">
-          Capstone
-        </button>
-      </div>
-      <!-- Grid -->
-      <div id="projectsGrid" class="grid grid-4 animate-enter delay-300">
-        <!-- Injected by scripts/pages/projects.js -->
-      </div>
-    </main>
-
-    <!-- Professional Footer -->
-    <div id="footer-placeholder"></div>
-
-    <button id="scrollToTopBtn" aria-label="Scroll to top">
-      <i class="fa-solid fa-arrow-up"></i>
-    </button>    <script src="../scripts/components/footer-loader.js"></script>
->>>>>>> ee23802683eb6efe8ad810849a6cde25e6df7907
-    <script src="../scripts/components/cursor.js"></script>
-    <script type="module" src="../scripts/pages/projects.js"></script>
 </body>
-
 </html>
