@@ -10,17 +10,272 @@
   <style>
     .contact-wrapper {
       padding-top: 120px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-bottom: 60px;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .contact-header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--accent-core), var(--accent-glow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-header p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
       max-width: 600px;
       margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .contact-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .contact-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    .contact-info {
+      background: var(--bg-glass-panel);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-info h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .info-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(5px);
+    }
+
+    .info-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-core), var(--accent-glow));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px var(--accent-alpha);
+    }
+
+    .info-icon i {
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    .info-content h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-content p {
+      color: var(--text-primary);
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+      justify-content: center;
+    }
+
+    .social-link {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: var(--text-secondary);
+    }
+
+    .social-link:hover {
+      background: linear-gradient(135deg, var(--accent-core), var(--accent-glow));
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px var(--accent-alpha);
     }
 
     .form-glass {
-      background: var(--bg-surface);
+      background: var(--bg-glass-panel);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      padding: 40px;
-      box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-glass h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      margin-left: 4px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--accent-core);
+      box-shadow: 0 0 0 3px var(--accent-alpha);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--accent-core), var(--accent-glow));
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--accent-alpha);
+      margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px var(--accent-alpha);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* Success/Error Messages */
+    .message-box {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message-box.success {
+      background: rgba(0, 255, 128, 0.1);
+      border: 1px solid rgba(0, 255, 128, 0.2);
+      color: #00ff80;
+    }
+
+    .message-box.error {
+      background: rgba(255, 0, 0, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.2);
+      color: #ff4444;
+    }
+
+    /* Light Mode Adjustments */
+    body.light-mode .form-input {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: var(--text-primary);
+    }
+
+    body.light-mode .form-input:focus {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .info-item {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    body.light-mode .info-item:hover {
+      background: rgba(0, 0, 0, 0.05);
     }
   </style>
   <script src="../scripts/components/sidebar-loader.js"></script>
@@ -86,144 +341,145 @@
 
   <main class="container">
     <div class="contact-wrapper animate-enter">
-      <div class="text-center mb-10">
-        <h1 style="font-size: var(--text-4xl); color:black; margin-bottom: 8px">
-          Establish Contact
-        </h1>
-        <p class="text-secondary">Send a transmission to the core team.</p>
+      <!-- Header -->
+      <div class="contact-header">
+        <h1>Get In Touch</h1>
+        <p>Have a question or want to collaborate? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
       </div>
 
-      <form class="form-glass flex flex-col gap-5">
-        <div class="form-group">
-          <label class="form-label" style="margin-left: 4px">Identity</label>
-          <input type="text" class="form-input" placeholder="Commander Name" style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              " />
+      <!-- Contact Content -->
+      <div class="contact-content">
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <h2>Contact Information</h2>
+          
+          <div class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="info-content">
+              <h3>Email</h3>
+              <p><a href="mailto:contact@100daysofwebdev.com" style="color: inherit; text-decoration: none;">contact@100daysofwebdev.com</a></p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="info-content">
+              <h3>Location</h3>
+              <p>Remote • Global</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="info-content">
+              <h3>Response Time</h3>
+              <p>24-48 hours</p>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="social-links">
+            <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" target="_blank" class="social-link" title="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="social-link" title="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://discord.gg/SW7puwEm" target="_blank" class="social-link" title="Discord">
+              <i class="fab fa-discord"></i>
+            </a>
+            <a href="#" class="social-link" title="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" style="margin-left: 4px">Coordinates (Email)</label>
-          <input type="email" class="form-input" placeholder="user@domain.com" style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              " />
-        </div>
+        <!-- Contact Form -->
+        <div class="form-glass">
+          <h2>Send a Message</h2>
+          
+          <!-- Message Box for Success/Error -->
+          <div id="messageBox" class="message-box">
+            <i class="fas fa-check-circle"></i>
+            <span id="messageText"></span>
+          </div>
 
-        <div class="form-group">
-          <label class="form-label" style="margin-left: 4px">Transmission</label>
-          <textarea class="form-input" rows="5" placeholder="Message content..." style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "></textarea>
-        </div>
+          <form id="contactForm">
+            <div class="form-group">
+              <label class="form-label">Your Name</label>
+              <input type="text" name="name" class="form-input" placeholder="John Doe" required />
+            </div>
 
-        <button type="submit" class="btn btn-primary" style="margin-top: 10px">
-          Send Transmission
-        </button>
-      </form>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" name="email" class="form-input" placeholder="john@example.com" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <input type="text" name="subject" class="form-input" placeholder="How can we help?" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea name="message" class="form-input" rows="5" placeholder="Tell us more about your inquiry..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </main>
 
   <!-- Professional Footer -->
-  <div id="footer-placeholder"></div>  <script src="../scripts/components/footer-loader.js"></script>
-  <footer class="site-footer" style="display: none;">
-    <div class="container footer-content">
-      <!-- Brand -->
-      <div class="footer-brand animate-enter">
-        <a href="dashboard.html" class="footer-logo">
-          <img src="../assets/images/logo.png" alt="Logo" />
-          <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-        </a>
-        <p class="footer-desc">
-          A hyper-intensive protocol designed to forge elite web engineers
-          through daily deployment cycles.
-        </p>
-      </div>
-
-      <!-- Resources -->
-      <div class="footer-col animate-enter delay-200">
-        <h3>Resources</h3>
-        <nav class="footer-links">
-          <a href="documentation.html" class="footer-link">Documentation</a>
-          <a href="api-status.html" class="footer-link">API Status</a>
-          <a href="contact.html" class="footer-link">Contact Comms</a>
-          <a href="system-logic.html" class="footer-link">System Logic</a>
-          <!-- Connect -->
-          <div class="footer-col animate-enter delay-300">
-            <h3>Connect</h3>
-            <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-            <div class="footer-socials">
-              <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" target="_blank"
-                rel="noopener noreferrer" class="social-btn" aria-label="Github">
-                <svg class="icon" viewBox="0 0 24 24">
-                  <path
-                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                  </path>
-                </svg>
-              </a>
-              <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
-                aria-label="Twitter" title="Coming soon">
-                <svg class="icon" viewBox="0 0 24 24">
-                  <path
-                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                  </path>
-                </svg>
-              </a>
-              <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
-                aria-label="Discord">
-                <svg class="icon" viewBox="0 0 24 24">
-                  <path
-                    d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z">
-                  </path>
-                </svg>
-              </a>
-            </div>
-          </div>
-      </div>
-
-      <!-- Connect -->
-      <div class="footer-col animate-enter delay-300">
-        <h3>Connect</h3>
-        <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-        <div class="footer-socials">
-          <a href="#" class="social-btn" aria-label="Github"><svg class="icon" viewBox="0 0 24 24">
-              <path
-                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-              </path>
-            </svg></a>
-          <a href="#" class="social-btn" aria-label="Twitter"><svg class="icon" viewBox="0 0 24 24">
-              <path
-                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-              </path>
-            </svg></a>
-          <a href="#" class="social-btn" aria-label="Discord"><svg class="icon" viewBox="0 0 24 24">
-              <path
-                d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z">
-              </path>
-            </svg></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="container footer-bottom">
-      <p class="copyright">
-        &copy; 2026 100 Days of Web Dev. All Systems Nominal.
-      </p>
-      <p class="made-by">
-        Maintained by <span class="text-flame font-bold">Subham</span>
-        <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-          </path>
-        </svg>
-      </p>
-    </div>
-  </footer>
-
+  <div id="footer-placeholder"></div>
+  
+  <script src="../scripts/components/footer-loader.js"></script>
   <script src="../scripts/components/cursor.js"></script>
   <script src="../scripts/auth/guard.js"></script>
   <script src="../scripts/components/navigation.js"></script>
+  
+  <script>
+    // Contact Form Handling
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const messageBox = document.getElementById('messageBox');
+      const messageText = document.getElementById('messageText');
+      const formData = new FormData(this);
+      
+      // Show loading state
+      messageBox.className = 'message-box';
+      messageBox.style.display = 'flex';
+      messageText.textContent = 'Sending message...';
+      
+      // Simulate form submission (replace with actual API call)
+      setTimeout(() => {
+        // Success
+        messageBox.classList.add('success');
+        messageText.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+        this.reset();
+        
+        // Hide message after 5 seconds
+        setTimeout(() => {
+          messageBox.style.display = 'none';
+        }, 5000);
+      }, 1000);
+      
+      // Error handling example:
+      // messageBox.classList.add('error');
+      // messageText.textContent = 'Failed to send message. Please try again.';
+    });
+  </script>
 </body>
 
 </html>
