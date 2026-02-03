@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Chat Application | Day 124 Project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>AI Chat Assistant</h1>
+                        <span>Day 124 Project | Real-time AI Chat Application</span>
+                    </div>
+                </div>
+                <div class="server-status" id="serverStatus">
+                    <i class="fas fa-circle"></i>
+                    <span>Connecting...</span>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="server-config">
+                    <h3><i class="fas fa-server"></i> Server Configuration</h3>
+                    <div class="config-input">
+                        <label for="serverUrl">Server URL</label>
+                        <input type="text" id="serverUrl" value="http://localhost:3000" placeholder="Enter server URL">
+                        <div class="input-hint">Backend server running on port 3000</div>
+                    </div>
+                    <div class="config-input">
+                        <label for="apiModel">AI Model</label>
+                        <select id="apiModel" class="model-select">
+    <option value="llama-3.1-8b-instant">Llama 3.1 8B Instant (Recommended)</option>
+    <option value="llama-3.1-70b-versatile">Llama 3.1 70B Versatile</option>
+    <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+    <option value="gemma2-9b-it">Gemma 2 9B</option>
+</select>
+                    </div>
+                    <div class="config-actions">
+                        <button class="btn btn-primary" id="saveConfig">
+                            <i class="fas fa-save"></i> Save & Connect
+                        </button>
+                        <button class="btn btn-secondary" id="testConnection">
+                            <i class="fas fa-wifi"></i> Test Connection
+                        </button>
+                    </div>
+                    <div class="connection-status" id="connectionDetails">
+                        <div class="status-item">
+                            <span class="status-label">Status:</span>
+                            <span class="status-value" id="statusText">Not Connected</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Model:</span>
+                            <span class="status-value" id="modelText">llama3-8b-8192</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Last Sync:</span>
+                            <span class="status-value" id="lastSync">Never</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conversation-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-comments"></i> Conversations</h2>
+                        <button class="icon-btn" id="refreshConversations" title="Refresh">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="conversations" id="conversationsList">
+                        <!-- Conversation items will be added dynamically -->
+                    </div>
+                    <div class="conversation-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-message"></i>
+                            <span id="totalConversations">0</span> chats
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span id="totalMessages">0</span> messages
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <h2 id="chatTitle">AI Chat Assistant</h2>
+                        <p id="chatSubtitle">Ask me anything - I'm powered by Groq's lightning-fast AI models</p>
+                        <div class="chat-info">
+                            <span class="info-badge" id="currentModel">Model: llama3-8b-8192</span>
+                            <span class="info-badge" id="messageCount">Messages: 0</span>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="btn btn-secondary" id="newChat" title="New Chat">
+                            <i class="fas fa-plus"></i> New
+                        </button>
+                        <button class="btn btn-secondary" id="saveChat" title="Save Chat">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        <button class="btn btn-secondary" id="exportChat" title="Export Chat">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button class="btn btn-secondary" id="clearChat" title="Clear Chat">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be added dynamically -->
+                    <div class="welcome-message">
+                        <div class="welcome-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="welcome-content">
+                            <h3>Welcome to AI Chat Assistant!</h3>
+                            <p>I'm powered by Groq's ultra-fast AI models. I can help you with:</p>
+                            <div class="welcome-features">
+                                <span><i class="fas fa-lightbulb"></i> Creative Writing</span>
+                                <span><i class="fas fa-code"></i> Code Explanation</span>
+                                <span><i class="fas fa-question"></i> Problem Solving</span>
+                                <span><i class="fas fa-book"></i> Learning & Research</span>
+                            </div>
+                            <p class="welcome-tip">💡 <strong>Quick Tip:</strong> Use the action buttons below for common tasks!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <div class="input-header">
+                            <div class="input-mode">
+                                <button class="mode-btn active" data-mode="text">
+                                    <i class="fas fa-font"></i> Text
+                                </button>
+                                <button class="mode-btn" data-mode="code">
+                                    <i class="fas fa-code"></i> Code
+                                </button>
+                            </div>
+                            <div class="input-tools">
+                                <button class="tool-btn" id="clearInput" title="Clear">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <button class="tool-btn" id="voiceInput" title="Voice Input">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <textarea class="chat-input" id="chatInput" placeholder="Type your message here... Press Enter to send, Shift+Enter for new line" rows="3"></textarea>
+                        <div class="input-footer">
+                            <div class="char-count">
+                                <span id="charCount">0</span>/2000 characters
+                            </div>
+                            <button class="send-btn" id="sendBtn">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Send</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-actions">
+                        <button class="action-btn" id="suggestTopic">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Suggest Topic</span>
+                        </button>
+                        <button class="action-btn" id="fixGrammar">
+                            <i class="fas fa-spell-check"></i>
+                            <span>Fix Grammar</span>
+                        </button>
+                        <button class="action-btn" id="explainCode">
+                            <i class="fas fa-code"></i>
+                            <span>Explain Code</span>
+                        </button>
+                        <button class="action-btn" id="summarize">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Summarize</span>
+                        </button>
+                        <button class="action-btn" id="translate">
+                            <i class="fas fa-language"></i>
+                            <span>Translate</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <h2>✨ Application Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Backend</h3>
+                    <p>API keys are securely stored on the server side. No sensitive information is exposed to the client.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Ultra-Fast Responses</h3>
+                    <p>Powered by Groq's LPU inference engine for lightning-fast AI responses through our secure server.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>Multiple AI Models</h3>
+                    <p>Switch between powerful models like Llama 3, Mixtral, and Gemma via server configuration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Conversation History</h3>
+                    <p>All your conversations are saved locally in your browser. Export or continue anytime.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>Smart Actions</h3>
+                    <p>Quick-action buttons for common tasks: fix grammar, explain code, summarize text, or generate ideas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Fully Responsive</h3>
+                    <p>Enjoy a seamless experience across all devices - desktop, tablet, or mobile with adaptive layouts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Start Guide -->
+        <div class="guide">
+            <h2>🚀 Quick Start Guide</h2>
+            <div class="guide-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Start the Server</h3>
+                        <p>Run <code>npm install</code> then <code>npm start</code> in the server folder</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Configure Server</h3>
+                        <p>Add your Groq API key to the server's <code>.env</code> file</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Connect & Chat</h3>
+                        <p>Open this file in browser and start chatting with AI!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AI Chat Assistant</h4>
+                    <p>Day 124 Project - Complete AI Chat Application</p>
+                    <p class="footer-note">Built with HTML, CSS, JavaScript & Express Backend</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Important Notes</h4>
+                    <ul>
+                        <li>API calls are routed through a secure backend server</li>
+                        <li>Conversations are stored locally in your browser</li>
+                        <li>No API keys are exposed to client-side code</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Server Setup</h4>
+                    <code class="code-block">
+# Install dependencies
+npm install
+
+# Start server
+npm start
+                    </code>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 AI Chat Application | Day 124 Project | Get Groq API key from <a href="https://console.groq.com" target="_blank">console.groq.com</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
