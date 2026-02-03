@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanbanFlow - Offline Kanban Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/components.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <h1>KanbanFlow</h1>
+            </div>
+
+            <div class="controls">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search tasks...">
+                </div>
+
+                <button id="addColumnBtn" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Add Column
+                </button>
+
+                <button id="resetBoardBtn" class="btn btn-danger icon-only" title="Reset Board">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="board-container" id="boardContainer">
+            <!-- Columns will be injected here dynamically -->
+        </main>
+
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Edit Task</h2>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="taskTitle">Title</label>
+                    <input type="text" id="taskTitle" placeholder="Task title">
+                </div>
+                <div class="form-group">
+                    <label for="taskDesc">Description</label>
+                    <textarea id="taskDesc" rows="4" placeholder="Add a more detailed description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Label Color</label>
+                    <div class="color-picker" id="colorPicker">
+                        <button class="color-option selected" data-color="#3b82f6"
+                            style="background-color: #3b82f6;"></button>
+                        <button class="color-option" data-color="#10b981" style="background-color: #10b981;"></button>
+                        <button class="color-option" data-color="#ef4444" style="background-color: #ef4444;"></button>
+                        <button class="color-option" data-color="#f59e0b" style="background-color: #f59e0b;"></button>
+                        <button class="color-option" data-color="#8b5cf6" style="background-color: #8b5cf6;"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteTaskBtn" class="btn btn-danger">Delete</button>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary close-modal">Cancel</button>
+                    <button id="saveTaskBtn" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+
+</html>
