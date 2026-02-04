@@ -1,59 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Dice Roller</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Dice Roller</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-    <div class="container">
-        <div class="scene">
-            <div class="cube" id="cube">
-                <div class="face front">
-                    <span class="dot center"></span>
-                </div>
-                <div class="face back">
-                    <span class="dot top-left"></span>
-                    <span class="dot bottom-right"></span>
-                </div>
-                <div class="face right">
-                    <span class="dot top-left"></span>
-                    <span class="dot center"></span>
-                    <span class="dot bottom-right"></span>
-                </div>
-                <div class="face left">
-                    <span class="dot top-left"></span>
-                    <span class="dot top-right"></span>
-                    <span class="dot bottom-left"></span>
-                    <span class="dot bottom-right"></span>
-                </div>
-                <div class="face top">
-                    <span class="dot top-left"></span>
-                    <span class="dot top-right"></span>
-                    <span class="dot center"></span>
-                    <span class="dot bottom-left"></span>
-                    <span class="dot bottom-right"></span>
-                </div>
-                <div class="face bottom">
-                    <span class="dot top-left"></span>
-                    <span class="dot top-right"></span>
-                    <span class="dot center-left"></span>
-                    <span class="dot center-right"></span>
-                    <span class="dot bottom-left"></span>
-                    <span class="dot bottom-right"></span>
-                </div>
-            </div>
-        </div>
+  <div class="card">
+    <h2>🎲 Dice Roller</h2>
 
-        <button id="rollBtn">Roll Dice</button>
-        <p id="resultText">Roll the dice!</p>
-    </div>
-    <div class="footer">
-            <p>Made by @AkshatRaval</p>
-            <a href="https://github.com/AkshatRaval">Github</a>
+    <div class="scene">
+      <div class="cube" id="cube">
+        <div class="face front"><span class="dot center"></span></div>
+        <div class="face back">
+          <span class="dot top-left"></span>
+          <span class="dot bottom-right"></span>
         </div>
-    <script src="script.js"></script>
+        <div class="face right">
+          <span class="dot top-left"></span>
+          <span class="dot center"></span>
+          <span class="dot bottom-right"></span>
+        </div>
+        <div class="face left">
+          <span class="dot top-left"></span>
+          <span class="dot top-right"></span>
+          <span class="dot bottom-left"></span>
+          <span class="dot bottom-right"></span>
+        </div>
+        <div class="face top">
+          <span class="dot top-left"></span>
+          <span class="dot top-right"></span>
+          <span class="dot center"></span>
+          <span class="dot bottom-left"></span>
+          <span class="dot bottom-right"></span>
+        </div>
+        <div class="face bottom">
+          <span class="dot top-left"></span>
+          <span class="dot top-right"></span>
+          <span class="dot center-left"></span>
+          <span class="dot center-right"></span>
+          <span class="dot bottom-left"></span>
+          <span class="dot bottom-right"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button id="rollBtn">Roll Dice</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <p id="resultText">Roll the dice!</p>
+
+    <div class="history">
+      <h4>Roll History</h4>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Made by @RiyaKharade</p>
+    <a href="https://github.com/riya-kharade" target="_blank">GitHub</a>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
