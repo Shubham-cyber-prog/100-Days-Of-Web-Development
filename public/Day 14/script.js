@@ -21,28 +21,17 @@ const current = document.getElementById("current");
 let songs = [];
 let currentIndex = -1;
 
-/* =========================
-   RECOMMENDED
-========================= */
-const recommended = [
-  "Arijit Singh",
-  "Taylor Swift",
-  "Ed Sheeran",
-  "The Weeknd",
-  "Coldplay"
-];
-
-recommended.forEach(name => {
+/* RECOMMENDED */
+["Arijit Singh","Taylor Swift","Ed Sheeran","The Weeknd","Coldplay"]
+.forEach(name => {
   const li = document.createElement("li");
   li.textContent = name;
   li.onclick = () => searchSongs(name);
   recommendedList.appendChild(li);
 });
 
-/* =========================
-   SEARCH
-========================= */
-searchInput.addEventListener("keydown", (e) => {
+/* SEARCH */
+searchInput.addEventListener("keydown", e => {
   if (e.key === "Enter") searchSongs(searchInput.value);
 });
 
@@ -69,72 +58,52 @@ async function searchSongs(query) {
     songs.push(song);
 
     const li = document.createElement("li");
-    li.textContent = `${song.trackName} – ${song.artistName}`;
+    li.innerHTML = `
+      <img src="${song.artworkUrl60}">
+      <div>
+        <strong>${song.trackName}</strong><br>
+        <small>${song.artistName}</small>
+      </div>
+    `;
     li.onclick = () => loadSong(index);
     playlist.appendChild(li);
   });
 }
 
-/* =========================
-   LOAD SONG
-========================= */
+/* LOAD SONG */
 function loadSong(index) {
   const song = songs[index];
   if (!song) return;
 
   currentIndex = index;
-
   audio.src = song.previewUrl;
   titleEl.textContent = song.trackName;
   artistEl.textContent = song.artistName;
-  coverEl.src = song.artworkUrl100.replace("100x100", "300x300");
+  coverEl.src = song.artworkUrl100.replace("100x100","300x300");
 
   current.classList.remove("placeholder");
-
-  playBtn.disabled = false;
-  prevBtn.disabled = false;
-  nextBtn.disabled = false;
+  playBtn.disabled = prevBtn.disabled = nextBtn.disabled = false;
 
   highlightActive();
   audio.play();
-  playBtn.textContent = "⏸";
 }
 
-/* =========================
-   HIGHLIGHT ACTIVE
-========================= */
+/* ACTIVE */
 function highlightActive() {
   [...playlist.children].forEach((li, i) => {
     li.classList.toggle("active", i === currentIndex);
   });
 }
 
-/* =========================
-   CONTROLS
-========================= */
-playBtn.onclick = () => {
-  if (audio.paused) {
-    audio.play();
-    playBtn.textContent = "⏸";
-  } else {
-    audio.pause();
-    playBtn.textContent = "▶";
-  }
-};
+/* CONTROLS */
+playBtn.onclick = () => audio.paused ? audio.play() : audio.pause();
+audio.onplay = () => playBtn.textContent = "⏸";
+audio.onpause = () => playBtn.textContent = "▶";
 
-nextBtn.onclick = () => {
-  if (!songs.length) return;
-  loadSong((currentIndex + 1) % songs.length);
-};
+nextBtn.onclick = () => loadSong((currentIndex + 1) % songs.length);
+prevBtn.onclick = () => loadSong((currentIndex - 1 + songs.length) % songs.length);
 
-prevBtn.onclick = () => {
-  if (!songs.length) return;
-  loadSong((currentIndex - 1 + songs.length) % songs.length);
-};
-
-/* =========================
-   TIME + PROGRESS
-========================= */
+/* TIME */
 audio.ontimeupdate = () => {
   progress.value = (audio.currentTime / audio.duration) * 100 || 0;
   currentTimeEl.textContent = formatTime(audio.currentTime);
@@ -145,18 +114,11 @@ progress.oninput = () => {
   audio.currentTime = (progress.value / 100) * audio.duration;
 };
 
-function formatTime(time) {
-  if (!time) return "0:00";
-  const min = Math.floor(time / 60);
-  const sec = Math.floor(time % 60).toString().padStart(2, "0");
-  return `${min}:${sec}`;
+function formatTime(t) {
+  if (!t) return "0:00";
+  return `${Math.floor(t/60)}:${Math.floor(t%60).toString().padStart(2,"0")}`;
 }
 
-/* =========================
-   VOLUME
-========================= */
-volume.oninput = () => {
-  audio.volume = volume.value;
-};
-
+/* VOLUME */
+volume.oninput = () => audio.volume = volume.value;
 audio.onended = () => nextBtn.click();

@@ -1,30 +1,21 @@
-# Firebase Authentication Implementation TODO
+# TODO: Fix Placeholder Content in 100 Days Web Development Dashboard
 
-## Completed Tasks
-- [x] Created Firebase configuration file (`website/firebase-config.js`)
-- [x] Updated login.js to use Firebase Authentication for signup, login, Google auth, and password reset
-- [x] Updated dashboard.js to use Firebase auth state listener instead of localStorage
-- [x] Updated index.html to redirect based on Firebase auth state
-- [x] Replaced localStorage-based authentication with Firebase Auth
+## Overview
+Many implemented projects have placeholder titles like "Project Day X" in the dashboard. Need to update titles to reflect actual project implementations.
 
-## Key Changes Made
-1. **Firebase Setup**: Added Firebase SDK imports and configuration
-2. **Authentication Methods**:
-   - Email/password signup and login
-   - Google OAuth sign-in
-   - Password reset functionality
-   - Secure logout
-3. **Auth State Management**: Replaced localStorage checks with Firebase auth state listeners
-4. **Error Handling**: Added comprehensive error messages for different auth scenarios
+## Tasks
+- [ ] Update Day 45 title from "Project Day 45" to "Project Management Tool"
+- [ ] Update Day 46 title from "Project Day 46" to "ShopEase Pro"
+- [ ] Update Day 47 title from "Project Day 47" to "Banking Dashboard"
+- [ ] Update Day 48 title from "Project Day 48" to "Flight Booking System"
+- [ ] Update Day 50 title from "Interactive Resume Builder" to "Interactive Resume Builder" (already correct)
+- [ ] Update Day 51 title from "Project Day 51" to "Portfolio & Blog"
+- [ ] Update Day 52 title from "Project Day 52" to "Task Management System"
+- [ ] Update Day 53 title from "Project Day 53" to "File Uploader"
+- [ ] Update Day 60 title from "Travel Planner" to "Travel Planner" (already correct)
+- [ ] Verify all changes are correct and consistent
 
-## Next Steps
-- Replace placeholder Firebase config with actual project credentials
-- Test authentication flow in browser
-- Consider migrating user progress data to Firebase for persistence across devices
-
-## Firebase Project Setup Required
-1. Create a Firebase project at https://console.firebase.google.com/
-2. Enable Authentication service
-3. Configure sign-in methods (Email/Password and Google)
-4. Copy the config object to `website/firebase-config.js`
-5. Update authorized domains in Firebase console
+## Implementation Details
+- File to edit: website/scripts/pages/dashboard.js
+- Update the projects array with correct titles
+- Ensure titles match the actual project implementations

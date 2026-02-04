@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RegEx-Viz | Live Pattern Tester</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fas fa-code-branch"></i> RegEx<span class="accent">Viz</span>
+            </div>
+            
+            <div class="cheat-sheet">
+                <h3>Cheat Sheet</h3>
+                <div class="token-group">
+                    <button class="token-btn" data-insert="\d"><span>\d</span> Digit</button>
+                    <button class="token-btn" data-insert="\w"><span>\w</span> Word Char</button>
+                    <button class="token-btn" data-insert="\s"><span>\s</span> Whitespace</button>
+                    <button class="token-btn" data-insert="."><span>.</span> Any Char</button>
+                    <button class="token-btn" data-insert="^"><span>^</span> Start</button>
+                    <button class="token-btn" data-insert="$"><span>$</span> End</button>
+                    <button class="token-btn" data-insert="[abc]"><span>[]</span> Character Set</button>
+                    <button class="token-btn" data-insert="(abc)"><span>()</span> Group</button>
+                    <button class="token-btn" data-insert="*"><span>*</span> 0 or more</button>
+                    <button class="token-btn" data-insert="+"><span>+</span> 1 or more</button>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <p><i class="fas fa-info-circle"></i> Click a token to insert it into the pattern.</p>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            
+            <div class="regex-inputs">
+                <div class="input-wrapper">
+                    <span class="slash">/</span>
+                    <input type="text" id="regex-pattern" placeholder="Enter regex pattern..." value="\b\w+\b">
+                    <span class="slash">/</span>
+                    <input type="text" id="regex-flags" placeholder="g" value="g">
+                </div>
+                
+                <div class="flag-toggles">
+                    <label><input type="checkbox" value="g" checked disabled> Global (g)</label>
+                    <label><input type="checkbox" id="flag-i" value="i"> Insensitive (i)</label>
+                    <label><input type="checkbox" id="flag-m" value="m"> Multiline (m)</label>
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <span id="match-count">0 matches found</span>
+                <span id="error-msg" class="hidden">Invalid Regex</span>
+            </div>
+
+            <div class="editor-container">
+                <div class="backdrop">
+                    <div class="highlights" id="highlights"></div>
+                </div>
+                <textarea id="test-string" spellcheck="false" placeholder="Enter your test string here...">Welcome to RegEx-Viz!
+Type your regular expression above to start matching.
+Email: user@example.com
+Phone: 123-456-7890
+Date: 2026-01-27</textarea>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
