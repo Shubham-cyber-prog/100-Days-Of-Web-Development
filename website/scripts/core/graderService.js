@@ -47,6 +47,39 @@ class GraderService {
         }
     }
 
+    /**
+     * Grades a user-submitted project.
+     * @param {object} submission - The submission object with projectLink, repoLink, etc.
+     * @returns {Promise<object>} - The grading report.
+     */
+    async gradeSubmission(submission) {
+        if (this.isGrading) return;
+        this.isGrading = true;
+
+        try {
+            // 1. Fetch source files from live project URL
+            const sourceCode = await this.fetchSubmissionFiles(submission);
+
+            // 2. Run Static Analysis via Web Worker
+            const staticResults = await this.runStaticAnalysis(sourceCode);
+
+            // 3. Run Runtime Analysis via Iframe (if possible)
+            const runtimeResults = await this.runRuntimeAnalysis(submission.projectLink);
+
+            // 4. Combine and finalize report
+            const finalReport = this.compileSubmissionReport(submission, staticResults, runtimeResults);
+
+            this.isGrading = false;
+            return finalReport;
+
+        } catch (error) {
+            console.error('Submission Grading Error:', error);
+            Notify.error('Project Analysis Failed: ' + error.message);
+            this.isGrading = false;
+            throw error;
+        }
+    }
+
     async fetchProjectFiles(baseUrl) {
         const files = { html: '', css: '', js: '' };
 
@@ -65,6 +98,82 @@ class GraderService {
 
         } catch (e) {
             console.warn('Some project files could not be fetched:', e);
+        }
+
+        return files;
+    }
+
+    async fetchSubmissionFiles(submission) {
+        const files = { html: '', css: '', js: '' };
+
+        try {
+            // Try to fetch from project link
+            if (submission.projectLink) {
+                const htmlRes = await fetch(submission.projectLink);
+                if (htmlRes.ok) {
+                    files.html = await htmlRes.text();
+                }
+            }
+
+            // Try to fetch from repo link if available (GitHub pages, etc.)
+            if (submission.repoLink && !files.html) {
+                // Try common patterns for live demos
+                const possibleUrls = [
+                    submission.repoLink.replace('github.com', 'github.io'),
+                    `${submission.repoLink}/index.html`,
+                    `${submission.repoLink}/dist/index.html`,
+                    `${submission.repoLink}/build/index.html`
+                ];
+
+                for (const url of possibleUrls) {
+                    try {
+                        const htmlRes = await fetch(url);
+                        if (htmlRes.ok) {
+                            files.html = await htmlRes.text();
+                            break;
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+            }
+
+            // If we have HTML, try to extract CSS and JS links
+            if (files.html) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(files.html, 'text/html');
+
+                // Extract CSS links
+                const cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
+                for (const link of cssLinks) {
+                    try {
+                        const cssUrl = new URL(link.href, submission.projectLink).href;
+                        const cssRes = await fetch(cssUrl);
+                        if (cssRes.ok) {
+                            files.css += await cssRes.text() + '\n';
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+
+                // Extract JS scripts
+                const jsScripts = doc.querySelectorAll('script[src]');
+                for (const script of jsScripts) {
+                    try {
+                        const jsUrl = new URL(script.src, submission.projectLink).href;
+                        const jsRes = await fetch(jsUrl);
+                        if (jsRes.ok) {
+                            files.js += await jsRes.text() + '\n';
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+            }
+
+        } catch (e) {
+            console.warn('Some submission files could not be fetched:', e);
         }
 
         return files;
@@ -168,6 +277,32 @@ class GraderService {
 
         return {
             day,
+            timestamp: new Date().toISOString(),
+            score: staticData.score,
+            status: staticData.score >= 70 ? 'PASSED' : 'RETRY',
+            issues: issues,
+            summary: {
+                semantics: staticData.semantics.length,
+                performance: staticData.performance.length,
+                accessibility: staticData.accessibility.length + runtimeData.a11y.length
+            }
+        };
+    }
+
+    compileSubmissionReport(submission, staticData, runtimeData) {
+        const issues = [
+            ...staticData.semantics,
+            ...staticData.accessibility,
+            ...staticData.performance,
+            ...staticData.bestPractices,
+            ...runtimeData.a11y,
+            ...runtimeData.dom
+        ];
+
+        return {
+            submissionId: submission.id,
+            title: submission.title,
+            author: submission.author.username,
             timestamp: new Date().toISOString(),
             score: staticData.score,
             status: staticData.score >= 70 ? 'PASSED' : 'RETRY',

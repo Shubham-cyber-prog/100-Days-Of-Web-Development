@@ -18,32 +18,26 @@
       .search-wrapper {
         max-width: 600px;
         margin: 0 auto 40px;
-        display: flex;
-        justify-content: center;
-        padding: 0 20px;
+        position: relative;
       }
 
-      .search-wrapper input {
+      #projectSearch {
+        background: var(--bg-surface);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 100px;
+        padding: 16px 24px;
+        font-size: var(--text-base);
         width: 100%;
-        padding: 14px 20px;
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        border: 1.5px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
+        transition: all 0.2s;
+        text-align: center;
         color: var(--text-primary);
-        font-size: 15px;
-        transition: all 0.3s ease;
       }
 
-      .search-wrapper input:focus {
+      #projectSearch:focus {
         outline: none;
-        background: rgba(255, 255, 255, 0.08);
         border-color: var(--accent-core);
-        box-shadow: 0 0 0 3px var(--accent-alpha);
-      }
-
-      .search-wrapper input::placeholder {
-        color: var(--text-tertiary);
+        box-shadow: 0 0 20px -5px var(--accent-alpha);
       }
 
       .filter-tabs {
@@ -302,39 +296,11 @@
   <!-- Professional Footer -->
   <div id="footer-placeholder"></div>
 
-  <button id="scrollToTopBtn" aria-label="Scroll to top">
-    <i class="fa-solid fa-arrow-up"></i>
-  </button>
-
-  <script src="../scripts/components/footer-loader.js"></script>
-  <script src="../scripts/components/cursor.js"></script>
-  <script type="module" src="../scripts/pages/projects.js"></script>
-
-  <script>
-    // Health Check for project URLs
-    document.getElementById("projectsGrid").addEventListener("click", async (e) => {
-      const card = e.target.closest(".project-card");
-      if (!card) return;
-
-      const targetUrl =
-        card.getAttribute("data-url") || card.querySelector("a")?.getAttribute("href");
-
-      if (targetUrl) {
-        e.preventDefault();
-
-        try {
-          const response = await fetch(targetUrl, { method: "HEAD" });
-
-          if (response.ok) {
-            window.location.href = targetUrl;
-          } else {
-            window.location.href = "./404.html";
-          }
-        } catch (error) {
-          window.location.href = "./404.html";
-        }
-      }
-    });
-  </script>
-</body>
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>    <script src="../scripts/components/footer-loader.js"></script>
+    <script src="../scripts/components/cursor.js"></script>
+    <script type="module" src="../scripts/pages/projects.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+  </body>
 </html>

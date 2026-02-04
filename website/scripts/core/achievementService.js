@@ -67,6 +67,7 @@ class AchievementService {
         ];
 
         this.unlockedAchievements = this.loadUnlocked();
+        this.userStats = this.loadUserStats();
     }
 
     /**
@@ -86,7 +87,7 @@ class AchievementService {
 
     /**
      * Check and unlock achievements based on current user stats
-     * @param {Object} stats - { totalCompleted, currentStreak, techCount }
+     * @param {Object} stats - { totalCompleted, currentStreak, techCount, ... }
      */
     checkAchievements(stats) {
         let newlyUnlocked = [];
@@ -98,6 +99,11 @@ class AchievementService {
                     ...achievement
                 };
                 newlyUnlocked.push(achievement);
+
+                // Award points for unlocking achievement
+                if (achievement.points) {
+                    this.awardPoints(achievement.points);
+                }
             }
         });
 
@@ -154,6 +160,95 @@ class AchievementService {
                 const goals = { day_1: 1, day_10: 10, day_25: 25, day_50: 50, day_100: 100 };
                 return (goals[a.id] || 0) - (goals[b.id] || 0);
             })[0];
+    }
+
+    /**
+     * Get achievement progress (0-1)
+     */
+    getAchievementProgress(achievementId, stats) {
+        const achievement = this.achievements.find(a => a.id === achievementId);
+        return achievement && achievement.progress ? achievement.progress(stats) : 0;
+    }
+
+    /**
+     * Get total points earned
+     */
+    getTotalPoints() {
+        return Object.values(this.unlockedAchievements).reduce((total, achievement) => {
+            return total + (achievement.points || 0);
+        }, 0);
+    }
+
+    /**
+     * Get achievements by category
+     */
+    getAchievementsByCategory(category) {
+        return this.getAllAchievements().filter(a => a.category === category);
+    }
+
+    /**
+     * Get achievement rarity color
+     */
+    getRarityColor(rarity) {
+        const colors = {
+            common: '#8B8B8B',
+            rare: '#4A90E2',
+            epic: '#9B59B6',
+            legendary: '#F39C12'
+        };
+        return colors[rarity] || colors.common;
+    }
+
+    /**
+     * Award points for achievement
+     */
+    awardPoints(points) {
+        this.userStats.totalPoints += points;
+        this.userStats.experience += points;
+        this.calculateLevel();
+        this.saveUserStats();
+    }
+
+    /**
+     * Calculate user level based on experience
+     */
+    calculateLevel() {
+        // Level up every 1000 XP
+        this.userStats.level = Math.floor(this.userStats.experience / 1000) + 1;
+    }
+
+    /**
+     * Get user level info
+     */
+    getLevelInfo() {
+        const currentXP = this.userStats.experience;
+        const levelXP = (this.userStats.level - 1) * 1000;
+        const nextLevelXP = this.userStats.level * 1000;
+        const progressToNext = (currentXP - levelXP) / (nextLevelXP - levelXP);
+
+        return {
+            level: this.userStats.level,
+            currentXP,
+            nextLevelXP,
+            progressToNext: Math.min(progressToNext, 1)
+        };
+    }
+
+    /**
+     * Update user activity
+     */
+    updateActivity() {
+        const now = new Date();
+        this.userStats.lastActivity = now.toISOString();
+
+        // Count days active (simplified - in real app would track unique days)
+        const today = now.toDateString();
+        if (!this.userStats.lastActiveDay || this.userStats.lastActiveDay !== today) {
+            this.userStats.daysActive += 1;
+            this.userStats.lastActiveDay = today;
+        }
+
+        this.saveUserStats();
     }
 }
 
