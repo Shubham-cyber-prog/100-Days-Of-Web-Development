@@ -1,43 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ConnectX - Social Network</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>GitHub Stats Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
 <header>
-  <h1>🌐 ConnectX</h1>
-  <input type="text" id="searchInput" placeholder="Search posts...">
+  <h1>📊 GitHub Dashboard</h1>
+
+  <div class="searchBox">
+    <input type="text" id="username" placeholder="Enter GitHub Username">
+    <button id="searchBtn">Search</button>
+  </div>
+
   <button id="themeToggle">🌙</button>
 </header>
 
-<section class="stories">
-  <div class="story">You</div>
-  <div class="story">Alex</div>
-  <div class="story">Emma</div>
-  <div class="story">John</div>
-</section>
 
 <main>
-  <aside class="profile">
-    <img src="https://i.pravatar.cc/150?img=32">
-    <h2>Sheetal</h2>
-    <p>Web Developer 💻</p>
-  </aside>
 
-  <section class="feed">
-    <div class="create-post">
-      <textarea id="postText" placeholder="What's on your mind?"></textarea>
-      <button onclick="addPost()">Post</button>
-    </div>
+<!-- PROFILE -->
+<section class="profile" id="profile">
+  <p class="hint">Search any GitHub username</p>
+</section>
 
-    <div id="posts"></div>
-  </section>
+
+<!-- STATS -->
+<section class="stats" id="stats"></section>
+
+
+<!-- REPOS -->
+<section class="repos">
+  <h2>Top Repositories</h2>
+  <div id="repoList"></div>
+</section>
+
 </main>
+
+
+<!-- LOADER -->
+<div id="loader">Loading...</div>
+
 
 <script src="script.js"></script>
 </body>

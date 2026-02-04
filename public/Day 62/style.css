@@ -1,136 +1,366 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,sans-serif;
 }
+
+body{
+  background:#f4f6fb;
+  color:#222;
+  transition:.3s;
+}
+
+
+/* HEADER */
+
+header{
+  background:#4f46e5;
+  color:#fff;
+  padding:15px 30px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.searchBox{
+  display:flex;
+  gap:10px;
+}
+
+header input{
+  padding:8px 12px;
+  border-radius:20px;
+  border:none;
+}
+
+header button{
+  border:none;
+  padding:8px 12px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+
+/* MAIN */
+
+main{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 20px;
+}
+
+
+/* PROFILE */
+
+.profile{
+  background:#fff;
+  padding:25px;
+  border-radius:15px;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.profile img{
+  width:120px;
+  border-radius:50%;
+  margin-bottom:10px;
+}
+
+.profile h2{
+  margin-bottom:5px;
+}
+
+.hint{
+  color:#666;
+}
+
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.statBox{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  font-weight:600;
+}
+
+
+/* REPOS */
+
+.repos{
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+}
+
+.repo{
+  border-bottom:1px solid #ddd;
+  padding:12px 0;
+}
+
+.repo:last-child{
+  border:none;
+}
+
+.repo a{
+  color:#4f46e5;
+  text-decoration:none;
+  font-weight:600;
+}
+
+
+/* LOADER */
+
+#loader{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  color:#fff;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  font-size:22px;
+}
+
+
+/* DARK MODE */
+
+.dark{
+  background:#111;
+  color:#eee;
+}
+
+.dark header{
+  background:#000;
+}
+
+.dark .profile,
+.dark .repos,
+.dark .statBox{
+  background:#1e1e1e;
+}
+/* =====================
+   GLOBAL
+===================== */
 
 body {
-  background: #f4f6fb;
-  color: #222;
-  transition: 0.3s;
+  background: linear-gradient(135deg, #eef2ff, #f9fafb);
+  color: #1f2937;
 }
 
+
+/* =====================
+   HEADER
+===================== */
+
 header {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  padding: 15px 30px;
-  background: #4f46e5;
-  color: white;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+header h1 {
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 header input {
-  flex: 1;
-  padding: 8px;
-  border-radius: 20px;
-  border: none;
+  min-width: 220px;
 }
 
-header button {
-  background: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 50%;
-  cursor: pointer;
+header button:hover {
+  transform: scale(1.05);
 }
 
-.stories {
-  display: flex;
-  gap: 15px;
-  padding: 15px;
-  overflow-x: auto;
-}
 
-.story {
-  min-width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #4f46e5, #ec4899);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-}
+/* =====================
+   MAIN LAYOUT
+===================== */
 
 main {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
+  max-width: 1200px;
+  margin: 40px auto;
 }
 
+
+/* =====================
+   PROFILE CARD
+===================== */
+
 .profile {
-  width: 250px;
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
+  background: #fff;
+  border-radius: 20px;
+  padding: 35px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+  transition: 0.3s;
+}
+
+.profile:hover {
+  transform: translateY(-5px);
 }
 
 .profile img {
-  width: 100px;
-  border-radius: 50%;
+  border: 4px solid #6366f1;
+  padding: 3px;
 }
 
-.feed {
-  flex: 1;
+.profile h2 {
+  margin-top: 10px;
+  font-size: 1.7rem;
+  font-weight: 700;
 }
 
-.create-post {
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  margin-bottom: 20px;
+.profile a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #4f46e5;
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.create-post textarea {
+.profile a:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================
+   STATS CARDS
+===================== */
+
+.stats {
+  margin-bottom: 35px;
+}
+
+.statBox {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.statBox::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 70px;
-  border-radius: 10px;
-  padding: 10px;
+  height: 4px;
+  background: #6366f1;
 }
 
-.create-post button {
-  margin-top: 10px;
-  padding: 8px 20px;
-  background: #4f46e5;
-  color: white;
-  border: none;
+.statBox:hover {
+  transform: translateY(-6px);
+}
+
+.statBox {
+  font-size: 1.1rem;
+}
+
+
+/* =====================
+   REPOSITORY SECTION
+===================== */
+
+.repos {
+  background: #fff;
   border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-.post {
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  animation: fadeIn 0.4s ease;
+.repos h2 {
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  font-weight: 700;
 }
 
-.post-actions {
-  display: flex;
-  gap: 20px;
-  margin-top: 10px;
-  cursor: pointer;
+.repo {
+  padding: 15px 0;
+  transition: 0.2s;
 }
+
+.repo:hover {
+  background: #eef2ff;
+  padding-left: 10px;
+  border-radius: 8px;
+}
+
+.repo a {
+  font-size: 1.05rem;
+}
+
+.repo small {
+  color: #6b7280;
+}
+
+
+/* =====================
+   SEARCH BOX
+===================== */
+
+.searchBox input {
+  outline: none;
+  transition: 0.3s;
+}
+
+.searchBox input:focus {
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
+}
+
+.searchBox button {
+  background: #fff;
+  color: #4f46e5;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.searchBox button:hover {
+  background: #e0e7ff;
+}
+
+
+/* =====================
+   LOADER
+===================== */
+
+#loader {
+  backdrop-filter: blur(5px);
+  font-weight: 700;
+}
+
+
+/* =====================
+   DARK MODE IMPROVE
+===================== */
 
 .dark {
-  background: #111;
-  color: #eee;
+  background: linear-gradient(135deg, #020617, #0f172a);
+}
+
+.dark .profile,
+.dark .repos,
+.dark .statBox {
+  background: #020617;
+  box-shadow: none;
+  border: 1px solid #1e293b;
+}
+
+.dark .repo:hover {
+  background: #020617;
 }
 
 .dark header {
-  background: #000;
-}
-
-.dark .post,
-.dark .create-post,
-.dark .profile {
-  background: #1e1e1e;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  background: linear-gradient(135deg, #020617, #1e293b);
 }
