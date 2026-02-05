@@ -1,5 +1,9 @@
-/* --- Components: Buttons --- */
+/* ========================================
+   BUTTONS COMPONENT
+   Comprehensive button styles with light theme support
+   ======================================== */
 
+/* Base Button */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -7,34 +11,125 @@
     gap: var(--space-2);
     padding: 0.75rem 1.5rem;
     font-family: var(--font-display);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
     font-size: var(--text-base);
     border-radius: var(--radius-md);
+    border: none;
     transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    text-decoration: none;
 }
 
-/* Primary "Launch" Button */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Primary Button */
 .btn-primary {
-    background: var(--gradient-glow);
-color: var(--text-on-dark);
-box-shadow:var(--shadow-glow);}
+    background: var(--gradient-accent);
+    color: var(--text-on-dark);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-glow);}
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
 
 .btn-primary:active {
     transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
 }
 
+/* Secondary Button */
+.btn-secondary {
+    background: var(--bg-glass-panel);
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--border-medium);
+    transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* Outline Button */
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent-core);
+    color: var(--accent-core);
+}
+
+.btn-outline:hover {
+    background: var(--accent-alpha);
+    transform: translateY(-1px);
+}
+
+.btn-outline:active {
+    transform: translateY(0);
+}
+
+/* Ghost Button */
+.btn-ghost {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+/* Danger Button */
+.btn-danger {
+    background: var(--accent-danger);
+    color: white;
+    box-shadow: 0 4px 12px rgba(231, 29, 54, 0.3);
+}
+
+.btn-danger:hover {
+    background: #C41E2E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 29, 54, 0.4);
+}
+
+.btn-danger:active {
+    transform: translateY(0);
+}
+
+/* Success Button */
+.btn-success {
+    background: var(--accent-success);
+    color: white;
+    box-shadow: 0 4px 12px rgba(46, 196, 182, 0.3);
+}
+
+.btn-success:hover {
+    background: #26A89A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 196, 182, 0.4);
+}
+
+.btn-success:active {
+    transform: translateY(0);
+}
+
+/* Social Buttons */
 .btn-social {
     width: 100%;
-background: var(--bg-glass-panel);
-border: 1px solid var(--glass-border);
-color: var(--text-secondary);
+    background: var(--bg-glass-panel);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
     font-family: var(--font-body);
     font-weight: var(--weight-medium);
     justify-content: center;
@@ -42,12 +137,12 @@ color: var(--text-secondary);
 
 .btn-social:hover {
     background: var(--bg-glass-hover);
-border-color: var(--glass-highlight);
-color: var(--text-primary);
+    border-color: var(--glass-highlight);
+    color: var(--text-primary);
     transform: translateY(-1px);
 }
 
-/* Social Brand Colors (Optional Hovers) */
+/* Social Brand Colors */
 .btn-social.google:hover {
     border-color: #EA4335;
     color: #EA4335;
@@ -63,8 +158,171 @@ color: var(--text-primary);
     color: #0077b5;
 }
 
-/* Icon sizes */
+/* Icon Button */
 .btn-icon {
-    width: 20px;
-    height: 20px;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border-radius: var(--radius-md);
+}
+
+.btn-icon svg,
+.btn-icon img {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: var(--text-sm);
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: var(--text-lg);
+}
+
+.btn-xl {
+    padding: 1.25rem 2.5rem;
+    font-size: var(--text-xl);
+}
+
+/* Button Group */
+.btn-group {
+    display: inline-flex;
+    gap: 0;
+}
+
+.btn-group .btn {
+    border-radius: 0;
+}
+
+.btn-group .btn:first-child {
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+}
+
+.btn-group .btn:last-child {
+    border-top-right-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+}
+
+.btn-group .btn:not(:last-child) {
+    border-right: none;
+}
+
+/* Loading State */
+.btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: btn-spin 0.6s linear infinite;
+}
+
+@keyframes btn-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+[data-theme="light"] .btn-primary {
+    background: var(--gradient-accent);
+    color: white;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+}
+
+[data-theme="light"] .btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+}
+
+[data-theme="light"] .btn-secondary {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-medium);
+}
+
+[data-theme="light"] .btn-outline {
+    border-color: var(--accent-core);
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .btn-outline:hover {
+    background: var(--accent-alpha);
+}
+
+[data-theme="light"] .btn-ghost {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .btn-ghost:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .btn-danger {
+    background: var(--accent-danger);
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+[data-theme="light"] .btn-danger:hover {
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.35);
+}
+
+[data-theme="light"] .btn-success {
+    background: var(--accent-success);
+    color: white;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+}
+
+[data-theme="light"] .btn-success:hover {
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
+}
+
+[data-theme="light"] .btn-social {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .btn-social:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .btn-social.google:hover {
+    border-color: #EA4335;
+    color: #EA4335;
+    background: rgba(234, 67, 53, 0.05);
+}
+
+[data-theme="light"] .btn-social.github:hover {
+    border-color: #24292e;
+    color: #24292e;
+    background: rgba(36, 41, 46, 0.05);
+}
+
+[data-theme="light"] .btn-social.linkedin:hover {
+    border-color: #0077b5;
+    color: #0077b5;
+    background: rgba(0, 119, 181, 0.05);
 }
