@@ -33,172 +33,81 @@
     animation: cosmicDrift 30s linear infinite;
 }
 
-[data-theme="light"] .leaderboard-panel::before {
-    background: radial-gradient(circle at 50% 50%,
-            rgba(255, 136, 0, 0.1),
-            rgba(99, 102, 241, 0.05),
-            var(--bg-void) 70%);
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+
+[data-theme="light"] .leaderboard-panel {
+    background: var(--bg-card);
+    box-shadow: var(--shadow-lg);
 }
 
-.leaderboard-panel::after {
-    content: "";
-    position: absolute;
-    inset: 1.5px;
-    border-radius: inherit;
-    z-index: -1;
-    background: var(--bg-surface);
-    backdrop-filter: blur(40px);
+[data-theme="light"] .leaderboard-panel::after {
+    background: white;
 }
 
-.leaderboard-panel > * {
-    position: relative;
-    z-index: 10;
+[data-theme="light"] .stat-card {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
 }
 
-@keyframes cosmicDrift {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+[data-theme="light"] .stat-card:hover {
+    background: white;
+    box-shadow: var(--shadow-md);
 }
 
-/* --- Leaderboard Stats Cards --- */
-
-/* --- Leaderboard Stats Cards --- */
-
-.stat-card {
-    background: var(--bg-glass-panel);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-4);
-    margin-bottom: var(--space-4);
-    transition: all 0.3s ease;
+[data-theme="light"] .stat-label {
+    color: var(--accent-success);
 }
 
-.stat-card:hover {
-    background: var(--bg-glass-hover);
-    transform: translateY(-2px);
+[data-theme="light"] .stat-value {
+    color: var(--text-primary) !important;
 }
 
-.stat-label {
-    font-size: var(--text-xs);
-    color: #059669; /* default green */
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
+[data-theme="light"] .stat-card.points {
+    background: var(--accent-alpha);
+    border-color: var(--accent-core);
 }
 
-/* Force stat values to always be blue */
-.stat-value {
-    font-family: var(--font-display);
-    font-size: var(--text-4xl);
-    font-weight: 800;
-    margin-top: var(--space-2);
-    color: #3b82f6 !important; /* <- this forces blue even if .points or light theme tries to override */
-}
-
-/* Points Card */
-.stat-card.points {
-    background: rgba(99, 102, 241, 0.1);
-    border-color: rgba(99, 102, 241, 0.2);
-}
-.points .stat-value {
-    color: #3b82f6;}
-/* remove any orange overrides */
-.stat-card.points .stat-value,
-[data-theme="light"] .stat-card.points .stat-value {
-    color: #3b82f6 !important;
-}
-
-/* Light theme adjustments for labels only */
 [data-theme="light"] .stat-card.points .stat-label {
-    color: #6366f1; /* Indigo */
+    color: var(--accent-core);
 }
 
-/* PRs Card */
-.stat-card.prs {
-    background: rgba(16, 185, 129, 0.1);
-    border-color: rgba(16, 185, 129, 0.2);
-}
-
-.stat-card.prs .stat-label {
-    color: #6ee7b7;
+[data-theme="light"] .stat-card.points .stat-value {
+    color: var(--accent-core) !important;
 }
 
 [data-theme="light"] .stat-card.prs {
     background: rgba(16, 185, 129, 0.05);
-    border-color: rgba(16, 185, 129, 0.2);
 }
 
 [data-theme="light"] .stat-card.prs .stat-label {
-    color: #059669;
+    color: var(--accent-success);
 }
 
-
-/* --- Live Indicator --- */
-.live-indicator {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
+[data-theme="light"] .live-indicator {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
     color: var(--text-secondary);
-    background: var(--bg-glass-panel);
-    padding: var(--space-3) var(--space-4);
-    border-radius: 100px;
-    margin-top: var(--space-2);
-    border: 1px solid var(--glass-border);
 }
 
-.dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-}
-
-.dot-green {
-    background: var(--accent-success);
-    box-shadow: 0 0 8px var(--accent-success);
-}
-
-.dot-blue {
-    background: #3b82f6;
-    box-shadow: 0 0 8px #3b82f6;
-}
-
-.dot-purple {
-    background: #a855f7;
-    box-shadow: 0 0 8px #a855f7;
-}
-
-.live-timestamp {
+[data-theme="light"] .live-timestamp {
     color: var(--text-primary);
 }
 
-/* --- Responsive --- */
-@media (max-width: 900px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* --- Mission Section Typography --- */
-.mission-quote {
-    padding: var(--space-6);
-    border-left: 2px solid var(--accent-core);
+[data-theme="light"] .mission-quote {
+    border-left-color: var(--accent-core);
     background: linear-gradient(90deg, var(--accent-alpha) 0%, transparent 100%);
-    margin-bottom: var(--space-8);
 }
 
-.mission-quote p {
+[data-theme="light"] .mission-quote p {
     color: var(--text-primary);
-    font-style: italic;
-    font-size: var(--text-lg);
 }
 
-.mission-phase h4 {
+[data-theme="light"] .mission-phase h4 {
     color: var(--text-primary);
-    margin-bottom: var(--space-2);
 }
 
-.mission-phase p {
-    color: var(--text-tertiary);
-    font-size: var(--text-sm);
+[data-theme="light"] .mission-phase p {
+    color: var(--text-secondary);
 }
