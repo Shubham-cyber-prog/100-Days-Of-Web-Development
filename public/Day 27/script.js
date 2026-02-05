@@ -1,48 +1,45 @@
-const cube = document.getElementById('cube');
-const rollBtn = document.getElementById('rollBtn');
-const resultText = document.getElementById('resultText');
+const cube = document.getElementById("cube");
+const rollBtn = document.getElementById("rollBtn");
+const resetBtn = document.getElementById("resetBtn");
+const resultText = document.getElementById("resultText");
+const historyList = document.getElementById("historyList");
 
-let currentClass = '';
+rollBtn.addEventListener("click", rollDice);
+resetBtn.addEventListener("click", resetHistory);
 
-rollBtn.addEventListener('click', () => {
-    // Generate random number 1-6
-    const randNum = Math.floor(Math.random() * 6) + 1;
-    
-    // We add some extra spins to make it exciting
-    // rotateX/Y values are carefully calculated to show the correct face
-    let xRotation = 0;
-    let yRotation = 0;
-    
-    // Logic Mapping based on CSS transforms:
-    // 1 (Front): 0, 0
-    // 2 (Back): 0, 180 (or 0, -180)
-    // 3 (Right): 0, -90 (Rotate box Left to see Right face)
-    // 4 (Left): 0, 90 (Rotate box Right to see Left face)
-    // 5 (Top): -90, 0 (Rotate box Down to see Top face)
-    // 6 (Bottom): 90, 0 (Rotate box Up to see Bottom face)
+function rollDice() {
+  const num = Math.floor(Math.random() * 6) + 1;
 
-    switch(randNum) {
-        case 1: xRotation = 0; yRotation = 0; break;
-        case 2: xRotation = 0; yRotation = 180; break;
-        case 3: xRotation = 0; yRotation = -90; break;
-        case 4: xRotation = 0; yRotation = 90; break;
-        case 5: xRotation = -90; yRotation = 0; break;
-        case 6: xRotation = 90; yRotation = 0; break;
-    }
+  let x = 0, y = 0;
+  switch (num) {
+    case 1: x = 0; y = 0; break;
+    case 2: x = 0; y = 180; break;
+    case 3: x = 0; y = -90; break;
+    case 4: x = 0; y = 90; break;
+    case 5: x = -90; y = 0; break;
+    case 6: x = 90; y = 0; break;
+  }
 
-    // Add multiple full spins (360 degrees) so it actually rolls
-    // We multiply by a random amount of spins (min 2 spins)
-    const spins = 5; 
-    xRotation += 360 * spins; 
-    yRotation += 360 * spins;
+  x += 360 * 3;
+  y += 360 * 3;
 
-    // Apply transform
-    cube.style.transform = `translateZ(-100px) rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
+  cube.style.transform = `translateZ(-50px) rotateX(${x}deg) rotateY(${y}deg)`;
 
-    resultText.innerText = "Rolling...";
+  resultText.innerText = "Rolling...";
 
-    // Wait for animation to finish (1s) to show result
-    setTimeout(() => {
-        resultText.innerText = `You rolled a ${randNum}!`;
-    }, 1000);
-});
+  setTimeout(() => {
+    resultText.innerText = `You rolled ${num}!`;
+    addToHistory(num);
+  }, 1000);
+}
+
+function addToHistory(num) {
+  const li = document.createElement("li");
+  li.textContent = `🎲 ${num}`;
+  historyList.prepend(li);
+}
+
+function resetHistory() {
+  historyList.innerHTML = "";
+  resultText.innerText = "Roll the dice!";
+}
