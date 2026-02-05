@@ -5,6 +5,20 @@ import { projectModal } from '../components/ProjectModal.js';
 import { App } from '../core/app.js';
 import { Notify } from '../core/Notify.js';
 
+<<<<<<< FEAT-Centralize-Project-Data
+let allProjects = [];
+
+async function loadProjects() {
+    try {
+        const response = await fetch('../../data/projects.json');
+        if (!response.ok) throw new Error('Failed to load projects');
+        allProjects = await response.json();
+        renderProjects();
+    } catch (error) {
+        console.error('Error loading projects:', error);
+        Notify.error('Failed to load mission data.');
+    }
+=======
 // Import project data
 import { allProjects, folderMap } from '../../data/projects.js';
 
@@ -13,6 +27,7 @@ function getDifficulty(day) {
     if (day <= 60) return "INTERMEDIATE";
     if (day <= 90) return "ADVANCED";
     return "CAPSTONE";
+>>>>>>> main
 }
 
 function renderProjects(filter = 'All') {
@@ -22,11 +37,11 @@ function renderProjects(filter = 'All') {
     let delay = 0;
 
     allProjects.forEach(project => {
-        const difficulty = getDifficulty(project.day);
+        const difficulty = project.level;
 
         if (filter !== 'All' && difficulty.toLowerCase() !== filter.toLowerCase()) return;
 
-        let folderName = folderMap[project.day];
+        let folderName = project.folder;
         let liveLink = '#';
         let codeLink = '#';
         let isDisabled = false;
@@ -275,7 +290,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 // Initial Render
 document.addEventListener('DOMContentLoaded', () => {
     // Small timeout to ensure styles load
-    setTimeout(() => renderProjects(), 50);
+    setTimeout(() => loadProjects(), 50);
 });
 
 const scrollToTopBtn = document.getElementById("scrollToTopBtn");
