@@ -1,0 +1,213 @@
+:root {
+    --bg-dark: #0d1117;
+    --panel-bg: #161b22;
+    --border: #30363d;
+    --text-main: #c9d1d9;
+    --text-dim: #8b949e;
+    --accent: #238636;
+    --node-bg: #1f6feb;
+    --node-leaf: #d29922;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    background: var(--panel-bg);
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.highlight { color: var(--accent); }
+
+.stats-bar {
+    display: flex;
+    gap: 30px;
+}
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.stat .label { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
+.stat .val { font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; }
+
+/* Main Input */
+.input-section {
+    padding: 20px 30px;
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-wrapper input {
+    width: 100%;
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    outline: none;
+    font-family: var(--font-mono);
+}
+.input-wrapper input:focus { border-color: var(--accent); }
+
+.binary-output {
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+    word-break: break-all;
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+.bit-chunk { margin-right: 5px; color: var(--accent); }
+
+/* Viz Section */
+.viz-section {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+}
+
+/* Frequency Table */
+.freq-panel {
+    width: 300px;
+    background: var(--panel-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.freq-panel h3, .tree-panel h3 {
+    padding: 15px;
+    margin: 0;
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    padding: 10px 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+}
+
+.freq-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.freq-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    padding: 8px 15px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.char-badge {
+    background: rgba(255,255,255,0.1);
+    width: 20px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+/* Tree Panel */
+.tree-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #0d1117;
+    position: relative;
+}
+
+.tree-container {
+    flex: 1;
+    position: relative;
+    overflow: auto;
+    cursor: grab;
+}
+
+#tree-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2000px; /* Large canvas for scrolling */
+    height: 1000px;
+    z-index: 1;
+}
+
+#tree-nodes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2000px;
+    height: 1000px;
+    z-index: 2;
+}
+
+/* Tree Nodes */
+.node {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #fff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+}
+
+.node.leaf { background: var(--node-leaf); color: #000; }
+.node.internal { background: var(--node-bg); font-size: 0.7rem; }
+
+.edge-label {
+    position: absolute;
+    background: var(--bg-dark);
+    padding: 2px 4px;
+    font-size: 0.7rem;
+    border-radius: 3px;
+    color: var(--text-dim);
+    transform: translate(-50%, -50%);
+}

@@ -131,3 +131,42 @@ body {
     transform: translateY(0);
   }
 }
+.back-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 6px;
+  padding: 0;
+  opacity: 0.9;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+/* Message layout for avatars */
+.message {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* Align messages */
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.assistant {
+  justify-content: flex-start;
+}
+
+/* Circular avatar image */
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}

@@ -15,19 +15,63 @@ function closeMobileMenu() {
     navLinks.classList.remove('open');
 }
 
-/* User Dropdown */
-function toggleUserMenu() {
-    const dropdown = document.querySelector('.user-dropdown');
-    dropdown.classList.toggle('show');
+
+// Features Dropdown (works for dynamically loaded header)
+function setupFeaturesDropdown() {
+    const navDropdown = document.querySelector('.nav-dropdown');
+    const dropdownTrigger = navDropdown?.querySelector('.dropdown-trigger');
+    const dropdownMenu = navDropdown?.querySelector('.dropdown-menu');
+    if (!navDropdown || !dropdownTrigger || !dropdownMenu) return;
+
+    // Toggle on click
+    dropdownTrigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        navDropdown.classList.toggle('active');
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!navDropdown.contains(e.target)) {
+            navDropdown.classList.remove('active');
+        }
+    });
+
+    // Close on dropdown item click
+    const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach((item) => {
+        item.addEventListener('click', function () {
+            navDropdown.classList.remove('active');
+        });
+    });
 }
 
-// Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
+// User Menu Dropdown (profile)
+function toggleUserMenu() {
+    const dropdown = document.querySelector('.user-menu');
+    if (dropdown) dropdown.classList.toggle('show');
+}
+
+function setupUserMenuDropdown() {
     const wrapper = document.querySelector('.user-avatar-wrapper');
-    if (wrapper && !wrapper.contains(e.target)) {
-        document.querySelector('.user-dropdown')?.classList.remove('show');
+    const dropdown = document.querySelector('.user-menu');
+    if (!wrapper || !dropdown) return;
+
+    // Toggle on avatar click
+    const avatarBtn = wrapper.querySelector('.user-avatar');
+    if (avatarBtn) {
+        avatarBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
     }
-});
+
+    // Close when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!wrapper.contains(e.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+}
 
 /* Theme Logic */
 function toggleTheme() {
@@ -39,6 +83,11 @@ function toggleTheme() {
     localStorage.setItem('theme', newTheme);
 
     updateThemeIcon(newTheme);
+    
+    // Update sidebar theme icon if available
+    if (typeof window.updateSidebarThemeIcon === 'function') {
+        window.updateSidebarThemeIcon();
+    }
 }
 
 function updateThemeIcon(theme) {
@@ -116,6 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 
+    // 6. Setup Features Dropdown and User Menu Dropdown (after header is loaded)
+    setTimeout(() => {
+        setupFeaturesDropdown();
+        setupUserMenuDropdown();
+    }, 0);
+
     // 4. Connection Status Init
     import('./ConnectionStatus.js').then(({ ConnectionStatus }) => {
         new ConnectionStatus();
@@ -161,12 +216,11 @@ function handleLogout() {
             localStorage.removeItem('guestSession');
         }
 
-        // Determine correct login path
-        const loginPath = window.location.pathname.includes('/pages/')
-            ? 'login.html'
-            : 'website/pages/login.html';
-
-        console.log('✅ Logged out, redirecting to:', loginPath);
-        window.location.href = loginPath;
+        // Redirect to home page after logout
+        console.log('✅ Logged out, redirecting to home');
+        const homePath = window.location.pathname.includes('/pages/')
+            ? '../index.html'
+            : 'index.html';
+        window.location.href = homePath;
     }
 }
