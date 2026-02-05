@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter & Validator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <i class="fas fa-code"></i>
+                JSON Formatter & Validator
+            </h1>
+            <p class="subtitle">Format, validate, and visualize JSON data with syntax highlighting, tree view, and comprehensive analysis</p>
+        </header>
+        
+        <div class="app">
+            <!-- Editor Panel -->
+            <div class="editor-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-edit"></i> JSON Input</h2>
+                </div>
+                
+                <div class="editor-container">
+                    <div class="editor-toolbar">
+                        <div class="editor-status">
+                            <div class="status-indicator" id="statusIndicator"></div>
+                            <span id="statusText">Ready</span>
+                        </div>
+                        <div class="editor-actions">
+                            <button id="clearBtn" class="btn btn-small btn-secondary">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                            <button id="loadExampleBtn" class="btn btn-small btn-secondary">
+                                <i class="fas fa-file-code"></i> Example
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="jsonInput" placeholder='Paste your JSON here or type directly...
+Example: {"name": "John", "age": 30, "city": "New York"}'>{
+  "user": {
+    "id": 12345,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "isActive": true,
+    "roles": ["user", "admin"],
+    "profile": {
+      "age": 30,
+      "location": "New York",
+      "preferences": {
+        "theme": "dark",
+        "notifications": true
+      }
+    },
+    "orders": [
+      {
+        "id": 1,
+        "product": "Laptop",
+        "price": 999.99,
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "product": "Mouse",
+        "price": 29.99,
+        "quantity": 2
+      }
+    ]
+  },
+  "metadata": {
+    "created": "2024-01-15T10:30:00Z",
+    "version": "1.0.0"
+  }
+}</textarea>
+                </div>
+                
+                <div class="controls">
+                    <button id="formatBtn" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Format & Validate
+                    </button>
+                    <button id="minifyBtn" class="btn btn-secondary">
+                        <i class="fas fa-compress-alt"></i> Minify
+                    </button>
+                    <button id="copyBtn" class="btn btn-secondary">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button id="saveBtn" class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Save
+                    </button>
+                </div>
+                
+                <div class="format-options">
+                    <div class="options-header">
+                        <i class="fas fa-sliders-h"></i>
+                        <h3>Formatting Options</h3>
+                    </div>
+                    <div class="options-grid">
+                        <div class="option-group">
+                            <label for="indentSize">Indentation Size</label>
+                            <input type="number" id="indentSize" min="1" max="8" value="2">
+                        </div>
+                        <div class="option-group">
+                            <label for="quoteStyle">Quote Style</label>
+                            <select id="quoteStyle">
+                                <option value="double">Double Quotes</option>
+                                <option value="single">Single Quotes</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="sortKeys">Sort Keys</label>
+                            <select id="sortKeys">
+                                <option value="false">Don't Sort</option>
+                                <option value="true">Alphabetical</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Viewer Panel -->
+            <div class="viewer-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-eye"></i> JSON Viewer</h2>
+                </div>
+                
+                <div class="viewer-container">
+                    <div class="viewer-toolbar">
+                        <div class="viewer-mode">
+                            <span>View Mode:</span>
+                            <div class="mode-toggle">
+                                <button class="mode-btn active" data-mode="tree">
+                                    <i class="fas fa-project-diagram"></i> Tree
+                                </button>
+                                <button class="mode-btn" data-mode="formatted">
+                                    <i class="fas fa-align-left"></i> Formatted
+                                </button>
+                                <button class="mode-btn" data-mode="raw">
+                                    <i class="fas fa-code"></i> Raw
+                                </button>
+                            </div>
+                        </div>
+                        <div class="editor-actions">
+                            <button id="expandAllBtn" class="btn btn-small btn-secondary">
+                                <i class="fas fa-expand"></i> Expand
+                            </button>
+                            <button id="collapseAllBtn" class="btn btn-small btn-secondary">
+                                <i class="fas fa-compress"></i> Collapse
+                            </button>
+                        </div>
+                    </div>
+                    <div class="viewer-content" id="viewerContent">
+                        <!-- JSON will be displayed here -->
+                        <div class="placeholder-text" style="text-align: center; padding: 50px; color: #718096;">
+                            <i class="fas fa-code-branch" style="font-size: 48px; margin-bottom: 20px;"></i>
+                            <h3>No JSON to Display</h3>
+                            <p>Enter JSON in the input area and click "Format & Validate" to see the result</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-panel">
+                    <div class="stats-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>JSON Statistics</h3>
+                    </div>
+                    <div class="stats-grid" id="statsGrid">
+                        <div class="stat-item">
+                            <span class="stat-value" id="statSize">0</span>
+                            <span class="stat-label">Size (chars)</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="statLines">0</span>
+                            <span class="stat-label">Lines</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="statKeys">0</span>
+                            <span class="stat-label">Keys</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="statDepth">0</span>
+                            <span class="stat-label">Depth</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="error-panel" id="errorPanel">
+                    <div class="error-header">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>JSON Error</h3>
+                    </div>
+                    <div class="error-message" id="errorMessage">
+                        <!-- Error message will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js">
+
+    </script>
+</body>
+</html>
