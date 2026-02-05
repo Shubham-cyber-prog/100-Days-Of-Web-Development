@@ -1,0 +1,130 @@
+/* Tree View Specific Styles */
+
+.tree-root {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.tree-node {
+    margin-left: 1.5rem;
+    position: relative;
+}
+
+/* Root level nodes should not have margin */
+.tree-root>.tree-node {
+    margin-left: 0;
+}
+
+.node-content {
+    display: flex;
+    align-items: flex-start;
+    padding: 2px 0;
+    cursor: default;
+    border-radius: 4px;
+}
+
+.node-content:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.caret {
+    cursor: pointer;
+    user-select: none;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-secondary);
+    transition: transform 0.1s;
+    margin-right: 2px;
+}
+
+.caret:hover {
+    color: var(--text-primary);
+}
+
+.caret-down {
+    transform: rotate(90deg);
+}
+
+.caret-empty {
+    width: 20px;
+}
+
+.key {
+    color: var(--text-primary);
+    margin-right: 6px;
+}
+
+.separator {
+    color: var(--text-secondary);
+    margin-right: 6px;
+}
+
+/* Value Types Colors */
+.value-string {
+    color: #10b981;
+    /* Green */
+}
+
+.value-number {
+    color: #f59e0b;
+    /* Orange/Yellow */
+}
+
+.value-boolean {
+    color: #ef4444;
+    /* Red */
+}
+
+.value-null {
+    color: #64748b;
+    /* Grey */
+    font-style: italic;
+}
+
+.value-object,
+.value-array {
+    color: var(--text-secondary);
+}
+
+.meta-info {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-left: 8px;
+    opacity: 0.7;
+}
+
+/* Nested Container */
+.nested {
+    display: none;
+}
+
+.nested.active {
+    display: block;
+}
+
+/* Highlighting Search Results */
+.highlight-key {
+    background-color: rgba(245, 158, 11, 0.2);
+    border-radius: 2px;
+}
+
+/* Editable Inputs (Future feature support) */
+.editable-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed var(--border);
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    width: 100px;
+}
+
+.editable-input:focus {
+    outline: none;
+    border-bottom-color: var(--primary);
+}
