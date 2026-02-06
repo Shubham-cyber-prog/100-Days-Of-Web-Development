@@ -9,11 +9,9 @@
   align-items: center;
   text-align: center;
   padding-top: 80px;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 157, 0, 0.05) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle at center,
+      rgba(255, 157, 0, 0.05) 0%,
+      transparent 70%);
 }
 
 /* =========================
@@ -24,26 +22,25 @@
   font-weight: var(--weight-black);
   line-height: 1.1;
   margin-bottom: var(--space-6);
-  background: linear-gradient(
-    135deg,
-    var(--text-primary) 0%,
-    var(--accent-core) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--text-primary) 0%,
+      var(--accent-core) 100%);
   background-clip: text;
   -webkit-background-clip: text;
+  mask-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: -2px;
 }
 
-/* Fix hero title visibility in LIGHT theme */
 [data-theme="light"] .hero-title {
-  -webkit-text-fill-color: #1f2937;
-  color: #1f2937;
-}
-
-/* Ensure gradient remains in DARK theme */
-[data-theme="dark"] .hero-title {
+  background: linear-gradient(135deg,
+      var(--text-primary) 0%,
+      var(--accent-core) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: var(--text-primary);
 }
 
 /* =========================
@@ -57,9 +54,8 @@
   line-height: 1.6;
 }
 
-/* Fix subtitle visibility in LIGHT theme */
 [data-theme="light"] .hero-subtitle {
-  color: #374151;
+  color: var(--text-secondary);
 }
 
 /* =========================
@@ -75,42 +71,29 @@
 /* =========================
    BUTTONS
 ========================= */
-.btn-zenith-primary {
+[data-theme="light"] .btn-zenith-primary {
   background: var(--accent-core);
-  color: #000;
-  border-radius: 100px;
-  padding: 1rem 3rem;
-  font-weight: 800;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.25s ease;
+  color: white;
   box-shadow: 0 10px 30px -5px var(--accent-alpha);
 }
 
-.btn-zenith-primary:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 20px 40px -10px var(--accent-alpha);
-  background: var(--gradient-glow);
+[data-theme="light"] .btn-zenith-primary:hover {
+  background: var(--accent-glow);
+  box-shadow: 0 15px 35px -8px var(--accent-alpha);
 }
 
-/* Secondary / Outline Button */
-.btn-zenith-secondary {
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 100px;
-  padding: 1rem 3rem;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: all 0.2s ease;
-}
-
-/* Fix SECONDARY BUTTON text in LIGHT theme (YOUR MAIN ISSUE) */
 [data-theme="light"] .btn-zenith-secondary {
-  color: #1f2937;
-  border-color: #1f2937;
+  color: var(--text-primary);
+  border-color: var(--border-light);
+  background: white;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .btn-zenith-secondary:hover {
+  border-color: var(--accent-core);
+  color: var(--accent-core);
+  background: var(--bg-void);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-zenith-secondary:hover {
@@ -126,37 +109,19 @@
   padding: var(--space-12) 0;
 }
 
-.feature-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  padding: var(--space-8);
-  border-radius: var(--radius-lg);
-  transition: all 0.3s ease;
+[data-theme="light"] .feature-card {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-sm);
 }
 
-.feature-card:hover {
+[data-theme="light"] .feature-card:hover {
   border-color: var(--accent-core);
-  transform: translateY(-5px);
-  box-shadow:
-    0 0 1px rgba(255, 200, 120, 0.25),
-    0 18px 36px rgba(255, 180, 80, 0.30),
-    0 0 60px rgba(255, 210, 120, 0.20);
+  box-shadow: 0 15px 35px -10px var(--accent-alpha);
 }
 
-.feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: var(--space-4);
-  display: inline-block;
-}
-
-.feature-card h3 {
-  margin-bottom: var(--space-3);
-  font-size: 1.5rem;
-}
-
-.feature-card p {
+[data-theme="light"] .feature-card p {
   color: var(--text-secondary);
-  line-height: 1.6;
 }
 
 /* Safety net: never allow invisible text in LIGHT theme */
