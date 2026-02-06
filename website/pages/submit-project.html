@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/images/logo.png" height="70px" width="100px">
+    <title>Submit Community Project | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/pages/submit-project.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="../scripts/components/sidebar-loader.js"></script>
+</head>
+
+<body>
+    <!-- Main Content -->
+    <main class="container section">
+        <div class="page-header animate-enter">
+            <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
+                Submit Community Project
+            </h1>
+            <p class="text-secondary">Share your innovative project ideas and implementations with the community.</p>
+        </div>
+
+        <!-- Submission Form -->
+        <div class="form-container animate-enter delay-100">
+            <form id="projectSubmissionForm" class="submission-form">
+                <!-- Project Details -->
+                <div class="form-section">
+                    <h2 class="section-title">Project Details</h2>
+
+                    <div class="form-group">
+                        <label for="projectTitle">Project Title *</label>
+                        <input type="text" id="projectTitle" name="title" required
+                               placeholder="Enter your project title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectDescription">Description *</label>
+                        <textarea id="projectDescription" name="description" required
+                                  placeholder="Describe your project, its features, and what makes it unique..." rows="4"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="projectDifficulty">Difficulty Level *</label>
+                            <select id="projectDifficulty" name="difficulty" required>
+                                <option value="">Select difficulty</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Capstone">Capstone</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="projectCategory">Category</label>
+                            <select id="projectCategory" name="category">
+                                <option value="">Select category</option>
+                                <option value="Web App">Web App</option>
+                                <option value="Game">Game</option>
+                                <option value="Tool">Tool</option>
+                                <option value="Educational">Educational</option>
+                                <option value="Productivity">Productivity</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Links and Resources -->
+                <div class="form-section">
+                    <h2 class="section-title">Links & Resources</h2>
+
+                    <div class="form-group">
+                        <label for="liveDemoUrl">Live Demo URL</label>
+                        <input type="url" id="liveDemoUrl" name="liveDemoUrl"
+                               placeholder="https://your-project-demo.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sourceCodeUrl">Source Code URL *</label>
+                        <input type="url" id="sourceCodeUrl" name="sourceCodeUrl" required
+                               placeholder="https://github.com/username/project-repo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectScreenshots">Screenshots (Optional)</label>
+                        <input type="file" id="projectScreenshots" name="screenshots" multiple accept="image/*">
+                        <small class="form-hint">Upload up to 3 screenshots (PNG, JPG, max 5MB each)</small>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="form-section">
+                    <h2 class="section-title">Technologies Used</h2>
+
+                    <div class="form-group">
+                        <label>Technologies *</label>
+                        <div class="tech-tags-container">
+                            <input type="text" id="techInput" placeholder="Type technology and press Enter">
+                            <div id="techTags" class="tech-tags"></div>
+                        </div>
+                        <small class="form-hint">Press Enter to add technologies (e.g., HTML, CSS, JavaScript)</small>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="form-section">
+                    <h2 class="section-title">Additional Information</h2>
+
+                    <div class="form-group">
+                        <label for="learningOutcomes">Learning Outcomes</label>
+                        <textarea id="learningOutcomes" name="learningOutcomes"
+                                  placeholder="What did you learn while building this project?" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="challenges">Challenges Faced</label>
+                        <textarea id="challenges" name="challenges"
+                                  placeholder="Describe any challenges you encountered and how you solved them" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="futureImprovements">Future Improvements</label>
+                        <textarea id="futureImprovements" name="futureImprovements"
+                                  placeholder="What features or improvements do you plan to add?" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Terms and Submit -->
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="termsAgreement" name="terms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="../CONTRIBUTING.html" target="_blank">contribution guidelines</a> and understand that my submission will be reviewed before publication.
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="history.back()">Cancel</button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Project
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Professional Footer -->
+    <div id="footer-placeholder"></div>
+
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="../scripts/components/footer-loader.js"></script>
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script type="module" src="../scripts/pages/submit-project.js"></script>
+</body>
+</html>
