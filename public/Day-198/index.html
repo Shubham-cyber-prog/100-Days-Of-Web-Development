@@ -1,52 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Tech Stack Recommendation Engine</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevMemory - Programming Concepts Memory Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/game.css">
+    <link rel="stylesheet" href="./styles/cards.css">
 </head>
+
 <body>
+    <div class="game-container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="header-left">
+                <h1><i class="fa-solid fa-brain"></i> DevMemory</h1>
+                <p class="tagline">Match Programming Concepts</p>
+            </div>
+            <div class="header-right">
+                <div class="stat-capsule">
+                    <i class="fa-solid fa-clock"></i>
+                    <span id="timer-display">00:00</span>
+                </div>
+                <div class="stat-capsule">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                    <span id="moves-display">0</span> moves
+                </div>
+                <div class="stat-capsule">
+                    <i class="fa-solid fa-check-double"></i>
+                    <span id="matches-display">0</span>/<span id="total-pairs">0</span>
+                </div>
+            </div>
+        </header>
 
-<div class="container">
-    <h1>Tech Stack Recommendation Engine</h1>
+        <!-- Settings Panel -->
+        <div class="settings-panel">
+            <div class="difficulty-selector">
+                <label>Difficulty:</label>
+                <div class="btn-group">
+                    <button class="btn-difficulty active" data-level="easy">
+                        <i class="fa-solid fa-star"></i> Easy (8 pairs)
+                    </button>
+                    <button class="btn-difficulty" data-level="medium">
+                        <i class="fa-solid fa-fire"></i> Medium (12 pairs)
+                    </button>
+                    <button class="btn-difficulty" data-level="hard">
+                        <i class="fa-solid fa-trophy"></i> Hard (16 pairs)
+                    </button>
+                </div>
+            </div>
 
-    <div class="form">
-        <label>Project Type:</label>
-        <select id="projectType">
-            <option value="web">Web App</option>
-            <option value="mobile">Mobile App</option>
-            <option value="ai">AI/ML Project</option>
-            <option value="startup">Startup MVP</option>
-        </select>
+            <div class="theme-selector">
+                <label>Theme:</label>
+                <select id="card-theme">
+                    <option value="mixed">🎨 Mixed Concepts</option>
+                    <option value="html">📄 HTML Tags</option>
+                    <option value="css">🎨 CSS Properties</option>
+                    <option value="javascript">⚡ JavaScript</option>
+                    <option value="frameworks">🚀 Frameworks & Tools</option>
+                </select>
+            </div>
 
-        <label>Team Size:</label>
-        <select id="teamSize">
-            <option value="solo">Solo Developer</option>
-            <option value="small">2-5 Members</option>
-            <option value="large">5+ Members</option>
-        </select>
+            <button class="btn-primary" id="btn-start-game">
+                <i class="fa-solid fa-play"></i> Start New Game
+            </button>
+        </div>
 
-        <label>Performance Requirement:</label>
-        <select id="performance">
-            <option value="normal">Normal</option>
-            <option value="high">High Performance</option>
-        </select>
+        <!-- Game Board -->
+        <main class="game-board" id="game-board">
+            <div class="pre-game-message">
+                <i class="fa-solid fa-gamepad"></i>
+                <h2>Ready to Test Your Memory?</h2>
+                <p>Select difficulty and theme, then click "Start New Game"</p>
+            </div>
+        </main>
 
-        <label>Deployment Preference:</label>
-        <select id="deployment">
-            <option value="cloud">Cloud</option>
-            <option value="serverless">Serverless</option>
-            <option value="traditional">Traditional Server</option>
-        </select>
-
-        <button onclick="recommendStack()">Get Recommendation</button>
+        <!-- High Scores Sidebar -->
+        <aside class="scores-panel">
+            <h3><i class="fa-solid fa-ranking-star"></i> Best Times</h3>
+            <div id="high-scores-list">
+                <div class="no-scores">Play your first game to see scores!</div>
+            </div>
+        </aside>
     </div>
 
-    <div class="result">
-        <h2>Recommended Stack</h2>
-        <p id="stackResult">Fill details to get recommendation.</p>
-    </div>
-</div>
+    <!-- Victory Modal -->
+    <div id="victory-modal" class="modal">
+        <div class="modal-content">
+            <div class="confetti"></div>
+            <i class="fa-solid fa-trophy modal-icon"></i>
+            <h2>Congratulations!</h2>
+            <p class="victory-message">You've matched all pairs!</p>
 
-<script src="script.js"></script>
+            <div class="final-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Time</span>
+                    <span class="stat-value" id="final-time">0:00</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Moves</span>
+                    <span class="stat-value" id="final-moves">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Accuracy</span>
+                    <span class="stat-value" id="final-accuracy">100%</span>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-secondary" id="btn-close-modal">View Board</button>
+                <button class="btn-primary" id="btn-play-again">
+                    <i class="fa-solid fa-rotate-right"></i> Play Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/game.js"></script>
 </body>
+
 </html>
