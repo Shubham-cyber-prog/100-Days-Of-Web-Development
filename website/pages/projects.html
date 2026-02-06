@@ -9,12 +9,16 @@
     <link rel="stylesheet" href="../styles/pages/projects.css">
     <link rel="stylesheet" href="../styles/components/project-modal.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Monaco Editor CDN -->
+    <script src="https://unpkg.com/monaco-editor@0.45.0/min/vs/loader.min.js"></script>
     <style>
       .page-header {
         text-align: center;
         padding: 120px 0 60px;
       }
-
+.sidebar-open-btn{
+    color: white;
+  }
       .search-wrapper {
         max-width: 600px;
         margin: 0 auto 40px;
@@ -261,6 +265,9 @@
 
 <body>
   <!-- Main Content -->
+     <button id="sidebar-open-btn" class="sidebar-open-btn" title="Open sidebar">
+    ☰
+  </button>
   <main class="container section">
     <div class="page-header animate-enter">
       <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">

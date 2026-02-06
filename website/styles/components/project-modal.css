@@ -462,8 +462,10 @@
     color: var(--modal-text-muted);
 }
 
-/* End of modal styles */
-
+/* Legacy support removal/fix */
+body.light-mode .project-modal-overlay {
+    --modal-overlay: rgba(0, 0, 0, 0.4);
+}
 
 body.light-mode .heading,
 body.light-mode .tab-btn,
