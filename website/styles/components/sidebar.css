@@ -246,7 +246,7 @@ body {
   .sidebar-fixed {
     width: 260px;
   }
-  
+
   body {
     margin-left: 260px;
   }
@@ -258,11 +258,11 @@ body {
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .sidebar-fixed.mobile-open {
     transform: translateX(0);
   }
-  
+
   body {
     margin-left: 0;
   }
@@ -292,4 +292,36 @@ body {
 
 [data-theme="light"] .sidebar-fixed::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   ADDITIONAL LIGHT MODE ENHANCEMENTS
+   ======================================== */
+[data-theme="light"] .sidebar-logo-img {
+  filter: drop-shadow(0 2px 8px rgba(124, 58, 237, 0.2));
+}
+
+[data-theme="light"] .sidebar-user-avatar {
+  border-color: var(--accent-core);
+}
+
+/* Badge/Notification Indicators */
+.sidebar-badge {
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  transform: translateY(-50%);
+  background: var(--accent-danger);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: var(--weight-bold);
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+[data-theme="light"] .sidebar-badge {
+  background: var(--accent-danger);
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
 }

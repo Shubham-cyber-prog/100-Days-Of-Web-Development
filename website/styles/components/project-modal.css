@@ -364,6 +364,109 @@
     }
 }
 
+/* --- LIGHT MODE OVERRIDES --- */
+[data-theme="light"] {
+    --modal-bg: #FFFFFF;
+    --modal-overlay: rgba(0, 0, 0, 0.4);
+    --modal-border: var(--border-light);
+    --modal-text: var(--text-primary);
+    --modal-text-muted: var(--text-secondary);
+    --code-bg: #F9FAFB;
+}
+
+[data-theme="light"] .project-modal {
+    background: var(--modal-bg);
+    border-color: var(--modal-border);
+    box-shadow: var(--shadow-xl);
+}
+
+[data-theme="light"] .modal-header {
+    background: var(--bg-secondary);
+    border-bottom-color: var(--modal-border);
+}
+
+[data-theme="light"] .modal-title {
+    color: var(--modal-text);
+}
+
+[data-theme="light"] .modal-close:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .modal-toolbar {
+    background: var(--bg-void);
+    border-bottom-color: var(--modal-border);
+}
+
+[data-theme="light"] .modal-tabs {
+    background: var(--bg-secondary);
+}
+
+[data-theme="light"] .modal-tab {
+    color: var(--modal-text-muted);
+}
+
+[data-theme="light"] .modal-tab.active {
+    background: var(--accent-core);
+    color: white;
+}
+
+[data-theme="light"] .viewport-btn {
+    border-color: var(--modal-border);
+    color: var(--modal-text-muted);
+}
+
+[data-theme="light"] .viewport-btn:hover,
+[data-theme="light"] .viewport-btn.active {
+    background: white;
+    color: var(--accent-core);
+    border-color: var(--accent-core);
+}
+
+[data-theme="light"] .view-action-btn:hover {
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .modal-content {
+    background: var(--bg-void);
+}
+
+[data-theme="light"] .code-container {
+    background: var(--code-bg);
+}
+
+[data-theme="light"] .code-header {
+    background: var(--bg-secondary);
+    border-bottom-color: var(--modal-border);
+}
+
+[data-theme="light"] .code-file-tab.active {
+    background: white;
+    color: var(--accent-core);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .code-content {
+    color: #374151;
+}
+
+[data-theme="light"] .code-copy-btn {
+    background: white;
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+
+[data-theme="light"] .modal-footer {
+    background: var(--bg-secondary);
+    border-top-color: var(--modal-border);
+    color: var(--modal-text-muted);
+}
+
+/* Legacy support removal/fix */
+body.light-mode .project-modal-overlay {
+    --modal-overlay: rgba(0, 0, 0, 0.4);
+}
+
 body.light-mode .heading,
 body.light-mode .tab-btn,
 body.light-mode .project-title,

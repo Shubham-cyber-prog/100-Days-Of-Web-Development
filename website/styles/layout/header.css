@@ -23,32 +23,14 @@
   border-radius: 100px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
-  overflow: visible; /* Prevent clipping profile icon */
-}
-
-/* Light Mode Header & Nav "Glow" */
-[data-theme="light"] .nav-container {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.05);
-  box-shadow:
-    0 4px 20px -5px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-}
-
-[data-theme="light"] .nav-container:hover {
-  border-color: var(--accent-alpha);
-  box-shadow: 0 8px 30px -5px rgba(255, 136, 0, 0.15);
+  overflow: visible;
+  /* Prevent clipping profile icon */
 }
 
 /* Scrolled state */
 .site-header.scrolled .nav-container {
   background: rgba(15, 15, 35, 0.9);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-}
-
-[data-theme="light"] .site-header.scrolled .nav-container {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
 }
 
 /* Logo */
@@ -84,9 +66,12 @@
   border-radius: 100px;
   border: 1px solid var(--accent-glow);
   box-shadow: 0 4px 15px var(--accent-alpha);
-  flex-shrink: 1; /* Allow shrinking if needed */
-  overflow: visible; /* Allow dropdown to show */
-  max-width: 65%; /* Prevent from taking all space and hiding profile icon */
+  flex-shrink: 1;
+  /* Allow shrinking if needed */
+  overflow: visible;
+  /* Allow dropdown to show */
+  max-width: 65%;
+  /* Prevent from taking all space and hiding profile icon */
   position: relative;
   z-index: 1;
 }
@@ -177,12 +162,15 @@
   display: flex !important;
   align-items: center;
   gap: var(--space-3);
-  flex-shrink: 0; /* Prevent shrinking */
-  min-width: fit-content; /* Ensure it takes needed space */
+  flex-shrink: 0;
+  /* Prevent shrinking */
+  min-width: fit-content;
+  /* Ensure it takes needed space */
   visibility: visible !important;
   opacity: 1 !important;
   position: relative;
-  z-index: 10; /* Ensure it's above nav-links */
+  z-index: 10;
+  /* Ensure it's above nav-links */
 }
 
 .icon-btn {
@@ -313,6 +301,138 @@
   cursor: pointer;
 }
 
+.dropdown-divider {
+  height: 1px;
+  background: var(--glass-border);
+  margin: 4px 0;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.action-buttons a,
+.action-buttons button {
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+
+/* Light Mode Header & Nav "Glow" */
+[data-theme="light"] .nav-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+}
+
+[data-theme="light"] .nav-container:hover {
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.12);
+}
+
+[data-theme="light"] .site-header.scrolled .nav-container {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .nav-logo {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .nav-links {
+  background: var(--accent-core);
+  border-color: var(--accent-glow);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+}
+
+[data-theme="light"] .nav-link {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="light"] .nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="light"] .nav-link.active {
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .dropdown-menu {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .dropdown-menu .dropdown-item {
+  color: var(--accent-core);
+}
+
+[data-theme="light"] .dropdown-menu .dropdown-item:hover {
+  background: var(--accent-alpha);
+  color: var(--accent-hover);
+}
+
+[data-theme="light"] .icon-btn {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .icon-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .user-avatar {
+  border-color: var(--border-light);
+}
+
+[data-theme="light"] .user-avatar:hover {
+  border-color: var(--accent-core);
+}
+
+[data-theme="light"] .user-menu {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .user-menu-item {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .user-menu-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .user-menu-item.logout-btn:hover,
+[data-theme="light"] .user-menu-item.text-danger:hover {
+  background: var(--accent-danger-bg);
+  color: var(--accent-danger);
+}
+
+[data-theme="light"] .dropdown-divider {
+  background: var(--border-light);
+}
+
+[data-theme="light"] .mobile-toggle {
+  color: var(--text-primary);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
 /* Mobile Nav Styles */
 @media (max-width: 850px) {
   .nav-container {
@@ -385,6 +505,13 @@
     width: 36px;
     height: 36px;
   }
+
+  /* Light mode mobile */
+  [data-theme="light"] .nav-links {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
 }
 
 /* Tablet Responsive */
@@ -417,12 +544,15 @@
   }
 }
 
-/* Animations */
+/* ========================================
+   ANIMATIONS
+   ======================================== */
 @keyframes fadeInSlide {
   from {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -434,27 +564,9 @@
     opacity: 0;
     transform: translate(-50%, -10px);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, 0);
   }
-}
-
-.dropdown-divider {
-  height: 1px;
-  background: var(--glass-border);
-  margin: 4px 0;
-}
-
-.action-buttons {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.action-buttons a,
-.action-buttons button {
-  height: 44px;
-  display: flex;
-  align-items: center;
 }

@@ -535,3 +535,103 @@
         animation: none;
     }
 }
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+[data-theme="light"] .main-footer {
+    background: var(--bg-secondary);
+    border-top-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .main-footer::before {
+    background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+}
+
+[data-theme="light"] .footer-col h4 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .footer-col h4::after {
+    background: linear-gradient(90deg, var(--accent-core), var(--accent-glow));
+}
+
+[data-theme="light"] .footer-description {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .footer-col:hover .footer-description {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .social-link {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .social-link:hover {
+    background: var(--accent-core);
+    color: white;
+    border-color: var(--accent-core);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+[data-theme="light"] .footer-links a {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .footer-links a:hover {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .footer-links a::before {
+    background: linear-gradient(45deg, var(--accent-core), var(--accent-glow));
+}
+
+[data-theme="light"] .footer-links a svg {
+    color: var(--text-tertiary);
+}
+
+[data-theme="light"] .footer-links a:hover svg {
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .legal-btn {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .legal-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .footer-bottom {
+    border-top-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .created-by a {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .created-by a::before {
+    background: linear-gradient(90deg, var(--accent-core), var(--accent-glow));
+}
+
+[data-theme="light"] .created-by a:hover {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] details.footer-col {
+    border-bottom-color: var(--border-light);
+}
+
+[data-theme="light"] details[open] summary .arrow-icon {
+    color: var(--accent-core);
+}
