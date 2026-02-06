@@ -12,6 +12,7 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1,
@@ -42,6 +43,7 @@ h6 {
 /* Custom Scrollbar for the Void */
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -51,21 +53,67 @@ h6 {
 ::-webkit-scrollbar-thumb {
     background: var(--glass-border);
     border-radius: 4px;
+    transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-tertiary);
 }
 
-html[data-theme="light"] body {
-    background: #f9fafb;
-    color: #111;
+/* Text Selection */
+::selection {
+    background: var(--accent-alpha);
+    color: var(--text-primary);
 }
+
+::-moz-selection {
+    background: var(--accent-alpha);
+    color: var(--text-primary);
+}
+
+/* Focus Outline */
+:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+html[data-theme="light"] body {
+    background: linear-gradient(135deg, #F9FAFB 0%, #F2F4F8 100%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-track {
+    background: #F2F4F8;
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="light"] ::selection {
+    background: rgba(124, 58, 237, 0.2);
+    color: #111827;
+}
+
+html[data-theme="light"] ::-moz-selection {
+    background: rgba(124, 58, 237, 0.2);
+    color: #111827;
+}
+
+/* Dark theme specific overrides */
 html[data-theme="dark"] {
     --bg-main: #0b0b0f;
     --bg-card: rgba(255, 255, 255, 0.06);
     --bg-card-solid: #121218;
     --text-primary: #eaeaf0;
     --text-secondary: #a1a1b3;
-    --border-glass: rgba(255,255,255,0.1);
+    --border-glass: rgba(255, 255, 255, 0.1);
 }

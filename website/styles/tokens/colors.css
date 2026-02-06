@@ -1,6 +1,10 @@
 /* --- Zenith: Cosmic Engine Colors --- */
 
 :root {
+    /* ========================================
+       DARK MODE (DEFAULT)
+       ======================================== */
+
     /* 1. The Void (Backgrounds) */
     --bg-void: #050505;
     /* Deepest Black */
@@ -9,6 +13,10 @@
     --bg-surface: rgba(255, 255, 255, 0.03);
     /* Glass Surface */
     --bg-overlay: rgba(0, 0, 0, 0.8);
+    --bg-card: #0f0f0f;
+    /* Card background */
+    --bg-input: rgba(255, 255, 255, 0.05);
+    /* Input fields */
 
     /* 2. Ignition (Accents - Purple Theme) */
     --accent-core: #8B5CF6;
@@ -17,88 +25,146 @@
     /* Bright Purple for gradients */
     --accent-alpha: rgba(139, 92, 246, 0.2);
     /* Glows */
+    --accent-hover: #9F67FF;
+    /* Hover state */
 
     /* 3. Starlight (Text) */
     --text-primary: #FFFFFF;
     --text-secondary: rgba(255, 255, 255, 0.7);
     --text-tertiary: rgba(255, 255, 255, 0.4);
+    --text-disabled: rgba(255, 255, 255, 0.3);
+    --text-placeholder: rgba(255, 255, 255, 0.35);
 
     /* 4. Glass & Borders */
     --glass-border: rgba(255, 255, 255, 0.1);
     --glass-highlight: rgba(255, 255, 255, 0.2);
     --border-light: var(--glass-border);
+    --border-medium: rgba(255, 255, 255, 0.15);
+    --border-strong: rgba(255, 255, 255, 0.25);
+    --border-focus: var(--accent-core);
 
-    /* 5. Functional */
+    /* 5. Functional States */
     --accent-success: #2EC4B6;
+    --accent-success-bg: rgba(46, 196, 182, 0.1);
+    --accent-warning: #F59E0B;
+    --accent-warning-bg: rgba(245, 158, 11, 0.1);
     --accent-danger: #E71D36;
+    --accent-danger-bg: rgba(231, 29, 54, 0.1);
+    --accent-info: #3B82F6;
+    --accent-info-bg: rgba(59, 130, 246, 0.1);
 
-    /* Gradients */
+    /* 6. Gradients */
     --gradient-glow: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --gradient-void: radial-gradient(circle at top right, #1a1a1a 0%, var(--bg-void) 50%);
+    --gradient-accent: linear-gradient(135deg, var(--accent-core) 0%, var(--accent-glow) 100%);
 
-    /* Component Semantics */
+    /* 7. Component Semantics */
     --bg-glass-nav: rgba(10, 10, 10, 0.6);
     --bg-glass-panel: rgba(255, 255, 255, 0.03);
     --bg-glass-hover: rgba(255, 255, 255, 0.05);
     --shadow-depth: rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
 
-    /* Text overrides for specific contexts */
+    /* 8. Text overrides for specific contexts */
     --text-on-dark: #FFFFFF;
     /* Always white (e.g. over dark images) */
     --text-inverse: #000000;
-        .btn.btn-primary.text-sm{
-        color:#F2F4F8;
-    }
 }
 
-/* --- LIGHT MODE OVERRIDES (\"Digital Paper\" Aesthetic) --- */
-[data-theme=\"light\"] {
-    .btn.btn-primary.text-sm{
-        color:#000000;
-    }
+/* ========================================
+   LIGHT MODE OVERRIDES ("Digital Paper" Aesthetic)
+   ======================================== */
+[data-theme="light"] {
     /* 1. The Void -> Paper */
     --bg-void: #F2F4F8;
     /* Soft Cool Grey */
     --bg-nebula: #FFFFFF;
     /* Pure White */
     --bg-surface: #FFFFFF;
-    --bg-overlay: rgba(255, 255, 255, 0.9);
+    --bg-overlay: rgba(255, 255, 255, 0.95);
+    --bg-card: #FFFFFF;
+    /* Card background */
+    --bg-input: #FFFFFF;
+    /* Input fields */
 
     /* 2. Ignition -> High Contrast Purple */
     --accent-core: #7C3AED;
     /* Darker Purple for visibility on white */
     --accent-glow: #9333EA;
-    --accent-alpha: rgba(124, 58, 237, 0.15);
+    --accent-alpha: rgba(124, 58, 237, 0.1);
+    --accent-hover: #6D28D9;
+    /* Even darker on hover */
 
     /* 3. Starlight -> Ink */
     --text-primary: #111827;
-    /* Rich Black */
+    /* Rich Black - 7:1 contrast on white */
     --text-secondary: #4B5563;
-    /* Cool Grey */
+    /* Cool Grey - 7:1 contrast */
     --text-tertiary: #9CA3AF;
+    /* Light Grey - 4.5:1 contrast */
+    --text-disabled: #D1D5DB;
+    /* Very light grey */
+    --text-placeholder: #9CA3AF;
+    /* Same as tertiary */
 
     /* 4. Glass -> Borders & Shadows */
     --glass-border: rgba(0, 0, 0, 0.08);
-    --glass-highlight: rgba(0, 0, 0, 0.05);
+    --glass-highlight: rgba(0, 0, 0, 0.03);
+    --border-light: rgba(0, 0, 0, 0.08);
+    --border-medium: rgba(0, 0, 0, 0.12);
+    --border-strong: rgba(0, 0, 0, 0.2);
+    --border-focus: var(--accent-core);
 
-    /* 5. Functional */
+    /* 5. Functional States */
     --accent-success: #059669;
-    /* Darker Green */
+    /* Darker Green for contrast */
+    --accent-success-bg: rgba(5, 150, 105, 0.08);
+    --accent-warning: #D97706;
+    /* Darker Orange */
+    --accent-warning-bg: rgba(217, 119, 6, 0.08);
     --accent-danger: #DC2626;
     /* Distinct Red */
+    --accent-danger-bg: rgba(220, 38, 38, 0.08);
+    --accent-info: #2563EB;
+    /* Darker Blue */
+    --accent-info-bg: rgba(37, 99, 235, 0.08);
 
-    /* Gradients */
+    /* 6. Gradients */
     --gradient-void: linear-gradient(180deg, #FFFFFF 0%, #F2F4F8 100%);
+    --gradient-glow: linear-gradient(135deg, #7C3AED 0%, #9333EA 100%);
+    --gradient-accent: linear-gradient(135deg, var(--accent-core) 0%, var(--accent-glow) 100%);
 
-    /* Component Semantics (Light Mode) */
-    --bg-glass-nav: rgba(255, 255, 255, 0.85);
-    /* Frosted white */
-    --bg-glass-panel: rgba(240, 242, 245, 0.5);
-    --bg-glass-hover: rgba(0, 0, 0, 0.05);
-    /* Grey hover */
+    /* 7. Component Semantics (Light Mode) */
+    --bg-glass-nav: rgba(255, 255, 255, 0.9);
+    /* Frosted white with more opacity */
+    --bg-glass-panel: rgba(255, 255, 255, 0.7);
+    --bg-glass-hover: rgba(0, 0, 0, 0.04);
+    /* Subtle grey hover */
     --shadow-depth: rgba(0, 0, 0, 0.08);
     /* Soft shadow */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
 
+    /* 8. Text overrides for specific contexts */
     --text-on-dark: #FFFFFF;
+    /* White text on dark backgrounds (e.g., accent buttons) */
     --text-inverse: #FFFFFF;
+    /* Inverse text color */
+}
+
+/* ========================================
+   BUTTON SPECIFIC OVERRIDES
+   ======================================== */
+:root .btn.btn-primary.text-sm {
+    color: #F2F4F8;
+}
+
+[data-theme="light"] .btn.btn-primary.text-sm {
+    color: #FFFFFF;
+    /* White text on purple button */
 }
