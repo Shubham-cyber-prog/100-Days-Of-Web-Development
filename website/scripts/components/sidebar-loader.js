@@ -46,6 +46,8 @@ function initializeSidebar() {
   
   // Update theme icon in sidebar
   updateSidebarThemeIcon();
+  setupSidebarToggle();
+
 }
 
 function updateSidebarThemeIcon() {
@@ -81,6 +83,33 @@ function updateSidebarThemeIcon() {
     `;
   }
 }
+
+function setupSidebarToggle() {
+  const sidebar = document.querySelector('.sidebar-fixed');
+  const closeBtn = document.getElementById('sidebar-close-btn');
+  const openBtn = document.getElementById('sidebar-open-btn');
+
+  if (!sidebar) return;
+
+  // restore saved state
+  if (localStorage.getItem('sidebarCollapsed') === 'true') {
+    sidebar.classList.add('sidebar-collapsed');
+    document.body.classList.add('sidebar-collapsed');
+  }
+
+  closeBtn?.addEventListener('click', () => {
+    sidebar.classList.add('sidebar-collapsed');
+    document.body.classList.add('sidebar-collapsed');
+    localStorage.setItem('sidebarCollapsed', 'true');
+  });
+
+  openBtn?.addEventListener('click', () => {
+    sidebar.classList.remove('sidebar-collapsed');
+    document.body.classList.remove('sidebar-collapsed');
+    localStorage.setItem('sidebarCollapsed', 'false');
+  });
+}
+
 
 // Export for use in navigation.js
 if (typeof window !== 'undefined') {
