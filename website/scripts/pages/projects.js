@@ -5,7 +5,6 @@ import { projectModal } from '../components/ProjectModal.js';
 import { App } from '../core/app.js';
 import { Notify } from '../core/Notify.js';
 
-<<<<<<< FEAT-Centralize-Project-Data
 let allProjects = [];
 
 async function loadProjects() {
@@ -18,16 +17,6 @@ async function loadProjects() {
         console.error('Error loading projects:', error);
         Notify.error('Failed to load mission data.');
     }
-=======
-// Import project data
-import { allProjects, folderMap } from '../../data/projects.js';
-
-function getDifficulty(day) {
-    if (day <= 30) return "BEGINNER";
-    if (day <= 60) return "INTERMEDIATE";
-    if (day <= 90) return "ADVANCED";
-    return "CAPSTONE";
->>>>>>> main
 }
 
 function renderProjects(filter = 'All') {
