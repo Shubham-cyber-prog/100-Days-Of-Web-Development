@@ -273,28 +273,77 @@
 }
 
 
-/* =========================
-   CONTACT FORM – LIGHT THEME FIX
-========================= */
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
 
-/* Input & textarea text */
-[data-theme="light"] input,
-[data-theme="light"] textarea {
-  background-color: #ffffff;
-  color: #1f2937;
-  border: 1px solid #cbd5e1;
+[data-theme="light"] .contact-card {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-sm);
 }
 
-/* Placeholder text */
-[data-theme="light"] input::placeholder,
-[data-theme="light"] textarea::placeholder {
-  color: #6b7280;
-  opacity: 1;
+[data-theme="light"] .contact-card:hover {
+    border-color: var(--accent-core);
+    box-shadow: var(--shadow-md);
 }
 
-/* On focus */
-[data-theme="light"] input:focus,
-[data-theme="light"] textarea:focus {
-  border-color: #4f46e5;
-  outline: none;
+[data-theme="light"] .icon-box {
+    background: var(--bg-secondary);
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .contact-card:hover .icon-box {
+    background: var(--accent-core);
+    color: white;
+}
+
+[data-theme="light"] .card-content p {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .contact-form-col {
+    background: white;
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-xl);
+}
+
+[data-theme="light"] .form-group label {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+    background: var(--bg-input);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group textarea:focus {
+    border-color: var(--accent-core);
+    background: white;
+    box-shadow: 0 0 0 4px var(--accent-alpha);
+}
+
+[data-theme="light"] .form-group input::placeholder,
+[data-theme="light"] .form-group textarea::placeholder {
+    color: var(--text-tertiary);
+}
+
+[data-theme="light"] .pill {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .pill:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-hover);
+}
+
+[data-theme="light"] .pill.active {
+    background: var(--accent-success-alpha);
+    border-color: var(--accent-success);
+    color: var(--accent-success);
 }
