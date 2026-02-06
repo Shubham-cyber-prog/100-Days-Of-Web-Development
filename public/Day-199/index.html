@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeType - Developer Typing Speed Trainer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/app.css">
+    <link rel="stylesheet" href="./styles/code-display.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <i class="fa-solid fa-keyboard"></i>
+                <h1>CodeType</h1>
+                <span class="beta-tag">BETA</span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-pill">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span id="live-wpm">0</span> WPM
+                </div>
+                <div class="stat-pill">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span id="live-accuracy">100</span>%
+                </div>
+                <div class="stat-pill timer-pill">
+                    <i class="fa-solid fa-clock"></i>
+                    <span id="countdown-timer">60</span>s
+                </div>
+            </div>
+        </header>
+
+        <!-- Setup Screen -->
+        <div id="setup-screen" class="screen active">
+            <div class="setup-container">
+                <div class="setup-intro">
+                    <i class="fa-solid fa-code"></i>
+                    <h2>Improve Your Coding Speed</h2>
+                    <p>Type real code snippets and track your WPM, accuracy, and errors</p>
+                </div>
+
+                <div class="setup-options">
+                    <div class="option-group">
+                        <label>Programming Language</label>
+                        <div class="btn-grid">
+                            <button class="btn-option active" data-lang="javascript">
+                                <i class="fa-brands fa-js"></i> JavaScript
+                            </button>
+                            <button class="btn-option" data-lang="python">
+                                <i class="fa-brands fa-python"></i> Python
+                            </button>
+                            <button class="btn-option" data-lang="java">
+                                <i class="fa-brands fa-java"></i> Java
+                            </button>
+                            <button class="btn-option" data-lang="cpp">
+                                <i class="fa-solid fa-c"></i> C++
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <label>Difficulty Level</label>
+                        <div class="btn-grid">
+                            <button class="btn-option active" data-difficulty="beginner">
+                                <i class="fa-solid fa-seedling"></i> Beginner
+                            </button>
+                            <button class="btn-option" data-difficulty="intermediate">
+                                <i class="fa-solid fa-fire"></i> Intermediate
+                            </button>
+                            <button class="btn-option" data-difficulty="advanced">
+                                <i class="fa-solid fa-rocket"></i> Advanced
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <label>Test Duration</label>
+                        <div class="btn-grid">
+                            <button class="btn-option" data-duration="30">30 seconds</button>
+                            <button class="btn-option active" data-duration="60">60 seconds</button>
+                            <button class="btn-option" data-duration="120">2 minutes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-primary btn-large" id="btn-start-test">
+                    <i class="fa-solid fa-play"></i> Start Typing Test
+                </button>
+            </div>
+        </div>
+
+        <!-- Typing Screen -->
+        <div id="typing-screen" class="screen">
+            <div class="typing-container">
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-label">
+                        <span id="progress-chars">0</span> / <span id="total-chars">0</span> characters
+                    </div>
+                </div>
+
+                <!-- Code Display -->
+                <div class="code-display-container">
+                    <div class="code-display" id="code-display">
+                        <!-- Code will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-container">
+                    <textarea id="typing-input" class="typing-input" placeholder="Start typing here..."
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="control-buttons">
+                    <button class="btn-secondary" id="btn-restart">
+                        <i class="fa-solid fa-rotate-right"></i> Restart
+                    </button>
+                    <button class="btn-secondary" id="btn-pause">
+                        <i class="fa-solid fa-pause"></i> Pause
+                    </button>
+                    <button class="btn-secondary" id="btn-quit">
+                        <i class="fa-solid fa-xmark"></i> Quit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="results-container">
+                <div class="results-header">
+                    <i class="fa-solid fa-chart-line results-icon"></i>
+                    <h2>Test Complete!</h2>
+                </div>
+
+                <div class="results-grid">
+                    <div class="result-card primary">
+                        <div class="result-label">Words Per Minute</div>
+                        <div class="result-value" id="final-wpm">0</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Accuracy</div>
+                        <div class="result-value" id="final-accuracy">0%</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Total Characters</div>
+                        <div class="result-value" id="final-chars">0</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Errors</div>
+                        <div class="result-value error" id="final-errors">0</div>
+                    </div>
+                </div>
+
+                <div class="error-breakdown" id="error-breakdown">
+                    <!-- Error details will be inserted here -->
+                </div>
+
+                <div class="wpm-chart-container">
+                    <h3>Performance Over Time</h3>
+                    <canvas id="wpm-chart" width="800" height="200"></canvas>
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn-secondary" id="btn-new-test">
+                        <i class="fa-solid fa-arrow-left"></i> New Test
+                    </button>
+                    <button class="btn-primary" id="btn-retry">
+                        <i class="fa-solid fa-rotate-right"></i> Retry Same Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/app.js"></script>
+</body>
+
+</html>
