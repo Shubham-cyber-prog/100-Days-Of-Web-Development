@@ -1,5 +1,9 @@
-/* --- Components: Forms --- */
+/* ========================================
+   FORMS COMPONENT
+   Comprehensive form controls with light theme support
+   ======================================== */
 
+/* Form Group */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -7,15 +11,32 @@
     margin-bottom: var(--space-4);
 }
 
+/* Form Label */
 .form-label {
     font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
-    color: var(--text-secondary);
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
 }
 
-.form-input {
-    background: var(--bg-surface);
+.form-label.required::after {
+    content: '*';
+    color: var(--accent-danger);
+    margin-left: 0.25rem;
+}
+
+/* Form Inputs (text, email, password, etc.) */
+.form-input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea {
+    background: var(--bg-input);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
     padding: 0.75rem 1rem;
@@ -23,23 +44,241 @@
     font-family: var(--font-body);
     font-size: var(--text-base);
     transition: all 0.2s ease;
+    width: 100%;
 }
 
-.form-input::placeholder {
-    color: var(--text-tertiary);
+.form-input::placeholder,
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-placeholder);
 }
 
-.form-input:focus {
+.form-input:hover,
+input:hover,
+textarea:hover {
+    border-color: var(--border-medium);
+}
+
+.form-input:focus,
+input:focus,
+textarea:focus {
     outline: none;
-    border-color: var(--accent-flame);
-    box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.15);
-    background: var(--bg-panel);
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--accent-alpha);
+    background: var(--bg-card);
 }
 
-/* Link Style */
+/* Textarea specific */
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Select Dropdown */
+select,
+.form-select {
+    background: var(--bg-input);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239CA3AF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    width: 100%;
+}
+
+select:hover,
+.form-select:hover {
+    border-color: var(--border-medium);
+}
+
+select:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--accent-alpha);
+}
+
+/* Checkbox and Radio */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-sm);
+    background: var(--bg-input);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="radio"] {
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background: var(--accent-core);
+    border-color: var(--accent-core);
+}
+
+input[type="checkbox"]:checked::before {
+    content: '✓';
+    color: white;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+input[type="radio"]:checked::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: white;
+}
+
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-alpha);
+}
+
+/* Checkbox/Radio Label */
+.checkbox-label,
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: var(--text-base);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 3rem;
+    height: 1.75rem;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-medium);
+    transition: 0.3s;
+    border-radius: 1.75rem;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 1.25rem;
+    width: 1.25rem;
+    left: 0.25rem;
+    bottom: 0.25rem;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.toggle-switch input:checked+.toggle-slider {
+    background-color: var(--accent-core);
+}
+
+.toggle-switch input:checked+.toggle-slider:before {
+    transform: translateX(1.25rem);
+}
+
+.toggle-switch input:focus+.toggle-slider {
+    box-shadow: 0 0 0 3px var(--accent-alpha);
+}
+
+/* Form Validation States */
+.form-input.error,
+input.error,
+textarea.error,
+select.error {
+    border-color: var(--accent-danger);
+}
+
+.form-input.error:focus,
+input.error:focus,
+textarea.error:focus,
+select.error:focus {
+    box-shadow: 0 0 0 3px var(--accent-danger-bg);
+}
+
+.form-input.success,
+input.success,
+textarea.success,
+select.success {
+    border-color: var(--accent-success);
+}
+
+.form-input.success:focus,
+input.success:focus,
+textarea.success:focus,
+select.success:focus {
+    box-shadow: 0 0 0 3px var(--accent-success-bg);
+}
+
+/* Helper Text */
+.form-helper {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+.form-error {
+    font-size: var(--text-sm);
+    color: var(--accent-danger);
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.form-success {
+    font-size: var(--text-sm);
+    color: var(--accent-success);
+    margin-top: 0.25rem;
+}
+
+/* Disabled State */
+.form-input:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+    background: var(--bg-hover);
+    color: var(--text-disabled);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Form Link */
 .form-link {
     font-size: var(--text-sm);
-    color: var(--accent-orbit);
+    color: var(--accent-core);
     text-align: center;
     display: block;
     margin-top: var(--space-4);
@@ -47,6 +286,86 @@
 }
 
 .form-link:hover {
-    color: var(--accent-success);
+    color: var(--accent-hover);
     text-decoration: underline;
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+[data-theme="light"] .form-label {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-input,
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="email"],
+[data-theme="light"] input[type="password"],
+[data-theme="light"] input[type="number"],
+[data-theme="light"] input[type="tel"],
+[data-theme="light"] input[type="url"],
+[data-theme="light"] input[type="search"],
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+    background: var(--bg-input);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-input:hover,
+[data-theme="light"] input:hover,
+[data-theme="light"] textarea:hover,
+[data-theme="light"] select:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-card);
+}
+
+[data-theme="light"] .form-input:focus,
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus,
+[data-theme="light"] select:focus {
+    background: var(--bg-card);
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--accent-alpha);
+}
+
+[data-theme="light"] select,
+[data-theme="light"] .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234B5563' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+}
+
+[data-theme="light"] input[type="checkbox"],
+[data-theme="light"] input[type="radio"] {
+    border-color: var(--border-medium);
+    background: var(--bg-card);
+}
+
+[data-theme="light"] input[type="checkbox"]:checked,
+[data-theme="light"] input[type="radio"]:checked {
+    background: var(--accent-core);
+    border-color: var(--accent-core);
+}
+
+[data-theme="light"] .toggle-slider {
+    background-color: #D1D5DB;
+}
+
+[data-theme="light"] .toggle-switch input:checked+.toggle-slider {
+    background-color: var(--accent-core);
+}
+
+[data-theme="light"] .form-input:disabled,
+[data-theme="light"] input:disabled,
+[data-theme="light"] textarea:disabled,
+[data-theme="light"] select:disabled {
+    background: var(--bg-secondary);
+    color: var(--text-disabled);
+}
+
+[data-theme="light"] .form-link {
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .form-link:hover {
+    color: var(--accent-hover);
 }

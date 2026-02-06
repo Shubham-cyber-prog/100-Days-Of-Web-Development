@@ -11,48 +11,12 @@
     transition: all 0.3s ease;
 }
 
-@media (max-width: 768px) {
-
-    .nav-content {
-        padding: 0 1rem;
-        /* reduce horizontal padding */
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-    }
-
-    .nav-links {
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-        /* reduced from 2rem */
-        margin-top: 0.5rem;
-        flex-basis: 100%;
-    }
-
-    .nav-links a {
-        padding: 0.4rem 0;
-        white-space: nowrap;
-        font-size: 0.85rem;
-    }
-
-    .theme-toggle {
-        margin-left: auto;
-    }
-}
-
-body.light-mode .navbar {
-    background: rgba(255, 255, 255, 0.85);
-}
-
 .nav-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
-    padding: 0 1.5rem;
+    \n padding: 0 1.5rem;
 }
 
 .logo {
@@ -63,6 +27,7 @@ body.light-mode .navbar {
     align-items: center;
     gap: 0.5rem;
     transition: transform 0.2s ease;
+    color: var(--text-primary);
 }
 
 .logo:hover {
@@ -81,7 +46,7 @@ body.light-mode .navbar {
 }
 
 .logo:hover span {
-    border-color: var(--text-tertiary);
+    border-color: var(--border-hover);
     color: var(--text-primary);
 }
 
@@ -95,10 +60,8 @@ body.light-mode .navbar {
 .nav-links a {
     color: var(--text-secondary);
     position: relative;
-    /* slightly increase horizontal hit area and make element block-level for predictable hover */
     padding: 0.5rem 0.4rem;
     display: inline-block;
-    /* show default cursor until user hovers — pointer will be shown on :hover only */
     cursor: default;
     transition: color var(--duration-fast) var(--ease-out);
 }
@@ -107,15 +70,12 @@ body.light-mode .navbar {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
     height: 2px;
     background: var(--gradient-glow);
-    
     transition: width var(--duration-normal) var(--ease-out-quad);
-    left: 50%;
-transform: translateX(-50%);
-background: var(--gradient-glow);
 }
 
 .nav-links a:hover::after,
@@ -126,7 +86,6 @@ background: var(--gradient-glow);
 .nav-links a:hover,
 .nav-links a.active {
     color: var(--text-primary);
-    /* show pointer only when hovered/active */
     cursor: pointer;
 }
 
@@ -155,21 +114,122 @@ background: var(--gradient-glow);
     transform: rotate(15deg) scale(0.95);
 }
 
-@media (max-width: 640px) {
-    .nav-links {
-        display: none;
-    }
-}
+/* User Menu Button */
 .nav-user .btn-primary {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--glass-border);
     color: var(--text-primary);
     box-shadow: none;
+    transition: all 0.3s ease;
 }
 
 .nav-user .btn-primary:hover {
     background: var(--gradient-glow);
     border-color: transparent;
-    box-shadow: var(--shadow-glow);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
     transform: translateY(-2px);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    .nav-content {
+        padding: 0 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
+
+    .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        flex-basis: 100%;
+    }
+
+    .nav-links a {
+        padding: 0.4rem 0;
+        white-space: nowrap;
+        font-size: 0.85rem;
+    }
+
+    .theme-toggle {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .nav-links {
+        display: none;
+    }
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+[data-theme="light"] .navbar {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .logo {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .logo span {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .logo:hover span {
+    background: var(--bg-hover);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .nav-links a {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .nav-links a:hover,
+[data-theme="light"] .nav-links a.active {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .nav-links a::after {
+    background: linear-gradient(135deg, var(--accent-core) 0%, var(--accent-glow) 100%);
+}
+
+[data-theme="light"] .theme-toggle {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+}
+
+[data-theme="light"] .nav-user .btn-primary {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .nav-user .btn-primary:hover {
+    background: var(--gradient-accent);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+}
+
+/* Legacy support */
+body.light-mode .navbar {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
