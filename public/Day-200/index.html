@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe AI - Unbeatable Minimax</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles/board.css">
+    <link rel="stylesheet" href="./styles/animations.css">
+</head>
+
+<body>
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <h1><i class="fa-solid fa-robot"></i> Tic-Tac-Toe AI</h1>
+            <p class="subtitle">Challenge the Minimax Algorithm</p>
+        </header>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel">
+            <div class="setting-group">
+                <label>AI Difficulty</label>
+                <div class="difficulty-buttons">
+                    <button class="btn-diff" data-difficulty="easy">
+                        <i class="fa-solid fa-smile"></i> Easy
+                    </button>
+                    <button class="btn-diff" data-difficulty="medium">
+                        <i class="fa-solid fa-fire"></i> Medium
+                    </button>
+                    <button class="btn-diff active" data-difficulty="hard">
+                        <i class="fa-solid fa-skull"></i> Impossible
+                    </button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label>
+                    <input type="checkbox" id="player-starts" checked>
+                    <span>Player Goes First</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Game Container -->
+        <div class="game-container">
+            <!-- Score Panel -->
+            <aside class="score-panel">
+                <h3><i class="fa-solid fa-chart-simple"></i> Statistics</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Wins</span>
+                    <span class="stat-value wins" id="stat-wins">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Losses</span>
+                    <span class="stat-value losses" id="stat-losses">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Draws</span>
+                    <span class="stat-value draws" id="stat-draws">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Win Rate</span>
+                    <span class="stat-value rate" id="stat-rate">0%</span>
+                </div>
+                <button class="btn-reset-stats" id="btn-reset-stats">
+                    <i class="fa-solid fa-rotate-right"></i> Reset Stats
+                </button>
+            </aside>
+
+            <!-- Game Board -->
+            <div class="board-container">
+                <div class="turn-indicator" id="turn-indicator">
+                    Your Turn (X)
+                </div>
+
+                <div class="board" id="game-board">
+                    <!-- SVG for win line -->
+                    <svg class="win-line-svg" id="win-line">
+                        <line x1="0" y1="0" x2="0" y2="0" stroke="#00ff88" stroke-width="8" stroke-linecap="round" />
+                    </svg>
+
+                    <!-- 9 cells -->
+                    <div class="cell" data-index="0"></div>
+                    <div class="cell" data-index="1"></div>
+                    <div class="cell" data-index="2"></div>
+                    <div class="cell" data-index="3"></div>
+                    <div class="cell" data-index="4"></div>
+                    <div class="cell" data-index="5"></div>
+                    <div class="cell" data-index="6"></div>
+                    <div class="cell" data-index="7"></div>
+                    <div class="cell" data-index="8"></div>
+                </div>
+
+                <button class="btn-new-game" id="btn-new-game">
+                    <i class="fa-solid fa-play"></i> New Game
+                </button>
+            </div>
+
+            <!-- Move History -->
+            <aside class="history-panel">
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> Move History</h3>
+                <div class="history-list" id="history-list">
+                    <div class="no-history">No moves yet</div>
+                </div>
+                <button class="btn-undo" id="btn-undo" disabled>
+                    <i class="fa-solid fa-undo"></i> Undo
+                </button>
+            </aside>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div class="modal" id="game-over-modal">
+            <div class="modal-content">
+                <div class="modal-icon" id="modal-icon">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h2 id="modal-title">You Win!</h2>
+                <p id="modal-message">Great job beating the AI!</p>
+                <div class="modal-actions">
+                    <button class="btn-primary" id="btn-play-again">
+                        <i class="fa-solid fa-rotate-right"></i> Play Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/game.js"></script>
+</body>
+
+</html>
