@@ -1,9 +1,25 @@
 const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/tree/main/public";
 
-// Import components
-import { projectModal } from '../components/ProjectModal.js';
-import { App } from '../core/app.js';
-import { Notify } from '../core/Notify.js';
+// Import components with error handling
+let projectModal = null;
+let Notify = null;
+
+// Dynamically import modules to prevent blocking if they fail
+(async () => {
+    try {
+        const modalModule = await import('../components/ProjectModal.js');
+        projectModal = modalModule.projectModal;
+    } catch (error) {
+        console.warn('Could not load ProjectModal:', error.message);
+    }
+    
+    try {
+        const notifyModule = await import('../core/Notify.js');
+        Notify = notifyModule.Notify;
+    } catch (error) {
+        console.warn('Could not load Notify:', error.message);
+    }
+})();
 
 let allProjects = [];
 
@@ -15,7 +31,9 @@ async function loadProjects() {
         renderProjects();
     } catch (error) {
         console.error('Error loading projects:', error);
-        Notify.error('Failed to load mission data.');
+        if (Notify) {
+            Notify.error('Failed to load mission data.');
+        }
     }
 }
 
@@ -117,7 +135,12 @@ function renderProjects(filter = 'All') {
                     time: project.day <= 30 ? '1-2 hours' : project.day <= 60 ? '3-5 hours' : '8+ hours'
                 };
 
-                projectModal.show(projectData);
+                if (projectModal) {
+                    projectModal.show(projectData);
+                } else {
+                    // Fallback: open in new tab if modal is not available
+                    window.open(liveLink, '_blank');
+                }
             });
         } else {
             card.classList.add('is-disabled');
@@ -277,10 +300,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 // Initial Render
-document.addEventListener('DOMContentLoaded', () => {
-    // Small timeout to ensure styles load
-    setTimeout(() => loadProjects(), 50);
-});
+// Module scripts execute after DOM is parsed, so we can call directly
+loadProjects();
 
 const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
