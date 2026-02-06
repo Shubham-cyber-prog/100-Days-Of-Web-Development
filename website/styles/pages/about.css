@@ -19,12 +19,6 @@
     background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
     z-index: -1;
     filter: blur(60px);
-    animation: pulse 8s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
 }
 
 .hero-title {
@@ -69,12 +63,11 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 0.3s ease;
 }
 
 .leaderboard-panel:hover {
     box-shadow: 0 12px 48px rgba(99, 102, 241, 0.2);
-    transform: translateY(-2px);
 }
 
 .leaderboard-panel::before {
@@ -89,7 +82,6 @@
             var(--accent-alpha),
             rgba(99, 102, 241, 0.1),
             var(--bg-void) 60%);
-    animation: cosmicDrift 30s linear infinite;
 }
 
 [data-theme="light"] .leaderboard-panel::before {
@@ -124,12 +116,11 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 0.3s ease;
 }
 
 .mission-panel:hover {
     box-shadow: 0 12px 48px rgba(99, 102, 241, 0.2);
-    transform: translateY(-2px);
 }
 
 .mission-panel::before {
@@ -144,7 +135,6 @@
             var(--accent-alpha),
             rgba(99, 102, 241, 0.1),
             var(--bg-void) 60%);
-    animation: cosmicDrift 30s linear infinite;
 }
 
 [data-theme="light"] .mission-panel::before {
@@ -169,15 +159,10 @@
     z-index: 10;
 }
 
-@keyframes cosmicDrift {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 /* === ENTRANCE ANIMATIONS === */
 .animate-enter {
     opacity: 0;
-    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: fadeInUp 0.6s ease forwards;
 }
 
 .animate-enter.delay-200 {
@@ -199,7 +184,7 @@
 @keyframes fadeInUp {
     0% {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
     }
     100% {
         opacity: 1;
@@ -218,31 +203,16 @@
     border-radius: var(--radius-xl);
     padding: var(--space-7);
     margin-bottom: var(--space-5);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     position: relative;
     overflow: hidden;
 }
 
-.stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.6s ease;
-}
-
-.stat-card:hover::before {
-    left: 100%;
-}
-
 .stat-card:hover {
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(118, 75, 162, 0.1) 100%);
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
     border-color: rgba(99, 102, 241, 0.3);
 }
 
@@ -260,7 +230,7 @@
 }
 
 .stat-card:hover .stat-icon {
-    transform: rotate(10deg) scale(1.15);
+    transform: scale(1.05);
 }
 
 .stat-label {
@@ -361,7 +331,6 @@
 /* --- Mission Section Typography --- */
 .mission-quote {
     --quote-border-width: 4px;
-    --quote-border-width-hover: 6px;
     padding: var(--space-7);
     border-left: var(--quote-border-width) solid var(--accent-core);
     background: linear-gradient(90deg, rgba(99, 102, 241, 0.12) 0%, transparent 100%);
@@ -383,8 +352,6 @@
 }
 
 .mission-quote:hover {
-    border-left-width: var(--quote-border-width-hover);
-    transform: translateX(8px);
     background: linear-gradient(90deg, rgba(99, 102, 241, 0.18) 0%, transparent 100%);
 }
 
@@ -403,13 +370,13 @@
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-xl);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     backdrop-filter: blur(10px);
 }
 
 .mission-phase:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
     border-color: rgba(99, 102, 241, 0.5);
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(118, 75, 162, 0.08) 100%);
 }
@@ -422,7 +389,7 @@
 }
 
 .mission-phase:hover .phase-icon {
-    transform: scale(1.2) rotate(-5deg);
+    transform: scale(1.1);
 }
 
 .mission-phase h4 {
@@ -471,7 +438,7 @@
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-xl);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(10px);
@@ -486,7 +453,7 @@
     height: 100%;
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(118, 75, 162, 0.1));
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
 }
 
 .achievement-card:hover::before {
@@ -494,8 +461,8 @@
 }
 
 .achievement-card:hover {
-    transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 16px 50px rgba(99, 102, 241, 0.35);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(99, 102, 241, 0.35);
     border-color: rgba(99, 102, 241, 0.5);
 }
 
@@ -503,12 +470,12 @@
     font-size: 4rem;
     margin-bottom: var(--space-6);
     display: inline-block;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s ease;
     filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3));
 }
 
 .achievement-card:hover .achievement-icon {
-    transform: scale(1.3) rotate(10deg);
+    transform: scale(1.1);
 }
 
 .achievement-card h3 {
@@ -583,13 +550,12 @@
     flex-shrink: 0;
     position: relative;
     z-index: 2;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s ease;
     border: 4px solid var(--bg-void);
 }
 
 .timeline-item:hover .timeline-marker {
-    transform: scale(1.2) rotate(10deg);
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.8);
+    transform: scale(1.1);
 }
 
 .timeline-content {
@@ -599,7 +565,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-xl);
     margin: 0 var(--space-8);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     position: relative;
 }
@@ -624,14 +590,14 @@
 }
 
 .timeline-content:hover {
-    transform: translateX(12px);
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.3);
+    transform: translateX(8px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
     border-color: rgba(99, 102, 241, 0.5);
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(118, 75, 162, 0.08) 100%);
 }
 
 .timeline-item:nth-child(even) .timeline-content:hover {
-    transform: translateX(-12px);
+    transform: translateX(-8px);
 }
 
 .timeline-content h3 {
@@ -673,7 +639,7 @@
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-xl);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     cursor: pointer;
     backdrop-filter: blur(10px);
     position: relative;
@@ -689,7 +655,7 @@
     height: 100%;
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(118, 75, 162, 0.15));
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
 }
 
 .tech-item:hover::before {
@@ -697,22 +663,22 @@
 }
 
 .tech-item:hover {
-    transform: translateY(-10px) scale(1.08);
-    box-shadow: 0 14px 45px rgba(99, 102, 241, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 32px rgba(99, 102, 241, 0.4);
     border-color: rgba(99, 102, 241, 0.6);
 }
 
 .tech-logo {
     font-size: 3.5rem;
     margin-bottom: var(--space-4);
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s ease;
     position: relative;
     z-index: 1;
     filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3));
 }
 
 .tech-item:hover .tech-logo {
-    transform: scale(1.3) rotate(12deg);
+    transform: scale(1.15);
 }
 
 .tech-item span {
@@ -726,26 +692,6 @@
 
 /* --- Enhanced Responsive Design --- */
 
-/* Performance Optimizations */
-.stat-card:hover,
-.achievement-card:hover,
-.tech-item:hover,
-.mission-phase:hover,
-.timeline-content:hover {
-    will-change: transform;
-}
-
-.animate-enter {
-    will-change: opacity, transform;
-}
-
-.animate-enter.delay-200,
-.animate-enter.delay-400,
-.animate-enter.delay-600,
-.animate-enter.delay-800 {
-    animation-fill-mode: forwards;
-}
-
 /* Remove will-change after animation completes */
 @media (prefers-reduced-motion: no-preference) {
     .animate-enter {
@@ -757,7 +703,7 @@
 .btn-primary {
     position: relative;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     font-weight: 700;
     padding: var(--space-5) var(--space-8);
     border-radius: var(--radius-xl);
@@ -768,24 +714,9 @@
     font-size: var(--text-base);
 }
 
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.6s ease;
-}
-
-.btn-primary:hover::before {
-    left: 100%;
-}
-
 .btn-primary:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.6);
 }
 
 @media (max-width: 1200px) {
