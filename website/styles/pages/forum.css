@@ -289,8 +289,13 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .no-posts,
@@ -447,4 +452,34 @@
     .comment-submit-btn {
         align-self: flex-start;
     }
+}
+
+[data-theme="light"] .category-btn {
+    background: white;
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .post-card {
+    background: white;
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .post-author-name {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .post-text {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .comment {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+}
+
+[data-theme="light"] .modal-content {
+    background: white;
+    border-color: var(--border-light);
 }

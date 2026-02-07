@@ -81,32 +81,33 @@ h6 {
    LIGHT MODE OVERRIDES
    ======================================== */
 html[data-theme="light"] body {
-    background: linear-gradient(135deg, #F9FAFB 0%, #F2F4F8 100%);
+    background: var(--bg-void);
     background-attachment: fixed;
     color: var(--text-primary);
 }
 
 html[data-theme="light"] ::-webkit-scrollbar-track {
-    background: #F2F4F8;
+    background: var(--bg-secondary);
 }
 
 html[data-theme="light"] ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.15);
+    background: var(--border-medium);
 }
 
 html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.25);
+    background: var(--text-tertiary);
 }
 
 html[data-theme="light"] ::selection {
-    background: rgba(124, 58, 237, 0.2);
-    color: #111827;
+    background: var(--accent-alpha);
+    color: var(--text-primary);
 }
 
 html[data-theme="light"] ::-moz-selection {
-    background: rgba(124, 58, 237, 0.2);
-    color: #111827;
+    background: var(--accent-alpha);
+    color: var(--text-primary);
 }
+
 
 /* Dark theme specific overrides */
 html[data-theme="dark"] {
