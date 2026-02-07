@@ -373,6 +373,14 @@ class ProfileManager {
             this.openEditModal();
         });
 
+        // Share profile button
+        const shareBtn = document.getElementById('shareProfileBtn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                this.shareProfile();
+            });
+        }
+
         // Edit avatar button
         document.getElementById('editAvatarBtn').addEventListener('click', () => {
             this.changeAvatar();
@@ -581,6 +589,83 @@ class ProfileManager {
             const coverImg = document.getElementById('coverImg');
             if (coverImg) {
                 coverImg.src = imageData;
+            }
+        });
+    }
+
+    shareProfile() {
+        const profileUrl = window.location.href;
+        const shareText = `Check out ${this.userData.fullName}'s profile on 100 Days of Web Development!`;
+
+        // Check if Web Share API is available
+        if (navigator.share) {
+            navigator.share({
+                title: `${this.userData.fullName} - 100 Days of Web Dev`,
+                text: shareText,
+                url: profileUrl
+            })
+            .then(() => {
+                this.showNotification('Profile shared successfully!', 'success');
+            })
+            .catch((error) => {
+                if (error.name !== 'AbortError') {
+                    console.error('Error sharing:', error);
+                    this.fallbackShare(profileUrl);
+                }
+            });
+        } else {
+            // Fallback to clipboard copy
+            this.fallbackShare(profileUrl);
+        }
+    }
+
+    fallbackShare(url) {
+        // Copy to clipboard as fallback
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                this.showNotification('Profile link copied to clipboard!', 'success');
+            })
+            .catch(() => {
+                // If clipboard fails, show modal with shareable link
+                this.showShareModal(url);
+            });
+    }
+
+    showShareModal(url) {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'block';
+        modal.innerHTML = `
+            <div class="modal-content" style="max-width: 400px;">
+                <div class="modal-header">
+                    <h3>Share Profile</h3>
+                    <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p style="margin-bottom: 1rem; color: var(--text-secondary);">Share this link:</p>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" value="${url}" readonly 
+                               style="flex: 1; padding: 0.75rem; border: 2px solid var(--border-light); 
+                                      border-radius: 8px; font-size: 0.9rem;"
+                               onclick="this.select()">
+                        <button class="btn-primary" onclick="
+                            navigator.clipboard.writeText('${url}').then(() => {
+                                alert('Copied to clipboard!');
+                                this.closest('.modal').remove();
+                            });
+                        " style="padding: 0.75rem 1rem; white-space: nowrap;">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        // Close on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
             }
         });
     }
