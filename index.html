@@ -1,30 +1,3 @@
-<nav class="nav-links">
-  <a href="#" class="nav-link active">Home</a>
-  <a href="website/pages/projects.html" class="nav-link">Projects</a>
-  <a href="website/pages/dashboard.html" class="nav-link dashboard-link" id="dashboardLink"
-    style="display: none;">Dashboard</a>
-  <a href="website/pages/about.html" class="nav-link">About</a>
-  <a href="website/pages/contributors.html" class="nav-link">Contributors</a>
-  <a href="website/pages/forum.html" class="nav-link">Forum</a>
-</nav>
-
-<script>
-  // Show/hide dashboard link based on authentication
-  document.addEventListener('DOMContentLoaded', () => {
-    const dashboardLink = document.getElementById('dashboardLink');
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const isGuest = localStorage.getItem('isGuest') === 'true';
-
-    if (dashboardLink) {
-      if (isLoggedIn && !isGuest) {
-        dashboardLink.style.display = 'inline-block';
-      } else {
-        dashboardLink.style.display = 'none';
-      }
-    }
-  });
-</script>
-=======
 <!doctype html>
 <html lang="en">
 
@@ -1394,6 +1367,32 @@
 </head>
 
 <body>
+  <nav class="nav-links" aria-label="Primary Navigation">
+  <a href="#" class="nav-link active">Home</a>
+  <a href="website/pages/projects.html" class="nav-link">Projects</a>
+  <a href="website/pages/dashboard.html" class="nav-link dashboard-link" id="dashboardLink"
+    style="display: none;">Dashboard</a>
+  <a href="website/pages/about.html" class="nav-link">About</a>
+  <a href="website/pages/contributors.html" class="nav-link">Contributors</a>
+  <a href="website/pages/forum.html" class="nav-link">Forum</a>
+</nav>
+
+<script>
+  // Show/hide dashboard link based on authentication
+  document.addEventListener('DOMContentLoaded', () => {
+    const dashboardLink = document.getElementById('dashboardLink');
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+
+    if (dashboardLink) {
+      if (isLoggedIn && !isGuest) {
+        dashboardLink.style.display = 'inline-block';
+      } else {
+        dashboardLink.style.display = 'none';
+      }
+    }
+  });
+</script>
   <!-- Loader -->
   <div id="page-loader" class="page-loader">
     <div class="loader-content">
@@ -1404,7 +1403,14 @@
 
   <!-- Sidebar Toggle Button -->
   <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle Sidebar">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
       <line x1="3" y1="12" x2="21" y2="12"></line>
       <line x1="3" y1="6" x2="21" y2="6"></line>
       <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -1415,10 +1421,21 @@
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-header">
       <a href="index.html" class="sidebar-logo">
-        <img src="website/assets/images/logo.png" alt="100 Days of Web Dev" class="sidebar-logo-img" />
+<img
+  src="website/assets/images/logo.png"
+  alt="100 Days of Web Development logo"
+  class="sidebar-logo-img"
+/>
       </a>
       <button id="sidebar-close" class="sidebar-close" aria-label="Close Sidebar">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
@@ -1427,28 +1444,56 @@
 
     <nav class="sidebar-nav">
       <a href="index.html" class="sidebar-link active">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
           <polyline points="9 22 9 12 15 12 15 22"></polyline>
         </svg>
         <span>Home</span>
       </a>
       <a href="website/pages/projects.html" class="sidebar-link">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
           <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
         </svg>
         <span>Projects</span>
       </a>
       <a href="website/pages/dashboard.html" class="sidebar-link dashboard-link" id="sidebarDashboardLink"
         style="display: none;">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
           <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
           <line x1="9" y1="3" x2="9" y2="21"></line>
         </svg>
         <span>Dashboard</span>
       </a>
       <a href="website/pages/about.html" class="sidebar-link">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="12" y1="16" x2="12" y2="12"></line>
           <line x1="12" y1="8" x2="12.01" y2="8"></line>
@@ -1456,7 +1501,14 @@
         <span>About</span>
       </a>
       <a href="website/pages/contributors.html" class="sidebar-link">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
           <circle cx="9" cy="7" r="4"></circle>
           <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -1465,7 +1517,14 @@
         <span>Contributors</span>
       </a>
       <a href="website/pages/forum.html" class="sidebar-link">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
         <span>Forum</span>
@@ -1474,7 +1533,14 @@
 
     <div class="sidebar-footer">
       <button id="theme-toggle-btn" class="sidebar-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
         <span>Toggle Theme</span>
@@ -1488,28 +1554,56 @@
   <!-- Mobile Bottom Navigation -->
   <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
     <a href="index.html" class="mobile-nav-item active" data-page="home">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="mobile-nav-icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
         <polyline points="9 22 9 12 15 12 15 22"></polyline>
       </svg>
       <span class="mobile-nav-label">Home</span>
     </a>
     <a href="website/pages/projects.html" class="mobile-nav-item" data-page="projects">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="mobile-nav-icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
       </svg>
       <span class="mobile-nav-label">Projects</span>
     </a>
     <a href="website/pages/dashboard.html" class="mobile-nav-item mobile-dashboard-link" id="mobileDashboardLink"
       style="display: none;" data-page="dashboard">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="mobile-nav-icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
         <line x1="9" y1="3" x2="9" y2="21"></line>
       </svg>
       <span class="mobile-nav-label">Dashboard</span>
     </a>
     <a href="website/pages/about.html" class="mobile-nav-item" data-page="about">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="mobile-nav-icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
         <circle cx="12" cy="12" r="10"></circle>
         <line x1="12" y1="16" x2="12" y2="12"></line>
         <line x1="12" y1="8" x2="12.01" y2="8"></line>
@@ -1517,7 +1611,14 @@
       <span class="mobile-nav-label">About</span>
     </a>
     <a href="website/pages/contributors.html" class="mobile-nav-item" data-page="contributors">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="mobile-nav-icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  aria-hidden="true"
+>
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
         <circle cx="9" cy="7" r="4"></circle>
         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -1550,7 +1651,7 @@
             <ul class="carousel-track">
               <li class="carousel-slide current-slide">
                 <div class="carousel-content">
-                  <div class="carousel-icon">🎯</div>
+<div class="carousel-icon" aria-hidden="true">🎯</div>
                   <h3>Day 1-30: Foundation</h3>
                   <p>Master HTML, CSS, and JavaScript fundamentals. Build your first 30 projects and establish a solid
                     coding routine.</p>
@@ -1558,7 +1659,7 @@
               </li>
               <li class="carousel-slide">
                 <div class="carousel-content">
-                  <div class="carousel-icon">⚡</div>
+<div class="carousel-icon" aria-hidden="true">⚡</div>
                   <h3>Day 31-60: Advanced Concepts</h3>
                   <p>Dive into React, APIs, and modern frameworks. Create interactive web applications with real-world
                     features.</p>
@@ -1566,7 +1667,7 @@
               </li>
               <li class="carousel-slide">
                 <div class="carousel-content">
-                  <div class="carousel-icon">🚀</div>
+<div class="carousel-icon" aria-hidden="true">🚀</div>
                   <h3>Day 61-100: Full-Stack Projects</h3>
                   <p>Build complete full-stack applications. Deploy to production and showcase your portfolio-worthy
                     projects.</p>
@@ -1574,7 +1675,7 @@
               </li>
               <li class="carousel-slide">
                 <div class="carousel-content">
-                  <div class="carousel-icon">🏆</div>
+<div class="carousel-icon" aria-hidden="true">🏆</div>
                   <h3>Success Stories</h3>
                   <p>Join hundreds of developers who transformed their careers through consistent daily practice and
                     dedication.</p>
@@ -1584,13 +1685,15 @@
           </div>
 
           <button class="carousel-button carousel-button--left" aria-label="Previous slide">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+
               <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round" />
             </svg>
           </button>
           <button class="carousel-button carousel-button--right" aria-label="Next slide">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+
               <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round" />
             </svg>
@@ -1609,7 +1712,7 @@
     <section class="features-section animate-enter delay-100">
       <div class="grid grid-3">
         <div class="feature-card">
-          <span class="feature-icon">🚀</span>
+<span class="feature-icon" aria-hidden="true">🚀</span>
           <h3>Daily Deployments</h3>
           <p>
             Build and ship a new project every single day. From simple scripts
@@ -1617,7 +1720,7 @@
           </p>
         </div>
         <div class="feature-card">
-          <span class="feature-icon">⚡</span>
+<span class="feature-icon" aria-hidden="true">⚡</span>
           <h3>Modern Stack</h3>
           <p>
             Master the latest technologies including React, Next.js,
@@ -1625,7 +1728,7 @@
           </p>
         </div>
         <div class="feature-card">
-          <span class="feature-icon">🤝</span>
+<span class="feature-icon" aria-hidden="true">🤝</span>
           <h3>Community Driven</h3>
           <p>
             Join a squad of dedicated developers. Code reviews, pair
@@ -1664,7 +1767,10 @@
       <!-- Brand -->
       <div class="footer-brand">
         <a href="/index.html" class="footer-logo">
-          <img src="website/assets/images/logo.png" alt="Logo" />
+<img
+  src="website/assets/images/logo.png"
+  alt="100 Days of Web Development logo"
+ />
           <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
         </a>
         <p class="footer-desc">
