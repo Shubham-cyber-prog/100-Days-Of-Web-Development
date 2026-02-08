@@ -110,8 +110,5 @@ function setupSidebarToggle() {
   });
 }
 
-
 // Export for use in navigation.js
-if (typeof window !== 'undefined') {
-  window.updateSidebarThemeIcon = updateSidebarThemeIcon;
-}
+window.updateSidebarThemeIcon = updateSidebarThemeIcon;
