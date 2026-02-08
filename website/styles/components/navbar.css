@@ -2,13 +2,21 @@
    GLASSMORPHISM NAVBAR
    ======================================== */
 
+:root {
+  --navbar-glass-bg-dark: rgba(255, 255, 255, 0.05);
+  --navbar-glass-bg-light: rgba(255, 255, 255, 0.7);
+  --navbar-glass-border-dark: rgba(255, 255, 255, 0.1);
+  --navbar-glass-border-light: rgba(0, 0, 0, 0.1);
+  --navbar-height: 70px;
+}
+
 .glassmorphism-navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  height: 70px;
+  height: var(--navbar-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,16 +24,16 @@
   z-index: 1000;
   
   /* Glassmorphism Effect */
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--navbar-glass-bg-dark);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--navbar-glass-border-dark);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="light"] .glassmorphism-navbar {
-  background: rgba(255, 255, 255, 0.7);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--navbar-glass-bg-light);
+  border-bottom: 1px solid var(--navbar-glass-border-light);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
 }
 
@@ -364,12 +372,12 @@
 
 /* Ensure body content doesn't overlap with fixed navbar */
 main {
-  padding-top: 70px;
+  padding-top: var(--navbar-height);
 }
 
 /* If sidebar exists, adjust navbar accordingly */
 body:not(.sidebar-collapsed) .glassmorphism-navbar {
-  left: 260px;
+  left: var(--sidebar-width);
 }
 
 body.sidebar-collapsed .glassmorphism-navbar {

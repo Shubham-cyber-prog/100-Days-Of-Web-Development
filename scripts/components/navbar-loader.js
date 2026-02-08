@@ -49,12 +49,15 @@ function setActiveNavLink() {
     const href = link.getAttribute('href');
     const dataPage = link.getAttribute('data-page');
     
+    // Remove any existing active class
+    link.classList.remove('active');
+    
     // For home page, check if we're at root or index.html
-    if (dataPage === 'home' && (currentPath === '/' || currentPath.endsWith('index.html') || currentPath.endsWith('/'))) {
+    if (dataPage === 'home' && (currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html')) {
       link.classList.add('active');
-    } else if (href && currentPath.includes(href) && dataPage !== 'home') {
-      link.classList.add('active');
-    } else if (dataPage && currentPath.includes(dataPage) && dataPage !== 'home') {
+    } 
+    // For other pages, check if path ends with the href
+    else if (href && currentPath.endsWith(href.split('/').pop())) {
       link.classList.add('active');
     }
   });
@@ -63,6 +66,7 @@ function setActiveNavLink() {
 function initializeProfileDropdown() {
   const profileBtn = document.getElementById('profileIconBtn');
   const profileTray = document.getElementById('profileTray');
+  const darkModeBtn = document.getElementById('darkModeToggleBtn');
   
   if (!profileBtn || !profileTray) {
     console.warn('Profile button or tray not found');
@@ -74,6 +78,19 @@ function initializeProfileDropdown() {
     e.stopPropagation();
     profileTray.classList.toggle('open');
   });
+  
+  // Add dark mode toggle event listener
+  if (darkModeBtn) {
+    darkModeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Use existing toggleTheme if available, otherwise use fallback
+      if (typeof window.toggleTheme === 'function') {
+        window.toggleTheme();
+      } else {
+        navbarToggleTheme();
+      }
+    });
+  }
 }
 
 function handleOutsideClick() {
@@ -141,15 +158,6 @@ function navbarToggleTheme() {
   if (typeof window.updateSidebarThemeIcon === 'function') {
     window.updateSidebarThemeIcon();
   }
-}
-
-// Override toggleTheme to also update navbar icon
-if (typeof window.toggleTheme !== 'undefined') {
-  const originalToggleTheme = window.toggleTheme;
-  window.toggleTheme = function() {
-    originalToggleTheme();
-    updateNavbarDarkModeIcon();
-  };
 }
 
 // Export for use in other files
