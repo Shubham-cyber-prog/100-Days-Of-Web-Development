@@ -145,6 +145,7 @@ function setupSidebarToggle() {
     }
   }, 150);
 
+  // Note: Event listener is not removed because sidebar persists for page lifetime
   window.addEventListener('resize', handleResize);
 }
 
