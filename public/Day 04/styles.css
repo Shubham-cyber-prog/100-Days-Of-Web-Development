@@ -19,6 +19,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .app {
@@ -231,3 +232,31 @@ footer {
     gap: 1rem;
   }
 }
+
+    
+/* 7 days Forecast css */
+.forecast {
+  margin-top: 1.8rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.forecast-card {
+  background: rgba(255,255,255,0.15);
+  border-radius: 14px;
+  padding: 10px 6px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.forecast-card i {
+  font-size: 1.2rem;
+  color: var(--accent);
+  margin: 6px 0;
+}
+
+.forecast-card .temp {
+  font-weight: 600;
+}
+
