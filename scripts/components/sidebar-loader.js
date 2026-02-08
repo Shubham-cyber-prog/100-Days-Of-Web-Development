@@ -123,14 +123,29 @@ function setupSidebarToggle() {
     localStorage.setItem('sidebarCollapsed', 'false');
   });
 
-  // Handle window resize
-  window.addEventListener('resize', () => {
+  // Debounce helper function
+  let resizeTimeout;
+  const debounce = (func, wait) => {
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(resizeTimeout);
+        func(...args);
+      };
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(later, wait);
+    };
+  };
+
+  // Handle window resize with debouncing
+  const handleResize = debounce(() => {
     if (!isMobile()) {
       // On desktop, remove mobile-open class
       sidebar.classList.remove('mobile-open');
       document.body.classList.remove('sidebar-mobile-open');
     }
-  });
+  }, 150);
+
+  window.addEventListener('resize', handleResize);
 }
 
 // Export for use in navigation.js
