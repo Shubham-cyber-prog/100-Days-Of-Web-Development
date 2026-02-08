@@ -65,3 +65,260 @@
   background-color: #090dea;
   transform: scale(1.1);
 }
+/* ===============================
+   FEEDBACK PAGE FORM TUNING
+   =============================== */
+
+.feedback-form {
+  max-width: 480px;
+  margin: 2.5rem auto;
+  padding: 2rem 2.2rem;
+}
+
+/* Input & textarea sizing */
+.feedback-form input {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.feedback-form textarea {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  min-height: 80px; /* ONLY textarea */
+}
+
+/* Reduce textarea height */
+.feedback-form textarea {
+  min-height: 140px;
+}
+
+/* Placeholder visibility */
+.feedback-form ::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.9rem;
+}
+
+/* Label spacing */
+.feedback-form label {
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+
+/* Button sizing */
+.feedback-form .btn-zenith-primary {
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 0.95rem;
+}
+/* ===============================
+   CENTERED PAGES (Feedback / Legal)
+   =============================== */
+
+.page-center {
+  min-height: calc(100vh - 120px); /* subtract top nav height */
+  display: flex;
+  align-items: center;            /* TRUE vertical center */
+  justify-content: center;        /* TRUE horizontal center */
+  padding: 2rem 1rem;
+  margin-left: 0 !important;
+}
+
+
+/* Card wrapper */
+.page-card {
+  width: 100%;
+  max-width: 520px;   /* wider */
+  padding: 1.4rem 1.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+}
+
+/* Title */
+.page-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.3rem;
+}
+
+/* Description */
+.page-desc {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.4rem;
+}
+
+/* Form */
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 6px;
+  display: inline-block;
+}
+.feedback-form input,
+.feedback-form textarea {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* inputs stay compact */
+.feedback-form input {
+  min-height: 44px;
+}
+
+/* textarea specifically smaller */
+.feedback-form textarea {
+  min-height: 70px;
+  max-height: 120px;
+  resize: vertical;
+}
+
+.feedback-form input::placeholder,
+.feedback-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.feedback-form textarea {
+  resize: vertical;
+  min-height: 70px;   /* reduced */
+  max-height: 120px;  /* prevents huge expansion */
+}
+
+.feedback-form button {
+  margin-top: 0.8rem;
+}
+
+.feedback-form button {
+  margin-top: 1.2rem;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 12px;
+}
+/* ===============================
+   STANDALONE CENTERED PAGES FIX
+   =============================== */
+
+body .page-center {
+  margin-left: 0 !important;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.page-card {
+  margin: 0 auto;
+}
+/* ===============================
+   FEEDBACK UX
+   =============================== */
+
+.form-error {
+  color: #ff6b6b;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.form-legal {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #0f0f23;
+  border: 1px solid rgba(102, 126, 234, 0.4);
+  padding: 2rem;
+  border-radius: 14px;
+  text-align: center;
+  max-width: 320px;
+}
+
+.modal-box h3 {
+  margin-bottom: 0.5rem;
+}
+
+.modal-box p {
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+/* ===============================
+   STANDALONE PAGES (NO SIDEBAR)
+   =============================== */
+
+/* Remove sidebar offset */
+body .page-center {
+  margin-left: 0 !important;
+}
+
+/* Force main content full width */
+body main.page-center {
+  margin-left: 0 !important;
+  width: 100%;
+}
+
+/* Safety override if main has margin */
+body main {
+  margin-left: 0;
+}
+/* ===============================
+   FORCE NO SIDEBAR ON STANDALONE PAGES
+   =============================== */
+
+/* Remove global sidebar offset */
+body:not(.has-sidebar) main {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+/* Feedback & legal pages */
+body:not(.has-sidebar) .page-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* ===============================
+   STANDALONE PAGES OVERRIDE
+   =============================== */
+
+.no-sidebar-main {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
