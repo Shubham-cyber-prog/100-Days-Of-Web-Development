@@ -1,5 +1,5 @@
 /**
- * Sidebar Loader Component
+ * Sidebar Loader Component for Root Directory
  * Loads the sidebar HTML and initializes active states
  */
 
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadSidebar() {
   try {
-    const response = await fetch('../components/sidebar.html');
+    const response = await fetch('components/sidebar.html');
     if (!response.ok) {
       console.error('Failed to load sidebar');
       return;
@@ -36,10 +36,12 @@ function initializeSidebar() {
     const href = link.getAttribute('href');
     const dataPage = link.getAttribute('data-page');
     
-    // Check if current path includes the link's href or data-page
-    if (href && currentPath.includes(href)) {
+    // For home page, check if we're at root or index.html
+    if (dataPage === 'home' && (currentPath === '/' || currentPath.endsWith('index.html') || currentPath.endsWith('/'))) {
       link.classList.add('active');
-    } else if (dataPage && currentPath.includes(dataPage)) {
+    } else if (href && currentPath.includes(href) && dataPage !== 'home') {
+      link.classList.add('active');
+    } else if (dataPage && currentPath.includes(dataPage) && dataPage !== 'home') {
       link.classList.add('active');
     }
   });
@@ -47,7 +49,6 @@ function initializeSidebar() {
   // Update theme icon in sidebar
   updateSidebarThemeIcon();
   setupSidebarToggle();
-
 }
 
 function updateSidebarThemeIcon() {
