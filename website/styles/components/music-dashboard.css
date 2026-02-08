@@ -111,10 +111,13 @@
 
 /* Pulse Animation for Live Elements */
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.6;
     transform: scale(0.95);
@@ -126,16 +129,17 @@
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
 }
 
 .loading-shimmer {
-  background: linear-gradient(90deg, 
-    rgba(255, 255, 255, 0.05) 0%, 
-    rgba(255, 255, 255, 0.15) 50%, 
-    rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.05) 100%);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
 }
@@ -191,32 +195,28 @@
 [data-theme="light"] .card,
 [data-theme="light"] .project-card,
 [data-theme="light"] .stat-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 248, 248, 0.95) 100%);
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-}
-
-[data-theme="light"] .card::before,
-[data-theme="light"] .stat-card::before {
-  background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-sm);
 }
 
 [data-theme="light"] .card:hover,
 [data-theme="light"] .project-card:hover,
 [data-theme="light"] .stat-card:hover {
-  border-color: rgba(139, 92, 246, 0.3);
-  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.15), 0 0 0 1px rgba(139, 92, 246, 0.2) inset;
+  background: white;
+  border-color: var(--accent-core);
+  box-shadow: var(--shadow-md);
 }
 
 [data-theme="light"] .btn-social {
-  background: rgba(0, 0, 0, 0.03);
-  border-color: rgba(0, 0, 0, 0.08);
-  color: rgba(0, 0, 0, 0.9);
+  background: var(--bg-secondary);
+  border-color: var(--border-light);
+  color: var(--text-secondary);
 }
 
 [data-theme="light"] .btn-social:hover {
-  background: rgba(139, 92, 246, 0.1);
-  border-color: rgba(139, 92, 246, 0.4);
+  background: var(--accent-alpha);
+  border-color: var(--accent-core);
   color: var(--accent-core);
 }
 
@@ -236,6 +236,7 @@
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
+
   .grid-3,
   .grid-4 {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -243,11 +244,12 @@
 }
 
 @media (max-width: 640px) {
+
   .grid-3,
   .grid-4 {
     grid-template-columns: 1fr;
   }
-  
+
   .card,
   .project-card,
   .stat-card {
@@ -287,6 +289,7 @@ html {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
