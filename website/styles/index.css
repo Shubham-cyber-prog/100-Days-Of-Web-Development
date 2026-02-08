@@ -65,9 +65,32 @@
   background-color: #090dea;
   transform: scale(1.1);
 }
-/* ===============================
-   FEEDBACK PAGE FORM TUNING
-   =============================== */
+
+@media (max-width: 1024px) {
+  /* Reduce excessive horizontal spacing on tablets */
+  body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Constrain main content slightly for better readability */
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  /* Improve grid breathing space */
+  .grid {
+    gap: 1.25rem;
+  }
+
+  /* Header / navbar spacing adjustment if present */
+  header,
+  .navbar {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
 
 .feedback-form {
   max-width: 480px;
@@ -321,4 +344,5 @@ body:not(.has-sidebar) .page-center {
 .no-sidebar-main {
   margin-left: 0 !important;
   width: 100% !important;
+
 }
