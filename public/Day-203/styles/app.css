@@ -1,0 +1,327 @@
+:root {
+    --primary-neon: #00f3ff;
+    --secondary-neon: #ff00ff;
+    --bg-dark: #050510;
+    --glass-bg: rgba(10, 10, 30, 0.8);
+    --border-color: rgba(0, 243, 255, 0.3);
+    --text-color: #e0e0f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    font-family: 'Rajdhani', sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.game-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    background: radial-gradient(circle at center, #1a1a3a 0%, #050510 100%);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 243, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.game-ui {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.game-ui.bottom {
+    border-top: 1px solid var(--border-color);
+    border-bottom: none;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-box.main {
+    flex: 1;
+}
+
+.stat-box .label {
+    font-size: 0.7rem;
+    color: var(--primary-neon);
+    letter-spacing: 2px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.stat-box .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 10px var(--primary-neon);
+}
+
+.stat-box.main .value {
+    font-size: 2rem;
+}
+
+.lives-icons {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.life-heart {
+    width: 12px;
+    height: 12px;
+    background-color: #ff3366;
+    clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 50% 80%, 18% 100%, 0% 35%);
+    box-shadow: 0 0 8px #ff3366;
+}
+
+.canvas-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    cursor: none;
+}
+
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.content {
+    text-align: center;
+    padding: 2rem;
+    background: var(--glass-bg);
+    border: 2px solid var(--primary-neon);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
+    animation: zoomIn 0.4s ease-out;
+}
+
+.content.hidden {
+    display: none;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 0 0 20px var(--primary-neon);
+}
+
+.main-title {
+    font-size: 4rem;
+    letter-spacing: 4px;
+    background: linear-gradient(to bottom, #fff, var(--primary-neon));
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Added background-clip */
+    -webkit-text-fill-color: transparent;
+}
+
+.instruction {
+    font-size: 1.2rem;
+    color: var(--primary-neon);
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    animation: blink 1.5s infinite;
+}
+
+.controls-hint {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+kbd {
+    background: #333;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    font-family: monospace;
+}
+
+.btn {
+    padding: 0.75rem 2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-neon);
+    color: black;
+}
+
+.btn-primary:hover {
+    background-color: white;
+    box-shadow: 0 0 20px var(--primary-neon);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-neon);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: white;
+    color: var(--secondary-neon);
+    box-shadow: 0 0 20px var(--secondary-neon);
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.active-powerups {
+    display: flex;
+    gap: 10px;
+}
+
+.powerup-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid currentColor;
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+    animation: glitch-anim2 1s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(31px, 9999px, 94px, 0);
+    }
+
+    4.16% {
+        clip: rect(91px, 9999px, 43px, 0);
+    }
+
+    8.33% {
+        clip: rect(65px, 9999px, 8px, 0);
+    }
+
+    12.5% {
+        clip: rect(43px, 9999px, 86px, 0);
+    }
+
+    16.66% {
+        clip: rect(53px, 9999px, 26px, 0);
+    }
+
+    20.83% {
+        clip: rect(51px, 9999px, 5px, 0);
+    }
+
+    25% {
+        clip: rect(10px, 9999px, 14px, 0);
+    }
+
+    100% {
+        clip: rect(15px, 9999px, 20px, 0);
+    }
+}
+
+@keyframes glitch-anim2 {
+    0% {
+        clip: rect(40px, 9999px, 60px, 0);
+    }
+
+    100% {
+        clip: rect(0px, 9999px, 100px, 0);
+    }
+}
