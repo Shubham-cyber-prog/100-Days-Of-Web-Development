@@ -29,6 +29,7 @@
 
   <!-- Fire Cursor - Commented out as file is missing -->
   <!-- <link rel="stylesheet" href="firecursor.css"> -->
+  <link rel="stylesheet" href="website/styles/tracker.css" />
 
   <style>
     /* Enhanced Modern UI Styles */
@@ -1443,8 +1444,19 @@
           </div>
         </div>
 
-        <div id="project-gallery" class="grid grid-4">
-          <!-- Dynamically loaded by project-loader.js -->
+        <!-- Tracker Progress Summary -->
+        <div id="progress-summary">
+          <div class="progress-text">Progress: <span id="progress-count" class="progress-count">0/100</span></div>
+          <div class="progress-bar-container">
+            <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div id="projectsGrid" class="grid grid-4">
+          <!-- Injected by landing-projects.js -->
+
+      <div id="project-gallery" class="grid grid-4">
+
         </div>
 
         <div style="text-align: center; margin-top: 3rem;">
