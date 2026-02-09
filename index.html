@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -51,25 +51,30 @@
       padding: 0;
     }
 
+    /* Enhanced inline styles for homepage specific overrides */
     body {
-      background: linear-gradient(135deg,
-          #0f0f23 0%,
-          #1a1a2e 50%,
-          #0f0f23 100%);
+      display: flex;
+      flex-direction: column;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
     }
-
-    body {
-      display: flex;
-      flex-direction: column;
+    
+    /* Force dark mode background - using !important to override external CSS conflicts */
+    html[data-theme="dark"] body {
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%) !important;
     }
 
     main {
       flex: 1;
       margin-left: var(--sidebar-width);
       transition: margin-left 0.3s ease;
+    }
+    
+    @media (max-width: 768px) {
+      main {
+        margin-left: 0;
+      }
     }
 
     /* Animated Background Particles */
@@ -1589,33 +1594,8 @@
       }, LOADER_HIDE_DELAY);
     });
 
-    // Sidebar functionality
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    const sidebarClose = document.getElementById('sidebar-close');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-    function openSidebar() {
-      sidebar.classList.add('active');
-      sidebarOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeSidebar() {
-      sidebar.classList.remove('active');
-      sidebarOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    sidebarToggle.addEventListener('click', openSidebar);
-    sidebarClose.addEventListener('click', closeSidebar);
-    sidebarOverlay.addEventListener('click', closeSidebar);
-
-    // Close sidebar when clicking on a link
-    const sidebarLinks = document.querySelectorAll('.sidebar-link');
-    sidebarLinks.forEach(link => {
-      link.addEventListener('click', closeSidebar);
-    });
+    // Sidebar functionality - handled by sidebar-loader.js
+    // Removed duplicate sidebar code to prevent null reference errors
 
     // Show/hide dashboard link based on authentication
     document.addEventListener('DOMContentLoaded', () => {
