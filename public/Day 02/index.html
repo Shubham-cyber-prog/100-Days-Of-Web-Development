@@ -6,7 +6,9 @@
   <title>InnovateTech | Responsive Landing Page</title>
 
   <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <!-- CSS -->
@@ -14,6 +16,9 @@
 </head>
 <body>
 
+<header>
+  <div class="container header-container">
+    <div class="logo"><i class="fas fa-rocket"></i> InnovateTech</div>
 <!-- HEADER -->
 <header>
   <div class="container header-container">
@@ -34,13 +39,25 @@
         <li><a href="#contact" class="btn btn-primary">Get Started</a></li>
       </ul>
     </nav>
-
+    
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="container hero-container">
+    <div class="hero-content">
+      <h1>Transform Your Business With Innovative Technology</h1>
+      <p>We build smart digital solutions to grow your business faster and smarter.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn btn-primary">Start Free Trial</a>
+        <a href="#" class="btn btn-secondary">Live Demo</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" alt="Tech">
+    </div>
+
 
     <div class="hero-content">
       <h1>Transform Your Business With Innovation</h1>
@@ -62,6 +79,16 @@
 <!-- FEATURES -->
 <section class="features" id="features">
   <div class="container">
+    <h2 class="section-title">Powerful Features</h2>
+
+    <div class="features-grid">
+      <div class="feature-card"><i class="fas fa-chart-line"></i><h3>Analytics</h3><p>Track performance in real time.</p></div>
+      <div class="feature-card"><i class="fas fa-robot"></i><h3>AI Automation</h3><p>Automate your daily tasks.</p></div>
+      <div class="feature-card"><i class="fas fa-shield-alt"></i><h3>Security</h3><p>Enterprise-grade protection.</p></div>
+      <div class="feature-card"><i class="fas fa-cloud"></i><h3>Cloud Sync</h3><p>Access anywhere anytime.</p></div>
+      <div class="feature-card"><i class="fas fa-mobile"></i><h3>Responsive</h3><p>Works on all devices.</p></div>
+      <div class="feature-card"><i class="fas fa-headset"></i><h3>Support</h3><p>24/7 technical support.</p></div>
+    </div>
 
     <h2 class="section-title">Powerful Features</h2>
 
@@ -110,6 +137,19 @@
 
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
+  <div class="container">
+    <h2 class="section-title">What Clients Say</h2>
+
+    <div class="testimonial active">“Amazing service and powerful tools.”</div>
+    <div class="testimonial">“Helped scale our startup quickly.”</div>
+    <div class="testimonial">“Very professional support team.”</div>
+
+    <div class="slider-btns">
+      <button id="prev">❮</button>
+      <button id="next">❯</button>
+    </div>
+  </div>
+
 
   <div class="container">
 
@@ -153,6 +193,10 @@
 
 <!-- CTA -->
 <section class="cta" id="contact">
+  <h2>Ready to Grow Your Business?</h2>
+  <p>Start your free trial today.</p>
+  <a href="#" class="btn btn-secondary">Get Started</a>
+
 
   <h2>Ready to Grow Your Business?</h2>
   <p>Join thousands of happy customers today.</p>
@@ -163,6 +207,14 @@
 
 <!-- FOOTER -->
 <footer>
+
+  <p>© 2026 InnovateTech. All rights reserved.</p>
+</footer>
+
+<button id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+<script src="script.js"></script>
+
   <p>© 2026 InnovateTech. All Rights Reserved.</p>
 </footer>
 
@@ -171,6 +223,7 @@
 </button>
 
 <script src="script.js"></script>
+
 
 </body>
 </html>

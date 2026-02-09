@@ -31,6 +31,7 @@ document.getElementById("prev").onclick = () => {
 setInterval(() => {
   index = (index + 1) % slides.length;
   showSlide(index);
+}, 4000);
 }, 5000);
 
 
@@ -38,6 +39,11 @@ setInterval(() => {
 const scrollBtn = document.getElementById("scrollTop");
 
 window.addEventListener("scroll", () => {
+  scrollBtn.style.display = window.scrollY > 200 ? "block" : "none";
+});
+
+scrollBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (window.scrollY > 300) {
     scrollBtn.style.display = "block";
