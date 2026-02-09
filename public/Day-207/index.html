@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Explorer</title>
+    <link rel="stylesheet" href="./styles/game.css">
+    <link rel="stylesheet" href="./styles/ui.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>⚔️ DUNGEON EXPLORER</h1>
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="label">HP:</span>
+                    <div class="bar health-bar">
+                        <div class="fill" id="health-fill" style="width: 100%"></div>
+                        <span class="text" id="health-text">100/100</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <span class="label">XP:</span>
+                    <div class="bar xp-bar">
+                        <div class="fill" id="xp-fill" style="width: 0%"></div>
+                        <span class="text" id="xp-text">0/100</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="label">LVL:</span>
+                    <span class="value" id="level-text">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">FLOOR:</span>
+                    <span class="value" id="floor-text">1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-main">
+            <div class="game-view">
+                <canvas id="gameCanvas"></canvas>
+                <div id="damage-numbers"></div>
+            </div>
+
+            <div class="side-panel">
+                <div class="panel-section">
+                    <h3>📦 INVENTORY</h3>
+                    <div class="inventory-grid" id="inventory">
+                        <!-- Inventory slots will be generated here -->
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>📊 STATS</h3>
+                    <div class="player-stats">
+                        <div class="stat-row">
+                            <span>ATK:</span>
+                            <span id="stat-attack">10</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>DEF:</span>
+                            <span id="stat-defense">5</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>KILLS:</span>
+                            <span id="stat-kills">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>🎮 CONTROLS</h3>
+                    <div class="controls-info">
+                        <p><kbd>WASD</kbd> / <kbd>↑↓←→</kbd> Move</p>
+                        <p><kbd>SPACE</kbd> Attack</p>
+                        <p><kbd>E</kbd> Use Item</p>
+                        <p><kbd>Q</kbd> Drop Item</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-footer">
+            <button class="btn" id="new-dungeon-btn">🔄 New Dungeon</button>
+            <div class="message-log" id="message-log">
+                <p>Welcome to the dungeon...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="level-up-modal">
+        <div class="modal-content">
+            <h2>🎉 LEVEL UP!</h2>
+            <p>You reached level <span id="new-level">2</span></p>
+            <div class="stat-increases">
+                <p>+10 Max HP</p>
+                <p>+2 Attack</p>
+                <p>+1 Defense</p>
+            </div>
+            <button class="btn" id="continue-btn">Continue</button>
+        </div>
+    </div>
+
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <h2>💀 GAME OVER</h2>
+            <p>You died on floor <span id="death-floor">1</span></p>
+            <p>Monsters slain: <span id="death-kills">0</span></p>
+            <button class="btn" id="restart-btn">Try Again</button>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>
