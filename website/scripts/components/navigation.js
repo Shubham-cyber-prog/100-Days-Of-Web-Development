@@ -88,6 +88,11 @@ function toggleTheme() {
     if (typeof window.updateSidebarThemeIcon === 'function') {
         window.updateSidebarThemeIcon();
     }
+    
+    // Update navbar theme icon if available
+    if (typeof window.updateNavbarDarkModeIcon === 'function') {
+        window.updateNavbarDarkModeIcon();
+    }
 }
 
 function updateThemeIcon(theme) {
