@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black & White World Toggle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.3s ease, transform 0.5s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Light theme (default) */
+        .light-theme {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        /* Dark theme */
+        .dark-theme {
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+        
+        .dark-theme .card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+        
+        .dark-theme button:not(.toggle-btn) {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+        
+        /* Header styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+        
+        .dark-theme header {
+            border-bottom-color: #333;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Toggle switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toggle-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .toggle-btn {
+            position: relative;
+            width: 80px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toggle-btn::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        .toggle-btn.dark::after {
+            transform: translateX(40px);
+            background-color: #f0f0f0;
+        }
+        
+        .toggle-btn.light {
+            background-color: #4dabf7;
+        }
+        
+        /* World visualization */
+        .world-visualization {
+            width: 100%;
+            height: 300px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark-theme .world-visualization {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .world {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .sun-moon {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .light-theme .sun-moon {
+            background-color: #ffd43b;
+            box-shadow: 0 0 40px rgba(255, 212, 59, 0.8);
+        }
+        
+        .dark-theme .sun-moon {
+            background-color: #f0f0f0;
+            box-shadow: 0 0 40px rgba(240, 240, 240, 0.8);
+            right: 30px;
+            top: 20px;
+        }
+        
+        .landscape {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60%;
+            background-color: #4a9c5f;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .dark-theme .landscape {
+            background-color: #2d5a3d;
+        }
+        
+        .buildings {
+            position: absolute;
+            bottom: 60%;
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding: 0 20px;
+        }
+        
+        .building {
+            width: 80px;
+            background-color: #adb5bd;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .dark-theme .building {
+            background-color: #495057;
+        }
+        
+        .building-1 { height: 120px; }
+        .building-2 { height: 90px; }
+        .building-3 { height: 150px; }
+        .building-4 { height: 70px; }
+        .building-5 { height: 110px; }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        
+        .dark-theme .stars {
+            opacity: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        /* Content section */
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
+        }
+        
+        .card h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .dark-theme .card h2 {
+            color: #f0f0f0;
+        }
+        
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        button:not(.toggle-btn) {
+            padding: 10px 20px;
+            background-color: #4dabf7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        button:hover:not(.toggle-btn) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark-theme button:hover:not(.toggle-btn) {
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Stats section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+        }
+        
+        .dark-theme .stats {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .light-theme .stat-number {
+            color: #333;
+        }
+        
+        .dark-theme .stat-number {
+            color: #f0f0f0;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .dark-theme footer {
+            border-top-color: #333;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .world-visualization {
+                height: 250px;
+            }
+            
+            .sun-moon {
+                width: 60px;
+                height: 60px;
+                right: 30px;
+            }
+            
+            .building {
+                width: 50px;
+            }
+            
+            .building-1 { height: 80px; }
+            .building-2 { height: 60px; }
+            .building-3 { height: 100px; }
+            .building-4 { height: 50px; }
+            .building-5 { height: 70px; }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-globe-americas"></i>
+                <span>Black & White World</span>
+            </div>
+            
+            <div class="toggle-container">
+                <span class="toggle-label">Light</span>
+                <button class="toggle-btn light" id="themeToggle">
+                    <!-- Toggle button inner circle is created with CSS pseudo-element -->
+                </button>
+                <span class="toggle-label">Dark</span>
+            </div>
+        </header>
+        
+        <main>
+            <h1>Experience the Dual Nature of Our World</h1>
+            <p>Toggle between light and dark modes to see how our world transforms. Each theme offers a unique perspective on the same content.</p>
+            
+            <div class="world-visualization">
+                <div class="world">
+                    <div class="sun-moon"></div>
+                    <div class="stars" id="starsContainer"></div>
+                    <div class="buildings">
+                        <div class="building building-1"></div>
+                        <div class="building building-2"></div>
+                        <div class="building building-3"></div>
+                        <div class="building building-4"></div>
+                        <div class="building building-5"></div>
+                    </div>
+                    <div class="landscape"></div>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="lightModeTime">12h</div>
+                    <div>Daylight Hours</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="darkModeTime">12h</div>
+                    <div>Night Hours</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="toggleCount">0</div>
+                    <div>Theme Switches</div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="card">
+                    <h2>Light World</h2>
+                    <p>In the light theme, everything is bright and clear. This mode is perfect for daytime use, reducing eye strain in well-lit environments. The high contrast makes text easy to read and colors appear vibrant.</p>
+                    <button id="lightBtn">Switch to Light</button>
+                </div>
+                
+                <div class="card">
+                    <h2>Dark World</h2>
+                    <p>In the dark theme, the interface transforms to reduce eye strain in low-light conditions. This mode saves energy on OLED/AMOLED screens and creates a focused environment for nighttime browsing.</p>
+                    <button id="darkBtn">Switch to Dark</button>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Black & White World Toggle &copy; 2026 | Toggle between light and dark themes to experience the dual nature of our digital world.</p>
+        </footer>
+    </div>
+
+    <script src="script.js">
+        // DOM elements
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const lightBtn = document.getElementById('lightBtn');
+        const darkBtn = document.getElementById('darkBtn');
+        const starsContainer = document.getElementById('starsContainer');
+        const toggleCountElement = document.getElementById('toggleCount');
+        const lightModeTimeElement = document.getElementById('lightModeTime');
+        const darkModeTimeElement = document.getElementById('darkModeTime');
+        
+        // Initialize variables
+        let toggleCount = 0;
+        let isDarkMode = false;
+        
+        // Create stars for the dark theme
+        function createStars() {
+            starsContainer.innerHTML = '';
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 70; // Only in the top 70% of the container
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                
+                // Set star properties
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random opacity for twinkling effect
+                const opacity = Math.random() * 0.7 + 0.3;
+                star.style.opacity = opacity;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Update time display based on current time
+        function updateTimeDisplay() {
+            const now = new Date();
+            const hours = now.getHours();
+            
+            // Calculate daylight and night hours based on current time
+            // This is a simplified calculation for demonstration
+            const daylightHours = hours >= 6 && hours < 18 ? 12 : 
+                                 hours < 6 ? 18 - hours : 
+                                 hours - 6;
+            const nightHours = 24 - daylightHours;
+            
+            lightModeTimeElement.textContent = `${daylightHours}h`;
+            darkModeTimeElement.textContent = `${nightHours}h`;
+        }
+        
+        // Toggle theme function
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            
+            if (isDarkMode) {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeToggle.classList.remove('light');
+                themeToggle.classList.add('dark');
+                document.querySelectorAll('.toggle-label')[0].textContent = 'Light';
+                document.querySelectorAll('.toggle-label')[1].textContent = 'Dark';
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeToggle.classList.remove('dark');
+                themeToggle.classList.add('light');
+                document.querySelectorAll('.toggle-label')[0].textContent = 'Light';
+                document.querySelectorAll('.toggle-label')[1].textContent = 'Dark';
+            }
+            
+            // Update toggle count
+            toggleCount++;
+            toggleCountElement.textContent = toggleCount;
+            
+            // Update time display
+            updateTimeDisplay();
+        }
+        
+        // Set theme function (for direct buttons)
+        function setTheme(isDark) {
+            // Only toggle if changing to a different theme
+            if (isDark !== isDarkMode) {
+                toggleTheme();
+            }
+        }
+        
+        // Initialize the page
+        function init() {
+            // Create stars for dark mode
+            createStars();
+            
+            // Update time display
+            updateTimeDisplay();
+            
+            // Set initial toggle count
+            toggleCountElement.textContent = toggleCount;
+            
+            // Add event listeners
+            themeToggle.addEventListener('click', toggleTheme);
+            lightBtn.addEventListener('click', () => setTheme(false));
+            darkBtn.addEventListener('click', () => setTheme(true));
+            
+            // Add some interactivity to the buildings
+            const buildings = document.querySelectorAll('.building');
+            buildings.forEach(building => {
+                building.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                building.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Add twinkling effect to stars
+            setInterval(() => {
+                if (isDarkMode) {
+                    const stars = document.querySelectorAll('.star');
+                    stars.forEach(star => {
+                        // Randomly change opacity for some stars
+                        if (Math.random() > 0.7) {
+                            const newOpacity = Math.random() * 0.7 + 0.3;
+                            star.style.opacity = newOpacity;
+                        }
+                    });
+                }
+            }, 1000);
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
