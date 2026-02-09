@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platformer - Jump & Run Adventure</title>
+    <link rel="stylesheet" href="./styles/game.css">
+    <link rel="stylesheet" href="./styles/animations.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>🎮 PLATFORMER</h1>
+            <div class="hud">
+                <div class="hud-item">
+                    <span class="label">💰 Coins:</span>
+                    <span class="value" id="coins">0</span>
+                </div>
+                <div class="hud-item">
+                    <span class="label">❤️ Lives:</span>
+                    <span class="value" id="lives">3</span>
+                </div>
+                <div class="hud-item">
+                    <span class="label">📍 Level:</span>
+                    <span class="value" id="level">1</span>
+                </div>
+                <div class="hud-item">
+                    <span class="label">⏱️ Time:</span>
+                    <span class="value" id="timer">0:00</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="game-viewport">
+            <canvas id="gameCanvas"></canvas>
+            <div id="particles-container"></div>
+        </div>
+
+        <footer class="game-footer">
+            <div class="controls-hint">
+                <span><kbd>←</kbd> <kbd>→</kbd> Move</span>
+                <span><kbd>Space</kbd> Jump</span>
+                <span><kbd>R</kbd> Restart</span>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal" id="level-complete-modal">
+        <div class="modal-content">
+            <h2>🎉 LEVEL COMPLETE!</h2>
+            <p>Coins Collected: <span id="level-coins">0</span></p>
+            <p>Time: <span id="level-time">0:00</span></p>
+            <button class="btn btn-primary" id="next-level-btn">Next Level</button>
+        </div>
+    </div>
+
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <h2>💀 GAME OVER</h2>
+            <p>You reached Level <span id="final-level">1</span></p>
+            <p>Total Coins: <span id="final-coins">0</span></p>
+            <button class="btn btn-primary" id="restart-game-btn">Try Again</button>
+        </div>
+    </div>
+
+    <div class="modal" id="victory-modal">
+        <div class="modal-content">
+            <h2>🏆 VICTORY!</h2>
+            <p>You completed all levels!</p>
+            <p>Total Coins: <span id="victory-coins">0</span></p>
+            <p>Total Time: <span id="victory-time">0:00</span></p>
+            <button class="btn btn-primary" id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>
