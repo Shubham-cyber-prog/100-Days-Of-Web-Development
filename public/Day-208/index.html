@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower Defense - Strategy Game</title>
+    <link rel="stylesheet" href="./styles/game.css">
+    <link rel="stylesheet" href="./styles/towers.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>🏰 TOWER DEFENSE</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="label">💰 Gold:</span>
+                    <span class="value" id="gold">200</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">❤️ Lives:</span>
+                    <span class="value" id="lives">20</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">🌊 Wave:</span>
+                    <span class="value" id="wave">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">👾 Enemies:</span>
+                    <span class="value" id="enemies">0/0</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="game-main">
+            <div class="canvas-wrapper">
+                <canvas id="gameCanvas"></canvas>
+                <div id="projectiles-layer"></div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="panel">
+                    <h3>🏗️ BUILD TOWERS</h3>
+                    <div class="tower-shop" id="tower-shop">
+                        <!-- Tower buttons will be generated here -->
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>⚙️ TOWER INFO</h3>
+                    <div class="tower-info" id="tower-info">
+                        <p class="hint">Click a tower to view details</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>🎮 CONTROLS</h3>
+                    <div class="controls">
+                        <button class="btn btn-primary" id="start-wave">Start Wave</button>
+                        <button class="btn btn-secondary" id="speed-toggle">Speed: 1x</button>
+                        <button class="btn btn-danger" id="sell-tower" disabled>Sell Tower</button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>📊 HIGH SCORE</h3>
+                    <div class="high-score">
+                        <p>Best Wave: <span id="best-wave">0</span></p>
+                        <p>Best Score: <span id="best-score">0</span></p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="game-footer">
+            <div class="message-log" id="message-log">
+                <p>Welcome to Tower Defense! Place towers to defend your base.</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <h2>💀 GAME OVER</h2>
+            <p>You survived <span id="final-wave">0</span> waves</p>
+            <p>Final Score: <span id="final-score">0</span></p>
+            <button class="btn btn-primary" id="restart-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>
