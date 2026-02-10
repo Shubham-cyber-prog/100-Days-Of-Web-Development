@@ -60,9 +60,9 @@
       overflow-x: hidden;
     }
     
-    /* Force dark mode background - using !important to override external CSS conflicts */
+    /* Force dark mode background - using pure black */
     html[data-theme="dark"] body {
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%) !important;
+      background: #000000 !important;
     }
 
     main {
@@ -77,8 +77,8 @@
       }
     }
 
-    /* Animated Background Particles */
-    body::before {
+    /* Animated Background Particles - Remove for dark mode, keep for light */
+    html[data-theme="light"] body::before {
       content: "";
       position: fixed;
       top: 0;
@@ -87,17 +87,18 @@
       height: 100%;
       background:
         radial-gradient(circle at 20% 50%,
-          rgba(102, 126, 234, 0.1) 0%,
+          rgba(102, 126, 234, 0.05) 0%,
           transparent 50%),
         radial-gradient(circle at 80% 80%,
-          rgba(245, 87, 108, 0.1) 0%,
+          rgba(245, 87, 108, 0.05) 0%,
           transparent 50%),
         radial-gradient(circle at 40% 20%,
-          rgba(79, 172, 254, 0.1) 0%,
+          rgba(79, 172, 254, 0.05) 0%,
           transparent 50%);
       animation: particles 20s ease-in-out infinite;
       pointer-events: none;
       z-index: 0;
+    }
     }
 
     @keyframes particles {
@@ -126,7 +127,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+      background: #000000;
       display: flex;
       justify-content: center;
       align-items: center;
