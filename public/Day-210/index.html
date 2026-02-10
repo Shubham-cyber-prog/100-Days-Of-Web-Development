@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match-3 Puzzle - Candy Crush Style</title>
+    <link rel="stylesheet" href="./styles/board.css">
+    <link rel="stylesheet" href="./styles/effects.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>💎 MATCH-3 PUZZLE</h1>
+            <div class="level-info">
+                <span>Level <span id="current-level">1</span></span>
+            </div>
+        </header>
+
+        <div class="game-main">
+            <aside class="sidebar-left">
+                <div class="panel">
+                    <h3>🎯 OBJECTIVE</h3>
+                    <div id="objective">
+                        <p>Score: <span id="target-score">1000</span></p>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>📊 STATS</h3>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="label">Score:</span>
+                            <span class="value" id="score">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="label">Moves:</span>
+                            <span class="value" id="moves">30</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="label">Combo:</span>
+                            <span class="value" id="combo">0x</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>⭐ PROGRESS</h3>
+                    <div class="stars" id="stars">
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="board-container">
+                <div id="game-board" class="game-board"></div>
+                <div id="hint-overlay" class="hint-overlay"></div>
+            </div>
+
+            <aside class="sidebar-right">
+                <div class="panel">
+                    <h3>💣 SPECIAL TILES</h3>
+                    <div class="special-info">
+                        <div class="special-item">
+                            <span class="icon">💣</span>
+                            <p>Bomb: Match 4 in a row</p>
+                        </div>
+                        <div class="special-item">
+                            <span class="icon">⚡</span>
+                            <p>Lightning: Match 5 in a row</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>🎮 CONTROLS</h3>
+                    <div class="controls">
+                        <button class="btn btn-secondary" id="hint-btn">💡 Hint</button>
+                        <button class="btn btn-secondary" id="shuffle-btn">🔀 Shuffle</button>
+                        <button class="btn btn-danger" id="restart-btn">🔄 Restart</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="modal" id="level-complete-modal">
+        <div class="modal-content">
+            <h2>🎉 LEVEL COMPLETE!</h2>
+            <div class="stars-display" id="stars-earned">
+                <span class="star">☆</span>
+                <span class="star">☆</span>
+                <span class="star">☆</span>
+            </div>
+            <p>Score: <span id="final-score">0</span></p>
+            <button class="btn btn-primary" id="next-level-btn">Next Level</button>
+        </div>
+    </div>
+
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <h2>😢 NO MORE MOVES</h2>
+            <p>Final Score: <span id="game-over-score">0</span></p>
+            <button class="btn btn-primary" id="retry-btn">Try Again</button>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>
