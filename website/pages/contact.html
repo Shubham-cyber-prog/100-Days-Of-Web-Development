@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="/website/assets/images/logo.png" />
   <title>Contact | 100 Days of Web Dev</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="../styles/index.css" />
   <style>
     .contact-wrapper {
@@ -172,9 +173,29 @@
       margin-left: 4px;
     }
 
+    .form-input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .form-input-wrapper .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-tertiary);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-input-wrapper.textarea-wrapper .input-icon {
+      top: 18px;
+      transform: none;
+    }
+
     .form-input {
       width: 100%;
-      padding: 14px 18px;
+      padding: 14px 18px 14px 45px;
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(10px);
       border: 1.5px solid var(--glass-border);
@@ -192,13 +213,67 @@
       box-shadow: 0 0 0 3px var(--accent-alpha);
     }
 
+    .form-input:focus + .input-icon {
+      color: var(--accent-core);
+    }
+
     .form-input::placeholder {
       color: var(--text-tertiary);
+    }
+
+    .form-input.valid {
+      border-color: #00ff80;
+      padding-right: 45px;
+    }
+
+    .form-input.invalid {
+      border-color: #ff4444;
+      padding-right: 45px;
+    }
+
+    .validation-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .form-input-wrapper.textarea-wrapper .validation-icon {
+      top: 18px;
+      transform: none;
+    }
+
+    .form-input.valid ~ .validation-icon.check,
+    .form-input.invalid ~ .validation-icon.error {
+      opacity: 1;
+    }
+
+    .validation-icon.check {
+      color: #00ff80;
+    }
+
+    .validation-icon.error {
+      color: #ff4444;
     }
 
     textarea.form-input {
       resize: vertical;
       min-height: 120px;
+      padding-left: 45px;
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 0.85rem;
+      margin-top: 6px;
+      margin-left: 4px;
+      display: none;
+    }
+
+    .form-input.invalid ~ .error-message {
+      display: block;
     }
 
     .btn-submit {
@@ -214,15 +289,50 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px var(--accent-alpha);
       margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn-submit:hover {
+    .btn-submit:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 6px 25px var(--accent-alpha);
     }
 
-    .btn-submit:active {
+    .btn-submit:active:not(:disabled) {
       transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .btn-submit .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .btn-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    .btn-submit.loading .btn-text {
+      opacity: 0.7;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* Success/Error Messages */
@@ -276,6 +386,34 @@
 
     body.light-mode .info-item:hover {
       background: rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .input-icon {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    body.light-mode .form-input:focus + .input-icon {
+      color: var(--accent-core);
+    }
+
+    body.light-mode .form-input.valid {
+      border-color: #00cc66;
+    }
+
+    body.light-mode .form-input.invalid {
+      border-color: #cc0000;
+    }
+
+    body.light-mode .validation-icon.check {
+      color: #00cc66;
+    }
+
+    body.light-mode .validation-icon.error {
+      color: #cc0000;
+    }
+
+    body.light-mode .error-message {
+      color: #cc0000;
     }
   </style>
   <script src="../scripts/components/sidebar-loader.js"></script>
@@ -413,26 +551,53 @@
           <form id="contactForm">
             <div class="form-group">
               <label class="form-label">Your Name</label>
-              <input type="text" name="name" class="form-input" placeholder="John Doe" required />
+              <div class="form-input-wrapper">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" name="name" class="form-input" placeholder="John Doe" required />
+                <i class="fas fa-check-circle validation-icon check"></i>
+                <i class="fas fa-exclamation-circle validation-icon error"></i>
+              </div>
+              <span class="error-message">Please enter your name</span>
             </div>
 
             <div class="form-group">
               <label class="form-label">Email Address</label>
-              <input type="email" name="email" class="form-input" placeholder="john@example.com" required />
+              <div class="form-input-wrapper">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" name="email" class="form-input" placeholder="john@example.com" required />
+                <i class="fas fa-check-circle validation-icon check"></i>
+                <i class="fas fa-exclamation-circle validation-icon error"></i>
+              </div>
+              <span class="error-message">Please enter a valid email address</span>
             </div>
 
             <div class="form-group">
               <label class="form-label">Subject</label>
-              <input type="text" name="subject" class="form-input" placeholder="How can we help?" required />
+              <div class="form-input-wrapper">
+                <i class="fas fa-tag input-icon"></i>
+                <input type="text" name="subject" class="form-input" placeholder="How can we help?" required />
+                <i class="fas fa-check-circle validation-icon check"></i>
+                <i class="fas fa-exclamation-circle validation-icon error"></i>
+              </div>
+              <span class="error-message">Please enter a subject</span>
             </div>
 
             <div class="form-group">
               <label class="form-label">Message</label>
-              <textarea name="message" class="form-input" rows="5" placeholder="Tell us more about your inquiry..." required></textarea>
+              <div class="form-input-wrapper textarea-wrapper">
+                <i class="fas fa-comment-dots input-icon"></i>
+                <textarea name="message" class="form-input" rows="5" placeholder="Tell us more about your inquiry..." required></textarea>
+                <i class="fas fa-check-circle validation-icon check"></i>
+                <i class="fas fa-exclamation-circle validation-icon error"></i>
+              </div>
+              <span class="error-message">Please enter your message</span>
             </div>
 
             <button type="submit" class="btn-submit">
-              <i class="fas fa-paper-plane"></i> Send Message
+              <div class="spinner"></div>
+              <span class="btn-text">
+                <i class="fas fa-paper-plane"></i> Send Message
+              </span>
             </button>
           </form>
         </div>
@@ -449,36 +614,112 @@
   <script src="../scripts/components/navigation.js"></script>
   
   <script>
-    // Contact Form Handling
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
+    // Contact Form Handling with Enhanced Validation
+    const contactForm = document.getElementById('contactForm');
+    const formInputs = contactForm.querySelectorAll('.form-input');
+    const submitBtn = contactForm.querySelector('.btn-submit');
+    const messageBox = document.getElementById('messageBox');
+    const messageText = document.getElementById('messageText');
+    
+    // Real-time validation
+    formInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validateField(this);
+      });
+      
+      input.addEventListener('blur', function() {
+        validateField(this);
+      });
+    });
+    
+    function validateField(field) {
+      const value = field.value.trim();
+      const type = field.type;
+      let isValid = false;
+      
+      if (type === 'email') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        isValid = emailRegex.test(value);
+      } else if (type === 'text' || field.tagName === 'TEXTAREA') {
+        isValid = value.length >= 2;
+      }
+      
+      if (isValid) {
+        field.classList.remove('invalid');
+        field.classList.add('valid');
+      } else if (value.length > 0) {
+        field.classList.remove('valid');
+        field.classList.add('invalid');
+      } else {
+        field.classList.remove('valid', 'invalid');
+      }
+    }
+    
+    // Form submission
+    contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
       
-      const messageBox = document.getElementById('messageBox');
-      const messageText = document.getElementById('messageText');
+      // Validate all fields
+      let allValid = true;
+      formInputs.forEach(input => {
+        validateField(input);
+        if (!input.classList.contains('valid')) {
+          allValid = false;
+        }
+      });
+      
+      if (!allValid) {
+        showMessage('error', 'Please fill out all fields correctly.');
+        return;
+      }
+      
       const formData = new FormData(this);
       
       // Show loading state
-      messageBox.className = 'message-box';
-      messageBox.style.display = 'flex';
-      messageText.textContent = 'Sending message...';
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      messageBox.style.display = 'none';
       
       // Simulate form submission (replace with actual API call)
       setTimeout(() => {
         // Success
-        messageBox.classList.add('success');
-        messageText.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        showMessage('success', 'Message sent successfully! We\'ll get back to you soon.');
         this.reset();
+        
+        // Clear validation states
+        formInputs.forEach(input => {
+          input.classList.remove('valid', 'invalid');
+        });
         
         // Hide message after 5 seconds
         setTimeout(() => {
           messageBox.style.display = 'none';
         }, 5000);
-      }, 1000);
+      }, 1500);
       
       // Error handling example:
-      // messageBox.classList.add('error');
-      // messageText.textContent = 'Failed to send message. Please try again.';
+      // setTimeout(() => {
+      //   submitBtn.classList.remove('loading');
+      //   submitBtn.disabled = false;
+      //   showMessage('error', 'Failed to send message. Please try again.');
+      // }, 1500);
     });
+    
+    function showMessage(type, text) {
+      messageBox.className = 'message-box ' + type;
+      messageBox.style.display = 'flex';
+      messageText.textContent = text;
+      
+      // Update icon based on type
+      const icon = messageBox.querySelector('i');
+      if (type === 'success') {
+        icon.className = 'fas fa-check-circle';
+      } else {
+        icon.className = 'fas fa-exclamation-circle';
+      }
+    }
   </script>
 </body>
 
