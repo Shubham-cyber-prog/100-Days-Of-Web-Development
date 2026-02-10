@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Documentary: The Digital Revolution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0a0e17;
+            color: #f0f0f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(100, 149, 237, 0.2);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #6495ed;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: #b8c7e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: #6495ed;
+        }
+        
+        .nav-progress {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6495ed, #7b68ee);
+            transition: width 0.3s;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(100, 149, 237, 0.1), transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(123, 104, 238, 0.1), transparent 50%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 0 30px;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #6495ed, #7b68ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #b8c7e0;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .hero-btn {
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #6495ed, #7b68ee);
+            color: white;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #b8c7e0;
+            border: 2px solid rgba(100, 149, 237, 0.5);
+        }
+        
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(100, 149, 237, 0.3);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #6495ed;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* Main Content */
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px 100px;
+        }
+        
+        .chapter {
+            margin-bottom: 150px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s;
+        }
+        
+        .chapter.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .chapter-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        
+        .chapter-number {
+            font-size: 1rem;
+            color: #6495ed;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .chapter-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #f0f0f0;
+        }
+        
+        .chapter-subtitle {
+            font-size: 1.3rem;
+            color: #b8c7e0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Content Grids */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .text-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #d0d7e7;
+        }
+        
+        .text-content p {
+            margin-bottom: 25px;
+        }
+        
+        .media-content {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .media-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .media-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .media-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(10, 14, 23, 0.9));
+            padding: 20px;
+            color: #f0f0f0;
+            font-size: 0.9rem;
+        }
+        
+        /* Interactive Timeline */
+        .timeline-container {
+            margin: 80px 0;
+            position: relative;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #6495ed, #7b68ee);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-items {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-date {
+            flex: 0 0 200px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #6495ed;
+        }
+        
+        .timeline-dot {
+            width: 24px;
+            height: 24px;
+            background-color: #6495ed;
+            border-radius: 50%;
+            border: 4px solid #0a0e17;
+            position: relative;
+            z-index: 3;
+            box-shadow: 0 0 0 4px rgba(100, 149, 237, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .timeline-dot:hover {
+            transform: scale(1.3);
+            box-shadow: 0 0 0 8px rgba(100, 149, 237, 0.3);
+        }
+        
+        .timeline-dot.active {
+            background-color: #7b68ee;
+            transform: scale(1.2);
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background-color: rgba(30, 35, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 0 40px;
+            border: 1px solid rgba(100, 149, 237, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            transition: all 0.3s;
+        }
+        
+        .timeline-content:hover {
+            border-color: rgba(100, 149, 237, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timeline-title {
+            font-size: 1.5rem;
+            color: #f0f0f0;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-description {
+            color: #b8c7e0;
+            margin-bottom: 15px;
+        }
+        
+        /* Interactive Gallery */
+        .gallery-container {
+            margin: 80px 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(100, 149, 237, 0.2);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(10, 14, 23, 0.9));
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-title {
+            font-size: 1.2rem;
+            color: #f0f0f0;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-description {
+            font-size: 0.9rem;
+            color: #b8c7e0;
+        }
+        
+        /* Data Visualization */
+        .viz-container {
+            background-color: rgba(30, 35, 50, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 80px 0;
+            border: 1px solid rgba(100, 149, 237, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .viz-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .viz-title {
+            font-size: 2rem;
+            color: #f0f0f0;
+            margin-bottom: 15px;
+        }
+        
+        .viz-subtitle {
+            color: #b8c7e0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .viz-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .viz-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .viz-label {
+            flex: 0 0 150px;
+            font-weight: 600;
+            color: #f0f0f0;
+        }
+        
+        .viz-bar-container {
+            flex: 1;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .viz-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6495ed, #7b68ee);
+            border-radius: 15px;
+            width: 0;
+            transition: width 1.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Interactive Quiz */
+        .quiz-container {
+            background-color: rgba(30, 35, 50, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 80px 0;
+            border: 1px solid rgba(100, 149, 237, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .quiz-question {
+            font-size: 1.8rem;
+            color: #f0f0f0;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .quiz-option {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(100, 149, 237, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .quiz-option:hover {
+            background-color: rgba(100, 149, 237, 0.1);
+            border-color: rgba(100, 149, 237, 0.5);
+        }
+        
+        .quiz-option.selected {
+            background-color: rgba(100, 149, 237, 0.2);
+            border-color: #6495ed;
+        }
+        
+        .quiz-option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+        }
+        
+        .option-letter {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(100, 149, 237, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #6495ed;
+            flex-shrink: 0;
+        }
+        
+        .quiz-option.selected .option-letter {
+            background-color: #6495ed;
+            color: white;
+        }
+        
+        .quiz-result {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(10, 14, 23, 0.5);
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .quiz-result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result-title {
+            font-size: 2rem;
+            color: #6495ed;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .quiz-btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .quiz-next {
+            background: linear-gradient(90deg, #6495ed, #7b68ee);
+            color: white;
+        }
+        
+        .quiz-restart {
+            background-color: transparent;
+            color: #b8c7e0;
+            border: 2px solid rgba(100, 149, 237, 0.5);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: rgba(10, 14, 23, 0.9);
+            border-top: 1px solid rgba(100, 149, 237, 0.2);
+            padding: 60px 30px;
+            margin-top: 100px;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
+            color: #6495ed;
+            margin-bottom: 25px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #b8c7e0;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: #6495ed;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(100, 149, 237, 0.2);
+            color: #8a9bb8;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal for gallery */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 14, 23, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background-color: rgba(30, 35, 50, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(100, 149, 237, 0.3);
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #b8c7e0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: #6495ed;
+        }
+        
+        .modal-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 2rem;
+            color: #f0f0f0;
+            margin-bottom: 15px;
+        }
+        
+        .modal-description {
+            color: #b8c7e0;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .chapter-title {
+                font-size: 2.5rem;
+            }
+            
+            .timeline-item, .timeline-item:nth-child(odd) {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .timeline-date {
+                flex: none;
+                margin-bottom: 15px;
+            }
+            
+            .timeline-content {
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                Digital Revolution
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#chapter1" class="nav-link">
+                    <i class="fas fa-desktop"></i> The Beginning
+                </a>
+                <a href="#chapter2" class="nav-link">
+                    <i class="fas fa-network-wired"></i> The Internet Age
+                </a>
+                <a href="#chapter3" class="nav-link">
+                    <i class="fas fa-mobile-alt"></i> Mobile Revolution
+                </a>
+                <a href="#chapter4" class="nav-link">
+                    <i class="fas fa-cloud"></i> Cloud & AI
+                </a>
+            </div>
+            <div class="nav-progress" id="navProgress"></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">The Digital Revolution</h1>
+            <p class="hero-subtitle">An Interactive Documentary Exploring How Technology Transformed Our World</p>
+            <div class="hero-buttons">
+                <button class="hero-btn btn-primary" id="startJourneyBtn">
+                    <i class="fas fa-play"></i> Start the Journey
+                </button>
+                <button class="hero-btn btn-secondary" id="exploreBtn">
+                    <i class="fas fa-compass"></i> Explore Chapters
+                </button>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="content-container">
+        <!-- Chapter 1 -->
+        <section class="chapter" id="chapter1">
+            <div class="chapter-header">
+                <div class="chapter-number">Chapter 1</div>
+                <h2 class="chapter-title">The Dawn of Computing</h2>
+                <p class="chapter-subtitle">From mechanical calculators to the first personal computers</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="text-content">
+                    <p>The journey of digital technology began long before the internet. In the mid-20th century, massive room-sized computers like ENIAC (1945) performed calculations that would take humans weeks or months.</p>
+                    <p>These early computers used vacuum tubes and punch cards, requiring specialized knowledge to operate. They were primarily used by governments, universities, and large corporations for scientific research and military applications.</p>
+                    <p>The invention of the transistor in 1947 revolutionized computing, making devices smaller, faster, and more reliable. This paved the way for integrated circuits and eventually microprocessors.</p>
+                </div>
+                <div class="media-content">
+                    <img src="https://images.unsplash.com/photo-1593341646782-e0b495cff86d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Early computer room" class="media-image">
+                    <div class="media-caption">ENIAC, one of the first general-purpose electronic computers (1945)</div>
+                </div>
+            </div>
+            
+            <!-- Interactive Timeline -->
+            <div class="timeline-container">
+                <h3 style="text-align: center; margin-bottom: 50px; font-size: 2rem; color: #f0f0f0;">Key Milestones</h3>
+                <div class="timeline">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-items">
+                        <div class="timeline-item">
+                            <div class="timeline-date">1945</div>
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4 class="timeline-title">ENIAC Completed</h4>
+                                <p class="timeline-description">The first general-purpose electronic computer, weighing 30 tons and occupying 1800 square feet.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1947</div>
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4 class="timeline-title">Transistor Invented</h4>
+                                <p class="timeline-description">Bell Labs researchers create the transistor, revolutionizing electronics and enabling smaller computers.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1971</div>
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4 class="timeline-title">First Microprocessor</h4>
+                                <p class="timeline-description">Intel introduces the 4004, the first commercially available microprocessor.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1976</div>
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4 class="timeline-title">Apple I Released</h4>
+                                <p class="timeline-description">Steve Jobs and Steve Wozniak introduce the Apple I, one of the first personal computers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2 -->
+        <section class="chapter" id="chapter2">
+            <div class="chapter-header">
+                <div class="chapter-number">Chapter 2</div>
+                <h2 class="chapter-title">The Internet Age</h2>
+                <p class="chapter-subtitle">Connecting the world and creating a global digital community</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="media-content">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Internet infrastructure" class="media-image">
+                    <div class="media-caption">Global internet infrastructure connecting continents</div>
+                </div>
+                <div class="text-content">
+                    <p>The internet began as a military research project called ARPANET in the late 1960s, designed to create a decentralized communication network that could survive nuclear attack.</p>
+                    <p>In the 1990s, the World Wide Web made the internet accessible to the general public. Tim Berners-Lee's invention of HTML, HTTP, and the first web browser transformed the internet from a text-based network used by academics into a multimedia experience.</p>
+                    <p>The dot-com boom of the late 1990s saw explosive growth of internet companies, many of which failed, but some like Amazon and Google became giants that shaped the modern digital landscape.</p>
+                </div>
+            </div>
+            
+            <!-- Data Visualization -->
+            <div class="viz-container">
+                <div class="viz-header">
+                    <h3 class="viz-title">Global Internet Adoption</h3>
+                    <p class="viz-subtitle">Percentage of world population using the internet from 1990 to 2023</p>
+                </div>
+                <div class="viz-content">
+                    <div class="viz-bar">
+                        <div class="viz-label">1990</div>
+                        <div class="viz-bar-container">
+                            <div class="viz-bar-fill" id="bar1990">0.5%</div>
+                        </div>
+                    </div>
+                    <div class="viz-bar">
+                        <div class="viz-label">2000</div>
+                        <div class="viz-bar-container">
+                            <div class="viz-bar-fill" id="bar2000">6.5%</div>
+                        </div>
+                    </div>
+                    <div class="viz-bar">
+                        <div class="viz-label">2010</div>
+                        <div class="viz-bar-container">
+                            <div class="viz-bar-fill" id="bar2010">28.7%</div>
+                        </div>
+                    </div>
+                    <div class="viz-bar">
+                        <div class="viz-label">2023</div>
+                        <div class="viz-bar-container">
+                            <div class="viz-bar-fill" id="bar2023">64.4%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 3 -->
+        <section class="chapter" id="chapter3">
+            <div class="chapter-header">
+                <div class="chapter-number">Chapter 3</div>
+                <h2 class="chapter-title">The Mobile Revolution</h2>
+                <p class="chapter-subtitle">Computing in your pocket and the rise of smartphones</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="text-content">
+                    <p>The first mobile phones of the 1980s were bulky devices with limited functionality, but they represented the beginning of a communication revolution.</p>
+                    <p>The introduction of the iPhone in 2007 marked a paradigm shift. Touchscreens, app stores, and mobile internet created a new platform that would eventually surpass desktop computing.</p>
+                    <p>Smartphones transformed not just communication but photography, navigation, entertainment, and commerce. Mobile apps created new industries and changed how we interact with the world around us.</p>
+                    <p>Today, more people access the internet via mobile devices than desktop computers, and smartphone penetration continues to grow worldwide.</p>
+                </div>
+                <div class="media-content">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Smartphones evolution" class="media-image">
+                    <div class="media-caption">Evolution of mobile phones from the 1980s to today</div>
+                </div>
+            </div>
+            
+            <!-- Interactive Gallery -->
+            <div class="gallery-container">
+                <h3 style="text-align: center; margin-bottom: 20px; font-size: 2rem; color: #f0f0f0;">Iconic Mobile Devices</h3>
+                <p style="text-align: center; color: #b8c7e0; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">Click on any device to learn more about its impact</p>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-modal="modal1">
+                        <img src="https://images.unsplash.com/photo-1546054451-aa224f8c8ea8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Motorola DynaTAC" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h4 class="gallery-title">Motorola DynaTAC (1983)</h4>
+                            <p class="gallery-description">The first commercially available mobile phone</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-modal="modal2">
+                        <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Nokia 3310" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h4 class="gallery-title">Nokia 3310 (2000)</h4>
+                            <p class="gallery-description">Legendary for its durability and battery life</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-modal="modal3">
+                        <img src="https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="iPhone" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h4 class="gallery-title">iPhone (2007)</h4>
+                            <p class="gallery-description">Revolutionized the smartphone industry</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 4 -->
+        <section class="chapter" id="chapter4">
+            <div class="chapter-header">
+                <div class="chapter-number">Chapter 4</div>
+                <h2 class="chapter-title">Cloud, AI & The Future</h2>
+                <p class="chapter-subtitle">Where we are today and what comes next</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="media-content">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="AI and cloud computing" class="media-image">
+                    <div class="media-caption">Artificial intelligence and cloud computing shaping our future</div>
+                </div>
+                <div class="text-content">
+                    <p>Cloud computing has transformed how we store data and run applications. Instead of local servers, companies and individuals now rely on massive data centers operated by companies like Amazon, Google, and Microsoft.</p>
+                    <p>Artificial intelligence, once a science fiction concept, is now part of our daily lives. From voice assistants to recommendation algorithms, AI is becoming increasingly sophisticated and integrated into our technology.</p>
+                    <p>The Internet of Things (IoT) connects everyday objects to the internet, creating smart homes, cities, and industries. This connectivity generates vast amounts of data that can be analyzed to improve efficiency and quality of life.</p>
+                    <p>As we look to the future, quantum computing, augmented reality, and brain-computer interfaces represent the next frontier of the digital revolution.</p>
+                </div>
+            </div>
+            
+            <!-- Interactive Quiz -->
+            <div class="quiz-container">
+                <h3 style="text-align: center; margin-bottom: 40px; font-size: 2rem; color: #f0f0f0;">Test Your Knowledge</h3>
+                
+                <div class="quiz-question" id="quizQuestion">What year was the World Wide Web invented?</div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-option="A" data-correct="false">
+                        <div class="option-letter">A</div>
+                        <div class="option-text">1975</div>
+                    </div>
+                    <div class="quiz-option" data-option="B" data-correct="false">
+                        <div class="option-letter">B</div>
+                        <div class="option-text">1982</div>
+                    </div>
+                    <div class="quiz-option" data-option="C" data-correct="true">
+                        <div class="option-letter">C</div>
+                        <div class="option-text">1989</div>
+                    </div>
+                    <div class="quiz-option" data-option="D" data-correct="false">
+                        <div class="option-letter">D</div>
+                        <div class="option-text">1995</div>
+                    </div>
+                </div>
+                
+                <div class="quiz-result" id="quizResult">
+                    <h3 class="result-title" id="resultTitle">Correct!</h3>
+                    <p id="resultDescription">The World Wide Web was invented by Tim Berners-Lee in 1989 while working at CERN. He created the first web browser and server in 1990.</p>
+                    <div class="quiz-actions">
+                        <button class="quiz-btn quiz-next" id="nextQuizBtn">Next Question</button>
+                        <button class="quiz-btn quiz-restart" id="restartQuizBtn">Restart Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Digital Revolution</h3>
+                <p>An interactive documentary exploring the history and impact of digital technology on society, culture, and human connection.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Explore More</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> Full Timeline</a></li>
+                    <li><a href="#"><i class="fas fa-images"></i> Photo Archive</a></li>
+                    <li><a href="#"><i class="fas fa-video"></i> Video Series</a></li>
+                    <li><a href="#"><i class="fas fa-newspaper"></i> Related Articles</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-graduation-cap"></i> Educational Materials</a></li>
+                    <li><a href="#"><i class="fas fa-download"></i> Download PDF</a></li>
+                    <li><a href="#"><i class="fas fa-code"></i> View Source Code</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Interactive Documentary: The Digital Revolution &copy; 2026 | Created for educational purposes</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">All images from Unsplash. Historical facts compiled from public sources.</p>
+        </div>
+    </footer>
+
+    <!-- Modals for Gallery -->
+    <div class="modal" id="modal1">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img src="https://images.unsplash.com/photo-1546054451-aa224f8c8ea8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Motorola DynaTAC" class="modal-image">
+            <h2 class="modal-title">Motorola DynaTAC (1983)</h2>
+            <div class="modal-description">
+                <p>The Motorola DynaTAC 8000X was the first commercially available handheld cellular phone. It weighed 2.5 pounds (1.1 kg), stood 13 inches (33 cm) tall, and provided 30 minutes of talk time after 10 hours of charging.</p>
+                <p>Priced at $3,995 in 1983 (equivalent to over $10,000 today), it was a status symbol for wealthy businesspeople. Despite its limitations, it represented a major breakthrough in mobile communication and paved the way for the mobile revolution that would follow.</p>
+                <p>The DynaTAC became an iconic symbol of 1980s technology and was famously used by Michael Douglas in the film "Wall Street."</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal2">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Nokia 3310" class="modal-image">
+            <h2 class="modal-title">Nokia 3310 (2000)</h2>
+            <div class="modal-description">
+                <p>The Nokia 3310 is one of the most iconic mobile phones ever made. Released in 2000, it became famous for its nearly indestructible build quality, exceptional battery life (up to 260 hours standby), and the addictive game Snake II.</p>
+                <p>With over 126 million units sold worldwide, the 3310 helped make mobile phones accessible to the masses. Its durability became the stuff of legend, with countless stories of phones surviving drops, water damage, and other accidents that would destroy modern smartphones.</p>
+                <p>The 3310's popularity led to a 2017 re-release with updated features but the same classic design, demonstrating the enduring appeal of this iconic device.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal3">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img src="https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="iPhone" class="modal-image">
+            <h2 class="modal-title">iPhone (2007)</h2>
+            <div class="modal-description">
+                <p>The original iPhone, introduced by Steve Jobs in 2007, revolutionized the smartphone industry and changed how people interact with technology. It combined a phone, an iPod, and an "Internet communicator" into one device with a revolutionary multi-touch interface.</p>
+                <p>Key innovations included the elimination of physical keyboards in favor of a software keyboard, intuitive gestures like pinch-to-zoom, and the introduction of the App Store in 2008 which created a new ecosystem for software development.</p>
+                <p>The iPhone's success forced competitors to completely redesign their products and led to the decline of previously dominant companies like BlackBerry and Nokia. It created new industries around mobile apps and transformed photography, navigation, entertainment, and communication.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js">
+
+    </script>
+</body>
+</html>
