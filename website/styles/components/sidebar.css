@@ -240,13 +240,15 @@
 body {
   margin-left: 260px;
 }
-
+body.sidebar-collapsed {
+  margin-left: 0;
+}
 /* Responsive */
 @media (max-width: 768px) {
   .sidebar-fixed {
     width: 260px;
   }
-  
+
   body {
     margin-left: 260px;
   }
@@ -258,13 +260,23 @@ body {
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .sidebar-fixed.mobile-open {
     transform: translateX(0);
   }
-  
+
   body {
     margin-left: 0;
+  }
+
+  /* On mobile, always show the open button when sidebar is hidden */
+  .sidebar-open-btn {
+    display: block;
+  }
+
+  /* Hide open button when sidebar has mobile-open class */
+  body.sidebar-mobile-open .sidebar-open-btn {
+    display: none;
   }
 }
 
@@ -278,18 +290,122 @@ body {
 }
 
 .sidebar-fixed::-webkit-scrollbar-thumb {
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--border-medium);
   border-radius: 10px;
 }
 
 .sidebar-fixed::-webkit-scrollbar-thumb:hover {
-  background: rgba(102, 126, 234, 0.5);
+  background: var(--text-tertiary);
 }
 
+
 [data-theme="light"] .sidebar-fixed::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--border-medium);
 }
 
 [data-theme="light"] .sidebar-fixed::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--text-tertiary);
+}
+
+
+/* ========================================
+   ADDITIONAL LIGHT MODE ENHANCEMENTS
+   ======================================== */
+[data-theme="light"] .sidebar-logo-img {
+  filter: drop-shadow(0 2px 8px rgba(124, 58, 237, 0.2));
+}
+
+[data-theme="light"] .sidebar-user-avatar {
+  border-color: var(--accent-core);
+}
+
+/* Badge/Notification Indicators */
+.sidebar-badge {
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  transform: translateY(-50%);
+  background: var(--accent-danger);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: var(--weight-bold);
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+[data-theme="light"] .sidebar-badge {
+  background: var(--accent-danger);
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
+}
+
+/* Close button */
+.sidebar-close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-color);
+  position: absolute;
+  right: 16px;
+  top: 20px;
+  padding: 4px 8px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+[data-theme="light"] .sidebar-close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Open button */
+.sidebar-open-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 999;
+  padding: 8px 12px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  background: rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  color: var(--text-color);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.sidebar-open-btn:hover {
+  background: rgba(102, 126, 234, 0.3);
+  transform: scale(1.05);
+}
+
+[data-theme="light"] .sidebar-open-btn {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+[data-theme="light"] .sidebar-open-btn:hover {
+  background: rgba(139, 92, 246, 0.2);
+}
+
+/* Collapse behavior */
+.sidebar-fixed.sidebar-collapsed {
+  transform: translateX(-100%);
+}
+
+/* Show open button when collapsed */
+body.sidebar-collapsed .sidebar-open-btn {
+  display: block;
+}
+
+/* Smooth animation */
+.sidebar-fixed {
+  transition: transform 0.3s ease;
 }
