@@ -67,8 +67,8 @@
         // Special cases
         if (project.day === 103) {
             liveLink = 'https://100dayswebdevelopment-ecwoc.netlify.app/public/Day%20103/index.html';
-        } else if (project.day === 111 && project.folder.toLowerCase().includes('day-111')) {
-            liveLink = `public/${project.folder}/build/index.html`;
+        } else if (project.day === 111) {
+            liveLink = `public/${project.folder}/day-111/build/index.html`;
         }
 
         // Tech tags HTML
