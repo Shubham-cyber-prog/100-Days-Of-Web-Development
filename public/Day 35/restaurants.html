@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants - NeonEats</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body data-page="restaurants">
+    <nav class="navbar">
+        <div class="container flex nav-content">
+            <a href="index.html" class="logo"><span class="text-gradient">Neon</span>Eats</a>
+            <div class="flex nav-actions">
+                <select id="location-select"></select>
+                <a href="cart.html" class="cart-icon">🛒 <span id="cart-count" class="cart-count">0</span></a>
+                <a href="login.html" id="user-btn" class="btn btn-glass">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 30px;">
+        <div class="flex" style="gap: 15px; margin-bottom: 20px; overflow-x: auto;">
+            <button class="btn btn-primary">All</button>
+            <button class="btn btn-glass">Fast Delivery</button>
+            <button class="btn btn-glass">Rating 4.0+</button>
+            <button class="btn btn-glass">Pure Veg</button>
+        </div>
+
+        <div id="restaurant-list" class="grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, sans-serif;
+}
+
+body{
+  background:#eef2ff;
+  padding:20px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+}
+
+header{
+  background:#fff;
+  padding:20px;
+  text-align:center;
+  border-radius:10px;
+  margin-bottom:20px;
+}
+
+/* STATS */
+
+.board-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.stats{
+  display:flex;
+  gap:25px;
+  background:#fff;
+  padding:15px;
+  border-radius:8px;
+}
+
+.danger{
+  background:#ef4444;
+  color:#fff;
+  border:none;
+  padding:10px 15px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.stats div b{
+    display:block;
+    font-size:1.2rem;
+    margin-left: 50px;
+}
+
+/* BOARD */
+
+.board{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.column{
+  background:#fff;
+  padding:15px;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+}
+
+.column h3{
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.taskBox{
+  flex:1;
+  min-height:100px;
+}
+
+/* TASK */
+
+.task{
+  background:#f9fafb;
+  padding:10px;
+  border-radius:6px;
+  margin-bottom:10px;
+  cursor:grab;
+}
+
+.task b{
+  display:block;
+}
+
+.task small{
+  color:#555;
+}
+
+.taskBtns{
+  margin-top:5px;
+  display:flex;
+  gap:8px;
+}
+
+.taskBtns button{
+  border:none;
+  padding:5px 8px;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.edit{background:#facc15}
+.del{background:#ef4444;color:#fff}
+
+/* ADD */
+
+.addBtn{
+  margin-top:10px;
+  background:#4f46e5;
+  color:#fff;
+  border:none;
+  padding:8px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.5);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modalBox{
+  background:#fff;
+  padding:25px;
+  width:90%;
+  max-width:400px;
+  border-radius:10px;
+}
+
+.modalBox input,
+.modalBox textarea,
+.modalBox select{
+  width:100%;
+  padding:10px;
+  margin-bottom:15px;
+  border:1px solid #ddd;
+  border-radius:6px;
+}
+
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+.actions button{
+  padding:8px 15px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+#cancel{
+  background:#e5e7eb;
+}

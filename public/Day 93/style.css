@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  color: #111827;
+}
+
+/* Header */
+header {
+  background: #1f2933;
+  color: #fff;
+  text-align: center;
+  padding: 30px 15px;
+}
+
+/* Layout */
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Card Animation */
+.card {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* Steps */
+.step {
+  margin-bottom: 15px;
+  padding-left: 10px;
+  border-left: 4px solid #2563eb;
+}
+
+/* Code block */
+code {
+  display: block;
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+code:hover {
+  background: #e0e7ff;
+}
+
+/* Button */
+button {
+  padding: 12px 20px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: transform 0.2s, background 0.3s;
+}
+
+button:hover {
+  background: #1e40af;
+  transform: scale(1.05);
+}
+
+/* Fade-in animation */
+.animate {
+  animation: fadeUp 1s ease-in;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  background: #1f2933;
+  color: #fff;
+}

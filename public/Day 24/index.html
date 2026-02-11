@@ -1,70 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <title>BMI Calculator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="wrapper">
-    <div class="card">
-        <h1>⚖️ BMI Calculator</h1>
-        <p class="subtitle">Check your Body Mass Index</p>
-
-        <div class="input-group">
-            <label>Height</label>
-            <div class="height-input">
-                <input type="number" id="height" placeholder="Enter height">
-                <select id="heightUnit">
-                    <option value="cm">cm</option>
-                    <option value="ft">feet</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label>Weight (kg)</label>
-            <input type="number" id="weight" placeholder="Enter weight">
-        </div>
-
-        <button onclick="calculateBMI()">Calculate BMI</button>
-
-        <div class="result-box">
-            <h2 id="bmiResult">Your BMI: —</h2>
-            <p id="bmiStatus"></p>
-            <p id="idealInfo"></p>
-        </div>
-    </div>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
-=======
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI Calculator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator</title>
+<link rel="stylesheet" href="style.css">
 <body>
     <div class="calculator-container">
         <h1 class="title animate-pop">BMI Calculator</h1>
         <div class="input-group animate-slide-up">
-            <label for="height">Height (cm):</label>
-            <input type="number" id="height" placeholder="Enter your height">
+        <label>Height</label>
+        <div class="unit-row">
+            <input type="number" id="height" placeholder="Enter height">
+            <select id="heightUnit">
+            <option value="cm">cm</option>
+            <option value="ft">ft</option>
+            </select>
         </div>
+        </div>
+
         <div class="input-group animate-slide-up" style="animation-delay: 0.2s;">
-            <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" placeholder="Enter your weight">
+        <label>Weight</label>
+        <div class="unit-row">
+            <input type="number" id="weight" placeholder="Enter weight">
+            <select id="weightUnit">
+            <option value="kg">kg</option>
+            <option value="lb">lb</option>
+            </select>
         </div>
-        <div class="input-group animate-slide-up" style="animation-delay: 0.3s;">
-            <label for="age">Age:</label>
-            <input type="number" id="age" placeholder="Enter your age">
         </div>
 
         <button id="calculate-btn" class="animate-slide-up" style="animation-delay: 0.4s;">Calculate BMI</button>
+        <button id="reset-btn" class="reset-btn">Reset</button>
+
         <div id="result" class="result-container hidden animate-fade-in">
             <h2>Your BMI:</h2>
             <div id="bmi-value" class="bmi-value">0</div>

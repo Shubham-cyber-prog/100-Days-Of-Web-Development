@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonEats - Future Delivery</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body data-page="home">
+
+    <nav class="navbar">
+        <div class="container flex nav-content">
+            <a href="index.html" class="logo"><span class="text-gradient">Neon</span>Eats</a>
+            <div class="flex nav-actions">
+                <select id="location-select"></select>
+                <a href="cart.html" class="cart-icon">🛒 <span id="cart-count" class="cart-count">0</span></a>
+                <a href="login.html" id="user-btn" class="btn btn-glass">Login</a>
+                <a href="foodmenu.html" class="view-menu-btn">View Menu</a>
+
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Craving the <span class="text-gradient">Future?</span></h1>
+            <input type="text" class="search-bar-lg" placeholder="Search for food, restaurants...">
+        </div>
+    </header>
+
+    <section class="container" style="padding: 40px 20px;">
+        <h2 style="margin-bottom: 20px;">Eat what makes you happy</h2>
+        <div class="flex" style="gap: 20px; overflow-x: auto; padding-bottom: 10px;">
+            <div class="card" style="min-width: 150px; text-align: center; padding: 20px;">🍕 Pizza</div>
+            <div class="card" style="min-width: 150px; text-align: center; padding: 20px;">🍔 Burger</div>
+            <div class="card" style="min-width: 150px; text-align: center; padding: 20px;">🍣 Sushi</div>
+            <div class="card" style="min-width: 150px; text-align: center; padding: 20px;">🥗 Healthy</div>
+        </div>
+    </section>
+
+    <section class="container" style="padding-bottom: 40px;">
+        <div class="flex" style="justify-content: space-between; margin-bottom: 20px;">
+            <h2>Top Restaurants in your city</h2>
+            <a href="restaurants.html" class="text-gradient">See All &rarr;</a>
+        </div>
+        <div id="restaurant-list" class="grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+            <div class="shimmer card" style="height: 300px;"></div>
+            <div class="shimmer card" style="height: 300px;"></div>
+            <div class="shimmer card" style="height: 300px;"></div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

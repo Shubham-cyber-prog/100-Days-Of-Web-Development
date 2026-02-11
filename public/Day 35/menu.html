@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - NeonEats</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body data-page="menu">
+    <nav class="navbar">
+        <div class="container flex nav-content">
+            <a href="index.html" class="logo"><span class="text-gradient">Neon</span>Eats</a>
+            <div class="flex nav-actions">
+                <select id="location-select"></select>
+                <a href="cart.html" class="cart-icon">🛒 <span id="cart-count" class="cart-count">0</span></a>
+                <a href="login.html" id="user-btn" class="btn btn-glass">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 40px;">
+        <div class="card" style="padding: 30px; margin-bottom: 30px; border-left: 5px solid var(--primary);">
+            <h1 id="rest-name">Loading...</h1>
+            <p id="rest-meta" class="text-muted">...</p>
+        </div>
+
+        <div id="menu-list" class="grid menu-grid">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

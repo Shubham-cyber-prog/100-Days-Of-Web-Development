@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Learning Platform</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --primary:#2563eb;
+  --success:#16a34a;
+  --warning:#f59e0b;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+.dark{
+  --bg:#020617;
+  --card:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
+
+/* HEADER */
+header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:18px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+header h1 span{color:var(--primary)}
+#themeToggle{
+  border:1px solid var(--border);
+  background:none;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* HERO */
+.hero{text-align:center;padding:55px 20px}
+.hero h2{font-size:36px;margin-bottom:10px}
+.hero p{color:var(--muted);max-width:650px;margin:auto}
+
+/* CONTAINER */
+.container{max-width:1200px;margin:auto;padding:20px}
+
+/* SEARCH */
+.search-box{margin-bottom:30px}
+.search-box input{
+  width:100%;padding:14px;border-radius:10px;
+  border:1px solid var(--border);font-size:15px
+}
+
+/* COURSES GRID */
+.courses{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.course{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:35px 25px;
+  text-align:center;
+  transition:.3s;
+}
+.course:hover{transform:translateY(-8px);border-color:var(--primary)}
+.course i{font-size:42px;color:var(--primary);margin-bottom:15px}
+.course p{color:var(--muted)}
+.course button{
+  margin-top:15px;width:100%;padding:12px;
+  border:none;border-radius:10px;
+  background:var(--primary);color:white;cursor:pointer
+}
+
+/* SECTIONS */
+.section{margin-top:60px}
+.section h2{margin-bottom:20px}
+
+/* ENROLLED / WISHLIST CARD */
+.enroll-card{
+  position:relative;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  margin-bottom:16px;
+  transition:.25s;
+}
+.enroll-card:hover{border-color:var(--primary)}
+
+.star{
+  position:absolute;
+  top:16px;
+  right:16px;
+  font-size:18px;
+  cursor:pointer;
+  color:var(--warning);
+}
+
+.enroll-card button{
+  margin-top:12px;
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  background:var(--success);
+  color:white;
+  cursor:pointer;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  background:var(--success);
+  color:white;
+  padding:15px 22px;
+  border-radius:10px;
+  display:none;
+}
+
+/* CERTIFICATE */
+#certificate{
+  display:none;
+  min-height:100vh;
+  background:#fff;
+  padding:60px;
+}
+.cert-box{
+  max-width:800px;
+  margin:auto;
+  border:8px solid #2563eb;
+  padding:50px;
+  text-align:center;
+}
+.cert-box h1{font-size:42px;margin-bottom:20px}
+.cert-box h2{margin:15px 0}
+.cert-box p{font-size:18px}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.courses{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.courses{grid-template-columns:1fr}}
+
+/* Certificate Download Button */
+#certificate button{
+  margin-top: 30px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+}
+
+/* Hover effect */
+#certificate button:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.35);
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+}
+
+/* Active click */
+#certificate button:active{
+  transform: scale(0.96);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Print mode (PDF) */
+@media print{
+  #certificate button{
+    display: none;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1><span>Online</span> Learning</h1>
+  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+</header>
+
+<section class="hero">
+  <h2>Learn Skills That Matter</h2>
+  <p>Enroll, save courses, and earn certificates.</p>
+</section>
+
+<section class="container">
+
+  <div class="search-box">
+    <input id="search" placeholder="Search courses...">
+  </div>
+
+  <div class="courses" id="courseList"></div>
+
+  <div class="section">
+    <h2>My Enrolled Courses</h2>
+    <div id="enrolledList"></div>
+  </div>
+
+  <div class="section">
+    <h2>Saved Courses (Wishlist)</h2>
+    <div id="wishlistList"></div>
+  </div>
+
+</section>
+
+<div class="toast" id="toast"></div>
+
+<!-- CERTIFICATE -->
+<div id="certificate">
+  <div class="cert-box">
+    <h1>Certificate of Completion</h1>
+    <p>This certifies that</p>
+    <h2 id="certName">Student Name</h2>
+    <p>has successfully completed</p>
+    <h2 id="certCourse"></h2>
+    <p>Date: <span id="certDate"></span></p>
+    <br>
+    <button onclick="window.print()">Download Certificate (PDF)</button>
+  </div>
+</div>
+
+<script>
+const courses=[
+{id:1,title:"HTML Basics",desc:"Learn web foundations.",icon:"fa-html5"},
+{id:2,title:"CSS Fundamentals",desc:"Style websites.",icon:"fa-css3-alt"},
+{id:3,title:"JavaScript Essentials",desc:"Make sites interactive.",icon:"fa-js"},
+{id:4,title:"Responsive Design",desc:"Mobile-friendly layouts.",icon:"fa-mobile-screen"},
+{id:5,title:"Git & GitHub",desc:"Version control.",icon:"fa-github"},
+{id:6,title:"UI/UX Design",desc:"Design interfaces.",icon:"fa-pen-nib"},
+{id:7,title:"Bootstrap",desc:"CSS framework.",icon:"fa-bootstrap"},
+{id:8,title:"APIs & Fetch",desc:"Work with APIs.",icon:"fa-cloud"},
+{id:9,title:"Deployment",desc:"Host projects.",icon:"fa-rocket"}
+];
+
+let enrolled=JSON.parse(localStorage.getItem("enrolled"))||[];
+let wishlist=JSON.parse(localStorage.getItem("wishlist"))||[];
+
+const courseList=document.getElementById("courseList");
+const enrolledList=document.getElementById("enrolledList");
+const wishlistList=document.getElementById("wishlistList");
+const toast=document.getElementById("toast");
+
+function showToast(msg){
+  toast.textContent=msg;
+  toast.style.display="block";
+  setTimeout(()=>toast.style.display="none",2500);
+}
+
+function renderCourses(){
+  courseList.innerHTML="";
+  courses.filter(c=>c.title.toLowerCase().includes(search.value.toLowerCase()))
+  .forEach(c=>{
+    courseList.innerHTML+=`
+      <div class="course">
+        <i class="fa-brands ${c.icon}"></i>
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+        <button onclick="enroll(${c.id})">Enroll</button>
+      </div>`;
+  });
+}
+
+function enroll(id){
+  if(enrolled.some(e=>e.id===id)) return;
+  const c=courses.find(x=>x.id===id);
+  enrolled.push(c);
+  localStorage.setItem("enrolled",JSON.stringify(enrolled));
+  showToast("Course added successfully 🎉");
+  renderEnrolled();
+}
+
+function renderEnrolled(){
+  enrolledList.innerHTML=enrolled.length?"":"<p>No enrolled courses</p>";
+  enrolled.forEach(c=>{
+    enrolledList.innerHTML+=`
+      <div class="enroll-card">
+        <i class="fa-solid fa-star star" onclick="saveWishlist(${c.id})"></i>
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+        <button onclick="generateCertificate('${c.title}')">Mark Completed</button>
+      </div>`;
+  });
+}
+
+function saveWishlist(id){
+  if(wishlist.some(w=>w.id===id)) return;
+  const c=courses.find(x=>x.id===id);
+  wishlist.push(c);
+  localStorage.setItem("wishlist",JSON.stringify(wishlist));
+  showToast("Saved to wishlist ⭐");
+  renderWishlist();
+}
+
+function renderWishlist(){
+  wishlistList.innerHTML=wishlist.length?"":"<p>No saved courses</p>";
+  wishlist.forEach(c=>{
+    wishlistList.innerHTML+=`
+      <div class="enroll-card">
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+      </div>`;
+  });
+}
+
+function generateCertificate(course){
+  document.body.innerHTML=document.getElementById("certificate").outerHTML;
+  certCourse.textContent=course;
+  certDate.textContent=new Date().toLocaleDateString();
+  document.getElementById("certificate").style.display="block";
+}
+
+/* THEME */
+const toggle=document.getElementById("themeToggle");
+const icon=toggle.querySelector("i");
+if(localStorage.getItem("theme")==="dark"){
+  document.body.classList.add("dark");
+  icon.classList.replace("fa-moon","fa-sun");
+}
+toggle.onclick=()=>{
+  document.body.classList.toggle("dark");
+  icon.classList.toggle("fa-moon");
+  icon.classList.toggle("fa-sun");
+  localStorage.setItem("theme",document.body.classList.contains("dark")?"dark":"light");
+};
+
+search.addEventListener("input",renderCourses);
+
+renderCourses();
+renderEnrolled();
+renderWishlist();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-gavel"></i>
+                <h1>BidMaster</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="#auctions"><i class="fas fa-gavel"></i> Live Auctions</a>
+                <a href="#watchlist"><i class="fas fa-heart"></i> Watchlist <span id="watchlist-count">0</span></a>
+                <a href="#my-bids"><i class="fas fa-hand-paper"></i> My Bids</a>
+            </div>
+            <div class="user-actions">
+                <button id="login-btn" class="btn-outline"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <button id="register-btn" class="btn-primary"><i class="fas fa-user-plus"></i> Register</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Find Unique Items & Amazing Deals</h2>
+                <p>Bid on exclusive items from around the world. Join live auctions now!</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for items...">
+                    <button class="btn-primary"><i class="fas fa-search"></i> Search</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="auction-listings">
+            <div class="section-header">
+                <h2>Live Auctions</h2>
+                <div class="filters">
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                        <option value="art">Art & Collectibles</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="jewelry">Jewelry</option>
+                        <option value="vehicles">Vehicles</option>
+                        <option value="fashion">Fashion</option>
+                    </select>
+                    <select id="sort-by">
+                        <option value="ending-soon">Ending Soon</option>
+                        <option value="newest">Newest</option>
+                        <option value="highest-bid">Highest Bid</option>
+                        <option value="lowest-bid">Lowest Bid</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="auctions-container" id="auctions-container">
+                <!-- Auction items will be dynamically generated here -->
+            </div>
+        </section>
+
+        <section class="current-auction">
+            <div class="section-header">
+                <h2>Featured Auction</h2>
+            </div>
+            <div class="featured-auction" id="featured-auction">
+                <!-- Featured auction will be displayed here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Auction Details -->
+    <div class="modal" id="auction-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Register Modal -->
+    <div class="modal" id="auth-modal">
+        <div class="modal-content auth-modal">
+            <span class="close-btn" id="close-auth">&times;</span>
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">Login</button>
+                <button class="tab-btn" data-tab="register">Register</button>
+            </div>
+            <div class="auth-form" id="login-form">
+                <h3>Login to Your Account</h3>
+                <form id="loginForm">
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+            </div>
+            <div class="auth-form hidden" id="register-form">
+                <h3>Create New Account</h3>
+                <form id="registerForm">
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <input type="password" placeholder="Confirm Password" required>
+                    <button type="submit" class="btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>BidMaster</h3>
+                <p>Your trusted online auction platform since 2023. Find unique items and amazing deals.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> support@bidmaster.com</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 BidMaster Auction Platform. All rights reserved.</p>
+        </div>
+    </footer>
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+    <i class="fa-solid fa-arrow-up"></i>
+    </button>
+    <script src="script.js"></script>
+</body>
+</html>

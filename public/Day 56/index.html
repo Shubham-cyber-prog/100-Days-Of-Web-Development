@@ -1,44 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Form Validation</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter - Pure JS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel = "stylesheet" href = "style.css">
 </head>
 <body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-money-bill-wave"></i> Expense Splitter</h1>
+            <p>Split expenses with friends and family easily</p>
+        </header>
 
-  <form class="form" id="signupForm">
-    <h2>Create Account</h2>
+        <div class="dashboard">
+            
+            <div class="card">
+                <h2><i class="fas fa-users"></i> Group Members</h2>
+                <div class="input-group">
+                    <label for="memberName">Add Member</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="memberName" placeholder="Enter member name">
+                        <button class="btn" onclick="addMember()">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+                
+                <ul id="membersList" class="members-list">
+                    
+                    <div class="empty-state" id="emptyMembers">
+                        <i class="fas fa-user-plus"></i>
+                        <p>No members added yet</p>
+                    </div>
+                </ul>
 
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" id="username" placeholder="Enter username">
-      <small></small>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalMembers">0</div>
+                        <div class="stat-label">Members</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalExpenses">0</div>
+                        <div class="stat-label">Expenses</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalAmount">$0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <h2><i class="fas fa-receipt"></i> Add Expense</h2>
+                <div class="input-group">
+                    <label for="expenseTitle">Description</label>
+                    <input type="text" id="expenseTitle" placeholder="Dinner, Groceries, etc.">
+                </div>
+                
+                <div class="input-group">
+                    <label for="expenseAmount">Amount ($)</label>
+                    <input type="number" id="expenseAmount" placeholder="0.00" step="0.01" min="0">
+                </div>
+                
+                <div class="input-group">
+                    <label for="paidBy">Paid By</label>
+                    <select id="paidBy">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label>Split Between</label>
+                    <div id="splitCheckboxes" class="checkbox-group">
+                        <!-- Checkboxes will be added by JS -->
+                    </div>
+                </div>
+                
+                <button class="btn btn-success" onclick="addExpense()">
+                    <i class="fas fa-save"></i> Add Expense
+                </button>
+            </div>
+        </div>
+
+        
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('expenses')">All Expenses</button>
+                <button class="tab" onclick="showTab('balances')">Balances</button>
+                <button class="tab" onclick="showTab('settle')">Settle Up</button>
+            </div>
+            
+            <div id="expensesTab" class="tab-content active">
+                <h2><i class="fas fa-list"></i> Recent Expenses</h2>
+                <div id="expensesList">
+                    <!-- Expenses will be added here -->
+                    <div class="empty-state" id="emptyExpenses">
+                        <i class="fas fa-receipt"></i>
+                        <p>No expenses added yet</p>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Add an expense to get started!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="balancesTab" class="tab-content">
+                <h2><i class="fas fa-balance-scale"></i> Current Balances</h2>
+                <div id="balanceSummary" class="balance-summary">
+                    <!-- Balance summary will be calculated here -->
+                    <div class="empty-state" style="color: white;">
+                        <i class="fas fa-calculator"></i>
+                        <p>Add expenses to see balances</p>
+                    </div>
+                </div>
+                
+                <div id="settlementSuggestions" class="settlement">
+                    <!-- Settlement suggestions will go here -->
+                </div>
+            </div>
+            
+            <div id="settleTab" class="tab-content">
+                <h2><i class="fas fa-handshake"></i> Settle Up</h2>
+                <div class="input-group">
+                    <label for="fromUser">From</label>
+                    <select id="fromUser">
+                        <!-- Options will be populated -->
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="toUser">To</label>
+                    <select id="toUser">
+                        <!-- Options will be populated -->
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="settleAmount">Amount ($)</label>
+                    <input type="number" id="settleAmount" placeholder="0.00" step="0.01" min="0">
+                </div>
+                
+                <button class="btn btn-success" onclick="recordSettlement()">
+                    <i class="fas fa-check-circle"></i> Record Settlement
+                </button>
+            </div>
+        </div>
+
+        <div id="successAlert" class="alert alert-success">
+            <i class="fas fa-check-circle"></i> Expense added successfully!
+        </div>
     </div>
 
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="email" placeholder="Enter email">
-      <small></small>
+    <script src = "script.js">
+    </script>
+
+    <div style="position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 100;">
+        <button class="btn" onclick="loadSampleData()" title="Load Sample Data">
+            <i class="fas fa-vial"></i>
+        </button>
+        <button class="btn btn-success" onclick="exportData()" title="Export Data">
+            <i class="fas fa-download"></i>
+        </button>
+        <button class="btn btn-secondary" onclick="importData()" title="Import Data">
+            <i class="fas fa-upload"></i>
+        </button>
+        <button class="btn btn-danger" onclick="clearAllData()" title="Clear All Data">
+            <i class="fas fa-trash"></i>
+        </button>
     </div>
-
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="password" placeholder="Enter password">
-
-      <!-- Password strength meter -->
-      <div class="strength-meter">
-        <div class="strength-bar"></div>
-      </div>
-      <p class="strength-text"></p>
-
-      <small></small>
-    </div>
-
-    <button type="submit">Sign Up</button>
-  </form>
-
-  <script src="script.js"></script>
 </body>
 </html>

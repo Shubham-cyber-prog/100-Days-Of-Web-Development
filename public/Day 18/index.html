@@ -1,138 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timer - Day 18</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown Timer</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <div class="container">
-        <div class="glass-card">
-            <h1 class="title">⏰ Countdown Timer</h1>
-            <p class="subtitle">Set your target date and watch the countdown</p>
-            <div class="input-section">
-                <div class="input-group">
-                    <label for="eventName">Event Name</label>
-                    <input type="text" id="eventName" placeholder="e.g., New Year 2027" value="New Year 2027">
-                </div>
+  <div class="container">
+    <div class="glass-card">
+      
+      <!-- HEADER -->
+      <header class="header">
+        <h1>⏰ Countdown Timer</h1>
+        <p>Set your target date and watch the countdown</p>
+      </header>
 
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="targetDate">Target Date</label>
-                        <input type="date" id="targetDate">
-                    </div>
-                    <div class="input-group">
-                        <label for="targetTime">Target Time</label>
-                        <input type="time" id="targetTime" value="00:00">
-                    </div>
-                </div>
+      <!-- INPUTS -->
+      <section class="inputs">
+        <label>Event Name</label>
+        <input id="eventName" type="text" value="New Year 2027" />
 
-                <button class="btn-start" onclick="startCountdown()">
-                    <span>Start Countdown</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                </button>
-            </div>
-
-            <div class="countdown-display" id="countdownDisplay">
-                <div class="event-title" id="eventTitle">Set a countdown to begin</div>
-
-                <div class="timer-grid">
-                    <div class="time-unit">
-                        <div class="time-value" id="days">00</div>
-                        <div class="time-label">Days</div>
-                    </div>
-                    <div class="time-separator">:</div>
-                    <div class="time-unit">
-                        <div class="time-value" id="hours">00</div>
-                        <div class="time-label">Hours</div>
-                    </div>
-                    <div class="time-separator">:</div>
-                    <div class="time-unit">
-                        <div class="time-value" id="minutes">00</div>
-                        <div class="time-label">Minutes</div>
-                    </div>
-                    <div class="time-separator">:</div>
-                    <div class="time-unit">
-                        <div class="time-value" id="seconds">00</div>
-                        <div class="time-label">Seconds</div>
-                    </div>
-                </div>
-
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-
-                <button class="btn-reset" id="resetBtn" onclick="resetCountdown()">
-                    Reset Timer
-                </button>
-            </div>
-            <div class="presets">
-                <h3>Quick Presets</h3>
-                <div class="preset-grid">
-                    <button class="preset-btn" onclick="setPreset('New Year 2027', '2027-01-01', '00:00')">
-                        🎉 New Year
-                    </button>
-                    <button class="preset-btn" onclick="setPreset('Christmas 2026', '2026-12-25', '00:00')">
-                        🎄 Christmas
-                    </button>
-                    <button class="preset-btn" onclick="setPreset('My Birthday', '2026-06-15', '00:00')">
-                        🎂 Birthday
-                    </button>
-                    <button class="preset-btn" onclick="setPreset('Weekend', getNextWeekend(), '18:00')">
-                        🌴 Weekend
-                    </button>
-                </div>
-            </div>
+        <div class="row">
+          <div>
+            <label>Target Date</label>
+            <input id="targetDate" type="date" />
+          </div>
+          <div>
+            <label>Target Time</label>
+            <input id="targetTime" type="time" value="00:00" />
+          </div>
         </div>
-        <div class="particles" id="particles"></div>
+
+        <button id="startBtn" class="primary-btn">
+          ▶ Start Countdown
+        </button>
+
+        <p id="errorMsg" class="error"></p>
+      </section>
+
+      <!-- TIMER -->
+      <section class="countdown">
+        <h2 id="eventTitle">Set a countdown to begin</h2>
+
+        <div class="timer">
+          <div class="box">
+            <span id="days">00</span>
+            <small>Days</small>
+          </div>
+          <div class="box">
+            <span id="hours">00</span>
+            <small>Hours</small>
+          </div>
+          <div class="box">
+            <span id="minutes">00</span>
+            <small>Minutes</small>
+          </div>
+          <div class="box">
+            <span id="seconds">00</span>
+            <small>Seconds</small>
+          </div>
+        </div>
+
+        <div class="progress">
+          <div id="progressFill"></div>
+        </div>
+
+        <button id="resetBtn" class="secondary-btn">Reset</button>
+      </section>
+
+      <!-- PRESETS -->
+      <section class="presets">
+        <h3>Quick Presets</h3>
+        <div class="preset-list">
+          <button data-date="2027-01-01" data-time="00:00">🎉 New Year 2027</button>
+          <button data-date="2026-12-25" data-time="00:00">🎄 Christmas 2026</button>
+        </div>
+      </section>
+
     </div>
 
-    <script src="script.js"></script>
+    <div id="particles"></div>
+  </div>
+
+  <script src="script.js" defer></script>
 </body>
-
-=======
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timer</title>
-    <link rel = "stylesheet" href = "style.css" />
-</head>
-<body>
-    <div class = "app">
-        <div class = "card">
-            <button class = "theme-toggle">🌙</button>
-
-            <h2>Countdown Timer</h2>
-
-            <div class = "inputs">
-                <input type = "number" placeholder = "HH" min = "0" />
-                <span>:</span>
-                <input type = "number" placeholder = "MM" min = "0" />
-                <span>:</span>
-                <input type = "number" placeholder = "SS" min = "0" />
-            </div>
-
-            <div class = "display">00:00:00</div>
-
-            <div class = "buttons">
-                <button class = "start">Start</button>
-                <button class = "pause">Pause</button>
-                <button class = "reset">Reset</button>
-            </div>
-
-            <p class = "status"></p>
-
-        </div>
-    </div>
-
-    <script src = "script.js"></script>
-    
-</body>
-
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ShopEase – Open Source E-Commerce</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>🛍️ ShopEase</h1>
+
+  <input type="text" placeholder="Search products..." onkeyup="searchProducts(this.value)">
+
+  <select onchange="filterByCategory(this.value)">
+    <option value="All">All</option>
+    <option value="Electronics">Electronics</option>
+    <option value="Accessories">Accessories</option>
+    <option value="Fashion">Fashion</option>
+    <option value="Home">Home</option>
+  </select>
+
+  <div class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+</header>
+
+<section class="products" id="productList"></section>
+
+<!-- PRODUCT MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <img id="modalImg">
+    <h3 id="modalName"></h3>
+    <p id="modalPrice"></p>
+    <button onclick="addToCart()">Add to Cart</button>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<!-- CART -->
+<section class="cart-page" id="cartPage">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
+</section>
+
+<!-- CHECKOUT -->
+<section class="checkout-page" id="checkoutPage">
+  <h2>Checkout</h2>
+  <input placeholder="Full Name">
+  <input placeholder="Address">
+  <input placeholder="Card Number">
+  <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

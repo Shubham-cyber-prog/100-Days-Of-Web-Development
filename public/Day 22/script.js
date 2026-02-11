@@ -1,27 +1,55 @@
 const input = document.getElementById("markdownInput");
-const preview = document.getElementById("preview");
+const preview = document.getElementById("previewContent");
+const charCount = document.getElementById("charCount");
+const themeToggle = document.getElementById("themeToggle");
 
-function renderMarkdown(text) {
-  return text
-    .replace(/^### (.*$)/gim, "<h3>$1</h3>")
-    .replace(/^## (.*$)/gim, "<h2>$1</h2>")
-    .replace(/^# (.*$)/gim, "<h1>$1</h1>")
-    .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
-    .replace(/\*(.*?)\*/gim, "<em>$1</em>")
-    .replace(/`(.*?)`/gim, "<code>$1</code>")
-    .replace(/\n/gim, "<br />")
-    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' target='_blank'>$1</a>");
-}
-
-input.addEventListener("input", () => {
-  preview.innerHTML = renderMarkdown(input.value);
+marked.setOptions({
+  gfm: true,
+  breaks: true
 });
 
-input.value = `# Markdown Previewer
+function render() {
+  preview.innerHTML = marked.parse(input.value);
+  charCount.textContent = `${input.value.length} characters`;
+  localStorage.setItem("markdown", input.value);
+}
+
+input.addEventListener("input", render);
+
+/* Toolbar actions */
+document.getElementById("clearBtn").onclick = () => {
+  input.value = "";
+  render();
+};
+
+document.getElementById("copyBtn").onclick = async () => {
+  await navigator.clipboard.writeText(input.value);
+  alert("Copied to clipboard!");
+};
+
+document.getElementById("downloadMd").onclick = () => {
+  downloadFile("document.md", input.value);
+};
+
+document.getElementById("downloadHtml").onclick = () => {
+  const html = `<html><body>${preview.innerHTML}</body></html>`;
+  downloadFile("document.html", html);
+};
+
+function downloadFile(name, content) {
+  const blob = new Blob([content], { type: "text/plain" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+}
+
+/* Initial content */
+input.value = localStorage.getItem("markdown") || `# Markdown Previewer
 
 ### Introduction
 
-This document demonstrates commonly used Markdown syntax.
+This document demonstrates commonly used Markdown syntax.  
 It can be used as sample content for a Markdown editor or previewer project.
 
 ---
@@ -39,7 +67,7 @@ Before using this previewer, you should be familiar with:
 
 This is *italic text*  
 This is **bold text**  
-This is ~~strikethrough text~~
+This is ~~strikethrough text~~  
 
 This is \`inline code\`.
 
@@ -92,4 +120,18 @@ console.log(message);
 \`\`\`
 `;
 
-preview.innerHTML = renderMarkdown(input.value);
+
+render();
+
+/* 🌗 Dark Mode */
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "dark") {
+  document.body.classList.add("dark");
+  themeToggle.textContent = "☀️ Light";
+}
+
+themeToggle.addEventListener("click", () => {
+  const isDark = document.body.classList.toggle("dark");
+  themeToggle.textContent = isDark ? "☀️ Light" : "🌙 Dark";
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+});

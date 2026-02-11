@@ -4,73 +4,52 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recipe Details</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <header class="header">
-    <h1 class="logo">🍽️ Recipe Book</h1>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-    </nav>
-  </header>
+<header class="header">
+  <h1 class="logo">🍽️ Recipe Book</h1>
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="favorites.html">❤️ Favorites</a>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </nav>
+</header>
 
-  <!-- ===== MAIN CONTENT ===== -->
-  <main class="container">
+<main class="container">
 
-    <!-- Recipe Title -->
-    <section class="recipe-header">
-      <h2 id="recipe-title">Recipe Title</h2>
-      <p id="recipe-time">⏱ Cooking Time: 30 mins</p>
-    </section>
+  <section class="recipe-detail-card">
 
-    <!-- Recipe Image -->
-    <section class="recipe-image">
-      <img 
-        id="recipe-img" 
-        src="assets/images/placeholder.jpg" 
-        alt="Recipe image"
-      />
-    </section>
+    <h2 id="recipe-title">Loading...</h2>
 
-    <!-- Ingredients -->
-    <section class="recipe-section">
-      <h3>Ingredients</h3>
-      <ul id="ingredients-list">
-        <!-- JS will insert ingredients -->
-        <!-- Example:
-        <li>Ingredient 1</li>
-        -->
-      </ul>
-    </section>
-
-    <!-- Instructions -->
-    <section class="recipe-section">
-      <h3>Instructions</h3>
-      <ol id="steps-list">
-        <!-- JS will insert steps -->
-        <!-- Example:
-        <li>Step 1</li>
-        -->
-      </ol>
-    </section>
-
-    <!-- Back Button -->
-    <div class="back-btn-container">
-      <a href="index.html" class="btn">← Back to Recipes</a>
+    <div class="recipe-image">
+      <img id="recipe-img" alt="Recipe image" />
     </div>
 
-  </main>
+    <div class="recipe-content">
 
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <p>© 2026 Recipe Book. All rights reserved.</p>
-  </footer>
+      <div class="recipe-section">
+        <h3>Ingredients</h3>
+        <ul id="ingredients-list"></ul>
+      </div>
 
-  <!-- JavaScript -->
-  <script src="js/script.js"></script>
+      <div class="recipe-section">
+        <h3>Instructions</h3>
+        <ol id="steps-list"></ol>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer class="footer">
+  © 2026 Recipe Book. All rights reserved.
+</footer>
+
+<script src="js/script.js"></script>
 </body>
 </html>

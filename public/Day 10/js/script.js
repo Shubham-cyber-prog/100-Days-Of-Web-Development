@@ -1,177 +1,148 @@
-/* =========================
-   RECIPE DATA
-========================= */
-
-const recipes = [
-  {
-    id: 1,
-    title: "Creamy Pasta",
-    description: "A rich and creamy pasta made with garlic and cheese.",
-    image: "assets/images/pasta.png",
-    time: "30 mins",
-    ingredients: [
-      "200g pasta",
-      "1 cup fresh cream",
-      "2 cloves garlic",
-      "1 tbsp butter",
-      "Salt to taste"
-    ],
-    steps: [
-      "Boil the pasta in salted water until al dente.",
-      "Heat butter in a pan and sauté garlic.",
-      "Add cream and simmer for 2–3 minutes.",
-      "Mix in cooked pasta and season with salt.",
-      "Serve hot with grated cheese."
-    ]
-  },
-  {
-    id: 2,
-    title: "Veg Sandwich",
-    description: "A quick and healthy vegetable sandwich.",
-    image: "assets/images/sandwich.png",
-    time: "15 mins",
-    ingredients: [
-      "Bread slices",
-      "Tomato",
-      "Cucumber",
-      "Butter",
-      "Salt & pepper"
-    ],
-    steps: [
-      "Slice vegetables thinly.",
-      "Butter the bread slices.",
-      "Layer vegetables on bread.",
-      "Season with salt and pepper.",
-      "Serve fresh or toasted."
-    ]
-  },
-  {
-    id: 3,
-    title: "Pancakes",
-    description: "Fluffy homemade pancakes perfect for breakfast.",
-    image: "assets/images/pancakes.png",
-    time: "20 mins",
-    ingredients: [
-      "1 cup flour",
-      "1 cup milk",
-      "1 egg",
-      "1 tbsp sugar",
-      "1 tsp baking powder"
-    ],
-    steps: [
-      "Mix all ingredients in a bowl.",
-      "Heat a pan and lightly grease it.",
-      "Pour batter and cook until bubbles form.",
-      "Flip and cook until golden.",
-      "Serve with syrup."
-    ]
-  }
-];
-
-/* =========================
-   DOM ELEMENTS (HOME PAGE)
-========================= */
+const API = "https://www.themealdb.com/api/json/v1/1/";
 
 const recipesGrid = document.getElementById("recipes-grid");
+const searchInput = document.getElementById("searchInput");
+const categorySelect = document.getElementById("categorySelect");
+const themeToggle = document.getElementById("themeToggle");
 
-/* =========================
-   RENDER RECIPES (HOME)
-========================= */
+const recipeTitle = document.getElementById("recipe-title");
+const recipeImg = document.getElementById("recipe-img");
+const ingredientsList = document.getElementById("ingredients-list");
+const stepsList = document.getElementById("steps-list");
 
-function renderRecipes() {
-  // Stop if not on home page
-  if (!recipesGrid) return;
+/* ---------- Favorites ---------- */
+function getFavorites() {
+  return JSON.parse(localStorage.getItem("favorites")) || [];
+}
+function saveFavorites(favs) {
+  localStorage.setItem("favorites", JSON.stringify(favs));
+}
+function toggleFavorite(id, btn) {
+  let favs = getFavorites();
+  if (favs.includes(id)) {
+    favs = favs.filter(x => x !== id);
+    btn.textContent = "🤍";
+  } else {
+    favs.push(id);
+    btn.textContent = "❤️";
+  }
+  saveFavorites(favs);
+}
 
+/* ---------- Render ---------- */
+function renderRecipes(meals) {
   recipesGrid.innerHTML = "";
+  const favs = getFavorites();
 
-  recipes.forEach((recipe) => {
+  meals.forEach(meal => {
     const card = document.createElement("article");
-    card.classList.add("recipe-card");
+    card.className = "recipe-card";
 
     card.innerHTML = `
-      <img src="${recipe.image}" alt="${recipe.title}">
+      <img src="${meal.strMealThumb}">
       <div class="recipe-info">
-        <h2>${recipe.title}</h2>
-        <p>${recipe.description}</p>
-        <a href="recipe.html?id=${recipe.id}" class="btn">
-          View Recipe
-        </a>
+        <h3>${meal.strMeal}</h3>
+        <p>${meal.strCategory || "Recipe"}</p>
+        <div class="card-actions">
+          <a class="btn" href="recipe.html?id=${meal.idMeal}">View Recipe</a>
+          <button class="fav-btn">${favs.includes(meal.idMeal) ? "❤️" : "🤍"}</button>
+        </div>
       </div>
     `;
+
+    const favBtn = card.querySelector(".fav-btn");
+    favBtn.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite(meal.idMeal, favBtn);
+    });
 
     recipesGrid.appendChild(card);
   });
 }
 
-/* =========================
-   DOM ELEMENTS (DETAIL PAGE)
-========================= */
-
-const recipeTitle = document.getElementById("recipe-title");
-const recipeTime = document.getElementById("recipe-time");
-const recipeImg = document.getElementById("recipe-img");
-const ingredientsList = document.getElementById("ingredients-list");
-const stepsList = document.getElementById("steps-list");
-
-/* =========================
-   HELPER FUNCTIONS
-========================= */
-
-function getRecipeIdFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
+/* ---------- Fetch ---------- */
+async function fetchRecipes(q="") {
+  if (!recipesGrid) return;
+  const res = await fetch(`${API}search.php?s=${q}`);
+  const data = await res.json();
+  renderRecipes(data.meals || []);
 }
 
-/* =========================
-   LOAD RECIPE DETAILS
-========================= */
+async function fetchCategories() {
+  if (!categorySelect) return;
+  const res = await fetch(`${API}categories.php`);
+  const data = await res.json();
+  data.categories.forEach(c => {
+    const o = document.createElement("option");
+    o.value = c.strCategory;
+    o.textContent = c.strCategory;
+    categorySelect.appendChild(o);
+  });
+}
 
-function loadRecipeDetails() {
-  // Stop if not on recipe detail page
+async function fetchByCategory(cat) {
+  const res = await fetch(`${API}filter.php?c=${cat}`);
+  const data = await res.json();
+  renderRecipes(data.meals || []);
+}
+
+/* ---------- Recipe Details ---------- */
+async function loadRecipeDetails() {
   if (!recipeTitle) return;
+  const id = new URLSearchParams(location.search).get("id");
+  const res = await fetch(`${API}lookup.php?i=${id}`);
+  const data = await res.json();
+  const r = data.meals[0];
 
-  const recipeId = getRecipeIdFromURL();
+  recipeTitle.textContent = r.strMeal;
+  recipeImg.src = r.strMealThumb;
 
-  if (!recipeId) {
-    recipeTitle.textContent = "Recipe not found";
-    return;
-  }
-
-  const recipe = recipes.find(
-    (item) => item.id === Number(recipeId)
-  );
-
-  if (!recipe) {
-    recipeTitle.textContent = "Recipe not found";
-    return;
-  }
-
-  // Basic info
-  recipeTitle.textContent = recipe.title;
-  recipeTime.textContent = `⏱ Cooking Time: ${recipe.time}`;
-  recipeImg.src = recipe.image;
-  recipeImg.alt = recipe.title;
-
-  // Ingredients
-  ingredientsList.innerHTML = "";
-  recipe.ingredients.forEach((ingredient) => {
-    const li = document.createElement("li");
-    li.textContent = ingredient;
-    ingredientsList.appendChild(li);
+  r.strInstructions.split(".").forEach(s => {
+    if (s.trim()) stepsList.innerHTML += `<li>${s}</li>`;
   });
 
-  // Steps
-  stepsList.innerHTML = "";
-  recipe.steps.forEach((step) => {
-    const li = document.createElement("li");
-    li.textContent = step;
-    stepsList.appendChild(li);
-  });
+  for (let i=1;i<=20;i++) {
+    const ing = r[`strIngredient${i}`];
+    if (ing) ingredientsList.innerHTML += `<li>${ing}</li>`;
+  }
 }
 
-/* =========================
-   INITIALIZE
-========================= */
+/* ---------- Favorites Page ---------- */
+async function loadFavoritesPage() {
+  if (!location.pathname.includes("favorites")) return;
+  const favs = getFavorites();
+  if (!favs.length) {
+    recipesGrid.innerHTML = "<p>No favorites yet ❤️</p>";
+    return;
+  }
+  const meals = await Promise.all(
+    favs.map(id => fetch(`${API}lookup.php?i=${id}`).then(r=>r.json()).then(d=>d.meals[0]))
+  );
+  renderRecipes(meals);
+}
 
-renderRecipes();
+/* ---------- Dark Mode ---------- */
+function applyTheme(t) {
+  document.body.classList.toggle("dark", t==="dark");
+  if (themeToggle) themeToggle.textContent = t==="dark" ? "☀️" : "🌙";
+}
+const savedTheme = localStorage.getItem("theme") || "light";
+applyTheme(savedTheme);
+if (themeToggle) {
+  themeToggle.onclick = () => {
+    const t = document.body.classList.contains("dark") ? "light" : "dark";
+    localStorage.setItem("theme", t);
+    applyTheme(t);
+  };
+}
+
+/* ---------- Events ---------- */
+if (searchInput) searchInput.oninput = e => fetchRecipes(e.target.value);
+if (categorySelect) categorySelect.onchange = e => e.target.value ? fetchByCategory(e.target.value) : fetchRecipes();
+
+/* ---------- Init ---------- */
+fetchRecipes();
+fetchCategories();
 loadRecipeDetails();
+loadFavoritesPage();

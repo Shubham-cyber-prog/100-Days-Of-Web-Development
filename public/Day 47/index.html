@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureBank | Online Banking Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <div id="login-page" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <i class="fas fa-university fa-3x"></i>
+                <h1>SecureBank</h1>
+                <p class="tagline">Safe. Secure. Smart Banking.</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="login-username" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Sign In</button>
+                
+                <div class="auth-links">
+                    <a href="#" id="show-register">Create new account</a>
+                    <a href="#" id="forgot-password">Forgot password?</a>
+                </div>
+            </form>
+            
+            <div class="security-notice">
+                <i class="fas fa-shield-alt"></i>
+                <p>Your security is our top priority. All data is stored locally on your device.</p>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="register-page" class="auth-container" style="display: none;">
+        <div class="auth-card">
+            <div class="auth-header">
+                <i class="fas fa-user-plus fa-3x"></i>
+                <h1>Create Account</h1>
+                <p class="tagline">Join SecureBank today</p>
+            </div>
+            
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-fullname"><i class="fas fa-id-card"></i> Full Name</label>
+                    <input type="text" id="register-fullname" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="register-username" placeholder="Choose a username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="register-password" placeholder="Create a strong password" required>
+                    <div class="password-strength">
+                        <div class="strength-meter">
+                            <div class="strength-bar"></div>
+                        </div>
+                        <span class="strength-text">Password strength: <span id="strength-value">None</span></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-initial-deposit"><i class="fas fa-money-bill-wave"></i> Initial Deposit ($)</label>
+                    <input type="number" id="register-initial-deposit" placeholder="Enter amount" min="0" value="1000" required>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="terms-agreement" required>
+                    <label for="terms-agreement">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+                
+                <button type="submit" class="btn-primary">Create Account</button>
+                
+                <div class="auth-links">
+                    <a href="#" id="show-login">Already have an account? Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <div id="dashboard" style="display: none;">
+        
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <i class="fas fa-university"></i>
+                    <span>SecureBank</span>
+                </div>
+    
+                <div class="nav-links" id = "nav-links">
+                    <a href="#overview" class="nav-link active"><i class="fas fa-home"></i> Overview</a>
+                    <a href="#accounts" class="nav-link"><i class="fas fa-wallet"></i> Accounts</a>
+                    <a href="#transactions" class="nav-link"><i class="fas fa-exchange-alt"></i> Transactions</a>
+                    <a href="#transfer" class="nav-link"><i class="fas fa-paper-plane"></i> Transfer</a>
+                    <a href="#payments" class="nav-link"><i class="fas fa-credit-card"></i> Payments</a>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-right">
+                <div class="user-profile" id = "user-profile">
+                    <div class="user-avatar" id="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <a href="#profile" id = "profile-settings-btn"><i class="fas fa-user-cog"></i> Profile</a>
+                        <a href="#security" id = "security-settings-btn"><i class="fas fa-shield-alt"></i> Security</a>
+                        <a href="#" id="desktop-dark-mode-toggle">
+                            <i class="fas fa-moon dark-toggle-icon"></i>
+                            <span class="dark-mode-text">Dark Mode</span>
+                        </a>
+                        <hr>
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+            <div class="mobile-menu" id="mobile-menu">
+                <div class="mobile-menu-header">
+                    <h3>Menu</h3>
+                    <button class="close-mobile-menu" id="close-mobile-menu">&times;</button>
+                </div>
+                <div class="mobile-menu-links">
+
+                    <a href="#overview" class="mobile-nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Overview</span>
+                    </a>
+
+                    <a href="#accounts" class="mobile-nav-link">
+                        <i class="fas fa-wallet"></i>
+                        <span>Accounts</span>
+                    </a>
+
+                    <a href="#transactions" class="mobile-nav-link">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transactions</span>
+                    </a>
+
+                    <a href="#transfer" class="mobile-nav-link">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Transfer</span>
+                    </a>
+
+                    <a href="#payments" class="mobile-nav-link">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Payments</span>
+                    </a>
+
+                    <div class="mobile-menu-divider"></div>
+
+                    <a href="#" class="mobile-nav-link" id="mobile-profile-settings">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile Settings</span>
+                    </a>
+                    <a href="#" class="mobile-nav-link" id="mobile-security-settings">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security</span>
+                    </a>
+
+                    <a href="#" class="mobile-nav-link" id="mobile-dark-mode-toggle">
+                        <i class="fas fa-moon dark-toggle-icon"></i>
+                        <span class = "dark-mode-text">Dark Mode</span>
+                    </a>
+
+                    <div class="mobile-menu-divider"></div>
+
+                        <a href="#" class="mobile-nav-link logout" id="mobile-logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+            </div>
+        
+        
+        <main class="main-content">
+            
+            <section class="welcome-section">
+                <div class="welcome-message">
+                    <h2>Welcome back, <span id="welcome-name">User</span>!</h2>
+                    <p id="current-date">Monday, October 16, 2023</p>
+                </div>
+                <div class="quick-actions">
+                    <button class="quick-action-btn" id="quick-transfer">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Quick Transfer</span>
+                    </button>
+                    <button class="quick-action-btn" id="quick-deposit">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>Deposit</span>
+                    </button>
+                    <button class="quick-action-btn" id="quick-payment">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Pay Bill</span>
+                    </button>
+                </div>
+            </section>
+            
+            
+            <section id="overview" class="dashboard-section active">
+                <div class="dashboard-grid">
+                    <!-- Account Balance Cards -->
+                    <div class="balance-card main-balance">
+                        <div class="balance-header">
+                            <h3>Total Balance</h3>
+                            <i class="fas fa-eye" id="balance-toggle"></i>
+                        </div>
+                        <div class="balance-amount">
+                            <span class="currency">$</span>
+                            <span class="amount" id="total-balance">0.00</span>
+                        </div>
+                        <div class="balance-change">
+                            <span class="change-positive"><i class="fas fa-arrow-up"></i> +2.5% from last month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="balance-card checking">
+                        <h3>Checking Account</h3>
+                        <div class="balance-amount">
+                            <span class="currency">$</span>
+                            <span class="amount" id="checking-balance">0.00</span>
+                        </div>
+                        <div class="account-number">**** 4532</div>
+                    </div>
+                    
+                    <div class="balance-card savings">
+                        <h3>Savings Account</h3>
+                        <div class="balance-amount">
+                            <span class="currency">$</span>
+                            <span class="amount" id="savings-balance">0.00</span>
+                        </div>
+                        <div class="account-number">**** 7816</div>
+                    </div>
+                    
+                    
+                    <div class="card recent-transactions">
+                        <div class="card-header">
+                            <h3>Recent Transactions</h3>
+                            <a href="#transactions" class="view-all">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="transactions-list" id="recent-transactions">
+                                <!-- Transactions will be loaded here -->
+                                <div class="transaction-item placeholder">
+                                    <p>No transactions yet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                   
+                    <div class="card spending-overview">
+                        <div class="card-header">
+                            <h3>Spending Overview</h3>
+                            <select id="spending-period">
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                                <option>Last 3 Months</option>
+                            </select>
+                        </div>
+                        <div class="card-body">
+                            <div class="spending-chart">
+                                <div class="chart-bar" data-category="Shopping" data-percent="65"></div>
+                                <div class="chart-bar" data-category="Food & Dining" data-percent="45"></div>
+                                <div class="chart-bar" data-category="Bills" data-percent="80"></div>
+                                <div class="chart-bar" data-category="Entertainment" data-percent="30"></div>
+                                <div class="chart-bar" data-category="Transport" data-percent="50"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="card quick-transfer-card">
+                        <div class="card-header">
+                            <h3>Quick Transfer</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="transfer-form">
+                                <div class="form-group">
+                                    <label for="transfer-to">To Account</label>
+                                    <select id="transfer-to" required>
+                                        <option value="">Select account</option>
+                                        <option value="savings">Savings Account</option>
+                                        <option value="external">External Account</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transfer-amount">Amount ($)</label>
+                                    <input type="number" id="transfer-amount" placeholder="0.00" min="0.01" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transfer-description">Description</label>
+                                    <input type="text" id="transfer-description" placeholder="Enter description">
+                                </div>
+                                <button type="submit" class="btn-primary">Transfer Now</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            
+            <section id="accounts" class="dashboard-section">
+                <h2 class="section-title">My Accounts</h2>
+                <div class="accounts-grid">
+                    <!-- Accounts will be loaded here -->
+                </div>
+                <button class="btn-secondary" id="add-account-btn">
+                    <i class="fas fa-plus"></i> Add New Account
+                </button>
+            </section>
+            
+            
+            <section id="transactions" class="dashboard-section">
+                <div class="section-header">
+                    <h2 class="section-title">Transaction History</h2>
+                    <div class="filter-options">
+                        <select id="transaction-filter">
+                            <option value="all">All Transactions</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expenses</option>
+                            <option value="transfer">Transfers</option>
+                        </select>
+                        <input type="month" id="transaction-month" value="2023-10">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-table-body">
+                                <!-- Transactions will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            
+            <section id="transfer" class="dashboard-section">
+                <h2 class="section-title">Make a Transfer</h2>
+                <div class="transfer-container">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="new-transfer-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="from-account">From Account</label>
+                                        <select id="from-account" required>
+                                            <option value="">Select account</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="to-account">To Account</label>
+                                        <select id="to-account" required>
+                                            <option value="">Select account</option>
+                                            <option value="savings">Savings Account</option>
+                                            <option value="external">External Account</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transfer-amount-full">Amount ($)</label>
+                                    <input type="number" id="transfer-amount-full" placeholder="0.00" min="0.01" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transfer-description-full">Description</label>
+                                    <input type="text" id="transfer-description-full" placeholder="Enter transfer description" required>
+                                </div>
+                                <button type="submit" class="btn-primary btn-large">Transfer Funds</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="transfer-info">
+                        <h3>Transfer Guidelines</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Transfers are processed immediately</li>
+                            <li><i class="fas fa-check-circle"></i> No fees for internal transfers</li>
+                            <li><i class="fas fa-check-circle"></i> External transfers may take 1-2 business days</li>
+                            <li><i class="fas fa-check-circle"></i> Daily transfer limit: $10,000</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            
+            <section id="payments" class="dashboard-section">
+                <h2 class="section-title">Bill Payments</h2>
+                <div class="payments-container">
+                    <div class="card upcoming-bills">
+                        <div class="card-header">
+                            <h3>Upcoming Bills</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="bills-list">
+                                <!-- Bills will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card pay-bill">
+                        <div class="card-header">
+                            <h3>Pay a Bill</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="bill-payment-form">
+                                <div class="form-group">
+                                    <label for="bill-type">Bill Type</label>
+                                    <select id="bill-type" required>
+                                        <option value="">Select bill type</option>
+                                        <option value="electricity">Electricity</option>
+                                        <option value="water">Water</option>
+                                        <option value="internet">Internet</option>
+                                        <option value="credit-card">Credit Card</option>
+                                        <option value="mortgage">Mortgage</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bill-amount">Amount ($)</label>
+                                    <input type="number" id="bill-amount" placeholder="0.00" min="0.01" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bill-due-date">Due Date</label>
+                                    <input type="date" id="bill-due-date" required>
+                                </div>
+                                <button type="submit" class="btn-primary">Schedule Payment</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        
+        <footer class="footer">
+            <p>© 2023 SecureBank. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <p class="disclaimer">This is a demonstration application. All data is stored locally in your browser.</p>
+        </footer>
+    </div>
+    
+    
+    <div id="notification-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Notifications</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="notification-list">
+                    <!-- Notifications will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="deposit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Make a Deposit</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="deposit-form">
+                    <div class="form-group">
+                        <label for="deposit-account">To Account</label>
+                        <select id="deposit-account" required>
+                            <option value="">Select account</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deposit-amount">Amount ($)</label>
+                        <input type="number" id="deposit-amount" placeholder="0.00" min="0.01" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="deposit-description">Description</label>
+                        <input type="text" id="deposit-description" placeholder="Enter deposit description">
+                    </div>
+                    <button type="submit" class="btn-primary">Deposit Funds</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="profile-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Profile Settings</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+
+            <div class="profile-view" id="profile-view">
+                    <p><strong>Name:</strong> <span id="pv-name"></span></p>
+                    <p><strong>Email:</strong> <span id="pv-email"></span></p>
+                    <p><strong>Phone:</strong> <span id="pv-phone"></span></p>
+                    <p><strong>Address:</strong> <span id="pv-address"></span></p>
+                
+                    <button class="btn-primary" id="edit-profile-btn">Edit Profile</button>
+                </div>
+
+            <form id="profile-form" style = "display: none;">
+
+                <div class="form-group">
+                    <label for="profile-name">Full Name</label>
+                    <input type="text" id="profile-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="profile-email">Email Address</label>
+                    <input type="email" id="profile-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="profile-phone">Phone Number</label>
+                    <input type="tel" id="profile-phone" placeholder="Enter your phone number">
+                </div>
+                <div class="form-group">
+                    <label for="profile-address">Address</label>
+                    <textarea id="profile-address" placeholder="Enter your address" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profile-city">City</label>
+                        <input type="text" id="profile-city" placeholder="City">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-zip">ZIP Code</label>
+                        <input type="text" id="profile-zip" placeholder="ZIP Code">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <button type="button" class="btn-secondary" id="cancel-profile">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <div id="security-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Security Settings</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="security-form">
+                <div class="form-group">
+                    <label for="current-password">Current Password</label>
+                    <input type="password" id="current-password" placeholder="Enter current password" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" placeholder="Enter new password" required>
+                    <div class="password-strength">
+                        <div class="strength-meter">
+                            <div class="strength-bar"></div>
+                        </div>
+                        <span class="strength-text">Password strength: <span id="security-strength-value">None</span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm New Password</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm new password" required>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="two-factor">
+                    <label for="two-factor">Enable Two-Factor Authentication</label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Update Password</button>
+                    <button type="button" class="btn-secondary" id="cancel-security">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    
+    
+    <div id="toast-container"></div>
+    
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/transactions.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
+=======
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banking Dashboard</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --primary:#2563eb;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+.dark{
+  --bg:#020617;
+  --card:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
+
+/* HEADER */
+header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+header h1 span{color:var(--primary)}
+#themeToggle{
+  border:1px solid var(--border);
+  background:none;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 20px;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:22px;
+  margin-bottom:30px;
+}
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:26px;
+}
+.stat i{font-size:26px;color:var(--primary)}
+.stat h2{margin:10px 0}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:28px;
+}
+
+/* FORM */
+form{
+  display:grid;
+  gap:16px;
+}
+input,select{
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+button{
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+  color:white;
+}
+.deposit{background:var(--success)}
+.export{background:#0ea5e9;margin-top:14px;width:100%}
+
+/* FILTER */
+.filter{
+  margin-top:18px;
+}
+
+/* TRANSACTIONS */
+.transactions{margin-top:30px}
+.tx-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 20px;
+  margin-bottom:14px;
+}
+.tx-actions button{
+  margin-left:8px;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:13px;
+}
+.edit{background:#f59e0b}
+.delete{background:#dc2626}
+.credit{color:var(--success)}
+.debit{color:var(--danger)}
+
+/* CHART */
+canvas{
+  width:100%!important;
+  max-height:260px;
+  margin-top:25px;
+}
+
+/* FOOTER */
+footer{text-align:center;padding:25px;color:var(--muted)}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1><span>Banking</span> Dashboard</h1>
+  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+</header>
+
+<div class="container">
+
+<section class="stats">
+  <div class="stat"><i class="fa-solid fa-wallet"></i><h2 id="balance">₹0</h2><p>Total Balance</p></div>
+  <div class="stat"><i class="fa-solid fa-arrow-up"></i><h2 id="income">₹0</h2><p>Total Income</p></div>
+  <div class="stat"><i class="fa-solid fa-arrow-down"></i><h2 id="expense">₹0</h2><p>Total Expense</p></div>
+</section>
+
+<div class="card">
+
+<h3>Add / Edit Transaction</h3>
+<form id="form">
+  <input type="hidden" id="editIndex">
+  <input id="title" placeholder="Transaction title" required>
+  <input id="amount" type="number" placeholder="Amount" required>
+  <select id="type" required>
+    <option value="">Select type</option>
+    <option value="credit">Deposit</option>
+    <option value="debit">Withdraw</option>
+  </select>
+  <input id="date" type="date" required>
+  <button class="deposit">Save Transaction</button>
+</form>
+
+<div class="filter">
+  <label>Filter by Month:</label>
+  <input type="month" id="monthFilter">
+</div>
+
+<button class="export" onclick="exportCSV()">Export Transactions (CSV)</button>
+
+<div class="transactions">
+  <h3>Recent Transactions</h3>
+  <div id="list"></div>
+</div>
+
+<h3>Income vs Expense (Trend)</h3>
+<canvas id="chart"></canvas>
+
+</div>
+</div>
+
+<footer>© 2026 Banking Dashboard – Day 47</footer>
+
+<script>
+let transactions=JSON.parse(localStorage.getItem("bankTx"))||[];
+let editIndex=null;
+const ctx=document.getElementById("chart").getContext("2d");
+
+function save(){localStorage.setItem("bankTx",JSON.stringify(transactions))}
+
+function render(){
+  const list=document.getElementById("list");
+  const month=document.getElementById("monthFilter").value;
+  let income=0,expense=0;
+  list.innerHTML="";
+
+  transactions.forEach((t,i)=>{
+    if(month && !t.date.startsWith(month)) return;
+    t.type==="credit"?income+=t.amount:expense+=t.amount;
+
+    list.innerHTML+=`
+    <div class="tx-card">
+      <div>
+        <b>${t.title}</b><br>
+        <small>${t.date}</small>
+      </div>
+      <div class="${t.type}">
+        ${t.type==="credit"?"+":"-"}₹${t.amount}
+      </div>
+      <div class="tx-actions">
+        <button class="edit" onclick="editTx(${i})">Edit</button>
+        <button class="delete" onclick="delTx(${i})">Delete</button>
+      </div>
+    </div>`;
+  });
+
+  balance.textContent="₹"+(income-expense);
+  income.textContent="₹"+income;
+  expense.textContent="₹"+expense;
+  drawLineChart(income,expense);
+}
+
+function drawLineChart(income,expense){
+  ctx.clearRect(0,0,400,260);
+  ctx.strokeStyle="#2563eb";
+  ctx.beginPath();
+  ctx.moveTo(50,200-income/50);
+  ctx.lineTo(200,200-expense/50);
+  ctx.stroke();
+}
+
+form.onsubmit=e=>{
+  e.preventDefault();
+  const tx={title:title.value,amount:+amount.value,type:type.value,date:date.value};
+  editIndex===null?transactions.unshift(tx):transactions[editIndex]=tx;
+  editIndex=null;
+  save();render();form.reset();
+};
+
+function editTx(i){
+  const t=transactions[i];
+  title.value=t.title;amount.value=t.amount;type.value=t.type;date.value=t.date;
+  editIndex=i;
+}
+
+function delTx(i){
+  transactions.splice(i,1);
+  save();render();
+}
+
+function exportCSV(){
+  let csv="Title,Amount,Type,Date\n";
+  transactions.forEach(t=>csv+=`${t.title},${t.amount},${t.type},${t.date}\n`);
+  const blob=new Blob([csv],{type:"text/csv"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="transactions.csv";
+  a.click();
+}
+
+/* THEME */
+themeToggle.onclick=()=>{
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",document.body.classList.contains("dark")?"dark":"light");
+};
+if(localStorage.getItem("theme")==="dark")document.body.classList.add("dark");
+
+monthFilter.onchange=render;
+render();
+</script>
+
+</body>
+</html>
