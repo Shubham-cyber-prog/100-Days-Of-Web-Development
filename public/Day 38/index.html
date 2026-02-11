@@ -2,80 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking Appointment System</title>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <!-- CSS -->
+  <title>Appointment Booking System</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-  <h1><span>Booking</span> Appointment System</h1>
-  <div class="header-right">
-    <small>Day 38 Project</small>
-    <button id="themeToggle" title="Toggle theme">
-      <i class="fa-solid fa-moon"></i>
-    </button>
+  <div class="container">
+    <h1>📅 Appointment Booking</h1>
+
+    <form id="appointmentForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="date" id="date" required>
+      <input type="time" id="time" required>
+      <button type="submit">Book Appointment</button>
+    </form>
+
+    <h2>Booked Appointments</h2>
+    <ul id="appointmentList"></ul>
   </div>
-</header>
 
-<main>
-
-  <section class="stats">
-    <div class="stat">
-      <i class="fa-solid fa-calendar"></i>
-      <h2 id="total">0</h2>
-      <p>Total Appointments</p>
-    </div>
-    <div class="stat">
-      <i class="fa-solid fa-clock"></i>
-      <h2 id="upcoming">0</h2>
-      <p>Upcoming</p>
-    </div>
-  </section>
-
-  <section class="grid">
-
-    <div class="card">
-      <h3>Book Appointment</h3>
-      <form id="form">
-        <input type="hidden" id="editIndex">
-
-        <!-- FIXED: fullName instead of name -->
-        <input id="fullName" placeholder="Full Name" required>
-
-        <input id="date" type="date" required>
-        <input id="time" type="time" required>
-
-        <select id="service" required>
-          <option value="">Select Service</option>
-          <option>Doctor Consultation</option>
-          <option>Business Meeting</option>
-          <option>Salon Appointment</option>
-          <option>General Inquiry</option>
-        </select>
-
-        <button>Save Appointment</button>
-      </form>
-    </div>
-
-    <div class="card">
-      <h3>Appointments</h3>
-      <div id="list"></div>
-    </div>
-
-  </section>
-
-</main>
-
-<footer>© 2026 Booking Appointment System</footer>
-
-<!-- JS -->
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

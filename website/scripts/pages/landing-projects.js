@@ -1,6 +1,7 @@
-
 // Import project data
 import { allProjects, folderMap } from '../../data/projects.js';
+// Import tracker logic
+import { isDayCompleted, toggleDay, updateProgressUI } from '../components/tracker.js';
 
 const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/tree/main/public";
 
@@ -55,9 +56,10 @@ function renderProjects(filter = '') {
         }
 
         const dayLabel = project.endDay ? `DAYS ${project.day}-${project.endDay}` : `DAY ${project.day}`;
+        const isCompleted = isDayCompleted(project.day);
 
         const card = document.createElement('div');
-        card.className = 'card project-card animate-enter';
+        card.className = `card project-card animate-enter ${isCompleted ? 'completed' : ''}`;
         card.style.animationDelay = `${Math.min(delay, 1000)}ms`;
         delay += 30;
 
@@ -82,10 +84,15 @@ function renderProjects(filter = '') {
 
         card.innerHTML = `
             <div class="card-top">
-                <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; max-width: calc(100% - 40px);">
+                <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; max-width: calc(100% - 80px);">
                     ${difficulty} • ${dayLabel}
                 </span>
-                <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
+                <div style="display: flex; align-items: center;">
+                    <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
+                    <button class="tracker-btn" type="button" aria-label="Toggle Completion" title="${isCompleted ? 'Mark as Incomplete' : 'Mark as Completed'}">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
             </div>
             <div class="card-divider"></div>
             <h3 class="project-title" style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
@@ -101,6 +108,21 @@ function renderProjects(filter = '') {
         codeChip.onclick = (e) => {
             e.stopPropagation();
             window.open(codeLink, '_blank');
+        };
+
+        const trackerBtn = card.querySelector('.tracker-btn');
+        trackerBtn.onclick = (e) => {
+            e.stopPropagation();
+            const nowCompleted = toggleDay(project.day);
+
+            // Toggle UI classes
+            if (nowCompleted) {
+                card.classList.add('completed');
+                trackerBtn.title = "Mark as Incomplete";
+            } else {
+                card.classList.remove('completed');
+                trackerBtn.title = "Mark as Completed";
+            }
         };
 
         if (!isDisabled) {
@@ -166,5 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if we already have the grid (in case script runs late)
     if (document.getElementById('projectsGrid')) {
         renderProjects();
+        updateProgressUI();
     }
 });
