@@ -14,53 +14,6 @@
     <link rel="stylesheet" href="../styles/pages/about.css" />
 
     <style>
-      /* Force text colors for light theme */
-      [data-theme="light"] .mission-panel h1,
-      [data-theme="light"] .mission-panel h2,
-      [data-theme="light"] .mission-panel h3,
-      [data-theme="light"] .mission-panel h4,
-      [data-theme="light"] .mission-panel .text-flame,
-      [data-theme="light"] .mission-panel .text-xl,
-      [data-theme="light"] .mission-panel .text-lg,
-      [data-theme="light"] .mission-panel .mission-phase h4,
-      [data-theme="light"] .mission-panel .mission-phase p,
-      [data-theme="light"] .mission-panel .text-secondary {
-        color: #1a1a2e !important;
-      }
-
-      /* Specific override for the quote text */
-      [data-theme="light"] .mission-quote p {
-        color: #2d3748 !important;
-        font-style: italic;
-      }
-
-      /* Override for the subtitle */
-      [data-theme="light"] .mission-panel .text-xl.text-secondary {
-        color: #4a5568 !important;
-      }
-
-      /* Make the flame text stand out */
-      [data-theme="light"] .text-flame {
-        background: linear-gradient(
-          135deg,
-          #667eea 0%,
-          #764ba2 100%
-        ) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        background-clip: text !important;
-      }
-
-      /* Make sure the button text is visible in light theme */
-      [data-theme="light"] .btn-primary {
-        color: white !important;
-        background: linear-gradient(
-          135deg,
-          #667eea 0%,
-          #764ba2 100%
-        ) !important;
-      }
-
       /* Header styling */
       header nav img {
         width: 100px;
@@ -81,7 +34,7 @@
 </head>
 
   <body>
-    <main class="container section" style="padding-top: 150px">
+    <main class="container section">
       <!-- Hero Section -->
       <div class="hero-section animate-enter">
         <h1 class="hero-title">
@@ -97,9 +50,9 @@
       <div class="about-grid">
         <!-- LEFT: Leaderboard -->
         <div class="leaderboard-panel animate-enter">
-          <div style="margin-bottom: var(--space-6)">
-            <h2 style="font-size: var(--text-3xl)">ECWoC 2026</h2>
-            <h2 class="text-flame italic" style="font-size: var(--text-3xl)">
+          <div class="leaderboard-header">
+            <h2>ECWoC 2026</h2>
+            <h2 class="text-flame italic">
               Leaderboard.
             </h2>
           </div>
@@ -108,7 +61,7 @@
             <div class="stat-icon">👥</div>
             <div>
               <div class="stat-label">Contributors</div>
-              <p class="stat-value" id="statContributors" style="color: #4133ff">
+              <p class="stat-value" id="statContributors">
                 30
               </p>
             </div>
@@ -118,7 +71,7 @@
             <div class="stat-icon">🏆</div>
             <div>
               <div class="stat-label">Total Points</div>
-              <p class="stat-value" id="statPoints" style="color: #4133ff">
+              <p class="stat-value" id="statPoints">
                 5,867
               </p>
             </div>
@@ -128,7 +81,7 @@
             <div class="stat-icon">🚀</div>
             <div>
               <div class="stat-label">Total PRs</div>
-              <p class="stat-value" id="statPRs" style="color: #4133ff">
+              <p class="stat-value" id="statPRs">
                 100
               </p>
             </div>
@@ -143,7 +96,7 @@
             </p>
           </div>
 
-          <div class="grid grid-2" style="gap: var(--space-4)">
+          <div class="mission-phases-grid">
             <div class="mission-phase">
               <div class="phase-icon">🎨</div>
               <h4>Phase 1: Foundation</h4>
@@ -166,16 +119,10 @@
             </div>
           </div>
 
-          <div style="margin-top: var(--space-8)">
+          <div class="mission-button-container">
             <a
               href="projects.html"
               class="btn btn-primary"
-              style="
-                color: white;
-                background: var(--accent);
-                display: inline-block;
-                text-decoration: none;
-              "
             >
               Inspect All Projects →
             </a>
@@ -294,60 +241,10 @@
     <!-- Footer -->
     <div id="footer-placeholder"></div>
 
-    <script src="../scripts/components/navigation.js"></script>    <script src="../scripts/components/footer-loader.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script src="../scripts/components/footer-loader.js"></script>
     <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/pages/about.js"></script>
 
-    <script>
-      // Theme detection and text color adjustment
-      document.addEventListener("DOMContentLoaded", function () {
-        function fixLightThemeTextColors() {
-          const isLightTheme =
-            document.documentElement.getAttribute("data-theme") === "light";
-
-          if (isLightTheme) {
-            document.body.classList.add("light-theme-active");
-            // Apply light theme text colors
-            const missionPanel = document.querySelector(".mission-panel");
-            if (missionPanel) {
-              missionPanel.style.setProperty(
-                "--text-primary",
-                "#1a1a2e",
-                "important",
-              );
-              missionPanel.style.setProperty(
-                "--text-secondary",
-                "#4a5568",
-                "important",
-              );
-              missionPanel.style.setProperty(
-                "--text-tertiary",
-                "#718096",
-                "important",
-              );
-            }
-          } else {
-            document.body.classList.remove("light-theme-active");
-          }
-        }
-
-        // Run on page load
-        fixLightThemeTextColors();
-
-        // Listen for theme changes
-        const originalToggleTheme = window.toggleTheme || function () {};
-        window.toggleTheme = function () {
-          originalToggleTheme();
-          setTimeout(fixLightThemeTextColors, 100);
-        };
-
-        // Alternative: Listen for theme attribute changes
-        const observer = new MutationObserver(fixLightThemeTextColors);
-        observer.observe(document.documentElement, {
-          attributes: true,
-          attributeFilter: ["data-theme"],
-        });
-      });
-    </script>
   </body>
 </html>
