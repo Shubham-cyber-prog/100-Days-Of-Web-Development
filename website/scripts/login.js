@@ -12,16 +12,30 @@ import {
     browserLocalPersistence,
     browserSessionPersistence
 } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+import { firestoreService } from './firestore.js';
 
 // Your Firebase configuration - REPLACE WITH YOUR ACTUAL CONFIG
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY_HERE",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
+const firebaseConfig = (() => {
+    const defaultConfig = {
+        apiKey: "YOUR_API_KEY_HERE",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+    if (typeof __firebase_config === 'object' && __firebase_config !== null) {
+        return __firebase_config;
+    } else if (typeof __firebase_config === 'string' && __firebase_config.trim()) {
+        try {
+            return JSON.parse(__firebase_config);
+        } catch (e) {
+            return defaultConfig;
+        }
+    } else {
+        return defaultConfig;
+    }
+})();
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -40,26 +54,45 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Auth script loaded');
     
     // --- Check if user is already logged in ---
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (user) {
             console.log('User already logged in:', user.email);
             console.log('UID:', user.uid);
-            
-            // Store user info in localStorage for easy access
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userEmail', user.email);
-            localStorage.setItem('userId', user.uid);
-            localStorage.setItem('userName', user.displayName || user.email.split('@')[0]);
-            
-            // If user is on login page, redirect to dashboard
-            if (window.location.pathname.includes('login.html') || 
-                window.location.pathname.includes('index.html') ||
-                window.location.pathname === '/') {
-                
-                console.log('Redirecting to dashboard...');
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 500);
+
+            try {
+                // Initialize user data in Firestore
+                await firestoreService.initializeUserData(user.uid, {
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL
+                });
+
+                // Migrate localStorage data if it exists
+                await firestoreService.migrateLocalStorageData(user.uid);
+
+                // Store user info in localStorage for easy access (keep for compatibility)
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', user.email);
+                localStorage.setItem('userId', user.uid);
+                localStorage.setItem('userName', user.displayName || user.email.split('@')[0]);
+
+                // If user is on login page, redirect to dashboard
+                if (window.location.pathname.includes('login.html') ||
+                    window.location.pathname.includes('index.html') ||
+                    window.location.pathname === '/') {
+
+                    console.log('Redirecting to dashboard...');
+                    setTimeout(() => {
+                        window.location.href = '/website/pages/dashboard.html';
+                    }, 500);
+                }
+            } catch (error) {
+                console.error('Error initializing user data:', error);
+                // Still allow login even if Firestore fails
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', user.email);
+                localStorage.setItem('userId', user.uid);
+                localStorage.setItem('userName', user.displayName || user.email.split('@')[0]);
             }
         } else {
             // User is not logged in
@@ -68,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userId');
             localStorage.removeItem('userName');
-            
+
             // If user is on dashboard without auth, redirect to login
             if (window.location.pathname.includes('dashboard.html')) {
                 console.log('Not authenticated, redirecting to login...');
@@ -315,10 +348,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userEmail', userCredential.user.email);
                 localStorage.setItem('userId', userCredential.user.uid);
-                
+
                 // Wait 1.5 seconds then redirect
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = '/website/pages/dashboard.html';
                 }, 1500);
                 
             } catch (error) {
@@ -396,9 +429,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Show success and redirect
                     showSuccessMessage('Google login successful! Redirecting...');
-                    
+
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
                     
                 } catch (error) {
@@ -440,9 +473,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Show success and redirect
                     showSuccessMessage('GitHub login successful! Redirecting...');
-                    
+
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
                     
                 } catch (error) {
@@ -483,9 +516,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Show success and redirect
                     showSuccessMessage('Welcome Guest! Redirecting...');
-                    
+
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
                 }
             });
@@ -556,18 +589,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     width: 100%;
                 `;
                 
-                demoBtn.addEventListener('click', () => {
-                    // Auto-fill demo credentials
-                    emailInput.value = 'demo@example.com';
-                    passwordInput.value = 'demo123';
-                    
-                    if (confirm('Use demo account? Email: demo@example.com, Password: demo123')) {
-                        // Trigger form submission after 1 second
-                        setTimeout(() => {
-                            authForm.dispatchEvent(new Event('submit'));
-                        }, 1000);
-                    }
-                });
+            demoBtn.addEventListener('click', () => {
+                if (confirm('Use demo account? Email: demo@example.com, Password: demo123')) {
+                    // Simulate successful login without Firebase authentication
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', 'demo@example.com');
+                    localStorage.setItem('userId', 'demo_' + Date.now());
+                    localStorage.setItem('userName', 'Demo User');
+
+                    console.log('Demo login successful');
+
+                    // Show success and redirect
+                    showSuccessMessage('Demo login successful! Redirecting...');
+
+                    setTimeout(() => {
+                        window.location.href = '/website/pages/dashboard.html';
+                    }, 1500);
+                }
+            });
                 
                 authForm.parentNode.insertBefore(demoBtn, authForm.nextSibling);
             }

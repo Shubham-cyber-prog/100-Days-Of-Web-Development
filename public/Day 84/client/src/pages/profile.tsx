@@ -107,25 +107,79 @@ const useLocationFetcher = (updateLocation: (loc: string) => void) => {
       async (position) => {
         try {
           const { latitude, longitude } = position.coords;
-          // Use environment variable in production, fallback to demo for testing
+          
+          // Add timeout and proper error handling
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 10000);
+          
           const apiKey = 'demo'; 
-          const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&limit=1`);
+          const res = await fetch(
+            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&limit=1`,
+            { signal: controller.signal }
+          );
+
+          clearTimeout(timeoutId);
+
+          // Check response status
+          if (!res.ok) {
+            throw new Error(`API returned ${res.status}: ${res.statusText}`);
+          }
+
+          // Validate content type
+          const contentType = res.headers.get('content-type');
+          if (!contentType?.includes('application/json')) {
+            throw new Error('Invalid response format from API');
+          }
+
           const data = await res.json();
           
           if (data.results?.[0]?.components) {
             const c = data.results[0].components;
             const locString = `${c.city || c.town || c.village || 'Unknown'}, ${c.country || ''}`;
             updateLocation(locString);
-            toast({ title: "Location Set", description: `Updated to ${locString}` });
+            toast({ title: "✓ Location Set", description: `Updated to ${locString}` });
+          } else {
+            throw new Error('No location data found in response');
           }
         } catch (e) {
-          toast({ title: "Error", description: "Failed to fetch address details.", variant: "destructive" });
+          const error = e instanceof Error ? e : new Error(String(e));
+          console.error("Location detection error:", error);
+          
+          let errorMsg = "Failed to fetch address details";
+          
+          if (error.name === 'AbortError') {
+            errorMsg = "Location request timed out. Please try again.";
+          } else if (error.message.includes('API returned')) {
+            errorMsg = error.message;
+          } else if (error instanceof TypeError) {
+            errorMsg = "Network error. Please check your connection.";
+          }
+          
+          toast({ 
+            title: "⚠️ Error", 
+            description: errorMsg, 
+            variant: "destructive" 
+          });
         } finally {
           setDetecting(false);
         }
       },
-      () => {
-        toast({ title: "Permission Denied", description: "Please allow location access to use this feature.", variant: "destructive" });
+      (error) => {
+        let errorMsg = "Please allow location access to use this feature";
+        
+        if (error.code === error.PERMISSION_DENIED) {
+          errorMsg = "Location permission denied. Please enable it in settings.";
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          errorMsg = "Location information is unavailable.";
+        } else if (error.code === error.TIMEOUT) {
+          errorMsg = "Location request timed out.";
+        }
+        
+        toast({ 
+          title: "⚠️ Permission Denied", 
+          description: errorMsg, 
+          variant: "destructive" 
+        });
         setDetecting(false);
       }
     );

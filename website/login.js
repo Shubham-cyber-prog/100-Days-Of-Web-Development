@@ -427,15 +427,19 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             
             demoBtn.addEventListener('click', () => {
-                // Auto-fill demo credentials
-                emailInput.value = 'demo@example.com';
-                passwordInput.value = 'demo123';
-                
                 if (confirm('Use demo account? Email: demo@example.com, Password: demo123')) {
-                    // Trigger form submission after 1 second
+                    // Simulate successful login without Firebase authentication
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', 'demo@example.com');
+                    localStorage.setItem('userId', 'demo_' + Date.now());
+                    localStorage.setItem('userName', 'Demo User');
+
+                    console.log('Demo login successful');
+                    alert('Demo login successful! Redirecting...');
+
                     setTimeout(() => {
-                        authForm.dispatchEvent(new Event('submit'));
-                    }, 1000);
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
                 }
             });
             
