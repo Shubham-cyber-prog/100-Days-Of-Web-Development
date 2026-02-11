@@ -93,7 +93,7 @@
         overflow: hidden;
         cursor: pointer;
         padding: 1rem;
-        min-height: 220px;
+        min-height: 280px;
         display: flex;
         flex-direction: column;
 
@@ -187,6 +187,23 @@
         -webkit-box-orient: vertical;
         line-height: 1.3;
         word-wrap: break-word;
+      }
+
+      .project-description {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+      }
+
+      body.light-mode .project-description {
+        color: var(--text-secondary);
+        opacity: 0.85;
       }
 
       .tech-stack {
