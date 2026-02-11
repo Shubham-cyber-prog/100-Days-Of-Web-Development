@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -34,14 +34,14 @@
   <style>
     /* Enhanced Modern UI Styles */
     :root {
-      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
       --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
       --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
       --gradient-dark: linear-gradient(135deg, #1e1e2e 0%, #2a2a40 100%);
       --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
       --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
       --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
-      --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.3);
+      --shadow-glow: 0 0 30px rgba(6, 182, 212, 0.3);
       --sidebar-width: 260px;
     }
 
@@ -51,19 +51,18 @@
       padding: 0;
     }
 
+    /* Enhanced inline styles for homepage specific overrides */
     body {
-      background: linear-gradient(135deg,
-          #0f0f23 0%,
-          #1a1a2e 50%,
-          #0f0f23 100%);
+      display: flex;
+      flex-direction: column;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
     }
-
-    body {
-      display: flex;
-      flex-direction: column;
+    
+    /* Force dark mode background - using pure black */
+    html[data-theme="dark"] body {
+      background: #000000 !important;
     }
 
     main {
@@ -71,9 +70,15 @@
       margin-left: var(--sidebar-width);
       transition: margin-left 0.3s ease;
     }
+    
+    @media (max-width: 768px) {
+      main {
+        margin-left: 0;
+      }
+    }
 
-    /* Animated Background Particles */
-    body::before {
+    /* Animated Background Particles - Remove for dark mode, keep for light */
+    html[data-theme="light"] body::before {
       content: "";
       position: fixed;
       top: 0;
@@ -82,17 +87,18 @@
       height: 100%;
       background:
         radial-gradient(circle at 20% 50%,
-          rgba(102, 126, 234, 0.1) 0%,
+          rgba(102, 126, 234, 0.05) 0%,
           transparent 50%),
         radial-gradient(circle at 80% 80%,
-          rgba(245, 87, 108, 0.1) 0%,
+          rgba(245, 87, 108, 0.05) 0%,
           transparent 50%),
         radial-gradient(circle at 40% 20%,
-          rgba(79, 172, 254, 0.1) 0%,
+          rgba(79, 172, 254, 0.05) 0%,
           transparent 50%);
       animation: particles 20s ease-in-out infinite;
       pointer-events: none;
       z-index: 0;
+    }
     }
 
     @keyframes particles {
@@ -121,7 +127,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+      background: #000000;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -187,10 +193,10 @@
       width: 100%;
       height: 100%;
       border: 4px solid transparent;
-      border-top-color: #667eea;
-      border-right-color: #667eea;
+      border-top-color: #06b6d4;
+      border-right-color: #06b6d4;
       animation: spinOuter 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-      box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
     }
 
     .loader-spinner::after {
@@ -200,10 +206,10 @@
       left: 50%;
       transform: translate(-50%, -50%);
       border: 4px solid transparent;
-      border-bottom-color: #764ba2;
-      border-left-color: #764ba2;
+      border-bottom-color: #22d3ee;
+      border-left-color: #22d3ee;
       animation: spinInner 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse;
-      box-shadow: 0 0 15px rgba(118, 75, 162, 0.5);
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
     }
 
     @keyframes spinOuter {
@@ -230,7 +236,7 @@
       color: #fff;
       font-size: 1.4rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 50%, #f093fb 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -283,7 +289,7 @@
     }
 
     .mobile-nav-item.active {
-      color: #667eea;
+      color: #06b6d4;
     }
 
     .mobile-nav-item.active::before {
@@ -294,7 +300,7 @@
       transform: translateX(-50%);
       width: 40px;
       height: 3px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
       border-radius: 0 0 3px 3px;
     }
 
@@ -369,7 +375,7 @@
     .hero-title {
       font-size: clamp(2.5rem, 6vw, 5rem);
       font-weight: 800;
-      background: linear-gradient(135deg, #fff 0%, #667eea 50%, #f5576c 100%);
+      background: linear-gradient(135deg, #fff 0%, #06b6d4 50%, #f5576c 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -576,7 +582,7 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 3rem;
-      background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+      background: linear-gradient(135deg, #fff 0%, #06b6d4 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -836,7 +842,7 @@
     }
 
     .footer-bottom span {
-      color: #667eea;
+      color: #06b6d4;
     }
 
     /* Responsive footer bottom */
@@ -882,7 +888,7 @@
     }
 
     .footer-link:hover {
-      color: #667eea;
+      color: #06b6d4;
       padding-left: 20px;
     }
 
@@ -1036,7 +1042,7 @@
 
     body.light-theme .nav-link:hover,
     body.light-theme .nav-link.active {
-      color: #667eea !important;
+      color: #06b6d4 !important;
     }
 
     body.light-theme .brand-logo-img {
@@ -1589,33 +1595,8 @@
       }, LOADER_HIDE_DELAY);
     });
 
-    // Sidebar functionality
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    const sidebarClose = document.getElementById('sidebar-close');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-    function openSidebar() {
-      sidebar.classList.add('active');
-      sidebarOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeSidebar() {
-      sidebar.classList.remove('active');
-      sidebarOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    sidebarToggle.addEventListener('click', openSidebar);
-    sidebarClose.addEventListener('click', closeSidebar);
-    sidebarOverlay.addEventListener('click', closeSidebar);
-
-    // Close sidebar when clicking on a link
-    const sidebarLinks = document.querySelectorAll('.sidebar-link');
-    sidebarLinks.forEach(link => {
-      link.addEventListener('click', closeSidebar);
-    });
+    // Sidebar functionality - handled by sidebar-loader.js
+    // Removed duplicate sidebar code to prevent null reference errors
 
     // Show/hide dashboard link based on authentication
     document.addEventListener('DOMContentLoaded', () => {

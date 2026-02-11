@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedural Map Studio | RPG World Generator</title>
+    <meta name="description"
+        content="Generate procedurably generated RPG maps with Perlin noise, cellular automata, and biome simulation.">
+    <link rel="stylesheet" href="styles/gui.css">
+    <link rel="stylesheet" href="styles/canvas.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <aside id="sidebar">
+            <header>
+                <h1>Map Studio</h1>
+                <p>v1.0.0</p>
+            </header>
+
+            <section class="control-group">
+                <h3>Global State</h3>
+                <div class="input-row">
+                    <label>Seed</label>
+                    <input type="text" id="seed-input" placeholder="Random Seed">
+                    <button id="random-seed">🎲</button>
+                </div>
+                <div class="input-row">
+                    <label>Dimensions</label>
+                    <select id="size-input">
+                        <option value="32">32x32 Tiles</option>
+                        <option value="64" selected>64x64 Tiles</option>
+                        <option value="128">128x128 Tiles</option>
+                        <option value="256">256x256 Tiles</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="control-group">
+                <h3>Terrain Noise</h3>
+                <div class="input-row">
+                    <label>Scale</label>
+                    <input type="range" id="noise-scale" min="0.01" max="0.5" step="0.01" value="0.1">
+                </div>
+                <div class="input-row">
+                    <label>Octaves</label>
+                    <input type="range" id="octaves" min="1" max="8" step="1" value="4">
+                </div>
+                <div class="input-row">
+                    <label>Persistence</label>
+                    <input type="range" id="persistence" min="0.1" max="0.9" step="0.05" value="0.5">
+                </div>
+            </section>
+
+            <section class="control-group">
+                <h3>Climate & Erosion</h3>
+                <div class="input-row">
+                    <label>Moisture</label>
+                    <input type="range" id="moisture-scale" min="0.01" max="0.3" step="0.01" value="0.08">
+                </div>
+                <div class="input-row">
+                    <label>Erosion Steps</label>
+                    <input type="range" id="erosion-steps" min="0" max="10" step="1" value="2">
+                </div>
+            </section>
+
+            <section class="control-group">
+                <h3>Cave System</h3>
+                <div class="input-row">
+                    <label>Fill Prob.</label>
+                    <input type="range" id="cave-prob" min="0.3" max="0.6" step="0.01" value="0.45">
+                </div>
+                <div class="input-row">
+                    <label>CA Iterations</label>
+                    <input type="range" id="cave-iter" min="0" max="10" step="1" value="4">
+                </div>
+            </section>
+
+            <footer class="actions">
+                <button id="generate-btn" class="primary">Generate Map</button>
+                <div class="export-row">
+                    <button id="export-png-btn">Export PNG</button>
+                    <button id="export-json-btn">Export JSON</button>
+                </div>
+            </footer>
+        </aside>
+
+        <main id="viewport">
+            <canvas id="map-canvas"></canvas>
+
+            <div id="toolbar">
+                <div class="tool-btn" title="Zoom In" id="zoom-in">+</div>
+                <div class="tool-btn" title="Zoom Out" id="zoom-out">-</div>
+                <div class="tool-btn" title="Reset View" id="reset-view">⟲</div>
+            </div>
+
+            <div id="stats">
+                <span id="coord-display">0:0</span>
+                <span id="biome-display">Biome: None</span>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/noise.js"></script>
+    <script src="scripts/automata.js"></script>
+    <script src="scripts/biomes.js"></script>
+    <script src="scripts/erosion.js"></script>
+    <script src="scripts/tiling.js"></script>
+    <script src="scripts/structures.js"></script>
+    <script src="scripts/export.js"></script>
+    <script src="scripts/engine.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const engine = new MapEngine('map-canvas');
+
+            // UI Binding
+            const seedInput = document.getElementById('seed-input');
+            seedInput.value = engine.seed;
+
+            document.getElementById('random-seed').onclick = () => {
+                const newSeed = Math.random().toString(36).substring(7);
+                seedInput.value = newSeed;
+                engine.setSeed(newSeed);
+            };
+
+            document.getElementById('size-input').onchange = (e) => engine.setSize(e.target.value, e.target.value);
+            document.getElementById('noise-scale').oninput = (e) => engine.setParam('noiseScale', e.target.value);
+            document.getElementById('octaves').oninput = (e) => engine.setParam('octaves', e.target.value);
+            document.getElementById('persistence').oninput = (e) => engine.setParam('persistence', e.target.value);
+            document.getElementById('moisture-scale').oninput = (e) => engine.setParam('moistureScale', e.target.value);
+            document.getElementById('erosion-steps').oninput = (e) => engine.setParam('erosionSteps', e.target.value);
+            document.getElementById('cave-prob').oninput = (e) => engine.setParam('caveProbability', e.target.value);
+            document.getElementById('cave-iter').oninput = (e) => engine.setParam('caveIterations', e.target.value);
+
+            document.getElementById('generate-btn').onclick = () => engine.generate();
+            document.getElementById('export-png-btn').onclick = () => engine.exportPNG();
+            document.getElementById('export-json-btn').onclick = () => engine.exportJSON();
+
+            document.getElementById('zoom-in').onclick = () => { engine.view.zoom *= 1.2; engine.render(); };
+            document.getElementById('zoom-out').onclick = () => { engine.view.zoom /= 1.2; engine.render(); };
+            document.getElementById('reset-view').onclick = () => {
+                engine.view = { zoom: 1, offsetX: 0, offsetY: 0 };
+                engine.render();
+            };
+
+            window.onresize = () => engine.resizeCanvas();
+        });
+    </script>
+</body>
+
+</html>
