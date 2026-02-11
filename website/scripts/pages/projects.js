@@ -4,6 +4,7 @@ const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Developm
 import { projectModal } from '../components/ProjectModal.js';
 import { App } from '../core/app.js';
 import { Notify } from '../core/Notify.js';
+import communityService from '../services/communityService.js';
 
 // Map of existing folders found in public/ to handle inconsistencies
 const folderMap = {
@@ -129,14 +130,28 @@ function getDifficulty(day) {
     return "CAPSTONE";
 }
 
-function renderProjects(filter = 'All') {
+async function renderProjects(filter = 'All') {
     const grid = document.getElementById('projectsGrid');
     grid.innerHTML = '';
 
+    // Load community projects
+    let communityProjects = [];
+    try {
+        communityProjects = await communityService.getApprovedProjects();
+    } catch (error) {
+        console.warn('Failed to load community projects:', error);
+    }
+
+    // Combine static and community projects
+    const allProjectsWithCommunity = [
+        ...allProjects.map(p => ({ ...p, isCommunity: false })),
+        ...communityProjects.map(p => communityService.formatProjectForGrid(p))
+    ];
+
     let delay = 0;
 
-    allProjects.forEach(project => {
-        const difficulty = getDifficulty(project.day);
+    allProjectsWithCommunity.forEach(project => {
+        const difficulty = project.isCommunity ? project.difficulty : getDifficulty(project.day);
 
         if (filter !== 'All' && difficulty.toLowerCase() !== filter.toLowerCase()) return;
 
