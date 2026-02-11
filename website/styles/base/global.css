@@ -2,9 +2,7 @@
 
 body {
     background-color: var(--bg-void);
-    background-image:
-        radial-gradient(circle at 15% 50%, rgba(255, 159, 28, 0.08) 0%, transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(78, 205, 196, 0.05) 0%, transparent 25%);
+    background-image: none;
     background-attachment: fixed;
     color: var(--text-primary);
     font-family: var(--font-body);
@@ -13,6 +11,13 @@ body {
     overflow-x: hidden;
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Add gradient only for light theme */
+[data-theme="light"] body {
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(255, 159, 28, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(78, 205, 196, 0.02) 0%, transparent 25%);
 }
 
 h1,
