@@ -46,6 +46,8 @@ function initializeSidebar() {
   
   // Update theme icon in sidebar
   updateSidebarThemeIcon();
+  setupSidebarToggle();
+
 }
 
 function updateSidebarThemeIcon() {
@@ -82,7 +84,69 @@ function updateSidebarThemeIcon() {
   }
 }
 
-// Export for use in navigation.js
-if (typeof window !== 'undefined') {
-  window.updateSidebarThemeIcon = updateSidebarThemeIcon;
+function setupSidebarToggle() {
+  const sidebar = document.querySelector('.sidebar-fixed');
+  const closeBtn = document.getElementById('sidebar-close-btn');
+  const openBtn = document.getElementById('sidebar-open-btn');
+
+  if (!sidebar) return;
+
+  // Check if we're on mobile
+  const isMobile = () => window.innerWidth <= 640;
+
+  // Restore saved state (only for desktop)
+  if (!isMobile() && localStorage.getItem('sidebarCollapsed') === 'true') {
+    sidebar.classList.add('sidebar-collapsed');
+    document.body.classList.add('sidebar-collapsed');
+  }
+
+  // Close button handler
+  closeBtn?.addEventListener('click', () => {
+    sidebar.classList.add('sidebar-collapsed');
+    document.body.classList.add('sidebar-collapsed');
+    // Also remove mobile-open class if present
+    sidebar.classList.remove('mobile-open');
+    document.body.classList.remove('sidebar-mobile-open');
+    localStorage.setItem('sidebarCollapsed', 'true');
+  });
+
+  // Open button handler
+  openBtn?.addEventListener('click', () => {
+    sidebar.classList.remove('sidebar-collapsed');
+    document.body.classList.remove('sidebar-collapsed');
+    // On mobile, add mobile-open class
+    if (isMobile()) {
+      sidebar.classList.add('mobile-open');
+      document.body.classList.add('sidebar-mobile-open');
+    }
+    localStorage.setItem('sidebarCollapsed', 'false');
+  });
+
+  // Debounce helper function
+  let resizeTimeout;
+  const debounce = (func, wait) => {
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(resizeTimeout);
+        func(...args);
+      };
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(later, wait);
+    };
+  };
+
+  // Handle window resize with debouncing
+  const handleResize = debounce(() => {
+    if (!isMobile()) {
+      // On desktop, remove mobile-open class
+      sidebar.classList.remove('mobile-open');
+      document.body.classList.remove('sidebar-mobile-open');
+    }
+  }, 150);
+
+  // Note: Event listener is not removed because sidebar persists for page lifetime
+  window.addEventListener('resize', handleResize);
 }
+
+// Export for use in navigation.js
+window.updateSidebarThemeIcon = updateSidebarThemeIcon;

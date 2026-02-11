@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings | 100 Days of Web Dev</title>
     <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
       .settings-container {
         max-width: 800px;
@@ -184,6 +185,18 @@
           padding: 1rem;
         }
 
+        .settings-header h1 {
+          font-size: 2rem;
+        }
+
+        .settings-section {
+          padding: 1.5rem;
+        }
+
+        .section-title {
+          font-size: 1.25rem;
+        }
+
         .setting-item {
           flex-direction: column;
           align-items: flex-start;
@@ -192,6 +205,51 @@
 
         .btn-group {
           flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .settings-container {
+          padding: 0.75rem;
+        }
+
+        .settings-header {
+          margin-bottom: 2rem;
+        }
+
+        .settings-header h1 {
+          font-size: 1.75rem;
+        }
+
+        .settings-section {
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+        }
+
+        .form-input {
+          font-size: 16px; /* Prevents iOS Safari from zooming on input focus (iOS zooms when font-size < 16px) */
+        }
+
+        .toggle-switch {
+          width: 50px;
+          height: 26px;
+        }
+
+        .toggle-slider {
+          width: 20px;
+          height: 20px;
+        }
+
+        .toggle-switch.active .toggle-slider {
+          transform: translateX(24px);
         }
       }
     </style>
@@ -212,6 +270,17 @@
         <!-- Profile Settings -->
         <div class="settings-section">
           <h2 class="section-title">👤 Profile Settings</h2>
+
+          <div class="form-group">
+            <label>Profile Picture</label>
+            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+              <img id="settingsAvatar" src="../assets/images/pilot_avatar.png" alt="Avatar" 
+                   style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--glass-border);">
+              <button type="button" class="btn btn-secondary" onclick="changeSettingsAvatar()">
+                <i class="fas fa-camera"></i> Change Photo
+              </button>
+            </div>
+          </div>
 
           <div class="form-group">
             <label for="displayName">Display Name</label>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Breakout - Classic Arcade</title>
+    <link rel="stylesheet" href="./styles/app.css">
+    <link rel="stylesheet" href="./styles/effects.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-wrapper">
+        <header class="game-ui top">
+            <div class="stat-box">
+                <span class="label">LEVEL</span>
+                <span id="level-val" class="value">01</span>
+            </div>
+            <div class="stat-box main">
+                <span class="label">SCORE</span>
+                <span id="score-val" class="value">000000</span>
+            </div>
+            <div class="stat-box">
+                <span class="label">LIVES</span>
+                <div id="lives-container" class="lives-icons">
+                    <!-- Heart icons will be injected here -->
+                </div>
+            </div>
+        </header>
+
+        <div class="canvas-container" id="container">
+            <canvas id="gameCanvas"></canvas>
+
+            <div id="overlay" class="overlay hidden">
+                <div class="content win hidden" id="win-screen">
+                    <h1 class="glitch" data-text="LEVEL COMPLETE">LEVEL COMPLETE</h1>
+                    <p>Bonus Points: <span id="bonus-val">500</span></p>
+                    <button class="btn btn-primary" id="next-btn">NEXT LEVEL</button>
+                </div>
+
+                <div class="content lose hidden" id="lose-screen">
+                    <h1 class="glitch" data-text="GAME OVER">GAME OVER</h1>
+                    <p>Final Score: <span id="final-score">0</span></p>
+                    <button class="btn btn-secondary" id="restart-btn">RETRY</button>
+                </div>
+
+                <div class="content start" id="start-screen">
+                    <h1 class="main-title">NEON BREAKOUT</h1>
+                    <p class="instruction">PRESS SPACE OR CLICK TO START</p>
+                    <div class="controls-hint">
+                        <span><kbd>←</kbd> <kbd>→</kbd> MOVE</span>
+                        <span><kbd>SPACE</kbd> LAUNCH</span>
+                    </div>
+                </div>
+
+                <div class="content pause hidden" id="pause-screen">
+                    <h1>PAUSED</h1>
+                    <p>Press ESC to Resume</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="game-ui bottom">
+            <div class="active-powerups" id="powerup-display">
+                <!-- Active powerup badges -->
+            </div>
+            <div class="high-score">
+                <span class="label">BEST</span>
+                <span id="high-score-val" class="value">000000</span>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="./scripts/game.js"></script>
+</body>
+
+</html>
