@@ -1,4 +1,4 @@
-const quotes = [
+let quotes = [
     {
         quote: "Believe you can and you're halfway there.",
         author: "Theodore Roosevelt"
@@ -61,13 +61,49 @@ const quotes = [
     }
 ];
 
+// ---------------- LOAD SAVED QUOTES ----------------
+const savedQuotes = JSON.parse(localStorage.getItem("quotes"));
+if (savedQuotes && Array.isArray(savedQuotes)) {
+    quotes.push(...savedQuotes);
+}
 
+// ---------------- ELEMENTS ----------------
 const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const btn = document.getElementById("btn");
 
+const userQuote = document.getElementById("userQuote");
+const userAuthor = document.getElementById("userAuthor");
+const addBtn = document.getElementById("addBtn");
+
+// ---------------- RANDOM QUOTE ----------------
 btn.addEventListener("click", () => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
+
     quoteText.textContent = `"${quotes[randomIndex].quote}"`;
     authorText.textContent = `— ${quotes[randomIndex].author}`;
+});
+
+// ---------------- ADD USER QUOTE + SHOW IT ----------------
+addBtn.addEventListener("click", () => {
+    const q = userQuote.value.trim();
+    const a = userAuthor.value.trim();
+
+    if (!q || !a) return;
+
+    const newQuote = { quote: q, author: a };
+
+    quotes.push(newQuote);
+
+    // Save to localStorage
+    const stored = JSON.parse(localStorage.getItem("quotes")) || [];
+    stored.push(newQuote);
+    localStorage.setItem("quotes", JSON.stringify(stored));
+
+    // 👇 Immediately display the added quote
+    quoteText.textContent = `"${q}"`;
+    authorText.textContent = `— ${a}`;
+
+    userQuote.value = "";
+    userAuthor.value = "";
 });
