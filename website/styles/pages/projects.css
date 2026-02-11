@@ -20,7 +20,7 @@
   grid-template-columns: repeat(auto-fill, var(--project-card-width));
   gap: var(--project-grid-gap);
   padding: 1rem 0 4rem;
-  
+
   /* Smooth animation for grid changes */
   transition: grid-template-columns 0.3s ease;
 }
@@ -83,11 +83,10 @@
   transform: translateX(-50%);
   width: 60px;
   height: 2px;
-  background: linear-gradient(90deg, 
-    transparent, 
-    var(--accent-core), 
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      var(--accent-core),
+      transparent);
 }
 
 /* ============================================
@@ -200,7 +199,7 @@
   color: #000;
   border-color: transparent;
   font-weight: 600;
-  box-shadow: 
+  box-shadow:
     0 4px 20px rgba(255, 157, 0, 0.3),
     0 0 0 1px rgba(255, 157, 0, 0.2) inset;
 }
@@ -255,10 +254,9 @@
 
 /* Tech tag in active project card */
 .project-card:hover .tech-tag {
-  background: linear-gradient(135deg, 
-    rgba(255, 157, 0, 0.1), 
-    rgba(255, 107, 107, 0.1)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 157, 0, 0.1),
+      rgba(255, 107, 107, 0.1));
   border-color: rgba(255, 157, 0, 0.4);
   color: var(--accent-core);
   box-shadow: 0 4px 12px rgba(255, 157, 0, 0.1);
@@ -419,8 +417,15 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* No results */
@@ -440,30 +445,122 @@
    LIGHT MODE ADAPTATION
    ============================================ */
 
+/* ============================================
+   LIGHT MODE OVERRIDES
+   ============================================ */
+
 [data-theme="light"] {
   --project-card-width: minmax(340px, 1fr);
 }
 
+[data-theme="light"] .projects-controls::before {
+  background: linear-gradient(90deg, transparent, var(--accent-core), transparent);
+}
+
 [data-theme="light"] .search-input {
-  background: rgba(0, 0, 0, 0.03);
-  border-color: rgba(0, 0, 0, 0.08);
+  background: var(--bg-input);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .search-input:focus {
+  background: white;
+  border-color: var(--accent-core);
+  box-shadow: 0 0 0 3px var(--accent-alpha);
+}
+
+[data-theme="light"] .search-input::placeholder {
+  color: var(--text-tertiary);
 }
 
 [data-theme="light"] .filter-tabs {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: rgba(0, 0, 0, 0.05);
+  background: var(--bg-secondary);
+  border-color: var(--border-light);
 }
 
-[data-theme="light"] .tech-tag {
-  background: rgba(0, 0, 0, 0.03);
-  border-color: rgba(0, 0, 0, 0.08);
+[data-theme="light"] .tab-btn {
   color: var(--text-secondary);
 }
 
+[data-theme="light"] .tab-btn:hover {
+  background: white;
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .tab-btn.active {
+  background: var(--accent-core);
+  color: white;
+  box-shadow: 0 4px 15px var(--accent-alpha);
+}
+
+[data-theme="light"] .tab-btn .badge {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] .tech-tag {
+  background: var(--bg-secondary);
+  border-color: var(--border-light);
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .tech-tag:hover,
 [data-theme="light"] .project-card:hover .tech-tag {
-  background: rgba(255, 157, 0, 0.08);
-  border-color: rgba(255, 157, 0, 0.3);
-  color: #ff9d00;
+  background: var(--accent-alpha);
+  border-color: var(--accent-core);
+  color: var(--accent-core);
+}
+
+[data-theme="light"] .project-card {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .project-card:hover {
+  border-color: var(--accent-core);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .project-card h3 {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .project-card .description {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .project-footer {
+  border-top-color: var(--border-light);
+}
+
+[data-theme="light"] .project-stats {
+  color: var(--text-tertiary);
+}
+
+[data-theme="light"] .project-action {
+  background: var(--accent-alpha);
+  color: var(--accent-core);
+  border-color: var(--accent-core);
+}
+
+[data-theme="light"] .project-action:hover {
+  background: var(--accent-core);
+  color: white;
+  box-shadow: 0 4px 12px var(--accent-alpha);
+}
+
+[data-theme="light"] .view-toggle {
+  background: var(--bg-secondary);
+}
+
+[data-theme="light"] .view-btn.active {
+  background: white;
+  color: var(--accent-core);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .skeleton-card {
+  background: var(--bg-secondary);
 }
 
 /* ============================================
@@ -471,7 +568,7 @@
    ============================================ */
 
 /* Stagger animation for grid items */
-.projects-grid > * {
+.projects-grid>* {
   animation: slideUpFade 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   opacity: 0;
   transform: translateY(20px);
@@ -485,19 +582,37 @@
 }
 
 /* Stagger delay for grid items */
-.projects-grid > *:nth-child(1) { animation-delay: 0.1s; }
-.projects-grid > *:nth-child(2) { animation-delay: 0.2s; }
-.projects-grid > *:nth-child(3) { animation-delay: 0.3s; }
-.projects-grid > *:nth-child(4) { animation-delay: 0.4s; }
-.projects-grid > *:nth-child(5) { animation-delay: 0.5s; }
-.projects-grid > *:nth-child(6) { animation-delay: 0.6s; }
+.projects-grid>*:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.projects-grid>*:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.projects-grid>*:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.projects-grid>*:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.projects-grid>*:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.projects-grid>*:nth-child(6) {
+  animation-delay: 0.6s;
+}
 
 /* ============================================
    ACCESSIBILITY
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  .projects-grid > *,
+
+  .projects-grid>*,
   .tab-btn,
   .tech-tag,
   .project-action {

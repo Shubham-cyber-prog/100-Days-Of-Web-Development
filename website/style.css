@@ -4,35 +4,35 @@
 */
 :root {
   /* Base Colors - Dark Mode Default */
-  --bg-primary: #0a0a0a;
-  /* Deepest black/grey */
-  --bg-secondary: #111111;
+  --bg-primary: #000000;
+  /* Pure black */
+  --bg-secondary: #0a0a0a;
   /* Slightly lighter for contrast */
-  --bg-card: #161616;
+  --bg-card: #0a0a0a;
   /* Card background */
-  --bg-hover: #1c1c1c;
+  --bg-hover: #1a1a1a;
   /* Hover state */
 
   /* Text Colors */
-  --text-primary: #ededed;
-  /* High contrast off-white */
-  --text-secondary: #a1a1aa;
-  /* Muted grey */
-  --text-tertiary: #52525b;
-  /* Subtle grey for borders/details */
+  --text-primary: #FFFFFF;
+  /* Pure white text */
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  /* Slightly dimmed white */
+  --text-tertiary: rgba(255, 255, 255, 0.6);
+  /* More dimmed for subtle text */
 
   /* Accents - Minimal & Professional */
-  --accent-primary: #ededed;
+  --accent-primary: #FFFFFF;
   /* White accent for austere look */
   --accent-secondary: #3b82f6;
   /* Subtle blue for links/actions */
-  --border-color: #262626;
+  --border-color: rgba(255, 255, 255, 0.12);
   /* Subtle border */
-  --border-hover: #404040;
+  --border-hover: rgba(255, 255, 255, 0.25);
 
   /* Badges */
-  --badge-bg: #262626;
-  --badge-text: #e5e5e5;
+  --badge-bg: #1a1a1a;
+  --badge-text: #FFFFFF;
 
   /* Typography */
   --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -84,6 +84,11 @@ body.light-mode {
   padding: 0;
   box-sizing: border-box;
 }
+/* --- Smooth Scrolling for Internal Anchor Links --- */
+html {
+  scroll-behavior: smooth;
+}
+
 
 body {
   font-family: var(--font-main);
