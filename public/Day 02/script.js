@@ -32,6 +32,7 @@ setInterval(() => {
   index = (index + 1) % slides.length;
   showSlide(index);
 }, 4000);
+
 }, 5000);
 
 
@@ -44,6 +45,7 @@ window.addEventListener("scroll", () => {
 
 scrollBtn.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+
 
   if (window.scrollY > 300) {
     scrollBtn.style.display = "block";
