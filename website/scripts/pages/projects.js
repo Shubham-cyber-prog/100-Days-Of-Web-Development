@@ -37,9 +37,23 @@ async function loadProjects() {
     }
 }
 
-function renderProjects(filter = 'All') {
+async function renderProjects(filter = 'All') {
     const grid = document.getElementById('projectsGrid');
     grid.innerHTML = '';
+
+    // Load community projects
+    let communityProjects = [];
+    try {
+        communityProjects = await communityService.getApprovedProjects();
+    } catch (error) {
+        console.warn('Failed to load community projects:', error);
+    }
+
+    // Combine static and community projects
+    const allProjectsWithCommunity = [
+        ...allProjects.map(p => ({ ...p, isCommunity: false })),
+        ...communityProjects.map(p => communityService.formatProjectForGrid(p))
+    ];
 
     let delay = 0;
 
