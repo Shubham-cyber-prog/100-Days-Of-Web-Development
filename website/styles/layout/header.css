@@ -1,23 +1,20 @@
 /* --- Zenith Layout: Header & Nav ("The Capsule") --- */
-/* Header is disabled - using fixed sidebar instead */
+/* Header is disabled - using glassmorphism navbar instead */
 
 .site-header {
   display: none !important;
 }
 
-.nav-container {
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-  width: 95%;
-  max-width: 1300px;
-  padding: 0 var(--space-4);
+/* Disable all old nav styles to prevent conflicts with glassmorphism navbar */
+.old-nav-container,
+.old-nav-links,
+.old-nav-link {
+  display: none !important;
+}
+/* 
+=== OLD NAV STYLES - DISABLED TO PREVENT CONFLICTS ===
+These styles are commented out to prevent conflicts with the new glassmorphism navbar
 
-  /* Dark glassmorphism to blend with site */
-  background: rgba(15, 15, 35, 0.7);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(102, 126, 234, 0.1);
   border-radius: 100px;
@@ -27,14 +24,14 @@
   /* Prevent clipping profile icon */
 }
 
-/* Scrolled state */
-.site-header.scrolled .nav-container {
+/* OLD STYLES - DISABLED
+.old-nav-container.scrolled {
   background: rgba(15, 15, 35, 0.9);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
-/* Logo */
-.nav-logo {
+/* Logo - DISABLED
+.old-nav-logo {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -47,17 +44,18 @@
 }
 
 .brand-logo-img {
-  height: 45px;
+  height: 35px;
+  /* Reduced from 45px */
   width: auto;
-  max-width: 150px;
+  max-width: 120px;
   object-fit: contain;
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
 
-/* Nav Links (Desktop) */
-.nav-links {
+/* Nav Links (Desktop) - DISABLED
+.old-nav-links {
   display: flex;
   gap: var(--space-2);
   align-items: center;
@@ -76,6 +74,7 @@
   z-index: 1;
 }
 
+/*
 .nav-link {
   font-family: var(--font-body);
   font-weight: var(--weight-medium);
@@ -98,6 +97,7 @@
   font-weight: var(--weight-bold);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
+*/
 
 /* Features Dropdown */
 .nav-dropdown {
