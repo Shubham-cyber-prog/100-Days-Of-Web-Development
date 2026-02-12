@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractal Geometry Explorer | High-Performance Mathematics</title>
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/themes.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="viewport">
+        <canvas id="fractal-canvas"></canvas>
+    </div>
+
+    <aside id="controls">
+        <header>
+            <h2 style="font-size: 1.2rem; margin-bottom: 5px;">Fractal Explorer</h2>
+            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 20px;">Use Mouse Wheel to Zoom, Drag to Pan</p>
+        </header>
+
+        <div class="hud-info">
+            <div class="hud-item">
+                <span>Zoom:</span>
+                <span id="zoom-val" style="color: var(--accent);">1.00e+0</span>
+            </div>
+            <div class="hud-item">
+                <span>Center:</span>
+                <span id="coord-val" style="color: var(--accent);">0.0, 0.0i</span>
+            </div>
+            <div class="hud-item">
+                <span>Speed:</span>
+                <span id="speed-val" style="color: #4ade80;">0.0M px/s</span>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Fractal Set</label>
+            <select id="fractal-type">
+                <option value="mandelbrot">Mandelbrot Set</option>
+                <option value="julia">Julia Set</option>
+                <option value="burningShip">Burning Ship</option>
+                <option value="tricorn">Tricorn Set</option>
+                <option value="buffalo">Buffalo Set</option>
+                <option value="newton">Newton Set</option>
+            </select>
+        </div>
+
+        <div id="julia-controls" class="control-group" style="display: none;">
+            <label>Julia Constant (C)</label>
+            <div class="btn-row">
+                <input type="number" id="julia-r" value="-0.8" step="0.001"
+                    style="width: 100%; background: #1e293b; border: 1px solid var(--border); color: white; padding: 4px; border-radius: 4px;">
+                <input type="number" id="julia-i" value="0.156" step="0.001"
+                    style="width: 100%; background: #1e293b; border: 1px solid var(--border); color: white; padding: 4px; border-radius: 4px;">
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <label>Color Palette</label>
+            <select id="palette-type">
+                <option value="ultra">Ultra Color</option>
+                <option value="fire">Solar Flare</option>
+                <option value="neon">Cyberpunk</option>
+                <option value="ice">Arctic Ice</option>
+                <option value="forest">Forest Canopy</option>
+                <option value="deepsea">Deep Ocean</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Detail Level (Iter: <span id="iter-val">256</span>)</label>
+            <input type="range" id="iterations" min="64" max="2048" step="64" value="256">
+        </div>
+
+        <div class="btn-row">
+            <button id="add-bookmark">Bookmark</button>
+            <button id="export-img">Export 4K</button>
+        </div>
+
+        <div id="bookmarks">
+            <label style="display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 8px;">BOOKMARKS</label>
+            <div id="bookmark-list">
+                <!-- Bookmarks injected here -->
+            </div>
+        </div>
+    </aside>
+
+    <script src="scripts/coloring.js"></script>
+    <script src="scripts/history.js"></script>
+    <script src="scripts/core.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const engine = new FractalEngine('fractal-canvas');
+            window.ui = new UIController(engine);
+            engine.render();
+        });
+    </script>
+</body>
+
+</html>
