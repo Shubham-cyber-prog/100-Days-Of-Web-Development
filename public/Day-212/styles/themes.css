@@ -1,0 +1,50 @@
+/**
+ * Preset Themes and UI Variables
+ */
+
+.theme-dark {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --accent: #3b82f6;
+}
+
+.theme-ghost {
+    --bg: #000;
+    --card: rgba(255, 255, 255, 0.05);
+    --accent: #f472b6;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#controls {
+    animation: fadeIn 0.5s ease-out;
+}
