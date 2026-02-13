@@ -242,7 +242,7 @@ button:hover{
 
 
 <!-- Download -->
-<div class="download">
+<div class="download" id="downloadBox" style="display:none;">
 
   <button onclick="downloadImg()">Download Image</button>
 
@@ -326,7 +326,8 @@ async function generate(){
       new Date().toLocaleDateString();
 
 
-    document.getElementById("certificate").style.display="block";
+document.getElementById("certificate").style.display="block";
+document.getElementById("downloadBox").style.display="block";
 
   }
 
@@ -342,47 +343,55 @@ async function generate(){
 /* Download Image */
 function downloadImg(){
 
-  let cert=document.getElementById("certificate");
+  let cert = document.getElementById("certificate");
 
-  html2canvas(cert).then(canvas=>{
+  html2canvas(cert,{
+    useCORS:true,
+    allowTaint:true,
+    scale:2
+  }).then(canvas=>{
 
-    let a=document.createElement("a");
+    let link = document.createElement("a");
 
-    a.href=canvas.toDataURL();
+    link.href = canvas.toDataURL("image/png");
 
-    a.download="certificate.png";
+    link.download = "contributor_certificate.png";
 
-    a.click();
+    link.click();
 
   });
-
 }
+
 
 
 
 /* Download PDF */
 function downloadPDF(){
 
-  let cert=document.getElementById("certificate");
+  let cert = document.getElementById("certificate");
 
-  html2canvas(cert).then(canvas=>{
+  html2canvas(cert,{
+    useCORS:true,
+    allowTaint:true,
+    scale:2
+  }).then(canvas=>{
 
-    const img=canvas.toDataURL("image/png");
+    const imgData = canvas.toDataURL("image/png");
 
-    const {jsPDF}=window.jspdf;
+    const { jsPDF } = window.jspdf;
 
-    let pdf=new jsPDF("landscape","mm","a4");
+    let pdf = new jsPDF("landscape","mm","a4");
 
-    let w=pdf.internal.pageSize.getWidth();
-    let h=pdf.internal.pageSize.getHeight();
+    let width = pdf.internal.pageSize.getWidth();
+    let height = pdf.internal.pageSize.getHeight();
 
-    pdf.addImage(img,"PNG",0,0,w,h);
+    pdf.addImage(imgData,"PNG",0,0,width,height);
 
-    pdf.save("certificate.pdf");
+    pdf.save("contributor_certificate.pdf");
 
   });
-
 }
+
 
 </script>
 
