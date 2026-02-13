@@ -37,9 +37,23 @@ async function loadProjects() {
     }
 }
 
-function renderProjects(filter = 'All') {
+async function renderProjects(filter = 'All') {
     const grid = document.getElementById('projectsGrid');
     grid.innerHTML = '';
+
+    // Load community projects
+    let communityProjects = [];
+    try {
+        communityProjects = await communityService.getApprovedProjects();
+    } catch (error) {
+        console.warn('Failed to load community projects:', error);
+    }
+
+    // Combine static and community projects
+    const allProjectsWithCommunity = [
+        ...allProjects.map(p => ({ ...p, isCommunity: false })),
+        ...communityProjects.map(p => communityService.formatProjectForGrid(p))
+    ];
 
     let delay = 0;
 
@@ -111,6 +125,7 @@ function renderProjects(filter = 'All') {
             <h3 class="project-title" style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
                 ${project.title}
             </h3>
+            ${project.description ? `<p class="project-description" style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 0.75rem; line-height: 1.5;">${project.description}</p>` : ''}
             <div class="tech-stack" style="margin-bottom: 0.5rem;">
                 ${techTags}
             </div>

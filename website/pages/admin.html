@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/images/logo.png" height="70px" width="100px">
+    <title>Admin Dashboard | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/pages/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="../scripts/components/sidebar-loader.js"></script>
+</head>
+
+<body>
+    <!-- Main Content -->
+    <main class="container section">
+        <div class="page-header animate-enter">
+            <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
+                Admin Dashboard
+            </h1>
+            <p class="text-secondary">Manage community project submissions and approvals.</p>
+        </div>
+
+        <!-- Admin Content -->
+        <div class="admin-content animate-enter delay-100">
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3>Pending Reviews</h3>
+                    <span id="pendingCount" class="stat-number">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Approved Projects</h3>
+                    <span id="approvedCount" class="stat-number">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Rejected Projects</h3>
+                    <span id="rejectedCount" class="stat-number">0</span>
+                </div>
+            </div>
+
+            <div class="admin-actions">
+                <button id="refreshBtn" class="btn-primary">
+                    <i class="fas fa-sync"></i>
+                    Refresh
+                </button>
+            </div>
+
+            <!-- Submissions Table -->
+            <div class="submissions-table">
+                <h2>Pending Submissions</h2>
+                <div id="submissionsList" class="table-container">
+                    <div class="loading-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading submissions...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Review Submission</h3>
+                <button class="modal-close" onclick="closeReviewModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Submission details will be loaded here -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeReviewModal()">Cancel</button>
+                <button class="btn-danger" onclick="rejectSubmission()">
+                    <i class="fas fa-times"></i>
+                    Reject
+                </button>
+                <button class="btn-success" onclick="approveSubmission()">
+                    <i class="fas fa-check"></i>
+                    Approve
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Footer -->
+    <div id="footer-placeholder"></div>
+
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="../scripts/components/footer-loader.js"></script>
+    <script src="../scripts/components/cursor.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+    <script type="module" src="../scripts/pages/admin.js"></script>
+</body>
+</html>

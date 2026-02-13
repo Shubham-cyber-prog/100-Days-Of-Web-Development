@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,6 +18,49 @@
         <input id="userAuthor" placeholder="Author..." />
         <button id="addBtn">Add</button>
       </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Quote Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>✨ Personalized Quotes</h1>
+
+        <!-- Category Section -->
+        <div class="category-box" id="categoryBox">
+            <p>Select Your Interest</p>
+
+            <select id="categorySelect">
+                <option value="">Choose Category</option>
+                <option value="motivation">Motivation</option>
+                <option value="life">Life</option>
+                <option value="success">Success</option>
+                <option value="study">Study</option>
+                <option value="love">Love</option>
+            </select>
+
+            <button id="saveCategory">Save Preference</button>
+        </div>
+
+
+        <!-- Quote Section -->
+        <div class="quote-box hidden" id="quoteBox">
+
+            <p id="quote">Loading...</p>
+            <p id="author"></p>
+
+            <div class="btn-group">
+                <button id="nextBtn">Next Quote</button>
+                <button id="changeBtn">Change Category</button>
+            </div>
+
+        </div>
+
     </div>
 
     <script src="app.js"></script>
