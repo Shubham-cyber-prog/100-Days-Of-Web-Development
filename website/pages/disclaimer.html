@@ -1,113 +1,283 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Disclaimer | 100 Days of Web Development</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Disclaimer | 100 Days of Web Development</title>
 
-  <!-- Main Styles -->
-  <link rel="stylesheet" href="../styles/index.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet" />
+<link rel="icon" type="image/png" href="../assets/images/logo.png" />
 
-  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#000;
+  color:#fff;
+  font-family:'Inter',sans-serif;
+}
+
+/* NAV */
+.nav-links{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  padding:20px 0;
+}
+
+.nav-link{
+  text-decoration:none;
+  color:#aaa;
+  font-weight:500;
+}
+
+.nav-link:hover{
+  color:#4aa3ff;
+}
+
+/* MAIN WRAPPER */
+.legal-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
+/* CONTENT */
+.legal-container{
+  width:100%;
+  max-width:1000px;
+  padding:60px 20px 80px;
+}
+
+/* HEADER */
+.legal-header{
+  text-align:center;
+  margin-bottom:60px;
+}
+
+.legal-header h1{
+  font-size:3rem;
+  margin-bottom:15px;
+}
+
+.legal-header p{
+  max-width:700px;
+  margin:auto;
+  color:#bbb;
+  line-height:1.6;
+  font-size:1.1rem;
+}
+
+/* CARD LAYOUT */
+.legal-cards{
+  display:flex;
+  flex-direction:column;
+  gap:30px;
+}
+
+/* CARD */
+.legal-card{
+  width:100%;
+  padding:30px 35px;
+  border-radius:16px;
+  border:1px solid rgba(0,150,255,0.4);
+  background:linear-gradient(145deg,#050505,#0b0b0b);
+  transition:0.3s ease;
+}
+
+.legal-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 25px rgba(0,150,255,0.25);
+}
+
+/* CARD HEADER */
+.card-header{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:18px;
+}
+
+.card-icon{
+  font-size:1.4rem;
+}
+
+.card-header h3{
+  font-size:1.35rem;
+  color:#4aa3ff;
+}
+
+/* TEXT */
+.legal-card p{
+  font-size:1rem;
+  line-height:1.7;
+  color:#ddd;
+}
+
+/* FOOTER */
+.site-footer{
+  border-top:1px solid #111;
+  padding:40px 20px;
+  margin-top:80px;
+}
+
+.footer-content{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:40px;
+}
+
+.footer-col h3{
+  margin-bottom:15px;
+  color:#4aa3ff;
+}
+
+.footer-links{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.footer-link{
+  text-decoration:none;
+  color:#aaa;
+}
+
+.footer-link:hover{
+  color:#4aa3ff;
+}
+
+.footer-bottom{
+  margin-top:40px;
+  text-align:center;
+  color:#777;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+  .legal-header h1{
+    font-size:2.2rem;
+  }
+
+  .legal-card{
+    padding:25px;
+  }
+
+  .footer-content{
+    flex-direction:column;
+  }
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- Header -->
-  <nav class="nav-links">
-    <a href="../../index.html" class="nav-link">Home</a>
-    <a href="./projects.html" class="nav-link">Projects</a>
-    <a href="./about.html" class="nav-link">About</a>
-    <a href="./contributors.html" class="nav-link">Contributors</a>
-    <a href="./forum.html" class="nav-link">Forum</a>
-  </nav>
+<nav class="nav-links">
+  <a href="../../index.html" class="nav-link">Home</a>
+  <a href="./projects.html" class="nav-link">Projects</a>
+  <a href="./about.html" class="nav-link">About</a>
+  <a href="./contributors.html" class="nav-link">Contributors</a>
+  <a href="./forum.html" class="nav-link">Forum</a>
+</nav>
 
-  <!-- Main Content -->
-  <main class="container section" style="margin-left: 280px;">
-    <section class="animate-enter">
-      <h1 class="hero-title" style="font-size: 2.8rem; margin-bottom: 1rem;">
-        Disclaimer
-      </h1>
+<div class="legal-wrapper">
+<main class="legal-container">
 
-      <p class="hero-subtitle" style="max-width: 700px;">
-        The information provided on the 100 Days of Web Development platform is
-        intended for educational and informational purposes only.
+  <div class="legal-header">
+    <h1>Disclaimer</h1>
+    <p>
+      The information provided on the 100 Days of Web Development platform
+      is intended for educational and informational purposes only.
+    </p>
+  </div>
+
+  <div class="legal-cards">
+
+    <div class="legal-card">
+      <div class="card-header">
+        <span class="card-icon">ℹ️</span>
+        <h3>General Information</h3>
+      </div>
+      <p>
+        While we strive to keep the content accurate and up to date, we make no guarantees regarding completeness, reliability, or accuracy.
       </p>
+    </div>
 
-      <div class="feature-card" style="max-width: 800px; margin: 3rem auto;">
-        <h3 style="margin-bottom: 1rem;">General Information</h3>
-        <p>
-          While we strive to keep the content accurate and up to date, we make
-          no guarantees regarding completeness, reliability, or accuracy.
-        </p>
-
-        <h3 style="margin: 2rem 0 1rem;">External Links</h3>
-        <p>
-          This platform may contain links to external websites. We are not
-          responsible for the content or practices of any third-party sites.
-        </p>
-
-        <h3 style="margin: 2rem 0 1rem;">Use at Your Own Risk</h3>
-        <p>
-          Any action you take based on the information found on this platform is
-          strictly at your own risk.
-        </p>
-
-        <h3 style="margin: 2rem 0 1rem;">Changes</h3>
-        <p>
-          This disclaimer may be updated at any time without prior notice.
-        </p>
+    <div class="legal-card">
+      <div class="card-header">
+        <span class="card-icon">🔗</span>
+        <h3>External Links</h3>
       </div>
-    </section>
-  </main>
+      <p>
+        This platform may contain links to external websites. We are not responsible for the content or practices of any third-party sites.
+      </p>
+    </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-content">
-      <div class="footer-brand">
-        <a href="../../index.html" class="footer-logo">
-          <img src="../assets/images/logo.png" alt="100 Days of Web Development logo" />
-          <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-        </a>
-        <p class="footer-desc">
-          A hyper-intensive protocol designed to forge elite web engineers
-          through daily deployment cycles.
-        </p>
+    <div class="legal-card">
+      <div class="card-header">
+        <span class="card-icon">⚠️</span>
+        <h3>Use at Your Own Risk</h3>
       </div>
+      <p>
+        Any action you take based on the information found on this platform is strictly at your own risk.
+      </p>
+    </div>
 
-      <div class="footer-col">
-        <h3>Quick Links</h3>
-        <nav class="footer-links">
-          <a href="../../index.html" class="footer-link">Home</a>
-          <a href="./projects.html" class="footer-link">Projects</a>
-          <a href="./contributors.html" class="footer-link">Contributors</a>
-          <a href="./about.html" class="footer-link">About</a>
-        </nav>
+    <div class="legal-card">
+      <div class="card-header">
+        <span class="card-icon">🔄</span>
+        <h3>Changes</h3>
       </div>
+      <p>
+        This disclaimer may be updated at any time without prior notice.
+      </p>
+    </div>
 
-      <div class="footer-col">
-        <h3>Legals</h3>
-        <nav class="footer-links">
-          <a href="./privacy-policy.html" class="footer-link">Privacy Policy</a>
-          <a href="./terms-of-use.html" class="footer-link">Terms of Use</a>
-          <a href="./disclaimer.html" class="footer-link">Disclaimer</a>
-        </nav>
+  </div>
+
+</main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-content">
+
+    <div>
+      <h3>Quick Links</h3>
+      <div class="footer-links">
+        <a href="../../index.html" class="footer-link">Home</a>
+        <a href="./projects.html" class="footer-link">Projects</a>
+        <a href="./about.html" class="footer-link">About</a>
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <p>© 2026 100 Days of Web Dev. All Systems Nominal.</p>
-      <p>Maintained by <span>Subham</span> ❤️</p>
+    <div>
+      <h3>Legals</h3>
+      <div class="footer-links">
+        <a href="./privacy-policy.html" class="footer-link">Privacy Policy</a>
+        <a href="./terms-of-use.html" class="footer-link">Terms of Use</a>
+        <a href="./disclaimer.html" class="footer-link">Disclaimer</a>
+      </div>
     </div>
-  </footer>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 100 Days of Web Dev. All Systems Nominal.
+  </div>
+</footer>
 
 </body>
 </html>
