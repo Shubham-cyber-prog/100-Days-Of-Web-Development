@@ -6,7 +6,7 @@
 body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #000000, #ffffff);
 }
 
 .wrapper {
@@ -81,4 +81,56 @@ h1 {
 .strength {
     margin-top: 15px;
     text-align: center;
+}
+
+/* Show/Hide button */
+#togglePassword {
+    background: #ddd;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* History */
+.history {
+    margin-top: 20px;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.history ul {
+    padding: 0;
+    list-style: none;
+}
+
+.history li {
+    background: #f3f3f3;
+    padding: 6px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .card {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+.strength-bar {
+    width: 100%;
+    height: 8px;
+    background: #eee;
+    border-radius: 5px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+#strengthFill {
+    height: 100%;
+    width: 0%;
+    transition: 0.3s ease;
 }
