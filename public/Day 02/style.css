@@ -1,4 +1,4 @@
-/* RESET */
+
 * {
   margin: 0;
   padding: 0;
@@ -7,11 +7,16 @@
 }
 
 
-/* VARIABLES */
 :root {
   --primary: #4f46e5;
   --dark: #1f2937;
   --light: #f9fafb;
+  --white: #fff;
+}
+
+
+
+  --white: #fff;
   --white: #ffffff;
 }
 
@@ -22,6 +27,22 @@ body {
   color: var(--dark);
 }
 
+/* COMMON */
+.container { max-width: 1200px; margin: auto; padding: 0 20px; }
+.section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; }
+
+.btn {
+  padding: 12px 30px;
+  border-radius: 25px;
+  display: inline-block;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { transform: scale(1.05); }
+
+.btn-secondary { border: 2px solid white; color: white; }
 
 /* COMMON */
 .container {
@@ -88,6 +109,8 @@ header {
   padding: 15px 0;
 }
 
+
+
 .logo {
   font-size: 1.4rem;
   font-weight: 700;
@@ -99,6 +122,11 @@ nav ul {
   list-style: none;
 }
 
+.mobile-menu-btn { display: none; background: none; border: none; font-size: 22px; }
+
+/* HERO */
+.hero {
+  padding: 140px 0 80px;
 nav a {
   text-decoration: none;
   color: var(--dark);
@@ -128,6 +156,16 @@ nav a:hover {
   gap: 40px;
 }
 
+
+.hero-content h1 { font-size: 3rem; margin-bottom: 20px; }
+.hero-image img { width: 100%; border-radius: 20px; }
+
+/* FEATURES */
+.features { padding: 80px 0; background: var(--light); }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
 .hero-content h1 {
   font-size: 3rem;
   margin-bottom: 20px;
@@ -168,6 +206,23 @@ nav a:hover {
   text-align: center;
   transition: 0.3s;
 }
+
+
+.feature-card:hover { transform: translateY(-10px); }
+
+/* TESTIMONIAL */
+.testimonials { padding: 80px 0; text-align: center; }
+
+.testimonial { display: none; font-size: 1.2rem; }
+.testimonial.active { display: block; }
+
+.slider-btns button {
+  padding: 10px 18px;
+  margin: 10px;
+  font-size: 20px;
+}
+
+/* CTA */
 
 .feature-card i {
   font-size: 30px;
@@ -234,6 +289,12 @@ nav a:hover {
   text-align: center;
 }
 
+
+
+/* FOOTER */
+
+
+
 .cta h2 {
   margin-bottom: 15px;
 }
@@ -252,7 +313,13 @@ footer {
 }
 
 
+
 /* SCROLL BUTTON */
+
+
+
+/* SCROLL BUTTON */
+
 #scrollTop {
   position: fixed;
   bottom: 30px;
@@ -263,6 +330,17 @@ footer {
   border-radius: 50%;
   padding: 12px;
   border: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-container { flex-direction: column; text-align: center; }
+  nav ul { 
+    position: absolute; top: 70px; left: 0; width: 100%;
+    background: white; flex-direction: column; display: none; 
+  }
+  nav ul.active { display: flex; }
+  .mobile-menu-btn { display: block; }
   cursor: pointer;
 }
 
