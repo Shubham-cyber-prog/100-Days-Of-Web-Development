@@ -19,30 +19,39 @@
   <link rel="icon" type="image/png" href="../assets/images/logo.png" />
 </head>
 
-<body>
+<body style="margin-left: 0px;">
 
   <!-- Header -->
-  <nav class="nav-links">
-    <a href="../../index.html" class="nav-link">Home</a>
-    <a href="./projects.html" class="nav-link">Projects</a>
-    <a href="./about.html" class="nav-link">About</a>
-    <a href="./contributors.html" class="nav-link">Contributors</a>
-    <a href="./forum.html" class="nav-link">Forum</a>
-  </nav>
+  <header
+    style="background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+    <nav class="nav-links site-header"
+      style="display: flex; justify-content: center; align-items: center; gap: 2rem; padding: 1rem 2rem; max-width: 1200px; margin: 0 auto;">
+      <a href="../../index.html" class="nav-link"
+        style="color: #fff; text-decoration: none; padding: 0.5rem 1rem; transition: all 0.3s ease; border-radius: 4px;">Home</a>
+      <a href="./projects.html" class="nav-link"
+        style="color: #fff; text-decoration: none; padding: 0.5rem 1rem; transition: all 0.3s ease; border-radius: 4px;">Projects</a>
+      <a href="./about.html" class="nav-link"
+        style="color: #fff; text-decoration: none; padding: 0.5rem 1rem; transition: all 0.3s ease; border-radius: 4px;">About</a>
+      <a href="./contributors.html" class="nav-link"
+        style="color: #fff; text-decoration: none; padding: 0.5rem 1rem; transition: all 0.3s ease; border-radius: 4px;">Contributors</a>
+      <a href="./forum.html" class="nav-link"
+        style="color: #fff; text-decoration: none; padding: 0.5rem 1rem; transition: all 0.3s ease; border-radius: 4px;">Forum</a>
+    </nav>
+  </header>
 
   <!-- Main Content -->
-  <main class="container section" style="margin-left: 280px;">
-    <section class="animate-enter">
+  <main class="container section" style="min-height: 80vh; padding: 2rem; max-width: 1200px; margin: 0 auto;">
+    <section class="animate-enter" style="text-align: center; width: 100%;">
       <h1 class="hero-title" style="font-size: 2.8rem; margin-bottom: 1rem;">
         Privacy Policy
       </h1>
 
-      <p class="hero-subtitle" style="max-width: 700px;">
+      <p class="hero-subtitle" style="max-width: 700px; margin: 0 auto 2rem; text-align: center;">
         Your privacy matters to us. This page explains how information is handled
         on the 100 Days of Web Development platform.
       </p>
 
-      <div class="feature-card" style="max-width: 800px; margin: 3rem auto;">
+      <div class="feature-card" style="max-width: 800px; margin: 0 auto; text-align: left; padding: 2rem;">
         <h3 style="margin-bottom: 1rem;">Information Usage</h3>
         <p>
           This platform does not intentionally collect personal data beyond what
@@ -71,8 +80,8 @@
   </main>
 
   <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-content">
+  <footer class="site-footer" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div class="container footer-content" style="display: flex; align-items: center; justify-content: space-around;">
       <div class="footer-brand">
         <a href="../../index.html" class="footer-logo">
           <img src="../assets/images/logo.png" alt="100 Days of Web Development logo" />
@@ -104,11 +113,12 @@
       </div>
     </div>
 
-    <div class="footer-bottom">
+    <div class="footer-bottom" style="">
       <p>© 2026 100 Days of Web Dev. All Systems Nominal.</p>
       <p>Maintained by <span>Subham</span> ❤️</p>
     </div>
   </footer>
 
 </body>
+
 </html>
