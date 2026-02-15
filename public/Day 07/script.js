@@ -19,6 +19,8 @@ function loadExpenses() {
   }
 }
 
+}
+
 // Save to localStorage
 function saveExpenses() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
@@ -58,6 +60,34 @@ function handleExpense(name, amount, category) {
 function saveExpenses() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
+
+// Add or Update Expense
+function handleExpense(name, amount, category) {
+  const editId = editIdInput.value;
+
+  if (editId) {
+    // EDIT
+    expenses = expenses.map(exp =>
+      exp.id === Number(editId)
+        ? { ...exp, name, amount: Number(amount), category }
+        : exp
+    );
+    editIdInput.value = "";
+  } else {
+    // ADD
+    expenses.push({
+      id: Date.now(),
+      name,
+      amount: Number(amount),
+      category
+    });
+  }
+
+  saveExpenses();
+  renderExpenses();
+  updateTotal();
+}
+
 
 // Add or Update Expense
 function handleExpense(name, amount, category) {
@@ -342,6 +372,7 @@ form.addEventListener("submit", e => {
 
 // Init
 loadExpenses();
+
 
 
 
