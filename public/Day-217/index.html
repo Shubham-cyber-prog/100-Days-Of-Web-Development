@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Composer | State Vector Simulator</title>
+    <link rel="stylesheet" href="styles/circuit.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="quantum-studio">
+        <header>
+            <div class="logo">QUANTUM_LAB::v2.01</div>
+            <div class="header-actions">
+                <button id="btn-reset" class="btn-primary" style="width: auto; padding: 0.5rem 1rem;">RESET
+                    STATE</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Toolbox -->
+            <aside class="panel">
+                <h3>Standard Gates</h3>
+                <div class="gate-palette" id="standard-palette">
+                    <div class="gate" draggable="true" data-type="H">H</div>
+                    <div class="gate" draggable="true" data-type="X">X</div>
+                    <div class="gate" draggable="true" data-type="Y">Y</div>
+                    <div class="gate" draggable="true" data-type="Z">Z</div>
+                    <div class="gate" draggable="true" data-type="S">S</div>
+                    <div class="gate" draggable="true" data-type="T">T</div>
+                    <div class="gate" draggable="true" data-type="CX" style="grid-column: span 2;">CNOT</div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3>Circuit Config</h3>
+                    <div style="font-size: 0.8rem; margin-bottom: 0.5rem;">Qubits: <span id="lbl-qubits">3</span></div>
+                    <input type="range" id="range-qubits" min="1" max="5" value="3">
+                </div>
+
+                <div style="margin-top: auto; padding-top: 2rem;">
+                    <button id="btn-export" class="btn-primary">EXPORT QASM</button>
+                </div>
+            </aside>
+
+            <!-- Circuit Workspace -->
+            <div id="circuit-workspace">
+                <!-- Programmatically generated -->
+            </div>
+
+            <!-- Analysis -->
+            <aside class="panel" id="analysis-panel">
+                <h3>State Probabilities</h3>
+                <div id="prob-chart" class="prob-container">
+                    <!-- Bars generated -->
+                </div>
+
+                <h3>Bloch Sphere (q0)</h3>
+                <canvas id="bloch-canvas" width="260" height="260"></canvas>
+
+                <div style="font-size: 0.75rem; color: var(--text-dim); line-height: 1.5;">
+                    * Bloch sphere visualization is currently limited to the first qubit for local state analysis.
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Math Core -->
+    <script src="scripts/math/complex.js"></script>
+    <script src="scripts/math/matrix.js"></script>
+    <!-- Simulator -->
+    <script src="scripts/simulator/statevector.js"></script>
+    <!-- Gates -->
+    <script src="scripts/gates/standard.js"></script>
+    <script src="scripts/gates/custom.js"></script>
+    <!-- UI components -->
+    <script src="scripts/ui/grid.js"></script>
+    <script src="scripts/ui/blochSphere.js"></script>
+    <!-- Compiler -->
+    <script src="scripts/compiler/qasm.js"></script>
+
+    <script>
+        class AppController {
+            constructor() {
+                this.numQubits = 3;
+                this.steps = 10;
+                this.simulator = new QuantumSimulator(this.numQubits);
+                this.ui = new CircuitUI('circuit-workspace', this.numQubits, this.steps);
+                this.bloch = new BlochSphere('bloch-canvas');
+
+                this.init();
+            }
+
+            init() {
+                this.ui.onCircuitChange = () => this.simulate();
+                this.ui.render();
+
+                // Palette drag events
+                document.querySelectorAll('.gate').forEach(gt => {
+                    gt.addEventListener('dragstart', (e) => {
+                        e.dataTransfer.setData('gate-type', e.target.dataset.type);
+                    });
+                });
+
+                document.getElementById('range-qubits').oninput = (e) => {
+                    this.numQubits = parseInt(e.target.value);
+                    document.getElementById('lbl-qubits').textContent = this.numQubits;
+                    this.reset();
+                };
+
+                document.getElementById('btn-reset').onclick = () => this.reset();
+                document.getElementById('btn-export').onclick = () => {
+                    let qasm = QASMCompiler.export(this.ui.getCircuit());
+                    QASMCompiler.download(qasm);
+                };
+
+                this.simulate();
+            }
+
+            reset() {
+                this.simulator = new QuantumSimulator(this.numQubits);
+                this.ui.numQubits = this.numQubits;
+                this.ui.grid = Array.from({ length: this.numQubits }, () => Array(this.steps).fill(null));
+                this.ui.render();
+                this.simulate();
+            }
+
+            simulate() {
+                this.simulator.reset();
+                let grid = this.ui.getCircuit();
+
+                for (let s = 0; s < this.steps; s++) {
+                    for (let q = 0; q < this.numQubits; q++) {
+                        let gateType = grid[q][s];
+                        if (gateType) {
+                            if (gateType === 'CX') {
+                                // Simple logic: if CX in row q, next row is target
+                                if (q < this.numQubits - 1) {
+                                    this.simulator.applyCNOT(q, q + 1);
+                                }
+                            } else if (Gates[gateType]) {
+                                this.simulator.applyGate(Gates[gateType], q);
+                            }
+                        }
+                    }
+                }
+
+                this.updateAnalysis();
+            }
+
+            updateAnalysis() {
+                // Update probabilities
+                let probs = this.simulator.getProbabilities();
+                let chart = document.getElementById('prob-chart');
+                chart.innerHTML = '';
+                probs.forEach((p, i) => {
+                    let bar = document.createElement('div');
+                    bar.className = 'prob-bar';
+                    bar.style.height = `${p * 100}%`;
+                    bar.dataset.val = `|${i.toString(2).padStart(this.numQubits, '0')}⟩: ${(p * 100).toFixed(1)}%`;
+                    chart.appendChild(bar);
+                });
+
+                // Update Bloch Sphere for q0
+                // To show a single qubit on the Bloch sphere, we need the reduced density matrix or just its state if not entangled
+                // In this restricted simulator, we just take the components of the full state vector for simplicity
+                let state = this.simulator.state.toArray();
+                this.bloch.draw(state);
+            }
+        }
+
+        window.onload = () => new AppController();
+    </script>
+</body>
+
+</html>
