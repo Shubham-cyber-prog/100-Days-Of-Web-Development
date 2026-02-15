@@ -6,6 +6,8 @@ menuBtn.addEventListener("click", () => {
   navMenu.classList.toggle("active");
 });
 
+// Testimonials Slider
+const slides = document.querySelectorAll(".testimonial");
 
 // Testimonials Slider
 const slides = document.querySelectorAll(".testimonial");
@@ -17,6 +19,15 @@ function showSlide(i) {
   slides[i].classList.add("active");
 }
 
+document.getElementById("next").onclick = () => {
+  index = (index + 1) % slides.length;
+  showSlide(index);
+};
+
+document.getElementById("prev").onclick = () => {
+  index = (index - 1 + slides.length) % slides.length;
+  showSlide(index);
+};
 document.getElementById("next").addEventListener("click", () => {
   index = (index + 1) % slides.length;
   showSlide(index);
@@ -36,6 +47,7 @@ setInterval(() => {
 
 
 
+
 }, 5000);
 
 
@@ -44,6 +56,11 @@ setInterval(() => {
 const scrollBtn = document.getElementById("scrollTop");
 
 window.addEventListener("scroll", () => {
+  scrollBtn.style.display = window.scrollY > 200 ? "block" : "none";
+});
+
+scrollBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
 
 
