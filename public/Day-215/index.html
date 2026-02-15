@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Architect | Deep Learning from Scratch</title>
+    <link rel="stylesheet" href="styles/architect.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="app-container">
+        <header>
+            <div class="brand">Neural<span>Architect</span></div>
+            <div class="stats-row">
+                <div class="stat">Epoch: <span id="epoch-count">0</span></div>
+                <div class="stat">Loss: <span id="loss-val">0.000</span></div>
+                <div class="stat">Accuracy: <span id="acc-val">0.0%</span></div>
+            </div>
+            <div class="actions">
+                <button id="btn-export" class="btn-secondary" style="width: auto; padding: 0.4rem 1rem;">Export
+                    Model</button>
+            </div>
+        </header>
+
+        <main>
+            <aside class="sidebar">
+                <section class="control-group">
+                    <h4>Add Network Architecture</h4>
+                    <div class="input-row">
+                        <input type="text" id="layer-config" value="2, 4, 4, 1" placeholder="e.g. 2, 8, 1">
+                    </div>
+                    <button id="btn-rebuild" class="btn-secondary">Rebuild Network</button>
+                </section>
+
+                <section class="control-group">
+                    <h4>Dataset Selection</h4>
+                    <select id="select-dataset">
+                        <option value="xor">XOR (Classic)</option>
+                        <option value="and">AND Logic</option>
+                        <option value="or">OR Logic</option>
+                        <option value="circle">Circular Boundary</option>
+                        <option value="linear">Linear Separation</option>
+                    </select>
+                </section>
+
+                <section class="control-group">
+                    <h4>Hyperparameters</h4>
+                    <div class="input-row">
+                        <label style="font-size: 0.8rem; color: var(--text-dim);">LR:</label>
+                        <input type="number" id="input-lr" value="0.01" step="0.001">
+                    </div>
+                    <div class="input-row">
+                        <label style="font-size: 0.8rem; color: var(--text-dim);">Batch:</label>
+                        <input type="number" id="input-batch" value="1">
+                    </div>
+                    <select id="select-optimizer">
+                        <option value="adam">Adam Optimizer</option>
+                        <option value="sgd">SGD</option>
+                    </select>
+                </section>
+
+                <section class="control-group" style="margin-top: auto;">
+                    <button id="btn-train" class="btn-primary">Start Training</button>
+                    <button id="btn-step" class="btn-secondary" style="margin-top: 0.5rem;">Single Step</button>
+                </section>
+            </aside>
+
+            <div class="workspace">
+                <div id="graph-container" class="view-card">
+                    <canvas id="graph-canvas"></canvas>
+                    <div style="position: absolute; top: 10px; left: 10px; font-size: 0.7rem; color: var(--text-dim);">
+                        NETWORK TOPOLOGY</div>
+                </div>
+                <div id="boundary-container" class="view-card">
+                    <canvas id="boundary-canvas"></canvas>
+                    <div style="position: absolute; top: 10px; left: 10px; font-size: 0.7rem; color: var(--text-dim);">
+                        DECISION SPACE & DATA POINTS</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="scripts/math.js"></script>
+    <script src="scripts/layer.js"></script>
+    <script src="scripts/network.js"></script>
+    <script src="scripts/solvers.js"></script>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/visualizer.js"></script>
+
+    <script>
+        let nn, visualizer, dataset;
+        let isTraining = false;
+        let epoch = 0;
+
+        function init() {
+            const config = document.getElementById('layer-config').value.split(',').map(n => parseInt(n.trim()));
+            nn = new NeuralNetwork(config);
+            visualizer = new NetworkVisualizer('graph-canvas');
+
+            updateDataset();
+            resize();
+            draw();
+        }
+
+        function resize() {
+            const graph = document.getElementById('graph-canvas');
+            const boundary = document.getElementById('boundary-canvas');
+            graph.width = graph.parentElement.clientWidth;
+            graph.height = graph.parentElement.clientHeight;
+            boundary.width = boundary.parentElement.clientWidth;
+            boundary.height = boundary.parentElement.clientHeight;
+        }
+
+        function updateDataset() {
+            const type = document.getElementById('select-dataset').value;
+            dataset = Datasets[type]();
+        }
+
+        function draw() {
+            visualizer.draw(nn);
+            visualizer.drawDecisionBoundary(nn, 'boundary-canvas', dataset);
+        }
+
+        function trainStep() {
+            let totalLoss = 0;
+            for (let i = 0; i < dataset.inputs.length; i++) {
+                totalLoss += nn.train(dataset.inputs[i], dataset.targets[i]);
+            }
+
+            epoch++;
+            document.getElementById('epoch-count').textContent = epoch;
+            document.getElementById('loss-val').textContent = (totalLoss / dataset.inputs.length).toFixed(4);
+
+            // Calc accuracy
+            let correct = 0;
+            for (let i = 0; i < dataset.inputs.length; i++) {
+                const pred = nn.predict(dataset.inputs[i])[0] > 0.5 ? 1 : 0;
+                if (pred === dataset.targets[i][0]) correct++;
+            }
+            document.getElementById('acc-val').textContent = (correct / dataset.inputs.length * 100).toFixed(1) + '%';
+        }
+
+        function trainingLoop() {
+            if (!isTraining) return;
+            for (let i = 0; i < 5; i++) trainStep(); // Train 5 steps per frame
+            draw();
+            requestAnimationFrame(trainingLoop);
+        }
+
+        // Listeners
+        document.getElementById('btn-rebuild').onclick = () => {
+            epoch = 0;
+            isTraining = false;
+            document.getElementById('btn-train').textContent = 'Start Training';
+            init();
+        };
+
+        document.getElementById('select-dataset').onchange = () => {
+            updateDataset();
+            draw();
+        };
+
+        document.getElementById('btn-train').onclick = () => {
+            isTraining = !isTraining;
+            document.getElementById('btn-train').textContent = isTraining ? 'Pause Training' : 'Resume Training';
+            if (isTraining) trainingLoop();
+        };
+
+        document.getElementById('btn-step').onclick = () => {
+            trainStep();
+            draw();
+        };
+
+        document.getElementById('input-lr').onchange = (e) => {
+            nn.optimizer.lr = parseFloat(e.target.value);
+        };
+
+        document.getElementById('select-optimizer').onchange = (e) => {
+            nn.setOptimizer(e.target.value, parseFloat(document.getElementById('input-lr').value));
+        };
+
+        document.getElementById('btn-export').onclick = () => {
+            const data = nn.serialize();
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'model_weights.json';
+            a.click();
+        };
+
+        window.addEventListener('resize', resize);
+        window.onload = init;
+    </script>
+</body>
+
+</html>
+Riverside:
