@@ -39,6 +39,18 @@ function addToHistory(num) {
   historyList.prepend(li);
 }
 
+// function resetHistory() {
+//   historyList.innerHTML = "";
+//   resultText.innerText = "Roll the dice!";
+// }
+function resetHistory() {
+  historyList.innerHTML = "";
+  resultText.innerText = "Roll the dice!";
+
+  // Reset dice position
+  cube.style.transform = `translateZ(-50px) rotateX(0deg) rotateY(0deg)`;
+}
+
 function resetHistory() {
   historyList.innerHTML = "";
   resultText.innerText = "Roll the dice!";
