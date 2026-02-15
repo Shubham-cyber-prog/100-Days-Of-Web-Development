@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioSim | Evolutionary Genetics Laboratory</title>
+    <link rel="stylesheet" href="styles/lab.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="laboratory">
+        <aside id="dashboard">
+            <div class="brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                BioSim <span>LAB_v4.2</span>
+            </div>
+
+            <section>
+                <h3 class="sec-title">Population Analytics</h3>
+                <div class="stat-card">
+                    <div class="stat-row"><span>Organisms:</span> <span id="val-pop">0</span></div>
+                    <div class="stat-row"><span>Gen:</span> <span id="val-gen">0</span></div>
+                    <div class="stat-row"><span>Peak Energy:</span> <span id="val-energy">0.0</span></div>
+                    <canvas id="graph-canvas"></canvas>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="sec-title">Laboratory Controls</h3>
+                <div class="control-grid">
+                    <button id="btn-pause">PAUSE ENGINE</button>
+                    <button id="btn-thermal">THERMAL SCANNER</button>
+                    <button id="btn-spawn" class="primary">SPAWN CLUSTER</button>
+                    <button id="btn-reset">FLUSH CHAMBER</button>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="sec-title">Data Management</h3>
+                <div class="control-grid">
+                    <button id="btn-save">EXPORT STATE</button>
+                    <button id="btn-load">IMPORT STATE</button>
+                </div>
+            </section>
+
+            <div style="margin-top: auto; font-size: 0.7rem; color: var(--text-dim); text-align: center;">
+                BIOSIM PROTOCOL © 2026<br />EVOLUTIONARY NEURAL SANDBOX
+            </div>
+        </aside>
+
+        <main id="viewport-container">
+            <canvas id="world-canvas"></canvas>
+
+            <div id="hud-overlay">
+                <div>ENGINE_STATUS: <span id="engine-status">ACTIVE</span></div>
+                <div>RENDER_MODE: <span id="render-mode">STANDARD</span></div>
+            </div>
+
+            <div id="selection-panel" class="selection-info">
+                <h4 id="sel-id">ENTITY_ID: #4021</h4>
+                <div class="stat-row"><span>AGE:</span> <span id="sel-age">0.0</span></div>
+                <div class="stat-row"><span>ENERGY:</span> <span id="sel-energy">0.0</span></div>
+                <div class="stat-row"><span>METAB_RATE:</span> <span id="sel-metab">0.0</span></div>
+                <div class="gene-strip" id="sel-genome"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/genetics/genome.js"></script>
+    <script src="scripts/bio/brain.js"></script>
+    <script src="scripts/bio/metabolism.js"></script>
+    <script src="scripts/bio/organism.js"></script>
+    <script src="scripts/eco/world.js"></script>
+    <script src="scripts/ui/graphs.js"></script>
+    <script src="scripts/ui/thermal.js"></script>
+    <script src="scripts/state/serialization.js"></script>
+
+    <script>
+        class LabApp {
+            constructor() {
+                this.canvas = document.getElementById('world-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.resize();
+
+                this.world = new World(this.width, this.height);
+                this.organisms = [];
+                this.stats = new StatisticsUI('graph-canvas');
+                this.thermal = new ThermalView(this.ctx, this.width, this.height);
+
+                this.isPaused = false;
+                this.viewMode = 'standard';
+                this.generation = 1;
+                this.selectedOrg = null;
+
+                this.init();
+            }
+
+            init() {
+                window.addEventListener('resize', () => this.resize());
+                this.setupEvents();
+                this.spawnCluster(50);
+                this.loop();
+            }
+
+            resize() {
+                this.width = this.canvas.clientWidth;
+                this.height = this.canvas.clientHeight;
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+            }
+
+            spawnCluster(count) {
+                for (let i = 0; i < count; i++) {
+                    this.organisms.push(new Organism(
+                        Math.random() * this.width,
+                        Math.random() * this.height
+                    ));
+                }
+            }
+
+            setupEvents() {
+                document.getElementById('btn-pause').onclick = (e) => {
+                    this.isPaused = !this.isPaused;
+                    e.target.textContent = this.isPaused ? "RESUME ENGINE" : "PAUSE ENGINE";
+                    document.getElementById('engine-status').textContent = this.isPaused ? "PAUSED" : "ACTIVE";
+                };
+
+                document.getElementById('btn-thermal').onclick = (e) => {
+                    this.viewMode = this.viewMode === 'standard' ? 'thermal' : 'standard';
+                    e.target.classList.toggle('toggle-active');
+                    document.getElementById('render-mode').textContent = this.viewMode.toUpperCase();
+                };
+
+                document.getElementById('btn-spawn').onclick = () => this.spawnCluster(20);
+                document.getElementById('btn-reset').onclick = () => {
+                    this.organisms = [];
+                    this.world.init();
+                };
+
+                document.getElementById('btn-save').onclick = () => EcosystemState.serialize(this.world, this.organisms);
+
+                document.getElementById('btn-load').onclick = () => {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.onchange = (e) => EcosystemState.load(e.target.files[0], (state) => {
+                        this.organisms = state.organisms.map(o => {
+                            const org = new Organism(o.x, o.y, new Genome(o.genome.length, new Uint8Array(o.genome)));
+                            org.metabolism.energy = o.energy;
+                            org.metabolism.age = o.age;
+                            return org;
+                        });
+                        this.world.nutrients = new Float32Array(state.nutrients);
+                    });
+                    input.click();
+                };
+
+                // Click to select
+                this.canvas.addEventListener('mousedown', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const mx = e.clientX - rect.left;
+                    const my = e.clientY - rect.top;
+
+                    this.selectedOrg = this.organisms.find(org => {
+                        const dx = org.x - mx;
+                        const dy = org.y - my;
+                        return Math.sqrt(dx * dx + dy * dy) < 15;
+                    });
+
+                    this.updateSelectionPanel();
+                });
+            }
+
+            updateSelectionPanel() {
+                const panel = document.getElementById('selection-panel');
+                if (!this.selectedOrg) {
+                    panel.style.display = 'none';
+                    return;
+                }
+                panel.style.display = 'block';
+                document.getElementById('sel-age').textContent = this.selectedOrg.metabolism.age.toFixed(2);
+                document.getElementById('sel-energy').textContent = this.selectedOrg.metabolism.energy.toFixed(1);
+                document.getElementById('sel-metab').textContent = this.selectedOrg.metabolism.baseMetabolicRate.toFixed(3);
+
+                const gStrip = document.getElementById('sel-genome');
+                gStrip.innerHTML = '';
+                for (let i = 0; i < 32; i++) {
+                    const div = document.createElement('div');
+                    div.className = 'gene-bit';
+                    div.style.background = `rgb(${this.selectedOrg.genome.data[i]}, 100, 200)`;
+                    gStrip.appendChild(div);
+                }
+            }
+
+            loop() {
+                if (!this.isPaused) {
+                    this.world.update();
+
+                    const nextGen = [];
+                    for (let i = this.organisms.length - 1; i >= 0; i--) {
+                        const org = this.organisms[i];
+                        const nutrients = this.world.getNutrientsAt(org.x, org.y);
+                        const consumed = org.update(this.width, this.height, nutrients);
+
+                        if (consumed) this.world.consumeAt(org.x, org.y, consumed);
+
+                        if (!org.metabolism.isAlive) {
+                            this.organisms.splice(i, 1);
+                            continue;
+                        }
+
+                        // Reproduction
+                        if (org.metabolism.canReproduce() && this.organisms.length < 300) {
+                            org.metabolism.reproduce();
+                            const offspringGenome = org.genome.copy();
+                            offspringGenome.mutate(0.02);
+                            nextGen.push(new Organism(org.x + 5, org.y + 5, offspringGenome));
+                        }
+                    }
+                    this.organisms.push(...nextGen);
+
+                    if (nextGen.length > 0) this.generation++;
+                }
+
+                // Render
+                this.ctx.fillStyle = "#000";
+                this.ctx.fillRect(0, 0, this.width, this.height);
+
+                if (this.viewMode === 'standard') {
+                    this.world.draw(this.ctx);
+                    for (const org of this.organisms) org.draw(this.ctx);
+                } else {
+                    this.thermal.render(this.world, this.organisms);
+                }
+
+                this.updateHUD();
+
+                // Track Stats every 60 frames
+                if (Math.floor(performance.now() / 1000) % 2 === 0) {
+                    const avgEnergy = this.organisms.reduce((acc, o) => acc + o.metabolism.energy, 0) / (this.organisms.length || 1);
+                    this.stats.record(this.organisms.length, avgEnergy);
+                }
+                this.stats.draw();
+
+                if (this.selectedOrg) this.updateSelectionPanel();
+
+                requestAnimationFrame(() => this.loop());
+            }
+
+            updateHUD() {
+                document.getElementById('val-pop').textContent = this.organisms.length;
+                document.getElementById('val-gen').textContent = this.generation;
+                const maxEnergy = this.organisms.length > 0 ? Math.max(...this.organisms.map(o => o.metabolism.energy)) : 0;
+                document.getElementById('val-energy').textContent = maxEnergy.toFixed(1);
+            }
+        }
+
+        window.onload = () => new LabApp();
+    </script>
+</body>
+
+</html>
