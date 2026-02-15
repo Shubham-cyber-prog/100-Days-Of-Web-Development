@@ -1,324 +1,289 @@
-/**
- * Tower Stack 3D Engine
- * Uses Isometric Projection to render 3D blocks on a 2D canvas.
- */
-
-const canvas = document.getElementById('game-canvas');
+// Get DOM elements
+const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const startScreen = document.getElementById('startScreen');
+const gameOverScreen = document.getElementById('gameOverScreen');
+const startBtn = document.getElementById('startBtn');
+const restartBtn = document.getElementById('restartBtn');
+const scoreDisplay = document.getElementById('score');
+const livesDisplay = document.getElementById('lives');
+const finalScoreDisplay = document.getElementById('finalScore');
 
-// --- Config ---
-const BLOCK_HEIGHT = 20; // Visual height of a layer
-const START_SIZE = 150;  // Initial width/depth
-const MOVE_SPEED = 3;
-const ZOOM = 1.2;
-
-// --- State ---
-let width, height;
-let blocks = []; // The stack
-let debris = []; // Falling cut pieces
-let activeBlock = null; // The one moving
+// Game state
+let gameRunning = false;
 let score = 0;
-let isPlaying = false;
-let cameraY = 0;
-let hue = 0;
+let lives = 3;
+let animationId;
 
-// --- Physics Classes ---
+// Player object
+const player = {
+    x: canvas.width / 2 - 25,
+    y: canvas.height - 80,
+    width: 50,
+    height: 40,
+    speed: 5,
+    color: '#00ff00'
+};
 
-class Block {
-    constructor(x, z, w, d, yIndex, color) {
-        this.x = x;
-        this.z = z;
-        this.w = w;
-        this.d = d;
-        this.yIndex = yIndex; // Logical height
-        this.color = color;
-        
-        // Physics for debris
-        this.vy = 0;
-        this.yPos = yIndex * BLOCK_HEIGHT; // Visual Y position
-    }
+// Controls
+const keys = {};
 
-    draw() {
-        // Convert 3D coords to 2D Isometric
-        // Iso Formula:
-        // screenX = (x - z)
-        // screenY = (x + z)/2 - y
-        
-        const isoX = (this.x - this.z) * ZOOM + width / 2;
-        const isoY = (this.x + this.z) * 0.5 * ZOOM + (height / 1.5) - (this.yPos * ZOOM) + cameraY;
-        
-        const wIso = this.w * ZOOM;
-        const dIso = this.d * ZOOM; // Visual scaling approximate for perspective
+// Bullets array
+let bullets = [];
+const bulletSpeed = 7;
 
-        // We need to draw a cube (Top, Left, Right faces)
-        // We need 4 corners of the top face
-        // Top Face (Diamond)
-        const topP1 = toIso(this.x, this.z);
-        const topP2 = toIso(this.x + this.w, this.z);
-        const topP3 = toIso(this.x + this.w, this.z + this.d);
-        const topP4 = toIso(this.x, this.z + this.d);
+// Aliens array
+let aliens = [];
+const alienRows = 3;
+const alienCols = 8;
+let alienDirection = 1;
+let alienSpeed = 1;
 
-        // Adjust for Y and Camera
-        const offY = (this.yPos * ZOOM) - cameraY;
-        
-        const drawPoly = (p1, p2, p3, p4, color) => {
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y - offY);
-            ctx.lineTo(p2.x, p2.y - offY);
-            ctx.lineTo(p3.x, p3.y - offY);
-            ctx.lineTo(p4.x, p4.y - offY);
-            ctx.closePath();
-            ctx.fill();
-            // Optional: Stroke for definition
-            // ctx.strokeStyle = "rgba(0,0,0,0.1)";
-            // ctx.stroke();
-        };
+// Stars background
+let stars = [];
 
-        // Draw Left Face (Darkest)
-        const h = BLOCK_HEIGHT * ZOOM;
-        drawPoly(
-            topP4, topP3,
-            {x: topP3.x, y: topP3.y + h},
-            {x: topP4.x, y: topP4.y + h},
-            shadeColor(this.color, -20)
-        );
-
-        // Draw Right Face (Mid)
-        drawPoly(
-            topP3, topP2,
-            {x: topP2.x, y: topP2.y + h},
-            {x: topP3.x, y: topP3.y + h},
-            shadeColor(this.color, -10)
-        );
-
-        // Draw Top Face (Lightest)
-        drawPoly(topP1, topP2, topP3, topP4, this.color);
-    }
-    
-    updateDebris() {
-        this.vy += 0.5; // Gravity
-        this.yPos -= this.vy;
+// Initialize stars for background
+function createStars() {
+    stars = [];
+    for (let i = 0; i < 100; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            speed: Math.random() * 0.5 + 0.1
+        });
     }
 }
 
-// Helper: Convert X/Z to Screen X/Y (without Y offset)
-function toIso(x, z) {
-    const screenX = (x - z) * ZOOM + width / 2;
-    const screenY = (x + z) * 0.5 * ZOOM + (height / 1.5);
-    return { x: screenX, y: screenY };
-}
-
-function shadeColor(color, percent) {
-    // HSL parsing simpler, but let's assume color is HSL string
-    // "hsl(100, 80%, 60%)"
-    const regex = /hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/;
-    const match = color.match(regex);
-    if (!match) return color;
-    
-    let h = parseInt(match[1]);
-    let s = parseInt(match[2]);
-    let l = parseInt(match[3]);
-    
-    l = Math.max(0, Math.min(100, l + percent));
-    return `hsl(${h}, ${s}%, ${l}%)`;
-}
-
-// --- Init ---
-
-function init() {
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    // Input
-    window.addEventListener('mousedown', handleClick);
-    window.addEventListener('keydown', e => {
-        if (e.code === 'Space') handleClick();
+// Draw moving stars
+function drawStars() {
+    ctx.fillStyle = '#fff';
+    stars.forEach(star => {
+        ctx.fillRect(star.x, star.y, star.size, star.size);
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+            star.y = 0;
+            star.x = Math.random() * canvas.width;
+        }
     });
-    
-    // Initial loop for background
-    loop();
 }
 
-function resizeCanvas() {
-    width = canvas.parentElement.clientWidth;
-    height = canvas.parentElement.clientHeight;
-    canvas.width = width;
-    canvas.height = height;
-}
-
-function startGame() {
-    document.getElementById('start-screen').classList.add('hidden');
-    document.getElementById('game-over').classList.add('hidden');
-    
-    // Reset State
-    blocks = [];
-    debris = [];
-    score = 0;
-    cameraY = 0;
-    hue = 0;
-    
-    // Base Block
-    const base = new Block(
-        -START_SIZE/2, -START_SIZE/2, 
-        START_SIZE, START_SIZE, 
-        0, 
-        `hsl(${hue}, 80%, 60%)`
-    );
-    blocks.push(base);
-    
-    spawnNextBlock();
-    isPlaying = true;
-}
-
-function spawnNextBlock() {
-    const prev = blocks[blocks.length - 1];
-    hue = (hue + 10) % 360;
-    
-    // Determine spawn pos based on direction
-    // Even score: Move along X (Z fixed)
-    // Odd score: Move along Z (X fixed)
-    const isX = score % 2 === 0;
-    
-    let x, z;
-    if (isX) {
-        x = -200; // Far left
-        z = prev.z;
-    } else {
-        x = prev.x;
-        z = -200; // Far back
-    }
-    
-    activeBlock = new Block(x, z, prev.w, prev.d, score + 1, `hsl(${hue}, 80%, 60%)`);
-    activeBlock.direction = isX ? 'x' : 'z';
-    // Starting speed (increases with score)
-    activeBlock.speed = MOVE_SPEED + (score * 0.05); 
-}
-
-// --- Game Logic ---
-
-function handleClick() {
-    if (!isPlaying) return;
-    
-    if (placeBlock()) {
-        score++;
-        document.getElementById('score').innerText = score;
-        spawnNextBlock();
-        
-        // Move Camera
-        // If stack gets high, scroll down
-        if (score > 5) {
-            // Target camera position
-            // We want active block to be somewhat centered
+// Create alien grid
+function createAliens() {
+    aliens = [];
+    for (let row = 0; row < alienRows; row++) {
+        for (let col = 0; col < alienCols; col++) {
+            aliens.push({
+                x: col * 80 + 60,
+                y: row * 60 + 50,
+                width: 40,
+                height: 30,
+                alive: true
+            });
         }
-    } else {
-        gameOver();
     }
 }
 
-function placeBlock() {
-    const prev = blocks[blocks.length - 1];
-    const curr = activeBlock;
-    
-    let cutW = curr.w;
-    let cutD = curr.d;
-    let cutX = curr.x;
-    let cutZ = curr.z;
-    
-    // Delta determines overlap
-    if (curr.direction === 'x') {
-        const delta = curr.x - prev.x;
-        if (Math.abs(delta) >= prev.w) return false; // Missed entirely
-        
-        // Trim
-        cutW = prev.w - Math.abs(delta);
-        cutX = delta > 0 ? curr.x : prev.x;
-        
-        // Create Debris (The slice that falls off)
-        const debrisW = Math.abs(delta);
-        const debrisX = delta > 0 ? (curr.x + cutW) : (curr.x);
-        
-        addDebris(debrisX, curr.z, debrisW, curr.d, curr.yIndex, curr.color);
-        
-    } else {
-        const delta = curr.z - prev.z;
-        if (Math.abs(delta) >= prev.d) return false;
-        
-        // Trim
-        cutD = prev.d - Math.abs(delta);
-        cutZ = delta > 0 ? curr.z : prev.z;
-        
-        // Debris
-        const debrisD = Math.abs(delta);
-        const debrisZ = delta > 0 ? (curr.z + cutD) : (curr.z);
-        
-        addDebris(curr.x, debrisZ, curr.w, debrisD, curr.yIndex, curr.color);
-    }
-    
-    // Update active block to match cut size
-    curr.x = cutX;
-    curr.z = cutZ;
-    curr.w = cutW;
-    curr.d = cutD;
-    
-    blocks.push(curr);
-    activeBlock = null;
-    return true;
+// Draw player spaceship
+function drawPlayer() {
+    // Spaceship body (triangle)
+    ctx.fillStyle = player.color;
+    ctx.beginPath();
+    ctx.moveTo(player.x + player.width / 2, player.y);
+    ctx.lineTo(player.x, player.y + player.height);
+    ctx.lineTo(player.x + player.width, player.y + player.height);
+    ctx.closePath();
+    ctx.fill();
+
+    // Spaceship wings
+    ctx.fillStyle = '#00cc00';
+    ctx.fillRect(player.x - 5, player.y + player.height - 10, 10, 10);
+    ctx.fillRect(player.x + player.width - 5, player.y + player.height - 10, 10, 10);
+
+    // Cockpit window
+    ctx.fillStyle = '#00ffff';
+    ctx.fillRect(player.x + player.width / 2 - 5, player.y + 10, 10, 10);
 }
 
-function addDebris(x, z, w, d, y, color) {
-    const deb = new Block(x, z, w, d, y, color);
-    debris.push(deb);
+// Draw aliens
+function drawAliens() {
+    aliens.forEach(alien => {
+        if (alien.alive) {
+            // Alien body
+            ctx.fillStyle = '#ff00ff';
+            ctx.fillRect(alien.x, alien.y + 10, alien.width, alien.height - 10);
+            
+            // Alien eyes
+            ctx.fillStyle = '#ffff00';
+            ctx.fillRect(alien.x + 10, alien.y + 15, 8, 8);
+            ctx.fillRect(alien.x + 22, alien.y + 15, 8, 8);
+            
+            // Alien antennae
+            ctx.strokeStyle = '#ff00ff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(alien.x + 10, alien.y + 10);
+            ctx.lineTo(alien.x + 5, alien.y);
+            ctx.moveTo(alien.x + 30, alien.y + 10);
+            ctx.lineTo(alien.x + 35, alien.y);
+            ctx.stroke();
+        }
+    });
 }
 
-function gameOver() {
-    isPlaying = false;
-    document.getElementById('final-score').innerText = score;
-    document.getElementById('game-over').classList.remove('hidden');
+// Draw bullets
+function drawBullets() {
+    ctx.fillStyle = '#ffff00';
+    bullets.forEach(bullet => {
+        ctx.fillRect(bullet.x, bullet.y, 4, 10);
+    });
 }
 
+// Main game update loop
 function update() {
-    // 1. Move Active Block
-    if (activeBlock && isPlaying) {
-        if (activeBlock.direction === 'x') {
-            activeBlock.x += activeBlock.speed;
-            // Bounce bounds
-            if (activeBlock.x > 150 || activeBlock.x < -200) activeBlock.speed *= -1;
-        } else {
-            activeBlock.z += activeBlock.speed;
-            if (activeBlock.z > 150 || activeBlock.z < -200) activeBlock.speed *= -1;
-        }
+    if (!gameRunning) return;
+
+    // Clear canvas
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw stars background
+    drawStars();
+
+    // Move player with arrow keys
+    if (keys['ArrowLeft'] && player.x > 0) {
+        player.x -= player.speed;
     }
-    
-    // 2. Camera Lerp
-    const targetCam = Math.max(0, (score - 3) * BLOCK_HEIGHT * ZOOM);
-    cameraY += (targetCam - cameraY) * 0.1;
-    
-    // 3. Debris Physics
-    debris.forEach(d => d.updateDebris());
-    debris = debris.filter(d => d.yPos > -500); // Remove if fell off screen
+    if (keys['ArrowRight'] && player.x < canvas.width - player.width) {
+        player.x += player.speed;
+    }
+
+    // Update bullets position
+    bullets = bullets.filter(bullet => {
+        bullet.y -= bulletSpeed;
+        return bullet.y > 0;
+    });
+
+    // Check bullet-alien collisions
+    bullets.forEach((bullet, bIndex) => {
+        aliens.forEach(alien => {
+            if (alien.alive &&
+                bullet.x < alien.x + alien.width &&
+                bullet.x + 4 > alien.x &&
+                bullet.y < alien.y + alien.height &&
+                bullet.y + 10 > alien.y) {
+                
+                // Hit detected
+                alien.alive = false;
+                bullets.splice(bIndex, 1);
+                score += 10;
+                scoreDisplay.textContent = `Score: ${score}`;
+                alienSpeed += 0.1; // Increase difficulty
+            }
+        });
+    });
+
+    // Move aliens
+    let hitEdge = false;
+    aliens.forEach(alien => {
+        if (alien.alive) {
+            alien.x += alienDirection * alienSpeed;
+            if (alien.x <= 0 || alien.x >= canvas.width - alien.width) {
+                hitEdge = true;
+            }
+        }
+    });
+
+    // Change direction and move down when hitting edge
+    if (hitEdge) {
+        alienDirection *= -1;
+        aliens.forEach(alien => {
+            alien.y += 20;
+        });
+    }
+
+    // Check if aliens reached player (bottom)
+    aliens.forEach(alien => {
+        if (alien.alive && alien.y + alien.height >= player.y) {
+            lives--;
+            updateLives();
+            alien.alive = false;
+            if (lives <= 0) {
+                endGame();
+            }
+        }
+    });
+
+    // Check if all aliens destroyed - create new wave
+    if (aliens.every(alien => !alien.alive)) {
+        createAliens();
+        alienSpeed += 0.5; // Increase speed for next wave
+    }
+
+    // Draw everything
+    drawPlayer();
+    drawAliens();
+    drawBullets();
+
+    // Continue game loop
+    animationId = requestAnimationFrame(update);
 }
 
-// --- Rendering ---
-
-function draw() {
-    ctx.clearRect(0, 0, width, height);
-    
-    // Draw Debris first (background)
-    debris.forEach(d => d.draw());
-
-    // Draw Stack (Bottom to Top)
-    blocks.forEach(b => b.draw());
-    
-    // Draw Active
-    if (activeBlock) activeBlock.draw();
+// Shoot bullet
+function shoot() {
+    bullets.push({
+        x: player.x + player.width / 2 - 2,
+        y: player.y
+    });
 }
 
-function loop() {
+// Update lives display
+function updateLives() {
+    const hearts = '❤️'.repeat(lives);
+    livesDisplay.textContent = `Lives: ${hearts}`;
+}
+
+// Start game function
+function startGame() {
+    gameRunning = true;
+    score = 0;
+    lives = 3;
+    alienSpeed = 1;
+    scoreDisplay.textContent = 'Score: 0';
+    updateLives();
+    createStars();
+    createAliens();
+    bullets = [];
+    player.x = canvas.width / 2 - 25;
+    startScreen.classList.add('hidden');
+    gameOverScreen.classList.add('hidden');
     update();
-    draw();
-    requestAnimationFrame(loop);
 }
 
-// Start
-init();
+// End game function
+function endGame() {
+    gameRunning = false;
+    cancelAnimationFrame(animationId);
+    finalScoreDisplay.textContent = `Final Score: ${score}`;
+    gameOverScreen.classList.remove('hidden');
+}
+
+// Keyboard event listeners
+document.addEventListener('keydown', (e) => {
+    keys[e.key] = true;
+    if (e.key === ' ' && gameRunning) {
+        e.preventDefault();
+        shoot();
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    keys[e.key] = false;
+});
+
+// Button event listeners
+startBtn.addEventListener('click', startGame);
+restartBtn.addEventListener('click', startGame);
+
+// Initialize stars on load
+createStars();
