@@ -1,212 +1,464 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
-    <title>My Favorites | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <link rel="stylesheet" href="../styles/components/project-modal.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <style>
-      .page-header {
-        text-align: center;
-        padding: 120px 0 60px;
-      }
 
-      .empty-state {
-        text-align: center;
-        padding: 100px 20px;
-        color: var(--text-secondary);
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      .empty-icon {
-        font-size: 4rem;
-        margin-bottom: 20px;
-        display: block;
-        color: var(--modal-accent);
-        opacity: 0.5;
-      }
+<title>Starred Missions</title>
 
-      /* Reuse project card styles from projects.html */
-      /* (In a real project, these would be in a shared CSS file) */
-      /* Copying minimal necessary styles for card appearance */
-      .project-card {
-        position: relative;
-        overflow: hidden;
-        border-radius: 12px;
-        background: var(--bg-nebula);
-        padding: 1.5rem;
-        min-height: 200px;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid var(--glass-border);
-        transition: all 0.3s ease;
-        cursor: pointer;
-      }
+<link rel="stylesheet"
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-      .project-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--modal-accent);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      }
+<style>
 
-      .card-top {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-      }
+/* ================= BASE ================= */
 
-      .tech-tag {
-        font-size: 0.75rem;
-        padding: 2px 8px;
-        background: rgba(102, 126, 234, 0.1);
-        border: 1px solid rgba(102, 126, 234, 0.3);
-        border-radius: 4px;
-        margin-right: 4px;
-      }
-    </style>
-    <script src="../scripts/components/sidebar-loader.js"></script>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,system-ui,sans-serif;
+}
+
+body{
+  background:#020617;
+  color:#e5e7eb;
+}
+
+/* ================= WRAPPER ================= */
+
+.wrapper{
+  max-width:1300px;
+  margin:auto;
+  padding:50px 25px 80px;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.header h1{
+  font-size:2.8rem;
+  font-weight:900;
+
+  background:linear-gradient(90deg,#38bdf8,#22d3ee,#818cf8);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.header p{
+  color:#94a3b8;
+  margin-top:8px;
+  font-size:1.05rem;
+}
+
+/* ================= GRID ================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:30px;
+}
+
+/* ================= CARD ================= */
+
+.card{
+  background:rgba(15,23,42,.85);
+  border:1px solid rgba(56,189,248,.25);
+
+  border-radius:18px;
+  padding:24px 22px 22px;
+
+  position:relative;
+
+  backdrop-filter:blur(12px);
+
+  box-shadow:
+   0 0 0 transparent;
+
+  transition:.35s;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  border-radius:18px;
+
+  background:
+   linear-gradient(120deg,
+    transparent,
+    rgba(56,189,248,.3),
+    transparent);
+
+  opacity:0;
+  transition:.35s;
+}
+
+/* ================= HOVER ================= */
+
+.card:hover{
+  transform:translateY(-10px) scale(1.02);
+
+  border-color:#38bdf8;
+
+  box-shadow:
+   0 0 25px rgba(56,189,248,.4),
+   0 0 60px rgba(34,211,238,.25);
+}
+
+.card:hover::before{
+  opacity:1;
+}
+
+/* ================= STAR ================= */
+
+.star{
+  position:absolute;
+  top:18px;
+  right:18px;
+
+  color:#facc15;
+  font-size:1.3rem;
+
+  filter:drop-shadow(0 0 6px gold);
+}
+
+/* ================= CONTENT ================= */
+
+.card h3{
+  font-size:1.25rem;
+  margin-bottom:6px;
+  font-weight:700;
+}
+
+.card p{
+  color:#94a3b8;
+  line-height:1.55;
+  font-size:.95rem;
+  margin-bottom:14px;
+}
+
+/* ================= TAGS ================= */
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.tag{
+  font-size:.7rem;
+
+  padding:4px 10px;
+  border-radius:6px;
+
+  background:rgba(56,189,248,.15);
+  border:1px solid rgba(56,189,248,.4);
+
+  color:#38bdf8;
+
+  letter-spacing:.4px;
+}
+
+/* ================= BUTTON ================= */
+
+.btn{
+  width:100%;
+
+  background:transparent;
+
+  border:1px solid rgba(56,189,248,.4);
+
+  padding:9px;
+
+  border-radius:8px;
+
+  color:#e5e7eb;
+
+  font-size:.85rem;
+
+  cursor:pointer;
+
+  transition:.25s;
+}
+
+.btn:hover{
+  background:linear-gradient(90deg,#38bdf8,#22d3ee);
+
+  color:#020617;
+
+  font-weight:600;
+
+  box-shadow:
+   0 0 12px rgba(56,189,248,.6);
+}
+
+/* ================= ANIMATION ================= */
+
+.card{
+  animation:fadeUp .5s ease both;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:600px){
+
+  .header h1{
+    font-size:2.2rem;
+  }
+
+  .wrapper{
+    padding:35px 18px 60px;
+  }
+
+}
+
+</style>
 </head>
 
-  <body>
-    <!-- Dynamic header will be loaded here -->
+<body>
 
-    <main class="container section">
-      <div class="page-header animate-enter">
-        <h1>Starred Missions</h1>
-        <p class="text-secondary">
-          Your collection of favorite projects and benchmarks.
-        </p>
-      </div>
+<div class="wrapper">
 
-      <div id="favoritesGrid" class="grid grid-4 animate-enter delay-100">
-        <!-- Injected by scripts/pages/favorites.js -->
-      </div>
+<!-- HEADER -->
 
-      <div id="emptyState" class="empty-state" style="display: none">
-        <span class="empty-icon"><i class="far fa-star"></i></span>
-        <h3>No favorites yet</h3>
-        <p>
-          Go to the <a href="projects.html">Projects Archive</a> to add some!
-        </p>
-      </div>
-    </main>
+<div class="header">
+  <h1>Starred Missions</h1>
+  <p>Your collection of favorite projects and benchmarks.</p>
+</div>
 
-    <!-- Footer -->
-    <div id="footer-placeholder"></div>    <script src="../scripts/components/footer-loader.js"></script>
-    <footer class="site-footer" style="display: none">
-      <div class="container footer-content">
-        <div class="footer-brand animate-enter">
-          <a href="#" class="footer-logo">
-            <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
-            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-          </a>
-          <p class="footer-desc">
-            A hyper-intensive protocol designed to forge elite web engineers
-            through daily deployment cycles.
-          </p>
-        </div>
+<!-- GRID -->
 
-        <div class="footer-col animate-enter delay-100">
-          <h3>Navigation</h3>
-          <nav class="footer-links">
-            <a href="#" class="footer-link">Home Base</a>
-            <a href="website/pages/projects.html" class="footer-link"
-              >Archive</a
-            >
-            <a href="website/pages/about.html" class="footer-link"
-              >Leaderboard</a
-            >
-            <a href="website/pages/contributors.html" class="footer-link"
-              >Crew</a
-            >
-          </nav>
-        </div>
+<div class="grid">
 
-        <div class="footer-col animate-enter delay-200">
-          <h3>Resources</h3>
-          <nav class="footer-links">
-            <a href="documentation.html" class="footer-link">Documentation</a>
-            <a href="api-status.html" class="footer-link">API Status</a>
-            <a href="contact.html" class="footer-link">Contact Comms</a>
-            <a href="system-logic.html" class="footer-link">System Logic</a>
-          </nav>
-        </div>
+<!-- CARD -->
 
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a
-              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Github"
-            >
-              <img
-                src="website/assets/images/github.png"
-                alt="GitHub"
-                class="icon"
-              />
-            </a>
 
-            <a
-              href="https://twitter.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Twitter (X)"
-            >
-              <img
-                src="website/assets/images/twitter.png"
-                alt="Twitter/X"
-                class="icon"
-              />
-            </a>
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
 
-            <a
-              href="https://discord.gg/SW7puwEm"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="Discord"
-            >
-              <img
-                src="website/assets/images/discord.png"
-                alt="Discord"
-                class="icon"
-              />
-            </a>
-          </div>
-        </div>
-      </div>
+  <h3>Portfolio Website</h3>
+  <p>Personal portfolio with animations</p>
 
-      <div class="container footer-bottom">
-        <p class="copyright">
-          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
-        </p>
-        <p class="made-by">
-          Maintained by <span class="text-flame font-bold">Subham</span>
-          <svg
-            class="icon icon-sm heart-pulse"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            ></path>
-          </svg>
-        </p>
-      </div>
-    </footer>
+  <div class="tags">
+    <span class="tag">CSS</span>
+    <span class="tag">Responsive</span>
+    <span class="tag">UI</span>
+  </div>
 
-    <script type="module" src="../scripts/pages/favorites.js"></script>
-    <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
-  </body>
+  <button class="btn">View Project</button>
+</div>
+
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Task Manager</h3>
+  <p>Todo app with local storage</p>
+
+  <div class="tags">
+    <span class="tag">JS</span>
+    <span class="tag">CRUD</span>
+    <span class="tag">Storage</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Blog Platform</h3>
+  <p>Dynamic blog with comments</p>
+
+  <div class="tags">
+    <span class="tag">Frontend</span>
+    <span class="tag">Backend</span>
+    <span class="tag">DB</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+<!-- CARD 7 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Quiz Application</h3>
+  <p>MCQ-based quiz system with timer and score tracking</p>
+
+  <div class="tags">
+    <span class="tag">JavaScript</span>
+    <span class="tag">Logic</span>
+    <span class="tag">DOM</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 8 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Expense Tracker</h3>
+  <p>Track daily income and expenses with charts</p>
+
+  <div class="tags">
+    <span class="tag">Finance</span>
+    <span class="tag">Charts</span>
+    <span class="tag">JS</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 9 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Notes Manager</h3>
+  <p>Cloud-based notes app with authentication</p>
+
+  <div class="tags">
+    <span class="tag">Firebase</span>
+    <span class="tag">Auth</span>
+    <span class="tag">CRUD</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 10 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Music Player</h3>
+  <p>Custom audio player with playlist support</p>
+
+  <div class="tags">
+    <span class="tag">Media</span>
+    <span class="tag">UI</span>
+    <span class="tag">JS</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 11 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Job Portal</h3>
+  <p>Job search and recruitment platform</p>
+
+  <div class="tags">
+    <span class="tag">Backend</span>
+    <span class="tag">Database</span>
+    <span class="tag">Auth</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 12 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Learning Platform</h3>
+  <p>Online courses and progress tracking system</p>
+
+  <div class="tags">
+    <span class="tag">E-Learning</span>
+    <span class="tag">UI</span>
+    <span class="tag">JS</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 13 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>AI Chatbot</h3>
+  <p>Smart chatbot using machine learning</p>
+
+  <div class="tags">
+    <span class="tag">AI</span>
+    <span class="tag">NLP</span>
+    <span class="tag">Python</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 14 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Online Voting System</h3>
+  <p>Secure voting platform with authentication</p>
+
+  <div class="tags">
+    <span class="tag">Security</span>
+    <span class="tag">Web</span>
+    <span class="tag">DB</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 15 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Travel Planner</h3>
+  <p>Plan trips with maps and schedules</p>
+
+  <div class="tags">
+    <span class="tag">Maps</span>
+    <span class="tag">API</span>
+    <span class="tag">UI</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+<!-- CARD 16 -->
+<div class="card">
+  <span class="star"><i class="fas fa-star"></i></span>
+
+  <h3>Restaurant Booking</h3>
+  <p>Online table reservation system</p>
+
+  <div class="tags">
+    <span class="tag">Booking</span>
+    <span class="tag">Backend</span>
+    <span class="tag">JS</span>
+  </div>
+
+  <button class="btn">View Project</button>
+</div>
+
+</div>
+
+</div>
+
+</body>
 </html>

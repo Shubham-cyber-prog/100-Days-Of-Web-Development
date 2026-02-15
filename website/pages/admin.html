@@ -1,99 +1,211 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/images/logo.png" height="70px" width="100px">
-    <title>Admin Dashboard | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/pages/admin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <script src="../scripts/components/sidebar-loader.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet"
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+/* ================= BASE ================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, system-ui, sans-serif;
+}
+
+body{
+  background:#f1f5f9;
+  color:#0f172a;
+}
+
+/* ================= LAYOUT ================= */
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:35px 20px 60px;
+}
+
+/* ================= TOP BAR ================= */
+
+.top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.top-bar h1{
+  font-size:2.4rem;
+  font-weight:800;
+}
+
+.top-bar p{
+  color:#64748b;
+  margin-top:4px;
+}
+
+/* ================= REFRESH ================= */
+
+.refresh-btn{
+  background:#0ea5e9;
+  color:white;
+  border:none;
+  padding:12px 22px;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.refresh-btn:hover{
+  background:#0284c7;
+  transform:scale(1.05);
+}
+
+/* ================= STATS ================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-bottom:30px;
+}
+
+.stat{
+  background:white;
+  padding:22px 24px;
+  border-radius:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.stat h3{
+  font-size:.9rem;
+  color:#64748b;
+  text-transform:uppercase;
+}
+
+.stat span{
+  font-size:2.1rem;
+  font-weight:800;
+  color:#0ea5e9;
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+  background:white;
+  border-radius:16px;
+  padding:25px 28px;
+  box-shadow:0 6px 20px rgba(0,0,0,.06);
+}
+
+.content h2{
+  font-size:1.3rem;
+  margin-bottom:15px;
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+  height:180px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  gap:12px;
+  color:#64748b;
+}
+
+.loading i{
+  font-size:2rem;
+  color:#0ea5e9;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+  .top-bar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
-    <!-- Main Content -->
-    <main class="container section">
-        <div class="page-header animate-enter">
-            <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
-                Admin Dashboard
-            </h1>
-            <p class="text-secondary">Manage community project submissions and approvals.</p>
-        </div>
 
-        <!-- Admin Content -->
-        <div class="admin-content animate-enter delay-100">
-            <div class="admin-stats">
-                <div class="stat-card">
-                    <h3>Pending Reviews</h3>
-                    <span id="pendingCount" class="stat-number">0</span>
-                </div>
-                <div class="stat-card">
-                    <h3>Approved Projects</h3>
-                    <span id="approvedCount" class="stat-number">0</span>
-                </div>
-                <div class="stat-card">
-                    <h3>Rejected Projects</h3>
-                    <span id="rejectedCount" class="stat-number">0</span>
-                </div>
-            </div>
+<div class="container">
 
-            <div class="admin-actions">
-                <button id="refreshBtn" class="btn-primary">
-                    <i class="fas fa-sync"></i>
-                    Refresh
-                </button>
-            </div>
+  <!-- TOP -->
 
-            <!-- Submissions Table -->
-            <div class="submissions-table">
-                <h2>Pending Submissions</h2>
-                <div id="submissionsList" class="table-container">
-                    <div class="loading-state">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <p>Loading submissions...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Review Modal -->
-    <div id="reviewModal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Review Submission</h3>
-                <button class="modal-close" onclick="closeReviewModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Submission details will be loaded here -->
-            </div>
-            <div class="modal-actions">
-                <button class="btn-secondary" onclick="closeReviewModal()">Cancel</button>
-                <button class="btn-danger" onclick="rejectSubmission()">
-                    <i class="fas fa-times"></i>
-                    Reject
-                </button>
-                <button class="btn-success" onclick="approveSubmission()">
-                    <i class="fas fa-check"></i>
-                    Approve
-                </button>
-            </div>
-        </div>
+  <div class="top-bar">
+    <div>
+      <h1>Admin Dashboard</h1>
+      <p>Manage community project submissions and approvals.</p>
     </div>
 
-    <!-- Professional Footer -->
-    <div id="footer-placeholder"></div>
-
-    <button id="scrollToTopBtn" aria-label="Scroll to top">
-        <i class="fa-solid fa-arrow-up"></i>
+    <button class="refresh-btn">
+      <i class="fas fa-sync"></i> Refresh
     </button>
+  </div>
 
-    <script src="../scripts/components/footer-loader.js"></script>
-    <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
-    <script type="module" src="../scripts/pages/admin.js"></script>
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <div class="stat">
+      <h3>Pending Reviews</h3>
+      <span>0</span>
+    </div>
+
+    <div class="stat">
+      <h3>Approved Projects</h3>
+      <span>0</span>
+    </div>
+
+    <div class="stat">
+      <h3>Rejected Projects</h3>
+      <span>0</span>
+    </div>
+
+  </div>
+
+  <!-- CONTENT -->
+
+  <div class="content">
+
+    <h2>Pending Submissions</h2>
+
+    <div class="loading">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Loading submissions...</p>
+    </div>
+
+  </div>
+
+</div>
+
 </body>
 </html>
