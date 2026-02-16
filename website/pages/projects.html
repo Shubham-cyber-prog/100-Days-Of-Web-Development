@@ -16,7 +16,9 @@
         text-align: center;
         padding: 120px 0 60px;
       }
-
+.sidebar-open-btn{
+    color: white;
+  }
       .search-wrapper {
         max-width: 600px;
         margin: 0 auto 40px;
@@ -91,7 +93,7 @@
         overflow: hidden;
         cursor: pointer;
         padding: 1rem;
-        min-height: 220px;
+        min-height: 280px;
         display: flex;
         flex-direction: column;
 
@@ -187,6 +189,23 @@
         word-wrap: break-word;
       }
 
+      .project-description {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+      }
+
+      body.light-mode .project-description {
+        color: var(--text-secondary);
+        opacity: 0.85;
+      }
+
       .tech-stack {
         display: flex;
         flex-wrap: wrap;
@@ -266,10 +285,13 @@
   <div id="progress-widget-container" class="progress-widget-container"></div>
 
   <!-- Main Content -->
+     <button id="sidebar-open-btn" class="sidebar-open-btn" title="Open sidebar">
+    ☰
+  </button>
   <main class="container section">
 
     <div class="page-header animate-enter">
-      <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
+      <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4); color: #ffffff; font-weight: 900; text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px rgba(0, 0, 0, 0.4), 0px 9px 10px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.15);">
         Projects Archive
       </h1>
       <p class="text-secondary">Access all mission logs and deployment records.</p>
@@ -308,26 +330,5 @@
     <script src="../scripts/components/cursor.js"></script>
     <script type="module" src="../scripts/pages/projects.js"></script>
     <script src="../scripts/components/navigation.js"></script>
-    
-    <!-- Progress Dashboard -->
-    <script type="module">
-        import { ProgressDashboard } from '../scripts/components/ProgressDashboard.js';
-        
-        // Initialize progress dashboard when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            const widgetContainer = document.getElementById('progress-widget-container');
-            if (widgetContainer) {
-                // Create compact progress dashboard for header
-                window.progressDashboard = new ProgressDashboard('progress-widget-container', {
-                    showProgressBar: true,
-                    showStreakCounter: true,
-                    showBadges: true,
-                    maxBadges: 4,
-                    compact: true
-                });
-            }
-        });
-    </script>
   </body>
-
 </html>

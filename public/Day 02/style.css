@@ -1,9 +1,11 @@
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
 
 :root {
   --primary: #4f46e5;
@@ -12,6 +14,14 @@
   --white: #fff;
 }
 
+
+
+  --white: #fff;
+  --white: #ffffff;
+}
+
+
+/* BODY */
 body {
   background: var(--white);
   color: var(--dark);
@@ -34,6 +44,55 @@ body {
 
 .btn-secondary { border: 2px solid white; color: white; }
 
+/* COMMON */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+
+/* BUTTONS */
+.btn {
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+}
+
+.btn-outline {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-light {
+  background: white;
+  color: var(--primary);
+}
+
+
 /* HEADER */
 header {
   position: fixed;
@@ -50,6 +109,13 @@ header {
   padding: 15px 0;
 }
 
+
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
 nav ul {
   display: flex;
   gap: 30px;
@@ -61,6 +127,26 @@ nav ul {
 /* HERO */
 .hero {
   padding: 140px 0 80px;
+nav a {
+  text-decoration: none;
+  color: var(--dark);
+}
+
+nav a:hover {
+  color: var(--primary);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+}
+
+
+/* HERO */
+.hero {
+  padding: 150px 0 90px;
   background: linear-gradient(135deg, #eef2ff, #c7d2fe);
 }
 
@@ -69,6 +155,7 @@ nav ul {
   align-items: center;
   gap: 40px;
 }
+
 
 .hero-content h1 { font-size: 3rem; margin-bottom: 20px; }
 .hero-image img { width: 100%; border-radius: 20px; }
@@ -79,6 +166,36 @@ nav ul {
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 20px;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+
+/* FEATURES */
+.features {
+  padding: 80px 0;
+  background: var(--light);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
   gap: 25px;
 }
 
@@ -89,6 +206,7 @@ nav ul {
   text-align: center;
   transition: 0.3s;
 }
+
 
 .feature-card:hover { transform: translateY(-10px); }
 
@@ -105,12 +223,86 @@ nav ul {
 }
 
 /* CTA */
+
+.feature-card i {
+  font-size: 30px;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+
+/* TESTIMONIALS */
+.testimonials {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.testimonial {
+  display: none;
+  max-width: 600px;
+  margin: auto;
+}
+
+.testimonial.active {
+  display: block;
+}
+
+.testimonial p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.testimonial h4 {
+  color: var(--primary);
+}
+
+.testimonial span {
+  color: gray;
+}
+
+.slider-btns {
+  margin-top: 30px;
+}
+
+.slider-btns button {
+  padding: 10px 15px;
+  margin: 0 8px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+/* CTA */
 .cta {
   background: var(--primary);
   color: white;
   padding: 80px 20px;
   text-align: center;
 }
+
+
+
+/* FOOTER */
+
+
+
+.cta h2 {
+  margin-bottom: 15px;
+}
+
+.cta p {
+  margin-bottom: 25px;
+}
+
 
 /* FOOTER */
 footer {
@@ -120,7 +312,14 @@ footer {
   text-align: center;
 }
 
+
+
 /* SCROLL BUTTON */
+
+
+
+/* SCROLL BUTTON */
+
 #scrollTop {
   position: fixed;
   bottom: 30px;
@@ -142,4 +341,43 @@ footer {
   }
   nav ul.active { display: flex; }
   .mobile-menu-btn { display: block; }
+  cursor: pointer;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-btns {
+    justify-content: center;
+  }
+
+  nav ul {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    display: none;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  nav ul li {
+    padding: 15px;
+    text-align: center;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
 }

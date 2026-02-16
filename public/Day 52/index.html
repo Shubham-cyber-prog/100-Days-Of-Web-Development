@@ -1,156 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management Board</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-tasks"></i> Task Management Board</h1>
-            <p class="subtitle">Drag and drop tasks between columns. Click + to add new tasks.</p>
-        </header>
-
-        <div class="board-controls">
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-value" id="total-tasks">0</span>
-                    <span class="stat-label">Total Tasks</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="done-tasks">0</span>
-                    <span class="stat-label">Completed</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="progress-tasks">0</span>
-                    <span class="stat-label">In Progress</span>
-                </div>
-            </div>
-            <button class="clear-all-btn" id="clear-all">
-                <i class="fas fa-trash-alt"></i> Clear All Tasks
-            </button>
-        </div>
-
-        <div class="board-container">
-            <!-- To Do Column -->
-            <div class="column todo" id="todo-column">
-                <div class="column-header">
-                    <h2 class="column-title">
-                        <i class="fas fa-clipboard-list"></i> To Do
-                        <span class="task-count" id="todo-count">0</span>
-                    </h2>
-                </div>
-                <div class="tasks-container" id="todo-tasks">
-                    <!-- Tasks will be added here dynamically -->
-                </div>
-                <button class="add-task-btn" data-column="todo">
-                    <i class="fas fa-plus"></i> Add Task
-                </button>
-            </div>
-
-            <!-- In Progress Column -->
-            <div class="column inprogress" id="inprogress-column">
-                <div class="column-header">
-                    <h2 class="column-title">
-                        <i class="fas fa-spinner"></i> In Progress
-                        <span class="task-count" id="inprogress-count">0</span>
-                    </h2>
-                </div>
-                <div class="tasks-container" id="inprogress-tasks">
-                    <!-- Tasks will be added here dynamically -->
-                </div>
-                <button class="add-task-btn" data-column="inprogress">
-                    <i class="fas fa-plus"></i> Add Task
-                </button>
-            </div>
-
-            <!-- Review Column -->
-            <div class="column review" id="review-column">
-                <div class="column-header">
-                    <h2 class="column-title">
-                        <i class="fas fa-search"></i> Review
-                        <span class="task-count" id="review-count">0</span>
-                    </h2>
-                </div>
-                <div class="tasks-container" id="review-tasks">
-                    <!-- Tasks will be added here dynamically -->
-                </div>
-                <button class="add-task-btn" data-column="review">
-                    <i class="fas fa-plus"></i> Add Task
-                </button>
-            </div>
-
-            <!-- Done Column -->
-            <div class="column done" id="done-column">
-                <div class="column-header">
-                    <h2 class="column-title">
-                        <i class="fas fa-check-circle"></i> Done
-                        <span class="task-count" id="done-count">0</span>
-                    </h2>
-                </div>
-                <div class="tasks-container" id="done-tasks">
-                    <!-- Tasks will be added here dynamically -->
-                </div>
-                <button class="add-task-btn" data-column="done">
-                    <i class="fas fa-plus"></i> Add Task
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Task Modal -->
-    <div class="modal" id="task-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">Add New Task</h3>
-                <button class="close-modal" id="close-modal">&times;</button>
-            </div>
-            <form id="task-form">
-                <input type="hidden" id="task-id">
-                <div class="form-group">
-                    <label for="task-title">Task Title</label>
-                    <input type="text" id="task-title" required>
-                </div>
-                <div class="form-group">
-                    <label for="task-description">Description</label>
-                    <textarea id="task-description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="task-priority">Priority</label>
-                    <select id="task-priority" required>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="task-column">Status</label>
-                    <select id="task-column" required>
-                        <option value="todo">To Do</option>
-                        <option value="inprogress">In Progress</option>
-                        <option value="review">Review</option>
-                        <option value="done">Done</option>
-                    </select>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" id="cancel-task">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="save-task">Save Task</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
-=======
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Task Management System</title>
+<title>Task Management Board</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -158,110 +11,126 @@
 
 <body>
 
-<nav>
-  <h1><span>Task</span> Manager</h1>
-  <ul>
-    <li class="active" onclick="openTab('home',this)">Home</li>
-    <li onclick="openTab('addTask',this)">Add Task</li>
-    <li onclick="openTab('tasksTab',this)">My Tasks</li>
-    <li onclick="openTab('profileTab',this)">Profile</li>
-    <li onclick="openTab('contact',this)">Contact</li>
-  </ul>
-  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
-</nav>
-
 <div class="container">
 
-<!-- HOME -->
-<div id="home" class="tab active">
-  <div class="card">
-    <h2>Welcome 👋</h2>
-    <p>Manage your daily tasks efficiently and stay productive.</p>
-  </div>
+<header>
+  <h1><i class="fas fa-tasks"></i> Task Management Board</h1>
+  <p class="subtitle">Manage tasks with persistence</p>
+</header>
 
-  <div class="card">
-    <h2>Features</h2>
-    <div class="features">
-      <div class="feature"><i class="fa-solid fa-plus"></i><p>Add Tasks</p></div>
-      <div class="feature"><i class="fa-solid fa-pen"></i><p>Edit Tasks</p></div>
-      <div class="feature"><i class="fa-solid fa-trash"></i><p>Delete Tasks</p></div>
-      <div class="feature"><i class="fa-solid fa-file-pdf"></i><p>PDF Export</p></div>
+<!-- STATS -->
+<div class="board-controls">
+
+  <div class="stats">
+    <div>
+      <b id="total">0</b><br>Total
+    </div>
+
+    <div>
+      <b id="done">0</b><br>Done
+    </div>
+
+    <div>
+      <b id="progress">0</b><br>In Progress
     </div>
   </div>
 
-  <!-- README DOWNLOAD -->
-  <a href="README.md" download class="download-btn">
-    <i class="fa-solid fa-download"></i> Download README
-  </a>
-</div>
-
-<!-- ADD TASK -->
-<div id="addTask" class="tab">
-  <div class="card">
-    <h2>Add Task</h2>
-    <form id="taskForm">
-      <input id="title" placeholder="Task Title" required>
-      <input id="due" type="date" required>
-      <select id="priority">
-        <option>Low</option>
-        <option>Medium</option>
-        <option>High</option>
-      </select>
-      <textarea id="desc" placeholder="Task Description"></textarea>
-      <button>Add Task</button>
-    </form>
-  </div>
-</div>
-
-<!-- TASKS -->
-<div id="tasksTab" class="tab">
-  <div class="card">
-    <h2>My Tasks</h2>
-    <div id="taskList"></div>
-  </div>
-</div>
-
-<!-- PROFILE -->
-<div id="profileTab" class="tab">
-  <div class="card">
-    <h2>Profile</h2>
-    <div class="profile">
-      <img src="https://i.imgur.com/8Km9tLL.png">
-      <div>
-        <p><b>Name:</b> Riya Kharade</p>
-        <p><b>Email:</b> riya@example.com</p>
-        <p><b>Role:</b> Student</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CONTACT -->
-<div id="contact" class="tab">
-  <div class="card">
-    <h2>Contact</h2>
-    <div class="contact">
-      <input placeholder="Name">
-      <input placeholder="Email">
-      <textarea rows="4" placeholder="Message"></textarea>
-      <button>Send</button>
-    </div>
-  </div>
-</div>
+  <button id="clearAll" class="danger">
+    <i class="fas fa-trash"></i> Clear All
+  </button>
 
 </div>
 
-<!-- PRINT -->
-<div id="printTask">
-  <div class="print-box">
-    <h1>Task Details</h1>
-    <p id="printContent"></p>
-  </div>
+<!-- BOARD -->
+<div class="board">
+
+<!-- TODO -->
+<div class="column" data-col="todo">
+
+<h3>To Do <span id="todoCount">0</span></h3>
+
+<div class="taskBox" id="todo"></div>
+
+<button class="addBtn" data-col="todo">+ Add Task</button>
+
 </div>
 
-<footer>© 2026 Task Management System</footer>
+
+<!-- IN PROGRESS -->
+<div class="column" data-col="inprogress">
+
+<h3>In Progress <span id="inprogressCount">0</span></h3>
+
+<div class="taskBox" id="inprogress"></div>
+
+<button class="addBtn" data-col="inprogress">+ Add Task</button>
+
+</div>
+
+
+<!-- REVIEW -->
+<div class="column" data-col="review">
+
+<h3>Review <span id="reviewCount">0</span></h3>
+
+<div class="taskBox" id="review"></div>
+
+<button class="addBtn" data-col="review">+ Add Task</button>
+
+</div>
+
+
+<!-- DONE -->
+<div class="column" data-col="done">
+
+<h3>Done <span id="doneCount">0</span></h3>
+
+<div class="taskBox" id="done"></div>
+
+<button class="addBtn" data-col="done">+ Add Task</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+
+<div class="modalBox">
+
+<h3 id="modalTitle">Add Task</h3>
+
+<form id="taskForm">
+
+<input type="hidden" id="taskId">
+
+<input type="text" id="title" placeholder="Task Title" required>
+
+<textarea id="desc" placeholder="Description"></textarea>
+
+<select id="status">
+  <option value="todo">To Do</option>
+  <option value="inprogress">In Progress</option>
+  <option value="review">Review</option>
+  <option value="done">Done</option>
+</select>
+
+<div class="actions">
+
+<button type="button" id="cancel">Cancel</button>
+
+<button type="submit">Save</button>
+
+</div>
+
+</form>
+
+</div>
+</div>
+
 
 <script src="script.js"></script>
 </body>
 </html>
-
