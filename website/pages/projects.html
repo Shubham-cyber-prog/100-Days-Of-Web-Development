@@ -262,8 +262,12 @@
 </head>
 
 <body>
+  <!-- Progress Widget -->
+  <div id="progress-widget-container" class="progress-widget-container"></div>
+
   <!-- Main Content -->
   <main class="container section">
+
     <div class="page-header animate-enter">
       <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
         Projects Archive
@@ -304,5 +308,26 @@
     <script src="../scripts/components/cursor.js"></script>
     <script type="module" src="../scripts/pages/projects.js"></script>
     <script src="../scripts/components/navigation.js"></script>
+    
+    <!-- Progress Dashboard -->
+    <script type="module">
+        import { ProgressDashboard } from '../scripts/components/ProgressDashboard.js';
+        
+        // Initialize progress dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const widgetContainer = document.getElementById('progress-widget-container');
+            if (widgetContainer) {
+                // Create compact progress dashboard for header
+                window.progressDashboard = new ProgressDashboard('progress-widget-container', {
+                    showProgressBar: true,
+                    showStreakCounter: true,
+                    showBadges: true,
+                    maxBadges: 4,
+                    compact: true
+                });
+            }
+        });
+    </script>
   </body>
+
 </html>
