@@ -1,0 +1,112 @@
+*{
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  margin:0;
+  background:#0f172a;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+/* ===== BLUR WRAPPER ===== */
+.blur-wrapper{
+  transition: filter 0.3s ease;
+}
+
+.blur-wrapper.blurred{
+  filter: blur(6px);
+  pointer-events:none;
+}
+
+/* ===== GAME UI ===== */
+.game-container{
+  text-align:center;
+}
+
+h1{
+  margin-bottom:10px;
+}
+
+.game-info{
+  display:flex;
+  justify-content:space-between;
+  margin:15px 0;
+}
+
+.info-item{
+  display:flex;
+  flex-direction:column;
+  font-size:14px;
+}
+
+canvas{
+  border:2px solid #fff;
+  background:black;
+}
+
+/* ===== CONTROLS ===== */
+.controls{
+  margin-top:15px;
+}
+
+button{
+  padding:10px 20px;
+  font-size:16px;
+  background:#3b82f6;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#2563eb;
+}
+
+/* ===== START OVERLAY ===== */
+.start-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+
+.start-card{
+  background:#020617;
+  padding:30px;
+  border-radius:16px;
+  width:320px;
+  text-align:center;
+}
+
+.instructions{
+  text-align:left;
+  margin:20px 0;
+}
+
+.instructions ul{
+  padding-left:18px;
+}
+
+/* ===== GAME OVER ===== */
+.game-over{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.hidden{
+  display:none;
+}

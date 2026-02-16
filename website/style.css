@@ -4,35 +4,35 @@
 */
 :root {
   /* Base Colors - Dark Mode Default */
-  --bg-primary: #0a0a0a;
-  /* Deepest black/grey */
-  --bg-secondary: #111111;
+  --bg-primary: #000000;
+  /* Pure black */
+  --bg-secondary: #0a0a0a;
   /* Slightly lighter for contrast */
-  --bg-card: #161616;
+  --bg-card: #0a0a0a;
   /* Card background */
-  --bg-hover: #1c1c1c;
+  --bg-hover: #1a1a1a;
   /* Hover state */
 
   /* Text Colors */
-  --text-primary: #ededed;
-  /* High contrast off-white */
-  --text-secondary: #a1a1aa;
-  /* Muted grey */
-  --text-tertiary: #52525b;
-  /* Subtle grey for borders/details */
+  --text-primary: #FFFFFF;
+  /* Pure white text */
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  /* Slightly dimmed white */
+  --text-tertiary: rgba(255, 255, 255, 0.6);
+  /* More dimmed for subtle text */
 
   /* Accents - Minimal & Professional */
-  --accent-primary: #ededed;
+  --accent-primary: #FFFFFF;
   /* White accent for austere look */
   --accent-secondary: #3b82f6;
   /* Subtle blue for links/actions */
-  --border-color: #262626;
+  --border-color: rgba(255, 255, 255, 0.12);
   /* Subtle border */
-  --border-hover: #404040;
+  --border-hover: rgba(255, 255, 255, 0.25);
 
   /* Badges */
-  --badge-bg: #262626;
-  --badge-text: #e5e5e5;
+  --badge-bg: #1a1a1a;
+  --badge-text: #FFFFFF;
 
   /* Typography */
   --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -55,9 +55,9 @@
   --duration-slow: 500ms;
 
   /* Golden Hover Glow */
-  --golden-core: #f59e0b;
-  --golden-alpha: rgba(245, 158, 11, 0.35);
-  --golden-alpha-soft: rgba(245, 158, 11, 0.15);
+  --golden-core: #0b22f5;
+  --golden-alpha: rgba(11, 132, 245, 0.35);
+  --golden-alpha-soft: rgba(62, 11, 245, 0.15);
 }
 
 /* Light Mode Overrides */
@@ -84,6 +84,11 @@ body.light-mode {
   padding: 0;
   box-sizing: border-box;
 }
+/* --- Smooth Scrolling for Internal Anchor Links --- */
+html {
+  scroll-behavior: smooth;
+}
+
 
 body {
   font-family: var(--font-main);
@@ -3269,4 +3274,76 @@ body.login-page {
 
 .auth-divider span {
   padding: 0 1rem;
+}
+
+/* Improved PNG icon styles */
+.footer-socials .social-btn img.icon {
+    width: 26px; /* Slightly larger */
+    height: 26px;
+    object-fit: contain;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Make black icons adapt to theme */
+    filter: brightness(0) saturate(100%) invert(55%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+}
+
+/* Light theme */
+[data-theme="light"] .footer-socials .social-btn img.icon {
+    filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(80%) contrast(80%);
+}
+
+/* Dark theme */
+[data-theme="dark"] .footer-socials .social-btn img.icon {
+    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+/* Hover effects */
+.footer-socials .social-btn:hover img.icon {
+    transform: translateY(-3px) scale(1.1);
+    filter: brightness(0) saturate(100%) invert(68%) sepia(67%) saturate(500%) hue-rotate(350deg) brightness(105%) contrast(101%);
+}
+
+[data-theme="light"] .footer-socials .social-btn:hover img.icon {
+    filter: brightness(0) saturate(100%) invert(25%) sepia(100%) saturate(1500%) hue-rotate(350deg) brightness(95%) contrast(95%);
+}
+
+[data-theme="dark"] .footer-socials .social-btn:hover img.icon {
+    filter: brightness(0) saturate(100%) invert(90%) sepia(100%) saturate(1500%) hue-rotate(350deg) brightness(110%) contrast(110%);
+}
+
+
+/* =========================================
+   CONTACT PAGE – FINAL VISIBILITY FIX
+========================================= */
+
+.contact-page h1,
+.contact-page h2,
+.contact-title {
+  color: #0f172a !important;
+  background: none !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Inputs & textarea */
+.contact-page input,
+.contact-page textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+/* Placeholder (empty fields) */
+.contact-page input::placeholder,
+.contact-page textarea::placeholder {
+  color: #475569 !important;
+  opacity: 1 !important;
+}
+
+/* Focus (cursor + typing) */
+.contact-page input:focus,
+.contact-page textarea:focus {
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  border-color: #4f46e5 !important;
+  outline: none;
 }

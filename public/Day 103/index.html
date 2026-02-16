@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>README Toolkit</title>
@@ -8,7 +9,9 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
+
   <div class="app-shell">
     <!-- SIDEBAR -->
     <aside class="sidebar">
@@ -20,13 +23,13 @@
         <button class="nav-item">GitHub Import</button>
         <button class="nav-item">Templates</button>
         <button class="nav-item">Export</button>
+        <button class="nav-item" onclick="loadSampleREADME()">✨ Try Sample README</button>
       </nav>
 
       <div class="sidebar-footer">
         <button id="themeToggle" class="icon-btn">🌙</button>
       </div>
     </aside>
-
     <!-- MAIN -->
     <main class="workspace">
       <!-- EDITOR -->
@@ -39,37 +42,37 @@
         <button onclick="importFromGitHub()">Import from GitHub</button>
 
         <h3>Badges</h3>
-                    <div class="checkbox-group">
-            <label>
-                <input type="checkbox" value="license" checked />
-                <span>License</span>
-            </label>
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" value="license" checked />
+            <span>License</span>
+          </label>
 
-            <label>
-                <input type="checkbox" value="stars" checked />
-                <span>Stars</span>
-            </label>
+          <label>
+            <input type="checkbox" value="stars" checked />
+            <span>Stars</span>
+          </label>
 
-            <label>
-                <input type="checkbox" value="forks" />
-                <span>Forks</span>
-            </label>
+          <label>
+            <input type="checkbox" value="forks" />
+            <span>Forks</span>
+          </label>
 
-            <label>
-                <input type="checkbox" value="html" />
-                <span>HTML</span>
-            </label>
+          <label>
+            <input type="checkbox" value="html" />
+            <span>HTML</span>
+          </label>
 
-            <label>
-                <input type="checkbox" value="css" />
-                <span>CSS</span>
-            </label>
+          <label>
+            <input type="checkbox" value="css" />
+            <span>CSS</span>
+          </label>
 
-            <label>
-                <input type="checkbox" value="js" />
-                <span>JavaScript</span>
-            </label>
-            </div>
+          <label>
+            <input type="checkbox" value="js" />
+            <span>JavaScript</span>
+          </label>
+        </div>
 
 
         <hr />
@@ -99,21 +102,24 @@
         <h2>Live Preview</h2>
 
         <div class="score-box">
-            <div class="score-header">
+          <div class="score-header">
             <span>README Quality</span>
             <strong id="scoreText">0%</strong>
-            </div>
-            <div class="score-bar">
+          </div>
+          <div class="score-bar">
             <div id="scoreFill"></div>
-            </div>
-            <ul id="scoreChecklist"></ul>
+          </div>
+          <ul id="scoreChecklist"></ul>
         </div>
 
         <div id="preview" class="preview-empty">
-            <p>👋 Start by generating a README</p>
-            <p class="muted">Your markdown preview will appear here</p>
+          <p>👋 New here?</p>
+          <p class="muted">
+            Fill the form on the left or click <strong>Try Sample README</strong> to see a live preview.
+          </p>
+
         </div>
-        </section>
+      </section>
 
     </main>
   </div>
@@ -125,4 +131,5 @@
   <script src="js/templates.js"></script>
   <script src="js/generator.js"></script>
 </body>
+
 </html>

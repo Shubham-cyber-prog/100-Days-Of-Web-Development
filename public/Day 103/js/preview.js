@@ -45,3 +45,6 @@ function renderPreview(markdown) {
 // Load saved README
 const savedReadme = localStorage.getItem("readme");
 if (savedReadme) renderPreview(savedReadme);
+
+const preview2 = document.getElementById("preview");
+preview2.classList.remove("preview-empty");
