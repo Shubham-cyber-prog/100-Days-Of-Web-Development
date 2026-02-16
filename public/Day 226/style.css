@@ -1,0 +1,195 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at center, #050816 0%, #000 70%);
+  color: white;
+}
+
+/* Canvas full screen */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  z-index: 0;
+}
+
+
+/* ================= HEADER ================= */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 95px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px 50px;
+
+  background:
+    radial-gradient(circle at 20% 50%, rgba(80,120,255,0.25), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(150,70,255,0.25), transparent 40%),
+    linear-gradient(90deg, #0a0f2c, #150b3b);
+
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(120, 160, 255, 0.3);
+
+  box-shadow:
+    0 0 40px rgba(95,140,255,0.2),
+    inset 0 0 60px rgba(95,140,255,0.1);
+
+  z-index: 100;
+}
+
+/* Animated glow border */
+.header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+
+  background: linear-gradient(90deg, #4e7cff, #8f5fff, #4e7cff);
+  background-size: 200% 100%;
+  animation: moveGlow 6s linear infinite;
+}
+
+@keyframes moveGlow {
+  from { background-position: 0% }
+  to { background-position: 200% }
+}
+
+
+/* ================= LOGO ================= */
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 4px;
+
+  background: linear-gradient(45deg, #7aa8ff, #b07bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 10px rgba(122,168,255,0.8),
+    0 0 25px rgba(176,123,255,0.6);
+}
+
+
+/* ================= PLANET BUTTONS ================= */
+#planetButtons {
+  margin-top: 10px;
+  display: flex;
+  gap: 14px;
+}
+
+#planetButtons button {
+  padding: 8px 18px;
+  border-radius: 25px;
+  border: 1px solid rgba(122,168,255,0.6);
+
+  background: rgba(25,35,80,0.5);
+  color: #7aa8ff;
+
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  font-size: 13px;
+
+  transition: all 0.3s ease;
+}
+
+#planetButtons button:hover {
+  background: linear-gradient(45deg, #5f8cff, #9c6bff);
+  color: black;
+
+  box-shadow:
+    0 0 12px #5f8cff,
+    0 0 30px #9c6bff88;
+
+  transform: translateY(-3px);
+}
+
+#planetButtons button:active {
+  transform: scale(0.95);
+}
+
+
+/* ================= INFO CARD ================= */
+.card {
+  position: fixed;
+  bottom: 50px;
+  left: 50px;
+  width: 340px;
+  padding: 30px;
+
+  background:
+    linear-gradient(145deg, rgba(20,30,80,0.9), rgba(10,15,45,0.95));
+
+  border-radius: 25px;
+  border: 1px solid rgba(122,168,255,0.4);
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 0 30px rgba(122,168,255,0.5),
+    inset 0 0 50px rgba(95,140,255,0.2);
+
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all 0.5s ease;
+
+  z-index: 100;
+}
+
+/* Show animation */
+.card.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.card h2 {
+  font-size: 28px;
+  margin-bottom: 12px;
+
+  background: linear-gradient(45deg, #7aa8ff, #b07bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 15px rgba(122,168,255,0.6);
+}
+
+.card p {
+  color: #cbd6ff;
+  line-height: 1.5;
+}
+
+.card button {
+  margin-top: 20px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+
+  background: linear-gradient(45deg, #5f8cff, #9c6bff);
+  color: black;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.card button:hover {
+  box-shadow:
+    0 0 15px #5f8cff,
+    0 0 30px #9c6bff88;
+
+  transform: scale(1.05);
+}

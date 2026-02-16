@@ -158,6 +158,9 @@
         let count = 0;
 
         for (const project of allProjects) {
+            // Apply limit of 4 projects for landing page
+            if (count >= 4) break;
+
             const searchString = `${project.title} ${project.level} ${(project.tech || []).join(' ')}`.toLowerCase();
 
             if (searchTerm && !searchString.includes(searchTerm)) {

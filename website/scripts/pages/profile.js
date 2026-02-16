@@ -3,6 +3,7 @@ class ProfileManager {
         this.userData = this.loadUserData();
         this.achievements = this.loadAchievements();
         this.activities = this.loadActivities();
+        this.userSubmissions = [];
 
         this.init();
     }
@@ -14,6 +15,9 @@ class ProfileManager {
         this.bindEvents();
         await this.updateStats();
         this.initMentorMode();
+
+        // Load user submissions
+        await this.loadUserSubmissions();
 
         // Initialize Mission Logs (encrypted notes)
         await this.initMissionLogs();
