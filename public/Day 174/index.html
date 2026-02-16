@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huffman-Viz | Compression Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="brand">
+                <i class="fas fa-compress-arrows-alt"></i> Huffman<span class="highlight">Viz</span>
+            </div>
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="label">Original Bits</span>
+                    <span class="val" id="stat-orig">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Compressed Bits</span>
+                    <span class="val" id="stat-comp">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Compression Ratio</span>
+                    <span class="val highlight" id="stat-ratio">0%</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <div class="input-wrapper">
+                    <input type="text" id="text-input" placeholder="Type text to compress..." value="hello world" spellcheck="false">
+                </div>
+                <div class="binary-output" id="binary-output">
+                    </div>
+            </section>
+
+            <section class="viz-section">
+                <div class="freq-panel">
+                    <h3><i class="fas fa-list-ol"></i> Frequency & Codes</h3>
+                    <div class="table-header">
+                        <span>Char</span>
+                        <span>Count</span>
+                        <span>Code</span>
+                    </div>
+                    <div class="freq-list" id="freq-list">
+                        </div>
+                </div>
+
+                <div class="tree-panel">
+                    <h3><i class="fas fa-project-diagram"></i> Huffman Tree</h3>
+                    <div class="tree-container" id="tree-container">
+                        <svg id="tree-svg"></svg>
+                        <div id="tree-nodes"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

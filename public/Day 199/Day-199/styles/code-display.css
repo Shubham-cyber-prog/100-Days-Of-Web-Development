@@ -1,0 +1,166 @@
+/* Code Display with Syntax Highlighting */
+
+.code-display {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--text-primary);
+}
+
+.code-char {
+    position: relative;
+    display: inline-block;
+}
+
+/* Character States */
+.code-char.correct {
+    color: var(--success);
+    background: rgba(63, 185, 80, 0.1);
+}
+
+.code-char.incorrect {
+    color: var(--error);
+    background: rgba(248, 81, 73, 0.2);
+    text-decoration: underline wavy var(--error);
+}
+
+.code-char.current {
+    background: rgba(88, 166, 255, 0.3);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        background: rgba(88, 166, 255, 0.3);
+    }
+
+    50% {
+        background: rgba(88, 166, 255, 0.5);
+    }
+}
+
+.code-char.pending {
+    color: var(--text-secondary);
+}
+
+/* Syntax Highlighting (Simple Manual Implementation) */
+.syntax-keyword {
+    color: #ff7b72;
+    /* Red for keywords */
+    font-weight: 600;
+}
+
+.syntax-string {
+    color: #a5d6ff;
+    /* Light blue for strings */
+}
+
+.syntax-number {
+    color: #79c0ff;
+    /* Blue for numbers */
+}
+
+.syntax-comment {
+    color: #8b949e;
+    /* Gray for comments */
+    font-style: italic;
+}
+
+.syntax-function {
+    color: #d2a8ff;
+    /* Purple for functions */
+}
+
+.syntax-operator {
+    color: #ff7b72;
+    /* Red for operators */
+}
+
+.syntax-bracket {
+    color: #ffa657;
+    /* Orange for brackets */
+}
+
+.syntax-variable {
+    color: #ffa657;
+    /* Orange for variables */
+}
+
+.syntax-type {
+    color: #79c0ff;
+    /* Blue for types */
+}
+
+.syntax-property {
+    color: #7ee787;
+    /* Green for properties */
+}
+
+/* Language-Specific Colors */
+.lang-python .syntax-keyword {
+    color: #ffb454;
+}
+
+.lang-java .syntax-keyword {
+    color: #ff7b72;
+}
+
+.lang-cpp .syntax-keyword {
+    color: #ff9bf7;
+}
+
+/* Cursor Effect */
+#cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.4em;
+    background: var(--primary);
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 1px;
+}
+
+@keyframes blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Error Highlighting in Results */
+.error-char-highlight {
+    background: rgba(248, 81, 73, 0.2);
+    padding: 0.1em 0.2em;
+    border-radius: 2px;
+    font-family: 'Fira Code', monospace;
+}
+
+.error-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: var(--bg-primary);
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.error-type {
+    color: var(--text-secondary);
+}
+
+.error-count {
+    color: var(--error);
+    font-weight: 700;
+    font-family: 'Fira Code', monospace;
+}

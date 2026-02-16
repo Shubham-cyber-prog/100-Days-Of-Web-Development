@@ -1,19 +1,54 @@
 
 /**
- * Auth Guard v3.0 - LOCAL AUTHENTICATION
- * Enhanced authentication protection using local storage
- * Firebase code commented out for future use
+ * Auth Guard v4.0 - UNIFIED AUTHENTICATION
+ * Enhanced authentication protection using centralized App Core
+ * Falls back to local storage when App Core is unavailable
  */
 
-/* ==========================================
-   FIREBASE IMPORTS - COMMENTED OUT
-   ==========================================
-import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
-    .then(({ getAuth, onAuthStateChanged }) => { ... });
-========================================== */
-
 (function () {
-    console.log('🔐 Auth Guard v3.0 loaded (Local Mode)');
+    console.log('🔐 Auth Guard v4.0 loaded (App Core + Local Mode)');
+
+    // Reference to App Core (will be loaded dynamically)
+    let App = window.App || null;
+    let Notify = window.Notify || null;
+
+    // Load App Core dynamically
+    async function loadAppCore() {
+        try {
+            // Determine correct path based on current location
+            const path = window.location.pathname;
+            let basePath = '../core/app.js';
+            let notifyPath = '../core/Notify.js';
+            
+            if (path.endsWith('/') || path.includes('index.html')) {
+                basePath = 'website/scripts/core/app.js';
+                notifyPath = 'website/scripts/core/Notify.js';
+            } else if (!path.includes('/pages/')) {
+                basePath = '/website/scripts/core/app.js';
+                notifyPath = '/website/scripts/core/Notify.js';
+            }
+
+            if (!App && !window.App) {
+                const appModule = await import(basePath);
+                App = appModule.App || appModule.default;
+                window.App = App;
+                console.log('✅ App Core loaded via Guard');
+            } else {
+                App = window.App;
+            }
+
+            if (!Notify && !window.Notify) {
+                const notifyModule = await import(notifyPath);
+                Notify = notifyModule.Notify || notifyModule.default;
+                window.Notify = Notify;
+                console.log('✅ Notify loaded via Guard');
+            } else {
+                Notify = window.Notify;
+            }
+        } catch (e) {
+            console.warn('⚠️ Could not load App Core modules, using legacy auth:', e.message);
+        }
+    }
 
     // Determine correct path for auth-service.js based on current location
     function getAuthServicePath() {
@@ -28,20 +63,26 @@ import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
         return '/website/scripts/auth/auth-service.js';
     }
 
-    // Load AuthService if not already loaded
+    // Load AuthService if not already loaded (legacy fallback)
     if (!window.AuthService) {
         const script = document.createElement('script');
         script.src = getAuthServicePath();
         script.onload = () => {
             console.log('🔐 AuthService loaded via Guard');
-            runAuthGuard();
+            initGuard();
         };
         script.onerror = () => {
             console.error('❌ Failed to load AuthService from:', script.src);
-            // Fallback attempts could go here
+            initGuard(); // Still try to run with App Core
         };
         document.head.appendChild(script);
     } else {
+        initGuard();
+    }
+
+    // Initialize guard after loading dependencies
+    async function initGuard() {
+        await loadAppCore();
         runAuthGuard();
     }
 
@@ -62,7 +103,6 @@ import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
 
     // Public routes (always accessible)
     const publicRoutes = [
-        'login.html',
         'index.html',
         ''
     ];
@@ -74,22 +114,44 @@ import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
     console.log('📍 Current page:', currentPage);
     console.log('📍 Current path:', currentPath);
 
-    // Check authentication status using LOCAL AUTH
+    // Check authentication status - App Core first, then legacy
     function checkAuthStatus() {
-        const auth = window.AuthService;
-
-        if (!auth) {
-            console.warn('⚠️ AuthService not loaded yet');
-            return { isAuthenticated: false, isGuest: false, user: null };
+        // Try App Core first (unified auth)
+        if (App && typeof App.isAuthenticated === 'function') {
+            const isAuthenticated = App.isAuthenticated();
+            const user = App.getUser ? App.getUser() : null;
+            const isGuest = user?.isGuest || false;
+            
+            console.log('🔍 App Core auth check:', { isAuthenticated, isGuest, user: user?.email || 'none' });
+            
+            return { isAuthenticated, isGuest, user };
         }
 
-        const isAuthenticated = auth.isAuthenticated();
-        const isGuest = auth.isGuest();
-        const user = auth.getCurrentUser();
+        // Try AuthService (legacy local auth)
+        const auth = window.AuthService;
 
-        console.log('🔍 Auth check:', { isAuthenticated, isGuest, user: user?.email || 'none' });
+        if (auth) {
+            const isAuthenticated = auth.isAuthenticated();
+            const isGuest = auth.isGuest();
+            const user = auth.getCurrentUser();
 
-        return { isAuthenticated, isGuest, user };
+            console.log('🔍 AuthService auth check:', { isAuthenticated, isGuest, user: user?.email || 'none' });
+
+            return { isAuthenticated, isGuest, user };
+        }
+
+        // Final fallback - check storage directly
+        console.warn('⚠️ No auth service available, checking storage directly');
+        const sessionAuth = sessionStorage.getItem('authToken') === 'true';
+        const localAuth = localStorage.getItem('isLoggedIn') === 'true' || 
+                          localStorage.getItem('isAuthenticated') === 'true';
+        const isGuest = localStorage.getItem('isGuest') === 'true';
+        
+        return { 
+            isAuthenticated: sessionAuth || localAuth || isGuest, 
+            isGuest, 
+            user: null 
+        };
     }
 
     /* ==========================================
@@ -182,20 +244,20 @@ import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
         );
     }
 
-    // Get correct login path
-    function getLoginPath() {
+    // Get correct home path
+    function getHomePath() {
         // Check if we're in pages directory
         if (currentPath.includes('/pages/')) {
-            return 'login.html';
+            return '../index.html';
         }
 
         // Check if we're in root
         if (currentPath.endsWith('/') || currentPath.includes('index.html')) {
-            return 'pages/login.html';
+            return 'index.html';
         }
 
         // Default (relative to current location)
-        return '../login.html';
+        return '../index.html';
     }
 
     // Get correct dashboard path
@@ -208,9 +270,9 @@ import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
 
     // Main guard logic
     function runAuthGuard() {
-        // Critical: Wait for AuthService to load
-        if (!window.AuthService) {
-            console.log('⏳ Waiting for AuthService to load...');
+        // Check if any auth service is available
+        if (!window.AuthService && !App) {
+            console.log('⏳ Waiting for auth services to load...');
             return;
         }
 
@@ -222,36 +284,33 @@ import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
         // Determine if current page needs protection
         const needsProtection = isProtectedRoute(currentPage);
         const isPublicPage = isPublicRoute(currentPage);
-        const isLoginPage = currentPage === 'login.html' || currentPage.includes('login');
 
         console.log('📊 Page analysis:', {
             currentPage,
             needsProtection,
             isPublicPage,
-            isLoginPage,
             isAuthenticated,
             isGuest
         });
 
-        // Case 1: User is authenticated but on login page → redirect to dashboard
-        if ((isAuthenticated || isGuest) && isLoginPage) {
-            console.log('✅ Authenticated user on login page, redirecting to dashboard');
-            const dashboardPath = getDashboardPath();
-            window.location.href = dashboardPath;
-            return;
-        }
-
-        // Case 2: User not authenticated and trying to access protected page → redirect to login
+        // Case 1: User not authenticated and trying to access protected page → redirect to home
         if (!isAuthenticated && !isGuest && needsProtection) {
-            console.log('❌ Unauthenticated access to protected page, redirecting to login');
-            const loginPath = getLoginPath();
+            console.log('❌ Unauthenticated access to protected page, redirecting to home');
+            const homePath = getHomePath();
 
             // Clear any stale auth data
-            if (window.AuthService) {
+            if (App && App.logout) {
+                App.logout();
+            } else if (window.AuthService) {
                 window.AuthService.logout();
             }
 
-            window.location.href = loginPath;
+            // Show notification if available
+            if (Notify) {
+                Notify.warning('Please authenticate to access this page');
+            }
+
+            window.location.href = homePath;
             return;
         }
 
@@ -286,6 +345,18 @@ import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
     function showGuestNotification() {
         // Only show once per session
         if (!sessionStorage.getItem('guestNotificationShown')) {
+            sessionStorage.setItem('guestNotificationShown', 'true');
+            
+            // Use Notify if available
+            if (Notify) {
+                Notify.warning('You\'re in Guest Mode. Some features may be limited.', {
+                    duration: 5000,
+                    icon: '👤'
+                });
+                return;
+            }
+            
+            // Fallback to local notification
             setTimeout(() => {
                 const notification = document.createElement('div');
                 notification.style.cssText = `
@@ -361,10 +432,10 @@ import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js')
             localStorage.removeItem('userId');
             localStorage.removeItem('userName');
 
-            // Redirect to login
-            window.location.href = getLoginPath();
+            // Redirect to home page
+            window.location.href = getHomePath();
         },
-        getLoginPath,
+        getHomePath,
         getDashboardPath
     };
 })();

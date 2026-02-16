@@ -1,0 +1,184 @@
+/* Gate Component Styling */
+.logic-gate {
+    position: absolute;
+    background: var(--bg-sidebar);
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    min-width: 80px;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+    user-select: none;
+    transition: box-shadow 0.2s;
+}
+
+.logic-gate:hover {
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.logic-gate.selected {
+    border-color: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.gate-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    margin-bottom: 2px;
+}
+
+.gate-type {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+/* Pins */
+.pin {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--bg-dark);
+    border: 2px solid var(--text-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pin:hover {
+    background: var(--accent);
+    transform: scale(1.2);
+}
+
+.pin.connected {
+    background: var(--text-secondary);
+}
+
+.pin.high {
+    background: #00ff88;
+    border-color: #00ff88;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+}
+
+.pin.low {
+    background: #ff4444;
+    border-color: #ff4444;
+}
+
+.pin-input {
+    left: -7px;
+}
+
+.pin-output {
+    right: -7px;
+}
+
+/* Specific Component Styles */
+.gate-switch {
+    width: 50px;
+    height: 40px;
+}
+
+.switch-toggle {
+    width: 30px;
+    height: 16px;
+    background: #333;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.gate-switch.on .switch-toggle {
+    background: var(--accent);
+}
+
+.switch-toggle::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: all 0.2s;
+}
+
+.gate-switch.on .switch-toggle::after {
+    left: 16px;
+}
+
+.gate-bulb {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gate-bulb.on {
+    background: #ffd700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    border-color: #fff;
+    color: #000;
+}
+
+/* Wires */
+.wire {
+    fill: none;
+    stroke: var(--text-secondary);
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke 0.2s;
+}
+
+.wire.high {
+    stroke: #00ff88;
+    stroke-width: 4;
+}
+
+.wire.active {
+    stroke-dasharray: 8;
+    animation: flow 1s linear infinite;
+}
+
+@keyframes flow {
+    from {
+        stroke-dashoffset: 16;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Context Menu */
+#context-menu {
+    position: fixed;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem 0;
+    min-width: 120px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.menu-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.menu-item:hover {
+    background: var(--accent);
+    color: var(--bg-dark);
+}
