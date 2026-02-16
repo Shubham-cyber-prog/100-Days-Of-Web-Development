@@ -1,3 +1,32 @@
+/* ===== FULL SCREEN CENTER ===== */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,  #ffd700, #000080);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ===== MAIN CARD ===== */
+.container {
+    width: 400px;
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== SCENE ===== */
+.scene {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 30px auto;
+    perspective: 800px;
 body {
   margin: 0;
   min-height: 100vh;
@@ -41,6 +70,28 @@ body {
   transition: transform 1s ease-out;
 }
 
+/* ===== DICE FACES ===== */
+.face {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: #ffffff;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    padding: 12px;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+}
+
+.dot {
+    width: 22px;
+    height: 22px;
+    background: #333;
+    border-radius: 50%;
+    align-self: center;
+    justify-self: center;
 .face {
   position: absolute;
   width: 100px;
@@ -71,6 +122,70 @@ body {
 .center-left { grid-area: 2 / 1; }
 .center-right { grid-area: 2 / 3; }
 
+/* Face rotations */
+.front  { transform: translateZ(75px); }
+.back   { transform: rotateY(180deg) translateZ(75px); }
+.right  { transform: rotateY(90deg) translateZ(75px); }
+.left   { transform: rotateY(-90deg) translateZ(75px); }
+.top    { transform: rotateX(90deg) translateZ(75px); }
+.bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+/* ===== BUTTONS ===== */
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border-radius: 30px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Roll Button */
+#rollBtn {
+    background: linear-gradient(45deg, #ff6b6b, #ff4757);
+    color: white;
+    box-shadow: 0 10px 25px rgba(255, 71, 87, 0.5);
+}
+
+#rollBtn:hover {
+    transform: translateY(-4px);
+}
+
+/* Reset Button */
+#resetBtn {
+    background: linear-gradient(45deg, #e077e0, #f390d5);
+    color: white;
+}
+
+/* ===== TEXT ===== */
+#resultText {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+}
+
+#rollCount {
+    margin-top: 10px;
+    color: #f1f1f1;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    position: fixed;
+    bottom: 10px;
+    text-align: center;
+    width: 100%;
+    color: white;
+    opacity: 0.7;
+}
+
+.footer a {
+    color: #cc9696;
+    text-decoration: none;
 /* Faces */
 .front { transform: translateZ(50px); }
 .back { transform: rotateY(180deg) translateZ(50px); }
