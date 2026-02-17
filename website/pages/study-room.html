@@ -1,378 +1,399 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
-    <title>Study Room | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <link rel="stylesheet" href="../styles/pages/study-room.css" />
-    <script src="../scripts/components/sidebar-loader.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Rooms | 100 Days of Web Dev</title>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <style>
+    /* ================= GLOBAL ================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #f1f5f9;
+      min-height: 100vh;
+    }
+
+    main {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #020617;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    }
+
+    /* ================= HEADER ================= */
+
+    .lobby-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .lobby-header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .lobby-header p {
+      color: #94a3b8;
+      font-size: 16px;
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .lobby-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 15px;
+      border-radius: 6px;
+    }
+
+    .btn-primary {
+      background: #0ea5e9;
+      color: white;
+      padding: 12px 22px;
+    }
+
+    .btn-primary:hover {
+      background: #0284c7;
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: white;
+      padding: 12px 20px;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    #createRoomBtn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+    }
+
+    /* ================= JOIN FORM ================= */
+
+    .join-room-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .join-room-form input {
+      width: 170px;
+      padding: 11px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      background: #020617;
+      color: white;
+      border: 1px solid #334155;
+    }
+
+    .join-room-form input:focus {
+      border-color: #0ea5e9;
+    }
+
+    /* ================= PUBLIC ROOMS ================= */
+
+    .public-rooms h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 20px;
+    }
+
+    .room-card {
+      background: #020617;
+      border: 1px solid #1e293b;
+      padding: 18px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .room-card:hover {
+      transform: translateY(-4px);
+      border-color: #0ea5e9;
+    }
+
+    .room-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .room-card p {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    /* ================= LOADING ================= */
+
+    .loading-rooms {
+      text-align: center;
+      color: #94a3b8;
+      grid-column: 1/-1;
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #020617;
+      padding: 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid #1e293b;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-close {
+      background: none;
+      color: white;
+      font-size: 24px;
+    }
+
+    /* ================= FORM ================= */
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: white;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #0ea5e9;
+      outline: none;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:600px){
+      .lobby-actions{
+        flex-direction: column;
+      }
+
+      .join-room-form{
+        width:100%;
+      }
+
+      .join-room-form input{
+        flex:1;
+      }
+    }
+
+  </style>
 </head>
-  <body>
-    <!-- Navigation -->
-    <!-- Dynamic header will be loaded here -->
 
-    <!-- Main Content -->
-    <main class="study-room-main">
-      <!-- Room Lobby View (shown when not in a room) -->
-      <section id="roomLobby" class="room-lobby">
-        <div class="container">
-          <div class="lobby-header">
-            <h1>📚 Study Rooms</h1>
-            <p>
-              Join or create a collaborative study session with fellow
-              developers
-            </p>
-          </div>
+<body>
 
-          <div class="lobby-actions">
-            <button id="createRoomBtn" class="btn btn-primary btn-lg">
-              <span class="btn-icon">➕</span>
-              Create Room
-            </button>
-            <div class="join-room-form">
-              <input
-                type="text"
-                id="inviteCodeInput"
-                placeholder="Enter invite code"
-                maxlength="6"
-                class="invite-input"
-              />
-              <button id="joinRoomBtn" class="btn btn-secondary">Join</button>
-            </div>
-          </div>
+<main>
 
-          <div class="public-rooms">
-            <h2>🌐 Public Rooms</h2>
-            <div id="publicRoomsList" class="rooms-grid">
-              <div class="loading-rooms">
-                <div class="spinner"></div>
-                <span>Loading rooms...</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  <section class="container">
 
-      <!-- Room View (shown when inside a room) -->
-      <section id="roomView" class="room-view" style="display: none">
-        <div class="room-container">
-          <!-- Room Header -->
-          <header class="room-header glass-panel">
-            <div class="room-info">
-              <h2 id="roomName">Study Room</h2>
-              <div class="room-meta">
-                <span
-                  class="invite-code"
-                  id="roomInviteCode"
-                  title="Click to copy"
-                >
-                  <span class="code-label">Code:</span>
-                  <span class="code-value">------</span>
-                  <svg
-                    class="copy-icon"
-                    viewBox="0 0 24 24"
-                    width="14"
-                    height="14"
-                  >
-                    <rect
-                      x="9"
-                      y="9"
-                      width="13"
-                      height="13"
-                      rx="2"
-                      ry="2"
-                    ></rect>
-                    <path
-                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                    ></path>
-                  </svg>
-                </span>
-                <span class="participant-count">
-                  <span id="participantCount">0</span>/10 participants
-                </span>
-              </div>
-            </div>
-            <div class="room-actions">
-              <button id="settingsBtn" class="btn-icon" title="Room Settings">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                  <circle cx="12" cy="12" r="3"></circle>
-                  <path
-                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
-                  ></path>
-                </svg>
-              </button>
-              <button id="leaveRoomBtn" class="btn btn-danger">
-                Leave Room
-              </button>
-            </div>
-          </header>
+    <!-- Header -->
+    <div class="lobby-header">
+      <h1>📚 Study Rooms</h1>
+      <p>Join or create a collaborative study session</p>
+    </div>
 
-          <!-- Main Room Content -->
-          <div class="room-content">
-            <!-- Participants Sidebar -->
-            <aside
-              class="participants-sidebar glass-panel"
-              id="participantsSidebar"
-            >
-              <div class="sidebar-header">
-                <h3>👥 Participants</h3>
-              </div>
-              <div id="participantsList" class="participants-list">
-                <!-- Populated by ParticipantList.js -->
-              </div>
-            </aside>
+    <!-- Actions -->
+    <div class="lobby-actions">
 
-            <!-- Center Content -->
-            <div class="room-center">
-              <!-- Pomodoro Timer -->
-              <div class="pomodoro-section glass-panel">
-                <div class="pomodoro-display">
-                  <div class="timer-ring">
-                    <svg class="timer-svg" viewBox="0 0 100 100">
-                      <circle class="timer-bg" cx="50" cy="50" r="45" />
-                      <circle
-                        class="timer-progress"
-                        id="timerProgress"
-                        cx="50"
-                        cy="50"
-                        r="45"
-                      />
-                    </svg>
-                    <div class="timer-content">
-                      <span class="timer-time" id="timerDisplay">25:00</span>
-                      <span class="timer-label" id="timerLabel"
-                        >Focus Time</span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="pomodoro-controls">
-                  <button id="pomodoroStartBtn" class="btn btn-primary">
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                    Start
-                  </button>
-                  <button
-                    id="pomodoroStopBtn"
-                    class="btn btn-secondary"
-                    style="display: none"
-                  >
-                    <svg viewBox="0 0 24 24" width="16" height="16">
-                      <rect x="6" y="4" width="4" height="16"></rect>
-                      <rect x="14" y="4" width="4" height="16"></rect>
-                    </svg>
-                    Pause
-                  </button>
-                  <button id="breakBtn" class="btn btn-outline">
-                    ☕ Break
-                  </button>
-                </div>
-              </div>
+      <button id="createRoomBtn" class="btn-primary">
+        <i class="fa-solid fa-plus"></i> Create Room
+      </button>
 
-              <!-- Working On Status -->
-              <div class="working-on-section glass-panel">
-                <h3>📝 What are you working on?</h3>
-                <div class="working-on-form">
-                  <select id="daySelect" class="day-select">
-                    <option value="">Select a day...</option>
-                    <!-- Populated dynamically -->
-                  </select>
-                  <button id="updateStatusBtn" class="btn btn-primary">
-                    Update Status
-                  </button>
-                </div>
-                <div
-                  id="currentWorkingOn"
-                  class="current-working-on"
-                  style="display: none"
-                >
-                  <span>Currently working on: </span>
-                  <strong id="workingOnText">Day X</strong>
-                  <button id="clearStatusBtn" class="btn-text">Clear</button>
-                </div>
-              </div>
-
-              <!-- Activity Feed -->
-              <div class="activity-section glass-panel">
-                <h3>📢 Activity Feed</h3>
-                <div id="activityFeed" class="activity-feed">
-                  <!-- Populated by room events -->
-                </div>
-              </div>
-            </div>
-
-            <!-- Chat Sidebar -->
-            <aside class="chat-sidebar glass-panel" id="chatSidebar">
-              <div class="chat-header">
-                <h3>💬 Room Chat</h3>
-              </div>
-              <div id="chatMessages" class="chat-messages">
-                <!-- Populated by RoomChat.js -->
-              </div>
-              <div class="chat-input-area">
-                <div class="chat-input-wrapper">
-                  <textarea
-                    id="chatInput"
-                    placeholder="Type a message... (Markdown supported)"
-                    rows="1"
-                  ></textarea>
-                  <button
-                    id="sendCodeBtn"
-                    class="btn-icon code-btn"
-                    title="Send code snippet"
-                  >
-                    <svg viewBox="0 0 24 24" width="18" height="18">
-                      <polyline points="16 18 22 12 16 6"></polyline>
-                      <polyline points="8 6 2 12 8 18"></polyline>
-                    </svg>
-                  </button>
-                </div>
-                <button id="sendMessageBtn" class="btn btn-primary send-btn">
-                  <svg viewBox="0 0 24 24" width="18" height="18">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                  </svg>
-                </button>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </section>
-
-      <!-- Create Room Modal -->
-      <div id="createRoomModal" class="modal" style="display: none">
-        <div class="modal-overlay"></div>
-        <div class="modal-content glass-panel">
-          <div class="modal-header">
-            <h2>Create Study Room</h2>
-            <button class="modal-close" id="closeCreateModal">&times;</button>
-          </div>
-          <form id="createRoomForm" class="modal-body">
-            <div class="form-group">
-              <label for="roomNameInput">Room Name</label>
-              <input
-                type="text"
-                id="roomNameInput"
-                placeholder="My Study Session"
-                maxlength="50"
-              />
-            </div>
-            <div class="form-group">
-              <label for="roomDescInput">Description (optional)</label>
-              <textarea
-                id="roomDescInput"
-                placeholder="What will you be studying?"
-                rows="2"
-              ></textarea>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="pomodoroDuration">Pomodoro (min)</label>
-                <input
-                  type="number"
-                  id="pomodoroDuration"
-                  value="25"
-                  min="5"
-                  max="60"
-                />
-              </div>
-              <div class="form-group">
-                <label for="breakDuration">Break (min)</label>
-                <input
-                  type="number"
-                  id="breakDuration"
-                  value="5"
-                  min="1"
-                  max="30"
-                />
-              </div>
-            </div>
-            <div class="form-group checkbox-group">
-              <label>
-                <input type="checkbox" id="isPrivateRoom" />
-                <span>Private Room (invite only)</span>
-              </label>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                id="cancelCreateBtn"
-              >
-                Cancel
-              </button>
-              <button type="submit" class="btn btn-primary">Create Room</button>
-            </div>
-          </form>
-        </div>
+      <div class="join-room-form">
+        <input type="text" id="inviteCode" placeholder="Invite code">
+        <button class="btn-secondary" id="joinBtn">Join</button>
       </div>
 
-      <!-- Code Snippet Modal -->
-      <div id="codeSnippetModal" class="modal" style="display: none">
-        <div class="modal-overlay"></div>
-        <div class="modal-content glass-panel">
-          <div class="modal-header">
-            <h2>Share Code Snippet</h2>
-            <button class="modal-close" id="closeCodeModal">&times;</button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="codeLanguage">Language</label>
-              <select id="codeLanguage">
-                <option value="javascript">JavaScript</option>
-                <option value="html">HTML</option>
-                <option value="css">CSS</option>
-                <option value="python">Python</option>
-                <option value="json">JSON</option>
-                <option value="plaintext">Plain Text</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="codeContent">Code</label>
-              <textarea
-                id="codeContent"
-                class="code-textarea"
-                rows="10"
-                placeholder="Paste your code here..."
-              ></textarea>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                id="cancelCodeBtn"
-              >
-                Cancel
-              </button>
-              <button type="button" class="btn btn-primary" id="shareCodeBtn">
-                Share Code
-              </button>
-            </div>
-          </div>
+    </div>
+
+    <!-- Public Rooms -->
+    <div class="public-rooms">
+
+      <h2>🌐 Public Rooms</h2>
+
+      <div class="rooms-grid" id="roomsGrid">
+
+        <div class="loading-rooms">
+          Loading rooms...
         </div>
+
       </div>
 
-      <!-- Connection Status -->
-      <div
-        id="connectionStatus"
-        class="connection-status"
-        style="display: none"
-      >
-        <span class="status-indicator"></span>
-        <span class="status-text">Reconnecting...</span>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- Create Room Modal -->
+
+<div class="modal" id="createModal">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2>Create Room</h2>
+      <button class="modal-close" id="closeModal">&times;</button>
+    </div>
+
+    <form id="createForm">
+
+      <div class="form-group">
+        <label>Room Name</label>
+        <input type="text" required>
       </div>
-    </main>
 
-    <!-- Scripts -->
-    <script type="module" src="../scripts/pages/study-room.js"></script>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea rows="3"></textarea>
+      </div>
 
-    <!-- Footer -->
-    <div id="footer-placeholder"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn-primary">Create</button>
+      </div>
 
-    <!-- Component Loaders -->    <script src="../scripts/components/footer-loader.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
-  </body>
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+  const modal = document.getElementById("createModal");
+  const openBtn = document.getElementById("createRoomBtn");
+  const closeBtn = document.getElementById("closeModal");
+  const cancelBtn = document.getElementById("cancelBtn");
+  const grid = document.getElementById("roomsGrid");
+
+  // Open modal
+  openBtn.onclick = () => {
+    modal.style.display = "flex";
+  };
+
+  // Close modal
+  closeBtn.onclick = cancelBtn.onclick = () => {
+    modal.style.display = "none";
+  };
+
+  // Fake rooms (demo)
+  const rooms = [
+    { name:"Web Dev Study", desc:"HTML & CSS practice" },
+    { name:"DSA Group", desc:"Daily problem solving" },
+    { name:"JS Bootcamp", desc:"Advanced JavaScript" },
+    { name:"React Learners", desc:"React projects" }
+  ];
+
+  // Load rooms
+  function loadRooms(){
+    grid.innerHTML = "";
+
+    rooms.forEach(room => {
+
+      const card = document.createElement("div");
+      card.className = "room-card";
+
+      card.innerHTML = `
+        <h3>${room.name}</h3>
+        <p>${room.desc}</p>
+        <button class="btn-primary">Join</button>
+      `;
+
+      grid.appendChild(card);
+
+    });
+  }
+
+  // Load on start
+  setTimeout(loadRooms, 800);
+
+</script>
+
+</body>
 </html>
