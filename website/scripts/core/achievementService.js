@@ -1,70 +1,16 @@
 /**
  * Achievement Service
  * Handles badge unlocking, progress tracking, and gamification logic
+ * Uses comprehensive achievement definitions from data/achievements.js
  */
 
 import { Notify } from './Notify.js';
+import { achievementsData, achievementCategories, rarityConfig, getTotalPossiblePoints } from '../data/achievements.js';
 
 class AchievementService {
     constructor() {
-        this.achievements = [
-            {
-                id: 'day_1',
-                title: 'First Orbit',
-                description: 'Complete your first day of code',
-                icon: '🚀',
-                category: 'milestone',
-                requirement: (stats) => stats.totalCompleted >= 1
-            },
-            {
-                id: 'day_10',
-                title: 'Decade of Code',
-                description: 'Complete 10 projects',
-                icon: '🎫',
-                category: 'milestone',
-                requirement: (stats) => stats.totalCompleted >= 10
-            },
-            {
-                id: 'day_25',
-                title: 'Quarter Century',
-                description: 'Complete 25 projects',
-                icon: '🎖️',
-                category: 'milestone',
-                requirement: (stats) => stats.totalCompleted >= 25
-            },
-            {
-                id: 'day_50',
-                title: 'Halfway Hero',
-                description: 'Complete 50 projects',
-                icon: '🏆',
-                category: 'milestone',
-                requirement: (stats) => stats.totalCompleted >= 50
-            },
-            {
-                id: 'day_100',
-                title: 'Zenith Master',
-                description: 'Complete the full 100 days',
-                icon: '👑',
-                category: 'milestone',
-                requirement: (stats) => stats.totalCompleted >= 100
-            },
-            {
-                id: 'streak_7',
-                title: 'Week Warrior',
-                description: 'Maintain a 7-day streak',
-                icon: '🔥',
-                category: 'streak',
-                requirement: (stats) => stats.currentStreak >= 7
-            },
-            {
-                id: 'explorer',
-                title: 'Tech Explorer',
-                description: 'Try 5 different technologies',
-                icon: '🌍',
-                category: 'explorer',
-                requirement: (stats) => stats.techCount >= 5
-            }
-        ];
+        // Use comprehensive achievements from data/achievements.js
+        this.achievements = achievementsData;
 
         this.unlockedAchievements = this.loadUnlocked();
         this.userStats = this.loadUserStats();
