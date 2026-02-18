@@ -1,207 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced QR Code Generator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>CyberCore | Real-Time Intrusion Detection & Network SOC</title>
+    <meta name="description"
+        content="Advanced network security operations dashboard. Simulates packet flow, implements IDS heuristics, and optimizes network topology via force-directed graphs.">
+    <link rel="stylesheet" href="styles/cyber.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🔲 Advanced QR Code Generator</h1>
-            <p>Generate colorful QR codes with logo and templates</p>
-        </div>
 
-        <!-- Quick Templates -->
-        <div class="templates-section">
-            <h3>Quick Templates</h3>
-            <div class="templates">
-                <button class="template-btn" data-type="url">🌐 URL</button>
-                <button class="template-btn" data-type="wifi">📶 WiFi</button>
-                <button class="template-btn" data-type="email">📧 Email</button>
-                <button class="template-btn" data-type="phone">📞 Phone</button>
-                <button class="template-btn" data-type="whatsapp">💬 WhatsApp</button>
-                <button class="template-btn" data-type="vcard">👤 vCard</button>
+<body class="soc-theme">
+    <div class="soc-layout">
+        <!-- Top Navigation Status -->
+        <header class="soc-header">
+            <div class="brand">
+                <div class="logo">CYBER_CORE <span class="v">v2.1</span></div>
             </div>
-        </div>
-
-        <!-- Dynamic Input Section -->
-        <div class="input-section" id="inputSection">
-            <!-- URL Template (Default) -->
-            <div class="template-form active" id="urlForm">
-                <div class="input-group">
-                    <label for="urlInput">Website URL</label>
-                    <input type="url" id="urlInput" placeholder="https://example.com">
-                </div>
+            <div class="threat-alert">
+                THREAT_LEVEL: <span id="level-val" class="level-low">LOW</span>
             </div>
-
-            <!-- WiFi Template -->
-            <div class="template-form" id="wifiForm">
-                <div class="input-group">
-                    <label for="wifiSSID">Network Name (SSID)</label>
-                    <input type="text" id="wifiSSID" placeholder="My WiFi Network">
-                </div>
-                <div class="input-group">
-                    <label for="wifiPassword">Password</label>
-                    <input type="text" id="wifiPassword" placeholder="Password">
-                </div>
-                <div class="input-group">
-                    <label for="wifiEncryption">Security Type</label>
-                    <select id="wifiEncryption">
-                        <option value="WPA">WPA/WPA2</option>
-                        <option value="WEP">WEP</option>
-                        <option value="nopass">None</option>
-                    </select>
-                </div>
+            <div class="node-stats">
+                ACTIVE_NODES: <span id="node-count">32</span> |
+                ENCRYPTION: <span class="active">AES-256</span> |
+                LATENCY: <span id="latency-val">4ms</span>
             </div>
+        </header>
 
-            <!-- Email Template -->
-            <div class="template-form" id="emailForm">
-                <div class="input-group">
-                    <label for="emailTo">Email Address</label>
-                    <input type="email" id="emailTo" placeholder="example@email.com">
+        <main class="main-workspace">
+            <!-- Topology View -->
+            <section class="topology-area">
+                <header class="panel-header">
+                    <h3>NETWORK_TOPOLOGY (FORCE_OPTIMIZED)</h3>
+                </header>
+                <div class="canvas-wrapper" id="topology-container">
+                    <canvas id="topology-canvas"></canvas>
                 </div>
-                <div class="input-group">
-                    <label for="emailSubject">Subject</label>
-                    <input type="text" id="emailSubject" placeholder="Email Subject">
+            </section>
+
+            <!-- Packet Inspector -->
+            <aside class="log-sidebar">
+                <header class="panel-header">
+                    <h3>IDS_REALTIME_LOG</h3>
+                </header>
+                <div class="log-console" id="ids-console">
+                    <div class="log-entry system">> SYSTEM: BOOT SEQUENCE COMPLETE.</div>
+                    <div class="log-entry system">> IDS: HEURISTIC_ENGINE LOADED.</div>
                 </div>
-                <div class="input-group">
-                    <label for="emailBody">Message</label>
-                    <textarea id="emailBody" placeholder="Your message here..." rows="3"></textarea>
-                </div>
+
+                <div class="packet-details" id="packet-inspector">
+                    <h3>PACKET_INSPECTOR</h3>
+                    <div class="details-grid">
+                        <div class="label">SOURCE_IP:</div>
+                        <div id="p-src">--</div>
+                        <div class="label">TARGET_IP:</div>
+                        <div id="p-dst">--</div>
+                        <div class="label">PROTOCOL:</div>
+                        <div id="p-proto">--</div>
+                        <div class="label">SIGNATURE:</div>
+                        <div id="p-sig" class="sig-ok">CLEAN</div>
+                    </div>
+            </aside>
+        </main>
+
+        <!-- Bottom Controls -->
+        <footer class="soc-footer">
+            <div class="control-panel">
+                <button class="action-btn" id="btn-add-node">+ NODE</button>
+                <button class="action-btn" id="btn-stress-test">⌁ STRESS_TEST</button>
+                <button class="action-btn danger" id="btn-reset">☢ PURGE_TOPOLOGY</button>
             </div>
 
-            <!-- Phone Template -->
-            <div class="template-form" id="phoneForm">
-                <div class="input-group">
-                    <label for="phoneNumber">Phone Number</label>
-                    <input type="tel" id="phoneNumber" placeholder="+1234567890">
-                </div>
+            <div class="topology-params">
+                <label>ATTRACTION
+                    <input type="range" id="input-attract" min="1" max="10" value="5">
+                </label>
+                <label>REPULSION
+                    <input type="range" id="input-repel" min="1" max="100" value="50">
+                </label>
             </div>
 
-            <!-- WhatsApp Template -->
-            <div class="template-form" id="whatsappForm">
-                <div class="input-group">
-                    <label for="whatsappNumber">WhatsApp Number</label>
-                    <input type="tel" id="whatsappNumber" placeholder="+1234567890">
-                </div>
-                <div class="input-group">
-                    <label for="whatsappMessage">Pre-filled Message (Optional)</label>
-                    <textarea id="whatsappMessage" placeholder="Hello!" rows="3"></textarea>
-                </div>
+            <div class="system-metrics">
+                EFFICENCY: <span id="val-eff">98.2%</span> |
+                DROPPED: <span id="val-drop">0</span>
             </div>
-
-            <!-- vCard Template -->
-            <div class="template-form" id="vcardForm">
-                <div class="input-group">
-                    <label for="vcardName">Full Name</label>
-                    <input type="text" id="vcardName" placeholder="John Doe">
-                </div>
-                <div class="input-group">
-                    <label for="vcardPhone">Phone</label>
-                    <input type="tel" id="vcardPhone" placeholder="+1234567890">
-                </div>
-                <div class="input-group">
-                    <label for="vcardEmail">Email</label>
-                    <input type="email" id="vcardEmail" placeholder="john@email.com">
-                </div>
-                <div class="input-group">
-                    <label for="vcardOrg">Organization (Optional)</label>
-                    <input type="text" id="vcardOrg" placeholder="Company Name">
-                </div>
-            </div>
-        </div>
-
-        <!-- Customization Options -->
-        <div class="customization-section">
-            <h3>Customize QR Code</h3>
-            
-            <div class="custom-grid">
-                <div class="input-group">
-                    <label for="qrSize">Size</label>
-                    <select id="qrSize">
-                        <option value="150">Small (150x150)</option>
-                        <option value="200" selected>Medium (200x200)</option>
-                        <option value="300">Large (300x300)</option>
-                        <option value="400">Extra Large (400x400)</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label for="darkColor">Dark Color</label>
-                    <input type="color" id="darkColor" value="#000000">
-                </div>
-
-                <div class="input-group">
-                    <label for="lightColor">Light Color</label>
-                    <input type="color" id="lightColor" value="#ffffff">
-                </div>
-
-                <div class="input-group">
-                    <label for="errorLevel">Error Correction</label>
-                    <select id="errorLevel">
-                        <option value="L">Low (7%)</option>
-                        <option value="M">Medium (15%)</option>
-                        <option value="Q">Quartile (25%)</option>
-                        <option value="H" selected>High (30%)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Logo Upload -->
-            <div class="input-group">
-                <label for="logoUpload">Add Logo (Optional) 🎨</label>
-                <input type="file" id="logoUpload" accept="image/*">
-                <small>Upload a logo to place in the center of QR code</small>
-            </div>
-        </div>
-
-        <button id="generateBtn" class="btn-generate">
-            <span class="btn-icon">⚡</span>
-            Generate QR Code
-        </button>
-
-        <div id="qrResult" class="qr-result hidden">
-            <div class="qr-display">
-                <canvas id="qrCanvas"></canvas>
-            </div>
-            <div class="action-buttons">
-                <button id="downloadBtn" class="btn-download">
-                    <span class="btn-icon">💾</span>
-                    Download PNG
-                </button>
-                <button id="downloadSvg" class="btn-download">
-                    <span class="btn-icon">📄</span>
-                    Download SVG
-                </button>
-                <button id="clearBtn" class="btn-clear">
-                    <span class="btn-icon">🔄</span>
-                    Clear
-                </button>
-            </div>
-        </div>
-
-        <div class="features">
-            <div class="feature-card">
-                <span class="feature-icon">🎨</span>
-                <h3>Custom Colors</h3>
-                <p>Choose any color combination</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">🖼️</span>
-                <h3>Add Logo</h3>
-                <p>Brand your QR codes</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">📱</span>
-                <h3>Smart Templates</h3>
-                <p>WiFi, Email, Phone & more</p>
-            </div>
-        </div>
+        </footer>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Logic Engine -->
+    <script src="scripts/physics/force.js" type="module"></script>
+    <script src="scripts/core/network.js" type="module"></script>
+    <script src="scripts/core/ids.js" type="module"></script>
+
+    <!-- Sim & UI -->
+    <script src="scripts/sim/packet.js" type="module"></script>
+    <script src="scripts/ui/topology.js" type="module"></script>
+    <script src="scripts/ui/console.js" type="module"></script>
+    <script src="scripts/state/security.js" type="module"></script>
+
+    <script type="module">
+        import { topology } from './scripts/ui/topology.js';
+        import { consoleController } from './scripts/ui/console.js';
+
+        window.addEventListener('load', () => {
+            topology.init();
+            consoleController.log('Network initialization sequence started...');
+        });
+    </script>
 </body>
+
 </html>
