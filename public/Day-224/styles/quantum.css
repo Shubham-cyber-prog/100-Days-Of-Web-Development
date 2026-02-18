@@ -1,0 +1,295 @@
+:root {
+    --bg-dark: #05050a;
+    --panel-bg: rgba(20, 20, 35, 0.7);
+    --accent-quantum: #00f2fe;
+    --accent-purple: #8e2de2;
+    --text-main: #e0e0f0;
+    --text-dim: #707090;
+    --border: rgba(255, 255, 255, 0.1);
+    --gate-h: #4facfe;
+    --gate-x: #f093fb;
+    --gate-y: #ff0844;
+    --gate-z: #96fbc4;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Outfit', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image:
+        radial-gradient(at 0% 0%, rgba(142, 45, 226, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.15) 0px, transparent 50%);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr 380px;
+    height: 100vh;
+}
+
+/* Sidebar: Gate Palette */
+.gate-palette {
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid var(--border);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.logo-symbol {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-quantum));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.sidebar-section {
+    margin-bottom: 30px;
+}
+
+.sidebar-section h3 {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.gate-tools {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.gate-tool {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gate-tool:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
+}
+
+.h-gate {
+    background: var(--gate-h);
+    color: #000;
+}
+
+.x-gate {
+    background: var(--gate-x);
+    color: #000;
+}
+
+.y-gate {
+    background: var(--gate-y);
+    color: #fff;
+}
+
+.z-gate {
+    background: var(--gate-z);
+    color: #000;
+}
+
+.cx-gate {
+    background: #fff;
+    color: #000;
+    grid-column: span 1;
+}
+
+.config-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.config-controls label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.config-controls input {
+    width: 100%;
+    margin-top: 10px;
+    accent-color: var(--accent-quantum);
+}
+
+/* Main Workbench */
+.workbench {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.workbench-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.status-indicator.online {
+    background: #00ff88;
+    box-shadow: 0 0 10px #00ff88;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-left: 10px;
+}
+
+/* Circuit Area */
+.circuit-area {
+    background: var(--panel-bg);
+    border-radius: 20px;
+    padding: 40px;
+    flex: 1;
+    min-height: 400px;
+    margin-bottom: 30px;
+    position: relative;
+    border: 1px solid var(--border);
+}
+
+.wire-container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.qubit-wire {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.qubit-wire::before {
+    content: attr(data-label);
+    position: absolute;
+    left: -40px;
+    font-family: var(--font-mono);
+    color: var(--accent-quantum);
+}
+
+/* Data Viz Area */
+.data-viz-area {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+}
+
+.data-card {
+    background: var(--panel-bg);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid var(--border);
+}
+
+.data-card h4 {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Visual Console (Right) */
+.visual-console {
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    border-left: 1px solid var(--border);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bloch-viewer {
+    aspect-ratio: 1;
+    background: #000;
+    margin-top: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.measurement-panel {
+    margin-top: 40px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-quantum));
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.system-logs {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    height: 120px;
+    overflow-y: auto;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
