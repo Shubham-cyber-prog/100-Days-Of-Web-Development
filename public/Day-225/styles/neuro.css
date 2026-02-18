@@ -1,0 +1,250 @@
+:root {
+    --bg-dark: #0a0a0f;
+    --panel-bg: #11111a;
+    --accent-neuro: #00f5ff;
+    --accent-positive: #00ff88;
+    --accent-negative: #ff3e3e;
+    --text-main: #f0f0ff;
+    --text-dim: #707085;
+    --border: rgba(255, 255, 255, 0.08);
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-sans: 'Space Grotesk', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header */
+.lab-header {
+    height: 80px;
+    background: var(--panel-bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.neuro-icon {
+    font-size: 2rem;
+    color: var(--accent-neuro);
+    font-weight: 700;
+}
+
+.brand h1 {
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+}
+
+.brand .sub {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.training-controls {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.control-group {
+    display: flex;
+    gap: 20px;
+    font-size: 0.8rem;
+}
+
+.control-group label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: var(--text-dim);
+}
+
+.control-group input {
+    background: #000;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    width: 80px;
+}
+
+.main-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: var(--accent-neuro);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #000;
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Content Layout */
+.main-content {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 280px 1fr 340px;
+    overflow: hidden;
+}
+
+.sidebar {
+    background: var(--panel-bg);
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.analysis-sidebar {
+    border-right: none;
+    border-left: 1px solid var(--border);
+}
+
+.panel h3 {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+}
+
+.dataset-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.data-btn {
+    background: #000;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.data-btn.active {
+    color: var(--accent-neuro);
+    border-color: var(--accent-neuro);
+    background: rgba(0, 245, 255, 0.05);
+}
+
+/* Workspace & Viz */
+.workspace {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    overflow-y: auto;
+}
+
+.viz-card {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.viz-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.viz-header h4 {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.canvas-container {
+    position: relative;
+    flex: 1;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#boundary-container canvas {
+    position: absolute;
+}
+
+/* Metrics & Charts */
+.chart-area {
+    height: 180px;
+    width: 100%;
+}
+
+.heat-grid {
+    height: 120px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+}
+
+.heat-cell {
+    background: #1a1a25;
+    border-radius: 2px;
+}
+
+.lab-footer {
+    height: 40px;
+    background: var(--panel-bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+}
+
+#system-status {
+    color: var(--accent-neuro);
+}
