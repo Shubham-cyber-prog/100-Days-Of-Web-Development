@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroPhys | N-Body Gravitational Laboratory</title>
+    <meta name="description"
+        content="High-precision N-body gravitational simulation using RK4 integration and quad-tree spatial partitioning. Explore orbital mechanics and celestial dynamics.">
+    <link rel="stylesheet" href="styles/cosmos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@300;400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="cosmos-container">
+        <header class="control-panel">
+            <div class="logo-section">
+                <h1 class="logo">ASTROPHYS</h1>
+                <span class="subtitle">N-BODY GRAVITATIONAL LABORATORY</span>
+            </div>
+
+            <div class="status-indicators">
+                <div class="indicator">
+                    <span class="label">BODIES:</span>
+                    <span id="body-count" class="value">0</span>
+                </div>
+                <div class="indicator">
+                    <span class="label">TIMESTEP:</span>
+                    <span id="timestep-display" class="value">1.0x</span>
+                </div>
+                <div class="indicator">
+                    <span class="label">INTEGRATION:</span>
+                    <span class="value highlight">RK4</span>
+                </div>
+                <div class="indicator">
+                    <span class="label">FPS:</span>
+                    <span id="fps-counter" class="value">60</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="btn-play" class="btn primary">▶ START</button>
+                <button id="btn-pause" class="btn" disabled>⏸ PAUSE</button>
+                <button id="btn-reset" class="btn danger">⟲ RESET</button>
+                <button id="btn-snapshot" class="btn">💾 SAVE</button>
+            </div>
+        </header>
+
+        <main class="workspace">
+            <aside class="sidebar left-panel">
+                <section class="panel-section">
+                    <h3>PRESETS</h3>
+                    <div class="preset-list">
+                        <button class="preset-btn" data-preset="solar">Solar System</button>
+                        <button class="preset-btn" data-preset="binary">Binary Stars</button>
+                        <button class="preset-btn" data-preset="triple">Triple System</button>
+                        <button class="preset-btn" data-preset="chaos">Chaotic Dance</button>
+                        <button class="preset-btn" data-preset="galaxy">Galaxy Spiral</button>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h3>ADD BODY</h3>
+                    <div class="add-body-controls">
+                        <label>
+                            <span>Mass (×10²⁴ kg)</span>
+                            <input type="number" id="input-mass" value="5.97" step="0.1" min="0.1">
+                        </label>
+                        <label>
+                            <span>Radius (px)</span>
+                            <input type="number" id="input-radius" value="8" step="1" min="2" max="50">
+                        </label>
+                        <label>
+                            <span>Color</span>
+                            <input type="color" id="input-color" value="#4a9eff">
+                        </label>
+                        <button id="btn-add-body" class="btn secondary">+ ADD BODY</button>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h3>RENDERING</h3>
+                    <div class="render-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="toggle-trails" checked>
+                            <span>Orbital Trails</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="toggle-glow" checked>
+                            <span>Bloom Effect</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="toggle-grid">
+                            <span>Spatial Grid</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="toggle-vectors">
+                            <span>Velocity Vectors</span>
+                        </label>
+                    </div>
+                </section>
+            </aside>
+
+            <section class="viewport-container">
+                <canvas id="main-canvas"></canvas>
+                <canvas id="trail-canvas"></canvas>
+                <canvas id="glow-canvas"></canvas>
+                <div class="viewport-overlay">
+                    <div id="hover-info" class="info-tooltip" style="display: none;"></div>
+                </div>
+            </section>
+
+            <aside class="sidebar right-panel">
+                <section class="panel-section">
+                    <h3>TIME CONTROL</h3>
+                    <div class="time-controls">
+                        <label>
+                            <span>Time Dilation</span>
+                            <input type="range" id="slider-timescale" min="0.1" max="10" step="0.1" value="1">
+                            <span id="timescale-value">1.0x</span>
+                        </label>
+                        <label>
+                            <span>Integration Steps</span>
+                            <input type="range" id="slider-substeps" min="1" max="10" step="1" value="1">
+                            <span id="substeps-value">1</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h3>PHYSICS</h3>
+                    <div class="physics-params">
+                        <label>
+                            <span>G Constant (×10⁻¹¹)</span>
+                            <input type="number" id="input-gravity" value="6.674" step="0.001" min="0">
+                        </label>
+                        <label>
+                            <span>Softening (ε)</span>
+                            <input type="number" id="input-softening" value="1" step="0.1" min="0">
+                        </label>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h3>SELECTED BODY</h3>
+                    <div id="body-inspector" class="inspector-content">
+                        <p class="placeholder">Click on a body to inspect</p>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h3>SYSTEM ENERGY</h3>
+                    <div class="energy-display">
+                        <div class="energy-item">
+                            <span>Kinetic:</span>
+                            <span id="energy-kinetic">0.00</span>
+                        </div>
+                        <div class="energy-item">
+                            <span>Potential:</span>
+                            <span id="energy-potential">0.00</span>
+                        </div>
+                        <div class="energy-item total">
+                            <span>Total:</span>
+                            <span id="energy-total">0.00</span>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </main>
+
+        <footer class="info-bar">
+            <div class="info-text">
+                <span>🔬 RK4 Integration | 🌌 Quad-tree Optimization | ⚡ Real-time Physics</span>
+            </div>
+            <div class="credits">
+                <span>Built for ECWoC'26 | Day 222</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="scripts/math/rk4.js" type="module"></script>
+    <script src="scripts/physics/gravity.js" type="module"></script>
+    <script src="scripts/physics/spatial.js" type="module"></script>
+    <script src="scripts/sim/nebula.js" type="module"></script>
+    <script src="scripts/render/trace.js" type="module"></script>
+    <script src="scripts/render/glow.js" type="module"></script>
+    <script src="scripts/ui/timeline.js" type="module"></script>
+    <script src="scripts/state/snapshot.js" type="module"></script>
+
+    <!-- Main Application -->
+    <script type="module">
+        import { Simulation } from './scripts/physics/gravity.js';
+        import { Timeline } from './scripts/ui/timeline.js';
+        import { SnapshotManager } from './scripts/state/snapshot.js';
+
+        // Initialize simulation
+        const sim = new Simulation();
+        const timeline = new Timeline(sim);
+        const snapshots = new SnapshotManager(sim);
+
+        // Make globally accessible for debugging
+        window.sim = sim;
+        window.timeline = timeline;
+        window.snapshots = snapshots;
+    </script>
+</body>
+
+</html>

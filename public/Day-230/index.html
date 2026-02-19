@@ -1,77 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>COSMOSIM — Solar System Simulator</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── JSON Metadata (SEO / Open Graph) ── -->
+  <title>Science Projects Hub</title>
+  <meta name="description" content="A curated collection of unique science project ideas spanning multiple disciplines" />
+  <meta property="og:title"       content="Science Projects Hub" />
+  <meta property="og:description" content="Unique science projects: biology, physics, chemistry, astronomy, neuroscience & more." />
+  <meta property="og:type"        content="website" />
+
+  <!-- ── JSON-LD Structured Data ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Science Projects Hub",
+    "description": "Curated unique science project ideas with metadata",
+    "url": "index.html",
+    "keywords": ["science", "projects", "biology", "physics", "chemistry", "astronomy"],
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "creator": { "@type": "Organization", "name": "Science Hub" }
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- TOP BAR -->
-  <header>
-    <div class="brand">
-      <span class="brand-icon">☀</span>
-      <span class="brand-name">COSMO<em>SIM</em></span>
+<!-- ═══════════════════════════════════════
+     HEADER
+════════════════════════════════════════ -->
+<header>
+  <div class="header-label">Loading metadata...</div>
+  <h1>Science<br /><span>Projects</span></h1>
+  <div class="header-meta">
+    <div class="meta-item">
+      <strong id="metaTotal">—</strong>
+      Projects
     </div>
-    <div class="tagline">SOLAR SYSTEM SIMULATOR</div>
-    <div class="live-badge">● LIVE</div>
-  </header>
-
-  <!-- MAIN CANVAS -->
-  <canvas id="space"></canvas>
-
-  <!-- CONTROLS -->
-  <div class="controls-bar">
-    <button id="btn-pause" class="ctrl-btn" title="Pause/Resume">
-      <span id="pause-icon">⏸</span>
-    </button>
-    <div class="speed-wrap">
-      <label>SPEED</label>
-      <input type="range" id="speed" min="1" max="100" value="20" step="1"/>
-      <span id="speed-val">1.0×</span>
+    <div class="meta-item">
+      <strong id="metaCats">—</strong>
+      Categories
     </div>
-    <button id="btn-reset" class="ctrl-btn" title="Reset View">⟳</button>
-    <div class="date-display">
-      <label>SIM DATE</label>
-      <span id="sim-date">2026-01-01</span>
+    <div class="meta-item">
+      <strong id="metaVer">—</strong>
+      Version
+    </div>
+    <div class="meta-item">
+      <strong id="metaDate">—</strong>
+      Updated
     </div>
   </div>
+</header>
 
-  <!-- PLANET INFO PANEL -->
-  <aside id="info-panel" class="hidden">
-    <button id="close-info">✕</button>
-    <div class="panel-glow" id="panel-glow"></div>
-    <div class="panel-top">
-      <div class="planet-icon-wrap">
-        <canvas id="planet-mini" width="80" height="80"></canvas>
-      </div>
-      <div class="panel-heading">
-        <h2 id="pi-name">Earth</h2>
-        <span id="pi-type">Terrestrial Planet</span>
-      </div>
-    </div>
-    <div class="pi-stats">
-      <div class="pi-stat"><label>Diameter</label><span id="pi-diameter"></span></div>
-      <div class="pi-stat"><label>Mass</label><span id="pi-mass"></span></div>
-      <div class="pi-stat"><label>Orbit Period</label><span id="pi-period"></span></div>
-      <div class="pi-stat"><label>Distance from Sun</label><span id="pi-dist"></span></div>
-      <div class="pi-stat"><label>Avg Temperature</label><span id="pi-temp"></span></div>
-      <div class="pi-stat"><label>Moons</label><span id="pi-moons"></span></div>
-    </div>
-    <p id="pi-desc"></p>
-  </aside>
-
-  <!-- PLANET LEGEND -->
-  <div class="legend">
-    <div class="legend-title">PLANETS</div>
-    <div id="legend-items"></div>
+<!-- ═══════════════════════════════════════
+     CONTROLS
+════════════════════════════════════════ -->
+<nav class="controls" role="navigation" aria-label="Project filters">
+  <div class="search-wrap">
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="Search projects, tags..."
+      aria-label="Search science projects"
+      autocomplete="off"
+    />
   </div>
 
-  <!-- TOOLTIP -->
-  <div id="tooltip"></div>
+  <div class="filter-tabs" id="filterTabs" role="tablist">
+    <button class="filter-btn active" data-cat="all" role="tab" aria-selected="true">All</button>
+    <!-- Category buttons injected by script.js -->
+  </div>
 
-  <script src="script.js"></script>
+  <select id="sortSelect" aria-label="Sort projects">
+    <option value="featured">★ Featured First</option>
+    <option value="az">A → Z</option>
+    <option value="difficulty">Difficulty</option>
+    <option value="duration">Duration</option>
+  </select>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     MAIN
+════════════════════════════════════════ -->
+<main>
+  <p id="resultsCount" aria-live="polite"></p>
+
+  <div id="projectGrid" role="list" aria-label="Science projects"></div>
+
+  <div id="emptyState" aria-live="polite">
+    <div class="empty-icon">🔭</div>
+    <p>No projects match your search</p>
+  </div>
+</main>
+
+<!-- ═══════════════════════════════════════
+     MODAL
+════════════════════════════════════════ -->
+<div id="modal" role="dialog" aria-modal="true" aria-label="Project details">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+
+    <div class="modal-cat-label"></div>
+    <h2 class="modal-title"></h2>
+    <p class="modal-desc"></p>
+
+    <div class="modal-section">
+      <h3>Project Info</h3>
+      <div class="card-meta" style="flex-wrap:wrap; gap:20px;">
+        <div class="card-meta-item">
+          <strong id="modalDifficulty">—</strong>
+          Difficulty
+        </div>
+        <div class="card-meta-item">
+          <strong id="modalDuration">—</strong>
+          Duration
+        </div>
+        <div class="card-meta-item">
+          <strong id="modalId">—</strong>
+          Project ID
+        </div>
+        <div class="card-meta-item">
+          <strong id="modalFeatured">—</strong>
+          Featured
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <h3>Materials Required</h3>
+      <ul class="materials-list"></ul>
+    </div>
+
+    <div class="modal-section">
+      <h3>Hypothesis</h3>
+      <div class="hypothesis-box"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <span id="footerTitle">Science Projects Hub</span>
+  <span>Data from <code>projects.json</code> · Rendered via <code>script.js</code></span>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
