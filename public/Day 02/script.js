@@ -9,6 +9,7 @@ menuBtn.addEventListener("click", () => {
 // Testimonials Slider
 const slides = document.querySelectorAll(".testimonial");
 
+
 // Testimonials Slider
 const slides = document.querySelectorAll(".testimonial");
 
@@ -28,6 +29,7 @@ document.getElementById("prev").onclick = () => {
   index = (index - 1 + slides.length) % slides.length;
   showSlide(index);
 };
+
 document.getElementById("next").addEventListener("click", () => {
   index = (index + 1) % slides.length;
   showSlide(index);
@@ -48,6 +50,7 @@ setInterval(() => {
 
 
 
+
 }, 5000);
 
 
@@ -61,6 +64,7 @@ window.addEventListener("scroll", () => {
 
 scrollBtn.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+
 
 
 
