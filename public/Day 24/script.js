@@ -128,18 +128,7 @@ if (bmi < 18.5) {
 document.getElementById("diet-plan").innerHTML = diet;
 
 
-    resultBox.classList.remove("hidden");
-    bmiValue.textContent = roundedBMI;
-    bmiCategory.textContent = category;
-    bmiMessage.textContent = message;
-
-    bmiValue.style.color = color;
-    bmiCategory.style.color = color;
-  }
-
-  const resetBtn = document.getElementById("reset-btn");
-
-  // ---- BMR ----
+ // ---- BMR ----
 let bmr;
 
 if (gender === "male") {
@@ -164,6 +153,19 @@ if (gender === "male") {
 document.getElementById("bfp-result").innerHTML =
   "<strong>Estimated Body Fat %:</strong> " + bfp.toFixed(1) + "%";
 
+
+    resultBox.classList.remove("hidden");
+    bmiValue.textContent = roundedBMI;
+    bmiCategory.textContent = category;
+    bmiMessage.textContent = message;
+
+    bmiValue.style.color = color;
+    bmiCategory.style.color = color;
+  }
+
+  const resetBtn = document.getElementById("reset-btn");
+
+ 
 
   if (resetBtn) {
     resetBtn.addEventListener("click", resetBMI);
