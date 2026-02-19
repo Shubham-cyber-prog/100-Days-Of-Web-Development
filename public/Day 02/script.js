@@ -9,6 +9,7 @@ menuBtn.addEventListener("click", () => {
 // Testimonials Slider
 const slides = document.querySelectorAll(".testimonial");
 
+
 // Testimonials Slider
 const slides = document.querySelectorAll(".testimonial");
 
@@ -48,6 +49,9 @@ setInterval(() => {
 
 
 
+
+
+
 }, 5000);
 
 
@@ -61,6 +65,7 @@ window.addEventListener("scroll", () => {
 
 scrollBtn.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+
 
 
 
