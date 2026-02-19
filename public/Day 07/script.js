@@ -417,7 +417,6 @@ loadExpenses();
 
 
 
-
 function renderExpenses() {
   expensesContainer.innerHTML = "";
 
