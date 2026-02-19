@@ -1,7 +1,42 @@
-// =====================================================
-//  COSMOSIM — script.js
+
 //  Solar System Simulator Engine
-// =====================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const canvas = document.getElementById('space');
 const ctx = canvas.getContext('2d');
