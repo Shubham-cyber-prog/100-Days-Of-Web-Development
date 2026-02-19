@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FluidNexus | SPH Fluid Dynamics Laboratory</title>
+    <meta name="description"
+        content="High-fidelity 2D SPH fluid simulator. Features spatial hashing, pressure-gradient solvers, and metaball surface reconstruction. Built for computational physics research.">
+    <link rel="stylesheet" href="styles/fluid.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="lab-theme">
+    <div class="app-layout">
+        <!-- Dashboard Header -->
+        <header class="lab-header">
+            <div class="brand">
+                <div class="liquid-logo">⌬</div>
+                <div class="brand-text">
+                    <h1>FluidNexus</h1>
+                    <span class="version">v1.2 // NAVIER-STOKES</span>
+                </div>
+            </div>
+
+            <div class="live-metrics">
+                <div class="metric">P_COUNT: <span id="val-particles">2500</span></div>
+                <div class="metric">PRESSURE: <span id="val-pressure">0.0</span></div>
+                <div class="metric">FPS: <span id="val-fps">60</span></div>
+            </div>
+
+            <div class="main-actions">
+                <button id="btn-play" class="btn-primary">START SIM</button>
+                <button id="btn-reset" class="btn-ghost">⟲ CLEAR</button>
+            </div>
+        </header>
+
+        <main class="viewport-main">
+            <!-- Sidebar: Physics Controls -->
+            <aside class="sidebar ctrl-sidebar">
+                <section class="panel">
+                    <h3>PHYSICS CONSTANTS</h3>
+                    <div class="ctrl-group">
+                        <label>Gravity
+                            <input type="range" id="param-gravity" min="0" max="2" step="0.1" value="0.5">
+                        </label>
+                        <label>Viscosity
+                            <input type="range" id="param-viscosity" min="0" max="1" step="0.01" value="0.05">
+                        </label>
+                        <label>Rest Density
+                            <input type="range" id="param-density" min="10" max="1000" value="400">
+                        </label>
+                        <label>Stiffness (k)
+                            <input type="range" id="param-stiffness" min="1" max="100" value="20">
+                        </label>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>VISUALIZATION</h3>
+                    <div class="toggle-group">
+                        <label class="check-container">
+                            <input type="checkbox" id="toggle-surface" checked>
+                            <span class="checkmark"></span> METABALL SURFACE
+                        </label>
+                        <label class="check-container">
+                            <input type="checkbox" id="toggle-vectors">
+                            <span class="checkmark"></span> VELOCITY VECTORS
+                        </label>
+                        <label class="check-container">
+                            <input type="checkbox" id="toggle-grid">
+                            <span class="checkmark"></span> SPATIAL HASH GRID
+                        </label>
+                    </div>
+                </section>
+
+                <section class="panel scenarios">
+                    <h3>SCENARIOS</h3>
+                    <div class="scenario-buttons">
+                        <button class="scene-btn" data-scene="dam-break">Dam Break</button>
+                        <button class="scene-btn" data-scene="falling-drop">Rain Drop</button>
+                        <button class="scene-btn" data-scene="vortex">Vortex Flow</button>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- Simulation Stage -->
+            <section class="sim-stage" id="stage-container">
+                <canvas id="sim-canvas"></canvas>
+                <canvas id="overlay-canvas"></canvas>
+
+                <div class="interaction-layer" id="interaction-zone">
+                    <div class="cursor-emitter" id="emitter"></div>
+                </div>
+            </section>
+
+            <!-- Inspector Sidebar -->
+            <aside class="sidebar stats-sidebar">
+                <section class="panel kinetic-chart">
+                    <h3>KINETIC ENERGY (J)</h3>
+                    <div class="chart-box" id="energy-chart">
+                        <canvas id="chart-canvas"></canvas>
+                    </div>
+                </section>
+
+                <section class="panel particle-inspector">
+                    <h3>PARTICLE_DATA</h3>
+                    <div class="data-table" id="data-view">
+                        <div class="data-row">ID: <span id="d-id">--</span></div>
+                        <div class="data-row">VEL: <span id="d-vel">--</span></div>
+                        <div class="data-row">PRE: <span id="d-pre">--</span></div>
+                        <div class="data-row">NEI: <span id="d-nei">--</span></div>
+                    </div>
+                </section>
+
+                <section class="panel colophon">
+                    <p class="mono-text">
+                        ALGO: Mueller SPH (2003)<br>
+                        KERNEL: Cubic Spline<br>
+                        INTEGRATOR: Leapfrog
+                    </p>
+                </section>
+            </aside>
+        </main>
+
+        <footer class="lab-footer">
+            <div class="footer-msg">> KERNEL_ESTIMATION: OPTIMAL | GRID_STRIDE: 32px | ECWoC_L3_COMPLEXITY_ACTIVE</div>
+        </footer>
+    </div>
+
+    <!-- Core Engine -->
+    <script src="scripts/core/sph.js" type="module"></script>
+    <script src="scripts/core/spatial.js" type="module"></script>
+    <script src="scripts/state/scene.js" type="module"></script>
+
+    <!-- Render Engine -->
+    <script src="scripts/render/particles.js" type="module"></script>
+    <script src="scripts/render/surface.js" type="module"></script>
+
+    <!-- UI UI -->
+    <script src="scripts/ui/controls.js" type="module"></script>
+
+    <script type="module">
+        import { simulator } from './scripts/core/sph.js';
+
+        window.addEventListener('load', () => {
+            simulator.init();
+        });
+    </script>
+</body>
+
+</html>
