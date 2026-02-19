@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS3 Master Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="./styles/app.css">
+    <link rel="stylesheet" href="./styles/controls.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Controls -->
+        <aside class="controls-panel">
+            <div class="app-brand">
+                <i class="fa-brands fa-css3-alt"></i>
+                <h1>CSS Master</h1>
+            </div>
+
+            <nav class="tool-tabs">
+                <button class="tab-btn active" data-tool="shadow">
+                    <i class="fa-solid fa-layer-group"></i> Box Shadow
+                </button>
+                <button class="tab-btn" data-tool="gradient">
+                    <i class="fa-solid fa-swatchbook"></i> Gradient
+                </button>
+                <button class="tab-btn" data-tool="flexbox">
+                    <i class="fa-solid fa-border-all"></i> Flexbox
+                </button>
+            </nav>
+
+            <div class="tool-content active" id="shadow-controls">
+                <div class="control-group">
+                    <label>Shift Right (X-Offset)</label>
+                    <input type="range" id="shadow-x" min="-50" max="50" value="10">
+                    <span class="value-display">10px</span>
+                </div>
+                <div class="control-group">
+                    <label>Shift Down (Y-Offset)</label>
+                    <input type="range" id="shadow-y" min="-50" max="50" value="10">
+                    <span class="value-display">10px</span>
+                </div>
+                <div class="control-group">
+                    <label>Blur Radius</label>
+                    <input type="range" id="shadow-blur" min="0" max="100" value="20">
+                    <span class="value-display">20px</span>
+                </div>
+                <div class="control-group">
+                    <label>Spread Radius</label>
+                    <input type="range" id="shadow-spread" min="-50" max="50" value="0">
+                    <span class="value-display">0px</span>
+                </div>
+                <div class="control-group">
+                    <label>Shadow Color</label>
+                    <input type="color" id="shadow-color" value="#000000">
+                    <label><input type="checkbox" id="shadow-inset"> Inset</label>
+                </div>
+            </div>
+
+            <div class="tool-content" id="gradient-controls">
+                <div class="control-group">
+                    <label>Type</label>
+                    <select id="gradient-type">
+                        <option value="linear">Linear</option>
+                        <option value="radial">Radial</option>
+                    </select>
+                </div>
+                <div class="control-group" id="angle-control">
+                    <label>Angle</label>
+                    <input type="range" id="gradient-angle" min="0" max="360" value="90">
+                    <span class="value-display">90deg</span>
+                </div>
+                <div class="control-group">
+                    <label>Color 1</label>
+                    <input type="color" id="gradient-color1" value="#3b82f6">
+                </div>
+                <div class="control-group">
+                    <label>Color 2</label>
+                    <input type="color" id="gradient-color2" value="#ec4899">
+                </div>
+            </div>
+
+            <div class="tool-content" id="flexbox-controls">
+                <div class="control-group">
+                    <label>Direction</label>
+                    <div class="btn-group" id="flex-direction">
+                        <button class="active" data-val="row">Row</button>
+                        <button data-val="column">Col</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Justify Content</label>
+                    <select id="flex-justify">
+                        <option value="flex-start">Start</option>
+                        <option value="center" selected>Center</option>
+                        <option value="flex-end">End</option>
+                        <option value="space-between">Space Between</option>
+                        <option value="space-around">Space Around</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Align Items</label>
+                    <select id="flex-align">
+                        <option value="flex-start">Start</option>
+                        <option value="center" selected>Center</option>
+                        <option value="flex-end">End</option>
+                        <option value="stretch">Stretch</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Gap</label>
+                    <input type="range" id="flex-gap" min="0" max="50" value="10">
+                    <span class="value-display">10px</span>
+                </div>
+            </div>
+
+            <div class="history-panel">
+                <h3>History</h3>
+                <ul id="style-history"></ul>
+            </div>
+        </aside>
+
+        <!-- Preview Area -->
+        <main class="preview-panel">
+            <div class="preview-stage">
+                <div id="preview-box" class="target-element">
+                    <span>Preview Object</span>
+                </div>
+
+                <!-- Flex Preview Container -->
+                <div id="flex-preview-box" class="flex-target active-hidden">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+
+            <div class="code-panel">
+                <div class="code-header">
+                    <span>CSS Code</span>
+                    <button class="btn-copy" id="btn-copy">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+                <pre><code id="css-output">box-shadow: 10px 10px 20px 0px rgba(0,0,0,1);</code></pre>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script type="module" src="./scripts/app.js"></script>
+</body>
+
+</html>

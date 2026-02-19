@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings | 100 Days of Web Dev</title>
     <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
       .settings-container {
         max-width: 800px;
@@ -184,6 +185,18 @@
           padding: 1rem;
         }
 
+        .settings-header h1 {
+          font-size: 2rem;
+        }
+
+        .settings-section {
+          padding: 1.5rem;
+        }
+
+        .section-title {
+          font-size: 1.25rem;
+        }
+
         .setting-item {
           flex-direction: column;
           align-items: flex-start;
@@ -193,90 +206,57 @@
         .btn-group {
           flex-direction: column;
         }
+
+        .btn {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .settings-container {
+          padding: 0.75rem;
+        }
+
+        .settings-header {
+          margin-bottom: 2rem;
+        }
+
+        .settings-header h1 {
+          font-size: 1.75rem;
+        }
+
+        .settings-section {
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+        }
+
+        .form-input {
+          font-size: 16px; /* Prevents iOS Safari from zooming on input focus (iOS zooms when font-size < 16px) */
+        }
+
+        .toggle-switch {
+          width: 50px;
+          height: 26px;
+        }
+
+        .toggle-slider {
+          width: 20px;
+          height: 20px;
+        }
+
+        .toggle-switch.active .toggle-slider {
+          transform: translateX(24px);
+        }
       }
     </style>
-  </head>
+    <script src="../scripts/components/sidebar-loader.js"></script>
+</head>
   <body>
-    <!-- Header -->
-    <header class="site-header">
-      <div
-        class="nav-container"
-        style="
-          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
-            drop-shadow(
-              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
-            )
-            drop-shadow(
-              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
-            );
-        "
-      >
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="contributors.html" class="nav-link">Contributors</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
-
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
-
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%"
-              />
-            </button>
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <!-- Dynamic header will be loaded here -->
 
     <main class="container section">
       <div class="settings-container">
@@ -290,6 +270,17 @@
         <!-- Profile Settings -->
         <div class="settings-section">
           <h2 class="section-title">👤 Profile Settings</h2>
+
+          <div class="form-group">
+            <label>Profile Picture</label>
+            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+              <img id="settingsAvatar" src="../assets/images/pilot_avatar.png" alt="Avatar" 
+                   style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--glass-border);">
+              <button type="button" class="btn btn-secondary" onclick="changeSettingsAvatar()">
+                <i class="fas fa-camera"></i> Change Photo
+              </button>
+            </div>
+          </div>
 
           <div class="form-group">
             <label for="displayName">Display Name</label>
@@ -441,7 +432,7 @@
     <!-- Notification -->
     <div id="notification" class="notification"></div>
 
-    <!-- Scripts -->
+    <!-- Scripts -->    <script src="../scripts/components/footer-loader.js"></script>
     <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/components/navigation.js"></script>
     <script src="../scripts/pages/settings.js"></script>
