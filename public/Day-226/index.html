@@ -1,59 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Matrix - Brain Training Game</title>
-    <link rel="stylesheet" href="style.css">
+    <title>VoxelArchitect | High-Performance SVO Voxel CAD</title>
+    <meta name="description"
+        content="Advanced voxel sculpting engine using Sparse Voxel Octrees and DDA ray-marching. Professional 3D CAD environment for volumetric modeling.">
+    <link rel="stylesheet" href="styles/voxel.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Memory Matrix</h1>
-            <p class="subtitle">Watch the pattern, then recreate it!</p>
-        </header>
 
-        <div class="game-info">
-            <div class="stat">
-                <span class="label">Level:</span>
-                <span class="value" id="level">1</span>
+<body class="cad-theme">
+    <div class="viewport-layout">
+        <!-- Main Toolbar (Left) -->
+        <aside class="tool-sidebar">
+            <div class="brand">
+                <div class="logo">VA<span class="pulse">_</span></div>
             </div>
-            <div class="stat">
-                <span class="label">Score:</span>
-                <span class="value" id="score">0</span>
+
+            <div class="tool-group">
+                <button class="tool-btn active" data-tool="add" title="Add Voxel [A]">
+                    <span class="icon">■</span>
+                </button>
+                <button class="tool-btn" data-tool="remove" title="Subtract Voxel [S]">
+                    <span class="icon">□</span>
+                </button>
+                <button class="tool-btn" data-tool="paint" title="Paint Material [P]">
+                    <span class="icon">✎</span>
+                </button>
+                <button class="tool-btn" data-tool="pick" title="Pick Material [I]">
+                    <span class="icon">✢</span>
+                </button>
             </div>
-            <div class="stat">
-                <span class="label">Best:</span>
-                <span class="value" id="best">0</span>
+
+            <div class="material-palette">
+                <h3>MATERIALS</h3>
+                <div class="color-grid">
+                    <div class="swatch active" style="background: #ffffff;" data-color="#ffffff"></div>
+                    <div class="swatch" style="background: #3b82f6;" data-color="#3b82f6"></div>
+                    <div class="swatch" style="background: #10b981;" data-color="#10b981"></div>
+                    <div class="swatch" style="background: #f59e0b;" data-color="#f59e0b"></div>
+                    <div class="swatch" style="background: #ef4444;" data-color="#ef4444"></div>
+                    <div class="swatch" style="background: #8b5cf6;" data-color="#8b5cf6"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="game-status" id="gameStatus">
-            <p>Click START to begin!</p>
-        </div>
+            <div class="cad-stats" id="cad-metrics">
+                <div class="stat-line">OXELS: <span id="stat-count">0</span></div>
+                <div class="stat-line">DEPTH: <span id="stat-depth">8</span></div>
+                <div class="stat-line">FPS: <span id="stat-fps">60</span></div>
+            </div>
+        </aside>
 
-        <div class="grid-container" id="gridContainer">
-            
-        </div>
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <header class="workspace-header">
+                <div class="view-controls">
+                    <button class="view-btn active">PERSPECTIVE</button>
+                    <button class="view-btn">ORTHO</button>
+                    <button class="view-btn">WIREFRAME</button>
+                </div>
+                <div class="project-info">
+                    <strong>UNNAMED_VOLUME_01.SVO</strong>
+                    <span id="save-status">AUTO-SAVING...</span>
+                </div>
+            </header>
 
-        <div class="controls">
-            <button id="startBtn" class="btn btn-primary">START</button>
-            <button id="submitBtn" class="btn btn-submit" disabled>SUBMIT</button>
-            <button id="resetBtn" class="btn btn-secondary">RESET GAME</button>
-        </div>
+            <div class="canvas-wrapper" id="canvas-container">
+                <canvas id="voxel-canvas"></canvas>
+                <div class="crosshair">+</div>
+            </div>
 
-        <div class="instructions">
-            <h3>How to Play:</h3>
-            <ol>
-                <li>Click START to see a pattern flash on the grid</li>
-                <li>Memorize which cells light up</li>
-                <li>Recreate the pattern by clicking the cells</li>
-                <li>Click SUBMIT to check your answer</li>
-                <li>Progress through levels with increasing difficulty!</li>
-            </ol>
-        </div>
+            <footer class="workspace-footer">
+                <div class="coord-info">
+                    X: <span id="coord-x">0</span>
+                    Y: <span id="coord-y">0</span>
+                    Z: <span id="coord-z">0</span>
+                </div>
+                <div class="action-hints">
+                    [LMB] Add/Paint | [RMB] Orbit | [Shift+LMB] Remove | [Space] Center
+                </div>
+            </footer>
+        </main>
+
+        <!-- Inspector (Right) -->
+        <aside class="inspector-sidebar">
+            <section class="panel camera-panel">
+                <h3>VIEWPORT PARAMETERS</h3>
+                <div class="param-row">
+                    <label>FOV</label>
+                    <input type="range" id="input-fov" min="45" max="110" value="75">
+                </div>
+                <div class="param-row">
+                    <label>RENDER_RES</label>
+                    <select id="select-res">
+                        <option value="1">1:1 (Native)</option>
+                        <option value="2">1:2 (Performance)</option>
+                        <option value="4">1:4 (Mobile)</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="panel structure-panel">
+                <h3>SVO STRUCTURE</h3>
+                <div class="tree-viz" id="tree-preview">
+                    <!-- Dynamic visualization of the octree health -->
+                </div>
+                <button id="btn-optimize" class="btn-action">OPTIMIZE TREE</button>
+            </section>
+
+            <section class="panel io-panel">
+                <h3>EXPORT / IMPORT</h3>
+                <div class="btn-group">
+                    <button id="btn-export-binary" class="btn-secondary">EXPORT .SVO (BIN)</button>
+                    <button id="btn-export-obj" class="btn-secondary">EXPORT .OBJ (MESH)</button>
+                </div>
+            </section>
+        </aside>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Core Pipeline -->
+    <script src="scripts/state/world.js" type="module"></script>
+    <script src="scripts/core/svo.js" type="module"></script>
+    <script src="scripts/core/raycaster.js" type="module"></script>
+
+    <!-- Render Engine -->
+    <script src="scripts/render/viewport.js" type="module"></script>
+
+    <!-- UI & IO -->
+    <script src="scripts/ui/toolbar.js" type="module"></script>
+    <script src="scripts/ui/stats.js" type="module"></script>
+    <script src="scripts/io/storage.js" type="module"></script>
+
+    <script type="module">
+        import { world } from './scripts/state/world.js';
+        import { viewport } from './scripts/render/viewport.js';
+
+        // Warm up the engine
+        window.addEventListener('load', () => {
+            world.init();
+            viewport.start();
+        });
+    </script>
 </body>
+
 </html>
