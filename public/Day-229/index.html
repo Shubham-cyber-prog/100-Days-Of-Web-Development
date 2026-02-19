@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinQuant | Quantitative Options Lab</title>
+    <meta name="description"
+        content="Advanced options pricing and volatility surface analytics. Black-Scholes engines, Monte Carlo path simulations, and 3D volatility surface visualizations.">
+    <link rel="stylesheet" href="styles/quant.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;700&family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="quant-theme">
+    <div class="quant-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="quant-sidebar">
+            <div class="brand">
+                <div class="logo-box">∑</div>
+                <div class="brand-text">
+                    <h1>FinQuant</h1>
+                    <span class="sub">DERIVATIVES ENGINE</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>MODEL PARAMETERS</h3>
+                    <div class="param-group">
+                        <label>Spot Price (S)
+                            <input type="number" id="input-spot" value="100" step="1">
+                        </label>
+                        <label>Strike Price (K)
+                            <input type="number" id="input-strike" value="100" step="1">
+                        </label>
+                        <label>Expiry (T, Years)
+                            <input type="number" id="input-expiry" value="1.0" step="0.1">
+                        </label>
+                        <label>Volatility (σ)
+                            <input type="range" id="input-vol" min="0.05" max="1.0" step="0.01" value="0.2">
+                        </label>
+                        <label>Risk-Free Rate (r)
+                            <input type="range" id="input-rate" min="0" max="0.15" step="0.001" value="0.05">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <h3>SIMULATION</h3>
+                    <div class="btn-stack">
+                        <button id="btn-monte-carlo" class="btn-action">RUN MONTE CARLO</button>
+                        <button id="btn-vol-surface" class="btn-secondary">GENERATE SURFACE</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="version-badge">B-S SOLVER v4.0.2</div>
+        </aside>
+
+        <!-- Main Analytics Workspace -->
+        <main class="quant-workspace">
+            <header class="workspace-header">
+                <div class="model-status">
+                    <span class="status-dot"></span>
+                    <strong>ENGINE STATUS:</strong> <span class="calc-status">OPTIMAL</span>
+                </div>
+                <div class="quick-metrics">
+                    <div class="q-metric">IV: <span id="m-iv">20.0%</span></div>
+                    <div class="q-metric">DTE: <span id="m-dte">365d</span></div>
+                </div>
+            </header>
+
+            <div class="workspace-grid">
+                <!-- Option Greeks Analysis -->
+                <section class="card analysis-card">
+                    <header class="card-header">
+                        <h4>DERIVATIVE GREEKS</h4>
+                    </header>
+                    <div class="greeks-grid">
+                        <div class="greek-item">
+                            <span class="symbol">Δ</span>
+                            <span class="name">DELTA</span>
+                            <span class="value" id="val-delta">0.000</span>
+                        </div>
+                        <div class="greek-item">
+                            <span class="symbol">Γ</span>
+                            <span class="name">GAMMA</span>
+                            <span class="value" id="val-gamma">0.000</span>
+                        </div>
+                        <div class="greek-item">
+                            <span class="symbol">Θ</span>
+                            <span class="name">THETA</span>
+                            <span class="value" id="val-theta">0.000</span>
+                        </div>
+                        <div class="greek-item">
+                            <span class="symbol">ν</span>
+                            <span class="name">VEGA</span>
+                            <span class="value" id="val-vega">0.000</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payoff Diagram -->
+                <section class="card graph-card">
+                    <header class="card-header">
+                        <h4>OPTION PAYOFF DIAGRAM</h4>
+                    </header>
+                    <div class="chart-container" id="payoff-container">
+                        <canvas id="payoff-canvas"></canvas>
+                    </div>
+                </section>
+
+                <!-- Volatility Surface (3D Projection) -->
+                <section class="card surface-card">
+                    <header class="card-header">
+                        <h4>VOLATILITY SURFACE (3D)</h4>
+                    </header>
+                    <div class="surface-view" id="surface-container">
+                        <canvas id="surface-canvas"></canvas>
+                    </div>
+                </section>
+
+                <!-- Monte Carlo Paths -->
+                <section class="card paths-card">
+                    <header class="card-header">
+                        <h4>MONTE CARLO ASSET PATHS</h4>
+                    </header>
+                    <div class="paths-view" id="paths-container">
+                        <canvas id="paths-canvas"></canvas>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Tool Inspector (Right) -->
+        <aside class="quant-inspector">
+            <div class="log-panel">
+                <h3>MODELS_LOG</h3>
+                <div class="log-stream" id="quant-logs">
+                    <div class="log-entry">>> QUANT_LAB INITIALIZED.</div>
+                    <div class="log-entry">>> ENGINE [BSM] LOADED.</div>
+                </div>
+            </div>
+
+            <div class="pricing-panel">
+                <h3>LIVE PRICING</h3>
+                <div class="price-display">
+                    <div class="price-tag">
+                        <span class="label">CALL_VALUE</span>
+                        <span class="val" id="val-call">$0.00</span>
+                    </div>
+                    <div class="price-tag">
+                        <span class="label">PUT_VALUE</span>
+                        <span class="val" id="val-put">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Core Pipeline -->
+    <script src="scripts/math/stats.js" type="module"></script>
+    <script src="scripts/core/blackScholes.js" type="module"></script>
+    <script src="scripts/core/monteCarlo.js" type="module"></script>
+
+    <!-- Render Engine -->
+    <script src="scripts/render/surface.js" type="module"></script>
+    <script src="scripts/render/charts.js" type="module"></script>
+
+    <!-- UI -->
+    <script src="scripts/ui/controls.js" type="module"></script>
+
+    <script type="module">
+        import { quantUI } from './scripts/ui/controls.js';
+        window.addEventListener('load', () => {
+            quantUI.init();
+        });
+    </script>
+</body>
+
+</html>
