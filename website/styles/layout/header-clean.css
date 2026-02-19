@@ -1,0 +1,41 @@
+/* --- Clean Header Layout --- */
+/* All old conflicting nav styles have been removed to prevent interference with glassmorphism navbar */
+
+.site-header {
+  display: none !important;
+}
+
+/* Any remaining nav-related elements should be hidden to prevent conflicts with glassmorphism navbar */
+.nav-container,
+.nav-links,
+.nav-link,
+.nav-logo,
+.brand-logo-img,
+.nav-dropdown,
+.dropdown-menu,
+.user-menu,
+.nav-toggle {
+  display: none !important;
+}
+
+/* Light theme variants - also disabled */
+[data-theme="light"] .nav-links,
+[data-theme="light"] .nav-link,
+[data-theme="light"] .nav-logo {
+  display: none !important;
+}
+
+/* Mobile nav variants - also disabled */
+@media (max-width: 1024px) {
+  .nav-links,
+  .nav-link {
+    display: none !important;
+  }
+}
+
+/* Ultra-mobile variants - also disabled */
+@media (max-width: 480px) {
+  .nav-link {
+    display: none !important;
+  }
+}

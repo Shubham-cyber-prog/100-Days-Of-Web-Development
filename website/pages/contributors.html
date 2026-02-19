@@ -18,6 +18,7 @@
         border: 2px groove #cc2a01;
         border-radius: 25%;
       }
+
       header nav img:hover {
         box-shadow:
           0 0 15px #ff5733,
@@ -25,10 +26,31 @@
           0 0 45px #ff5733;
         transition: box-shadow 0.3s ease-in-out;
       }
-      .nav-container {
-        height: 120px;
-        margin-top: 25px;
+
+      .search-wrapper {
+        max-width: 600px;
+        margin: 0 auto 40px;
       }
+
+      .search-input-field {
+        background: var(--bg-surface);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 100px;
+        padding: 16px 24px;
+        font-size: var(--text-base);
+        width: 100%;
+        transition: all 0.2s;
+        text-align: center;
+        color: var(--text-primary);
+      }
+
+      .search-input-field:focus {
+        outline: none;
+        border-color: var(--accent-core);
+        box-shadow: 0 0 20px -5px var(--accent-alpha);
+      }
+
       .crew-header {
         text-align: center;
         padding: 120px 0 60px;
@@ -60,97 +82,11 @@
           0 0 0 1px var(--accent-core) inset;
       }
     </style>
-  </head>
+    <script src="../scripts/components/sidebar-loader.js"></script>
+</head>
 
   <body>
-    <header class="site-header">
-      <div
-        class="nav-container"
-        style="
-          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
-            drop-shadow(
-              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
-            )
-            drop-shadow(
-              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
-            );
-        "
-      >
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="contributors.html" class="nav-link active">Contributors</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
-              margin-right: 15px;
-              background: none;
-              border: none;
-              cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
-
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%; border-radius: 50%"
-              />
-            </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <!-- Dynamic header will be loaded here -->
 
     <main class="container section">
       <div class="crew-header animate-enter">
@@ -160,6 +96,16 @@
         <p class="text-secondary">
           Engineers of the 100 Days of Web Dev Initiative.
         </p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-wrapper animate-enter delay-50">
+        <input
+          type="text"
+          id="contributorSearch"
+          class="search-input-field"
+          placeholder="Search contributors..."
+        />
       </div>
 
       <div id="contributorsGrid" class="grid grid-4 animate-enter delay-100">
@@ -183,7 +129,10 @@
     </main>
 
     <!-- Professional Footer -->
-    <footer class="site-footer">
+    <div id="footer-placeholder"></div>
+
+    <script src="../scripts/components/navigation.js"></script>    <script src="../scripts/components/footer-loader.js"></script>
+    <footer class="site-footer" style="display: none">
       <div class="container footer-content">
         <!-- Brand -->
         <div class="footer-brand animate-enter">
@@ -289,6 +238,5 @@
 
     <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/pages/contributors.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
   </body>
 </html>
