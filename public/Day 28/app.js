@@ -1,3 +1,5 @@
+import { $, $$, random } from "../shared/utils.js";
+
 let userScore = 0;
 let compScore = 0;
 
@@ -7,11 +9,15 @@ const userScorePara = document.querySelector("#user-score");
 const compScorePara = document.querySelector("#comp-score");
 const themeToggle = document.querySelector("#themeToggle");
 const body = document.body;
+const choices = $$(".choice");
+const msg = $("#msg");
+const userScorePara = $("#user-score");
+const compScorePara = $("#comp-score");
 
 /* ---------- Computer Choice ---------- */
 const genCompChoice = () => {
   const options = ["rock", "paper", "scissors"];
-  return options[Math.floor(Math.random() * 3)];
+  return options[random(0, 2)];
 };
 
 /* ---------- Reset Game ---------- */

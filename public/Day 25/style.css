@@ -11,153 +11,140 @@ body {
     height: 100vh;
     display: grid;
     place-items: center;
-    background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
-    overflow: hidden;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
 }
 
-/* Floating gradient blobs */
-body::before,
-body::after {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
-    filter: blur(120px);
-    opacity: 0.6;
-    z-index: -1;
-}
-
-body::after {
-    bottom: -50px;
-    right: -50px;
-    background: linear-gradient(135deg, #f857a6, #ff5858);
-}
 
 /* Card */
+
 .container {
     width: 420px;
-    padding: 40px 35px;
-    border-radius: 22px;
+    padding: 35px;
+    border-radius: 20px;
     background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.5),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     text-align: center;
-    color: #ffffff;
-    animation: popIn 0.9s ease;
+    color: white;
 }
 
+
 /* Title */
+
 h1 {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
-    background: linear-gradient(90deg, #00f2fe, #4facfe);
+    font-size: 26px;
+    margin-bottom: 25px;
+    background: linear-gradient(90deg,#00f2fe,#4facfe);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Quote */
+
+/* Category */
+
+.category-box p {
+    margin-bottom: 12px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+#saveCategory {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg,#00f2fe,#4facfe);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+/* Quote Box */
+
+.quote-box {
+    animation: fadeIn 0.5s ease;
+}
+
 #quote {
-    font-size: 19px;
-    line-height: 1.7;
-    margin-bottom: 18px;
-    position: relative;
-    padding: 0 10px;
-    animation: fadeSlide 0.6s ease;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 12px;
 }
 
-#quote::before {
-    content: "❝";
-    font-size: 45px;
-    position: absolute;
-    left: -10px;
-    top: -20px;
-    color: rgba(255, 255, 255, 0.2);
-}
-
-#quote::after {
-    content: "❞";
-    font-size: 45px;
-    position: absolute;
-    right: -10px;
-    bottom: -20px;
-    color: rgba(255, 255, 255, 0.2);
-}
-
-/* Author */
 #author {
     font-size: 14px;
-    font-weight: 500;
-    opacity: 0.75;
-    margin-bottom: 35px;
+    opacity: 0.7;
+    margin-bottom: 20px;
 }
 
-/* Button */
-button {
-    padding: 14px 34px;
-    border-radius: 40px;
+
+/* Buttons */
+
+.btn-group {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-group button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 25px;
     border: none;
     cursor: pointer;
-    font-size: 15px;
     font-weight: 600;
-    color: #0f2027;
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
-    box-shadow: 
-        0 10px 30px rgba(79, 172, 254, 0.4),
-        inset 0 0 0 0 rgba(255, 255, 255, 0.3);
-    transition: all 0.35s ease;
+    background: linear-gradient(135deg,#00f2fe,#4facfe);
 }
 
-button:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 
-        0 18px 45px rgba(79, 172, 254, 0.6);
+
+/* Utility */
+
+.hidden {
+    display: none;
 }
 
-button:active {
-    transform: scale(0.95);
+
+/* Animation */
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
-/* Animations */
-@keyframes popIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-@keyframes fadeSlide {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 /* Responsive */
-@media (max-width: 480px) {
-    .container {
-        width: 90%;
-        padding: 30px 25px;
+
+@media(max-width:480px){
+
+    .container{
+        width:90%;
+        padding:25px;
     }
 
-    h1 {
-        font-size: 24px;
-    }
-
-    #quote {
-        font-size: 17px;
-    }
 }
+
+.add-quote {
+    margin-top: 18px;
+    display: flex;
+    gap: 8px;
+}
+
+.add-quote input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 13px;
+}
+
+.add-quote button {
+    padding: 8px 16px;
+    font-size: 13px;
+}
+
