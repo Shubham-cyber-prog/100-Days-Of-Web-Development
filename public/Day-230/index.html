@@ -1,126 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CircuitLogic | Visual HDL & Synthesis Lab</title>
-    <meta name="description"
-        content="State-of-the-art digital logic simulator. Design complex circuits, simulate propagation delays, and analyze timing diagrams in real-time.">
-    <link rel="stylesheet" href="styles/logic.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;700;900&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>COSMOSIM — Solar System Simulator</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 </head>
+<body>
 
-<body class="digital-lab">
-    <div class="lab-layout">
-        <!-- Sidebar Tool Palette -->
-        <aside class="palette-sidebar">
-            <div class="brand">
-                <span class="icon">⊦</span>
-                <h1>CircuitLogic</h1>
-            </div>
-
-            <div class="tool-section">
-                <h3>GATES</h3>
-                <div class="gate-grid">
-                    <div class="gate-item" draggable="true" data-type="AND" title="AND Gate">AND</div>
-                    <div class="gate-item" draggable="true" data-type="OR" title="OR Gate">OR</div>
-                    <div class="gate-item" draggable="true" data-type="XOR" title="XOR Gate">XOR</div>
-                    <div class="gate-item" draggable="true" data-type="NOT" title="Inverter">NOT</div>
-                    <div class="gate-item" draggable="true" data-type="NAND" title="NAND Gate">NAND</div>
-                </div>
-            </div>
-
-            <div class="tool-section">
-                <h3>I/O COMPONENTS</h3>
-                <div class="gate-grid">
-                    <div class="gate-item io" draggable="true" data-type="INPUT">SWITCH</div>
-                    <div class="gate-item io" draggable="true" data-type="OUTPUT">LED</div>
-                    <div class="gate-item io" draggable="true" data-type="CLOCK">CLOCK</div>
-                </div>
-            </div>
-
-            <div class="tool-section">
-                <h3>SIMULATION</h3>
-                <div class="sim-ctrl">
-                    <label>Delay (ns)
-                        <input type="range" id="param-delay" min="1" max="100" value="10">
-                    </label>
-                    <button class="btn-primary" id="btn-run">RUN DESIGN</button>
-                    <button class="btn-ghost" id="btn-clear">PURGE ALL</button>
-                </div>
-            </div>
-
-            <div class="status-monitor">
-                <p>> LOGIC_SYNTHESIS: READY</p>
-                <p>> EVENT_QUEUE: IDLE</p>
-            </div>
-        </aside>
-
-        <!-- Main Schematic Workspace -->
-        <main class="schematic-workspace">
-            <header class="workspace-header">
-                <div class="breadcrumb">PROJECT_ROOT / UNTITLED_01.HDL</div>
-                <div class="view-ops">
-                    <button class="op-btn">GRID_ON</button>
-                    <button class="op-btn">SNAP_ON</button>
-                </div>
-            </header>
-
-            <div class="schematic-area" id="draw-container">
-                <canvas id="schematic-canvas"></canvas>
-                <!-- SVG layer for dynamic connections -->
-                <svg id="wire-svg" class="wire-overlay"></svg>
-            </div>
-
-            <footer class="workspace-footer">
-                <div class="stats">GATES: <span id="stat-gates">0</span> | WIRES: <span id="stat-wires">0</span></div>
-                <div class="hint">[Dbl-Click] Toggle Switch | [Drag] Connect Ports</div>
-            </footer>
-        </main>
-
-        <!-- Timing Analysis Sidebar -->
-        <aside class="timing-sidebar">
-            <header class="sidebar-header">
-                <h3>SIGNAL_ANALYSIS</h3>
-            </header>
-
-            <div class="timing-view" id="timing-container">
-                <!-- Dynamic timing lanes here -->
-                <canvas id="timing-canvas"></canvas>
-            </div>
-
-            <div class="component-inspector">
-                <h3>INSPECTOR</h3>
-                <div class="inspector-fields" id="ins-view">
-                    <p class="placeholder">Select a component to inspect attributes.</p>
-                </div>
-            </div>
-        </aside>
+  <!-- TOP BAR -->
+  <header>
+    <div class="brand">
+      <span class="brand-icon">☀</span>
+      <span class="brand-name">COSMO<em>SIM</em></span>
     </div>
+    <div class="tagline">SOLAR SYSTEM SIMULATOR</div>
+    <div class="live-badge">● LIVE</div>
+  </header>
 
-    <!-- Core Engine -->
-    <script src="scripts/core/logic.js" type="module"></script>
-    <script src="scripts/core/simulator.js" type="module"></script>
+  <!-- MAIN CANVAS -->
+  <canvas id="space"></canvas>
 
-    <!-- Render Engine -->
-    <script src="scripts/render/schematic.js" type="module"></script>
-    <script src="scripts/render/timing.js" type="module"></script>
+  <!-- CONTROLS -->
+  <div class="controls-bar">
+    <button id="btn-pause" class="ctrl-btn" title="Pause/Resume">
+      <span id="pause-icon">⏸</span>
+    </button>
+    <div class="speed-wrap">
+      <label>SPEED</label>
+      <input type="range" id="speed" min="1" max="100" value="20" step="1"/>
+      <span id="speed-val">1.0×</span>
+    </div>
+    <button id="btn-reset" class="ctrl-btn" title="Reset View">⟳</button>
+    <div class="date-display">
+      <label>SIM DATE</label>
+      <span id="sim-date">2026-01-01</span>
+    </div>
+  </div>
 
-    <!-- UI UI -->
-    <script src="scripts/ui/composer.js" type="module"></script>
+  <!-- PLANET INFO PANEL -->
+  <aside id="info-panel" class="hidden">
+    <button id="close-info">✕</button>
+    <div class="panel-glow" id="panel-glow"></div>
+    <div class="panel-top">
+      <div class="planet-icon-wrap">
+        <canvas id="planet-mini" width="80" height="80"></canvas>
+      </div>
+      <div class="panel-heading">
+        <h2 id="pi-name">Earth</h2>
+        <span id="pi-type">Terrestrial Planet</span>
+      </div>
+    </div>
+    <div class="pi-stats">
+      <div class="pi-stat"><label>Diameter</label><span id="pi-diameter"></span></div>
+      <div class="pi-stat"><label>Mass</label><span id="pi-mass"></span></div>
+      <div class="pi-stat"><label>Orbit Period</label><span id="pi-period"></span></div>
+      <div class="pi-stat"><label>Distance from Sun</label><span id="pi-dist"></span></div>
+      <div class="pi-stat"><label>Avg Temperature</label><span id="pi-temp"></span></div>
+      <div class="pi-stat"><label>Moons</label><span id="pi-moons"></span></div>
+    </div>
+    <p id="pi-desc"></p>
+  </aside>
 
-    <script type="module">
-        import { composer } from './scripts/ui/composer.js';
+  <!-- PLANET LEGEND -->
+  <div class="legend">
+    <div class="legend-title">PLANETS</div>
+    <div id="legend-items"></div>
+  </div>
 
-        window.addEventListener('load', () => {
-            composer.init();
-        });
-    </script>
+  <!-- TOOLTIP -->
+  <div id="tooltip"></div>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
