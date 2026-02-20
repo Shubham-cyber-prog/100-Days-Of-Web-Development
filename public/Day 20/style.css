@@ -222,3 +222,41 @@ canvas {
     flex-direction: column;
   }
 }
+
+
+/* 🌙 Light Mode */
+body.light {
+  --bg-primary: #f9fafb;
+  --bg-card: rgba(0, 0, 0, 0.05);
+  --bg-hover: rgba(0, 0, 0, 0.08);
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --border: rgba(0, 0, 0, 0.12);
+}
+
+/* Toggle UI */
+.theme-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+/* Customize Section */
+.customize {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.customize label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.customize input[type="color"],
+.customize input[type="range"],
+.customize input[type="file"] {
+  margin-bottom: 10px;
+}
