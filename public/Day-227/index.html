@@ -1,5 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberCore | Real-Time Intrusion Detection & Network SOC</title>
+    <meta name="description"
+        content="Advanced network security operations dashboard. Simulates packet flow, implements IDS heuristics, and optimizes network topology via force-directed graphs.">
+    <link rel="stylesheet" href="styles/cyber.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="soc-theme">
+    <div class="soc-layout">
+        <!-- Top Navigation Status -->
+        <header class="soc-header">
+            <div class="brand">
+                <div class="logo">CYBER_CORE <span class="v">v2.1</span></div>
+            </div>
+            <div class="threat-alert">
+                THREAT_LEVEL: <span id="level-val" class="level-low">LOW</span>
+            </div>
+            <div class="node-stats">
+                ACTIVE_NODES: <span id="node-count">32</span> |
+                ENCRYPTION: <span class="active">AES-256</span> |
+                LATENCY: <span id="latency-val">4ms</span>
+            </div>
+        </header>
+
+        <main class="main-workspace">
+            <!-- Topology View -->
+            <section class="topology-area">
+                <header class="panel-header">
+                    <h3>NETWORK_TOPOLOGY (FORCE_OPTIMIZED)</h3>
+                </header>
+                <div class="canvas-wrapper" id="topology-container">
+                    <canvas id="topology-canvas"></canvas>
+                </div>
+            </section>
+
+            <!-- Packet Inspector -->
+            <aside class="log-sidebar">
+                <header class="panel-header">
+                    <h3>IDS_REALTIME_LOG</h3>
+                </header>
+                <div class="log-console" id="ids-console">
+                    <div class="log-entry system">> SYSTEM: BOOT SEQUENCE COMPLETE.</div>
+                    <div class="log-entry system">> IDS: HEURISTIC_ENGINE LOADED.</div>
+                </div>
+
+                <div class="packet-details" id="packet-inspector">
+                    <h3>PACKET_INSPECTOR</h3>
+                    <div class="details-grid">
+                        <div class="label">SOURCE_IP:</div>
+                        <div id="p-src">--</div>
+                        <div class="label">TARGET_IP:</div>
+                        <div id="p-dst">--</div>
+                        <div class="label">PROTOCOL:</div>
+                        <div id="p-proto">--</div>
+                        <div class="label">SIGNATURE:</div>
+                        <div id="p-sig" class="sig-ok">CLEAN</div>
+                    </div>
+            </aside>
+        </main>
+
+        <!-- Bottom Controls -->
+        <footer class="soc-footer">
+            <div class="control-panel">
+                <button class="action-btn" id="btn-add-node">+ NODE</button>
+                <button class="action-btn" id="btn-stress-test">⌁ STRESS_TEST</button>
+                <button class="action-btn danger" id="btn-reset">☢ PURGE_TOPOLOGY</button>
+            </div>
+
+            <div class="topology-params">
+                <label>ATTRACTION
+                    <input type="range" id="input-attract" min="1" max="10" value="5">
+                </label>
+                <label>REPULSION
+                    <input type="range" id="input-repel" min="1" max="100" value="50">
+                </label>
+            </div>
+
+            <div class="system-metrics">
+                EFFICENCY: <span id="val-eff">98.2%</span> |
+                DROPPED: <span id="val-drop">0</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Logic Engine -->
+    <script src="scripts/physics/force.js" type="module"></script>
+    <script src="scripts/core/network.js" type="module"></script>
+    <script src="scripts/core/ids.js" type="module"></script>
+
+    <!-- Sim & UI -->
+    <script src="scripts/sim/packet.js" type="module"></script>
+    <script src="scripts/ui/topology.js" type="module"></script>
+    <script src="scripts/ui/console.js" type="module"></script>
+    <script src="scripts/state/security.js" type="module"></script>
+
+    <script type="module">
+        import { topology } from './scripts/ui/topology.js';
+        import { consoleController } from './scripts/ui/console.js';
+
+        window.addEventListener('load', () => {
+            topology.init();
+            consoleController.log('Network initialization sequence started...');
+        });
+    </script>
+</body>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
