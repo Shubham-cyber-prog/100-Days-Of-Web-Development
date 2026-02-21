@@ -1,0 +1,422 @@
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    overflow-x: hidden;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header p {
+    margin: 10px 0 0 0;
+    font-size: 1.1em;
+    color: #7f8c8d;
+}
+
+main {
+    display: flex;
+    min-height: calc(100vh - 120px);
+}
+
+aside#stats-panel {
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+aside h2, aside h3 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+#meters, #resources {
+    margin-bottom: 20px;
+}
+
+#meters div, #resources div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #34495e;
+}
+
+progress {
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #ecf0f1;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #ecf0f1;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border-radius: 10px;
+}
+
+progress::-moz-progress-bar {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border-radius: 10px;
+}
+
+#events-log ul {
+    list-style-type: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#events-log li {
+    background-color: #f8f9fa;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-left: 3px solid #3498db;
+    font-size: 0.9em;
+}
+
+section#game-area {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#tool-panel {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+#tool-panel h2 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+#terrain-tools, #special-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tool-btn {
+    padding: 8px 12px;
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+.tool-btn:hover {
+    background-color: #7f8c8d;
+    transform: translateY(-2px);
+}
+
+.tool-btn.active {
+    background-color: #3498db;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#brush-size {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#brush-slider {
+    flex: 1;
+}
+
+#terrain-canvas {
+    border: 3px solid #2c3e50;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, #87CEEB 0%, #98FB98 50%, #D2B48C 100%);
+    cursor: crosshair;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#instructions {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #7f8c8d;
+    max-width: 800px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #7f8c8d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    aside#stats-panel {
+        width: 100%;
+        order: 2;
+    }
+
+    section#game-area {
+        order: 1;
+    }
+
+    #terrain-tools, #special-tools {
+        justify-content: center;
+    }
+
+    #terrain-canvas {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+aside, #tool-panel, #terrain-canvas {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Additional styles for enhanced UI */
+.tool-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tool-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+#events-list li:hover {
+    background-color: #e8f4f8;
+}
+
+#tool-panel {
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.95));
+}
+
+#terrain-canvas:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.progress-container {
+    position: relative;
+}
+
+.progress-container::after {
+    content: attr(data-value) '%';
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+    color: #2c3e50;
+}
+
+#meters div, #resources div {
+    position: relative;
+}
+
+#atmosphere-bar::after { content: attr(value) '%'; }
+#water-bar::after { content: attr(value) '%'; }
+#heat-bar::after { content: attr(value) '%'; }
+#population-bar::after { content: attr(value); }
+#happiness-bar::after { content: attr(value) '%'; }
+#food-bar::after { content: attr(value); }
+#energy-bar::after { content: attr(value); }
+#minerals-bar::after { content: attr(value); }
+
+/* Loading animation */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.tool-btn.active {
+    animation: pulse 2s infinite;
+}
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Enhanced footer */
+footer {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    #tool-panel {
+        padding: 10px;
+    }
+
+    .tool-btn {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+
+    #brush-size {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #brush-slider {
+        margin-top: 5px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: #ecf0f1;
+    }
+
+    aside, #tool-panel {
+        background-color: rgba(44, 62, 80, 0.9);
+        color: #ecf0f1;
+    }
+
+    h1, h2, h3 {
+        color: #ecf0f1;
+    }
+
+    .tool-btn {
+        background-color: #34495e;
+        color: #ecf0f1;
+    }
+
+    .tool-btn.active {
+        background-color: #3498db;
+    }
+
+    #events-list li {
+        background-color: #34495e;
+        color: #ecf0f1;
+    }
+
+    footer {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    #terrain-canvas {
+        page-break-inside: avoid;
+        border: 1px solid black;
+    }
+
+    aside, #tool-panel {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+    }
+
+    .tool-btn {
+        background: #f0f0f0 !important;
+        color: black !important;
+        border: 1px solid black !important;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.tool-btn:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+#brush-slider:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .tool-btn {
+        border: 2px solid black;
+    }
+
+    progress {
+        border: 2px solid black;
+    }
+
+    #terrain-canvas {
+        border: 3px solid black;
+    }
+}
