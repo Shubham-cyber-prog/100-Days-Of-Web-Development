@@ -15,12 +15,30 @@
     font-family:"Schoolbell";
 }
 
-body{
+/* body{
     background: radial-gradient(circle at top,#2f2f2f,#121212);
     color:white;
     min-height:100vh;
+} */
+
+body{
+    margin:0;
+    min-height:100vh;
+    color:white;
+    overflow-x:hidden;
+    position:relative;
+
+    background: linear-gradient(-45deg, #d1d5de, #885b21, #56b2da, #0afeb1);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
 }
 
+/* Animated Gradient */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 /* HEADER */
 .header{
     text-align:center;
