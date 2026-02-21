@@ -43,6 +43,13 @@ const resetGame = () => {
   msg.style.backgroundColor = "#081b31";
 
   document.body.style.background = "";
+  const popup = document.getElementById("resetPopup");
+
+popup.classList.add("show");
+
+setTimeout(() => {
+  popup.classList.remove("show");
+}, 2000);
 };
 
 /* ---------- Draw ---------- */
@@ -71,8 +78,18 @@ const showWinner = (userWin, userChoice, compChoice) => {
   if (userWin) {
     userScore++;
     userScorePara.innerText = userScore;
+    userScorePara.classList.add("score-pop");
+
+    setTimeout(() => {
+    userScorePara.classList.remove("score-pop");
+    }, 400);
 
     msg.innerText = `You win! ${userChoice} beats ${compChoice}. Click to reset`;
+    msg.classList.add("result-animate");
+
+    setTimeout(() => {
+    msg.classList.remove("result-animate");
+    }, 500);
     msg.style.backgroundColor = "green";
 
     document.body.style.background =
@@ -83,8 +100,18 @@ const showWinner = (userWin, userChoice, compChoice) => {
   } else {
     compScore++;
     compScorePara.innerText = compScore;
+    userScorePara.classList.add("score-pop");
+
+    setTimeout(() => {
+    userScorePara.classList.remove("score-pop");
+    }, 400);
 
     msg.innerText = `You lost. ${compChoice} beats ${userChoice}. Click to reset`;
+    userChoiceElement.classList.add("winner");
+
+    setTimeout(() => {
+    userChoiceElement.classList.remove("winner");
+    }, 1000);
     msg.style.backgroundColor = "red";
 
     document.body.style.background =
