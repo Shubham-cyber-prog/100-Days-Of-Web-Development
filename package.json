@@ -7,7 +7,11 @@
         "lint:js": "eslint .",
         "lint:css": "stylelint \"**/*.css\"",
         "lint:html": "htmlhint \"**/*.html\"",
-        "lint": "npm run lint:js && npm run lint:css && npm run lint:html"
+        "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+        "lint:fix": "eslint . --fix && stylelint \"**/*.css\" --fix",
+        "format": "prettier --write \"**/*.{js,css,html,json,md}\"",
+        "format:check": "prettier --check \"**/*.{js,css,html,json,md}\"",
+        "prepare": "husky"
     },
     "keywords": [],
     "author": "",
@@ -16,6 +20,26 @@
         "eslint": "^8.56.0",
         "stylelint": "^16.2.1",
         "stylelint-config-standard": "^36.0.0",
-        "htmlhint": "^1.1.4"
+        "htmlhint": "^1.1.4",
+        "husky": "^9.0.0",
+        "lint-staged": "^15.0.0",
+        "prettier": "^3.2.0"
+    },
+    "lint-staged": {
+        "*.js": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.css": [
+            "stylelint --fix",
+            "prettier --write"
+        ],
+        "*.html": [
+            "htmlhint",
+            "prettier --write"
+        ],
+        "*.{json,md}": [
+            "prettier --write"
+        ]
     }
 }
