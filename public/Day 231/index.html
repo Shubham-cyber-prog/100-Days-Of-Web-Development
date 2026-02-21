@@ -1,3 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cute Star Catcher!</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #87ceeb, #fff);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+    }
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    .player {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      background: pink;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff69b4;
+    }
+    .star {
+      position: absolute;
+      top: -30px;
+      width: 30px;
+      height: 30px;
+      background: yellow;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: fall linear;
+    }
+    @keyframes fall {
+      0% { top: -30px; }
+      100% { top: 100vh; }
+    }
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <div class="player" id="player">🐱</div>
+    <div id="score">Score: 0</div>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    const game = document.getElementById('game');
+    const scoreDisplay = document.getElementById('score');
+    let score = 0;
+    let playerX = window.innerWidth/2 - 25;
+    const speed = 20;
+
+    function movePlayer(e) {
+      if(e.key === "ArrowLeft") playerX -= speed;
+      if(e.key === "ArrowRight") playerX += speed;
+      playerX = Math.max(0, Math.min(window.innerWidth - 50, playerX));
+      player.style.left = playerX + 'px';
+    }
+    document.addEventListener('keydown', movePlayer);
+
+    function spawnStar() {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const starX = Math.random() * (window.innerWidth - 30);
+      star.style.left = starX + 'px';
+      const duration = 3 + Math.random() * 2;
+      star.style.animationDuration = duration + 's';
+      game.appendChild(star);
+
+      const checkCatch = setInterval(() => {
+        const starRect = star.getBoundingClientRect();
+        const playerRect = player.getBoundingClientRect();
+
+        if(starRect.bottom >= playerRect.top &&
+           starRect.top <= playerRect.bottom &&
+           starRect.left + 15 >= playerRect.left &&
+           starRect.right - 15 <= playerRect.right) {
+          score++;
+          scoreDisplay.textContent = "Score: " + score;
+          star.remove();
+          clearInterval(checkCatch);
+        }
+
+        if(starRect.top > window.innerHeight) {
+          star.remove();
+          clearInterval(checkCatch);
+        }
+      }, 20);
+    }
+
+    setInterval(spawnStar, 1000);
+  </script>
+</body>
+=======
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -261,4 +375,5 @@ const app = new Vue({
 })
 </script>
 </body>
+
 </html>
