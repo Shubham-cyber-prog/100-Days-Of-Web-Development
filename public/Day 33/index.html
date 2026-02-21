@@ -20,8 +20,10 @@
       <a href="#listings">Listings</a>
       <a href="#features">Features</a>
       <a href="#contact">Contact</a>
+      <i class="fa fa-bars" id="menuBtn"></i>
     </nav>
     <button class="btn-primary">Login</button>
+    <button id="themeBtn">🌙</button>
   </header>
 
   <section class="hero" id="home">
@@ -29,7 +31,8 @@
       <h1>Find Your <span>Dream Home</span></h1>
       <p>Luxury properties curated for modern living</p>
       <div class="search-box">
-        <input type="text" placeholder="City, location or keyword" />
+        <!-- <input type="text" placeholder="City, location or keyword" /> -->
+         <input type="text" id="searchInput" placeholder="Search by name or location" />
         <button>Search</button>
       </div>
     </div>
@@ -67,5 +70,13 @@
     <i class="fa-solid fa-arrow-up"></i>
     </button>
   <script src="script.js"></script>
+
+  <div class="modal" id="modal">
+  <div class="modal-content">
+    <h2 id="modalTitle"></h2>
+    <p id="modalPrice"></p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
 </body>
 </html>

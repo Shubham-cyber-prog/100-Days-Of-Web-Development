@@ -66,3 +66,64 @@ footer{text-align:center;padding:20px;background:#020617;color:#94a3b8}
   background-color: #0056b3;
   transform: scale(1.1);
 }
+
+
+.save-btn{
+  margin-top:8px;
+  padding:8px 14px;
+  border:none;
+  background:#38bdf8;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.light{
+  background:#f1f5f9;
+  color:#020617;
+}
+
+.light .card{
+  background:white;
+}
+
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:#020617;
+  padding:30px;
+  border-radius:20px;
+}
+
+#menuBtn{
+  display:none;
+  font-size:22px;
+  cursor:pointer;
+}
+
+@media(max-width:768px){
+  nav{
+    display:none;
+    flex-direction:column;
+    background:#020617;
+    position:absolute;
+    top:70px;
+    right:20px;
+    padding:20px;
+  }
+
+  nav.show{
+    display:flex;
+  }
+
+  #menuBtn{
+    display:block;
+  }
+}
