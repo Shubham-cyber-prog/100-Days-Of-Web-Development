@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiRoute | Logistics & Pathfinding Optimization</title>
+    <meta name="description"
+        content="Advanced logistics optimization suite using Ant Colony Optimization and Dijkstra's algorithm for solving the Traveling Salesman Problem with multi-threaded computation.">
+    <link rel="stylesheet" href="styles/logistics.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="brand">
+                <div class="logo-icon">🚚</div>
+                <div class="brand-text">
+                    <h1>OptiRoute</h1>
+                    <span class="tagline">Logistics Optimization Suite</span>
+                </div>
+            </div>
+
+            <div class="header-stats">
+                <div class="stat-card">
+                    <span class="stat-label">Nodes</span>
+                    <span id="node-count" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Distance</span>
+                    <span id="total-distance" class="stat-value">0 km</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Algorithm</span>
+                    <span id="current-algo" class="stat-value">None</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Status</span>
+                    <span id="status" class="stat-value status-idle">Idle</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Left Sidebar -->
+            <aside class="sidebar sidebar-left">
+                <section class="panel">
+                    <h3>Algorithms</h3>
+                    <div class="algo-buttons">
+                        <button id="btn-dijkstra" class="btn btn-algo">
+                            <span class="btn-icon">🔍</span>
+                            <span>Dijkstra's Path</span>
+                        </button>
+                        <button id="btn-aco" class="btn btn-algo">
+                            <span class="btn-icon">🐜</span>
+                            <span>Ant Colony (ACO)</span>
+                        </button>
+                        <button id="btn-genetic" class="btn btn-algo">
+                            <span class="btn-icon">🧬</span>
+                            <span>Genetic Algorithm</span>
+                        </button>
+                        <button id="btn-greedy" class="btn btn-algo">
+                            <span class="btn-icon">⚡</span>
+                            <span>Greedy Nearest</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Map Controls</h3>
+                    <div class="control-group">
+                        <button id="btn-add-node" class="btn btn-secondary">
+                            <span class="btn-icon">📍</span>
+                            <span>Add Node</span>
+                        </button>
+                        <button id="btn-add-obstacle" class="btn btn-secondary">
+                            <span class="btn-icon">🚧</span>
+                            <span>Add Obstacle</span>
+                        </button>
+                        <button id="btn-clear-map" class="btn btn-danger">
+                            <span class="btn-icon">🗑️</span>
+                            <span>Clear Map</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Presets</h3>
+                    <div class="preset-list">
+                        <button class="preset-btn" data-preset="grid">Grid Pattern (25)</button>
+                        <button class="preset-btn" data-preset="random">Random (50)</button>
+                        <button class="preset-btn" data-preset="cluster">Clustered (30)</button>
+                        <button class="preset-btn" data-preset="circle">Circle (20)</button>
+                        <button class="preset-btn" data-preset="cities">Major Cities</button>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>ACO Parameters</h3>
+                    <div class="param-controls">
+                        <label>
+                            <span>Ants</span>
+                            <input type="number" id="aco-ants" value="50" min="10" max="200">
+                        </label>
+                        <label>
+                            <span>Iterations</span>
+                            <input type="number" id="aco-iterations" value="100" min="10" max="500">
+                        </label>
+                        <label>
+                            <span>Alpha (α)</span>
+                            <input type="number" id="aco-alpha" value="1" min="0" max="5" step="0.1">
+                        </label>
+                        <label>
+                            <span>Beta (β)</span>
+                            <input type="number" id="aco-beta" value="2" min="0" max="5" step="0.1">
+                        </label>
+                        <label>
+                            <span>Evaporation (ρ)</span>
+                            <input type="number" id="aco-evaporation" value="0.5" min="0" max="1" step="0.05">
+                        </label>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- Map Canvas -->
+            <section class="map-container">
+                <canvas id="map-canvas"></canvas>
+                <div class="map-overlay">
+                    <div id="hover-info" class="info-tooltip" style="display: none;"></div>
+                </div>
+                <div class="map-controls">
+                    <button id="btn-zoom-in" class="map-btn">+</button>
+                    <button id="btn-zoom-out" class="map-btn">−</button>
+                    <button id="btn-reset-view" class="map-btn">⟲</button>
+                </div>
+            </section>
+
+            <!-- Right Sidebar -->
+            <aside class="sidebar sidebar-right">
+                <section class="panel">
+                    <h3>Performance Metrics</h3>
+                    <div class="metrics-display">
+                        <div class="metric-item">
+                            <span class="metric-label">Computation Time:</span>
+                            <span id="metric-time" class="metric-value">0 ms</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Best Distance:</span>
+                            <span id="metric-distance" class="metric-value">0 km</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Iterations:</span>
+                            <span id="metric-iterations" class="metric-value">0</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Improvement:</span>
+                            <span id="metric-improvement" class="metric-value">0%</span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="convergence-chart" width="250" height="150"></canvas>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Route Details</h3>
+                    <div id="route-details" class="route-info">
+                        <p class="placeholder">Run an algorithm to see route details</p>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Export</h3>
+                    <div class="export-buttons">
+                        <button id="btn-export-json" class="btn btn-secondary">
+                            <span class="btn-icon">📄</span>
+                            <span>Export JSON</span>
+                        </button>
+                        <button id="btn-export-csv" class="btn btn-secondary">
+                            <span class="btn-icon">📊</span>
+                            <span>Export CSV</span>
+                        </button>
+                        <button id="btn-export-image" class="btn btn-secondary">
+                            <span class="btn-icon">🖼️</span>
+                            <span>Export Image</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Visualization</h3>
+                    <div class="viz-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="toggle-labels" checked>
+                            <span>Node Labels</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="toggle-distances" checked>
+                            <span>Edge Distances</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="toggle-pheromones">
+                            <span>Pheromone Trails</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="toggle-animation" checked>
+                            <span>Animate Solution</span>
+                        </label>
+                    </div>
+                </section>
+            </aside>
+        </main>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <div class="footer-info">
+                <span>🎯 OptiRoute v1.0 | Solving NP-Hard TSP with Advanced Algorithms</span>
+            </div>
+            <div class="footer-credits">
+                <span>Built for ECWoC'26 | Day 221</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/algo/dijkstra.js" type="module"></script>
+    <script src="scripts/algo/aco.js" type="module"></script>
+    <script src="scripts/map/projection.js" type="module"></script>
+    <script src="scripts/map/tiles.js" type="module"></script>
+    <script src="scripts/ui/metrics.js" type="module"></script>
+    <script src="scripts/ui/editor.js" type="module"></script>
+    <script src="scripts/io/exporter.js" type="module"></script>
+
+    <!-- Main Application -->
+    <script type="module">
+        import { MapEditor } from './scripts/ui/editor.js';
+        import { MetricsTracker } from './scripts/ui/metrics.js';
+        import { RouteExporter } from './scripts/io/exporter.js';
+
+        // Initialize application
+        const editor = new MapEditor();
+        const metrics = new MetricsTracker();
+        const exporter = new RouteExporter(editor);
+
+        // Make globally accessible
+        window.app = { editor, metrics, exporter };
+    </script>
+</body>
+
+</html>
