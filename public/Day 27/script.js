@@ -51,3 +51,9 @@ function resetHistory() {
   cube.style.transform = `translateZ(-50px) rotateX(0deg) rotateY(0deg)`;
 }
 
+
+
+function resetHistory() {
+  historyList.innerHTML = "";
+  resultText.innerText = "Roll the dice!";
+}

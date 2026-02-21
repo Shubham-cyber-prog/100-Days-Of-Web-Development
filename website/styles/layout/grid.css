@@ -46,6 +46,24 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
+/* Projects specific horizontal layout */
+.projects-section .grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+  justify-content: start;
+}
+
+/* Enhanced project card layout for better horizontal presentation */
+.projects-section #project-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
 /* Stack on Mobile */
 @media (max-width: 900px) {
   .grid-3 {
@@ -66,9 +84,10 @@
 
   /* Maintain responsive columns for grid-4 (Projects) */
   .grid-4 {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
     /* Reduce gap on mobile */
+    padding: 0 0.5rem;
   }
 
   .grid {

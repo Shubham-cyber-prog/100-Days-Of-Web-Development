@@ -4,6 +4,9 @@
  */
 
 import { CodeViewer } from './CodeViewer.js';
+import { CodePlayground } from './CodePlayground.js';
+import graderService from '../core/graderService.js';
+import graderUI from './GraderUI.js';
 
 export class ProjectModal {
     constructor() {
@@ -40,6 +43,7 @@ export class ProjectModal {
                         <div class="modal-tabs">
                             <button class="modal-tab active" data-tab="preview">Preview</button>
                             <button class="modal-tab" data-tab="code">Source Code</button>
+                            <button class="modal-tab" data-tab="playground">Playground</button>
                         </div>
                         <div class="viewport-toggles" id="viewportToggles">
                             <button class="viewport-btn active" data-view="desktop" title="Desktop View"><i class="fas fa-desktop"></i></button>
@@ -58,6 +62,9 @@ export class ProjectModal {
                         <button class="favorite-btn" id="modalFavBtn">
                             <i class="far fa-star"></i>
                         </button>
+                        <button class="grade-action-btn" id="modalGradeBtn">
+                            <i class="fas fa-microchip"></i> Grade
+                        </button>
                     </div>
                 </div>
 
@@ -65,7 +72,7 @@ export class ProjectModal {
                     <div class="preview-container active" id="previewContainer">
                         <iframe src="" class="preview-iframe" id="modalIframe"></iframe>
                     </div>
-                    
+
                     <div class="code-container" id="codeContainer">
                         <div class="code-header">
                             <div class="code-file-tab active" data-file="index.html">index.html</div>
@@ -74,6 +81,10 @@ export class ProjectModal {
                         </div>
                         <button class="code-copy-btn" id="modalCopyBtn">Copy Code</button>
                         <pre class="code-content" id="modalCodePre"></pre>
+                    </div>
+
+                    <div class="playground-container" id="playgroundContainer">
+                        <!-- CodePlayground component will be injected here -->
                     </div>
                 </div>
 
@@ -91,6 +102,7 @@ export class ProjectModal {
         this.iframe = overlay.querySelector('#modalIframe');
         this.codeContainer = overlay.querySelector('#codeContainer');
         this.codePre = overlay.querySelector('#modalCodePre');
+        this.playgroundContainer = overlay.querySelector('#playgroundContainer');
 
         this.setupEventListeners();
     }
@@ -122,6 +134,26 @@ export class ProjectModal {
 
         // Favorite
         this.overlay.querySelector('#modalFavBtn').addEventListener('click', () => this.toggleFavorite());
+
+        // Grade
+        this.overlay.querySelector('#modalGradeBtn').addEventListener('click', () => this.gradeCurrentProject());
+    }
+
+    async gradeCurrentProject() {
+        if (!this.currentProject) return;
+
+        try {
+            if (window.Notify) window.Notify.info(`Analyzing Mission ${this.currentProject.day}...`);
+            const report = await graderService.gradeProject(this.currentProject.day);
+            graderUI.showReport(report);
+
+            if (report.status === 'PASSED') {
+                if (window.Notify) window.Notify.success('Mission Analysis Passed! 🚀');
+                // You could automatically trigger completion here if progressService is available
+            }
+        } catch (error) {
+            console.error('Grading failed:', error);
+        }
     }
 
     show(project) {
@@ -149,6 +181,25 @@ export class ProjectModal {
         // Show overlay
         this.overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
+
+        // Trigger Neural Nexus mission advice
+        this.triggerNexusMission(project);
+    }
+
+    async triggerNexusMission(project) {
+        if (!window.AI || !window.NexusHUD) return;
+
+        const advice = await window.AI.getHUDAdvice(project.day);
+        window.NexusHUD.updateAITip(advice);
+
+        // Occasionally generate a dynamic quest when starting a mission
+        if (Math.random() > 0.7 && window.Quests) {
+            const analysis = await window.AI.analyzeProgress({
+                completedDays: [project.day],
+                techDistribution: { [project.tech[0]]: 1 },
+                currentStreak: 1
+            });
+        }
     }
 
     hide() {
@@ -168,10 +219,16 @@ export class ProjectModal {
         // Toggle containers
         this.overlay.querySelector('#previewContainer').classList.toggle('active', tab === 'preview');
         this.overlay.querySelector('#codeContainer').classList.toggle('show', tab === 'code');
+        this.overlay.querySelector('#playgroundContainer').classList.toggle('active', tab === 'playground');
 
         // Pre-load code if switching to code tab
         if (tab === 'code') {
             this.switchCodeFile('index.html');
+        }
+
+        // Initialize playground if switching to playground tab
+        if (tab === 'playground') {
+            this.initPlayground();
         }
     }
 
@@ -253,6 +310,18 @@ export class ProjectModal {
         } else {
             btn.classList.remove('active');
             icon.className = 'far fa-star';
+        }
+    }
+
+    initPlayground() {
+        // Initialize CodePlayground component if not already done
+        if (!this.playgroundInstance) {
+            this.playgroundInstance = new CodePlayground(this.playgroundContainer);
+        }
+
+        // Load project-specific code if available
+        if (this.currentProject) {
+            this.playgroundInstance.loadProjectCode(this.currentProject);
         }
     }
 }
