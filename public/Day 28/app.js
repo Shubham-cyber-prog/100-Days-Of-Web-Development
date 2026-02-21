@@ -9,6 +9,7 @@ const userScorePara = document.querySelector("#user-score");
 const compScorePara = document.querySelector("#comp-score");
 const themeToggle = document.querySelector("#themeToggle");
 const body = document.body;
+
 const choices = $$(".choice");
 const msg = $("#msg");
 const userScorePara = $("#user-score");

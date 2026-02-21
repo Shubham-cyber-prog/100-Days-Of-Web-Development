@@ -19,14 +19,6 @@ body {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(20px);
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-}
-
-/* ===== SCENE ===== */
-.scene {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 30px auto;
-    perspective: 800px;
 
 }
 
@@ -36,6 +28,16 @@ body {
     height: 150px;
     margin: 0 auto 30px auto;
     perspective: 800px;
+
+}
+
+/* ===== SCENE ===== */
+.scene {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 30px auto;
+    perspective: 800px;
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -186,6 +188,31 @@ button {
 
 }
 
+#rollBtn:hover {
+    transform: translateY(-4px);
+}
+
+/* Reset Button */
+#resetBtn {
+    background: linear-gradient(45deg, #e077e0, #f390d5);
+    color: white;
+}
+
+/* ===== TEXT ===== */
+#resultText {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+}
+
+#rollCount {
+    margin-top: 10px;
+    color: #f1f1f1;
+}
+
+}
+
 /* ===== TEXT ===== */
 #resultText {
     margin-top: 20px;
@@ -240,6 +267,7 @@ button {
 .footer a {
     color: #cc9696;
     text-decoration: none;
+
 
 /* Faces */
 .front { transform: translateZ(50px); }
