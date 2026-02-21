@@ -8,11 +8,6 @@ menuBtn.addEventListener("click", () => {
 
 // Testimonials Slider
 const slides = document.querySelectorAll(".testimonial");
-
-
-// Testimonials Slider
-const slides = document.querySelectorAll(".testimonial");
-
 let index = 0;
 
 function showSlide(i) {
@@ -30,31 +25,11 @@ document.getElementById("prev").onclick = () => {
   showSlide(index);
 };
 
-document.getElementById("next").addEventListener("click", () => {
-  index = (index + 1) % slides.length;
-  showSlide(index);
-});
-
-document.getElementById("prev").addEventListener("click", () => {
-  index = (index - 1 + slides.length) % slides.length;
-  showSlide(index);
-});
-
-
 // Auto Slide
 setInterval(() => {
   index = (index + 1) % slides.length;
   showSlide(index);
 }, 4000);
-
-
-
-
-
-
-}, 5000);
-
-
 
 // Scroll To Top
 const scrollBtn = document.getElementById("scrollTop");
@@ -65,26 +40,11 @@ window.addEventListener("scroll", () => {
 
 scrollBtn.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
-
-
-
-
-  if (window.scrollY > 300) {
-
-  if (window.scrollY > 200) {
-
-    scrollBtn.style.display = "block";
-  } else {
-    scrollBtn.style.display = "none";
-  }
-
 });
 
-scrollBtn.addEventListener("click", () => {
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
+menuBtn.addEventListener("click", ()=>{
+  navLinks.classList.toggle("active");
 });

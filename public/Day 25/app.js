@@ -1,226 +1,126 @@
+let quotes = JSON.parse(localStorage.getItem("themeQuotes")) || [
 
-let quotes = [
-    {
-        quote: "Believe you can and you're halfway there.",
-        author: "Theodore Roosevelt"
-    },
-    {
-        quote: "The future belongs to those who prepare for it today.",
-        author: "Malcolm X"
-    },
-    {
-        quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-        author: "Winston Churchill"
-    },
-    {
-        quote: "Do what you can, with what you have, where you are.",
-        author: "Theodore Roosevelt"
-    },
-    {
-        quote: "It always seems impossible until it’s done.",
-        author: "Nelson Mandela"
-    },
-    {
-        quote: "Don’t let yesterday take up too much of today.",
-        author: "Will Rogers"
-    },
-    {
-        quote: "Your time is limited, so don’t waste it living someone else’s life.",
-        author: "Steve Jobs"
-    },
-    {
-        quote: "First, solve the problem. Then, write the code.",
-        author: "John Johnson"
-    },
-    {
-        quote: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
-        author: "Martin Fowler"
-    },
-    {
-        quote: "Simplicity is the soul of efficiency.",
-        author: "Austin Freeman"
-    },
-    {
-        quote: "Learning never exhausts the mind.",
-        author: "Leonardo da Vinci"
-    },
-    {
-        quote: "Small progress is still progress.",
-        author: "Unknown"
-    },
-    {
-        quote: "The best error message is the one that never shows up.",
-        author: "Thomas Fuchs"
-    },
-    {
-        quote: "Dream big. Start small. Act now.",
-        author: "Robin Sharma"
-    },
-    {
-        quote: "Consistency beats motivation.",
-        author: "Unknown"
-    }
+    // MOTIVATION
+    {quote:"Discipline beats motivation.", author:"Unknown", theme:"motivation"},
+    {quote:"Push yourself, because no one else will do it for you.", author:"Unknown", theme:"motivation"},
+    {quote:"Success starts with self-belief.", author:"Unknown", theme:"motivation"},
+    {quote:"Small progress is still progress.", author:"Unknown", theme:"motivation"},
+    {quote:"Your only limit is your mindset.", author:"Unknown", theme:"motivation"},
+    {quote:"Hard days build strong people.", author:"Unknown", theme:"motivation"},
+    {quote:"Don’t stop until you’re proud.", author:"Unknown", theme:"motivation"},
+
+    // LIFE
+    {quote:"Life rewards courage.", author:"Unknown", theme:"life"},
+    {quote:"Peace begins when expectations end.", author:"Buddha", theme:"life"},
+    {quote:"Happiness depends upon ourselves.", author:"Aristotle", theme:"life"},
+    {quote:"Live less out of habit and more out of intent.", author:"Unknown", theme:"life"},
+    {quote:"The meaning of life is to give life meaning.", author:"Unknown", theme:"life"},
+    {quote:"Life becomes easier when you learn to accept.", author:"Unknown", theme:"life"},
+    {quote:"What you think, you become.", author:"Buddha", theme:"life"},
+
+    // SUCCESS
+    {quote:"Success is consistency.", author:"Robin Sharma", theme:"success"},
+    {quote:"Success is built daily, not overnight.", author:"Unknown", theme:"success"},
+    {quote:"Dream big. Start small. Act now.", author:"Robin Sharma", theme:"success"},
+    {quote:"Work in silence. Let results make noise.", author:"Unknown", theme:"success"},
+    {quote:"Failure is not opposite of success; it’s part of success.", author:"Arianna Huffington", theme:"success"},
+    {quote:"Focus on goals, not obstacles.", author:"Unknown", theme:"success"},
+    {quote:"Success begins outside your comfort zone.", author:"Unknown", theme:"success"},
+
+    // STUDY
+    {quote:"Study now, shine later.", author:"Unknown", theme:"study"},
+    {quote:"Learning never exhausts the mind.", author:"Leonardo da Vinci", theme:"study"},
+    {quote:"The expert in anything was once a beginner.", author:"Helen Hayes", theme:"study"},
+    {quote:"Don’t watch the clock; do what it does. Keep going.", author:"Sam Levenson", theme:"study"},
+    {quote:"Education is the passport to the future.", author:"Malcolm X", theme:"study"},
+    {quote:"Your future is created by what you do today.", author:"Unknown", theme:"study"},
+    {quote:"Success in exams comes from daily effort.", author:"Unknown", theme:"study"},
+
+    // LOVE
+    {quote:"Love grows with effort.", author:"Unknown", theme:"love"},
+    {quote:"Where there is love, there is life.", author:"Mahatma Gandhi", theme:"love"},
+    {quote:"Love is friendship set on fire.", author:"Jeremy Taylor", theme:"love"},
+    {quote:"To love deeply is to live fully.", author:"Unknown", theme:"love"},
+    {quote:"Real love feels safe, not stressful.", author:"Unknown", theme:"love"},
+    {quote:"Love is built on trust and patience.", author:"Unknown", theme:"love"},
+    {quote:"The best thing to hold onto in life is each other.", author:"Audrey Hepburn", theme:"love"}
 ];
 
-// ---------------- LOAD SAVED QUOTES ----------------
-const savedQuotes = JSON.parse(localStorage.getItem("quotes"));
-if (savedQuotes && Array.isArray(savedQuotes)) {
-    quotes.push(...savedQuotes);
-}
 
 
-const quotes = {
-
-    motivation: [
-        { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-        { quote: "Dream big. Start small. Act now.", author: "Robin Sharma" },
-        { quote: "Consistency beats motivation.", author: "Unknown" }
-    ],
-
-    life: [
-        { quote: "Life is what happens when you're busy making plans.", author: "John Lennon" },
-        { quote: "Live in the moment.", author: "Unknown" },
-        { quote: "Enjoy the little things.", author: "Unknown" }
-    ],
-
-    success: [
-        { quote: "Success is not final, failure is not fatal.", author: "Winston Churchill" },
-        { quote: "Work hard in silence.", author: "Unknown" },
-        { quote: "Push yourself, no one else will.", author: "Unknown" }
-    ],
-
-    study: [
-        { quote: "First, solve the problem. Then, write the code.", author: "John Johnson" },
-        { quote: "Learning never exhausts the mind.", author: "Leonardo da Vinci" },
-        { quote: "Study now, shine later.", author: "Unknown" }
-    ],
-
-    love: [
-        { quote: "Love all, trust a few.", author: "William Shakespeare" },
-        { quote: "Where there is love, there is life.", author: "Gandhi" },
-        { quote: "Love is friendship on fire.", author: "Unknown" }
-    ]
-
-};
-
-
-const categoryBox = document.getElementById("categoryBox");
-const quoteBox = document.getElementById("quoteBox");
-
-const categorySelect = document.getElementById("categorySelect");
-const saveBtn = document.getElementById("saveCategory");
-
-
-// ---------------- ELEMENTS ----------------
-const quoteText = document.getElementById("quote");
-const authorText = document.getElementById("author");
-
-const userQuote = document.getElementById("userQuote");
-const userAuthor = document.getElementById("userAuthor");
 const addBtn = document.getElementById("addBtn");
-
-// ---------------- RANDOM QUOTE ----------------
-btn.addEventListener("click", () => {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-
-    quoteText.textContent = `"${quotes[randomIndex].quote}"`;
-    authorText.textContent = `— ${quotes[randomIndex].author}`;
-
-const nextBtn = document.getElementById("nextBtn");
-const changeBtn = document.getElementById("changeBtn");
+const searchBtn = document.getElementById("searchBtn");
+const modal = document.getElementById("modal");
+const modalQuotes = document.getElementById("modalQuotes");
+const closeModal = document.getElementById("closeModal");
 
 
+addBtn.addEventListener("click", () => {
 
+    const text = document.getElementById("newQuote").value.trim();
+    const author = document.getElementById("newAuthor").value.trim();
+    const theme = document.getElementById("newTheme").value;
 
-const savedCategory = localStorage.getItem("quoteCategory");
-
-if (savedCategory) {
-    showQuotes(savedCategory);
-}
-
-
-
-
-saveBtn.addEventListener("click", () => {
-
-    const category = categorySelect.value;
-
-    if (category === "") {
-        alert("Please select a category");
+    if(!text || !author || !theme){
+        alert("Fill all fields");
         return;
     }
 
-    localStorage.setItem("quoteCategory", category);
+    quotes.push({quote:text, author:author, theme:theme});
+    localStorage.setItem("themeQuotes", JSON.stringify(quotes));
 
-    showQuotes(category);
+    document.getElementById("newQuote").value="";
+    document.getElementById("newAuthor").value="";
+    document.getElementById("newTheme").value="";
 
+    alert("Quote Added!");
 });
 
 
+searchBtn.addEventListener("click", () => {
 
-function showQuotes(category) {
+    const theme = document.getElementById("searchTheme").value;
 
-    categoryBox.classList.add("hidden");
-    quoteBox.classList.remove("hidden");
+    if(!theme){
+        alert("Select a theme");
+        return;
+    }
 
-    generateQuote(category);
-}
+    modalQuotes.innerHTML="";
+    const filtered = quotes.filter(q => q.theme === theme);
 
+    if(filtered.length === 0){
+        modalQuotes.innerHTML="<p>No quotes found.</p>";
+    }
 
-function generateQuote(category) {
+    filtered.forEach(q => {
+        const div = document.createElement("div");
+        div.classList.add("quote-card");
 
-    const list = quotes[category];
+        div.innerHTML = `
+            <p>"${q.quote}"</p>
+            <small>— ${q.author}</small><br>
+            <button class="copy-btn">Copy</button>
+        `;
 
-    const random = Math.floor(Math.random() * list.length);
+        div.querySelector(".copy-btn").addEventListener("click", () => {
+            navigator.clipboard.writeText(`"${q.quote}" — ${q.author}`);
+            alert("Copied to clipboard!");
+        });
 
-    quoteText.textContent = `"${list[random].quote}"`;
-    authorText.textContent = `— ${list[random].author}`;
+        modalQuotes.appendChild(div);
+    });
 
-}
-
-
-
-
-nextBtn.addEventListener("click", () => {
-
-    const category = localStorage.getItem("quoteCategory");
-
-    generateQuote(category);
-
+    modal.style.display="flex";
 });
 
 
-
-
-changeBtn.addEventListener("click", () => {
-
-    localStorage.removeItem("quoteCategory");
-
-    quoteBox.classList.add("hidden");
-    categoryBox.classList.remove("hidden");
-
+closeModal.addEventListener("click", () => {
+    modal.style.display="none";
 });
 
-// ---------------- ADD USER QUOTE + SHOW IT ----------------
-addBtn.addEventListener("click", () => {
-    const q = userQuote.value.trim();
-    const a = userAuthor.value.trim();
-
-    if (!q || !a) return;
-
-    const newQuote = { quote: q, author: a };
-
-    quotes.push(newQuote);
-
-    // Save to localStorage
-    const stored = JSON.parse(localStorage.getItem("quotes")) || [];
-    stored.push(newQuote);
-    localStorage.setItem("quotes", JSON.stringify(stored));
-
-    // 👇 Immediately display the added quote
-    quoteText.textContent = `"${q}"`;
-    authorText.textContent = `— ${a}`;
-
-    userQuote.value = "";
-    userAuthor.value = "";
+modal.addEventListener("click", (e) => {
+    if(e.target === modal){
+        modal.style.display="none";
+    }
 });
