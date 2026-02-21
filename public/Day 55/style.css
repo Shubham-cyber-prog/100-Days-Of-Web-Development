@@ -1,32 +1,74 @@
+/* 🌸 Beautiful Pink-Purple Gradient Background */
+/* 🌸 Beautiful Soft Modern Background */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Glowing Background Circles */
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+    z-index: -1;
+}
+
+body::before {
+    background: #ff9a9e;
+    top: -100px;
+    left: -100px;
+}
+
+body::after {
+    background: #a18cd1;
+    bottom: -100px;
+    right: -100px;
+}
+
+
+/* Smooth animated gradient */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-    color: #333;
-    min-height: 100vh;
-    padding: 20px;
+
+html {
+    scroll-behavior: smooth;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    padding-bottom: 20px;
 }
 
 .app-header {
-    padding: 30px;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
     color: white;
-    text-align: center;
+    padding: 30px;
+    border-radius: 30px 30px 0 0;
 }
+
 
 .app-header h1 {
     font-size: 2.5rem;
@@ -55,13 +97,33 @@ body {
     }
 }
 
-.recorder-card {
+/* .recorder-card {
     background: white;
     border-radius: 15px;
     padding: 25px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     border: 1px solid #eee;
+} */
+.recorder-card {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
 }
+
+
+
+.recorder-card,
+.notes-section {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.recorder-card:hover,
+.notes-section:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
 
 .recorder-card h2 {
     color: #6a11cb;
@@ -120,6 +182,16 @@ body {
     background: #6a11cb;
     border-radius: 4px;
     transition: height 0.3s ease;
+}
+
+.recording-visualizer .bar {
+    box-shadow: 0 0 10px rgba(106,17,203,0.8);
+    animation: glowPulse 1.5s infinite alternate;
+}
+
+@keyframes glowPulse {
+    from { box-shadow: 0 0 5px rgba(106,17,203,0.6); }
+    to { box-shadow: 0 0 20px rgba(106,17,203,1); }
 }
 
 .timer {
@@ -181,13 +253,13 @@ button:disabled {
 }
 
 .btn-save {
-    background: linear-gradient(to right, #007bff, #17a2b8);
+    background: linear-gradient(to right, #df66d1, #17a2b8);
     color: white;
     flex-grow: 1;
 }
 
 .btn-save:hover:not(:disabled) {
-    background: linear-gradient(to right, #0069d9, #138496);
+    background: linear-gradient(to right, #cf7fcd, #f39edd);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
 }
@@ -206,13 +278,38 @@ button:disabled {
     border-color: #6a11cb;
 }
 
-.notes-section {
+/* .notes-section {
     background: white;
     border-radius: 15px;
     padding: 25px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     border: 1px solid #eee;
+} */
+ .notes-section {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
 }
+
+
+
+.recorder-card,
+.notes-section {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.recorder-card:hover,
+.notes-section:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+.recorder-card:hover,
+.notes-section:hover {
+    transform: translateY(-8px);
+}
+
+
 
 .notes-header {
     display: flex;
@@ -302,6 +399,20 @@ button:disabled {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
+.note-item {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.note-item:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+
 .note-info {
     flex-grow: 1;
 }
@@ -358,6 +469,8 @@ button:disabled {
 /* Modal Styles */
 .modal {
     display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
     position: fixed;
     top: 0;
     left: 0;
@@ -377,6 +490,20 @@ button:disabled {
     overflow: hidden;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
+
+.modal-content {
+    transform: scale(0.8);
+    transition: transform 0.4s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
 
 .modal-header {
     display: flex;
@@ -447,11 +574,40 @@ button:disabled {
     transform: translateY(-3px);
 }
 
-.play-btn {
+/* .play-btn {
     background: linear-gradient(to right, #28a745, #20c997);
     color: white;
     padding: 15px 35px;
+} */
+ /* .play-btn {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    padding: 18px 45px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(255, 75, 43, 0.4);
+    transition: all 0.3s ease;
+} */
+ .play-btn {
+    background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
+
+.play-btn:hover {
+    transform: scale(1.1);
+}
+
+
+.play-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 35px rgba(255, 75, 43, 0.6);
+}
+
 
 .play-btn:hover {
     background: linear-gradient(to right, #218838, #1ba87e);
@@ -547,4 +703,23 @@ button:disabled {
 @keyframes slideOut {
     from { transform: translateX(0); opacity: 1; }
     to { transform: translateX(100%); opacity: 0; }
+}
+/* 🔥 Enhanced Background Glow */
+body {
+    background: radial-gradient(circle at 20% 20%, rgba(106,17,203,0.6), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(37,117,252,0.6), transparent 40%),
+                linear-gradient(135deg, #6a11cb, #2575fc);
+    background-attachment: fixed;
+    animation: backgroundMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundMove {
+    0% { background-position: left top, right bottom, center; }
+    100% { background-position: right top, left bottom, center; }
+}
+
+.note-item.active {
+    background: linear-gradient(to right, #ffecd2, #fcb69f);
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }

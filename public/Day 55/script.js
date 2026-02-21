@@ -341,6 +341,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function playNote(note) {
+        // Remove previous active
+document.querySelectorAll('.note-item').forEach(item => {
+    item.classList.remove('active');
+});
+
+// Add active to clicked note
+const activeItem = document.querySelector(`[data-id="${note.id}"]`);
+if (activeItem) {
+    activeItem.classList.add('active');
+}
+
         // Set current audio
         if (appState.currentAudio) {
             appState.currentAudio.pause();
@@ -386,7 +397,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Show modal
+        // audioPlayerModal.style.display = 'flex';
         audioPlayerModal.style.display = 'flex';
+        setTimeout(() => {
+        audioPlayerModal.classList.add('show');
+        }, 10);
+
         
         // Play audio
         appState.currentAudio.play();
@@ -422,7 +438,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!appState.currentNoteId) return;
         
         deleteNote(appState.currentNoteId);
+        // audioPlayerModal.style.display = 'none';
+        audioPlayerModal.classList.remove('show');
+        setTimeout(() => {
         audioPlayerModal.style.display = 'none';
+        }, 300);
+
         
         if (appState.currentAudio) {
             appState.currentAudio.pause();
