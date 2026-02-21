@@ -1,150 +1,210 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
 }
 
-body {
-    height: 100vh;
-    display: grid;
-    place-items: center;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+
+.container{
+    width:550px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+    color:white;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+    font-size:24px;
+    background:linear-gradient(90deg,#00f2fe,#4facfe);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.section{
+    margin-bottom:30px;
+}
+
+.section h2{
+    margin-bottom:12px;
+    font-size:18px;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:25px;
+    font-weight:600;
+    cursor:pointer;
+    background:linear-gradient(135deg,#00f2fe,#4facfe);
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px #4facfe;
+}
+
+/* ---------------- MODAL ---------------- */
+
+/* ---------------- STUNNING MODAL ---------------- */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    backdrop-filter:blur(8px);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    animation:fadeOverlay 0.3s ease;
+}
+
+@keyframes fadeOverlay{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.modal-content{
+    width:520px;
+    max-height:75vh;
+    background:linear-gradient(145deg,#1e293b,#0f172a);
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.8);
+    animation:modalPop 0.35s ease;
+    overflow-y:auto;
+    scroll-behavior:smooth;
+}
+
+/* Smooth pop animation */
+@keyframes modalPop{
+    from{opacity:0; transform:scale(0.85);}
+    to{opacity:1; transform:scale(1);}
+}
+
+/* Hide scrollbar (modern way) */
+.modal-content::-webkit-scrollbar{
+    width:0px;
+}
+
+.modal-content{
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+}
+
+/* Header */
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    gap:40px;
+}
+
+.modal-header h3{
+    font-size:18px;
+    background:linear-gradient(90deg,#00f2fe,#4facfe);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* Modern Close Button */
+.close-btn{
+    background:linear-gradient(135deg,#ff4e50,#f9d423);
+    border:none;
+    padding:6px 12px;
+    border-radius:20px;
+    max-width: fit-content;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+    color:black;
+}
+
+.close-btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 15px #ff4e50;
+}
+
+/* Quote Card Upgrade */
+.quote-card{
+    background:rgba(255,255,255,0.06);
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.08);
+    color:white;
+    transition:0.3s;
+}
+
+.quote-card:hover{
+    transform:translateY(-4px);
+    background:rgba(255,255,255,0.1);
+}
+
+/* Quote Text */
+.quote-card p{
+    font-size:15px;
+    margin-bottom:8px;
+    line-height:1.6;
+}
+
+/* Author */
+.quote-card small{
+    opacity:0.7;
+}
+
+/* Copy Button */
+.copy-btn{
+    margin-top:8px;
+    background:linear-gradient(135deg,#00f2fe,#4facfe);
+    border:none;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.copy-btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 12px #4facfe;
 }
 
 
-/* Card */
-
-.container {
-    width: 420px;
-    padding: 35px;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    text-align: center;
-    color: white;
+@keyframes fadeIn{
+    from{opacity:0; transform:scale(0.95);}
+    to{opacity:1; transform:scale(1);}
 }
 
-
-/* Title */
-
-h1 {
-    font-size: 26px;
-    margin-bottom: 25px;
-    background: linear-gradient(90deg,#00f2fe,#4facfe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-
-/* Category */
-
-.category-box p {
-    margin-bottom: 12px;
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    margin-bottom: 15px;
-    font-size: 14px;
-}
-
-#saveCategory {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(135deg,#00f2fe,#4facfe);
-    cursor: pointer;
-    font-weight: 600;
-}
-
-
-/* Quote Box */
-
-.quote-box {
-    animation: fadeIn 0.5s ease;
-}
-
-#quote {
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 12px;
-}
-
-#author {
-    font-size: 14px;
-    opacity: 0.7;
-    margin-bottom: 20px;
-}
-
-
-/* Buttons */
-
-.btn-group {
-    display: flex;
-    gap: 12px;
-}
-
-.btn-group button {
-    flex: 1;
-    padding: 10px;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    background: linear-gradient(135deg,#00f2fe,#4facfe);
-}
-
-
-/* Utility */
-
-.hidden {
-    display: none;
-}
-
-
-/* Animation */
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-
-/* Responsive */
-
-@media(max-width:480px){
-
+@media(max-width:600px){
     .container{
         width:90%;
-        padding:25px;
     }
-
+    .modal-content{
+        width:90%;
+    }
 }
-
-.add-quote {
-    margin-top: 18px;
-    display: flex;
-    gap: 8px;
-}
-
-.add-quote input {
-    flex: 1;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: none;
-    font-size: 13px;
-}
-
-.add-quote button {
-    padding: 8px 16px;
-    font-size: 13px;
-}
-
