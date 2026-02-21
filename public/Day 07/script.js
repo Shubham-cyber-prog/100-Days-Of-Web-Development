@@ -18,6 +18,7 @@ function loadExpenses() {
     updateTotal();
   }
 
+
 }
 
 }
@@ -63,6 +64,29 @@ function handleExpense(name, amount, category) {
 function saveExpenses() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
+
+// Add or Update Expense
+function handleExpense(name, amount, category) {
+  const editId = editIdInput.value;
+
+  if (editId) {
+    // EDIT
+    expenses = expenses.map(exp =>
+      exp.id === Number(editId)
+        ? { ...exp, name, amount: Number(amount), category }
+        : exp
+    );
+    editIdInput.value = "";
+  } else {
+    // ADD
+    expenses.push({
+      id: Date.now(),
+      name,
+      amount: Number(amount),
+      category
+    });
+  }
+
 
 // Add or Update Expense
 function handleExpense(name, amount, category) {
@@ -312,6 +336,7 @@ function deleteExpense(id) {
 function editExpense(id) {
   const expense = expenses.find(exp => exp.id === id);
   if (!expense) return;
+
 
 
 // Edit Expense
@@ -450,7 +475,6 @@ form.addEventListener("submit", e => {
 
 // Init
 loadExpenses();
-
 
 
 

@@ -52,6 +52,7 @@ function resetHistory() {
 }
 
 
+
 function resetHistory() {
   historyList.innerHTML = "";
   resultText.innerText = "Roll the dice!";
