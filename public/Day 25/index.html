@@ -1,5 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalized Quote Generator</title>
+  <meta name="description" content="Get inspired with our personalized quote generator featuring multiple categories.">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Quotes Generator | Daily Inspiration">
+  <meta property="og:description" content="Discover motivational, life, and success quotes tailored to your interests.">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Quotes Generator | Daily Inspiration">
+  <meta name="twitter:description"
+    content="Discover motivational, life, and success quotes tailored to your interests.">
+  <link rel="stylesheet" href="style.css">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +23,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
+  <div class="container">
+
+    <h1>✨ Personalized Quotes</h1>
+
+    <!-- Category Section -->
+    <div class="category-box" id="categoryBox">
+      <p>Select Your Interest</p>
+
+      <select id="categorySelect">
+        <option value="">Choose Category</option>
 <div class="container">
 
 <h1>✨ Theme Quote Hub</h1>
@@ -25,6 +52,23 @@
         <option value="success">Success</option>
         <option value="study">Study</option>
         <option value="love">Love</option>
+      </select>
+
+      <button id="saveCategory">Save Preference</button>
+    </div>
+
+
+    <!-- Quote Section -->
+    <div class="quote-box hidden" id="quoteBox">
+
+      <p id="quote">Loading...</p>
+      <p id="author"></p>
+
+      <div class="btn-group">
+        <button id="nextBtn">Next Quote</button>
+        <button id="changeBtn">Change Category</button>
+      </div>
+
     </select>
     <button id="addBtn">Add Quote</button>
 </div>
@@ -59,5 +103,11 @@
 
 <script src="app.js"></script>
 
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
 </body>
 </html>

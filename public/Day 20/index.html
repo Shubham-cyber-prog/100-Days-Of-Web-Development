@@ -4,7 +4,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glass QR Generator</title>
+  <title>Glass QR Generator | Interactive QR Tool</title>
+  <meta name="description"
+    content="Generate beautiful glassmorphism-style QR codes with custom colors, logos, and themes.">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Glass QR Generator | Modern Utility">
+  <meta property="og:description" content="Create stunning, customizable QR codes with our glassmorphic generator.">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Glass QR Generator | Modern Utility">
+  <meta name="twitter:description" content="Create stunning, customizable QR codes with our glassmorphic generator.">
   <link rel="stylesheet" href="../shared/base.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -14,10 +24,10 @@
   <div class="container">
     <!-- 🌙 Dark Mode Toggle -->
     <div class="theme-toggle">
-    <label>
-    <input type="checkbox" id="darkToggle">
-    Dark Mode
-    </label>
+      <label>
+        <input type="checkbox" id="darkToggle">
+        Dark Mode
+      </label>
     </div>
 
     <h1>QR Code Generator</h1>
@@ -52,16 +62,16 @@
       <button onclick="generateQR()">Generate QR</button>
       <!-- 🎨 QR Customization -->
       <div class="customize">
-      <h3>Customize QR</h3>
+        <h3>Customize QR</h3>
 
-      <label>QR Color</label>
-      <input type="color" id="qrColor" value="#000000">
+        <label>QR Color</label>
+        <input type="color" id="qrColor" value="#000000">
 
-      <label>QR Size</label>
-      <input type="range" id="qrSize" min="150" max="300" value="180">
+        <label>QR Size</label>
+        <input type="range" id="qrSize" min="150" max="300" value="180">
 
-      <label>Add Logo</label>
-      <input type="file" id="logoUpload" accept="image/*">
+        <label>Add Logo</label>
+        <input type="file" id="logoUpload" accept="image/*">
       </div>
 
 

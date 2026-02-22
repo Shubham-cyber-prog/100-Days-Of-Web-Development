@@ -1,49 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MarkLiveEdit</title>
+  <title>MarkLiveEdit | Markdown Live Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Write, preview, and export Markdown in real-time with MarkLiveEdit.">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MarkLiveEdit | Real-time Markdown Editor">
+  <meta property="og:description"
+    content="Create high-quality Markdown documents with instant live previews and export options.">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MarkLiveEdit | Real-time Markdown Editor">
+  <meta name="twitter:description"
+    content="Create high-quality Markdown documents with instant live previews and export options.">
 
   <!-- Markdown Parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="topbar">
-  <div>
-    <h1>MarkLiveEdit</h1>
-    <p>Markdown Live Editor</p>
+  <header class="topbar">
+    <div>
+      <h1>MarkLiveEdit</h1>
+      <p>Markdown Live Editor</p>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button id="clearBtn">🗑 Clear</button>
+    <button id="copyBtn">📋 Copy</button>
+    <button id="downloadMd">⬇️ .md</button>
+    <button id="downloadHtml">⬇️ .html</button>
+    <button id="themeToggle">🌙 Dark</button>
   </div>
-</header>
 
-<div class="toolbar">
-  <button id="clearBtn">🗑 Clear</button>
-  <button id="copyBtn">📋 Copy</button>
-  <button id="downloadMd">⬇️ .md</button>
-  <button id="downloadHtml">⬇️ .html</button>
-  <button id="themeToggle">🌙 Dark</button>
-</div>
+  <main class="editor-container">
+    <section class="panel editor">
+      <h3>Editor</h3>
+      <textarea id="markdownInput"></textarea>
+      <span id="charCount">0 characters</span>
+    </section>
 
-<main class="editor-container">
-  <section class="panel editor">
-    <h3>Editor</h3>
-    <textarea id="markdownInput"></textarea>
-    <span id="charCount">0 characters</span>
-  </section>
+    <section class="panel preview">
+      <h3>Preview</h3>
+      <div id="previewContent"></div>
+    </section>
+  </main>
 
-  <section class="panel preview">
-    <h3>Preview</h3>
-    <div id="previewContent"></div>
-  </section>
-</main>
+  <footer>
+    Made with ❤️ by You
+  </footer>
 
-<footer>
-  Made with ❤️ by You
-</footer>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
