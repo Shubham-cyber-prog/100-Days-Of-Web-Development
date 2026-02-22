@@ -1,65 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Tic Tac Toe</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe | Classic Board Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play the classic Tic Tac Toe game online against a friend or the computer.">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tic Tac Toe | Classic Strategy Game">
+  <meta property="og:description"
+    content="Challenge your friends to a game of Tic Tac Toe with our clean and modern interface.">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tic Tac Toe | Classic Strategy Game">
+  <meta name="twitter:description"
+    content="Challenge your friends to a game of Tic Tac Toe with our clean and modern interface.">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="blur">
 
-<!-- ===== GAME UI ===== -->
-<div class="game-wrapper hidden" id="gameUI">
-  <h1>Tic Tac Toe</h1>
-  <p id="turn">O's Turn</p>
+  <!-- ===== GAME UI ===== -->
+  <div class="game-wrapper hidden" id="gameUI">
+    <h1>Tic Tac Toe</h1>
+    <p id="turn">O's Turn</p>
 
-  <div class="board">
-    <button class="box"></button>
-    <button class="box"></button>
-    <button class="box"></button>
-    <button class="box"></button>
-    <button class="box"></button>
-    <button class="box"></button>
-    <button class="box"></button>
-    <button class="box"></button>
-    <button class="box"></button>
+    <div class="board">
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+    </div>
+
+    <div class="controls">
+      <button onclick="resetGame()">Restart</button>
+    </div>
   </div>
 
-  <div class="controls">
-    <button onclick="resetGame()">Restart</button>
+  <!-- ===== WELCOME MODAL ===== -->
+  <div class="modal" id="welcomeModal">
+    <div class="modal-box">
+      <h2>Welcome 🎮</h2>
+      <p>Ready to play Tic Tac Toe?</p>
+      <button onclick="openMode()">Continue</button>
+    </div>
   </div>
-</div>
 
-<!-- ===== WELCOME MODAL ===== -->
-<div class="modal" id="welcomeModal">
-  <div class="modal-box">
-    <h2>Welcome 🎮</h2>
-    <p>Ready to play Tic Tac Toe?</p>
-    <button onclick="openMode()">Continue</button>
+  <!-- ===== MODE MODAL ===== -->
+  <div class="modal hidden" id="modeModal">
+    <div class="modal-box">
+      <h3>Select Mode</h3>
+      <button onclick="startGame('single')">Play with Computer</button>
+      <button onclick="startGame('two')">Two Player</button>
+    </div>
   </div>
-</div>
 
-<!-- ===== MODE MODAL ===== -->
-<div class="modal hidden" id="modeModal">
-  <div class="modal-box">
-    <h3>Select Mode</h3>
-    <button onclick="startGame('single')">Play with Computer</button>
-    <button onclick="startGame('two')">Two Player</button>
+  <!-- ===== RESULT MODAL ===== -->
+  <div class="modal hidden" id="resultModal">
+    <div class="modal-box">
+      <h3 id="resultText"></h3>
+      <button onclick="closeResult()">Play Again</button>
+      <a href="index.html">
+        <button>Back To Home Page</button>
+      </a>
+    </div>
   </div>
-</div>
 
-<!-- ===== RESULT MODAL ===== -->
-<div class="modal hidden" id="resultModal">
-  <div class="modal-box">
-    <h3 id="resultText"></h3>
-    <button onclick="closeResult()">Play Again</button>
-    <a href="index.html">
-      <button>Back To Home Page</button>
-    </a>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
