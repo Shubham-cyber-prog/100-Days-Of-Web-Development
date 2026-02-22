@@ -1,602 +1,936 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/website/assets/images/logo.png" />
-  <title>Contact | 100 Days of Web Dev</title>
+  <link rel="icon" href="https://github.com/Shubham-cyber-prog.png" /> <!-- placeholder logo -->
+  <title>Contact | dimensional · glass + webgl</title>
   
-  <!-- Font Awesome -->
+  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
-  <!-- GSAP -->
+  <!-- GSAP & ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="../styles/index.css" />
-  
-  <!-- Contact Page Specific Styles -->
-  <link rel="stylesheet" href="../styles/pages/contact.css" />
-  
-  <script src="../scripts/components/sidebar-loader.js"></script>
-</head>
+  <!-- Three.js core -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+      }
+    }
+  </script>
 
+  <style>
+    /* reset & base — ultra clean, minimal, glass-friendly */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0a0c12;
+      --glass-bg: rgba(20, 30, 45, 0.3);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-highlight: rgba(255, 255, 255, 0.05);
+      --accent-primary: #00e5ff;
+      --accent-glow: 0 0 20px #00e5ff88;
+      --text-light: #f0f5ff;
+      --text-dim: #a0b5d0;
+      --card-bg: rgba(15, 25, 40, 0.5);
+      --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      perspective: 1200px;
+    }
+
+    /* three.js canvas background */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none; /* allows interaction with UI */
+    }
+
+    /* main content – sits above canvas */
+    .container {
+      position: relative;
+      z-index: 10;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+    }
+
+    /* glassmorphism core */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 3rem;
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), inset 0 1px 1px var(--glass-highlight);
+    }
+
+    /* contact wrapper – grid layout */
+    .contact-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* ===== HEADER (GSAP later) ===== */
+    .contact-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 1rem auto 2rem;
+      padding: 2.5rem 2rem;
+      border-radius: 4rem;
+      background: rgba(0, 20, 40, 0.25);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      box-shadow: 0 20px 40px -15px black;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: rgba(0, 229, 255, 0.12);
+      padding: 0.4rem 1.4rem;
+      border-radius: 60px;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: #a0f0ff;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .title-line {
+      background: linear-gradient(145deg, #ffffff, #b0f0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px #00e5ff50;
+    }
+
+    .title-line.accent {
+      background: linear-gradient(145deg, #00e5ff, #a0e0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* main 2-col layout */
+    .contact-content {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ===== LEFT CARDS (glass) ===== */
+    .contact-info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .column-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      padding-left: 0.5rem;
+      background: linear-gradient(90deg, #00e5ff, transparent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .info-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      border-radius: 2.5rem;
+      padding: 1.8rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.4s;
+      box-shadow: 0 25px 40px -20px black;
+    }
+
+    .info-card:hover {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.3), var(--shadow-heavy);
+      transform: translateY(-6px) scale(1.02);
+    }
+
+    .card-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(0, 229, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: var(--accent-primary);
+      position: relative;
+      border: 1px solid rgba(0,229,255,0.3);
+    }
+
+    .icon-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #00e5ff30, transparent 70%);
+      filter: blur(6px);
+      z-index: -1;
+    }
+
+    .card-content h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .card-content p {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-link {
+      color: var(--text-light);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--accent-primary);
+    }
+
+    .card-action {
+      font-size: 0.95rem;
+      color: var(--accent-primary);
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .info-card:hover .card-action {
+      opacity: 1;
+    }
+
+    /* social grid */
+    .social-section {
+      margin-top: 1.5rem;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 3rem;
+      padding: 1.8rem 2rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .social-title {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: #b0e0ff;
+    }
+
+    .social-grid {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(0,229,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      transition: 0.25s;
+      position: relative;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+    }
+
+    .social-link:hover {
+      background: var(--accent-primary);
+      color: black;
+      transform: scale(1.15) rotate(8deg);
+      box-shadow: 0 0 40px #00e5ff;
+    }
+
+    .social-tooltip {
+      position: absolute;
+      bottom: -30px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: white;
+      pointer-events: none;
+      opacity: 0;
+      transition: 0.2s;
+    }
+
+    .social-link:hover .social-tooltip {
+      opacity: 1;
+      bottom: -35px;
+    }
+
+    /* ===== RIGHT FORM ===== */
+    .contact-form-col {
+      background: rgba(10, 18, 28, 0.5);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 3rem;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-heavy);
+    }
+
+    .form-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .form-title {
+      font-size: 2rem;
+      font-weight: 600;
+      background: linear-gradient(145deg, #fff, #a0f0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .form-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 229, 255, 0.1);
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      border: 1px solid rgba(0,229,255,0.3);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #00ff9d;
+      box-shadow: 0 0 15px #00ff9d;
+    }
+
+    .message-box {
+      background: rgba(0, 229, 255, 0.1);
+      border-left: 5px solid var(--accent-primary);
+      border-radius: 2rem;
+      padding: 1rem 1.8rem;
+      margin-bottom: 2rem;
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .message-box.success {
+      border-left-color: #00ffaa;
+      background: rgba(0, 255, 170, 0.1);
+    }
+
+    .message-box.error {
+      border-left-color: #ff4d6d;
+      background: rgba(255, 70, 100, 0.1);
+    }
+
+    /* form groups */
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: #c0d5f0;
+      letter-spacing: 0.3px;
+    }
+
+    .required {
+      color: #ff6b6b;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 60px;
+      transition: 0.2s;
+      backdrop-filter: blur(6px);
+    }
+
+    .textarea-wrapper {
+      border-radius: 2rem;
+      align-items: flex-start;
+    }
+
+    .input-wrapper.focused {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(0,229,255,0.2);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1.5rem;
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      transition: 0.2s;
+      z-index: 2;
+    }
+
+    .focused .input-icon {
+      color: var(--accent-primary);
+    }
+
+    .form-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 1.2rem 1.2rem 1.2rem 3.2rem;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      border-radius: inherit;
+    }
+
+    textarea.form-input {
+      min-height: 140px;
+      resize: vertical;
+      padding-top: 1.4rem;
+    }
+
+    .validation-icons {
+      position: absolute;
+      right: 1.5rem;
+      display: flex;
+      gap: 0.3rem;
+      color: white;
+    }
+
+    .valid-icon { color: #00e676; display: none; }
+    .invalid-icon { color: #ff4d6d; display: none; }
+
+    .input-wrapper.valid .valid-icon { display: block; }
+    .input-wrapper.invalid .invalid-icon { display: block; }
+    .input-wrapper.valid .input-icon { color: #00e676; }
+    .input-wrapper.invalid .input-icon { color: #ff4d6d; }
+
+    .error-message {
+      font-size: 0.85rem;
+      color: #ff7b7b;
+      margin-top: 0.4rem;
+      display: block;
+      opacity: 0;
+      transition: 0.2s;
+      padding-left: 1.2rem;
+    }
+
+    .input-wrapper.invalid ~ .error-message {
+      opacity: 1;
+    }
+
+    .char-counter {
+      text-align: right;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+
+    /* submit button */
+    .btn-submit {
+      background: linear-gradient(135deg, #00b8ff, #0055ff);
+      border: none;
+      border-radius: 60px;
+      padding: 1.3rem 2.5rem;
+      width: 100%;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 25px #00e5ff40;
+    }
+
+    .btn-submit .spinner {
+      display: none;
+      width: 24px;
+      height: 24px;
+      border: 3px solid white;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .btn-submit.loading .btn-text {
+      display: none;
+    }
+
+    .btn-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .btn-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, #ffffff80, transparent 70%);
+      opacity: 0;
+      transition: 0.4s;
+    }
+
+    .btn-submit:hover .btn-glow { opacity: 0.5; }
+    .btn-submit:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 35px #00e5ff; }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2.5rem;
+      color: var(--text-dim);
+    }
+
+    /* responsive */
+    @media (max-width: 1000px) {
+      .contact-content { grid-template-columns: 1fr; }
+    }
+
+    /* placeholder footer */
+    .footer-placeholder {
+      height: 60px;
+      text-align: center;
+      color: #3a4a60;
+      padding: 1.5rem;
+    }
+  </style>
+</head>
 <body>
-  <!-- Header will be loaded by sidebar-loader -->
-  
+
+  <!-- Three.js canvas injected here -->
+  <canvas id="webgl-canvas"></canvas>
+
   <main class="container">
     <div class="contact-wrapper">
-      <!-- Header with GSAP animation -->
+      <!-- header with glass effect -->
       <div class="contact-header animate-header">
         <div class="header-badge">
-          <span class="badge-text">📬 Let's Connect</span>
+          <span class="badge-text"><i class="fas fa-bolt"></i> neural link</span>
         </div>
         <h1 class="hero-title">
           <span class="title-line">Get In</span>
           <span class="title-line accent">Touch</span>
         </h1>
         <p class="hero-subtitle">
-          Have a question or want to collaborate? We'd love to hear from you. 
-          Send us a message and we'll respond as soon as possible.
+          Reach out across dimensions. Our collective replies within light-hours.
         </p>
-        <div class="header-decoration">
-          <span class="decoration-dot"></span>
-          <span class="decoration-dot"></span>
-          <span class="decoration-dot"></span>
+        <div class="header-decoration" style="margin-top: 2rem;">
+          <i class="fas fa-asterisk" style="color: #00e5ff; opacity:0.6;"></i>
         </div>
       </div>
 
-      <!-- Contact Content with GSAP stagger -->
+      <!-- left + right columns -->
       <div class="contact-content">
-        <!-- Contact Information Cards -->
-        <div class="contact-info-col animate-cards">
-          <h2 class="column-title">Contact Information</h2>
-          
-          <div class="info-card" data-delay="0.1">
-            <div class="card-icon">
-              <i class="fas fa-envelope"></i>
-              <div class="icon-glow"></div>
-            </div>
+        <!-- LEFT INFO CARDS (glass) -->
+        <div class="contact-info-col">
+          <h2 class="column-title">// connect nodes</h2>
+          <div class="info-card" data-delay="0">
+            <div class="card-icon"><i class="fas fa-envelope"></i><div class="icon-glow"></div></div>
             <div class="card-content">
               <h3>Email</h3>
-              <p>
-                <a href="mailto:contact@100daysofwebdev.com" class="contact-link">
-                  contact@100daysofwebdev.com
-                </a>
-              </p>
-              <span class="card-action">Send email →</span>
+              <p><a href="mailto:hello@dimensional.dev" class="contact-link">hello@dimensional.dev</a></p>
+              <span class="card-action">send wave →</span>
             </div>
           </div>
-
-          <div class="info-card" data-delay="0.2">
-            <div class="card-icon">
-              <i class="fas fa-map-marker-alt"></i>
-              <div class="icon-glow"></div>
-            </div>
+          <div class="info-card" data-delay="0.1">
+            <div class="card-icon"><i class="fas fa-map-marker-alt"></i><div class="icon-glow"></div></div>
             <div class="card-content">
               <h3>Location</h3>
-              <p>Remote • Global</p>
-              <span class="card-action">Anywhere →</span>
+              <p>orbital • everywhere</p>
+              <span class="card-action">zero latency →</span>
             </div>
           </div>
-
-          <div class="info-card" data-delay="0.3">
-            <div class="card-icon">
-              <i class="fas fa-clock"></i>
-              <div class="icon-glow"></div>
-            </div>
+          <div class="info-card" data-delay="0.2">
+            <div class="card-icon"><i class="fas fa-clock"></i><div class="icon-glow"></div></div>
             <div class="card-content">
-              <h3>Response Time</h3>
-              <p>24-48 hours</p>
-              <span class="card-action">Fast reply →</span>
+              <h3>Response</h3>
+              <p>typically 0.5 cycles</p>
+              <span class="card-action">quantum reply →</span>
             </div>
           </div>
-
-          <!-- Social Links with hover animations -->
+          
+          <!-- social glass -->
           <div class="social-section">
-            <h3 class="social-title">Follow Us</h3>
+            <h3 class="social-title">follow the signal</h3>
             <div class="social-grid">
-              <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" 
-                 target="_blank" class="social-link" title="GitHub">
-                <i class="fab fa-github"></i>
-                <span class="social-tooltip">GitHub</span>
-              </a>
-              <a href="https://twitter.com/" target="_blank" class="social-link" title="Twitter">
-                <i class="fa-brands fa-x-twitter"></i>
-                <span class="social-tooltip">Twitter</span>
-              </a>
-              <a href="https://discord.gg/SW7puwEm" target="_blank" class="social-link" title="Discord">
-                <i class="fab fa-discord"></i>
-                <span class="social-tooltip">Discord</span>
-              </a>
-              <a href="#" class="social-link" title="LinkedIn">
-                <i class="fab fa-linkedin"></i>
-                <span class="social-tooltip">LinkedIn</span>
-              </a>
+              <a href="https://github.com/Shubham-cyber-prog" class="social-link"><i class="fab fa-github"></i><span class="social-tooltip">github</span></a>
+              <a href="#" class="social-link"><i class="fa-brands fa-x-twitter"></i><span class="social-tooltip">x</span></a>
+              <a href="#" class="social-link"><i class="fab fa-discord"></i><span class="social-tooltip">discord</span></a>
+              <a href="#" class="social-link"><i class="fab fa-linkedin"></i><span class="social-tooltip">linkedin</span></a>
             </div>
           </div>
         </div>
 
-        <!-- Premium Contact Form -->
-        <div class="contact-form-col animate-form">
+        <!-- RIGHT FORM (glass + working validation) -->
+        <div class="contact-form-col">
           <div class="form-header">
-            <h2 class="form-title">Send a Message</h2>
-            <div class="form-status">
-              <span class="status-dot"></span>
-              <span class="status-text">We're active</span>
-            </div>
+            <h2 class="form-title">transmit message</h2>
+            <div class="form-status"><span class="status-dot"></span><span class="status-text">online</span></div>
           </div>
-          
-          <!-- Message Box for Success/Error -->
-          <div id="messageBox" class="message-box">
-            <i class="fas fa-check-circle"></i>
-            <span id="messageText"></span>
-          </div>
+
+          <div id="messageBox" class="message-box"><i class="fas fa-check-circle"></i> <span id="messageText"></span></div>
 
           <form id="contactForm" class="premium-form">
             <div class="form-group">
-              <label class="form-label">
-                Your Name <span class="required">*</span>
-              </label>
-              <div class="input-wrapper">
-                <i class="fas fa-user input-icon"></i>
-                <input type="text" 
-                       name="name" 
-                       class="form-input" 
-                       placeholder="John Doe" 
-                       required 
-                       minlength="2" />
-                <div class="input-highlight"></div>
-                <div class="validation-icons">
-                  <i class="fas fa-check-circle valid-icon"></i>
-                  <i class="fas fa-exclamation-circle invalid-icon"></i>
-                </div>
-              </div>
-              <span class="error-message">Please enter your name (min. 2 characters)</span>
-              <div class="char-hint"></div>
+              <label class="form-label">your name <span class="required">*</span></label>
+              <div class="input-wrapper"><i class="fas fa-user input-icon"></i><input type="text" name="name" class="form-input" placeholder="e.g. Neo" required minlength="2"><div class="validation-icons"><i class="fas fa-check-circle valid-icon"></i><i class="fas fa-exclamation-circle invalid-icon"></i></div></div>
+              <span class="error-message">min 2 characters</span>
             </div>
-
             <div class="form-group">
-              <label class="form-label">
-                Email Address <span class="required">*</span>
-              </label>
-              <div class="input-wrapper">
-                <i class="fas fa-envelope input-icon"></i>
-                <input type="email" 
-                       name="email" 
-                       class="form-input" 
-                       placeholder="john@example.com" 
-                       required />
-                <div class="input-highlight"></div>
-                <div class="validation-icons">
-                  <i class="fas fa-check-circle valid-icon"></i>
-                  <i class="fas fa-exclamation-circle invalid-icon"></i>
-                </div>
-              </div>
-              <span class="error-message">Please enter a valid email address</span>
+              <label class="form-label">email <span class="required">*</span></label>
+              <div class="input-wrapper"><i class="fas fa-envelope input-icon"></i><input type="email" name="email" class="form-input" placeholder="neo@matrix.net" required><div class="validation-icons"><i class="fas fa-check-circle valid-icon"></i><i class="fas fa-exclamation-circle invalid-icon"></i></div></div>
+              <span class="error-message">valid email required</span>
             </div>
-
             <div class="form-group">
-              <label class="form-label">
-                Subject <span class="required">*</span>
-              </label>
-              <div class="input-wrapper">
-                <i class="fas fa-tag input-icon"></i>
-                <input type="text" 
-                       name="subject" 
-                       class="form-input" 
-                       placeholder="How can we help?" 
-                       required 
-                       minlength="3" />
-                <div class="input-highlight"></div>
-                <div class="validation-icons">
-                  <i class="fas fa-check-circle valid-icon"></i>
-                  <i class="fas fa-exclamation-circle invalid-icon"></i>
-                </div>
-              </div>
-              <span class="error-message">Please enter a subject (min. 3 characters)</span>
+              <label class="form-label">subject <span class="required">*</span></label>
+              <div class="input-wrapper"><i class="fas fa-tag input-icon"></i><input type="text" name="subject" class="form-input" placeholder="quantum collaboration" required minlength="3"><div class="validation-icons"><i class="fas fa-check-circle valid-icon"></i><i class="fas fa-exclamation-circle invalid-icon"></i></div></div>
+              <span class="error-message">min 3 characters</span>
             </div>
-
             <div class="form-group">
-              <label class="form-label">
-                Message <span class="required">*</span>
-              </label>
-              <div class="input-wrapper textarea-wrapper">
-                <i class="fas fa-comment-dots input-icon"></i>
-                <textarea name="message" 
-                          class="form-input" 
-                          rows="5" 
-                          placeholder="Tell us more about your inquiry..." 
-                          required 
-                          minlength="10"></textarea>
-                <div class="input-highlight"></div>
-                <div class="validation-icons">
-                  <i class="fas fa-check-circle valid-icon"></i>
-                  <i class="fas fa-exclamation-circle invalid-icon"></i>
-                </div>
-              </div>
-              <span class="error-message">Please enter your message (min. 10 characters)</span>
+              <label class="form-label">message <span class="required">*</span></label>
+              <div class="input-wrapper textarea-wrapper"><i class="fas fa-comment-dots input-icon"></i><textarea name="message" class="form-input" rows="4" placeholder="your thoughts..." required minlength="10"></textarea><div class="validation-icons"><i class="fas fa-check-circle valid-icon"></i><i class="fas fa-exclamation-circle invalid-icon"></i></div></div>
+              <span class="error-message">at least 10 characters</span>
               <div class="char-counter">0/500</div>
             </div>
 
-            <button type="submit" class="btn-submit">
-              <div class="spinner"></div>
-              <span class="btn-text">
-                <i class="fas fa-paper-plane"></i>
-                <span>Send Message</span>
-              </span>
-              <div class="btn-glow"></div>
-            </button>
+            <button type="submit" class="btn-submit"><div class="spinner"></div><span class="btn-text"><i class="fas fa-paper-plane"></i> <span>launch message</span></span><div class="btn-glow"></div></button>
           </form>
 
-          <!-- Trust indicators -->
           <div class="form-footer">
-            <div class="trust-badge">
-              <i class="fas fa-shield-alt"></i>
-              <span>Your data is secure</span>
-            </div>
-            <div class="response-time">
-              <i class="fas fa-bolt"></i>
-              <span>Avg. response: 2h</span>
-            </div>
+            <span><i class="fas fa-shield-alt"></i> encrypted</span>
+            <span><i class="fas fa-bolt"></i> avg response 2h</span>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Footer -->
-  <div id="footer-placeholder"></div>
-  
-  <!-- Scripts -->
-  <script src="../scripts/components/footer-loader.js"></script>
-  <script src="../scripts/components/cursor.js"></script>
-  <script src="../scripts/auth/guard.js"></script>
-  <script src="../scripts/components/navigation.js"></script>
-  
+  <div class="footer-placeholder">⚡ 100 Days of Web Dev · 2026</div>
+
+  <!-- three.js script -->
+  <script type="module">
+    import * as THREE from 'three';
+
+    // --- setup scene, camera, renderer ---
+    const canvas = document.getElementById('webgl-canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0a0c12); // deep dark base
+    
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 15);
+    
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    // --- lights ---
+    const ambient = new THREE.AmbientLight(0x404060);
+    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(1, 2, 4);
+    scene.add(dirLight);
+    const pointLight = new THREE.PointLight(0x00e5ff, 1, 20);
+    pointLight.position.set(-2, 1, 3);
+    scene.add(pointLight);
+    
+    // --- floating glass shapes + particles for that "khatarnak" feel ---
+    
+    // central glass torus knot (premium)
+    const geometry1 = new THREE.TorusKnotGeometry(1.2, 0.35, 128, 16);
+    const material1 = new THREE.MeshPhongMaterial({
+      color: 0x00e5ff,
+      emissive: 0x112233,
+      transparent: true,
+      opacity: 0.25,
+      wireframe: true,
+      shininess: 60
+    });
+    const knot = new THREE.Mesh(geometry1, material1);
+    knot.position.set(1, -1, -3);
+    scene.add(knot);
+    
+    // floating spheres (glass)
+    const sphereGeom = new THREE.SphereGeometry(0.6, 32, 32);
+    const sphereMat = new THREE.MeshStandardMaterial({
+      color: 0x88ccff,
+      emissive: 0x114466,
+      transparent: true,
+      opacity: 0.2,
+      roughness: 0.1,
+      metalness: 0.3
+    });
+    const sphere1 = new THREE.Mesh(sphereGeom, sphereMat);
+    sphere1.position.set(-2.5, 1.2, -2);
+    scene.add(sphere1);
+    
+    const sphere2 = new THREE.Mesh(sphereGeom, sphereMat);
+    sphere2.position.set(3, 1.8, -4);
+    sphere2.scale.set(0.8,0.8,0.8);
+    scene.add(sphere2);
+    
+    // many tiny particles (stars)
+    const particlesGeo = new THREE.BufferGeometry();
+    const particlesCount = 2000;
+    const posArray = new Float32Array(particlesCount * 3);
+    for(let i = 0; i < particlesCount * 3; i += 3) {
+      posArray[i] = (Math.random() - 0.5) * 40;
+      posArray[i+1] = (Math.random() - 0.5) * 30;
+      posArray[i+2] = (Math.random() - 0.5) * 40 - 10; // spread in z
+    }
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMat = new THREE.PointsMaterial({
+      size: 0.08,
+      color: 0xaaccff,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending
+    });
+    const particles = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particles);
+    
+    // subtle grid floor (invisible but adds depth)
+    const gridHelper = new THREE.GridHelper(30, 40, 0x00e5ff, 0x336688);
+    gridHelper.position.y = -2.5;
+    gridHelper.material.opacity = 0.12;
+    gridHelper.material.transparent = true;
+    scene.add(gridHelper);
+    
+    // animation loop
+    let clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      const delta = clock.getDelta();
+      const elapsed = performance.now() * 0.001; // seconds
+      
+      // rotate objects gently
+      knot.rotation.x += 0.001;
+      knot.rotation.y += 0.003;
+      
+      sphere1.rotation.x += 0.002;
+      sphere1.rotation.y += 0.001;
+      sphere2.rotation.y += 0.004;
+      
+      particles.rotation.y += 0.0002;
+      
+      // slight camera movement for dynamism
+      camera.position.x = Math.sin(elapsed * 0.1) * 1.5;
+      camera.position.y = Math.cos(elapsed * 0.15) * 0.8 + 1;
+      camera.lookAt(0, 0, -2);
+      
+      renderer.render(scene, camera);
+    }
+    animate();
+    
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+
+  <!-- gsap + form validation (same as before but enhanced) -->
   <script>
-    // ==================== GSAP ANIMATIONS ====================
-    gsap.registerPlugin(ScrollTrigger);
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initial page load animation
-      const tl = gsap.timeline({
-        defaults: {
-          ease: "power3.out"
-        }
-      });
-
-      // Header animation
-      tl.from('.contact-header', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        clearProps: "all"
-      })
-      .from('.header-badge', {
-        scale: 0,
-        opacity: 0,
-        duration: 0.8,
-        ease: "back.out(1.7)"
-      }, "-=0.5")
-      .from('.title-line', {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power4.out"
-      }, "-=0.3")
-      .from('.hero-subtitle', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8
-      }, "-=0.5")
-      .from('.header-decoration .decoration-dot', {
-        scale: 0,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1
-      }, "-=0.3");
-
-      // Cards animation with stagger
-      gsap.from('.info-card', {
-        scrollTrigger: {
-          trigger: '.contact-info-col',
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        },
-        x: -50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "back.out(1.2)"
-      });
-
-      // Card icons animation
-      gsap.from('.card-icon', {
-        scrollTrigger: {
-          trigger: '.info-card',
-          start: 'top 80%'
-        },
-        scale: 0,
-        rotation: -180,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "elastic.out(1, 0.5)"
-      });
-
-      // Form animation
-      gsap.from('.contact-form-col', {
-        scrollTrigger: {
-          trigger: '.contact-form-col',
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        },
-        x: 50,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out"
-      });
-
-      // Form groups stagger
-      gsap.from('.form-group', {
-        scrollTrigger: {
-          trigger: '.premium-form',
-          start: 'top 80%'
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out"
-      });
-
-      // Social links animation
-      gsap.from('.social-link', {
-        scrollTrigger: {
-          trigger: '.social-grid',
-          start: 'top 90%'
-        },
-        scale: 0,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "back.out(1.7)"
-      });
-
-      // Continuous animations
-      gsap.to('.card-icon', {
-        y: -5,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-
-      gsap.to('.status-dot', {
-        scale: 1.2,
-        opacity: 0.8,
-        duration: 1,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-
-      gsap.to('.btn-submit', {
-        boxShadow: '0 10px 30px rgba(0, 229, 255, 0.3)',
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-    });
-
-    // ==================== FORM HANDLING ====================
-    const contactForm = document.getElementById('contactForm');
-    const formInputs = contactForm.querySelectorAll('.form-input');
-    const submitBtn = contactForm.querySelector('.btn-submit');
-    const messageBox = document.getElementById('messageBox');
-    const messageText = document.getElementById('messageText');
-    const charCounter = document.querySelector('.char-counter');
-    const messageField = document.querySelector('textarea[name="message"]');
-
-    // Character counter
-    if (messageField && charCounter) {
-      messageField.addEventListener('input', function() {
-        const length = this.value.length;
-        charCounter.textContent = `${length}/500`;
+    (function() {
+      // register scrolltrigger
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // dom ready animations
+      document.addEventListener('DOMContentLoaded', () => {
+        // header animation
+        gsap.from('.contact-header', { y: 80, opacity: 0, duration: 1.2, ease: 'power3.out' });
+        gsap.from('.header-badge', { scale: 0, rotation: -20, duration: 1, delay: 0.2, ease: 'back.out(1.5)' });
+        gsap.from('.title-line', { y: 60, opacity: 0, duration: 1, stagger: 0.2, delay: 0.3 });
+        gsap.from('.hero-subtitle', { y: 30, opacity: 0, duration: 1, delay: 0.8 });
         
-        // Change color as limit approaches
-        if (length > 450) {
-          charCounter.style.color = '#ff6b6b';
-        } else if (length > 400) {
-          charCounter.style.color = '#fbbf24';
-        } else {
-          charCounter.style.color = 'var(--text-secondary)';
-        }
-      });
-    }
-
-    // Real-time validation with animation
-    formInputs.forEach(input => {
-      input.addEventListener('input', function() {
-        validateField(this);
-        
-        // Add pulse animation on valid
-        if (this.classList.contains('valid')) {
-          gsap.fromTo(this.parentElement.querySelector('.valid-icon'),
-            { scale: 0 },
-            { scale: 1, duration: 0.3, ease: "back.out" }
-          );
-        }
-      });
-      
-      input.addEventListener('focus', function() {
-        this.parentElement.classList.add('focused');
-      });
-      
-      input.addEventListener('blur', function() {
-        this.parentElement.classList.remove('focused');
-        validateField(this);
-      });
-    });
-
-    function validateField(field) {
-      const value = field.value.trim();
-      const type = field.type;
-      const minLength = field.minLength || 0;
-      let isValid = false;
-      
-      if (type === 'email') {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        isValid = emailRegex.test(value);
-      } else if (field.tagName === 'TEXTAREA') {
-        isValid = value.length >= 10 && value.length <= 500;
-      } else {
-        isValid = value.length >= (minLength || 2);
-      }
-      
-      const wrapper = field.parentElement;
-      
-      if (isValid) {
-        field.classList.remove('invalid');
-        field.classList.add('valid');
-        wrapper.classList.add('valid');
-        wrapper.classList.remove('invalid');
-      } else if (value.length > 0) {
-        field.classList.remove('valid');
-        field.classList.add('invalid');
-        wrapper.classList.add('invalid');
-        wrapper.classList.remove('valid');
-        
-        // Shake animation on invalid
-        gsap.to(field, {
-          x: [-5, 5, -5, 5, 0],
-          duration: 0.4,
-          ease: "power2.inOut"
+        // cards stagger with scroll
+        gsap.from('.info-card', {
+          scrollTrigger: { trigger: '.contact-info-col', start: 'top 75%' },
+          x: -80,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.2,
+          ease: 'back.out(1.2)'
         });
-      } else {
-        field.classList.remove('valid', 'invalid');
-        wrapper.classList.remove('valid', 'invalid');
-      }
-    }
-
-    // Form submission
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Validate all fields
-      let allValid = true;
-      formInputs.forEach(input => {
-        validateField(input);
-        if (!input.classList.contains('valid')) {
-          allValid = false;
-        }
-      });
-      
-      if (!allValid) {
-        showMessage('error', 'Please fill out all fields correctly.');
         
-        // Scroll to first invalid field
-        const firstInvalid = document.querySelector('.form-input.invalid');
-        if (firstInvalid) {
-          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        return;
-      }
-      
-      const formData = new FormData(this);
-      
-      // Show loading state
-      submitBtn.classList.add('loading');
-      submitBtn.disabled = true;
-      messageBox.style.display = 'none';
-      
-      // Animate button
-      gsap.to(submitBtn, {
-        scale: 0.95,
-        duration: 0.2,
-        yoyo: true,
-        repeat: 1
-      });
-      
-      // Simulate form submission
-      setTimeout(() => {
-        // Success
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-        
-        showMessage('success', '🚀 Message sent successfully! We\'ll get back to you within 24 hours.');
-        
-        // Animate success
-        gsap.to(messageBox, {
-          scale: [1, 1.02, 1],
+        gsap.from('.social-link', {
+          scrollTrigger: { trigger: '.social-grid', start: 'top 85%' },
+          scale: 0,
+          opacity: 0,
           duration: 0.5,
-          ease: "back.out"
+          stagger: 0.1,
+          ease: 'back.out(2)'
         });
         
-        this.reset();
-        
-        // Clear validation states
-        formInputs.forEach(input => {
-          input.classList.remove('valid', 'invalid');
-          input.parentElement.classList.remove('valid', 'invalid');
+        gsap.from('.contact-form-col', {
+          scrollTrigger: { trigger: '.contact-form-col', start: 'top 70%' },
+          x: 100,
+          opacity: 0,
+          duration: 1.2,
+          ease: 'power4.out'
         });
         
-        if (charCounter) {
-          charCounter.textContent = '0/500';
-          charCounter.style.color = 'var(--text-secondary)';
-        }
-        
-        // Hide message after 5 seconds
-        setTimeout(() => {
-          gsap.to(messageBox, {
-            opacity: 0,
-            duration: 0.3,
-            onComplete: () => {
-              messageBox.style.display = 'none';
-              messageBox.style.opacity = 1;
-            }
-          });
-        }, 5000);
-      }, 2000);
-    });
-
-    function showMessage(type, text) {
-      messageBox.className = 'message-box ' + type;
-      messageBox.style.display = 'flex';
-      messageBox.style.opacity = '1';
-      messageText.textContent = text;
-      
-      const icon = messageBox.querySelector('i');
-      icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-    }
-
-    // ==================== THEME HANDLING ====================
-    function toggleTheme() {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      
-      // Animate theme change
-      gsap.to('body', {
-        opacity: 0.8,
-        duration: 0.1,
-        yoyo: true,
-        repeat: 1,
-        onComplete: () => {
-          html.setAttribute('data-theme', newTheme);
-          localStorage.setItem('theme', newTheme);
-        }
+        // infinite subtle pulse on status dot
+        gsap.to('.status-dot', { scale: 1.4, opacity: 0.6, duration: 1.2, repeat: -1, yoyo: true });
       });
-    }
-
-    // Initialize theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      // ----- FORM VALIDATION & SIMULATION (fully working) -----
+      const form = document.getElementById('contactForm');
+      const inputs = form.querySelectorAll('.form-input');
+      const messageBox = document.getElementById('messageBox');
+      const messageText = document.getElementById('messageText');
+      const submitBtn = document.querySelector('.btn-submit');
+      const charCounter = document.querySelector('.char-counter');
+      const textarea = document.querySelector('textarea[name="message"]');
+      
+      // char counter
+      if (textarea && charCounter) {
+        textarea.addEventListener('input', function() {
+          let len = this.value.length;
+          charCounter.textContent = len + '/500';
+          if (len > 450) charCounter.style.color = '#ffb86b';
+          else charCounter.style.color = '#a0b5d0';
+        });
+      }
+      
+      // validation functions
+      function validateField(field) {
+        const wrapper = field.closest('.input-wrapper');
+        if (!wrapper) return false;
+        const val = field.value.trim();
+        let valid = false;
+        if (field.type === 'email') {
+          valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        } else if (field.tagName === 'TEXTAREA') {
+          valid = val.length >= 10 && val.length <= 500;
+        } else if (field.name === 'name') {
+          valid = val.length >= 2;
+        } else if (field.name === 'subject') {
+          valid = val.length >= 3;
+        } else {
+          valid = val.length > 0;
+        }
+        
+        if (valid) {
+          field.classList.add('valid');
+          field.classList.remove('invalid');
+          wrapper.classList.add('valid');
+          wrapper.classList.remove('invalid');
+        } else {
+          field.classList.add('invalid');
+          field.classList.remove('valid');
+          wrapper.classList.add('invalid');
+          wrapper.classList.remove('valid');
+          if (val.length > 0) {
+            gsap.to(field, { x: [-4,4,-4,4,0], duration: 0.3 });
+          }
+        }
+        return valid;
+      }
+      
+      inputs.forEach(inp => {
+        inp.addEventListener('input', function() { validateField(this); });
+        inp.addEventListener('blur', function() { validateField(this); });
+        inp.addEventListener('focus', function() {
+          this.closest('.input-wrapper').classList.add('focused');
+        });
+        inp.addEventListener('blur', function() {
+          this.closest('.input-wrapper').classList.remove('focused');
+        });
+      });
+      
+      function showMessage(type, text) {
+        messageBox.style.display = 'flex';
+        messageBox.className = 'message-box ' + type;
+        messageText.textContent = text;
+        gsap.fromTo(messageBox, {scale:0.8, opacity:0}, {scale:1, opacity:1, duration:0.4});
+      }
+      
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let allValid = true;
+        inputs.forEach(i => { if (!validateField(i)) allValid = false; });
+        if (!allValid) {
+          showMessage('error', 'correct all fields');
+          return;
+        }
+        
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+        
+        setTimeout(() => {
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+          showMessage('success', '🚀 message transmitted! we will reply soon.');
+          form.reset();
+          inputs.forEach(i => {
+            i.classList.remove('valid','invalid');
+            i.closest('.input-wrapper').classList.remove('valid','invalid','focused');
+          });
+          if (charCounter) charCounter.textContent = '0/500';
+          
+          setTimeout(() => { messageBox.style.display = 'none'; }, 4000);
+        }, 1800);
+      });
+    })();
   </script>
 </body>
-
 </html>
