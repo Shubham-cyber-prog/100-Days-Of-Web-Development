@@ -1,66 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Password Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Secure and customizable password generator tool for creating strong passwords.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Password Generator | Secure Tools">
+    <meta property="og:description" content="Generate strong, secure passwords with custom length and character types.">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Password Generator | Secure Tools">
+    <meta name="twitter:description"
+        content="Generate strong, secure passwords with custom length and character types.">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="wrapper">
-    <div class="card">
-        <h1>🔐 Password Generator</h1>
-        <p class="subtitle">Create strong and secure passwords</p>
+    <div class="wrapper">
+        <div class="card">
+            <h1>🔐 Password Generator</h1>
+            <p class="subtitle">Create strong and secure passwords</p>
 
-        <!-- <div class="password-box">
+            <!-- <div class="password-box">
             <input type="text" id="password" readonly>
             <button onclick="copyPassword()">Copy</button>
         </div> -->
-        <div class="password-box">
-        <input type="password" id="password" readonly>
-        <button id="togglePassword" type="button">👁️</button>
-        <button id="copyBtn" type="button" onclick="copyPassword()">Copy</button>
-        </div>
+            <div class="password-box">
+                <input type="password" id="password" readonly>
+                <button id="togglePassword" type="button">👁️</button>
+                <button id="copyBtn" type="button" onclick="copyPassword()">Copy</button>
+            </div>
 
 
-        <div class="option">
-            <label>Password Length</label>
-            <input type="range" id="length" min="6" max="20" value="12">
-            <span id="lengthValue">12</span>
-        </div>
+            <div class="option">
+                <label>Password Length</label>
+                <input type="range" id="length" min="6" max="20" value="12">
+                <span id="lengthValue">12</span>
+            </div>
 
-        <div class="option">
-            <label><input type="checkbox" id="uppercase" checked> Uppercase Letters</label>
-        </div>
-        <div class="option">
-            <label><input type="checkbox" id="lowercase" checked> Lowercase Letters</label>
-        </div>
-        <div class="option">
-            <label><input type="checkbox" id="numbers" checked> Numbers</label>
-        </div>
-        <div class="option">
-            <label><input type="checkbox" id="symbols"> Symbols</label>
-        </div>
+            <div class="option">
+                <label><input type="checkbox" id="uppercase" checked> Uppercase Letters</label>
+            </div>
+            <div class="option">
+                <label><input type="checkbox" id="lowercase" checked> Lowercase Letters</label>
+            </div>
+            <div class="option">
+                <label><input type="checkbox" id="numbers" checked> Numbers</label>
+            </div>
+            <div class="option">
+                <label><input type="checkbox" id="symbols"> Symbols</label>
+            </div>
 
-        <button class="generate-btn" onclick="generatePassword()">Generate Password</button>
+            <button class="generate-btn" onclick="generatePassword()">Generate Password</button>
 
-        <div class="strength">
-            <span>Password Strength:</span>
-            <strong id="strengthText">—</strong>
-        </div>
-        <div class="strength-bar">
-        <div id="strengthFill"></div>
-        </div>
-        <div class="history">
-        <h3>Recent Passwords</h3>
-        <ul id="historyList"></ul>
-        </div>
+            <div class="strength">
+                <span>Password Strength:</span>
+                <strong id="strengthText">—</strong>
+            </div>
+            <div class="strength-bar">
+                <div id="strengthFill"></div>
+            </div>
+            <div class="history">
+                <h3>Recent Passwords</h3>
+                <ul id="historyList"></ul>
+            </div>
 
 
+        </div>
     </div>
-</div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
