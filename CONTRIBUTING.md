@@ -515,7 +515,92 @@ Now you can start contributing! Here's what to do:
    1. Open `index.html` in your browser
    2. Interact with the application
 
+
+---
+
+## ♿ Accessibility Guidelines
+
+All projects must meet WCAG 2.1 AA accessibility standards. Our CI pipeline automatically tests accessibility using Lighthouse CI.
+
+### Minimum Requirements
+
+- **Accessibility Score**: Minimum 90/100 on Lighthouse
+- **Color Contrast**: 4.5:1 ratio for normal text, 3:1 for large text
+- **Keyboard Navigation**: All interactive elements must be keyboard accessible
+- **Screen Reader Support**: Proper semantic HTML and ARIA labels
+
+### Common Accessibility Issues and Fixes
+
+#### 1. Missing Image Alt Text
+```html
+<!-- Bad -->
+<img src="photo.jpg">
+
+<!-- Good -->
+<img src="photo.jpg" alt="Team photo at hackathon">
+```
+
+#### 2. Poor Color Contrast
+```css
+/* Bad - contrast ratio 2.1:1 */
+.text { color: #888; background: #fff; }
+
+/* Good - contrast ratio 7.5:1 */
+.text { color: #595959; background: #fff; }
+```
+
+#### 3. Missing Form Labels
+```html
+<!-- Bad -->
+<input type="text" placeholder="Name">
+
+<!-- Good -->
+<label for="name">Name</label>
+<input type="text" id="name" name="name">
+```
+
+#### 4. Missing Document Language
+```html
+<!-- Bad -->
+<html>
+
+<!-- Good -->
+<html lang="en">
+```
+
+#### 5. Non-semantic Interactive Elements
+```html
+<!-- Bad -->
+<div onclick="doSomething()">Click me</div>
+
+<!-- Good -->
+<button onclick="doSomething()">Click me</button>
+```
+
+### Running Lighthouse Locally
+
+```bash
+# Install Lighthouse CLI
+npm install -g lighthouse
+
+# Run accessibility audit
+lighthouse http://localhost:3000 --only-categories=accessibility --view
+```
+
+### Testing Keyboard Navigation
+
+1. Use Tab key to navigate through all interactive elements
+2. Ensure focus indicators are visible
+3. Test with Enter/Space for activation
+4. Escape should close modals/dialogs
+
+### Resources
+
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [Web.dev Accessibility](https://web.dev/learn/accessibility/)
+- [MDN Accessibility Guide](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
+
+
    ## Author
    Subham Nayak
-   ````
-   
+

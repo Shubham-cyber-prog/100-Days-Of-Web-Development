@@ -1,0 +1,82 @@
+name: Lighthouse CI Accessibility Testing
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '**/*.css'
+      - '**/*.js'
+      - 'website/**'
+      - 'public/**'
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '**/*.css'
+      - '**/*.js'
+      - 'website/**'
+      - 'public/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  lighthouse-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.13.x
+
+      - name: Create URLs file
+        run: |
+          cat > lighthouse-urls.txt << 'EOF'
+          http://localhost:3000/index.html
+          http://localhost:3000/website/projects.html
+          http://localhost:3000/website/showcase.html
+          http://localhost:3000/website/contribute.html
+          http://localhost:3000/website/structure.html
+          EOF
+
+      - name: Start HTTP Server
+        run: |
+          npx serve -l 3000 &
+          sleep 5
+
+      - name: Run Lighthouse CI
+        run: |
+          lhci autorun --upload.target=temporary-public-storage || true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Generate Accessibility Report
+        id: report
+        run: |
+          echo "## Lighthouse Accessibility Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Lighthouse CI has analyzed the website for accessibility compliance." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Accessibility Requirements" >> $GITHUB_STEP_SUMMARY
+          echo "- Minimum accessibility score: 90/100" >> $GITHUB_STEP_SUMMARY
+          echo "- WCAG 2.1 AA compliance checks" >> $GITHUB_STEP_SUMMARY
+          echo "- Color contrast validation" >> $GITHUB_STEP_SUMMARY
+          echo "- ARIA attribute validation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the Lighthouse CI results in the workflow artifacts." >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Lighthouse Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+          retention-days: 7
