@@ -604,3 +604,80 @@ lighthouse http://localhost:3000 --only-categories=accessibility --view
    ## Author
    Subham Nayak
 
+   ````
+
+---
+
+## Code Standards
+
+All code contributions must pass automated quality checks. Our CI pipeline runs linters on every pull request.
+
+### Running Linters Locally
+
+```bash
+# Install dependencies
+npm install
+
+# Run all linters
+npm run lint
+
+# Run specific linters
+npm run lint:js      # ESLint for JavaScript
+npm run lint:css     # Stylelint for CSS
+npm run lint:html    # HTMLHint for HTML
+
+# Auto-fix issues
+npm run lint:fix     # Fix ESLint and Stylelint issues
+npm run format       # Format all files with Prettier
+```
+
+### Pre-commit Hooks
+
+Pre-commit hooks automatically run linters on staged files before each commit:
+
+- JavaScript files: ESLint + Prettier
+- CSS files: Stylelint + Prettier
+- HTML files: HTMLHint + Prettier
+- JSON/Markdown: Prettier
+
+### Common Issues and Fixes
+
+#### ESLint
+
+| Issue | Fix |
+|-------|-----|
+| `no-unused-vars` | Remove unused variables or prefix with underscore |
+| `no-undef` | Declare variables before use |
+| `semi` | Add or remove semicolons consistently |
+
+#### Stylelint
+
+| Issue | Fix |
+|-------|-----|
+| `declaration-block-no-duplicate-properties` | Remove duplicate CSS properties |
+| `no-descending-specificity` | Reorder selectors by specificity |
+| `property-no-unknown` | Use valid CSS property names |
+
+#### HTMLHint
+
+| Issue | Fix |
+|-------|-----|
+| `tag-pair` | Ensure all tags are properly closed |
+| `id-unique` | Use unique ID attributes |
+| `attr-lowercase` | Use lowercase attribute names |
+
+### Configuration Files
+
+- `.eslintrc.json` - JavaScript linting rules
+- `.stylelintrc.json` - CSS linting rules
+- `.htmlhintrc` - HTML linting rules
+- `.prettierrc` - Code formatting rules
+
+### Best Practices
+
+1. **Run linters before committing**: `npm run lint`
+2. **Fix issues immediately**: `npm run lint:fix`
+3. **Format code**: `npm run format`
+4. **Check formatting**: `npm run format:check`
+5. **Review CI results**: Check the workflow output on your PR
+
