@@ -1,0 +1,40 @@
+name: Comment on Issue Close
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  greet-on-close:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Thank User on Issue Close
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const issueCreator = issue.user.login;
+            const issueNumber = issue.number;
+
+            const message = `
+            🎉 Hello @${issueCreator}!
+
+            Your issue **#${issueNumber}** has been successfully closed ✅
+
+            Thank you for contributing to **100 Days Of Web Development – ECWoC'26** 🚀  
+            We truly appreciate your time and effort in helping improve this project 💙
+
+            Feel free to raise more issues or submit a PR anytime.
+            Happy Open Source! ✨
+            `;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: message
+            });

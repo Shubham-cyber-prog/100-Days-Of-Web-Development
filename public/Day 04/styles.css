@@ -1,0 +1,262 @@
+:root {
+  --glass: rgba(255, 255, 255, 0.18);
+  --border: rgba(255, 255, 255, 0.25);
+  --text: #fff;
+  --accent: #4cc9f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.app {
+  width: 100%;
+  max-width: 420px;
+  background: var(--glass);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.logo {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.logo span {
+  color: var(--accent);
+}
+
+.search-box {
+  display: flex;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 10px 16px;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.search-box:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.search-box input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-box button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.search-box button:active {
+  transform: scale(0.9);
+}
+
+/* Suggestions dropdown */
+#suggestions {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  color: #222;
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
+  z-index: 10;
+}
+
+#suggestions div {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+#suggestions div:hover {
+  background: #eee;
+}
+
+/* Loader */
+.loader {
+  margin: 20px auto;
+  width: 36px;
+  height: 36px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: none;
+}
+
+/* Error message */
+.error-msg {
+  background: rgba(255, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 12px;
+  display: none;
+  font-weight: 500;
+}
+
+/* Weather card */
+.weather {
+  margin-top: 2rem;
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.location {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.main-weather {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.temp {
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+.icon {
+  font-size: 3.5rem;
+  color: var(--accent);
+}
+
+.condition {
+  margin: 1.2rem auto;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.stats,
+.extras {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.stats i,
+.extras i {
+  margin-right: 4px;
+}
+
+footer {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* Hidden utility */
+.hidden {
+  display: none;
+}
+
+/* Animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 400px) {
+  .app {
+    padding: 2rem 1.5rem;
+  }
+
+  .temp {
+    font-size: 3.2rem;
+  }
+
+  .main-weather {
+    gap: 1rem;
+  }
+}
+
+    
+/* 7 days Forecast css */
+.forecast {
+  margin-top: 1.8rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.forecast-card {
+  background: rgba(255,255,255,0.15);
+  border-radius: 14px;
+  padding: 10px 6px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.forecast-card i {
+  font-size: 1.2rem;
+  color: var(--accent);
+  margin: 6px 0;
+}
+
+.forecast-card .temp {
+  font-weight: 600;
+}
+

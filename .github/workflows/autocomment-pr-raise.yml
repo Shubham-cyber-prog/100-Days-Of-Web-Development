@@ -1,0 +1,36 @@
+name: Auto Comment on PR
+
+on:
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add Comment to Pull Request
+        run: |
+          COMMENT=$(cat <<EOF
+          {
+            "body": "Thank you for submitting this Pull Request! 🙌✨\n\nPlease ensure that:\n- Your changes follow our **CONTRIBUTING.md** 👉 https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/blob/main/CONTRIBUTING.md\n- The PR title and description clearly explain the changes\n- Related issues (if any) are properly linked\n\nOur maintainers will review your PR as soon as possible 🚀\nThank you for contributing to **100 Days Of Web Development – ECWoC'26** 💙"
+          }
+          EOF
+          )
+          RESPONSE=$(curl -s -o response.json -w "%{http_code}" \
+            -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            -d "$COMMENT")
+          cat response.json
+          if [ "$RESPONSE" -ne 201 ]; then
+            echo "Failed to add PR comment"
+            exit 1
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

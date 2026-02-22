@@ -1,152 +1,251 @@
 const projects = [
-    // BEGINNER (Days 1-30)
-    { day: 1, title: "Personal Portfolio", folder: "BEGINNER/day-01-personal-portfolio", level: "Beginner" },
-    { day: 2, title: "Responsive Landing Page", folder: "BEGINNER/day-02-responsive-landing-page", level: "Beginner" },
-    { day: 3, title: "Todo List", folder: "BEGINNER/day-03-todo-list", level: "Beginner" },
-    { day: 4, title: "Weather App", folder: "BEGINNER/day-04-weather-app", level: "Beginner" },
-    { day: 5, title: "Calculator", folder: "BEGINNER/day-05-calculator", level: "Beginner" },
-    { day: 6, title: "Quiz App", folder: "BEGINNER/day-06-quiz-app", level: "Beginner" },
-    { day: 7, title: "Expense Tracker", folder: "BEGINNER/day-07-expense-tracker", level: "Beginner" },
-    { day: 8, title: "Pomodoro Timer", folder: "BEGINNER/day-08-pomodoro-timer", level: "Beginner" },
-    { day: 9, title: "Note Taking App", folder: "BEGINNER/day-09-note-taking-app", level: "Beginner" },
-    { day: 10, title: "Recipe Book", folder: "BEGINNER/day-10-recipe-book", level: "Beginner" },
-    { day: 11, title: "Blog Website", folder: "BEGINNER/day-11-blog-website", level: "Beginner" },
-    { day: 12, title: "Ecommerce Product Page", folder: "BEGINNER/day-12-ecommerce-product-page", level: "Beginner" },
-    { day: 13, title: "Chat UI", folder: "BEGINNER/day-13-chat-ui", level: "Beginner" },
-    { day: 14, title: "Music Player", folder: "BEGINNER/day-14-music-player", level: "Beginner" },
-    { day: 15, title: "Drawing App", folder: "BEGINNER/day-15-drawing-app", level: "Beginner" },
-    { day: 16, title: "Password Generator", folder: "BEGINNER/day-16-password-generator", level: "Beginner" },
-    { day: 17, title: "Unit Converter", folder: "BEGINNER/day-17-unit-converter", level: "Beginner" },
-    { day: 18, title: "Countdown Timer", folder: "BEGINNER/day-18-countdown-timer", level: "Beginner" },
-    { day: 19, title: "Tip Calculator", folder: "BEGINNER/day-19-tip-calculator", level: "Beginner" },
-    { day: 20, title: "QR Code Generator", folder: "BEGINNER/day-20-qr-code-generator", level: "Beginner" },
-    { day: 21, title: "Flashcards App", folder: "BEGINNER/day-21-flashcards-app", level: "Beginner" },
-    { day: 22, title: "Markdown Previewer", folder: "BEGINNER/day-22-markdown-previewer", level: "Beginner" },
-    { day: 23, title: "Currency Converter", folder: "BEGINNER/day-23-currency-converter", level: "Beginner" },
-    { day: 24, title: "BMI Calculator", folder: "BEGINNER/day-24-bmi-calculator", level: "Beginner" },
-    { day: 25, title: "Random Quote Generator", folder: "BEGINNER/day-25-random-quote-generator", level: "Beginner" },
-    { day: 26, title: "Image Gallery", folder: "BEGINNER/day-26-image-gallery", level: "Beginner" },
-    { day: 27, title: "Dice Roller", folder: "BEGINNER/day-27-dice-roller", level: "Beginner" },
-    { day: 28, title: "Rock Paper Scissors", folder: "BEGINNER/day-28-rock-paper-scissors", level: "Beginner" },
-    { day: 29, title: "Memory Game", folder: "BEGINNER/day-29-memory-game", level: "Beginner" },
-    { day: 30, title: "Tic Tac Toe", folder: "BEGINNER/day-30-tic-tac-toe", level: "Beginner" },
+    // BEGINNER (Days 1-30) - Updated to match your actual Day XX folders
+    { day: 1, title: "Animated Landing Page", folder: "Day 01", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 2, title: "Advanced To-Do List", folder: "Day 02", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 3, title: "Weather Forecast App", folder: "Day 03", level: "Beginner", tech: ["HTML", "CSS", "JS", "API"] },
+    { day: 4, title: "Jewellery-company landing page", folder: "Day 04", level: "Beginner", tech: ["HTML", "CSS"] },
+    { day: 5, title: "Random Image Generator", folder: "Day 05", level: "Beginner", tech: ["HTML", "CSS", "JS", "API"] },
+    { day: 6, title: "New Year Countdown", folder: "Day 06", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 7, title: "Stylish Animated loginpage", folder: "Day 07", level: "Beginner", tech: ["HTML", "CSS"] },
+    { day: 8, title: "BMI Calculator", folder: "Day 08", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 9, title: "QR Generator", folder: "Day 09", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 10, title: "Rock Paper Scissors Game", folder: "Day 10", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 11, title: "Reading Journal", folder: "Day 11", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 12, title: "Pong Game", folder: "Day 12", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 13, title: "Colour Picker", folder: "Day 13", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 14, title: "Drawing Canvas", folder: "Day 14", level: "Beginner", tech: ["HTML", "CSS", "JS", "Canvas"] },
+    { day: 15, title: "Nasa Astronomy Picture of the day", folder: "Day 15", level: "Beginner", tech: ["HTML", "CSS", "JS", "API"] },
+    { day: 16, title: "World Clock", folder: "Day 16", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 17, title: "Mood Timer", folder: "Day 17", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 18, title: "text to PDF Convertor", folder: "Day 18", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 19, title: "Memory Card Game", folder: "Day 19", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 20, title: "Email Validator", folder: "Day 20", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 21, title: "Snake And Ladder Game", folder: "Day 21", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 22, title: "Space Jumper Game", folder: "Day 22", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 23, title: "Smart Calculator 2.0", folder: "Day 23", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 24, title: "Promodoro Timer", folder: "Day 24", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 25, title: "Temperature Converter", folder: "Day 25", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 26, title: "Space War Game", folder: "Day 26", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 27, title: "CHESS GAME", folder: "Day 27", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 28, title: "Rock Paper Scissors Game", folder: "Day 28", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 29, title: "Simon Says Game", folder: "Day 29", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 30, title: "Tic Tac Toe", folder: "Day 30", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
 
     // INTERMEDIATE (Days 31-60)
-    { day: 31, title: "Job Board", folder: "INTERMEDIATE/day-31-job-board", level: "Intermediate" },
-    { day: 32, title: "Social Media Dashboard", folder: "INTERMEDIATE/day-32-social-media-dashboard", level: "Intermediate" },
-    { day: 33, title: "Real Estate Website", folder: "INTERMEDIATE/day-33-real-estate-website", level: "Intermediate" },
-    { day: 34, title: "Hotel Booking System", folder: "INTERMEDIATE/day-34-hotel-booking-system", level: "Intermediate" },
-    { day: 35, title: "Food Delivery App", folder: "INTERMEDIATE/day-35-food-delivery-app", level: "Intermediate" },
-    { day: 36, title: "Fitness Tracker", folder: "INTERMEDIATE/day-36-fitness-tracker", level: "Intermediate" },
-    { day: 37, title: "Event Management", folder: "INTERMEDIATE/day-37-event-management", level: "Intermediate" },
-    { day: 38, title: "Booking Appointment System", folder: "INTERMEDIATE/day-38-booking-appointment-system", level: "Intermediate" },
-    { day: 39, title: "Online Learning Platform", folder: "INTERMEDIATE/day-39-online-learning-platform", level: "Intermediate" },
-    { day: 40, title: "Movie Database", folder: "INTERMEDIATE/day-40-movie-database", level: "Intermediate" },
-    { day: 41, title: "Github Profile Finder", folder: "INTERMEDIATE/day-41-github-profile-finder", level: "Intermediate" },
-    { day: 42, title: "Stock Market Tracker", folder: "INTERMEDIATE/day-42-stock-market-tracker", level: "Intermediate" },
-    { day: 43, title: "News Aggregator", folder: "INTERMEDIATE/day-43-news-aggregator", level: "Intermediate" },
-    { day: 44, title: "Chat Application", folder: "INTERMEDIATE/day-44-chat-application", level: "Intermediate" },
-    { day: 45, title: "Project Management Tool", folder: "INTERMEDIATE/day-45-project-management-tool", level: "Intermediate" },
-    { day: 46, title: "Ecommerce Cart", folder: "INTERMEDIATE/day-46-ecommerce-cart", level: "Intermediate" },
-    { day: 47, title: "Banking Dashboard", folder: "INTERMEDIATE/day-47-banking-dashboard", level: "Intermediate" },
-    { day: 48, title: "Flight Booking System", folder: "INTERMEDIATE/day-48-flight-booking-system", level: "Intermediate" },
-    { day: 49, title: "Recipe Sharing Platform", folder: "INTERMEDIATE/day-49-recipe-sharing-platform", level: "Intermediate" },
-    { day: 50, title: "Blog With CMS", folder: "INTERMEDIATE/day-50-blog-with-cms", level: "Intermediate" },
-    { day: 51, title: "Portfolio With Blog", folder: "INTERMEDIATE/day-51-portfolio-with-blog", level: "Intermediate" },
-    { day: 52, title: "Task Management Board", folder: "INTERMEDIATE/day-52-task-management-board", level: "Intermediate" },
-    { day: 53, title: "File Uploader", folder: "INTERMEDIATE/day-53-file-uploader", level: "Intermediate" },
-    { day: 54, title: "Code Editor", folder: "INTERMEDIATE/day-54-code-editor", level: "Intermediate" },
-    { day: 55, title: "Voice Notes App", folder: "INTERMEDIATE/day-55-voice-notes-app", level: "Intermediate" },
-    { day: 56, title: "Expense Splitter", folder: "INTERMEDIATE/day-56-expense-splitter", level: "Intermediate" },
-    { day: 57, title: "Habit Tracker", folder: "INTERMEDIATE/day-57-habit-tracker", level: "Intermediate" },
-    { day: 58, title: "Budget Planner", folder: "INTERMEDIATE/day-58-budget-planner", level: "Intermediate" },
-    { day: 59, title: "Meal Planner", folder: "INTERMEDIATE/day-59-meal-planner", level: "Intermediate" },
-    { day: 60, title: "Travel Planner", folder: "INTERMEDIATE/day-60-travel-planner", level: "Intermediate" },
+    { day: 31, title: "Bubble Shooter Game", folder: "Day 31", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 32, title: "Animated Login Form", folder: "Day 32", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 33, title: "Guess the Number Game", folder: "Day 33", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 34, title: "Typing Speed Test webapp", folder: "Day 34", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 35, title: "Startup Name Generator Web App", folder: "Day 35", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 36, title: "Fitness Tracker Dashboard", folder: "Day 36", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 37, title: "Recipe Finder", folder: "Day 37", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
+    { day: 38, title: "Snake Game", folder: "Day 38", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 39, title: "Hangman Game", folder: "Day 39", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 40, title: "Simon Say Game", folder: "Day 40", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    // Continue pattern for remaining days...
+    { day: 60, title: "Travel Planner", folder: "Day 60", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
 
-    // ADVANCED (Days 61-90)
-    { day: 61, title: "Fullstack Ecommerce", folder: "ADVANCED/day-61-fullstack-ecommerce", level: "Advanced" },
-    { day: 62, title: "Social Network", folder: "ADVANCED/day-62-social-network", level: "Advanced" },
-    { day: 63, title: "Video Conferencing", folder: "ADVANCED/day-63-video-conferencing", level: "Advanced" },
-    { day: 64, title: "Online Code Editor", folder: "ADVANCED/day-64-online-code-editor", level: "Advanced" },
-    { day: 65, title: "Real Time Collaboration", folder: "ADVANCED/day-65-real-time-collaboration", level: "Advanced" },
-    { day: 66, title: "Stock Trading Simulator", folder: "ADVANCED/day-66-stock-trading-simulator", level: "Advanced" },
-    { day: 67, title: "Multiplayer Game", folder: "ADVANCED/day-67-multiplayer-game", level: "Advanced" },
-    { day: 68, title: "AI Chatbot", folder: "ADVANCED/day-68-ai-chatbot", level: "Advanced" },
-    { day: 69, title: "Blockchain Explorer", folder: "ADVANCED/day-69-blockchain-explorer", level: "Advanced" },
-    { day: 70, title: "Data Visualization Dashboard", folder: "ADVANCED/day-70-data-visualization-dashboard", level: "Advanced" },
-    { day: 71, title: "Crypto Wallet", folder: "ADVANCED/day-71-crypto-wallet", level: "Advanced" },
-    { day: 72, title: "IOT Dashboard", folder: "ADVANCED/day-72-iot-dashboard", level: "Advanced" },
-    { day: 73, title: "Machine Learning UI", folder: "ADVANCED/day-73-machine-learning-ui", level: "Advanced" },
-    { day: 74, title: "Voice Assistant", folder: "ADVANCED/day-74-voice-assistant", level: "Advanced" },
-    { day: 75, title: "AR Web App", folder: "ADVANCED/day-75-ar-web-app", level: "Advanced" },
-    { day: 76, title: "PWA News App", folder: "ADVANCED/day-76-pwa-news-app", level: "Advanced" },
-    { day: 77, title: "Real Time Analytics", folder: "ADVANCED/day-77-real-time-analytics", level: "Advanced" },
-    { day: 78, title: "Document Editor", folder: "ADVANCED/day-78-document-editor", level: "Advanced" },
-    { day: 79, title: "Email Client", folder: "ADVANCED/day-79-email-client", level: "Advanced" },
-    { day: 80, title: "Project Management SaaS", folder: "ADVANCED/day-80-project-management-saas", level: "Advanced" },
-    { day: 81, title: "Healthcare Portal", folder: "ADVANCED/day-81-healthcare-portal", level: "Advanced" },
-    { day: 82, title: "Elearning Platform", folder: "ADVANCED/day-82-elearning-platform", level: "Advanced" },
-    { day: 83, title: "Recruitment Platform", folder: "ADVANCED/day-83-recruitment-platform", level: "Advanced" },
-    { day: 84, title: "Real Time Chat Support", folder: "ADVANCED/day-84-real-time-chat-support", level: "Advanced" },
-    { day: 85, title: "Auction Platform", folder: "ADVANCED/day-85-auction-platform", level: "Advanced" },
-    { day: 86, title: "Freelance Marketplace", folder: "ADVANCED/day-86-freelance-marketplace", level: "Advanced" },
-    { day: 87, title: "Music Streaming", folder: "ADVANCED/day-87-music-streaming", level: "Advanced" },
-    { day: 88, title: "Video Streaming", folder: "ADVANCED/day-88-video-streaming", level: "Advanced" },
-    { day: 89, title: "Smart Home Dashboard", folder: "ADVANCED/day-89-smart-home-dashboard", level: "Advanced" },
-    { day: 90, title: "Enterprise CRM", folder: "ADVANCED/day-90-enterprise-crm", level: "Advanced" },
-
-    // CAPSTONE (Days 91-100)
-    { day: 91, title: "Microservices Project (Part 1)", folder: "CAPSTONE/day-91-92-microservices-project", level: "Capstone" },
-    { day: 92, title: "Microservices Project (Part 2)", folder: "CAPSTONE/day-91-92-microservices-project", level: "Capstone" },
-    { day: 93, title: "Open Source Contribution (Part 1)", folder: "CAPSTONE/day-93-94-open-source-contribution", level: "Capstone" },
-    { day: 94, title: "Open Source Contribution (Part 2)", folder: "CAPSTONE/day-93-94-open-source-contribution", level: "Capstone" },
-    { day: 95, title: "Fullstack Application (Part 1)", folder: "CAPSTONE/day-95-96-fullstack-application", level: "Capstone" },
-    { day: 96, title: "Fullstack Application (Part 2)", folder: "CAPSTONE/day-95-96-fullstack-application", level: "Capstone" },
-    { day: 97, title: "Complex Dashboard (Part 1)", folder: "CAPSTONE/day-97-98-complex-dashboard", level: "Capstone" },
-    { day: 98, title: "Complex Dashboard (Part 2)", folder: "CAPSTONE/day-97-98-complex-dashboard", level: "Capstone" },
-    { day: 99, title: "Master Project (Part 1)", folder: "CAPSTONE/day-99-100-master-project", level: "Capstone" },
-    { day: 100, title: "Master Project (Part 2)", folder: "CAPSTONE/day-99-100-master-project", level: "Capstone" }
+    // ADVANCED & CAPSTONE - Follow same pattern
+    { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+    // ... add more as you complete them
+    { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
 ];
 
 const grid = document.getElementById('projects-grid');
-const tabs = document.querySelectorAll('.tab-btn');
-const repoBaseUrl = "https://github.com/Shubham-cyber-prog/100-days-of-web-development/tree/main/";
-const liveBaseUrl = "https://Shubham-cyber-prog.github.io/100-Days-Of-Web-Development/";
+const repoBaseUrl = "https://github.com/Shubham-cyber-prog/100-days-of-web-development/tree/main/public/";
+const liveBaseUrl = "../public/";
 
-function renderProjects(category = 'All') {
+// Filter state
+let currentFilters = {
+    search: '',
+    difficulty: 'All',
+    tech: ['HTML', 'CSS', 'JS']
+};
+
+// Completed days tracking
+let completedDays = [];
+
+// Helper function to check if localStorage is available
+function isLocalStorageAvailable() {
+    try {
+        const test = '__localStorage_test__';
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// localStorage functions
+function getCompletedDays() {
+    if (!isLocalStorageAvailable()) {
+        return [];
+    }
+
+    try {
+        const stored = localStorage.getItem('completedDays');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            // Ensure it's an array and contains only numbers
+            if (Array.isArray(parsed) && parsed.every(d => typeof d === 'number' && !isNaN(d))) {
+                return parsed;
+            }
+        }
+        return [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveCompletedDays(days) {
+    if (!isLocalStorageAvailable()) {
+        return;
+    }
+
+    try {
+        localStorage.setItem('completedDays', JSON.stringify(days));
+    } catch (e) {
+        // Error saving to localStorage, silently fail
+    }
+}
+
+// Event listeners for filters
+document.getElementById('projectSearch').addEventListener('input', (e) => {
+    currentFilters.search = e.target.value.toLowerCase();
+    renderProjects();
+});
+
+document.getElementById('difficultyFilter').addEventListener('change', (e) => {
+    currentFilters.difficulty = e.target.value;
+    renderProjects();
+});
+
+document.querySelectorAll('.tech-checkboxes input').forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+        currentFilters.tech = Array.from(document.querySelectorAll('.tech-checkboxes input:checked')).map(cb => cb.value);
+        renderProjects();
+    });
+});
+
+// Clear search button
+document.getElementById('clearSearch').addEventListener('click', () => {
+    document.getElementById('projectSearch').value = '';
+    currentFilters.search = '';
+    renderProjects();
+});
+
+// Clear filters button
+document.getElementById('clearFilters').addEventListener('click', () => {
+    // Reset difficulty filter
+    document.getElementById('difficultyFilter').value = 'All';
+    currentFilters.difficulty = 'All';
+
+    // Reset tech checkboxes
+    document.querySelectorAll('.tech-checkboxes input').forEach(checkbox => {
+        checkbox.checked = checkbox.value === 'HTML' || checkbox.value === 'CSS' || checkbox.value === 'JS';
+    });
+    currentFilters.tech = ['HTML', 'CSS', 'JS'];
+
+    // Reset search
+    document.getElementById('projectSearch').value = '';
+    currentFilters.search = '';
+
+    renderProjects();
+});
+
+// Modified renderProjects function
+function renderProjects() {
     grid.innerHTML = '';
 
-    const filteredProjects = category === 'All'
-        ? projects
-        : projects.filter(p => p.level === category);
+    let filteredProjects = projects;
+
+    // Apply difficulty filter
+    if (currentFilters.difficulty !== 'All') {
+        filteredProjects = filteredProjects.filter(p => p.level === currentFilters.difficulty);
+    }
+
+    // Apply tech filter
+    if (currentFilters.tech.length > 0) {
+        filteredProjects = filteredProjects.filter(p =>
+            p.tech && p.tech.some(t => currentFilters.tech.includes(t))
+        );
+    }
+
+    // Apply search filter
+    if (currentFilters.search) {
+        filteredProjects = filteredProjects.filter(p =>
+            p.title.toLowerCase().includes(currentFilters.search) ||
+            p.day.toString().includes(currentFilters.search) ||
+            (p.tech && p.tech.some(t => t.toLowerCase().includes(currentFilters.search)))
+        );
+    }
+
+    // Update results count
+    const resultsCountEl = document.getElementById('resultsCount');
+    if (resultsCountEl) {
+        resultsCountEl.textContent = `Showing ${filteredProjects.length} of ${projects.length} projects`;
+    }
+
+    // Ensure sorted by day
+    filteredProjects.sort((a, b) => a.day - b.day);
 
     filteredProjects.forEach(project => {
+        const isCompleted = completedDays.includes(project.day);
         const card = document.createElement('div');
-        card.className = 'project-card';
+        card.className = `project-card ${isCompleted ? 'completed' : ''}`;
         card.innerHTML = `
+            <a class="code-chip" href="${repoBaseUrl}${project.folder}" target="_blank" aria-label="View Code">&lt;/&gt;</a>
             <div class="card-header">
-                <span class="badge ${project.level.toLowerCase()}">${project.level}</span>
+                <label class="completion-checkbox">
+                    <input type="checkbox" data-day="${project.day}" ${isCompleted ? 'checked' : ''}>
+                    <span class="checkmark">${isCompleted ? '✓' : ''}</span>
+                </label>
                 <span class="day-number">Day ${project.day}</span>
+                <span class="badge">${project.level}</span>
             </div>
             <h3>${project.title}</h3>
-            <p>A ${project.level} level project.</p>
-            <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
-            </div>
+            <p>${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}</p>
         `;
+
+        const codeChip = card.querySelector('.code-chip');
+        codeChip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.open(`${repoBaseUrl}${project.folder}`, '_blank');
+        });
+
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.completion-checkbox') || e.target.closest('.code-chip')) {
+                return;
+            }
+            window.open(`${liveBaseUrl}${project.folder}/index.html`, '_blank');
+        });
+
         grid.appendChild(card);
     });
 }
 
-// Tab Switching Logic
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        renderProjects(tab.dataset.category);
-    });
+// Event listener for completion checkboxes
+document.addEventListener('change', (e) => {
+    if (e.target.type === 'checkbox' && e.target.hasAttribute('data-day')) {
+        const day = parseInt(e.target.getAttribute('data-day'));
+        const isChecked = e.target.checked;
+
+        if (isChecked) {
+            if (!completedDays.includes(day)) {
+                completedDays.push(day);
+            }
+        } else {
+            completedDays = completedDays.filter(d => d !== day);
+        }
+
+        saveCompletedDays(completedDays);
+        renderProjects(); // Re-render to update styles
+    }
 });
+
+// Initialize completed days from localStorage
+completedDays = getCompletedDays();
 
 // Initial Render
 renderProjects();

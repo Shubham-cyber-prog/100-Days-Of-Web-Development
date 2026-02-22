@@ -1,0 +1,83 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #191970;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+form, #resume-preview {
+  background: #ffffff;
+  color: #000000;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1 1 400px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.skills label {
+  margin-right: 10px;
+}
+
+#preview-photo img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3498db;
+}
+
+/* Progress bar */
+#progress-container {
+  height: 8px;
+  background: #ddd;
+  margin-bottom: 10px;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #4caf50;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+/* PDF FIX */
+#resume-preview {
+  background: #ffffff !important;
+  color: #000000 !important;
+  overflow: visible !important;
+}
+
+#resume-preview * {
+  visibility: visible !important;
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+}

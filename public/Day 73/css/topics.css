@@ -1,0 +1,66 @@
+.topics {
+  padding: 80px 60px;
+}
+
+.topic-row {
+  margin-bottom: 60px;
+}
+
+.topic-row h3 {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.scroll-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.card-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 0;
+}
+
+.card-container::-webkit-scrollbar {
+  display: none;
+}
+
+.topic-card {
+  min-width: 260px;
+  height: 140px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+
+  padding: 20px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.topic-card:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-6px);
+}
+
+.scroll-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  font-size: 22px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}

@@ -1,0 +1,39 @@
+name: Auto Comment on PR Merge
+
+on:
+  pull_request_target:
+    types: [closed]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  comment:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Add Comment to Merged PR
+        run: |
+          COMMENT=$(cat <<EOF
+          {
+            "body": "🎉 Congratulations @${{ github.event.pull_request.user.login }}!\n\nYour Pull Request **#${{ github.event.pull_request.number }}** has been successfully merged ✅\n\nThank you for your valuable contribution to **100 Days Of Web Development – ECWoC'26** 🚀💙\nYour efforts help make this project better for everyone.\n\nWe’d love to see more contributions from you—feel free to open new issues or submit another PR anytime. Happy Open Source! ✨"
+          }
+          EOF
+          )
+          RESPONSE=$(curl -s -o response.json -w "%{http_code}" \
+            -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            -d "$COMMENT")
+          cat response.json
+          if [ "$RESPONSE" -ne 201 ]; then
+            echo "Failed to add PR merge comment"
+            exit 1
+          fi

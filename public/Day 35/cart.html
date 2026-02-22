@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - NeonEats</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body data-page="cart">
+    <nav class="navbar">
+        <div class="container flex nav-content">
+            <a href="index.html" class="logo"><span class="text-gradient">Neon</span>Eats</a>
+            <div class="flex nav-actions">
+                <a href="index.html" class="btn btn-glass">Continue Shopping</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 600px; margin-top: 40px;">
+        <h2 style="margin-bottom: 20px;">Your Cart</h2>
+        <div class="card">
+            <div id="cart-items">
+            </div>
+            <div style="padding: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <h3>Total</h3>
+                <h3 id="cart-total" class="text-gradient">$0</h3>
+            </div>
+            <div style="padding: 20px;">
+                <button class="btn btn-primary" style="width: 100%;">Checkout</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeatherPro</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="background"></div>
+
+  <main class="app">
+    <h1 class="logo">Weather<span>Pro</span></h1>
+
+    <!-- Search -->
+    <div class="search-box">
+      <input id="cityInput" type="text" placeholder="Enter city name..." />
+      <button id="searchBtn">
+        <i class="fas fa-search"></i>
+      </button>
+      <div id="suggestions"></div>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader" class="loader"></div>
+
+    <!-- Error -->
+    <div id="errorMsg" class="error-msg"></div>
+
+    <!-- Weather Card -->
+    <section id="weatherData" class="weather hidden">
+      <div class="location">
+        <i class="fas fa-map-marker-alt"></i>
+        <span id="cityName"></span>
+      </div>
+
+      <div class="main-weather">
+        <div class="temp">
+          <span id="temperature"></span><span class="unit">°C</span>
+        </div>
+        <div id="weatherIcon" class="icon"></div>
+      </div>
+
+      <div id="condition" class="condition"></div>
+
+      <div class="stats">
+        <div>
+          <i class="fas fa-wind"></i>
+          <span id="windSpeed"></span>
+        </div>
+        <div>
+          <i class="fas fa-tint"></i>
+          <span id="humidity"></span>
+        </div>
+      </div>
+
+      <div class="extras">
+        <div>Feels Like <span id="feelsLike"></span></div>
+        <div>UV <span id="uvIndex"></span></div>
+        <div>Visibility <span id="visibility"></span></div>
+      </div>
+    </section>
+
+    <footer>
+      Powered by Open-Meteo API
+    </footer>
+  </main>
+  <br>
+  <p>Next 7 Days Forecast</p>
+  <!-- 7 Day Forecast -->
+<section id="forecast" class="forecast hidden"></section>
+
+  <script src="script.js"></script>
+</body>
+</html>

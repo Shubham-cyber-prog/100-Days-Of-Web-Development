@@ -1,0 +1,398 @@
+/* body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #000000f3; 
+    padding-top: 80px;
+    box-sizing: border-box; 
+} */
+ body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    /* 🌸 Pink attractive gradient */
+    background: linear-gradient(
+        135deg,
+        #ff9a9e 0%,
+        #fad0c4 40%,
+        #fbc2eb 70%,
+        #a18cd1 100%
+    );
+
+    color: #000000f3;
+    padding-top: 80px;
+    min-height: 100vh;
+}
+
+
+.asimovian-regular {
+  font-family: "Asimovian", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* .btn {
+    padding: 10px 10px;
+    border: none;
+    margin:0.75rem;
+    border-radius: 8px;
+    background-color: #0373eb;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+} */
+ .btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #ff758c,
+        #ff7eb3
+    );
+
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 120, 170, 0.6);
+}
+
+/* 
+.btn:hover {
+    background-color: #023367; 
+} */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #71849cd9;
+    color: #000000;
+    font-weight: 1000;
+    padding: 0.5rem 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    z-index: 1000;
+    box-sizing: border-box;   
+}
+
+
+.nav-links {
+    display: flex;
+    align-items: center; 
+}
+
+.nav-links a {
+    color:#000000 ;          
+    text-decoration: none;        
+    margin-left: 30px;          
+    font-weight: 800;          
+    transition: color 0.3s ease; 
+}
+
+.nav-links a:hover {
+    color: #0373eb;
+}
+
+#hero-section {
+    display: flex;
+    align-items: center;
+    margin-left: 120px; 
+    padding: 10px;
+}
+
+.hero-content {
+    margin-right: 50px;
+}
+.hero-content button {
+    margin: 50px;
+    margin-left: 200px; 
+    padding: 25px;
+}
+.hero-image {
+    margin-right:50px ;
+}
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    position: right;
+}
+
+
+#features-section {
+    padding: 60px 5%;
+}
+
+#features-section h2 {
+    text-align: center;  
+    font-size: 3rem;
+    margin-bottom: 50px;
+}
+
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 50px; 
+}
+
+.feature-item {
+    text-align: center; 
+}
+
+
+.feature-item i {
+    font-size: 3rem; 
+    color: #0373eb;    
+    margin-bottom: 20px;
+}
+
+.feature-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.feature-item p {
+    color: #000000;   
+    line-height: 1.5;
+}
+
+#gallery-section {
+    padding: 60px 5%;
+}
+
+.gallery-section {
+    padding: 60px 5%;
+    background-color: #ffffff;
+    margin: 50px 5%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.gallery-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+
+.gallery-images {
+    display: flex;        
+    gap: 20px;            
+    justify-content: center;
+    align-items: center;  
+}
+
+
+.gallery-images img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.main-gallery-img {
+    flex: 2;
+}
+
+
+.thumbnail-gallery-img {
+    flex: 1; 
+}
+
+.reviews-section {
+    padding: 60px 5%;
+}
+
+.reviews-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+/* This card is already responsive, good job! */
+.review-card {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto; 
+}
+
+
+.review-card .stars i {
+    color: #FFC107;
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+}
+
+.review-card p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-style: italic; 
+    color: black;
+    margin-bottom: 20px;
+}
+
+.review-card .reviewer-name {
+    font-weight: bold;
+    color: black;
+}
+
+/* #main-footer {
+    background-color: #71849cd9; 
+    color: black;
+    padding: 1rem 5%;
+    margin-top: 60px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; 
+} */
+ #main-footer {
+    background: linear-gradient(
+        135deg,
+        #fbc2eb,
+        #a6c1ee
+    );
+    color: black;
+    padding: 1.5rem 5%;
+    margin-top: 80px;
+    border-radius: 30px 30px 0 0;
+}
+
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.social-icons a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.25rem;
+    margin-left: 30px; 
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #0553a8; 
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;            
+}
+
+main section {
+    background: rgba(255, 255, 255, 0.85);
+    margin: 40px 5%;
+    padding: 50px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px; 
+    }
+
+
+    /* .navbar {
+        flex-direction: column; 
+    } */
+     .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+
+    color: #000;
+    font-weight: 700;
+    padding: 0.5rem 5%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+    .nav-links {
+        margin-top: 10px; 
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .nav-links a {
+        margin: 5px 10px; 
+    }
+
+    #hero-section {
+        flex-direction: column; 
+        text-align: center;     
+        margin-left: 0; 
+        padding: 40px 5%; 
+    }
+    #hero-section {
+    background: linear-gradient(
+        135deg,
+        #fbc2eb,
+        #a6c1ee
+    );
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(161, 140, 209, 0.4);
+}
+
+   
+    .hero-content {
+        margin-right: 0;
+        margin-bottom: 30px; 
+    }
+   
+    .hero-content button {
+        margin: 20px auto 0; 
+    }
+
+   
+    .features-grid {
+        grid-template-columns: 1fr; 
+        gap: 40px;
+    }
+
+  
+    .gallery-images {
+        flex-direction: column; 
+    }
+    
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    #features-section h2, .gallery-section h2, .reviews-section h2 {
+        font-size: 2rem;
+    }
+
+    #main-footer {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .social-icons {
+        margin-top: 20px;
+    }
+    .social-icons a {
+        margin: 0 15px; 
+    }
+    
+}

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StayHub - Hotel Booking System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-hotel"></i>
+                    <span>StayHub</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#" onclick="showSection('hotels')">Hotels</a></li>
+                    <li><a href="#" onclick="showSection('bookings')">My Bookings</a></li>
+                    <li><a href="#" onclick="showSection('about')">About</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="btn btn-outline" onclick="showLoginModal()">
+                        <i class="fas fa-user"></i> Login
+                    </button>
+                    <button class="btn btn-primary" onclick="toggleBookingCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Find Your Perfect Stay</h1>
+                    <p>Discover amazing hotels and resorts worldwide</p>
+                    
+                    <!-- Search Widget -->
+                    <div class="search-widget">
+                        <div class="search-row">
+                            <div class="search-field">
+                                <label><i class="fas fa-map-marker-alt"></i> Destination</label>
+                                <input type="text" id="destinationInput" placeholder="City or Hotel">
+                            </div>
+                            <div class="search-field">
+                                <label><i class="fas fa-calendar"></i> Check-in</label>
+                                <input type="date" id="checkinDate">
+                            </div>
+                            <div class="search-field">
+                                <label><i class="fas fa-calendar"></i> Check-out</label>
+                                <input type="date" id="checkoutDate">
+                            </div>
+                            <div class="search-field">
+                                <label><i class="fas fa-users"></i> Guests</label>
+                                <select id="guestCount">
+                                    <option value="1">1 Guest</option>
+                                    <option value="2">2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary search-btn" onclick="searchHotels()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Hotels -->
+            <div class="featured-section">
+                <h2>Featured Hotels</h2>
+                <div class="featured-grid" id="featuredHotels">
+                    <!-- Featured hotels will be dynamically added -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotels Section -->
+        <section id="hotels" class="section">
+            <div class="container">
+                <div class="hotels-header">
+                    <h2>Available Hotels</h2>
+                    <div class="view-options">
+                        <button class="btn btn-outline" onclick="toggleFilters()">
+                            <i class="fas fa-filter"></i> Filters
+                        </button>
+                        <select id="sortSelect" onchange="sortHotels()">
+                            <option value="recommended">Recommended</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Rating</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Filters Sidebar -->
+                <div class="filters-sidebar" id="filtersSidebar">
+                    <h3>Filters</h3>
+                    
+                    <div class="filter-group">
+                        <h4>Price Range</h4>
+                        <div class="price-range">
+                            <input type="range" id="priceRange" min="0" max="500" value="500" oninput="updatePriceFilter()">
+                            <div class="price-labels">
+                                <span>$0</span>
+                                <span id="priceValue">$500</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Star Rating</h4>
+                        <div class="rating-filters">
+                            <label><input type="checkbox" value="5" onchange="applyFilters()"> 5 Stars</label>
+                            <label><input type="checkbox" value="4" onchange="applyFilters()"> 4 Stars</label>
+                            <label><input type="checkbox" value="3" onchange="applyFilters()"> 3 Stars</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Amenities</h4>
+                        <div class="amenity-filters">
+                            <label><input type="checkbox" value="wifi" onchange="applyFilters()"> WiFi</label>
+                            <label><input type="checkbox" value="pool" onchange="applyFilters()"> Pool</label>
+                            <label><input type="checkbox" value="spa" onchange="applyFilters()"> Spa</label>
+                            <label><input type="checkbox" value="gym" onchange="applyFilters()"> Gym</label>
+                            <label><input type="checkbox" value="parking" onchange="applyFilters()"> Parking</label>
+                            <label><input type="checkbox" value="restaurant" onchange="applyFilters()"> Restaurant</label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-outline" onclick="clearFilters()">Clear Filters</button>
+                </div>
+
+                <!-- Hotels Grid -->
+                <div class="hotels-grid" id="hotelsGrid">
+                    <!-- Hotels will be dynamically added -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotel Details Modal -->
+        <div class="modal" id="hotelModal">
+            <div class="modal-content hotel-details">
+                <span class="close" onclick="closeHotelModal()">&times;</span>
+                <div id="hotelDetailsContent">
+                    <!-- Hotel details will be dynamically added -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookings Section -->
+        <section id="bookings" class="section">
+            <div class="container">
+                <h2>My Bookings</h2>
+                <div class="bookings-list" id="bookingsList">
+                    <!-- Bookings will be dynamically added -->
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About StayHub</h2>
+                <div class="about-content">
+                    <p>StayHub is your trusted partner for finding and booking the perfect accommodation. 
+                    With thousands of hotels worldwide, we make travel planning simple and affordable.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-globe"></i>
+                            <h3>Worldwide Coverage</h3>
+                            <p>Hotels in over 100 countries</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Secure Booking</h3>
+                            <p>Safe and encrypted transactions</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-headset"></i>
+                            <h3>24/7 Support</h3>
+                            <p>Always here to help you</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-tag"></i>
+                            <h3>Best Prices</h3>
+                            <p>Guaranteed lowest rates</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Booking Cart Sidebar -->
+    <div class="booking-cart" id="bookingCart">
+        <div class="cart-header">
+            <h3>Booking Summary</h3>
+            <button class="close-cart" onclick="toggleBookingCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-content">
+            <div id="cartItems">
+                <!-- Cart items will be dynamically added -->
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Taxes (10%):</span>
+                    <span id="taxes">$0</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">$0</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="proceedToCheckout()">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content checkout-form">
+            <span class="close" onclick="closeCheckoutModal()">&times;</span>
+            <h2>Complete Your Booking</h2>
+            <form id="checkoutForm" onsubmit="completeBooking(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name *</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name *</label>
+                        <input type="text" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone *</label>
+                    <input type="tel" required>
+                </div>
+                <div class="form-group">
+                    <label>Special Requests</label>
+                    <textarea rows="3" placeholder="Any special requirements..."></textarea>
+                </div>
+                <div class="payment-section">
+                    <h3>Payment Information</h3>
+                    <div class="form-group">
+                        <label>Card Number *</label>
+                        <input type="text" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Date *</label>
+                            <input type="text" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV *</label>
+                            <input type="text" placeholder="123" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Complete Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content login-form">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-link">Don't have an account? <a href="#">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

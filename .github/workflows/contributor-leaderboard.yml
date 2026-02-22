@@ -1,8 +1,8 @@
-name: 🏆 ECWoC'26 Contributor Leaderboard
+name: 🏆 ECWoC'26 Daily Contributor Leaderboard
 
 on:
   schedule:
-    - cron: "0 10 * * 0"   # Every Sunday
+    - cron: "0 10 * * *"   # Every day at 10:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -15,16 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Generate ECWoC'26 Weekly Contributor Leaderboard
+      - name: Generate ECWoC'26 Daily Contributor Leaderboard
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
-            const DAYS = 7;
+            const DAYS = 1;  // Daily leaderboard
 
-            console.log(`🏆 Generating ECWoC'26 leaderboard for last ${DAYS} days`);
+            console.log(`🏆 Generating ECWoC'26 leaderboard for last ${DAYS} day(s)`);
 
             const since = new Date();
             since.setDate(since.getDate() - DAYS);
@@ -79,7 +79,7 @@ jobs:
               .slice(0, 10);
 
             if (leaderboard.length === 0) {
-              console.log("⚠️ No ECWoC'26 contributors found this week.");
+              console.log("⚠️ No ECWoC'26 contributors found today.");
               return;
             }
 
@@ -91,8 +91,8 @@ jobs:
             });
 
             const body = `
-            ## 🏆 ECWoC'26 Weekly Contributor Leaderboard
-            ⏱ **Last ${DAYS} Days**
+            ## 🏆 ECWoC'26 Daily Contributor Leaderboard
+            ⏱ **Last ${DAYS} Day**
 
             | Rank | Contributor | PRs | Merged | Issues | Total |
             |------|-------------|-----|--------|--------|-------|
@@ -102,7 +102,7 @@ jobs:
             Every PR & Issue counts towards **ECWoC'26** 🚀
 
             ---
-            🤖 _Auto-generated weekly for ECWoC'26_
+            🤖 _Auto-generated daily for ECWoC'26_
             `;
 
             // Check existing leaderboard issue
@@ -125,7 +125,7 @@ jobs:
               await github.rest.issues.create({
                 owner,
                 repo,
-                title: "🏆 ECWoC'26 Weekly Contributor Leaderboard",
+                title: "🏆 ECWoC'26 Daily Contributor Leaderboard",
                 body,
                 labels: ["ECWoC26", "leaderboard", "automated"]
               });

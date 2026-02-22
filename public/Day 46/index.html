@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ShopEase Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo">🛒 ShopEase</h1>
+
+    <input 
+      type="text" 
+      id="searchInput" 
+      placeholder="Search products..."
+      onkeyup="searchProducts()"
+    >
+
+    <button class="cart-btn" onclick="toggleCart()">
+      Cart (<span id="cart-count">0</span>)
+    </button>
+  </header>
+
+  <!-- FILTER -->
+  <div class="filters">
+    <button onclick="filterCategory('all')">All</button>
+    <button onclick="filterCategory('electronics')">Electronics</button>
+    <button onclick="filterCategory('fashion')">Fashion</button>
+    <button onclick="filterCategory('accessories')">Accessories</button>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="product-list"></section>
+
+  <!-- CART -->
+  <aside class="cart" id="cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+
+    <div class="cart-footer">
+      <h3>Total: ₹<span id="total-price">0</span></h3>
+      <button class="checkout-btn">Checkout</button>
+      <button class="close-btn" onclick="toggleCart()">Close</button>
+    </div>
+  </aside>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

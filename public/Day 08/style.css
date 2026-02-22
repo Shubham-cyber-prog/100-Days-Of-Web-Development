@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+/* Themes */
+body.pomodoro {
+  background: #b44f4f;
+}
+
+body.shortBreak {
+  background: #2f7f7b;
+}
+
+body.longBreak {
+  background: #3a6e95;
+}
+
+.container {
+  background: rgba(255,255,255,0.15);
+  padding: 30px;
+  border-radius: 14px;
+  width: 320px;
+  text-align: center;
+}
+
+/* Tabs */
+.modes {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modes button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.modes button.active {
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+  opacity: 1;
+}
+
+/* Timer */
+#timer {
+  font-size: 4rem;
+  margin: 20px 0;
+}
+
+/* Buttons */
+.buttons button {
+  margin: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#start { background: white; color: #333; }
+#pause { background: #facc15; }
+#reset { background: #ef4444; color: white; }
+
+#modeText {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}

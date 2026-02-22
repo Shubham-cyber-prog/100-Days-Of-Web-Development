@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Real-Time Monitoring</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">🚀 IoTFlow</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="user-menu">
+                <span>Welcome!</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- DASHBOARD HEADER -->
+        <div class="dashboard-header">
+            <div class="dashboard-title">
+                <h2>Real-Time Event Monitoring</h2>
+                <p id="currentTime" style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;"></p>
+            </div>
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span>LIVE</span>
+            </div>
+        </div>
+
+        <!-- GAUGES SECTION -->
+        <div class="dashboard-grid">
+            <div class="gauge-container">
+                <h3 class="gauge-label">🌡️ Temperature</h3>
+                <canvas id="temperatureGauge" class="gauge-canvas"></canvas>
+                <div class="gauge-value" id="temperatureValue">--</div>
+                <div class="gauge-unit">°C</div>
+            </div>
+
+            <div class="gauge-container">
+                <h3 class="gauge-label">🔊 Sound Level</h3>
+                <canvas id="soundGauge" class="gauge-canvas"></canvas>
+                <div class="gauge-value" id="soundValue">--</div>
+                <div class="gauge-unit">dB</div>
+            </div>
+
+            <div class="gauge-container">
+                <h3 class="gauge-label">👥 Crowd Density</h3>
+                <canvas id="crowdGauge" class="gauge-canvas"></canvas>
+                <div class="gauge-value" id="crowdValue">--</div>
+                <div class="gauge-unit">%</div>
+            </div>
+        </div>
+
+        <!-- CHARTS SECTION -->
+        <h3 style="margin-top: 3rem; margin-bottom: 1.5rem; color: var(--text-primary);">📈 Trend Analysis</h3>
+        <div class="charts-section">
+            <div class="chart-container">
+                <div class="chart-title">Temperature Trend</div>
+                <canvas id="temperatureChart" width="400" height="300"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Sound Level Trend</div>
+                <canvas id="soundChart" width="400" height="300"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Crowd Density Trend</div>
+                <canvas id="crowdChart" width="400" height="300"></canvas>
+            </div>
+        </div>
+
+        <!-- ALERTS & STATS -->
+        <div class="alerts-stats" style="margin-top: 3rem;">
+            <div class="alert-panel">
+                <h3>⚠️ Recent Alerts</h3>
+                <div id="alertPanel">
+                    <p style="color: var(--text-secondary);">No alerts yet. All systems normal.</p>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary-accent);">📊 Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Average Temperature</h4>
+                        <div class="value" id="avgTemp">--°C</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Peak Sound Level</h4>
+                        <div class="value" id="maxSound">-- dB</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Max Crowd Density</h4>
+                        <div class="value" id="maxCrowd">--%</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Total Alerts</h4>
+                        <div class="value" id="totalAlerts">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="features.html">Features</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+        </div>
+        <p>&copy; 2025 IoT EventShield. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

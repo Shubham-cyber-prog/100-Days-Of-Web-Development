@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Notes App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1><i class="fas fa-microphone-alt"></i> Voice Notes</h1>
+            <p class="subtitle">Record, save, and manage your voice notes</p>
+        </header>
+
+        <main class="app-main">
+            <div class="recorder-section">
+                <div class="recorder-card">
+                    <h2><i class="fas fa-record-vinyl"></i> Record New Note</h2>
+                    
+                    <div class="recorder-display">
+                        <div class="recording-status" id="recordingStatus">
+                            <i class="fas fa-circle"></i> Ready to record
+                        </div>
+                        
+                        <div class="recording-visualizer" id="visualizer">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                        </div>
+                        
+                        <div class="timer" id="timer">00:00</div>
+                    </div>
+                    
+                    <div class="recorder-controls">
+                        <button class="btn-record" id="recordBtn">
+                            <i class="fas fa-microphone"></i> Start Recording
+                        </button>
+                        <button class="btn-stop" id="stopBtn" disabled>
+                            <i class="fas fa-stop"></i> Stop
+                        </button>
+                        <button class="btn-save" id="saveBtn" disabled>
+                            <i class="fas fa-save"></i> Save Note
+                        </button>
+                    </div>
+                    
+                    <div class="note-title-input">
+                        <input type="text" id="noteTitle" placeholder="Add a title for your note (optional)">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="notes-section">
+                <div class="notes-header">
+                    <h2><i class="fas fa-notes"></i> Saved Notes</h2>
+                    <div class="notes-count">
+                        <span id="notesCount">0</span> notes
+                    </div>
+                </div>
+                
+                <div class="notes-filter">
+                    <input type="text" id="searchNotes" placeholder="Search notes...">
+                    <button class="btn-filter" id="filterBtn">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                </div>
+                
+                <div class="notes-list" id="notesList">
+                    <div class="empty-state" id="emptyState">
+                        <i class="fas fa-comment-slash"></i>
+                        <h3>No notes yet</h3>
+                        <p>Record your first voice note using the recorder above!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="app-footer">
+            <p>Voice Notes App &copy; Made with <i class="fas fa-heart"></i> for voice recording enthusiasts</p>
+        </footer>
+    </div>
+    
+    <!-- Audio Player Modal -->
+    <div class="modal" id="audioPlayerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Playing Voice Note</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="audio-player">
+                    <div class="audio-title" id="audioTitle">Untitled Note</div>
+                    <div class="audio-date" id="audioDate">Date not available</div>
+                    
+                    <div class="audio-controls">
+                        <button class="audio-control-btn" id="rewindBtn">
+                            <i class="fas fa-backward"></i> 10s
+                        </button>
+                        <button class="audio-control-btn play-btn" id="playPauseBtn">
+                            <i class="fas fa-play"></i> Play
+                        </button>
+                        <button class="audio-control-btn" id="forwardBtn">
+                            10s <i class="fas fa-forward"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="audio-progress">
+                        <input type="range" id="progressBar" class="progress-bar" value="0" min="0" max="100">
+                        <div class="time-display">
+                            <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="audio-actions">
+                        <button class="audio-action-btn" id="deleteNoteBtn">
+                            <i class="fas fa-trash-alt"></i> Delete Note
+                        </button>
+                        <button class="audio-action-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

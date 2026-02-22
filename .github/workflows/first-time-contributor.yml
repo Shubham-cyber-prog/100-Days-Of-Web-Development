@@ -1,0 +1,96 @@
+name: Welcome First-Time Contributors
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  welcome-contributor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Check if First-Time Contributor
+        id: first-time
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const author = context.payload.pull_request.user.login;
+
+            const { data: pulls } = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:pr author:${author}`
+            });
+
+            const isFirstTime = pulls.total_count === 1;
+
+            core.setOutput('first_time', isFirstTime);
+            core.setOutput('author', author);
+            core.setOutput('pr_number', context.payload.pull_request.number);
+
+      - name: Welcome First-Time Contributor
+        if: steps.first-time.outputs.first_time == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const author = '${{ steps.first-time.outputs.author }}';
+            const prNumber = Number('${{ steps.first-time.outputs.pr_number }}');
+
+            const message = [
+              `## 🎉 Welcome to *100 Days of Web Development (ECWoC'26)*, @${author}!`,
+              ``,
+              `Congratulations on submitting your **first Pull Request** 🎯`,
+              ``,
+              `### 🌟 What this means`,
+              `- You're now part of an open-source community`,
+              `- Your contribution matters and helps others learn`,
+              `- This PR counts toward **ECWoC’26**`,
+              ``,
+              `### 🚀 What happens next?`,
+              `1. Maintainers will review your PR`,
+              `2. You may receive suggestions or feedback`,
+              `3. Update your code if required`,
+              `4. Once approved, it will be merged 🎉`,
+              ``,
+              `### 💡 Tips for Contributors`,
+              `- Keep PRs small and focused`,
+              `- Follow the project folder structure`,
+              `- Ask questions freely in comments`,
+              `- Stay consistent and complete your 100 Days`,
+              ``,
+              `### 🤝 Need Help?`,
+              `- Check the README & contribution guidelines`,
+              `- Join the community discussions`,
+              ``,
+              `---`,
+              `*Happy Coding & Welcome to ECWoC’26!* 🚀`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: message
+            });
+
+      - name: Add First-Time Contributor Label
+        if: steps.first-time.outputs.first_time == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = Number('${{ steps.first-time.outputs.pr_number }}');
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              labels: ['first-time-contributor', 'ecwoc-26']
+            });

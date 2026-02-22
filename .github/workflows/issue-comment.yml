@@ -1,0 +1,90 @@
+name: Auto Comment & Label Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  auto-comment-label:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auto Comment on New Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const { number, title, body, user } = issue;
+            const author = user.login;
+
+            const truncatedBody = body
+              ? (body.length > 300 ? body.substring(0, 300) + '...' : body)
+              : '*No description provided*';
+
+            const comment = [
+              `## 🎉 Welcome to 100 Days of Web Development!`,
+              ``,
+              `Hi @${author}, thanks for opening this issue 🚀`,
+              ``,
+              `### 📌 Issue Summary`,
+              `- **Issue #${number}**: ${title}`,
+              `- **Status**: 🆕 Open`,
+              ``,
+              `### 📝 Description`,
+              `\`\`\`\n${truncatedBody}\n\`\`\``,
+              ``,
+              `### 🔧 What Happens Next?`,
+              `1. Maintainers will review this issue shortly.`,
+              `2. Labels will be assigned automatically.`,
+              `3. Feel free to add screenshots or extra details.`,
+              ``,
+              `### 🔗 Useful Links`,
+              `- 📖 [Project README](https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26#readme)`,
+              `- 🐞 [Bug Report Template](.github/ISSUE_TEMPLATE/bug_report.md)`,
+              `- ✨ [Feature Request Template](.github/ISSUE_TEMPLATE/feature_request.md)`,
+              `- 🌐 [Live Website](https://100days-progress-tracker.netlify.app/)`,
+              ``,
+              `---`,
+              `🤖 *This is an automated message. Happy Contributing!*`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: number,
+              body: comment
+            });
+
+      - name: Auto Label Issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const { number, title, body } = issue;
+
+            const text = `${title} ${body || ''}`.toLowerCase();
+            let labels = ['new-issue'];
+
+            const keywordMap = {
+              bug: ['bug', 'error', 'crash', 'issue'],
+              enhancement: ['feature', 'enhancement', 'improve', 'add'],
+              documentation: ['doc', 'readme', 'documentation'],
+              'ui/ux': ['ui', 'ux', 'design', 'layout'],
+              frontend: ['frontend', 'html', 'css', 'javascript', 'ui'],
+            };
+
+            for (const [label, keywords] of Object.entries(keywordMap)) {
+              if (keywords.some(word => text.includes(word))) {
+                labels.push(label);
+              }
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: number,
+              labels: [...new Set(labels)]
+            });

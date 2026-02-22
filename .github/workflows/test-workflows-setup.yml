@@ -1,0 +1,60 @@
+name: Test Workflows Setup
+
+on:
+  workflow_dispatch:   # Manual trigger
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/**"
+
+jobs:
+  test-setup:
+    name: Validate GitHub Workflows
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: List Workflow Files
+        run: |
+          echo "🔍 Listing all workflow files in .github/workflows/"
+          ls -la .github/workflows/
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Validate YAML Syntax
+        run: |
+          echo "✅ Validating YAML syntax for all workflows..."
+          pip install pyyaml
+          for file in .github/workflows/*.yml; do
+            echo "Checking $file..."
+            python3 -c "import yaml; yaml.safe_load(open('$file'))"
+            echo "✅ $file is valid"
+          done
+
+      - name: Test GitHub Script Action
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            console.log('🚀 GitHub Script is working!');
+            console.log('Repository:', context.repo.owner + '/' + context.repo.repo);
+            console.log('Triggered by:', context.eventName);
+
+      - name: Success Message
+        run: |
+          echo "🎉 Workflow validation completed successfully!"
+          echo ""
+          echo "📋 Active workflows in this repository:"
+          echo "  - issue-comment.yml              → Auto welcome & label issues"
+          echo "  - pr-comment.yml                 → Auto welcome & label PRs"
+          echo "  - first-time-contributor.yml     → Recognize first-time contributors"
+          echo "  - status-updates.yml             → Stale checks & weekly summaries"
+          echo "  - test-workflows.yml             → Workflow validation"
+          echo ""
+          echo "🚀 Project: 100 Days of Web Development (ECWoC'26)"
+          echo "💡 All workflows are correctly configured and ready for contributors."

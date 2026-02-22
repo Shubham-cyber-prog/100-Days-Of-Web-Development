@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub - eLearning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>LearnHub</span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="courses">Courses</a></li>
+                        <li><a href="#" class="nav-link" data-page="dashboard">Dashboard</a></li>
+                        <li><a href="#" class="nav-link" data-page="lesson">My Learning</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="user-actions">
+                    <div class="notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <button class="btn btn-outline btn-small">Login</button>
+                    <button class="btn btn-primary btn-small">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>Learn Without Limits</h1>
+                <p>Build skills with courses, certificates, and degrees from world-class universities and companies. Start, switch, or advance your career with thousands of courses.</p>
+                <button class="btn btn-primary" style="align-self: flex-start; margin-top: 10px;">Explore Courses</button>
+            </div>
+            
+            <h2 class="section-title">Popular Courses</h2>
+            <div class="courses-grid" id="popular-courses">
+                <!-- Popular courses will be loaded here -->
+            </div>
+            
+            <h2 class="section-title">Continue Learning</h2>
+            <div class="courses-grid" id="continue-learning">
+                <!-- Continue learning courses will be loaded here -->
+            </div>
+        </section>
+        
+        <!-- Courses Page -->
+        <section id="courses" class="page">
+            <h2 class="section-title">All Courses</h2>
+            <div class="courses-grid" id="all-courses">
+                <!-- All courses will be loaded here -->
+            </div>
+        </section>
+        
+        <!-- Dashboard Page -->
+        <section id="dashboard" class="page">
+            <h2 class="section-title">My Dashboard</h2>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="enrolled-courses">0</h3>
+                        <p>Enrolled Courses</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="completed-lessons">0</h3>
+                        <p>Completed Lessons</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="study-hours">0</h3>
+                        <p>Study Hours</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="achievements">0</h3>
+                        <p>Achievements</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-courses">
+                <h3 class="section-title">My Courses</h3>
+                <div class="courses-grid" id="my-courses">
+                    <!-- User's courses will be loaded here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Lesson Page -->
+        <section id="lesson" class="page">
+            <div class="lesson-container">
+                <div class="lesson-sidebar">
+                    <h3 class="module-title" id="module-title">Web Development Fundamentals</h3>
+                    <div id="lesson-list">
+                        <!-- Lesson list will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h2 class="lesson-title" id="current-lesson-title">Introduction to HTML</h2>
+                    
+                    <div class="lesson-video">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    
+                    <div class="lesson-text" id="lesson-text">
+                        <p>HTML (HyperText Markup Language) is the standard markup language for creating web pages and web applications. It describes the structure of a web page semantically and originally included cues for the appearance of the document.</p>
+                        <p>HTML elements are the building blocks of HTML pages. With HTML constructs, images and other objects such as interactive forms may be embedded into the rendered page.</p>
+                        <p>HTML provides a means to create structured documents by denoting structural semantics for text such as headings, paragraphs, lists, links, quotes and other items.</p>
+                    </div>
+                    
+                    <div class="lesson-navigation">
+                        <button class="btn btn-outline" id="prev-lesson">
+                            <i class="fas fa-arrow-left"></i> Previous Lesson
+                        </button>
+                        <button class="btn btn-primary" id="next-lesson">
+                            Next Lesson <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Quiz Page (hidden by default) -->
+        <section id="quiz" class="page">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h2 class="quiz-title">Quiz: HTML Basics</h2>
+                    <div class="quiz-progress">Question <span id="current-question">1</span> of <span id="total-questions">5</span></div>
+                </div>
+                
+                <div class="quiz-question" id="quiz-question">
+                    What does HTML stand for?
+                </div>
+                
+                <div class="quiz-options" id="quiz-options">
+                    <!-- Options will be loaded here -->
+                </div>
+                
+                <div class="quiz-footer">
+                    <button class="btn btn-outline" id="quit-quiz">Quit Quiz</button>
+                    <button class="btn btn-primary" id="next-question">Next Question</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>LearnHub</h3>
+                    <p>LearnHub is an online learning platform dedicated to providing high-quality courses to learners worldwide.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Courses</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Data Science</a></li>
+                        <li><a href="#">Business</a></li>
+                        <li><a href="#">Design</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@learnhub.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Learning St, Edu City</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 LearnHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+   <script src="script.js"></script>
+</body>
+</html>

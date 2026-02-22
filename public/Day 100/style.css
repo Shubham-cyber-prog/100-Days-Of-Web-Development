@@ -1,0 +1,221 @@
+/* Base styles and aesthetics */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --term-bg: #050505;
+  --term-text: #e5e5e5;
+  --term-accent: #ff4400; /* International Orange */
+  --term-dim: #666666;
+  --term-glow: rgba(255, 68, 0, 0.4);
+  --term-border: 1px solid #ff4400;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--term-bg);
+  font-family: "Space Mono", monospace; /* Retro font override */
+  color: var(--term-text);
+  user-select: none;
+}
+
+#canvas-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* CRT Scanline Overlay */
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.2)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.6;
+}
+
+/* Terminal UI Panels (Replaces Glassmorphism) */
+.glass-panel {
+  background: #0a0a0a !important; /* Solid black */
+  backdrop-filter: none !important;
+  border: 1px solid var(--term-accent) !important;
+  box-shadow: 0 0 15px var(--term-glow);
+  border-radius: 4px !important; /* sharper corners */
+}
+
+/* Force Text Colors for Terminal Vibe */
+.text-gray-300, .text-gray-400, .text-gray-500 {
+  color: var(--term-dim) !important;
+}
+
+/* Keep logic colors but make them neon */
+.text-red-400, .text-red-500 { color: #ff3333 !important; text-shadow: 0 0 5px #ff0000; }
+.text-green-400 { color: #33ff33 !important; text-shadow: 0 0 5px #00ff00; }
+.text-blue-400 { color: #33ccff !important; text-shadow: 0 0 5px #00ccff; }
+.text-yellow-400 { color: #ffff33 !important; text-shadow: 0 0 5px #ffff00; }
+.text-orange-400 { color: #ffaa33 !important; text-shadow: 0 0 5px #ff9900; }
+.text-cyan-400 { color: #33ffff !important; text-shadow: 0 0 5px #00ffff; }
+.text-purple-400 { color: #cc33ff !important; text-shadow: 0 0 5px #aa00ff; }
+
+/* Interactive elements styles */
+.service-btn {
+  transition: all 0.1s steps(2);
+  border: 1px solid #333;
+  background: #111;
+  border-radius: 2px !important;
+}
+
+.service-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--term-accent);
+  box-shadow: 0 0 10px var(--term-glow);
+  background: #1a1a1a;
+}
+
+.service-btn:active {
+  transform: translateY(0);
+}
+
+.service-btn.active {
+  background: rgba(255, 68, 0, 0.1) !important;
+  border: 1px solid var(--term-accent) !important;
+  box-shadow: inset 0 0 10px var(--term-glow);
+  color: var(--term-accent) !important;
+}
+
+/* Time Controls */
+.time-btn {
+  border-radius: 2px !important;
+  border: 1px solid #444;
+}
+
+.time-btn:hover {
+  border-color: var(--term-text);
+}
+
+.time-btn.active {
+  background: var(--term-text) !important;
+  color: var(--term-bg) !important;
+  border-color: var(--term-text) !important;
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: #000;
+  color: var(--term-accent);
+  padding: 8px 12px;
+  border: 1px solid var(--term-accent);
+  box-shadow: 0 0 10px var(--term-glow);
+  border-radius: 0;
+  font-size: 11px;
+  font-family: inherit;
+  display: none;
+  z-index: 100;
+  text-transform: uppercase;
+}
+
+/* Modal Styles */
+#main-menu-modal, #modal {
+    background: rgba(0, 0, 0, 0.9) !important;
+}
+
+#main-menu-modal .rounded-2xl {
+    border-radius: 0 !important;
+    border: 2px solid var(--term-accent) !important;
+    box-shadow: 0 0 30px var(--term-glow) !important;
+    background: #000 !important;
+}
+
+/* Buttons in Menus */
+button.font-mono {
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-width: 1px;
+}
+
+/* Specific button overrides for the colored menu buttons to fit the theme */
+.bg-blue-600, .bg-green-600, .bg-purple-600, .bg-cyan-600 {
+    background: transparent !important;
+    border: 1px solid currentColor !important;
+    color: currentColor !important;
+}
+.bg-blue-600 { color: #33ccff !important; border-color: #33ccff !important; }
+.bg-green-600 { color: #33ff33 !important; border-color: #33ff33 !important; }
+.bg-purple-600 { color: #cc33ff !important; border-color: #cc33ff !important; }
+.bg-cyan-600 { color: #33ffff !important; border-color: #33ffff !important; }
+
+.bg-blue-600:hover { background: rgba(51, 204, 255, 0.2) !important; box-shadow: 0 0 15px rgba(51, 204, 255, 0.5); }
+.bg-green-600:hover { background: rgba(51, 255, 51, 0.2) !important; box-shadow: 0 0 15px rgba(51, 255, 51, 0.5); }
+
+/* Intervention Warnings */
+.intervention-warning {
+    border-radius: 0 !important;
+    background: #000 !important;
+    border: 1px solid currentColor !important;
+    box-shadow: 0 0 10px currentColor !important;
+    font-family: "Space Mono", monospace;
+    text-transform: uppercase;
+}
+
+.warning-danger { border-color: #ff3333 !important; color: #ff3333 !important; }
+.warning-warning { border-color: #ffaa33 !important; color: #ffaa33 !important; }
+.warning-info { border-color: #33ccff !important; color: #33ccff !important; }
+
+/* Event indicator bar */
+.event-active-bar {
+  animation: eventBarPulse 0.5s ease-in-out infinite alternate;
+  font-family: "Space Mono", monospace;
+  text-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+
+#active-event-bar {
+    opacity: 0.9;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+@keyframes eventBarPulse {
+  from { opacity: 0.8; }
+  to { opacity: 1; text-shadow: 0 0 10px white; }
+}
+
+/* Animations replacements */
+@keyframes neonPulse {
+  0% { box-shadow: 0 0 5px #39ff14; }
+  50% { box-shadow: 0 0 15px #39ff14; }
+  100% { box-shadow: 0 0 5px #39ff14; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #111;
+}
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border: 1px solid #000;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--term-accent);
+}
+
+/* Canvas/ThreeJS Background override helper */
+/* (This is handled in JS essentially, but CSS backup) */
+canvas {
+    filter: contrast(1.1) brightness(0.9) saturate(1.2);
+}

@@ -1,250 +1,520 @@
-# Contributing to ECWoc ’26  
-## 100 Days Of Web Development 🚀
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c080e4ae-221e-422a-92db-a8525edeef07" alt="Contributing Banner" width="70%">
+</p>
 
-Welcome to **100 Days Of Web Development**, an open-source initiative under **ECWoc ’26** aimed at helping beginners and intermediates grow their web development skills through daily challenges and real-world projects.
+<h1 align="center">🤝 Contributing to 100 Days Of Web Development</h1>
 
-We’re excited to have you here! 🎉  
-Every contribution—big or small—matters.
+<p align="center">
+  <strong>Welcome to ECWoC '26! We're thrilled to have you here! 🎉</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/PRs-Welcome-00C7B7?style=for-the-badge&logo=github" alt="PRs Welcome">
+  <img src="https://img.shields.io/badge/First_Timers-Friendly-FF6B6B?style=for-the-badge&logo=github" alt="First Timers">
+  <img src="https://img.shields.io/badge/ECWoC-2026-FFD700?style=for-the-badge" alt="ECWoC 2026">
+</p>
+
+<img src="https://github.com/Mayur-Pagote/README_Design_Kit/blob/45123f007c79aa8d0c8d9b11b3ff72d6bf4744c7/Assets/Star%20Light%20Line.gif" width="100%">
+
+## 💙 Why Contribute?
+
+Contributing to open source is more than just code—it's about:
+
+- 🎓 **Learning**: Gain real-world development experience
+- 🤝 **Collaboration**: Work with developers worldwide
+- 🌟 **Portfolio**: Build projects that showcase your skills
+- 💼 **Career**: Stand out in job applications and interviews
+- 🏆 **Recognition**: Get featured in our Hall of Fame
+- 🎯 **Impact**: Help thousands of learners on their journey
+
+<blockquote align="center">
+  <p><em>"Every expert was once a beginner. Every contribution matters!"</em></p>
+</blockquote>
 
 ---
 
 ## 📌 Table of Contents
 
-- [About the Project](#about-the-project)
-- [Who Can Contribute?](#who-can-contribute)
-- [Ways to Contribute](#ways-to-contribute)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Contribution Workflow](#contribution-workflow)
-- [Pull Request Guidelines](#pull-request-guidelines)
-- [Issue Guidelines](#issue-guidelines)
-- [Code & Content Standards](#code--content-standards)
-- [Commit Message Convention](#commit-message-convention)
-- [Review Process](#review-process)
-- [Code of Conduct](#code-of-conduct)
-- [Need Help?](#need-help)
-- [Acknowledgements](#acknowledgements)
+- [About the Project](#-about-the-project)
+- [Who Can Contribute?](#-who-can-contribute)
+- [Ways to Contribute](#-ways-to-contribute)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Contribution Workflow](#-contribution-workflow)
+- [Pull Request Guidelines](#-pull-request-guidelines)
+- [Issue Guidelines](#-issue-guidelines)
+- [Code Standards](#-code-standards)
+- [Commit Message Convention](#-commit-message-convention)
+- [Review Process](#-review-process)
+- [Code of Conduct](#-code-of-conduct)
+- [Need Help?](#-need-help)
+- [Recognition](#-recognition)
 
 ---
 
 ## 📖 About the Project
 
-**100 Days Of Web Development** is a structured learning challenge designed to cover:
+**100 Days Of Web Development** is a structured learning challenge designed to help developers:
 
-- HTML, CSS, JavaScript
-- Responsive Design
-- Git & GitHub
-- Frontend Projects
-- Beginner-friendly concepts with hands-on practice
+<table>
+  <tr>
+    <td>✅ Master <strong>HTML, CSS, JavaScript</strong></td>
+    <td>✅ Build <strong>150+ real projects</strong></td>
+  </tr>
+  <tr>
+    <td>✅ Learn <strong>modern frameworks</strong> (React, Next.js)</td>
+    <td>✅ Practice <strong>Git & GitHub</strong></td>
+  </tr>
+  <tr>
+    <td>✅ Create a <strong>portfolio-worthy collection</strong></td>
+    <td>✅ Prepare for <strong>internships & jobs</strong></td>
+  </tr>
+</table>
 
-This repository is **community-driven**, beginner-friendly, and open to everyone participating in **ECWoc ’26**.
+This repository is **community-driven**, **beginner-friendly**, and open to everyone participating in **ECWoC '26**.
+
+🔗 **Live Website**: [100dayswebdevelopment-ecwoc.netlify.app](https://100dayswebdevelopment-ecwoc.netlify.app/website/pages/projects)
 
 ---
 
 ## 👥 Who Can Contribute?
 
-Anyone can contribute!  
-You don’t need to be an expert.
+<div align="center">
 
-✔ Beginners  
-✔ Students  
-✔ Open-source enthusiasts  
-✔ ECWoc ’26 participants  
-✔ Frontend developers  
+### 🌟 **Everyone is Welcome!** 🌟
 
-If you can **learn**, you can **contribute** 💙
+</div>
+
+You **don't need to be an expert** to contribute. We welcome:
+
+<table align="center">
+  <tr>
+    <td align="center" width="33%">
+      <h3>🎓 Students</h3>
+      <p>Learning web development?<br>Start your open-source journey here!</p>
+    </td>
+    <td align="center" width="33%">
+      <h3>🔰 Beginners</h3>
+      <p>First-time contributors?<br>We have issues labeled <code>good first issue</code></p>
+    </td>
+    <td align="center" width="33%">
+      <h3>💻 Developers</h3>
+      <p>Experienced coders?<br>Help us build amazing features!</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <h3>🎨 Designers</h3>
+      <p>Creative minds?<br>Improve our UI/UX!</p>
+    </td>
+    <td align="center" width="33%">
+      <h3>📝 Writers</h3>
+      <p>Good with words?<br>Enhance our documentation!</p>
+    </td>
+    <td align="center" width="33%">
+      <h3>🏆 ECWoC Participants</h3>
+      <p>Event contributors?<br>Complete your milestones here!</p>
+    </td>
+  </tr>
+</table>
+
+<blockquote align="center">
+  <p><strong>If you can learn, you can contribute! 💙</strong></p>
+</blockquote>
 
 ---
 
 ## 🛠 Ways to Contribute
 
-You can help in many ways:
+### 1️⃣ Code Contributions 💻
 
-### 📚 Content Contributions
-- Add new daily challenges
-- Improve explanations
-- Add examples or diagrams
-- Fix typos or grammar
+<details open>
+<summary><b>Click to expand</b></summary>
 
-### 💻 Code Contributions
-- Add mini projects
-- Improve existing code
+#### **Add New Projects**
+- Create daily challenge projects (Day 1 - Day 150+)
+- Follow the existing structure
+- Ensure projects are beginner-friendly
+- Include proper documentation
+
+#### **Improve Existing Code**
 - Optimize HTML/CSS/JS
+- Fix bugs and errors
 - Improve responsiveness
+- Add accessibility features
+- Enhance performance
 
-### 📄 Documentation
-- Improve README files
-- Add learning resources
-- Write guides or tutorials
+#### **Implement Features**
+- Add authentication (Firebase/Supabase/Appwrite)
+- Create interactive components
+- Build dashboard features
+- Integrate APIs
 
-### 🐞 Bug Fixes
-- Fix broken links
-- Resolve UI issues
-- Correct code errors
+**Example Projects to Contribute:**
+- 🌤️ Weather applications
+- 📝 Todo lists with advanced features
+- 🎮 Interactive games
+- 📊 Data visualization tools
+- 💬 Chat applications
+- 🛒 E-commerce components
 
-### 💡 Ideas & Suggestions
-- Suggest new challenge ideas
-- Propose project improvements
+</details>
 
 ---
 
-## 🗂 Project Structure
+### 2️⃣ Documentation 📚
+
+<details>
+<summary><b>Click to expand</b></summary>
+
+#### **Improve README Files**
+- Add clear explanations
+- Include screenshots/GIFs
+- Write setup instructions
+- Document features
+
+#### **Create Tutorials**
+- Step-by-step guides
+- Video walkthroughs
+- Code explanations
+- Learning resources
+
+#### **Fix Documentation**
+- Correct typos and grammar
+- Update outdated information
+- Add missing details
+- Improve formatting
+
+**Example Contributions:**
+```markdown
+# Project Name
+
+## Features
+- Feature 1
+- Feature 2
+
+## Technologies Used
+- HTML5
+- CSS3
+- JavaScript
+
+## Setup Instructions
+1. Clone the repository
+2. Open index.html
+3. Start coding!
 ```
-100-days-web-projects/
+
+</details>
+
+---
+
+### 3️⃣ Design & UI/UX 🎨
+
+<details>
+<summary><b>Click to expand</b></summary>
+
+#### **Visual Improvements**
+- Create better layouts
+- Design color schemes
+- Add animations
+- Improve typography
+
+#### **User Experience**
+- Enhance navigation
+- Improve accessibility
+- Add responsive design
+- Create better forms
+
+#### **Assets**
+- Design icons
+- Create illustrations
+- Make banners
+- Design badges
+
+**Tools You Can Use:**
+- Figma
+- Adobe XD
+- Canva
+- CSS animations
+- SVG graphics
+
+</details>
+
+---
+
+### 4️⃣ Bug Fixes & Testing 🐞
+
+<details>
+<summary><b>Click to expand</b></summary>
+
+#### **Find and Fix Bugs**
+- Test on different browsers
+- Check mobile responsiveness
+- Fix broken links
+- Resolve console errors
+
+#### **Testing**
+- Test user flows
+- Verify forms work
+- Check API integrations
+- Test accessibility
+
+#### **Report Issues**
+- Document bugs clearly
+- Provide screenshots
+- Suggest solutions
+- Test on multiple devices
+
+</details>
+
+---
+
+### 5️⃣ Ideas & Suggestions 💡
+
+<details>
+<summary><b>Click to expand</b></summary>
+
+#### **Propose New Features**
+- Suggest project ideas
+- Recommend improvements
+- Share learning resources
+- Propose new challenges
+
+#### **Community Building**
+- Answer questions
+- Help other contributors
+- Write blog posts
+- Share on social media
+
+</details>
+
+---
+
+## 📂 Project Structure
+
+Understanding the structure helps you contribute effectively:
+
+```
+100-Days-Of-Web-Development-ECWoC26/
 │
-├── 📁 README.md                           # Main project overview
-├── 📁 progress-tracker.md                 # Check off completed projects
-├── 📁 resources.md                        # Learning resources
-│
-├── 📁 BEGINNER (Days 1-30)                # Basic Projects
-│   │
-│   ├── 📁 day-01-personal-portfolio/
+├── 📁 public/                          # All daily projects
+│   ├── 📁 Day 01/                      # Beginner projects
 │   │   ├── index.html
 │   │   ├── style.css
 │   │   ├── script.js
-│   │   └── README.md
-│   │
-│   ├── 📁 day-02-responsive-landing-page/
-│   ├── 📁 day-03-todo-list/
-│   ├── 📁 day-04-weather-app/
-│   ├── 📁 day-05-calculator/
-│   ├── 📁 day-06-quiz-app/
-│   ├── 📁 day-07-expense-tracker/
-│   ├── 📁 day-08-pomodoro-timer/
-│   ├── 📁 day-09-note-taking-app/
-│   ├── 📁 day-10-recipe-book/
-│   ├── 📁 day-11-blog-website/
-│   ├── 📁 day-12-ecommerce-product-page/
-│   ├── 📁 day-13-chat-ui/
-│   ├── 📁 day-14-music-player/
-│   ├── 📁 day-15-drawing-app/
-│   ├── 📁 day-16-password-generator/
-│   ├── 📁 day-17-unit-converter/
-│   ├── 📁 day-18-countdown-timer/
-│   ├── 📁 day-19-tip-calculator/
-│   ├── 📁 day-20-qr-code-generator/
-│   ├── 📁 day-21-flashcards-app/
-│   ├── 📁 day-22-markdown-previewer/
-│   ├── 📁 day-23-currency-converter/
-│   ├── 📁 day-24-bmi-calculator/
-│   ├── 📁 day-25-random-quote-generator/
-│   ├── 📁 day-26-image-gallery/
-│   ├── 📁 day-27-dice-roller/
-│   ├── 📁 day-28-rock-paper-scissors/
-│   ├── 📁 day-29-memory-game/
-│   └── 📁 day-30-tic-tac-toe/
+│   │   └── README.md                   # Project documentation
+│   ├── 📁 Day 02/
+│   ├── 📁 Day 30/
+│   ├── 📁 Day 60/                      # Intermediate projects
+│   ├── 📁 Day 90/                      # Advanced projects
+│   └── 📁 Day 150+/                    # Expert/Capstone projects
 │
-├── 📁 INTERMEDIATE (Days 31-60)           # Intermediate Projects
-│   │
-│   ├── 📁 day-31-job-board/
-│   ├── 📁 day-32-social-media-dashboard/
-│   ├── 📁 day-33-real-estate-website/
-│   ├── 📁 day-34-hotel-booking-system/
-│   ├── 📁 day-35-food-delivery-app/
-│   ├── 📁 day-36-fitness-tracker/
-│   ├── 📁 day-37-event-management/
-│   ├── 📁 day-38-booking-appointment-system/
-│   ├── 📁 day-39-online-learning-platform/
-│   ├── 📁 day-40-movie-database/
-│   ├── 📁 day-41-github-profile-finder/
-│   ├── 📁 day-42-stock-market-tracker/
-│   ├── 📁 day-43-news-aggregator/
-│   ├── 📁 day-44-chat-application/
-│   ├── 📁 day-45-project-management-tool/
-│   ├── 📁 day-46-ecommerce-cart/
-│   ├── 📁 day-47-banking-dashboard/
-│   ├── 📁 day-48-flight-booking-system/
-│   ├── 📁 day-49-recipe-sharing-platform/
-│   ├── 📁 day-50-blog-with-cms/
-│   ├── 📁 day-51-portfolio-with-blog/
-│   ├── 📁 day-52-task-management-board/
-│   ├── 📁 day-53-file-uploader/
-│   ├── 📁 day-54-code-editor/
-│   ├── 📁 day-55-voice-notes-app/
-│   ├── 📁 day-56-expense-splitter/
-│   ├── 📁 day-57-habit-tracker/
-│   ├── 📁 day-58-budget-planner/
-│   ├── 📁 day-59-meal-planner/
-│   └── 📁 day-60-travel-planner/
+├── 📁 website/                         # Main portfolio website
+│   ├── 📁 assets/                      # Images, fonts, icons
+│   │   ├── images/
+│   │   ├── fonts/
+│   │   └── icons/
+│   ├── 📁 pages/                       # Website pages
+│   │   ├── home.html
+│   │   ├── projects.html              # Project showcase
+│   │   ├── login.html                 # Auth page (needs implementation)
+│   │   └── about.html
+│   ├── 📁 styles/                      # CSS files
+│   │   ├── main.css
+│   │   ├── projects.css
+│   │   └── responsive.css
+│   └── 📁 scripts/                     # JavaScript files
+│       ├── main.js
+│       ├── projects.js
+│       └── auth.js
 │
-├── 📁 ADVANCED (Days 61-90)               # Advanced Projects
-│   │
-│   ├── 📁 day-61-fullstack-ecommerce/
-│   ├── 📁 day-62-social-network/
-│   ├── 📁 day-63-video-conferencing/
-│   ├── 📁 day-64-online-code-editor/
-│   ├── 📁 day-65-real-time-collaboration/
-│   ├── 📁 day-66-stock-trading-simulator/
-│   ├── 📁 day-67-multiplayer-game/
-│   ├── 📁 day-68-ai-chatbot/
-│   ├── 📁 day-69-blockchain-explorer/
-│   ├── 📁 day-70-data-visualization-dashboard/
-│   ├── 📁 day-71-crypto-wallet/
-│   ├── 📁 day-72-iot-dashboard/
-│   ├── 📁 day-73-machine-learning-ui/
-│   ├── 📁 day-74-voice-assistant/
-│   ├── 📁 day-75-ar-web-app/
-│   ├── 📁 day-76-pwa-news-app/
-│   ├── 📁 day-77-real-time-analytics/
-│   ├── 📁 day-78-document-editor/
-│   ├── 📁 day-79-email-client/
-│   ├── 📁 day-80-project-management-saas/
-│   ├── 📁 day-81-healthcare-portal/
-│   ├── 📁 day-82-elearning-platform/
-│   ├── 📁 day-83-recruitment-platform/
-│   ├── 📁 day-84-real-time-chat-support/
-│   ├── 📁 day-85-auction-platform/
-│   ├── 📁 day-86-freelance-marketplace/
-│   ├── 📁 day-87-music-streaming/
-│   ├── 📁 day-88-video-streaming/
-│   ├── 📁 day-89-smart-home-dashboard/
-│   └── 📁 day-90-enterprise-crm/
+├── 📁 .github/                         # GitHub specific files
+│   ├── ISSUE_TEMPLATE/
+│   └── workflows/
 │
-├── 📁 CAPSTONE (Days 91-100)              # Final Projects
-│   │
-│   ├── 📁 day-91-92-microservices-project/
-│   ├── 📁 day-93-94-open-source-contribution/
-│   ├── 📁 day-95-96-fullstack-application/
-│   ├── 📁 day-97-98-complex-dashboard/
-│   └── 📁 day-99-100-master-project/
-│
-├── 📁 templates/                          # Reusable templates
-│   ├── 📁 html-template/
-│   ├── 📁 css-template/
-│   ├── 📁 js-template/
-│   ├── 📁 api-template/
-│   └── 📁 component-library/
-│
-├── 📁 assets/                             # Shared assets
-│   ├── 📁 images/
-│   ├── 📁 icons/
-│   ├── 📁 fonts/
-│   └── 📁 styles/
-│       ├── variables.css
-│       ├── utilities.css
-│       └── animations.css
-│
-├── 📁 tools/                              # Development tools
-│   ├── 📁 generators/
-│   │   ├── component-generator.js
-│   │   └── project-scaffold.js
-│   ├── 📁 scripts/
-│   └── 📁 config/
-│
-└── 📁 packages.json
+├── 📄 index.html                       # Entry point
+├── 📄 README.md                        # Main documentation
+├── 📄 CONTRIBUTING.md                  # This file
+├── 📄 CODE_OF_CONDUCT.md              # Community guidelines
+├── 📄 LICENSE                          # MIT License
+└── 📄 .gitignore                       # Git ignore rules
 ```
 
+### 📋 File Naming Conventions
 
-> Please follow the existing structure when adding new content.
+- **Folders**: `Day 01`, `Day 02` (with leading zero for days 1-9)
+- **HTML Files**: `index.html` (lowercase)
+- **CSS Files**: `style.css` or `styles.css`
+- **JS Files**: `script.js` or descriptive names (`auth.js`, `api.js`)
+- **Images**: Descriptive names (`project-screenshot.png`)
 
 ---
 
 ## 🚀 Getting Started
 
-1. **Fork** this repository
-2. **Clone** your fork:
+### Prerequisites
+
+Before you begin, make sure you have:
+
+- ✅ **Git** installed ([Download](https://git-scm.com/downloads))
+- ✅ **GitHub account** ([Sign up](https://github.com/signup))
+- ✅ **Code editor** (VS Code recommended)
+- ✅ Basic knowledge of HTML/CSS/JavaScript
+- ✅ Familiarity with Git commands (optional but helpful)
+
+### Step-by-Step Setup
+
+#### 1️⃣ Fork the Repository
+
+<details>
+<summary><b>What is forking?</b></summary>
+
+Forking creates a copy of the repository under your GitHub account. This allows you to make changes without affecting the original project.
+
+</details>
+
+1. Visit the repository: [100-Days-Of-Web-Development-ECWoC26](https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26)
+2. Click the **"Fork"** button in the top-right corner
+3. Wait for GitHub to create your fork
+
+<p align="center">
+  <img src="https://docs.github.com/assets/cb-40742/mw-1440/images/help/repository/fork-button.webp" alt="Fork Button" width="70%">
+</p>
+
+---
+
+#### 2️⃣ Clone Your Fork
+
+<details>
+<summary><b>What is cloning?</b></summary>
+
+Cloning downloads the repository to your local machine so you can work on it.
+
+</details>
+
+Open your terminal/command prompt and run:
+
+```bash
+# Replace YOUR-USERNAME with your GitHub username
+git clone https://github.com/YOUR-USERNAME/100-Days-Of-Web-Development-ECWoC26.git
+
+# Navigate into the project folder
+cd 100-Days-Of-Web-Development-ECWoC26
+```
+
+**Example:**
+```bash
+git clone https://github.com/john-doe/100-Days-Of-Web-Development-ECWoC26.git
+cd 100-Days-Of-Web-Development-ECWoC26
+```
+
+---
+
+#### 3️⃣ Add Upstream Remote
+
+<details>
+<summary><b>Why add upstream?</b></summary>
+
+The upstream remote points to the original repository. This allows you to sync your fork with the latest changes.
+
+</details>
+
+```bash
+# Add the original repository as upstream
+git remote add upstream https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git
+
+# Verify remotes
+git remote -v
+```
+
+**Expected output:**
+```
+origin    https://github.com/YOUR-USERNAME/100-Days-Of-Web-Development-ECWoC26.git (fetch)
+origin    https://github.com/YOUR-USERNAME/100-Days-Of-Web-Development-ECWoC26.git (push)
+upstream  https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git (fetch)
+upstream  https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git (push)
+```
+
+---
+
+#### 4️⃣ Create a New Branch
+
+<details>
+<summary><b>Why create a branch?</b></summary>
+
+Branches allow you to work on features/fixes independently without affecting the main codebase.
+
+</details>
+
+```bash
+# Create and switch to a new branch
+git checkout -b feature/your-feature-name
+
+# Or use the newer syntax
+git switch -c feature/your-feature-name
+```
+
+**Branch Naming Convention:**
+
+| Type | Example |
+|------|---------|
+| Feature | `feature/add-weather-app` |
+| Bug Fix | `bugfix/fix-navbar-alignment` |
+| Documentation | `docs/update-readme` |
+| UI/Design | `ui/improve-landing-page` |
+
+**Examples:**
+```bash
+git checkout -b feature/add-day-45-project
+git checkout -b bugfix/fix-mobile-menu
+git checkout -b docs/add-setup-guide
+```
+
+---
+
+#### 5️⃣ Make Your Changes
+
+Now you can start contributing! Here's what to do:
+
+##### **For New Projects:**
+
+1. Create a new folder in `public/`:
    ```bash
-   git clone https://github.com/<your-username>/100-Days-Of-Web-Development.git
+   mkdir "public/Day 45"
+   cd "public/Day 45"
+   ```
+
+2. Create required files:
+   ```bash
+   touch index.html style.css script.js README.md
+   ```
+
+3. Add your project code
+
+4. Create a README.md:
+   ````markdown
+   # Project Name
+
+   ## Description
+   Brief description of what this project does.
+
+   ## Features
+   - Feature 1
+   - Feature 2
+   - Feature 3
+
+   ## Technologies Used
+   - HTML5
+   - CSS3
+   - JavaScript
+
+   ## Demo
+   ![Screenshot](screenshot.png)
+
+   ## How to Use
+   1. Open `index.html` in your browser
+   2. Interact with the application
+
 
 ---
 
@@ -329,4 +599,8 @@ lighthouse http://localhost:3000 --only-categories=accessibility --view
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [Web.dev Accessibility](https://web.dev/learn/accessibility/)
 - [MDN Accessibility Guide](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
+
+
+   ## Author
+   Subham Nayak
 

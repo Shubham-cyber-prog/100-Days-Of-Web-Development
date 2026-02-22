@@ -1,0 +1,294 @@
+.hero {
+  position: relative;
+  height: 100vh;
+  background: #1f1f2e;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+}
+
+
+#circleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;          
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.start-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background: white;
+  color: black;
+  border-radius: 30px;
+  font-weight: bold;
+}
+body {
+  margin: 0;
+  background: #1f1f2e;
+  color: #ffffff;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.topics {
+  padding: 80px 60px;
+  background: transparent; 
+}
+.topics h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #ffffff;
+}
+
+.topic-row h3 {
+  color: #ffffff;
+}
+.topic-card {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-radius: 14px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.topic-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.scroll-btn {
+  color: #ffffff;
+}
+
+.hero,
+.topics,
+.main-footer,
+.main-header {
+  position: relative;
+  z-index: 1;
+}
+
+.main-footer {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.chapter-section {
+  position: relative;
+  padding: 80px 80px 120px;
+}
+
+.chapter-nav {
+  display: flex;
+  gap: 28px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 60px;
+}
+
+.chapter-nav span {
+  cursor: pointer;
+}
+
+.chapter-nav .active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.chapter-content {
+  display: flex;
+  gap: 80px;
+  align-items: center;
+}
+
+.chapter-left {
+  width: 40%;
+}
+
+.chapter-label {
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
+
+.chapter-left h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.chapter-desc {
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+.chapter-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: #ffffff;
+  color: #000;
+  border-radius: 30px;
+  font-weight: 600;
+}
+
+.chapter-right {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.topic-card-large {
+  background: #ffffff;
+  color: #000;
+  padding: 22px 28px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.topic-card-large:hover {
+  transform: translateY(-4px);
+}
+
+
+.icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;       
+  flex-shrink: 0;
+
+  background: linear-gradient(135deg, #ff5ea0, #6c8cff);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      
+  border-radius: 50%;
+  display: block;
+}
+
+
+.chapter-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.chapter-arrow.left {
+  left: 20px;
+}
+
+.chapter-arrow.right {
+  right: 20px;
+}
+.chapter-nav {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* even spacing */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.chapter-nav button {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.chapter-nav button.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.chapter-right {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+}
+
+.chapter-right::before {
+  content: "";
+  display: block;
+  height: 120px; 
+}
+#heroCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#staticCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-content,
+.chapter-content,
+.chapter-nav {
+  position: relative;
+  z-index: 1;
+}
+
+.hero,
+.chapter-section {
+  position: relative;
+  overflow: hidden;
+}
+canvas {
+  pointer-events: none;
+}
+#heroCanvas,
+#staticCanvas {
+  pointer-events: none;
+}

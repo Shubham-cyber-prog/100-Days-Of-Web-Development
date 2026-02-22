@@ -1,0 +1,183 @@
+:root {
+  --bg: #f4f6fa;
+  --card: #ffffff;
+  --text: #222;
+  --accent: #4a6cf7;
+}
+
+.dark {
+  --bg: #141625;
+  --card: #1f2235;
+  --text: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 20px;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Header */
+/* .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+} */
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
+
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  padding:18px 25px;
+  border-radius:14px;
+}
+
+.header h1 {
+  font-size: 28px;
+}
+
+.header button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 25px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.header button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(74,108,247,0.4);
+}
+
+/* Overview Cards */
+.overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  padding: 22px;
+  border-radius: 14px;
+  text-align: center;
+  color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.count {
+  font-size: 34px;
+  font-weight: bold;
+}
+
+/* Social Colors */
+.facebook {
+  background: linear-gradient(135deg, #1877f2, #4e8cff);
+}
+
+.twitter {
+  background: linear-gradient(135deg, #1da1f2, #6cc6ff);
+}
+
+.instagram {
+  background: linear-gradient(135deg, #e1306c, #fd6e9a);
+}
+
+.youtube {
+  background: linear-gradient(135deg, #ff0000, #ff5f5f);
+}
+
+/* Activity */
+.activity {
+  margin-top: 50px;
+}
+
+.activity h2 {
+  margin-bottom: 20px;
+}
+
+.activity-card {
+  background: var(--card);
+  padding: 16px 22px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+
+.activity-card:hover {
+  transform: translateX(6px);
+}
+
+
+#dateTime{
+  font-size:14px;
+  opacity:0.7;
+}
+
+
+.progress{
+  height:6px;
+  background: rgba(255,255,255,0.3);
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.bar{
+  height:100%;
+  border-radius:10px;
+  background:white;
+  animation: grow 1.5s ease;
+}
+
+@keyframes grow{
+  from{width:0;}
+}
+
+.toast{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  background: var(--accent);
+  color:white;
+  padding:14px 20px;
+  border-radius:10px;
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.4s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}

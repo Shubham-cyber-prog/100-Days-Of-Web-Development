@@ -1,0 +1,137 @@
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #ffffff;
+    --accent: #38bdf8;
+}
+
+.light {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --accent: #0284c7;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 320px;
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#themeToggle {
+    float: right;
+    background: var(--accent);
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+}
+
+input, select {
+    background: #334155;
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    font-weight: bold;
+    cursor: pointer;
+    margin: 8px 0;   /* 🔑 consistent spacing */
+}
+
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid var(--accent);
+}
+
+
+#result {
+    margin-top: 12px;
+    font-weight: bold;
+    color: var(--accent);
+    text-align: center;
+}
+
+.history {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+
+#historyList {
+    list-style: none;
+    padding: 0;
+}
+
+#historyList li {
+    background: #334155;
+    padding: 6px;
+    margin-bottom: 6px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+
+#convertBtn {
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+
+#clearHistory {
+    margin-top: 8px;
+}

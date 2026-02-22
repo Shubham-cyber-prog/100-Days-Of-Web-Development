@@ -1,0 +1,129 @@
+/* General Dashboard Layout */
+.dashboard {
+  width: 70vw;
+ height: 90vh;
+  padding: 20px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f4f6f8;
+  border-radius: 20px;
+  position: relative;
+  left: 12vw;
+}
+
+.dashboard-title {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* Card Sections */
+.card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.patientList{
+  margin-top: 100px;
+}
+.card h2 {
+  margin-bottom: 15px;
+  color: #34495e;
+}
+
+/* Lists */
+.list-item {
+  padding: 8px 0;
+ 
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+/* Patient & Appointment Styling */
+.patient-name {
+  font-weight: bold;
+  color: #2980b9;
+}
+
+.appointment-patient {
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.appointment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.appointment-item:last-child {
+  border-bottom: none;
+}
+
+/* Status Colors */
+.status {
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.status.okay {
+  color: green;
+}
+
+.status.pending {
+  color: orange;
+}
+
+.status.postponed {
+  color: red;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #2ecc71;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.actions button:hover {
+  background-color: #27ae60;
+}
+
+.date-input {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Prescription Upload */
+.prescription-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prescription-item input[type="file"] {
+  margin-left: 15px;
+}
+
+.uploaded-file {
+  margin-left: 15px;
+  font-size: 0.9em;
+  color: #27ae60;
+}

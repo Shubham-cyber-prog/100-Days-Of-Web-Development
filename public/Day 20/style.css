@@ -1,141 +1,262 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* =========================
+   QR PAGE — MAIN SITE THEME
+   ========================= */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+:root {
+  --bg-primary: #0b0a08;
+  --bg-card: rgba(255, 255, 255, 0.06);
+  --bg-hover: rgba(255, 255, 255, 0.12);
+
+  --text-primary: #ffffff;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  /* 🔥 MAIN SITE ORANGE / RED ACCENT */
+  --accent: #f97316;
+  /* orange */
+  --accent-glow: rgba(249, 115, 22, 0.35);
+
+  --border: rgba(255, 255, 255, 0.12);
 }
 
+
+/* ---------- Reset -> Moved to shared/base.css ---------- */
+
+/* ---------- Body ---------- */
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #4a90e2, #7e57c2);
-    padding: 0 10px;
+  min-height: 100vh;
+  background: radial-gradient(1200px 600px at top,
+      rgba(124, 58, 237, 0.08),
+      transparent 60%),
+    var(--bg-primary);
+  color: var(--text-primary);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
 }
 
-.wrapper {
-    background: #fff;
-    max-width: 410px;
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-    padding: 30px;
+/* ---------- Container ---------- */
+.container {
+  width: 100%;
+  max-width: 520px;
 }
 
-header h1 {
-    font-size: 28px;
-    font-weight: 600;
-    color: #333;
-    text-align: center;
+/* ---------- Title ---------- */
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
 }
 
-header p {
-    margin-top: 5px;
-    color: #666;
-    font-size: 16px;
-    text-align: center;
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
-.wrapper .form {
-    margin: 25px 0 30px;
+.tab {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-.form :where(input, button) {
-    width: 100%;
-    height: 55px;
-    border: none;
-    outline: none;
-    border-radius: 5px;
+.tab:hover {
+  background: var(--bg-hover);
+  transform: translateY(-1px);
 }
 
-.form input {
-    font-size: 16px;
-    padding: 0 15px;
-    border: 1px solid #999;
-    margin-bottom: 15px;
+.tab.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 0 0 1px var(--accent),
+    0 8px 30px var(--accent-glow);
 }
 
-.form button {
-    background: #4a90e2;
-    color: #fff;
-    cursor: pointer;
-    font-size: 17px;
-    font-weight: 500;
-    transition: 0.3s ease;
+/* ---------- Card ---------- */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  animation: fadeUp 0.6s ease;
 }
 
-.form button:hover {
-    background: #3a7bc8;
+/* ---------- Inputs ---------- */
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
 }
 
-.qr-code {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    border-radius: 5px;
+input::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ---------- Buttons ---------- */
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg,
+      var(--accent),
+      #5b21b6);
+  color: white;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px var(--accent-glow);
+}
+
+/* ---------- Tab Content ---------- */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: slideFade 0.35s ease;
+}
+
+/* ---------- QR Output ---------- */
+.qr-box {
+  margin-top: 18px;
+  display: none;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+#downloadBtn {
+  display: none;
+}
+
+/* ---------- Background Controls ---------- */
+.bg-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.bg-controls button {
+  background: transparent;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  padding: 8px;
+  border-radius: 12px;
+  color: var(--text-secondary);
+}
+
+.bg-controls button:hover {
+  background: var(--bg-hover);
+}
+
+/* ---------- Media ---------- */
+video,
+canvas {
+  width: 100%;
+  border-radius: 14px;
+  margin-top: 12px;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeUp {
+  from {
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-}
+    transform: translateY(14px);
+  }
 
-.qr-code.active {
+  to {
     opacity: 1;
-    pointer-events: auto;
-    transition: opacity 1s ease;
+    transform: translateY(0);
+  }
 }
 
-.qr-code img {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 15px;
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+/* ---------- Mobile ---------- */
+@media (max-width: 480px) {
+  body {
+    padding: 18px;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
 }
 
-.download-btn {
-    background: #4a90e2;
-    color: #fff;
-    cursor: pointer;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.3s ease;
+
+/* 🌙 Light Mode */
+body.light {
+  --bg-primary: #f9fafb;
+  --bg-card: rgba(0, 0, 0, 0.05);
+  --bg-hover: rgba(0, 0, 0, 0.08);
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --border: rgba(0, 0, 0, 0.12);
 }
 
-.download-btn:hover {
-    background: #3a7bc8;
+/* Toggle UI */
+.theme-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
 }
 
-.download-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
+/* Customize Section */
+.customize {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
 }
 
-@media (max-width: 430px) {
-    .wrapper {
-        padding: 25px;
-    }
-    header h1 {
-        font-size: 24px;
-    }
-    .form :where(input, button) {
-        height: 50px;
-    }
-    .qr-code img {
-        width: 160px;
-        height: 160px;
-    }
+.customize label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.customize input[type="color"],
+.customize input[type="range"],
+.customize input[type="file"] {
+  margin-bottom: 10px;
 }

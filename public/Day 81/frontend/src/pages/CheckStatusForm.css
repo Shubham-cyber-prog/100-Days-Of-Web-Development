@@ -1,0 +1,134 @@
+.status-container {
+    width: 75vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 80vh;
+  background: #f4f6f8;
+  padding: 40px;
+  position: relative;
+  left: 10vw;
+}
+
+.status-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 80vw;
+
+  text-align: center;
+}
+
+.status-card h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+.status-form{
+        display: flex;
+        flex-direction: column;
+    }
+
+.status-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.status-form button {
+  width: 100%;
+  padding: 12px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.status-form button:hover {
+  background: #2980b9;
+}
+
+.result-card {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.status-label {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.status-label.pending {
+  background: #f39c12;
+  color: white;
+}
+
+.status-label.okay {
+  background: #2ecc71;
+  color: white;
+}
+
+.status-label.postponed {
+  background: #e74c3c;
+  color: white;
+}
+
+.edit-form label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: 500;
+}
+
+.edit-form textarea,
+.edit-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.update-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: #1abc9c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.update-btn:hover {
+  background: #16a085;
+}
+
+@media screen and (min-width: 1200px) {
+    .status-form{
+        display: flex;
+        flex-direction: row;
+    }
+    .status-form button{
+        width: 400px;
+        margin-inline: 20px;
+        height: 60px;
+        position: relative;
+        top: 10px;
+    }
+    .status-form input{
+        margin-inline: 10px;
+        height: 40px;
+    }
+}

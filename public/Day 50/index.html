@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Resume Builder</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- FORM -->
+  <form id="resume-form">
+    <div id="progress-container">
+      <div id="progress-bar"></div>
+    </div>
+
+    <h2>📋 Resume Builder</h2>
+
+    <label>Name
+      <input type="text" id="name">
+    </label>
+
+    <label>Email
+      <input type="email" id="email">
+    </label>
+
+    <label>Phone
+      <input type="tel" id="phone">
+    </label>
+
+    <label>LinkedIn
+      <input type="url" id="linkedin">
+    </label>
+
+    <label>GitHub
+      <input type="url" id="github">
+    </label>
+
+    <label>Profile Summary
+      <textarea id="summary" maxlength="500"></textarea>
+      <small><span id="word-count">0</span>/500</small>
+    </label>
+
+    <label>Profile Photo
+      <input type="file" id="photo-upload" accept="image/*">
+    </label>
+
+    <div id="education-section">
+      <label>🎓 Education</label>
+      <input type="text" class="education" placeholder="Degree & Institution">
+      <button type="button" onclick="addEducation()">+ Add Education</button>
+    </div>
+
+    <div id="experience-section">
+      <label>💼 Experience</label>
+      <input type="text" class="experience" placeholder="Role & Company">
+      <button type="button" onclick="addExperience()">+ Add Experience</button>
+    </div>
+
+    <label>🛠 Skills</label>
+    <div class="skills">
+      <label><input type="checkbox" value="HTML"> HTML</label>
+      <label><input type="checkbox" value="CSS"> CSS</label>
+      <label><input type="checkbox" value="JavaScript"> JavaScript</label>
+      <label><input type="checkbox" value="React"> React</label>
+    </div>
+
+    <button type="button" onclick="clearForm()">🧹 ClearForm</button>
+  </form>
+
+  <!-- PREVIEW -->
+  <div id="resume-preview">
+    <h2>📄 Resume Preview</h2>
+
+    <div id="preview-photo"></div>
+
+    <p><b>Name:</b> <span id="preview-name"></span></p>
+    <p><b>Email:</b> <span id="preview-email"></span></p>
+    <p><b>Phone:</b> <span id="preview-phone"></span></p>
+    <p><b>LinkedIn:</b> <span id="preview-linkedin"></span></p>
+    <p><b>GitHub:</b> <span id="preview-github"></span></p>
+
+    <p><b>Summary:</b> <span id="preview-summary"></span></p>
+
+    <p><b>🎓 Education</b></p>
+    <ul id="preview-education"></ul>
+
+    <p><b>💼 Experience</b></p>
+    <ul id="preview-experience"></ul>
+
+    <p><b>🛠 Skills:</b> <span id="preview-skills"></span></p>
+
+    <button onclick="downloadResume()">📥 Download PDF</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

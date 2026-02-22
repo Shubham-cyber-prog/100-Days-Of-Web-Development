@@ -1,0 +1,91 @@
+.chat-header {
+  height: 56px;
+  padding: 0 16px;
+  background: #0b0f14;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #e5e7eb;
+}
+
+.chat-title {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: #e5e7eb;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Dropdown menu */
+
+.menu-container {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: 36px;
+
+  background: #111827;
+  border-radius: 10px;
+  min-width: 160px;
+  padding: 6px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+}
+
+.menu.hidden {
+  display: none;
+}
+
+.menu button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #e5e7eb;
+  padding: 10px 12px;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.menu hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 6px 0;
+}
+
+.menu .danger {
+  color: #f87171;
+}

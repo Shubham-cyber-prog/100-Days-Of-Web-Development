@@ -1,0 +1,100 @@
+.courses-page {
+  padding: 60px;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.course-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.course-card button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #1f1f2e;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.courses-page {
+  min-height: 100vh;
+  padding: 80px 60px;
+  background: #1f1f2e;
+  color: #ffffff;
+}
+
+.courses-page h1 {
+  font-size: 42px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+}
+
+.course-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: left;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.course-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.course-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.course-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+.course-card button {
+  background: #ffffff;
+  color: #1f1f2e;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.course-card button:hover {
+  background: #e6e6e6;
+}
+.course-card button.enrolled {
+  background: #4caf50;
+  color: #ffffff;
+  cursor: default;
+  opacity: 0.9;
+}
+
+.course-card button:disabled {
+  pointer-events: none;
+}

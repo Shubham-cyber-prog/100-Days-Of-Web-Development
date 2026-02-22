@@ -1,0 +1,637 @@
+/* --- Footer --- */
+.main-footer {
+    background: #050505;
+    /* Deepest black */
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 1.5rem 1rem;
+    /* Significantly reduced padding */
+    margin-top: auto;
+    font-family: var(--font-main);
+    position: relative;
+    overflow: hidden;
+
+    --text-primary: #ededed;
+    /* Resets Header/Main text to White */
+    --text-secondary: #a1a1aa;
+    /* Resets Description/Link text to Light Grey */
+    --text-tertiary: #52525b;
+    /* Resets copyright text to Muted Grey */
+
+    /* Ensure the color is applied */
+    color: var(--text-primary);
+}
+
+.main-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 4rem;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Specific column weighting for large screens */
+@media (min-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Enforce left alignment */
+    transition: transform 0.3s ease;
+}
+
+.footer-col:hover {
+    transform: translateY(-2px);
+    color: var(--text-secondary);
+}
+
+.footer-col h4 {
+    color: var(--text-primary) !important;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--text-primary), var(--accent-secondary));
+    transition: width 0.3s ease;
+}
+
+.footer-col:hover h4::after {
+    width: 30px;
+
+}
+
+.footer-description {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    max-width: 300px;
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+.footer-col:hover .footer-description {
+    color: var(--text-primary);
+}
+
+/* Social Icons Row */
+.footer-socials {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease;
+    opacity: 0;
+}
+
+.social-link:hover::before {
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+}
+
+.social-link:hover {
+    background: var(--text-primary);
+    color: var(--text-tertiary);
+    border-color: var(--text-primary);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Links List */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.85rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    position: relative;
+    padding: 0.25rem 0;
+}
+
+.footer-links a:hover {
+    color: #ffffff !important;
+    /* Ensure hover state is bright white */
+}
+
+.footer-links a::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(45deg, var(--text-primary), var(--accent-secondary));
+    border-radius: 2px;
+    transform: translateY(-50%);
+    transition: height 0.3s ease;
+}
+
+.footer-links a:hover::before {
+    height: 100%;
+}
+
+.footer-links a:hover {
+    color: var(--text-primary);
+    transform: translateX(8px);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.footer-links a svg {
+    color: var(--text-tertiary);
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover svg {
+    color: var(--accent-primary);
+    transform: rotate(5deg) scale(1.1);
+}
+
+/* Usage Tags */
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.tech-tag {
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.tech-tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.tech-tag:hover::before {
+    left: 100%;
+}
+
+.tech-tag:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tag-html {
+    background: rgba(227, 76, 38, 0.1);
+    color: #e34c26;
+    border: 1px solid rgba(227, 76, 38, 0.2);
+}
+
+.tag-html:hover {
+    background: rgba(227, 76, 38, 0.15);
+    border-color: rgba(227, 76, 38, 0.4);
+    box-shadow: 0 4px 15px rgba(227, 76, 38, 0.2);
+}
+
+.tag-css {
+    background: rgba(38, 77, 228, 0.1);
+    color: #264de4;
+    border: 1px solid rgba(38, 77, 228, 0.2);
+}
+
+.tag-css:hover {
+    background: rgba(38, 77, 228, 0.15);
+    border-color: rgba(38, 77, 228, 0.4);
+    box-shadow: 0 4px 15px rgba(38, 77, 228, 0.2);
+}
+
+.tag-js {
+    background: rgba(247, 223, 30, 0.1);
+    color: #f7df1e;
+    border: 1px solid rgba(247, 223, 30, 0.2);
+}
+
+.tag-js:hover {
+    background: rgba(247, 223, 30, 0.15);
+    border-color: rgba(247, 223, 30, 0.4);
+    box-shadow: 0 4px 15px rgba(247, 223, 30, 0.2);
+}
+
+/* Legal Pills */
+.legal-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.legal-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.legal-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transition: left 0.4s ease;
+}
+
+.legal-btn:hover::before {
+    left: 100%;
+}
+
+.legal-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    border-color: var(--text-tertiary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Copyright Row */
+.footer-bottom {
+    max-width: var(--container-width);
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+}
+
+.created-by {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.created-by a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.created-by a::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--text-secondary), var(--accent-secondary));
+    transition: width 0.3s ease;
+}
+
+.created-by a:hover::before {
+    width: 100%;
+}
+
+.created-by a:hover {
+    color: var(--text-primary);
+    transform: translateY(-1px);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+/* --- Mobile Footer Accordion --- */
+/* Mobile: Hide arrow by default */
+.arrow-icon {
+    display: none;
+    transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .main-footer {
+        padding: 1.5rem 1rem 6rem;
+        /* Reduced top/side, Increased bottom for Nav clearance */
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        /* Significantly reduced gap */
+    }
+
+    details.footer-col {
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.25rem;
+        width: 100%;
+        margin-bottom: 0.25rem;
+        transition: background-color 0.2s;
+    }
+
+    details.footer-col[open] {
+        padding-bottom: 1rem;
+    }
+
+    /* Target the summary for styling */
+    details.footer-col summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem 0;
+        /* Tighter padding */
+        position: relative;
+    }
+
+    details.footer-col summary::webkit-details-marker {
+        display: none;
+    }
+
+    details.footer-col summary h4 {
+        margin: 0;
+        font-size: 0.95rem;
+        /* Slightly smaller header */
+        color: var(--text-primary);
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Show our custom arrow */
+    .arrow-icon {
+        display: block;
+        opacity: 0.7;
+        position: absolute;
+        right: 0.5rem;
+        /* Tighter positioning */
+        width: 16px;
+        /* Smaller icon */
+        height: 16px;
+    }
+
+    /* Rotate arrow when open */
+    details[open] summary .arrow-icon {
+        transform: rotate(180deg);
+        color: var(--accent-secondary);
+    }
+
+    /* Only indent content when open */
+    .footer-links,
+    .tech-tags,
+    .legal-links {
+        margin-top: 0.5rem;
+        /* Tighter margin */
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Force all footer columns to align items center */
+    .footer-col {
+        align-items: center !important;
+        text-align: center !important;
+        width: 100%;
+    }
+
+    .tech-tags {
+        flex-direction: row;
+        justify-content: center;
+        gap: 0.4rem;
+        /* Tighter gap */
+    }
+
+    .footer-description {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        max-width: 100%;
+    }
+
+    .footer-socials {
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    .footer-col h4 {
+        margin-bottom: 0;
+        /* Remove bottom margin from h4 on mobile since summary handles padding */
+    }
+
+    .footer-links li {
+        margin-bottom: 0.5rem;
+        /* Compact links */
+    }
+}
+
+/* --- Desktop Specifics (Disable Accordion) --- */
+@media (min-width: 769px) {
+
+    /* Hide the summary marker (arrow) on desktop */
+    details.footer-col>summary {
+        list-style: none;
+        pointer-events: none;
+        /* Disable clicking */
+    }
+
+    details.footer-col>summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* Hide the custom arrow icon */
+    .arrow-icon {
+        display: none !important;
+    }
+
+    /* Ensure content is always visible */
+    details.footer-col[open] .footer-links,
+    details.footer-col[open] .tech-tags,
+    details.footer-col[open] .legal-links {
+        animation: none;
+    }
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+[data-theme="light"] .main-footer {
+    background: var(--bg-secondary);
+    border-top-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .main-footer::before {
+    background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+}
+
+[data-theme="light"] .footer-col h4 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .footer-col h4::after {
+    background: linear-gradient(90deg, var(--accent-core), var(--accent-glow));
+}
+
+[data-theme="light"] .footer-description {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .footer-col:hover .footer-description {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .social-link {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .social-link:hover {
+    background: var(--accent-core);
+    color: white;
+    border-color: var(--accent-core);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+[data-theme="light"] .footer-links a {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .footer-links a:hover {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .footer-links a::before {
+    background: linear-gradient(45deg, var(--accent-core), var(--accent-glow));
+}
+
+[data-theme="light"] .footer-links a svg {
+    color: var(--text-tertiary);
+}
+
+[data-theme="light"] .footer-links a:hover svg {
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .legal-btn {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .legal-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .footer-bottom {
+    border-top-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .created-by a {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .created-by a::before {
+    background: linear-gradient(90deg, var(--accent-core), var(--accent-glow));
+}
+
+[data-theme="light"] .created-by a:hover {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] details.footer-col {
+    border-bottom-color: var(--border-light);
+}
+
+[data-theme="light"] details[open] summary .arrow-icon {
+    color: var(--accent-core);
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - IoT Event Monitoring</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">🚀 IoTFlow</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Get In Touch</h1>
+            <p>We'd love to hear from you. Reach out for support, feedback, or collaboration</p>
+        </section>
+
+        <section class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; margin: 0 auto;">
+                <div>
+                    <h2 class="section-title mb-3">Contact Us</h2>
+                    <div class="form-container" style="margin: 0; max-width: 100%;">
+                        <div id="contactError" class="alert alert-error" style="display: none;"></div>
+
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="contactName">Full Name</label>
+                                <input type="text" id="contactName" required placeholder="Your name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contactEmail">Email Address</label>
+                                <input type="email" id="contactEmail" required placeholder="your@email.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <select id="subject" required>
+                                    <option value="">Select a subject...</option>
+                                    <option value="support">Support Request</option>
+                                    <option value="feedback">Feedback</option>
+                                    <option value="partnership">Partnership Inquiry</option>
+                                    <option value="general">General Question</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" required placeholder="Your message..." rows="5"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="section-title mb-3">Contact Information</h2>
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        <div class="card">
+                            <h4>📧 Email</h4>
+                            <p>support@iotshield.com</p>
+                            <p>sales@iotshield.com</p>
+                        </div>
+                        <div class="card">
+                            <h4>📞 Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                            <p>Mon - Fri: 9 AM - 6 PM IST</p>
+                        </div>
+                        <div class="card">
+                            <h4>📍 Location</h4>
+                            <p>Tech Hub, Innovation Square<br>Pune, Maharashtra, India</p>
+                        </div>
+                        <div class="card">
+                            <h4>🕐 Support Hours</h4>
+                            <p>24/7 Technical Support<br>Typical response time: 2 hours</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mt-4">
+            <h2 class="section-title mb-3">Follow Us</h2>
+            <div style="text-align: center;">
+                <a href="#" style="display: inline-block; margin: 0 1rem; font-size: 2rem; color: var(--primary-accent); text-decoration: none;">📘</a>
+                <a href="#" style="display: inline-block; margin: 0 1rem; font-size: 2rem; color: var(--primary-accent); text-decoration: none;">𝕏</a>
+                <a href="#" style="display: inline-block; margin: 0 1rem; font-size: 2rem; color: var(--primary-accent); text-decoration: none;">💼</a>
+                <a href="#" style="display: inline-block; margin: 0 1rem; font-size: 2rem; color: var(--primary-accent); text-decoration: none;">📺</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="features.html">Features</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+        </div>
+        <p>&copy; 2025 IoT EventShield. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

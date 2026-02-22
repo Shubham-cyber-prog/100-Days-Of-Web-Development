@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ML Path</title>
+
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+</head>
+
+<body>
+
+  <div id="header"></div>
+
+  <section class="hero">
+    <canvas id="heroCanvas"></canvas>
+
+    <div class="hero-content">
+      <h1>Start Your Machine Learning Journey</h1>
+      <p>Roadmaps, courses, progress tracking & projects</p>
+      <a href="login.html" id="homeStartBtn" class="start-btn">Get Started</a>
+    </div>
+  </section>
+
+  <section class="chapter-section">
+    <canvas id="staticCanvas"></canvas>
+
+    <div class="chapter-nav" id="chapterNav">
+      <button>Probability</button>
+      <button>Clustering</button>
+      <button class="active">Regression</button>
+      <button>Classification</button>
+      <button>Python</button>
+      <button>NLP</button>
+    </div>
+
+    <div class="chapter-content">
+      <div class="chapter-left">
+        <p class="chapter-label"></p>
+        <h2></h2>
+        <p class="chapter-desc"></p>
+        <a class="chapter-btn"></a>
+      </div>
+
+      <div class="chapter-right"></div>
+    </div>
+
+    <button class="chapter-arrow left">‹</button>
+    <button class="chapter-arrow right">›</button>
+  </section>
+
+  <div id="footer"></div>
+
+
+  <div id="chatbot-container"></div>
+
+  <script src="components/header.js"></script>
+  <script src="components/footer.js"></script>
+
+  <script src="js/home-circles.js"></script>
+  <script src="js/static-circles.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const topics = [
+        {
+          chapter: 1,
+          title: "Basic Probability",
+          desc: "This chapter introduces the basic concepts of probability theory.",
+          cta: "Go to Probability",
+          link: "topics/maths/probability.html",
+          cards: [
+            { title: "Chance Events", icon: "assets/icons/chanceevent.png" },
+            { title: "Expectation", icon: "assets/icons/expectation.png" },
+            { title: "Variance", icon: "assets/icons/variance.png" }
+          ]
+        },
+        {
+          chapter: 2,
+          title: "Clustering",
+          desc: "Unsupervised learning technique that groups similar data points.",
+          cta: "Go to Clustering",
+          link: "topics/unsupervised/clustering.html",
+          cards: [
+            { title: "K-Means", icon: "assets/icons/kmeans.png" },
+            { title: "Hierarchical Clustering", icon: "assets/icons/hierarchial.png" },
+            { title: "DBSCAN", icon: "assets/icons/dbscan.png" }
+          ]
+        },
+        {
+          chapter: 3,
+          title: "Regression Analysis",
+          desc: "Model relationships between variables to make predictions.",
+          cta: "Go to Regression Analysis",
+          link: "topics/supervised/regression.html",
+          cards: [
+            { title: "Ordinary Least Squares", icon: "assets/icons/ols.png" },
+            { title: "Correlation", icon: "assets/icons/correlation.png" },
+            { title: "Analysis of Variance", icon: "assets/icons/Analysis-variance.png" }
+          ]
+        }
+      ];
+
+      let activeIndex = 2;
+      const navButtons = document.querySelectorAll("#chapterNav button");
+      const label = document.querySelector(".chapter-label");
+      const title = document.querySelector(".chapter-left h2");
+      const desc = document.querySelector(".chapter-desc");
+      const btn = document.querySelector(".chapter-btn");
+      const right = document.querySelector(".chapter-right");
+
+      function renderTopic(index) {
+        activeIndex = index;
+        navButtons.forEach(b => b.classList.remove("active"));
+        navButtons[index].classList.add("active");
+
+        const t = topics[index];
+        label.textContent = `Chapter ${t.chapter}`;
+        title.textContent = t.title;
+        desc.textContent = t.desc;
+        btn.textContent = t.cta;
+        btn.href = t.link;
+
+        right.innerHTML = "";
+        t.cards.forEach(card => {
+          const div = document.createElement("div");
+          div.className = "topic-card-large";
+          div.innerHTML = `
+            <div class="icon-circle">
+              <img src="${card.icon}" alt="${card.title}">
+            </div>
+            <span>${card.title}</span>
+          `;
+          right.appendChild(div);
+        });
+      }
+
+      navButtons.forEach((b, i) => b.onclick = () => renderTopic(i));
+      document.querySelector(".chapter-arrow.right").onclick =
+        () => renderTopic((activeIndex + 1) % topics.length);
+      document.querySelector(".chapter-arrow.left").onclick =
+        () => renderTopic((activeIndex - 1 + topics.length) % topics.length);
+
+      renderTopic(activeIndex);
+    });
+  </script>
+
+  <script>
+    fetch("components/chatbot.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("chatbot-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "js/chatbot.js";
+        document.body.appendChild(script);
+      })
+      .catch(err => console.error("Chatbot load failed:", err));
+  </script>
+
+</body>
+</html>

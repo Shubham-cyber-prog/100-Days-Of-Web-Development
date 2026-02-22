@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PWA News App</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="../src/styles.css" />
+
+</head>
+<body>
+
+  <header>
+    <h1>📰 PWA News App</h1>
+    <p>Latest headlines at your fingertips</p>
+  </header>
+
+ <main class="container">
+
+  <!-- Status -->
+  <div id="status" class="status online">🟢 Online</div>
+
+  <!-- Category Filters -->
+  <div class="filters">
+    <button onclick="loadCategory('general')">General</button>
+    <button onclick="loadCategory('technology')">Technology</button>
+    <button onclick="loadCategory('business')">Business</button>
+  </div>
+
+  <!-- News -->
+  <div id="news-container" class="news-grid"></div>
+
+</main>
+
+
+  <script src="../src/app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../src/service-worker.js');
+    }
+  </script>
+
+</body>
+</html>

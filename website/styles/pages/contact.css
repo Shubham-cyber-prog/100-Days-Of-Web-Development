@@ -1,0 +1,349 @@
+/* --- Contact Page Styles --- */
+
+/* Main Layout Grid */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    align-items: start;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- Left Column: Contact Info --- */
+.contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.column-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Glassmorphic Contact Cards */
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.contact-card:hover::before {
+    transform: translateX(100%);
+}
+
+.contact-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--text-primary);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    background: var(--bg-hover);
+}
+
+.icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    color: var(--text-primary);
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.contact-card:hover .icon-box {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.card-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+}
+
+.card-action {
+    font-size: 0.75rem;
+    color: var(--accent-secondary);
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+/* --- Right Column: Contact Form --- */
+.contact-form-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.6rem;
+}
+
+.form-group label .required {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-secondary);
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Button & Status */
+.form-note {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin-top: 1rem;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.status-pills {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.pill {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: default;
+    transition: all 0.2s;
+    backdrop-filter: blur(5px);
+}
+
+.pill:hover {
+    border-color: var(--text-tertiary);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.pill.active {
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+/* --- Mobile / Responsive --- */
+@media (max-width: 900px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .contact-info-col {
+        order: 1;
+        /* Form first on mobile? Usually Info first is better for context, keeping default order */
+    }
+
+    .contact-form-col {
+        padding: 1.5rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-hero h1 {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .status-pills {
+        justify-content: center;
+        /* Centered as requested */
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        /* Ensure they wrap if needed */
+        padding-bottom: 0;
+        mask-image: none;
+        /* Remove fade */
+    }
+
+    .pill {
+        white-space: normal;
+        /* Allow text to wrap if really needed, or keep nowrap */
+        text-align: center;
+    }
+}
+
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+
+[data-theme="light"] .contact-card {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .contact-card:hover {
+    border-color: var(--accent-core);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .icon-box {
+    background: var(--bg-secondary);
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .contact-card:hover .icon-box {
+    background: var(--accent-core);
+    color: white;
+}
+
+[data-theme="light"] .card-content p {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .contact-form-col {
+    background: white;
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-xl);
+}
+
+[data-theme="light"] .form-group label {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+    background: var(--bg-input);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group textarea:focus {
+    border-color: var(--accent-core);
+    background: white;
+    box-shadow: 0 0 0 4px var(--accent-alpha);
+}
+
+[data-theme="light"] .form-group input::placeholder,
+[data-theme="light"] .form-group textarea::placeholder {
+    color: var(--text-tertiary);
+}
+
+[data-theme="light"] .pill {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .pill:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-hover);
+}
+
+[data-theme="light"] .pill.active {
+    background: var(--accent-success-alpha);
+    border-color: var(--accent-success);
+    color: var(--accent-success);
+}

@@ -1,0 +1,264 @@
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(90deg, #efd5ff 0%, #515ada 100%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+/* Animation Classes */
+.animate-pop {
+    animation: pop 0.5s ease-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Calculator Container */
+.calculator-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.title {
+    color: #4a6baf;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* Input Styles */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+.unit-row {
+  display: flex;
+  gap: 10px;
+}
+
+.unit-row input {
+  flex: 2;
+}
+
+.unit-row select {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    border-color: #4a6baf;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 107, 175, 0.2);
+}
+
+/* Button Styles */
+button {
+    background-color: #4a6baf;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #3a5a9f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 107, 175, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Result Styles */
+.result-container {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    transition: all 0.5s ease;
+}
+
+.result-container h2 {
+    margin-top: 0;
+    color: #555;
+    font-size: 20px;
+}
+
+.bmi-value {
+    font-size: 48px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #4a6baf;
+    transition: all 0.5s ease;
+}
+
+.bmi-category {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.bmi-message {
+    font-size: 16px;
+    color: #666;
+}
+
+.hidden {
+    display: none;
+}
+
+/* BMI Scale Styles */
+.bmi-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.scale-item {
+    flex: 1;
+    padding: 10px 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    position: relative;
+}
+
+.scale-item span {
+    font-size: 12px;
+}
+
+.scale-label {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.underweight {
+    background-color: #3498db;
+}
+
+.normal {
+    background-color: #2ecc71;
+}
+
+.overweight {
+    background-color: #f39c12;
+}
+
+.obese {
+    background-color: #e74c3c;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .calculator-container {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    .bmi-scale {
+        flex-direction: column;
+    }
+    
+    .scale-item {
+        margin-bottom: 5px;
+    }
+}
+.input-group {
+    margin-bottom: 1rem;
+}
+
+#bmr-result,
+#bfp-result,
+#diet-plan {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+#diet-plan {
+    background: #eef2ff;
+    padding: 10px;
+    border-radius: 8px;
+}

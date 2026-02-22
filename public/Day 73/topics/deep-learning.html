@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | ML Path</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<div class="auth-container">
+  <h2>Get Started</h2>
+
+  <input type="text" id="fname" placeholder="First Name">
+  <input type="text" id="lname" placeholder="Last Name">
+  <input type="email" id="email" placeholder="Email">
+
+  <select id="level">
+    <option value="">Select ML Level</option>
+    <option>Beginner</option>
+    <option>Intermediate</option>
+    <option>Advanced</option>
+  </select>
+
+  <button onclick="login()">Continue</button>
+</div>
+
+<script>
+  function login() {
+    const user = {
+      fname: fname.value,
+      lname: lname.value,
+      email: email.value,
+      level: level.value
+    };
+    localStorage.setItem("user", JSON.stringify(user));
+    window.location.href = "index.html";
+  }
+</script>
+</body>
+</html>

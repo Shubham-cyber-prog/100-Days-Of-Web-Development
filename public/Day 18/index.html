@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown Timer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="glass-card">
+      
+      <!-- HEADER -->
+      <header class="header">
+        <h1>⏰ Countdown Timer</h1>
+        <p>Set your target date and watch the countdown</p>
+      </header>
+
+      <!-- INPUTS -->
+      <section class="inputs">
+        <label>Event Name</label>
+        <input id="eventName" type="text" value="New Year 2027" />
+
+        <div class="row">
+          <div>
+            <label>Target Date</label>
+            <input id="targetDate" type="date" />
+          </div>
+          <div>
+            <label>Target Time</label>
+            <input id="targetTime" type="time" value="00:00" />
+          </div>
+        </div>
+
+        <button id="startBtn" class="primary-btn">
+          ▶ Start Countdown
+        </button>
+
+        <p id="errorMsg" class="error"></p>
+      </section>
+
+      <!-- TIMER -->
+      <section class="countdown">
+        <h2 id="eventTitle">Set a countdown to begin</h2>
+
+        <div class="timer">
+          <div class="box">
+            <span id="days">00</span>
+            <small>Days</small>
+          </div>
+          <div class="box">
+            <span id="hours">00</span>
+            <small>Hours</small>
+          </div>
+          <div class="box">
+            <span id="minutes">00</span>
+            <small>Minutes</small>
+          </div>
+          <div class="box">
+            <span id="seconds">00</span>
+            <small>Seconds</small>
+          </div>
+        </div>
+
+        <div class="progress">
+          <div id="progressFill"></div>
+        </div>
+
+        <button id="resetBtn" class="secondary-btn">Reset</button>
+      </section>
+
+      <!-- PRESETS -->
+      <section class="presets">
+        <h3>Quick Presets</h3>
+        <div class="preset-list">
+          <button data-date="2027-01-01" data-time="00:00">🎉 New Year 2027</button>
+          <button data-date="2026-12-25" data-time="00:00">🎄 Christmas 2026</button>
+        </div>
+      </section>
+
+    </div>
+
+    <div id="particles"></div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

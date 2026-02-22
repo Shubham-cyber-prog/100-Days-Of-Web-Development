@@ -11,7 +11,7 @@ if (themeToggle) {
     }
   });
 }
-
+const container = document.querySelector('.container');
 const taskInput = document.getElementById("taskInput");
 const addBtn = document.getElementById("addBtn");
 const taskList = document.getElementById("taskList");
@@ -20,7 +20,20 @@ addBtn.addEventListener("click", addTask);
 
 function addTask() {
   const text = taskInput.value.trim();
-  if (text === "") return;
+  
+   if (text=== '') {
+        
+        const errMsg = document.createElement('div');
+         errMsg.innerText = 'Please enter a task.';
+         
+         container.prepend(errMsg);
+         errMsg.classList.add('tempMsg','errMsg');
+         setTimeout(() => {
+             container.removeChild(errMsg);
+         }, 4000);
+         return;
+        
+    }
 
   const li = document.createElement("li");
 
@@ -35,6 +48,7 @@ function addTask() {
   actions.className = "actions";
 
   const editBtn = document.createElement("button");
+  editBtn.classList.add("edit-btn","btn");
   editBtn.textContent = "Edit";
   editBtn.addEventListener("click", () => {
     const newText = prompt("Edit task:", span.textContent);
@@ -45,6 +59,7 @@ function addTask() {
 
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-btn","btn");
   deleteBtn.addEventListener("click", () => {
     li.remove();
   });
@@ -57,4 +72,13 @@ function addTask() {
 
   taskList.appendChild(li);
   taskInput.value = "";
+   const succMsg = document.createElement('div');
+         succMsg.innerText = 'Task added successfully.';
+         container.prepend(succMsg);
+         succMsg.classList.add('tempMsg','succMsg');
+         setTimeout(() => {
+             container.removeChild(succMsg);
+         }, 4000);
+        return;
+    
 }

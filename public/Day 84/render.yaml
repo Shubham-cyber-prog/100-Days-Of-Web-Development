@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: intellicircle-server
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "npm run start"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: intellicircle-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production
+
+databases:
+  - name: intellicircle-db
+    plan: free
+    

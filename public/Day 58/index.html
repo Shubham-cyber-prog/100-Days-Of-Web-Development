@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Planner Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-chart-pie"></i>
+                <h1>Budget Planner Pro</h1>
+            </div>
+            <div class="month-selector">
+                <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                <h2 id="current-month">October 2023</h2>
+                <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="card income-card">
+                    <h3><i class="fas fa-wallet"></i> Income</h3>
+                    <p class="amount" id="total-income">$0.00</p>
+                </div>
+                <div class="card expense-card">
+                    <h3><i class="fas fa-shopping-cart"></i> Expenses</h3>
+                    <p class="amount" id="total-expenses">$0.00</p>
+                </div>
+                <div class="card balance-card">
+                    <h3><i class="fas fa-scale-balanced"></i> Balance</h3>
+                    <p class="amount" id="balance">$0.00</p>
+                </div>
+            </div>
+
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="input-card">
+                    <h3>Add Transaction</h3>
+                    <form id="transaction-form">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" placeholder="Enter description" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="amount">Amount ($)</label>
+                            <input type="number" id="amount" step="0.01" placeholder="0.00" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" required>
+                                <option value="">Select Category</option>
+                                <optgroup label="Income">
+                                    <option value="salary">Salary</option>
+                                    <option value="freelance">Freelance</option>
+                                    <option value="investment">Investment</option>
+                                    <option value="other-income">Other</option>
+                                </optgroup>
+                                <optgroup label="Expenses">
+                                    <option value="housing">Housing</option>
+                                    <option value="transportation">Transportation</option>
+                                    <option value="food">Food & Dining</option>
+                                    <option value="utilities">Utilities</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="health">Health</option>
+                                    <option value="education">Education</option>
+                                    <option value="other-expense">Other</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="type">Type</label>
+                            <div class="type-selector">
+                                <button type="button" class="type-btn active" data-type="income">
+                                    <i class="fas fa-plus-circle"></i> Income
+                                </button>
+                                <button type="button" class="type-btn" data-type="expense">
+                                    <i class="fas fa-minus-circle"></i> Expense
+                                </button>
+                            </div>
+                            <input type="hidden" id="type" value="income">
+                        </div>
+                        
+                        <button type="submit" class="btn-add">
+                            <i class="fas fa-plus"></i> Add Transaction
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Budget Goals -->
+                <div class="input-card">
+                    <h3>Budget Goals</h3>
+                    <div class="budget-goals">
+                        <div class="goal-item">
+                            <span>Savings Goal</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <span>$450 / $1,000</span>
+                        </div>
+                        <div class="goal-item">
+                            <span>Food Budget</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill warning" style="width: 75%"></div>
+                            </div>
+                            <span>$375 / $500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions List -->
+            <div class="transactions-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-history"></i> Recent Transactions</h3>
+                    <div class="filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="income">Income</button>
+                        <button class="filter-btn" data-filter="expense">Expenses</button>
+                    </div>
+                </div>
+                <div class="transactions-list" id="transactions-list">
+                    <!-- Transactions will be added here dynamically -->
+                    <div class="empty-state">
+                        <i class="fas fa-receipt"></i>
+                        <p>No transactions yet. Add your first transaction!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-pie"></i> Expense Breakdown</h3>
+                    <canvas id="expenseChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-line"></i> Monthly Trend</h3>
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2023 Budget Planner Pro | Track your finances wisely</p>
+            <div class="footer-links">
+                <button id="export-btn"><i class="fas fa-download"></i> Export Data</button>
+                <button id="reset-btn"><i class="fas fa-redo"></i> Reset Month</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <button id="scrollToTopBtn" aria-label="Scroll to top">
+    <i class="fa-solid fa-arrow-up"></i>
+    </button>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,31 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glass QR Generator</title>
+  <link rel="stylesheet" href="../shared/base.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <div class="wrapper">
-        <header>
-            <h1>QR Code Generator</h1>
-            <p>Enter text or URL to generate a QR code</p>
-        </header>
-        <div class="form">
-            <input type="text" id="qr-text" placeholder="Enter text or URL" spellcheck="false">
-            <button id="generate-btn">Generate QR Code</button>
-        </div>
-        <div class="qr-code">
-            <img src="" alt="QR Code" id="qr-img">
-            <div class="buttons">
-                <button id="download-btn" class="download-btn" disabled>
-                    <i class="fas fa-download"></i> Download
-                </button>
-            </div>
-        </div>
+
+  <div class="container">
+    <!-- 🌙 Dark Mode Toggle -->
+    <div class="theme-toggle">
+    <label>
+    <input type="checkbox" id="darkToggle">
+    Dark Mode
+    </label>
     </div>
-    <script src="script.js"></script>
+
+    <h1>QR Code Generator</h1>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('text')">Text / URL</button>
+      <button class="tab" onclick="switchTab('wifi')">WiFi</button>
+      <button class="tab" onclick="switchTab('contact')">Contact</button>
+    </div>
+
+    <div class="glass-card">
+
+      <!-- Text QR -->
+      <div class="tab-content active" id="text">
+        <input id="textInput" placeholder="Enter text or URL">
+      </div>
+
+      <!-- WiFi QR -->
+      <div class="tab-content" id="wifi">
+        <input id="ssid" placeholder="WiFi Name (SSID)">
+        <input id="wifiPass" placeholder="Password">
+      </div>
+
+      <!-- Contact QR -->
+      <div class="tab-content" id="contact">
+        <input id="name" placeholder="Full Name">
+        <input id="phone" placeholder="Phone Number">
+        <input id="email" placeholder="Email">
+      </div>
+
+      <button onclick="generateQR()">Generate QR</button>
+      <!-- 🎨 QR Customization -->
+      <div class="customize">
+      <h3>Customize QR</h3>
+
+      <label>QR Color</label>
+      <input type="color" id="qrColor" value="#000000">
+
+      <label>QR Size</label>
+      <input type="range" id="qrSize" min="150" max="300" value="180">
+
+      <label>Add Logo</label>
+      <input type="file" id="logoUpload" accept="image/*">
+      </div>
+
+
+      <div class="qr-box" id="qrBox">
+        <canvas id="qrCanvas"></canvas>
+      </div>
+
+      <button id="downloadBtn" onclick="downloadQR()">Download QR</button>
+
+      <!-- 🌿 Background Switch -->
+      <div class="bg-controls">
+        <button onclick="setBackground('rain')">🌧 Rain</button>
+        <button onclick="setBackground('mountain')">⛰ Mountain</button>
+        <button onclick="setBackground('nature')">🌿 Nature</button>
+      </div>
+
+      <!-- 📸 Camera -->
+      <button onclick="openCamera()">📸 Take Photo</button>
+      <video id="video" autoplay></video>
+      <canvas id="photo"></canvas>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Experience - Universal AR Viewer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- AR/3D View -->
+        <div class="view-container">
+            <canvas id="mainCanvas"></canvas>
+            <div class="view-overlay">
+                <div class="mode-indicator">
+                    <span id="modeText" class="mode-ar">
+                        <i class="fas fa-vr-cardboard"></i> AR Mode
+                    </span>
+                </div>
+                <div class="status-message" id="statusMessage">
+                    <i class="fas fa-spinner fa-spin"></i> Initializing...
+                </div>
+                <div class="controls">
+                    <button id="toggleMode" class="btn mode-btn">
+                        <i class="fas fa-exchange-alt"></i> Switch to 3D Viewer
+                    </button>
+                    <button id="placeObject" class="btn primary">
+                        <i class="fas fa-plus-circle"></i> Place Object
+                    </button>
+                    <button id="resetScene" class="btn secondary">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+                <div class="debug-info" id="debugInfo">
+                    Device Info: Loading...
+                </div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                <h1><i class="fas fa-cube"></i> AR Studio</h1>
+                <div class="scene-info">
+                    <div class="info-item">
+                        <i class="fas fa-shapes"></i>
+                        <span id="objectCount">0</span> objects
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span id="fpsCounter">0</span> FPS
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode Selector -->
+            <div class="mode-selector">
+                <h2><i class="fas fa-cogs"></i> View Mode</h2>
+                <div class="mode-buttons">
+                    <button class="mode-option active" data-mode="ar">
+                        <i class="fas fa-vr-cardboard"></i>
+                        <span>AR View</span>
+                    </button>
+                    <button class="mode-option" data-mode="3d">
+                        <i class="fas fa-cube"></i>
+                        <span>3D Viewer</span>
+                    </button>
+                    <button class="mode-option" data-mode="orbit">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>Orbit View</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Object Library -->
+            <div class="object-library">
+                <h2><i class="fas fa-shapes"></i> Object Library</h2>
+                <div class="object-grid">
+                    <div class="object-item active" data-type="cube">
+                        <div class="object-preview cube">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <span>Cube</span>
+                    </div>
+                    <div class="object-item" data-type="sphere">
+                        <div class="object-preview sphere">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <span>Sphere</span>
+                    </div>
+                    <div class="object-item" data-type="cone">
+                        <div class="object-preview cone">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <span>Cone</span>
+                    </div>
+                    <div class="object-item" data-type="cylinder">
+                        <div class="object-preview cylinder">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <span>Cylinder</span>
+                    </div>
+                    <div class="object-item" data-type="torus">
+                        <div class="object-preview torus">
+                            <i class="fas fa-ring"></i>
+                        </div>
+                        <span>Torus</span>
+                    </div>
+                    <div class="object-item" data-type="pyramid">
+                        <div class="object-preview pyramid">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <span>Pyramid</span>
+                    </div>
+                    <div class="object-item" data-type="teapot">
+                        <div class="object-preview teapot">
+                            <i class="fas fa-mug-hot"></i>
+                        </div>
+                        <span>Teapot</span>
+                    </div>
+                    <div class="object-item" data-type="monkey">
+                        <div class="object-preview monkey">
+                            <i class="fas fa-otter"></i>
+                        </div>
+                        <span>Monkey</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Palette -->
+            <div class="color-palette">
+                <h2><i class="fas fa-palette"></i> Colors</h2>
+                <div class="color-grid">
+                    <div class="color-item active" style="background: #FF3B30;" data-color="#FF3B30"></div>
+                    <div class="color-item" style="background: #FF9500;" data-color="#FF9500"></div>
+                    <div class="color-item" style="background: #FFCC00;" data-color="#FFCC00"></div>
+                    <div class="color-item" style="background: #34C759;" data-color="#34C759"></div>
+                    <div class="color-item" style="background: #007AFF;" data-color="#007AFF"></div>
+                    <div class="color-item" style="background: #5856D6;" data-color="#5856D6"></div>
+                    <div class="color-item" style="background: #AF52DE;" data-color="#AF52DE"></div>
+                    <div class="color-item" style="background: #FF2D55;" data-color="#FF2D55"></div>
+                    <div class="color-item" style="background: #8E8E93;" data-color="#8E8E93"></div>
+                    <div class="color-item" style="background: #000000;" data-color="#000000"></div>
+                    <div class="color-item" style="background: #FFFFFF; border: 2px solid #ddd;" data-color="#FFFFFF"></div>
+                    <div class="color-item gradient" style="background: linear-gradient(45deg, #FF3B30, #FF9500);" data-color="gradient"></div>
+                </div>
+            </div>
+
+            <!-- Object Properties -->
+            <div class="properties">
+                <h2><i class="fas fa-sliders-h"></i> Properties</h2>
+                <div class="property-controls">
+                    <div class="property">
+                        <label><i class="fas fa-expand-alt"></i> Scale</label>
+                        <input type="range" id="scaleSlider" min="0.1" max="2" step="0.1" value="0.5">
+                        <span id="scaleValue">0.5x</span>
+                    </div>
+                    <div class="property">
+                        <label><i class="fas fa-sync-alt"></i> Rotation Speed</label>
+                        <input type="range" id="rotationSlider" min="0" max="2" step="0.1" value="0.5">
+                        <span id="rotationValue">0.5x</span>
+                    </div>
+                    <div class="property">
+                        <label><i class="fas fa-sun"></i> Brightness</label>
+                        <input type="range" id="brightnessSlider" min="0.1" max="2" step="0.1" value="1">
+                        <span id="brightnessValue">1.0x</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> How to Use</h3>
+                <div class="instruction-content">
+                    <div class="instruction" id="instructionAR">
+                        <strong>AR Mode:</strong> Click "Place Object" to add 3D objects to your space.
+                    </div>
+                    <div class="instruction" id="instruction3D" style="display: none;">
+                        <strong>3D Viewer:</strong> Click to place objects. Drag to rotate view.
+                    </div>
+                    <div class="instruction" id="instructionOrbit" style="display: none;">
+                        <strong>Orbit View:</strong> Objects orbit around center. Drag to rotate camera.
+                    </div>
+                </div>
+                <div class="shortcuts">
+                    <div><i class="fas fa-mouse-pointer"></i> Click: Place object</div>
+                    <div><i class="fas fa-arrows-alt"></i> Drag: Rotate view</div>
+                    <div><i class="fas fa-mouse"></i> Scroll: Zoom in/out</div>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="system-status">
+                <div class="status-item">
+                    <i class="fas fa-microchip"></i>
+                    <span id="rendererInfo">WebGL 2.0</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-video"></i>
+                    <span id="cameraStatus">Camera: Ready</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span id="deviceInfo">Device: Detecting...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader-container">
+            <div class="loader"></div>
+            <h2>Loading AR Experience</h2>
+            <p id="loadingText">Initializing 3D engine...</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Object placed successfully!</span>
+        </div>
+    </div>
+
+    <!-- WebXR Polyfill -->
+    <script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js"></script>
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Orbit Controls -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
