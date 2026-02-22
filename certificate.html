@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contributor Certificate</title>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+:root{
+  --dark:#090dea;
+  --light:#3c83ee;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,var(--dark),var(--light));
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.app{
+  width:100%;
+  max-width:900px;
+  background:white;
+  border-radius:15px;
+  padding:30px;
+  box-shadow:0 0 25px rgba(0,0,0,0.3);
+}
+
+h1{
+  text-align:center;
+  color:var(--dark);
+  margin-bottom:20px;
+}
+
+.form{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+input{
+  width:280px;
+  padding:12px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  margin:10px;
+}
+
+button{
+  padding:10px 20px;
+  background:var(--dark);
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  margin:5px;
+}
+
+button:hover{
+  background:var(--light);
+}
+
+/* Certificate */
+
+#certificate{
+  display:none;
+  margin-top:25px;
+  padding:30px;
+  border:6px solid var(--dark);
+  border-radius:12px;
+  background:linear-gradient(to bottom right,#f8faff,#e9efff);
+}
+
+.cert-head{
+  text-align:center;
+}
+
+.cert-head h2{
+  color:var(--dark);
+}
+
+.cert-head h3{
+  color:var(--light);
+}
+
+.profile{
+  text-align:center;
+  margin:20px 0;
+}
+
+.profile img{
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  border:4px solid var(--light);
+}
+
+.info{
+  text-align:center;
+  font-size:18px;
+  line-height:1.7;
+}
+
+.stats{
+  display:flex;
+  justify-content:space-around;
+  margin:25px 0;
+  text-align:center;
+}
+
+.stats div{
+  background:#eef3ff;
+  padding:15px;
+  border-radius:8px;
+  width:22%;
+  font-weight:bold;
+}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+  margin-top:25px;
+}
+
+.sign{
+  text-align:center;
+}
+
+.sign hr{
+  width:150px;
+}
+
+.download{
+  text-align:center;
+  margin-top:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<h1>Contributor Certificate Generator</h1>
+
+<!-- Input -->
+<div class="form">
+
+  <input type="text" id="user" placeholder="Enter GitHub Username">
+
+  <br>
+
+  <button onclick="generate()">
+    Generate Certificate
+  </button>
+
+</div>
+
+
+<!-- Certificate -->
+<div id="certificate">
+
+  <div class="cert-head">
+    <h2>Certificate of Contribution</h2>
+    <h3>100 Days of Web Development</h3>
+  </div>
+
+  <div class="profile">
+    <img id="avatar">
+  </div>
+
+  <div class="info">
+
+    This certificate is awarded to <br><br>
+
+    <b id="name"></b> <br><br>
+
+    For valuable contributions to the project <br><br>
+
+    <b>100-Days-Of-Web-Development-ECWoC26</b> <br><br>
+
+    Date: <b id="date"></b>
+
+  </div>
+
+
+  <!-- Stats -->
+  <div class="stats">
+
+    <div>
+      Commits <br>
+      <span id="commits">0</span>
+    </div>
+
+    <div>
+      PRs <br>
+      <span id="prs">0</span>
+    </div>
+
+    <div>
+      Issues <br>
+      <span id="issues">0</span>
+    </div>
+
+    <div>
+      Public Repos <br>
+      <span id="repos">0</span>
+    </div>
+
+  </div>
+
+
+  <div class="footer">
+
+    <div class="sign">
+      <hr>
+      Project Lead
+    </div>
+
+    <div class="sign">
+      <hr>
+      ECWoC 2026
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Download -->
+<div class="download" id="downloadBox" style="display:none;">
+
+  <button onclick="downloadImg()">Download Image</button>
+
+  <button onclick="downloadPDF()">Download PDF</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* Fixed Repository */
+const OWNER = "Shubham-cyber-prog";
+const REPO  = "100-Days-Of-Web-Development-ECWoC26";
+
+
+async function generate(){
+
+  let user = document.getElementById("user").value.trim();
+
+  if(user===""){
+    alert("Enter GitHub Username");
+    return;
+  }
+
+  try{
+
+    // User Info
+    let ures = await fetch(`https://api.github.com/users/${user}`);
+    let udata = await ures.json();
+
+    if(udata.message==="Not Found"){
+      alert("User not found");
+      return;
+    }
+
+
+    // Commits in Repo by User
+    let cres = await fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/commits?author=${user}&per_page=100`
+    );
+    let commits = await cres.json();
+
+
+    // PRs by User
+    let pres = await fetch(
+      `https://api.github.com/search/issues?q=repo:${OWNER}/${REPO}+type:pr+author:${user}`
+    );
+    let prdata = await pres.json();
+
+
+    // Issues by User
+    let ires = await fetch(
+      `https://api.github.com/search/issues?q=repo:${OWNER}/${REPO}+type:issue+author:${user}`
+    );
+    let idata = await ires.json();
+
+
+
+    /* Set Values */
+
+    document.getElementById("avatar").src = udata.avatar_url;
+
+    document.getElementById("name").innerText =
+      udata.name || udata.login;
+
+    document.getElementById("repos").innerText =
+      udata.public_repos;
+
+    document.getElementById("commits").innerText =
+      commits.length;
+
+    document.getElementById("prs").innerText =
+      prdata.total_count;
+
+    document.getElementById("issues").innerText =
+      idata.total_count;
+
+    document.getElementById("date").innerText =
+      new Date().toLocaleDateString();
+
+
+document.getElementById("certificate").style.display="block";
+document.getElementById("downloadBox").style.display="block";
+
+  }
+
+  catch(err){
+    alert("GitHub API limit / Network error");
+    console.log(err);
+  }
+
+}
+
+
+
+/* Download Image */
+function downloadImg(){
+
+  let cert = document.getElementById("certificate");
+
+  html2canvas(cert,{
+    useCORS:true,
+    allowTaint:true,
+    scale:2
+  }).then(canvas=>{
+
+    let link = document.createElement("a");
+
+    link.href = canvas.toDataURL("image/png");
+
+    link.download = "contributor_certificate.png";
+
+    link.click();
+
+  });
+}
+
+
+
+
+/* Download PDF */
+function downloadPDF(){
+
+  let cert = document.getElementById("certificate");
+
+  html2canvas(cert,{
+    useCORS:true,
+    allowTaint:true,
+    scale:2
+  }).then(canvas=>{
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const { jsPDF } = window.jspdf;
+
+    let pdf = new jsPDF("landscape","mm","a4");
+
+    let width = pdf.internal.pageSize.getWidth();
+    let height = pdf.internal.pageSize.getHeight();
+
+    pdf.addImage(imgData,"PNG",0,0,width,height);
+
+    pdf.save("contributor_certificate.pdf");
+
+  });
+}
+
+
+</script>
+
+</body>
+</html>

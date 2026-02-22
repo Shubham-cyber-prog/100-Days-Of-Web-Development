@@ -1,12 +1,3 @@
-/**
- * Login Page - Refactored with AppCore and Notify Integration
- * Uses centralized state management and unified notification system
- * 
- * @version 2.0.0
- * @author 100 Days of Web Dev Team
- */
-
-// Firebase imports (optional - for Firebase auth)
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
 import {
     getAuth,
@@ -22,9 +13,6 @@ import {
     browserSessionPersistence
 } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
 import { firestoreService } from './firestore.js';
-
-// Import App Core and Notify (will fallback to window globals if not module)
-let App, Notify;
 
 // Your Firebase configuration - REPLACE WITH YOUR ACTUAL CONFIG
 const firebaseConfig = (() => {
@@ -118,11 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.location.pathname.includes('dashboard.html')) {
                 console.log('Not authenticated, redirecting to login...');
                 setTimeout(() => {
-                    window.location.href = '/website/pages/dashboard.html';
+                    window.location.href = 'login.html';
                 }, 500);
             }
-        });
-    }
+        }
+    });
 
     // --- Elements ---
     const authForm = document.getElementById('authForm');
@@ -219,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add error class to input
             input.classList.add('error');
-
+            
             // Create error message element
             const errorMsg = document.createElement('div');
             errorMsg.className = 'error-msg';
@@ -227,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMsg.style.color = '#ef4444';
             errorMsg.style.fontSize = '0.875rem';
             errorMsg.style.marginTop = '0.25rem';
-
+            
             // Insert after input
             input.parentNode.insertBefore(errorMsg, input.nextSibling);
 
@@ -339,50 +327,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 let userCredential;
-
+                
                 if (isLogin) {
                     // Login
                     userCredential = await signInWithEmailAndPassword(auth, email, password);
                     console.log('Login successful:', userCredential.user.email);
-
-                    // Login via App Core
-                    if (App) {
-                        await App.login({
-                            id: userCredential.user.uid,
-                            email: userCredential.user.email,
-                            name: userCredential.user.displayName || userCredential.user.email.split('@')[0]
-                        }, true);
-                    }
-
-                    // Show success notification
-                    if (Notify) {
-                        Notify.success('Login successful! Redirecting...');
-                    } else {
-                        showSuccessMessage('Login successful! Redirecting...');
-                    }
+                    
+                    // Show success message
+                    showSuccessMessage('Login successful! Redirecting...');
                 } else {
                     // Register
                     userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     console.log('Registration successful:', userCredential.user.email);
-
-                    // Login via App Core
-                    if (App) {
-                        await App.login({
-                            id: userCredential.user.uid,
-                            email: userCredential.user.email,
-                            name: userCredential.user.email.split('@')[0]
-                        }, true);
-                    }
-
-                    // Show success notification
-                    if (Notify) {
-                        Notify.success('Account created successfully! Redirecting...');
-                    } else {
-                        showSuccessMessage('Account created successfully! Redirecting...');
-                    }
+                    
+                    // Show success message
+                    showSuccessMessage('Account created successfully! Redirecting...');
                 }
 
-                // Legacy storage (for backward compatibility)
+                // Store user info
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userEmail', userCredential.user.email);
                 localStorage.setItem('userId', userCredential.user.uid);
@@ -391,12 +353,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     window.location.href = '/website/pages/dashboard.html';
                 }, 1500);
-
+                
             } catch (error) {
                 console.error('Auth error:', error);
-
+                
                 let errorMessage = 'An error occurred. Please try again.';
-
+                
                 switch (error.code) {
                     case 'auth/user-not-found':
                         errorMessage = 'No account found with this email.';
@@ -420,14 +382,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         errorMessage = 'Network error. Please check your connection.';
                         break;
                 }
-
-                // Show error via Notify or fallback
-                if (Notify) {
-                    Notify.error(errorMessage);
-                } else {
-                    showError(emailInput, errorMessage);
-                }
-
+                
+                showError(emailInput, errorMessage);
+                
                 // Reset button state
                 submitBtn.textContent = originalBtnText;
                 submitBtn.disabled = false;
@@ -439,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Remove existing success messages
             const existingSuccess = document.querySelector('.success-message');
             if (existingSuccess) existingSuccess.remove();
-
+            
             // Create success message
             const successMsg = document.createElement('div');
             successMsg.className = 'success-message';
@@ -447,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
                 ${message}
             `;
-
+            
             // Insert after form
             authForm.parentNode.insertBefore(successMsg, authForm.nextSibling);
         }
@@ -460,41 +417,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     googleBtn.disabled = true;
                     googleBtn.textContent = 'Connecting...';
                     googleBtn.classList.add('loading');
-
+                    
                     const userCredential = await signInWithPopup(auth, provider);
                     console.log('Google sign-in successful:', userCredential.user.email);
-
-                    // Login via App Core
-                    if (App) {
-                        await App.login({
-                            id: userCredential.user.uid,
-                            email: userCredential.user.email,
-                            name: userCredential.user.displayName || 'Google User',
-                            provider: 'google'
-                        }, true);
-                    }
-
-                    // Legacy storage (for backward compatibility)
+                    
+                    // Store user info
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('userEmail', userCredential.user.email);
                     localStorage.setItem('userId', userCredential.user.uid);
                     localStorage.setItem('userName', userCredential.user.displayName);
-
-                    // Show success via Notify or fallback
-                    if (Notify) {
-                        Notify.success('Google login successful! Redirecting...');
-                    } else {
-                        showSuccessMessage('Google login successful! Redirecting...');
-                    }
+                    
+                    // Show success and redirect
+                    showSuccessMessage('Google login successful! Redirecting...');
 
                     setTimeout(() => {
                         window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
-
+                    
                 } catch (error) {
                     console.error('Google sign-in error:', error);
                     let errorMessage = 'Failed to sign in with Google. ';
-
+                    
                     if (error.code === 'auth/popup-blocked') {
                         errorMessage += 'Popup blocked by browser. Please allow popups for this site.';
                     } else if (error.code === 'auth/popup-closed-by-user') {
@@ -502,13 +445,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         errorMessage += 'Please try again.';
                     }
-
-                    // Show error via Notify or fallback
-                    if (Notify) {
-                        Notify.error(errorMessage);
-                    } else {
-                        showError(emailInput, errorMessage);
-                    }
+                    
+                    showError(emailInput, errorMessage);
                     googleBtn.disabled = false;
                     googleBtn.textContent = 'Continue with Google';
                     googleBtn.classList.remove('loading');
@@ -523,21 +461,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     githubBtn.disabled = true;
                     githubBtn.textContent = 'Connecting...';
                     githubBtn.classList.add('loading');
-
+                    
                     const userCredential = await signInWithPopup(auth, provider);
                     console.log('GitHub sign-in successful:', userCredential.user.email);
-
-                    // Login via App Core
-                    if (App) {
-                        await App.login({
-                            id: userCredential.user.uid,
-                            email: userCredential.user.email || 'github-user@github.com',
-                            name: userCredential.user.displayName || 'GitHub User',
-                            provider: 'github'
-                        }, true);
-                    }
-
-                    // Legacy storage (for backward compatibility)
+                    
+                    // Store user info
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('userEmail', userCredential.user.email || 'github-user@github.com');
                     localStorage.setItem('userId', userCredential.user.uid);
@@ -549,11 +477,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => {
                         window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
-
+                    
                 } catch (error) {
                     console.error('GitHub sign-in error:', error);
                     let errorMessage = 'Failed to sign in with GitHub. ';
-
+                    
                     if (error.code === 'auth/popup-blocked') {
                         errorMessage += 'Popup blocked by browser. Please allow popups for this site.';
                     } else if (error.code === 'auth/popup-closed-by-user') {
@@ -563,13 +491,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         errorMessage += 'Please try again.';
                     }
-
-                    // Show error via Notify or fallback
-                    if (Notify) {
-                        Notify.error(errorMessage);
-                    } else {
-                        showError(emailInput, errorMessage);
-                    }
+                    
+                    showError(emailInput, errorMessage);
                     githubBtn.disabled = false;
                     githubBtn.textContent = 'Continue with GitHub';
                     githubBtn.classList.remove('loading');
@@ -579,60 +502,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Guest Login (Without Firebase Auth) ---
         if (guestBtn) {
-            guestBtn.addEventListener('click', async () => {
-                // Use Notify for confirmation or fallback to confirm()
-                const confirmGuest = () => {
-                    return new Promise(resolve => {
-                        if (Notify && Notify.confirm) {
-                            Notify.confirm('Continue as guest? Some features may be limited.', {
-                                onConfirm: () => resolve(true),
-                                onCancel: () => resolve(false)
-                            });
-                        } else {
-                            resolve(confirm('Continue as guest? Some features may be limited.'));
-                        }
-                    });
-                };
-
-                const confirmed = await confirmGuest();
-                if (!confirmed) return;
-
-                // Guest login via App Core
-                const guestUser = {
-                    id: 'guest_' + Date.now(),
-                    email: 'guest@example.com',
-                    name: 'Guest User',
-                    isGuest: true
-                };
-
-                if (App) {
-                    await App.loginAsGuest(); // Use proper guest login method
-                }
-
-                // Legacy storage (for backward compatibility)
-                localStorage.setItem('isGuest', 'true');
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('guestSession', Date.now().toString());
-                localStorage.setItem('userName', 'Guest User');
-                localStorage.setItem('userEmail', 'guest@example.com');
-                localStorage.setItem('userId', guestUser.id);
-
-                console.log('Guest login successful');
-
-                // Show success via Notify or fallback
-                if (Notify) {
-                    Notify.success('Welcome Guest! Redirecting...');
-                } else {
+            guestBtn.addEventListener('click', () => {
+                if (confirm('Continue as guest? Some features may be limited.')) {
+                    // Store guest session in localStorage
+                    localStorage.setItem('isGuest', 'true');
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('guestSession', Date.now().toString());
+                    localStorage.setItem('userName', 'Guest User');
+                    localStorage.setItem('userEmail', 'guest@example.com');
+                    localStorage.setItem('userId', 'guest_' + Date.now());
+                    
+                    console.log('Guest login successful');
+                    
+                    // Show success and redirect
                     showSuccessMessage('Welcome Guest! Redirecting...');
 
                     setTimeout(() => {
                         window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
                 }
-
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500);
             });
         }
 
@@ -640,43 +528,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (forgotPasswordAction) {
             forgotPasswordAction.addEventListener('click', async (e) => {
                 e.preventDefault();
-
+                
                 const email = emailInput.value.trim();
-
+                
                 if (!email) {
-                    if (Notify) {
-                        Notify.warning('Please enter your email address first.');
-                    } else {
-                        showError(emailInput, 'Please enter your email address first.');
-                    }
+                    showError(emailInput, 'Please enter your email address first.');
                     return;
                 }
-
+                
                 if (!validateEmail(email)) {
-                    if (Notify) {
-                        Notify.warning('Please enter a valid email address.');
-                    } else {
-                        showError(emailInput, 'Please enter a valid email address.');
-                    }
+                    showError(emailInput, 'Please enter a valid email address.');
                     return;
                 }
 
                 try {
                     forgotPasswordAction.textContent = 'Sending...';
                     forgotPasswordAction.disabled = true;
-
+                    
                     await sendPasswordResetEmail(auth, email);
-
-                    if (Notify) {
-                        Notify.success(`Password reset email sent to ${email}. Check your inbox.`);
-                    } else {
-                        showSuccessMessage(`Password reset email sent to ${email}. Please check your inbox.`);
-                    }
+                    
+                    showSuccessMessage(`Password reset email sent to ${email}. Please check your inbox.`);
                 } catch (error) {
                     console.error('Password reset error:', error);
-
+                    
                     let errorMessage = 'Failed to send password reset email. ';
-
+                    
                     if (error.code === 'auth/user-not-found') {
                         errorMessage = 'No account found with this email.';
                     } else if (error.code === 'auth/too-many-requests') {
@@ -684,12 +560,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         errorMessage += 'Please try again.';
                     }
-
-                    if (Notify) {
-                        Notify.error(errorMessage);
-                    } else {
-                        showError(emailInput, errorMessage);
-                    }
+                    
+                    showError(emailInput, errorMessage);
                 } finally {
                     forgotPasswordAction.textContent = 'Forgot Password?';
                     forgotPasswordAction.disabled = false;
