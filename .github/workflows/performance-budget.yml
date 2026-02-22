@@ -1,0 +1,154 @@
+name: Performance Budget Monitoring
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '**/*.css'
+      - '**/*.js'
+      - 'public/**'
+      - 'website/**'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  performance-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          npm install -g @lhci/cli@0.13.x
+          npm install -g bundlesize
+
+      - name: Analyze bundle sizes
+        run: |
+          echo "## Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          echo "### CSS Files" >> $GITHUB_STEP_SUMMARY
+          find . -name "*.css" -not -path "./node_modules/*" -exec ls -lh {} \; | while read line; do
+            echo "- $line" >> $GITHUB_STEP_SUMMARY
+          done
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### JavaScript Files" >> $GITHUB_STEP_SUMMARY
+          find . -name "*.js" -not -path "./node_modules/*" -exec ls -lh {} \; | while read line; do
+            echo "- $line" >> $GITHUB_STEP_SUMMARY
+          done
+
+      - name: Check file size budgets
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Performance Budget Compliance" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          VIOLATIONS=""
+
+          check_file_size() {
+            local file=$1
+            local max_size=$2
+            local size_kb=$(du -k "$file" | cut -f1)
+            if [ "$size_kb" -gt "$max_size" ]; then
+              VIOLATIONS="${VIOLATIONS}- $file: ${size_kb}KB exceeds ${max_size}KB limit\n"
+            fi
+          }
+
+          for file in $(find . -name "*.js" -not -path "./node_modules/*" -not -path "./.git/*"); do
+            check_file_size "$file" 100
+          done
+
+          for file in $(find . -name "*.css" -not -path "./node_modules/*" -not -path "./.git/*"); do
+            check_file_size "$file" 50
+          done
+
+          if [ -n "$VIOLATIONS" ]; then
+            echo "FAILURES:" >> $GITHUB_STEP_SUMMARY
+            echo -e "$VIOLATIONS" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Budget limits: JS < 100KB, CSS < 50KB, Images < 200KB" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "All files within budget limits!" >> $GITHUB_STEP_SUMMARY
+            echo "- JavaScript: < 100 KB" >> $GITHUB_STEP_SUMMARY
+            echo "- CSS: < 50 KB" >> $GITHUB_STEP_SUMMARY
+            echo "- Images: < 200 KB per file" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Start HTTP Server
+        run: |
+          npx serve -l 3000 &
+          sleep 5
+
+      - name: Run Lighthouse Performance Audit
+        run: |
+          lhci autorun --upload.target=temporary-public-storage || true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Generate Performance Report
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Performance Audit Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Lighthouse CI has analyzed website performance." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Performance Targets" >> $GITHUB_STEP_SUMMARY
+          echo "- Performance Score: > 90" >> $GITHUB_STEP_SUMMARY
+          echo "- First Contentful Paint: < 1.5s" >> $GITHUB_STEP_SUMMARY
+          echo "- Largest Contentful Paint: < 2.5s" >> $GITHUB_STEP_SUMMARY
+          echo "- Time to Interactive: < 3.0s" >> $GITHUB_STEP_SUMMARY
+          echo "- Cumulative Layout Shift: < 0.1" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the workflow artifacts for detailed Lighthouse reports." >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Performance Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-results
+          path: .lighthouseci/
+          retention-days: 7
+
+  image-optimization-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check image optimization
+        run: |
+          echo "## Image Optimization Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          LARGE_IMAGES=""
+          NON_WEBP=""
+
+          for img in $(find . -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) -not -path "./node_modules/*" -not -path "./.git/*"); do
+            size_kb=$(du -k "$img" | cut -f1)
+            if [ "$size_kb" -gt 200 ]; then
+              LARGE_IMAGES="${LARGE_IMAGES}- $img: ${size_kb}KB\n"
+            fi
+          done
+
+          if [ -n "$LARGE_IMAGES" ]; then
+            echo "### Large Images (> 200KB)" >> $GITHUB_STEP_SUMMARY
+            echo -e "$LARGE_IMAGES" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Consider optimizing these images or converting to WebP format." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "All images are under 200KB." >> $GITHUB_STEP_SUMMARY
+          fi

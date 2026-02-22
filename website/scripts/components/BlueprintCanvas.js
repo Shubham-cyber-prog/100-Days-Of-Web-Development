@@ -1,368 +1,228 @@
 /**
- * Blueprint Canvas Component - High-Performance Rendering Engine
- * HTML5 Canvas-based vector graphics renderer with pan/zoom support
- * @version 1.0.0
+ * Blueprint Canvas Component
+ * Interactive SVG-based collaborative engine
+ * Issue #1158
  */
 
 export class BlueprintCanvas {
-    constructor(canvasId, options = {}) {
-        this.canvas = document.getElementById(canvasId);
-        this.ctx = this.canvas.getContext('2d');
-        this.shapes = [];
-        this.selectedShapeId = null;
-        this.tool = 'select'; // select, rectangle, circle, line, text, arrow
-        this.listeners = [];
-        
-        // Transform state
+    constructor(containerId) {
+        this.container = document.getElementById(containerId);
+        if (!this.container) return;
+
+        this.svg = null;
+        this.nodesLayer = null;
+        this.linksLayer = null;
+        this.presenceLayer = null;
+        this.draggedElement = null;
         this.offset = { x: 0, y: 0 };
-        this.scale = 1;
+        this.zoom = 1;
         this.isPanning = false;
-        this.panStart = { x: 0, y: 0 };
-        
-        // Drawing state
-        this.isDrawing = false;
-        this.drawStart = { x: 0, y: 0 };
-        this.tempShape = null;
-        
-        // Colors and styles
-        this.primaryColor = options.primaryColor || '#58a6ff';
-        this.secondaryColor = options.secondaryColor || '#ffffff';
-        this.gridSize = 20;
-        this.showGrid = options.showGrid !== false;
-        
+
         this.init();
     }
 
     init() {
-        this.resizeCanvas();
-        this.setupEventListeners();
+        this.createSVG();
+        this.setupListeners();
         this.render();
-        
-        window.addEventListener('resize', () => this.resizeCanvas());
-    }
 
-    resizeCanvas() {
-        const container = this.canvas.parentElement;
-        this.canvas.width = container.clientWidth;
-        this.canvas.height = container.clientHeight;
-        this.render();
-    }
-
-    setupEventListeners() {
-        // Mouse events
-        this.canvas.addEventListener('mousedown', this.handleMouseDown.bind(this));
-        this.canvas.addEventListener('mousemove', this.handleMouseMove.bind(this));
-        this.canvas.addEventListener('mouseup', this.handleMouseUp.bind(this));
-        this.canvas.addEventListener('wheel', this.handleWheel.bind(this));
-        
-        // Touch events for mobile
-        this.canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            this.handleMouseDown({ clientX: touch.clientX, clientY: touch.clientY });
-        });
-        
-        this.canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            this.handleMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
-        });
-        
-        this.canvas.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            this.handleMouseUp({});
-        });
-    }
-
-    getCanvasPoint(clientX, clientY) {
-        const rect = this.canvas.getBoundingClientRect();
-        return {
-            x: (clientX - rect.left - this.offset.x) / this.scale,
-            y: (clientY - rect.top - this.offset.y) / this.scale
-        };
-    }
-
-    handleMouseDown(e) {
-        const point = this.getCanvasPoint(e.clientX, e.clientY);
-        
-        if (e.button === 1 || (e.button === 0 && e.ctrlKey)) {
-            // Middle mouse or Ctrl+Left = Pan
-            this.isPanning = true;
-            this.panStart = { x: e.clientX - this.offset.x, y: e.clientY - this.offset.y };
-            this.canvas.style.cursor = 'grabbing';
-            return;
+        // Listen for service updates
+        if (window.Blueprint) {
+            window.Blueprint.onUpdate = () => this.render();
+            window.Blueprint.onPresenceUpdate = (presence) => this.renderPresence(presence);
         }
-        
-        if (this.tool === 'select') {
-            const clickedShape = this.getShapeAtPoint(point.x, point.y);
-            this.selectedShapeId = clickedShape ? clickedShape.id : null;
-            this.emit('shapeSelected', this.selectedShapeId);
+    }
+
+    createSVG() {
+        this.container.innerHTML = '';
+        this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        this.svg.setAttribute("width", "100%");
+        this.svg.setAttribute("height", "100%");
+        this.svg.style.cursor = 'crosshair';
+        this.svg.classList.add('blueprint-svg');
+
+        // Add pattern for grid
+        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+        defs.innerHTML = `
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            </pattern>
+        `;
+        this.svg.appendChild(defs);
+
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute("width", "100%");
+        rect.setAttribute("height", "100%");
+        rect.setAttribute("fill", "url(#grid)");
+        this.svg.appendChild(rect);
+
+        this.linksLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        this.nodesLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        this.presenceLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+        this.svg.appendChild(this.linksLayer);
+        this.svg.appendChild(this.nodesLayer);
+        this.svg.appendChild(this.presenceLayer);
+        this.container.appendChild(this.svg);
+    }
+
+    setupListeners() {
+        this.svg.addEventListener('mousedown', (e) => this.onMouseDown(e));
+        this.svg.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        this.svg.addEventListener('mouseup', () => this.onMouseUp());
+        this.svg.addEventListener('dblclick', (e) => this.onDoubleClick(e));
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Delete' && this.selectedId) {
+                window.Blueprint.deleteNode(this.selectedId);
+                this.selectedId = null;
+                this.render();
+            }
+        });
+    }
+
+    onMouseDown(e) {
+        const target = e.target.closest('.node-group');
+        if (target) {
+            this.draggedElement = target;
+            this.selectedId = target.dataset.id;
+            const pt = this.getSVGPoint(e);
+            const node = window.Blueprint.nodes.get(this.selectedId);
+            this.offset = {
+                x: pt.x - node.x,
+                y: pt.y - node.y
+            };
+            this.draggedElement.classList.add('dragging');
         } else {
-            // Start drawing
-            this.isDrawing = true;
-            this.drawStart = point;
-            this.tempShape = this.createShape(this.tool, point.x, point.y, 0, 0);
-        }
-        
-        this.render();
-    }
-
-    handleMouseMove(e) {
-        const point = this.getCanvasPoint(e.clientX, e.clientY);
-        
-        if (this.isPanning) {
-            this.offset.x = e.clientX - this.panStart.x;
-            this.offset.y = e.clientY - this.panStart.y;
-            this.render();
-            return;
-        }
-        
-        if (this.isDrawing && this.tempShape) {
-            const width = point.x - this.drawStart.x;
-            const height = point.y - this.drawStart.y;
-            
-            this.tempShape = this.createShape(
-                this.tool,
-                this.drawStart.x,
-                this.drawStart.y,
-                width,
-                height
-            );
-            
-            this.render();
-        }
-        
-        // Update cursor
-        this.emit('cursorMoved', point);
-    }
-
-    handleMouseUp(e) {
-        if (this.isPanning) {
-            this.isPanning = false;
-            this.canvas.style.cursor = 'default';
-            return;
-        }
-        
-        if (this.isDrawing && this.tempShape) {
-            // Finalize shape
-            if (Math.abs(this.tempShape.width) > 5 || Math.abs(this.tempShape.height) > 5) {
-                this.emit('shapeCreated', this.tempShape);
-            }
-            this.tempShape = null;
-            this.isDrawing = false;
+            this.selectedId = null;
             this.render();
         }
     }
 
-    handleWheel(e) {
-        e.preventDefault();
-        
-        const point = this.getCanvasPoint(e.clientX, e.clientY);
-        const delta = e.deltaY > 0 ? 0.9 : 1.1;
-        const newScale = Math.max(0.1, Math.min(5, this.scale * delta));
-        
-        // Zoom towards cursor
-        this.offset.x -= point.x * (newScale - this.scale);
-        this.offset.y -= point.y * (newScale - this.scale);
-        this.scale = newScale;
-        
+    onMouseMove(e) {
+        const pt = this.getSVGPoint(e);
+
+        if (this.draggedElement && this.selectedId) {
+            window.Blueprint.updateNode(this.selectedId, {
+                x: pt.x - this.offset.x,
+                y: pt.y - this.offset.y
+            });
+            this.render(); // Re-render for links
+        }
+
+        // Broadast presence
+        if (window.Blueprint) {
+            window.Blueprint.updatePresence(window.Blueprint.userId, {
+                x: pt.x,
+                y: pt.y,
+                name: window.Blueprint.userName
+            });
+        }
+    }
+
+    onMouseUp() {
+        if (this.draggedElement) {
+            this.draggedElement.classList.remove('dragging');
+            this.draggedElement = null;
+        }
+    }
+
+    onDoubleClick(e) {
+        if (e.target.closest('.node-group')) return;
+        const pt = this.getSVGPoint(e);
+        const id = 'node_' + Date.now();
+        window.Blueprint.updateNode(id, {
+            x: pt.x,
+            y: pt.y,
+            title: 'New Objective',
+            type: 'task'
+        });
         this.render();
     }
 
-    createShape(type, x, y, width, height) {
-        const baseShape = {
-            type,
-            x, y, width, height,
-            strokeColor: this.primaryColor,
-            fillColor: 'transparent',
-            strokeWidth: 2
-        };
-        
-        switch (type) {
-            case 'rectangle':
-                return { ...baseShape };
-            case 'circle':
-                return { ...baseShape, radius: Math.max(Math.abs(width), Math.abs(height)) / 2 };
-            case 'line':
-                return { ...baseShape, x2: x + width, y2: y + height };
-            case 'arrow':
-                return { ...baseShape, x2: x + width, y2: y + height, arrowSize: 10 };
-            case 'text':
-                return { ...baseShape, text: 'Text', fontSize: 16, fontFamily: 'Arial' };
-            default:
-                return baseShape;
-        }
-    }
-
-    getShapeAtPoint(x, y) {
-        for (let i = this.shapes.length - 1; i >= 0; i--) {
-            const shape = this.shapes[i];
-            if (this.isPointInShape(x, y, shape)) {
-                return shape;
-            }
-        }
-        return null;
-    }
-
-    isPointInShape(x, y, shape) {
-        switch (shape.type) {
-            case 'rectangle':
-                return x >= shape.x && x <= shape.x + shape.width &&
-                       y >= shape.y && y <= shape.y + shape.height;
-            case 'circle':
-                const dx = x - (shape.x + shape.radius);
-                const dy = y - (shape.y + shape.radius);
-                return Math.sqrt(dx * dx + dy * dy) <= shape.radius;
-            default:
-                return false;
-        }
-    }
-
-    setShapes(shapes) {
-        this.shapes = shapes;
-        this.render();
-    }
-
-    setTool(tool) {
-        this.tool = tool;
-        this.selectedShapeId = null;
-        this.canvas.style.cursor = tool === 'select' ? 'default' : 'crosshair';
+    getSVGPoint(e) {
+        const pt = this.svg.createSVGPoint();
+        pt.x = e.clientX;
+        pt.y = e.clientY;
+        return pt.matrixTransform(this.svg.getScreenCTM().inverse());
     }
 
     render() {
-        const ctx = this.ctx;
-        
-        // Clear canvas
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // Save context
-        ctx.save();
-        
-        // Apply transform
-        ctx.translate(this.offset.x, this.offset.y);
-        ctx.scale(this.scale, this.scale);
-        
-        // Draw grid
-        if (this.showGrid) {
-            this.drawGrid(ctx);
-        }
-        
-        // Draw shapes
-        this.shapes.forEach(shape => {
-            this.drawShape(ctx, shape, shape.id === this.selectedShapeId);
+        if (!window.Blueprint) return;
+
+        this.nodesLayer.innerHTML = '';
+        this.linksLayer.innerHTML = '';
+
+        const nodes = window.Blueprint.getNodes();
+        const links = window.Blueprint.getLinks();
+
+        // Render Links
+        links.forEach(link => {
+            const from = window.Blueprint.nodes.get(link.from);
+            const to = window.Blueprint.nodes.get(link.to);
+            if (from && to) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", from.x + 60);
+                line.setAttribute("y1", from.y + 30);
+                line.setAttribute("x2", to.x + 60);
+                line.setAttribute("y2", to.y + 30);
+                line.setAttribute("stroke", "rgba(139, 92, 246, 0.4)");
+                line.setAttribute("stroke-width", "2");
+                line.setAttribute("stroke-dasharray", "5,5");
+                this.linksLayer.appendChild(line);
+            }
         });
-        
-        // Draw temp shape
-        if (this.tempShape) {
-            this.drawShape(ctx, this.tempShape, false);
-        }
-        
-        // Restore context
-        ctx.restore();
+
+        // Render Nodes
+        nodes.forEach(node => {
+            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            group.setAttribute("class", `node-group ${this.selectedId === node.id ? 'selected' : ''}`);
+            group.setAttribute("transform", `translate(${node.x}, ${node.y})`);
+            group.setAttribute("data-id", node.id);
+
+            const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("width", "120");
+            rect.setAttribute("height", "60");
+            rect.setAttribute("rx", "12");
+            rect.setAttribute("class", "node-rect");
+
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.setAttribute("x", "60");
+            text.setAttribute("y", "35");
+            text.setAttribute("text-anchor", "middle");
+            text.setAttribute("class", "node-text");
+            text.textContent = node.title || 'Node';
+
+            group.appendChild(rect);
+            group.appendChild(text);
+            this.nodesLayer.appendChild(group);
+        });
     }
 
-    drawGrid(ctx) {
-        ctx.strokeStyle = '#1a1a1a';
-        ctx.lineWidth = 0.5;
-        
-        const startX = Math.floor(-this.offset.x / this.scale / this.gridSize) * this.gridSize;
-        const startY = Math.floor(-this.offset.y / this.scale / this.gridSize) * this.gridSize;
-        const endX = startX + this.canvas.width / this.scale + this.gridSize;
-        const endY = startY + this.canvas.height / this.scale + this.gridSize;
-        
-        for (let x = startX; x < endX; x += this.gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, startY);
-            ctx.lineTo(x, endY);
-            ctx.stroke();
-        }
-        
-        for (let y = startY; y < endY; y += this.gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(startX, y);
-            ctx.lineTo(endX, y);
-            ctx.stroke();
-        }
-    }
+    renderPresence(presence) {
+        this.presenceLayer.innerHTML = '';
+        presence.forEach((data, id) => {
+            if (id === window.Blueprint.userId) return; // Don't render self
 
-    drawShape(ctx, shape, isSelected) {
-        ctx.strokeStyle = shape.strokeColor || this.primaryColor;
-        ctx.fillStyle = shape.fillColor || 'transparent';
-        ctx.lineWidth = shape.strokeWidth || 2;
-        
-        if (isSelected) {
-            ctx.strokeStyle = '#ffa500';
-            ctx.lineWidth = 3;
-        }
-        
-        ctx.beginPath();
-        
-        switch (shape.type) {
-            case 'rectangle':
-                ctx.rect(shape.x, shape.y, shape.width, shape.height);
-                break;
-            case 'circle':
-                ctx.arc(
-                    shape.x + shape.radius,
-                    shape.y + shape.radius,
-                    shape.radius,
-                    0,
-                    Math.PI * 2
-                );
-                break;
-            case 'line':
-                ctx.moveTo(shape.x, shape.y);
-                ctx.lineTo(shape.x2, shape.y2);
-                break;
-            case 'arrow':
-                this.drawArrow(ctx, shape.x, shape.y, shape.x2, shape.y2, shape.arrowSize || 10);
-                break;
-            case 'text':
-                ctx.font = `${shape.fontSize}px ${shape.fontFamily}`;
-                ctx.fillStyle = shape.strokeColor;
-                ctx.fillText(shape.text, shape.x, shape.y);
-                return;
-        }
-        
-        if (shape.fillColor && shape.fillColor !== 'transparent') {
-            ctx.fill();
-        }
-        ctx.stroke();
-    }
+            // Simple ghost cursor
+            const cursor = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            cursor.setAttribute("transform", `translate(${data.x}, ${data.y})`);
 
-    drawArrow(ctx, x1, y1, x2, y2, arrowSize) {
-        const angle = Math.atan2(y2 - y1, x2 - x1);
-        
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        
-        ctx.lineTo(
-            x2 - arrowSize * Math.cos(angle - Math.PI / 6),
-            y2 - arrowSize * Math.sin(angle - Math.PI / 6)
-        );
-        ctx.moveTo(x2, y2);
-        ctx.lineTo(
-            x2 - arrowSize * Math.cos(angle + Math.PI / 6),
-            y2 - arrowSize * Math.sin(angle + Math.PI / 6)
-        );
-    }
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("r", "5");
+            circle.setAttribute("fill", "#8B5CF6");
+            circle.setAttribute("opacity", "0.6");
 
-    emit(eventName, data) {
-        this.listeners
-            .filter(l => l.eventName === eventName)
-            .forEach(l => l.callback(data));
-    }
+            const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            label.setAttribute("x", "10");
+            label.setAttribute("y", "5");
+            label.setAttribute("font-size", "10");
+            label.setAttribute("fill", "white");
+            label.textContent = data.name || 'User';
 
-    on(eventName, callback) {
-        this.listeners.push({ eventName, callback });
-        return () => {
-            this.listeners = this.listeners.filter(
-                l => l.eventName !== eventName || l.callback !== callback
-            );
-        };
-    }
-
-    destroy() {
-        this.listeners = [];
+            cursor.appendChild(circle);
+            cursor.appendChild(label);
+            this.presenceLayer.appendChild(cursor);
+        });
     }
 }
