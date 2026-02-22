@@ -25,15 +25,31 @@ let allProjects = [];
 
 async function loadProjects() {
     try {
-        const response = await fetch('../../data/projects.json');
-        if (!response.ok) throw new Error('Failed to load projects');
+        // ✅ FIX 1: Correct path — page is in /pages/, data is in /data/
+        const response = await fetch('/website/data/projects.json');
+        if (!response.ok) throw new Error(`Failed to load projects: ${response.status}`);
         allProjects = await response.json();
         renderProjects();
     } catch (error) {
         console.error('Error loading projects:', error);
-        if (Notify) {
-            Notify.error('Failed to load mission data.');
+        // ✅ Show friendly error in grid so user knows what happened
+        const grid = document.getElementById('projectsGrid');
+        if (grid) {
+            grid.innerHTML = `
+                <div style="
+                    grid-column: 1/-1;
+                    text-align: center;
+                    padding: 3rem;
+                    color: rgba(255,255,255,0.4);
+                    font-size: 0.95rem;
+                ">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📭</div>
+                    <div>Could not load projects. Check console for details.</div>
+                    <div style="font-size: 0.78rem; margin-top: 0.5rem; color: rgba(255,255,255,0.25);">${error.message}</div>
+                </div>
+            `;
         }
+        if (Notify) Notify.error('Failed to load mission data.');
     }
 }
 
@@ -41,26 +57,35 @@ async function renderProjects(filter = 'All') {
     const grid = document.getElementById('projectsGrid');
     grid.innerHTML = '';
 
-    // Load community projects
+    // ✅ FIX 2: communityService guard — only load if it actually exists
     let communityProjects = [];
-    try {
-        communityProjects = await communityService.getApprovedProjects();
-    } catch (error) {
-        console.warn('Failed to load community projects:', error);
+    if (typeof communityService !== 'undefined' && communityService) {
+        try {
+            communityProjects = await communityService.getApprovedProjects();
+        } catch (error) {
+            console.warn('Failed to load community projects:', error);
+        }
     }
 
     // Combine static and community projects
     const allProjectsWithCommunity = [
         ...allProjects.map(p => ({ ...p, isCommunity: false })),
-        ...communityProjects.map(p => communityService.formatProjectForGrid(p))
+        ...communityProjects.map(p => {
+            // guard in case communityService.formatProjectForGrid is missing too
+            if (typeof communityService !== 'undefined' && communityService.formatProjectForGrid) {
+                return communityService.formatProjectForGrid(p);
+            }
+            return { ...p, isCommunity: true };
+        })
     ];
 
     let delay = 0;
 
-    allProjects.forEach(project => {
+    // ✅ FIX 3: Use allProjectsWithCommunity instead of allProjects so community projects show too
+    allProjectsWithCommunity.forEach(project => {
         const difficulty = project.level;
 
-        if (filter !== 'All' && difficulty.toLowerCase() !== filter.toLowerCase()) return;
+        if (filter !== 'All' && difficulty && difficulty.toLowerCase() !== filter.toLowerCase()) return;
 
         let folderName = project.folder;
         let liveLink = '#';
@@ -74,7 +99,7 @@ async function renderProjects(filter = 'All') {
             isDisabled = false;
         }
         else if (project.day === 111) {
-            liveLink = `../../public/${folderName}/build/index.html`
+            liveLink = `../../public/${folderName}/build/index.html`;
             codeLink = `${REPO_URL}/${folderName}`;
             isDisabled = false;
         }
@@ -86,7 +111,6 @@ async function renderProjects(filter = 'All') {
             isDisabled = true;
             codeLink = REPO_URL;
         }
-
 
         const dayLabel = project.endDay ? `DAYS ${project.day}-${project.endDay}` : `DAY ${project.day}`;
 
@@ -112,7 +136,6 @@ async function renderProjects(filter = 'All') {
         </span>
       `).join('')
             : '';
-
 
         card.innerHTML = `
             <div class="card-top">
@@ -141,7 +164,6 @@ async function renderProjects(filter = 'All') {
         // --- PROJECT SHOWCASE INTEGRATION ---
         if (!isDisabled) {
             card.addEventListener('click', (e) => {
-                // Prepare project data for modal
                 const projectData = {
                     ...project,
                     difficulty,
@@ -153,7 +175,6 @@ async function renderProjects(filter = 'All') {
                 if (projectModal) {
                     projectModal.show(projectData);
                 } else {
-                    // Fallback: open in new tab if modal is not available
                     window.open(liveLink, '_blank');
                 }
             });
@@ -165,6 +186,22 @@ async function renderProjects(filter = 'All') {
         setupTiltEffect(card);
         grid.appendChild(card);
     });
+
+    // ✅ Show empty state if no projects matched filter
+    if (grid.children.length === 0) {
+        grid.innerHTML = `
+            <div style="
+                grid-column: 1/-1;
+                text-align: center;
+                padding: 3rem;
+                color: rgba(255,255,255,0.35);
+                font-size: 0.95rem;
+            ">
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔍</div>
+                <div>No projects found for "<strong>${filter}</strong>"</div>
+            </div>
+        `;
+    }
 }
 
 // Ensure the path to 404.html is correct relative to your current folder
@@ -172,18 +209,15 @@ async function handleProjectClick(event, url) {
     event.preventDefault();
 
     const card = event.currentTarget;
-    const originalHTML = card.innerHTML;
 
     try {
-        // Show loading state
         card.style.opacity = '0.6';
         card.style.pointerEvents = 'none';
 
-        // Use 'no-cache' to ensure the browser doesn't give a fake "OK" 
         const response = await fetch(url, {
             method: 'HEAD',
             cache: 'no-cache',
-            signal: AbortSignal.timeout(5000) // 5 second timeout
+            signal: AbortSignal.timeout(5000)
         });
 
         card.style.opacity = '1';
@@ -192,14 +226,6 @@ async function handleProjectClick(event, url) {
         if (response.ok) {
             window.open(url, '_blank', 'noopener,noreferrer');
         } else {
-            // Show error message
-            const errorMsg = `
-                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
-                            background: rgba(0,0,0,0.8); display: flex; align-items: center; 
-                            justify-content: center; border-radius: 8px; color: #fee; font-size: 14px; padding: 16px;">
-                    Project not available (HTTP ${response.status})
-                </div>
-            `;
             showErrorToast('Project folder not found. Showing available projects.');
             window.location.href = './404.html';
         }
@@ -209,7 +235,6 @@ async function handleProjectClick(event, url) {
 
         console.error('Project click error:', error);
 
-        // Provide specific error messages
         const errorMsg = error.name === 'AbortError'
             ? 'Request timeout. Project server may be down.'
             : error instanceof TypeError
@@ -221,14 +246,9 @@ async function handleProjectClick(event, url) {
     }
 }
 
-/**
- * Display user-friendly error toast notification
- */
 function showErrorToast(message) {
     const existingToast = document.querySelector('.error-toast');
-    if (existingToast) {
-        existingToast.remove();
-    }
+    if (existingToast) existingToast.remove();
 
     const toast = document.createElement('div');
     toast.className = 'error-toast';
@@ -249,40 +269,31 @@ function showErrorToast(message) {
 
     document.body.appendChild(toast);
 
-    // Auto-dismiss after 5 seconds
     setTimeout(() => {
         toast.style.animation = 'slideOut 0.3s ease-out';
         setTimeout(() => toast.remove(), 300);
     }, 5000);
 }
-/**
- * Applies a 3D Tilt effect based on cursor position.
- * Uses CSS variables --rx and --ry to control rotation.
- */
+
 function setupTiltEffect(card) {
     card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // Calculate percentage (0 to 1)
         const xPct = x / rect.width;
         const yPct = y / rect.height;
 
-        // Calculate rotation (Max tilt: 10deg)
-        // Y-axis rotation is based on X position (left/right)
-        // X-axis rotation is based on Y position (up/down) - Reversed for natural feel
         const rotateY = (xPct - 0.5) * 12;
         const rotateX = (0.5 - yPct) * 12;
 
         card.style.setProperty('--rx', `${rotateX}deg`);
         card.style.setProperty('--ry', `${rotateY}deg`);
-        card.style.setProperty('--tx', `${(xPct - 0.5) * 5}px`); // Subtle translation
+        card.style.setProperty('--tx', `${(xPct - 0.5) * 5}px`);
         card.style.setProperty('--ty', `${(yPct - 0.5) * 5}px`);
     });
 
     card.addEventListener('mouseleave', () => {
-        // Reset to center
         card.style.setProperty('--rx', '0deg');
         card.style.setProperty('--ry', '0deg');
         card.style.setProperty('--tx', '0px');
@@ -297,11 +308,7 @@ document.getElementById('projectSearch').addEventListener('input', (e) => {
 
     cards.forEach(card => {
         const text = card.textContent.toLowerCase();
-        if (text.includes(term)) {
-            card.style.display = 'flex';
-        } else {
-            card.style.display = 'none';
-        }
+        card.style.display = text.includes(term) ? 'flex' : 'none';
     });
 });
 
@@ -315,9 +322,9 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 // Initial Render
-// Module scripts execute after DOM is parsed, so we can call directly
 loadProjects();
 
+// Scroll to top button
 const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
 window.addEventListener("scroll", () => {
@@ -329,8 +336,5 @@ window.addEventListener("scroll", () => {
 });
 
 scrollToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
