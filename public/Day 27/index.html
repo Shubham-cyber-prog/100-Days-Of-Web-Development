@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3D Dice Roller</title>
+  <meta name="description" content="Realistic 3D dice rolling application with roll history and 3D animations.">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="3D Dice Roller | Interactive 3D Tool">
+  <meta property="og:description"
+    content="Experience realistic 3D dice rolls with history tracking and smooth animations.">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="3D Dice Roller | Interactive 3D Tool">
+  <meta name="twitter:description"
+    content="Experience realistic 3D dice rolls with history tracking and smooth animations.">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
 
+<body>
   <div class="card">
     <h2>🎲 Dice Roller</h2>
-
     <div class="scene">
       <div class="cube" id="cube">
         <div class="face front"><span class="dot center"></span></div>
@@ -46,35 +57,23 @@
         </div>
       </div>
     </div>
-
-        <button id="rollBtn">Roll Dice</button>
-        <p id="resultText">Roll the dice!</p>
-        <p id="rollCount">Total Rolls: 0</p>
-        <button id="resetBtn">Reset</button>
-
-        <audio id="rollSound" src="https://assets.mixkit.co/active_storage/sfx/2001/2001-preview.mp3"></audio>
-
-
-
-
     <div class="buttons">
       <button id="rollBtn">Roll Dice</button>
       <button id="resetBtn">Reset</button>
     </div>
-
     <p id="resultText">Roll the dice!</p>
-
+    <p id="rollCount">Total Rolls: 0</p>
+    <audio id="rollSound" src="https://assets.mixkit.co/active_storage/sfx/2001/2001-preview.mp3"></audio>
     <div class="history">
       <h4>Roll History</h4>
       <ul id="historyList"></ul>
     </div>
   </div>
-
   <footer class="footer">
     <p>Made by @RiyaKharade</p>
     <a href="https://github.com/riya-kharade" target="_blank">GitHub</a>
   </footer>
-
   <script src="script.js"></script>
 </body>
+
 </html>
