@@ -743,18 +743,29 @@ body.light-mode .navbar {
   transition: width var(--duration-normal) var(--ease-out-quad);
 }
 
+.nav-links a {
+  position: relative;
+  padding: 0.5rem 0.4rem;
+  display: inline-block;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px; /* important */
+  width: 0%;
+  height: 3px;
+
+  background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+
+  transition: width 0.3s ease;
+}
+
 .nav-links a:hover::after,
 .nav-links a.active::after {
   width: 100%;
 }
-
-.nav-links a:hover,
-.nav-links a.active {
-  color: var(--text-primary);
-  /* make pointer visible only on hover/active to indicate clickability */
-  cursor: pointer;
-}
-
 /* Theme Toggle */
 .theme-toggle {
   background: transparent;
