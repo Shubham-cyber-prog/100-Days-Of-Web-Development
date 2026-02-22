@@ -6,23 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>100 Days of Web Development | Command Center</title>
 
-  <!-- Design System -->
-  <link rel="stylesheet" href="website/styles/index.css" />
-
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+  <!-- Original Stylesheets -->
+  <link rel="stylesheet" href="website/styles/index.css" />
+  <link rel="stylesheet" href="website/style.css">
+  <link rel="stylesheet" href="website/styles/tracker.css" />
   <link rel="icon" type="image/png" href="website/assets/images/logo.png" />
 
-  <!-- Enhanced Modern UI Styles -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <!-- Sidebar Loader -->
+  <!-- Sidebar & Navbar Loaders -->
   <script src="scripts/components/sidebar-loader.js"></script>
+  <!-- <script src="scripts/components/navbar-loader.js"></script> -->
+
 
   <!-- Navbar Loader -->
    <link rel="stylesheet" href="website/style.css">
@@ -31,514 +32,818 @@
   <!-- Fire Cursor - Commented out as file is missing -->
   <!-- <link rel="stylesheet" href="firecursor.css"> -->
   <link rel="stylesheet" href="website/styles/tracker.css" />
+ 
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#ff7a18" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Zenith" />
 
+  <style>
+   
+  </style>
 
 </head>
 
 <body>
-  <!-- Navbar will be loaded dynamically by navbar-loader.js -->
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
   <!-- Loader -->
-  
+  <div id="loader">
+    <div class="loader-text">100 <span>DAYS</span></div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar" id="loaderBar"></div>
+    </div>
+    <div class="loader-pct" id="loaderPct">0%</div>
+  </div>
 
-  <!-- Sidebar Toggle Button -->
-  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle Sidebar">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
+  <!-- Three.js Background Canvas -->
+  <canvas id="bg-canvas"></canvas>
 
-  <!-- Sidebar will be loaded dynamically -->
-
-  <!-- Mobile Bottom Navigation -->
-  <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
-    <a href="index.html" class="mobile-nav-item active" data-page="home">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        aria-hidden="true">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+  <div class="page-wrapper">
+    <!-- Sidebar Toggle -->
+    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle Sidebar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
       </svg>
-      <span class="mobile-nav-label">Home</span>
-    </a>
-    <a href="website/pages/projects.html" class="mobile-nav-item" data-page="projects">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        aria-hidden="true">
-        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-      </svg>
-      <span class="mobile-nav-label">Projects</span>
-    </a>
-    <a href="website/pages/dashboard.html" class="mobile-nav-item mobile-dashboard-link" id="mobileDashboardLink"
-      style="display: none;" data-page="dashboard">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="9" y1="3" x2="9" y2="21"></line>
-      </svg>
-      <span class="mobile-nav-label">Dashboard</span>
-    </a>
-    <a href="website/pages/about.html" class="mobile-nav-item" data-page="about">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        aria-hidden="true">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="16" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-      </svg>
-      <span class="mobile-nav-label">About</span>
-    </a>
-    <a href="website/pages/contributors.html" class="mobile-nav-item" data-page="contributors">
-      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        aria-hidden="true">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-        <circle cx="9" cy="7" r="4"></circle>
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-      </svg>
-      <span class="mobile-nav-label">Team</span>
-    </a>
-  </nav>
+    </button>
 
-  <main class="container section">
-    <!-- Hero Section -->
-    <section class="zenith-hero animate-enter">
-      <h1 class="hero-title">Forge Your Future<br />One Day at a Time</h1>
-      <p class="hero-subtitle">
-        Join the elite 100-day coding protocol. Master modern web development
-        through rigorous daily deployment cycles.
-      </p>
-      <div class="hero-actions">
-        <a href="website/pages/dashboard.html" class="btn-zenith-primary">Initialize Protocol</a>
-        <a href="website/pages/projects.html" class="btn-zenith-secondary">View Archive</a>
-      </div>
-    </section>
+    <!-- Navbar -->
+    <nav class="navbar" id="mainNav">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-badge">100</div>
+        <span>Days of Web Dev</span>
+      </a>
+      <!-- <ul class="nav-links">
+        <li><a href="website/pages/projects.html">Projects</a></li>
+        <li><a href="website/pages/contributors.html">Contributors</a></li>
+        <li><a href="website/pages/about.html">About</a></li>
+        <li><a href="website/pages/documentation.html">Docs</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="website/pages/about.html" class="btn-nav btn-nav-outline">Learn More</a>
+        <a href="website/pages/dashboard.html" class="btn-nav btn-nav-fill">Dashboard →</a>
+      </div> -->
+    </nav>
 
-    <!-- Carousel Section -->
-    <section class="carousel-section animate-enter delay-50">
-      <div class="carousel-container">
-        <h2 class="carousel-title">Journey Highlights</h2>
-        <div class="carousel">
-          <div class="carousel-track-container">
-            <ul class="carousel-track">
-              <li class="carousel-slide current-slide">
-                <div class="carousel-content">
-                  <div class="carousel-icon" aria-hidden="true">🎯</div>
-                  <h3>Day 1-30: Foundation</h3>
-                  <p>Master HTML, CSS, and JavaScript fundamentals. Build your first 30 projects and establish a solid
-                    coding routine.</p>
-                </div>
-              </li>
-              <li class="carousel-slide">
-                <div class="carousel-content">
-                  <div class="carousel-icon" aria-hidden="true">⚡</div>
-                  <h3>Day 31-60: Advanced Concepts</h3>
-                  <p>Dive into React, APIs, and modern frameworks. Create interactive web applications with real-world
-                    features.</p>
-                </div>
-              </li>
-              <li class="carousel-slide">
-                <div class="carousel-content">
-                  <div class="carousel-icon" aria-hidden="true">🚀</div>
-                  <h3>Day 61-100: Full-Stack Projects</h3>
-                  <p>Build complete full-stack applications. Deploy to production and showcase your portfolio-worthy
-                    projects.</p>
-                </div>
-              </li>
-              <li class="carousel-slide">
-                <div class="carousel-content">
-                  <div class="carousel-icon" aria-hidden="true">🏆</div>
-                  <h3>Success Stories</h3>
-                  <p>Join hundreds of developers who transformed their careers through consistent daily practice and
-                    dedication.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+    <!-- Mobile Bottom Nav -->
+    <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
+      <a href="index.html" class="mobile-nav-item active">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span>Home</span>
+      </a>
+      <a href="website/pages/projects.html" class="mobile-nav-item">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+        </svg>
+        <span>Projects</span>
+      </a>
+      <a href="website/pages/dashboard.html" class="mobile-nav-item" id="mobileDashboardLink" style="display:none;">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <line x1="9" y1="3" x2="9" y2="21" />
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="website/pages/about.html" class="mobile-nav-item">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+        <span>About</span>
+      </a>
+      <a href="website/pages/contributors.html" class="mobile-nav-item">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span>Team</span>
+      </a>
+      <a href="website/pages/contact.html" class="mobile-nav-item">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span>Contact</span>
+      </a>
+    </nav>
 
-          <button class="carousel-button carousel-button--left" aria-label="Previous slide">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-
-              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
+    <main>
+      <!-- HERO -->
+      <section class="hero" id="hero">
+        <div class="hero-eyebrow gsap-fade">Protocol Active — Day <span id="liveDay">1</span> of 100</div>
+        <h1 class="hero-title">
+          <span class="line"><span class="word">Forge Your</span></span>
+          <span class="line"><span class="word accent">Future.</span></span>
+          <span class="line"><span class="word">One Day At</span></span>
+          <span class="line"><span class="word">A Time.</span></span>
+        </h1>
+        <p class="hero-subtitle gsap-up">
+          Join the elite 100-day coding protocol. Master modern web development through rigorous daily deployment cycles
+          and community-driven growth.
+        </p>
+        <div class="hero-actions gsap-up">
+          <a href="website/pages/dashboard.html" class="btn-primary">
+            Initialize Protocol <span class="icon">→</span>
+          </a>
+          <a href="website/pages/projects.html" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
             </svg>
-          </button>
-          <button class="carousel-button carousel-button--right" aria-label="Next slide">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            View Archive
+          </a>
+        </div>
+        <div class="scroll-indicator gsap-fade">
+          <div class="scroll-mouse"></div>
+          <span>Scroll</span>
+        </div>
+      </section>
 
-              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </button>
+      <!-- STATS TICKER -->
+      <div class="stats-ticker">
+        <div class="ticker-inner" id="tickerInner">
+          <span class="ticker-item"><strong>100</strong> Days Challenge</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>500+</strong> Developers Enrolled</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>100</strong> Projects Built</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>React</strong> · Next.js · TailwindCSS</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>Daily</strong> Deployments</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>Open Source</strong> Community</span>
+          <span class="ticker-divider"></span>
+          <!-- duplicate for seamless loop -->
+          <span class="ticker-item"><strong>100</strong> Days Challenge</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>500+</strong> Developers Enrolled</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>100</strong> Projects Built</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>React</strong> · Next.js · TailwindCSS</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>Daily</strong> Deployments</span>
+          <span class="ticker-divider"></span>
+          <span class="ticker-item"><strong>Open Source</strong> Community</span>
+          <span class="ticker-divider"></span>
+        </div>
+      </div>
 
-          <div class="carousel-nav">
-            <button class="carousel-indicator current-slide" aria-label="Go to slide 1"></button>
-            <button class="carousel-indicator" aria-label="Go to slide 2"></button>
-            <button class="carousel-indicator" aria-label="Go to slide 3"></button>
-            <button class="carousel-indicator" aria-label="Go to slide 4"></button>
+      <!-- FEATURES -->
+      <section class="section features-wrap">
+        <div style="margin-bottom:56px;">
+          <div class="section-label gsap-fade">Core Protocol</div>
+          <h2 class="section-title gsap-up">Everything you need<br>to level up fast</h2>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card gsap-up">
+            <div class="feature-icon-wrap">🚀</div>
+            <h3>Daily Deployments</h3>
+            <p>Build and ship a new project every single day. From simple scripts to complex full-stack applications.
+              Consistency is the key to mastery.</p>
+          </div>
+          <div class="feature-card gsap-up">
+            <div class="feature-icon-wrap">⚡</div>
+            <h3>Modern Stack</h3>
+            <p>Master the latest technologies including React, Next.js, TailwindCSS, Node.js, and serverless
+              architecture used by top companies.</p>
+          </div>
+          <div class="feature-card gsap-up">
+            <div class="feature-icon-wrap">🤝</div>
+            <h3>Community Driven</h3>
+            <p>Join a squad of dedicated developers. Code reviews, pair programming, and collaborative growth that
+              accelerates your journey.</p>
+          </div>
+          <div class="feature-card gsap-up">
+            <div class="feature-icon-wrap">📊</div>
+            <h3>Progress Tracking</h3>
+            <p>Live dashboard to track your streak, completed projects, and skill progression across all 100 days of the
+              challenge.</p>
+          </div>
+          <div class="feature-card gsap-up">
+            <div class="feature-icon-wrap">🎯</div>
+            <h3>Structured Curriculum</h3>
+            <p>A carefully crafted learning path from HTML basics to advanced full-stack applications. No guesswork —
+              just focused execution.</p>
+          </div>
+          <div class="feature-card gsap-up">
+            <div class="feature-icon-wrap">🏆</div>
+            <h3>Portfolio Ready</h3>
+            <p>Graduate with 100 projects in your portfolio. Real, deployed applications that demonstrate your skills to
+              potential employers.</p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="features-section animate-enter delay-100">
-      <div class="grid grid-3">
-        <div class="feature-card">
-          <span class="feature-icon" aria-hidden="true">🚀</span>
-          <h3>Daily Deployments</h3>
-          <p>
-            Build and ship a new project every single day. From simple scripts
-            to complex full-stack applications.
-          </p>
+      <!-- COUNTER -->
+      <section class="section" style="padding-top: 0">
+        <div class="counter-section gsap-fade">
+          <div class="counter-item">
+            <span class="counter-num" data-target="100"><span class="val">0</span><span class="suffix">+</span></span>
+            <div class="counter-label">Days of Content</div>
+          </div>
+          <div class="counter-item">
+            <span class="counter-num" data-target="500"><span class="val">0</span><span class="suffix">+</span></span>
+            <div class="counter-label">Active Developers</div>
+          </div>
+          <div class="counter-item">
+            <span class="counter-num" data-target="100"><span class="val">0</span><span class="suffix"></span></span>
+            <div class="counter-label">Projects Built</div>
+          </div>
+          <div class="counter-item">
+            <span class="counter-num" data-target="98"><span class="val">0</span><span class="suffix">%</span></span>
+            <div class="counter-label">Completion Rate</div>
+          </div>
         </div>
-        <div class="feature-card">
-          <span class="feature-icon" aria-hidden="true">⚡</span>
-          <h3>Modern Stack</h3>
-          <p>
-            Master the latest technologies including React, Next.js,
-            TailwindCSS, and serverless architecture.
-          </p>
-        </div>
-        <div class="feature-card">
-          <span class="feature-icon" aria-hidden="true">🤝</span>
-          <h3>Community Driven</h3>
-          <p>
-            Join a squad of dedicated developers. Code reviews, pair
-            programming, and collaborative growth.
-          </p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Projects Search Section -->
-    <section class="projects-section section animate-enter delay-200" id="explore-projects">
-      <div class="container">
+      <!-- TIMELINE / JOURNEY -->
+      <section class="section timeline-section">
         <div class="section-header">
-          <h2>Explore The Archive</h2>
-          <div class="search-wrapper">
-            <input type="text" id="projectSearch" placeholder="Search mission name, tech, or difficulty..."
+          <div class="section-label gsap-fade">The Journey</div>
+          <h2 class="section-title gsap-up">100 Days.<br>Three Phases.</h2>
+          <p class="section-desc gsap-up">A structured progression designed to take you from beginner fundamentals to
+            production-grade full-stack developer.</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-card gsap-up">
+            <div class="timeline-phase">Phase 01</div>
+            <div class="timeline-days">1–30 <span>days</span></div>
+            <div class="timeline-title">Foundation</div>
+            <p class="timeline-desc">Master HTML, CSS, and JavaScript fundamentals. Build your first 30 projects and
+              establish a rock-solid coding routine.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">HTML5</span>
+              <span class="timeline-tag">CSS3</span>
+              <span class="timeline-tag">JavaScript</span>
+              <span class="timeline-tag">DOM API</span>
+            </div>
+          </div>
+          <div class="timeline-card gsap-up">
+            <div class="timeline-phase">Phase 02</div>
+            <div class="timeline-days">31–60 <span>days</span></div>
+            <div class="timeline-title">Advanced Concepts</div>
+            <p class="timeline-desc">Dive into React, REST APIs, and modern frameworks. Create interactive web
+              applications with real-world features and data.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">React</span>
+              <span class="timeline-tag">REST API</span>
+              <span class="timeline-tag">Node.js</span>
+              <span class="timeline-tag">Git</span>
+            </div>
+          </div>
+          <div class="timeline-card gsap-up">
+            <div class="timeline-phase">Phase 03</div>
+            <div class="timeline-days">61–100 <span>days</span></div>
+            <div class="timeline-title">Full-Stack Mastery</div>
+            <p class="timeline-desc">Build complete full-stack applications. Deploy to production, manage databases, and
+              ship portfolio-worthy projects.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Next.js</span>
+              <span class="timeline-tag">MongoDB</span>
+              <span class="timeline-tag">Vercel</span>
+              <span class="timeline-tag">TypeScript</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TECH STACK -->
+      <section class="section" style="padding-top:0;">
+        <div class="section-label gsap-fade">Tech Stack</div>
+        <h2 class="section-title gsap-up">Technologies you'll master</h2>
+        <div class="tech-grid gsap-up">
+          <span class="tech-pill"><span class="tech-pill-dot"></span>HTML5</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>CSS3</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>JavaScript ES6+</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>React</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>Next.js</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>Node.js</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>TailwindCSS</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>MongoDB</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>PostgreSQL</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>REST APIs</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>GraphQL</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>TypeScript</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>Git & GitHub</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>Vercel</span>
+          <span class="tech-pill"><span class="tech-pill-dot"></span>Docker</span>
+        </div>
+      </section>
+
+      <!-- PROJECTS SECTION -->
+      <section class="section projects-section" id="explore-projects">
+        <div class="projects-header">
+          <div>
+            <div class="section-label gsap-fade">Archive</div>
+            <h2 class="section-title gsap-up">Explore Projects</h2>
+          </div>
+          <div class="search-wrap gsap-fade">
+            <i class="fa-solid fa-search search-icon"></i>
+            <input type="text" id="projectSearch" placeholder="Search mission, tech, difficulty…"
               class="search-input" />
           </div>
         </div>
-
-        <!-- Tracker Progress Summary -->
         <div id="progress-summary">
-          <div class="progress-text">Progress: <span id="progress-count" class="progress-count">0/100</span></div>
+          <span class="progress-text">Progress: <span id="progress-count" class="progress-count">0/100</span></span>
           <div class="progress-bar-container">
-            <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%"></div>
+            <div id="progress-bar-fill" style="width: 0%"></div>
           </div>
         </div>
-
         <div id="projectsGrid" class="grid grid-4">
-          <!-- Injected by landing-projects.js -->
+          <div id="project-gallery"></div>
+        </div>
+        <div class="view-all-wrap gsap-up">
+          <a href="website/pages/projects.html" class="btn-secondary">View Full Archive →</a>
+        </div>
+      </section>
 
-          <div id="project-gallery" class="grid grid-4">
-
+      <!-- TESTIMONIALS -->
+      <section class="section" style="padding-top:0;">
+        <div class="section-label gsap-fade">Community</div>
+        <h2 class="section-title gsap-up" style="margin-bottom:48px;">What developers say</h2>
+        <div class="testimonials-grid">
+          <div class="testimonial-card gsap-up">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"This challenge completely transformed my career. I went from zero coding
+              knowledge to landing my first frontend dev job in 4 months."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AK</div>
+              <div>
+                <div class="testimonial-name">Arjun K.</div>
+                <div class="testimonial-role">Frontend Developer @ Startup</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card gsap-up">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"The daily deployment discipline is what makes this different. You build real
+              things, not just tutorials. My portfolio went from 0 to 100 projects."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">PS</div>
+              <div>
+                <div class="testimonial-name">Priya S.</div>
+                <div class="testimonial-role">Full-Stack Engineer</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card gsap-up">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"The community support is incredible. Code reviews from experienced devs on
+              every project. I learned more in 100 days than I did in a year of self-study."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">RM</div>
+              <div>
+                <div class="testimonial-name">Rahul M.</div>
+                <div class="testimonial-role">React Developer</div>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="view-all-container">
-          <a href="website/pages/projects.html" class="btn-zenith-secondary">View Full Archive</a>
+      <!-- CTA -->
+      <section class="section" style="padding-top:0; padding-bottom:120px;">
+        <div class="cta-section gsap-fade">
+          <div class="section-label"
+            style="justify-content:center; display:inline-block; margin:0 auto 16px; display:block; text-align:center;">
+            Ready to Begin?</div>
+          <h2>Start Day 1 Today.<br>Your future self will thank you.</h2>
+          <p>Join hundreds of developers who've committed to the 100-day protocol. The best time to start was yesterday
+            — the second best time is now.</p>
+          <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+            <a href="website/pages/dashboard.html" class="btn-primary">Initialize Protocol <span
+                class="icon">→</span></a>
+            <a href="website/pages/about.html" class="btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/index.html" class="footer-logo">
+            <img src="website/assets/images/logo.png" alt="100 Days of Web Development logo" />
+            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
+          </a>
+          <p class="footer-desc">A hyper-intensive protocol designed to forge elite web engineers through daily
+            deployment cycles and community-driven growth.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <nav class="footer-links">
+            <a href="/index.html" class="footer-link">Home</a>
+            <a href="/website/pages/projects.html" class="footer-link">Projects</a>
+            <a href="/website/pages/contributors.html" class="footer-link">Contributors</a>
+            <a href="/website/pages/about.html" class="footer-link">About</a>
+            <a href="/website/pages/feedback.html" class="footer-link">Feedback</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h3>Navigation</h3>
+          <nav class="footer-links">
+            <a href="/website/pages/dashboard.html" class="footer-link">Dashboard</a>
+            <a href="/website/pages/documentation.html" class="footer-link">Documentation</a>
+            <a href="/website/pages/api-status.html" class="footer-link">API Status</a>
+            <a href="/website/pages/contact.html" class="footer-link">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h3>Legals</h3>
+          <nav class="footer-links">
+            <a href="/website/pages/privacy-policy.html" class="footer-link">Privacy Policy</a>
+            <a href="/website/pages/terms-of-use.html" class="footer-link">Terms of Use</a>
+            <a href="/website/pages/disclaimer.html" class="footer-link">Disclaimer</a>
+            <a href="/website/pages/system-logic.html" class="footer-link">System Logic</a>
+          </nav>
+        </div>
+        <div class="footer-connect">
+          <h3>Connect</h3>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Join the signal frequency.</p>
+          <div class="footer-socials">
+            <a href="https://github.com/Shubham-cyber-prog" class="social-btn" target="_blank" aria-label="GitHub">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg>
+            </a>
+            <a href="https://twitter.com" class="social-btn" target="_blank" aria-label="X">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/subham-nayak-00276930b/" class="social-btn" target="_blank"
+              aria-label="LinkedIn">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-content">
-      <!-- Brand -->
-      <div class="footer-brand">
-        <a href="/index.html" class="footer-logo">
-          <img src="website/assets/images/logo.png" alt="100 Days of Web Development logo" />
-          <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-        </a>
-        <p class="footer-desc">
-          A hyper-intensive protocol designed to forge elite web engineers
-          through daily deployment cycles.
-        </p>
+      <div class="footer-bottom">
+        <p>© 2026 100 Days of Web Dev. All Systems Nominal.</p>
+        <p>Maintained by <span>Subham</span> ❤️</p>
       </div>
+    </footer>
+  </div>
 
-      <!-- Quick Links -->
-      <div class="footer-col">
-        <h3>Quick Links</h3>
-        <nav class="footer-links">
-          <a href="/index.html" class="footer-link">Home</a>
-          <a href="/website/pages/projects.html" class="footer-link">Projects</a>
-          <a href="/website/pages/contributors.html" class="footer-link">Contributors</a>
-          <a href="/website/pages/about.html" class="footer-link">About</a>
-          <a href="/website/pages/feedback.html" class="footer-link">Feedback</a>
-        </nav>
-      </div>
+  <!-- Scroll To Top -->
+  <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top">↑</button>
 
-      <!-- Navigation -->
-      <div class="footer-col">
-        <h3>Navigation</h3>
-        <nav class="footer-links">
-          <a href="/website/pages/dashboard.html" class="footer-link">Dashboard</a>
-          <a href="/website/pages/documentation.html" class="footer-link">Documentation</a>
-          <a href="/website/pages/api-status.html" class="footer-link">API Status</a>
-          <a href="/website/pages/contact.html" class="footer-link">Contact</a>
-        </nav>
-      </div>
+  <!-- SCRIPTS -->
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-      <!-- Resources -->
-      <div class="footer-col">
-        <h3>Resources</h3>
-        <nav class="footer-links">
-          <a href="/website/pages/documentation.html" class="footer-link">Documentation</a>
-          <a href="/website/pages/api-status.html" class="footer-link">API Status</a>
-          <a href="/website/pages/contact.html" class="footer-link">Contact Comms</a>
-          <a href="/website/pages/system-logic.html" class="footer-link">System Logic</a>
-        </nav>
-      </div>
-
-      <!-- Legals (FIXED 404 ISSUE) -->
-      <div class="footer-col">
-        <h3>Legals</h3>
-        <nav class="footer-links">
-          <a href="/website/pages/privacy-policy.html" class="footer-link">Privacy Policy</a>
-          <a href="/website/pages/terms-of-use.html" class="footer-link">Terms of Use</a>
-          <a href="/website/pages/disclaimer.html" class="footer-link">Disclaimer</a>
-        </nav>
-      </div>
-
-      <!-- Connect -->
-      <div class="footer-connect">
-        <h3>Connect</h3>
-        <p class="text-secondary text-sm">Join the signal frequency.</p>
-        <div class="footer-socials">
-          <a href="https://github.com/Shubham-cyber-prog" class="social-btn" target="_blank" aria-label="GitHub">
-            <svg class="icon" viewBox="0 0 24 24">
-              <path
-                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-            </svg>
-          </a>
-
-          <a href="https://twitter.com" class="social-btn" target="_blank" aria-label="Twitter">
-            <svg class="icon" viewBox="0 0 24 24">
-              <path
-                d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 8v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5" />
-            </svg>
-          </a>
-
-          <a href="https://www.linkedin.com/in/subham-nayak-00276930b/" class="social-btn" target="_blank"
-            aria-label="LinkedIn">
-            <svg class="icon" viewBox="0 0 24 24">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2" />
-              <rect x="2" y="9" width="4" height="12" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer Bottom -->
-    <div class="footer-bottom">
-      <p>© 2026 100 Days of Web Dev. All Systems Nominal.</p>
-      <p>Maintained by <span>Subham</span> ❤️</p>
-    </div>
-  </footer>
-
-  <!-- Scroll To Top Button -->
-  <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top" title="Back to top">
-    ↑
-  </button>
-
-
-  <!-- Scripts -->
+  <!-- Original project scripts -->
+  <script src="assets/js/project-loader.js"></script>
+  <script src="assets/js/main.js"></script>
   <script src="website/scripts/components/cursor.js"></script>
   <script src="website/scripts/components/navigation.js"></script>
-  <script src="assets/js/project-loader.js"></script>
-  <script>
-    // Constants
-    const LOADER_HIDE_DELAY = 500;
 
-    // Page Loader
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('page-loader');
-      setTimeout(() => {
-        loader.classList.add('hidden');
-      }, LOADER_HIDE_DELAY);
+  <script>
+    // ===== LOADER =====
+    const loaderBar = document.getElementById('loaderBar');
+    const loaderPct = document.getElementById('loaderPct');
+    const loader = document.getElementById('loader');
+    let pct = 0;
+    const loaderInterval = setInterval(() => {
+      pct = Math.min(pct + Math.random() * 15, 100);
+      loaderBar.style.width = pct + '%';
+      loaderPct.textContent = Math.floor(pct) + '%';
+      if (pct >= 100) {
+        clearInterval(loaderInterval);
+        setTimeout(() => loader.classList.add('hidden'), 300);
+      }
+    }, 120);
+
+    // ===== LIVE DAY COUNTER =====
+    const startDate = new Date('2026-01-01');
+    const today = new Date();
+    const dayNum = Math.min(Math.floor((today - startDate) / 86400000) + 1, 100);
+    const liveDayEl = document.getElementById('liveDay');
+    if (liveDayEl) liveDayEl.textContent = Math.max(1, dayNum);
+
+    // ===== THREE.JS BACKGROUND =====
+    (function () {
+      const canvas = document.getElementById('bg-canvas');
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
+
+      // Particle system
+      const particleCount = 1200;
+      const positions = new Float32Array(particleCount * 3);
+      const colors = new Float32Array(particleCount * 3);
+      const sizes = new Float32Array(particleCount);
+
+      for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 30;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
+        // Cyan to teal gradient
+        const t = Math.random();
+        colors[i * 3] = 0;                    // R
+        colors[i * 3 + 1] = 0.6 + t * 0.4;  // G
+        colors[i * 3 + 2] = 0.8 + t * 0.2;  // B
+        sizes[i] = Math.random() * 2.5 + 0.5;
+      }
+
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+      geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+      const mat = new THREE.PointsMaterial({
+        size: 0.04,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.6,
+        sizeAttenuation: true,
+      });
+
+      const particles = new THREE.Points(geo, mat);
+      scene.add(particles);
+
+      // Mouse tracking
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      let scrollY = 0;
+      window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      const clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+        particles.rotation.y = t * 0.04 + mouseX * 0.15;
+        particles.rotation.x = t * 0.02 - mouseY * 0.08;
+        camera.position.y = -scrollY * 0.002;
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+    // ===== CUSTOM CURSOR =====
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+      ringX += (e.clientX - ringX) * 0.12;
+      ringY += (e.clientY - ringY) * 0.12;
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    });
+    // requestAnimationFrame ring lerp
+    function lerpRing() {
+      requestAnimationFrame(lerpRing);
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+    }
+    // Actually update properly
+    document.addEventListener('mousemove', (e) => {
+      gsap.to(ring, { x: e.clientX - 18, y: e.clientY - 18, duration: 0.15, ease: 'power2.out' });
+      gsap.to(dot, { x: e.clientX - 4, y: e.clientY - 4, duration: 0.05 });
+    });
+    document.querySelectorAll('a, button, .feature-card, .timeline-card, .testimonial-card').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+    });
+    dot.style.position = 'fixed';
+    ring.style.position = 'fixed';
+    dot.style.left = ring.style.left = '-100px';
+
+    // ===== GSAP ANIMATIONS =====
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero animations - run after loader
+    setTimeout(() => {
+      const tl = gsap.timeline({ delay: 0.3 });
+      tl.from('.hero-title .word', {
+        y: 80,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.1,
+        ease: 'power3.out'
+      })
+        .from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
+        .from('.hero-actions', { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+        .from('.hero-eyebrow', { y: -20, opacity: 0, duration: 0.5, ease: 'power2.out' }, '<')
+        .from('.scroll-indicator', { opacity: 0, duration: 0.5 }, '-=0.2');
+    }, 1500);
+
+    // Scroll-triggered animations for all .gsap-up, .gsap-fade
+    document.querySelectorAll('.gsap-up').forEach(el => {
+      gsap.fromTo(el, { y: 50, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+    document.querySelectorAll('.gsap-fade').forEach(el => {
+      gsap.fromTo(el, { opacity: 0 }, {
+        opacity: 1, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
     });
 
-    // Sidebar functionality - handled by sidebar-loader.js
-    // Removed duplicate sidebar code to prevent null reference errors
+    // Stagger feature cards
+    gsap.fromTo('.feature-card', { y: 50, opacity: 0 }, {
+      y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out',
+      scrollTrigger: { trigger: '.features-grid', start: 'top 80%', once: true }
+    });
 
-    // Show/hide dashboard link based on authentication
+    // Stagger timeline cards
+    gsap.fromTo('.timeline-card', { y: 60, opacity: 0 }, {
+      y: 0, opacity: 1, duration: 0.7, stagger: 0.15, ease: 'power2.out',
+      scrollTrigger: { trigger: '.timeline', start: 'top 80%', once: true }
+    });
+
+    // Counter animation
+    const counterSection = document.querySelector('.counter-section');
+    let counted = false;
+    ScrollTrigger.create({
+      trigger: counterSection,
+      start: 'top 80%',
+      onEnter: () => {
+        if (counted) return;
+        counted = true;
+        document.querySelectorAll('.counter-num').forEach(el => {
+          const target = parseInt(el.dataset.target);
+          const valEl = el.querySelector('.val');
+          gsap.to({ val: 0 }, {
+            val: target,
+            duration: 1.8,
+            ease: 'power2.out',
+            onUpdate: function () {
+              valEl.textContent = Math.floor(this.targets()[0].val);
+            }
+          });
+        });
+      }
+    });
+
+    // Testimonials stagger
+    gsap.fromTo('.testimonial-card', { y: 40, opacity: 0 }, {
+      y: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: 'power2.out',
+      scrollTrigger: { trigger: '.testimonials-grid', start: 'top 80%', once: true }
+    });
+
+    // Tech pills stagger
+    gsap.fromTo('.tech-pill', { scale: 0.8, opacity: 0 }, {
+      scale: 1, opacity: 1, duration: 0.4, stagger: 0.04, ease: 'back.out(1.7)',
+      scrollTrigger: { trigger: '.tech-grid', start: 'top 85%', once: true }
+    });
+
+    // Navbar scroll effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll to top
+    const scrollBtn = document.getElementById('scrollToTopBtn');
+    window.addEventListener('scroll', () => {
+      scrollBtn.classList.toggle('show', window.scrollY > 300);
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Auth dashboard link visibility
     document.addEventListener('DOMContentLoaded', () => {
-      const dashboardLink = document.getElementById('sidebarDashboardLink');
-      const mobileDashboardLink = document.getElementById('mobileDashboardLink');
+      const mobileLink = document.getElementById('mobileDashboardLink');
       const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
       const isGuest = localStorage.getItem('isGuest') === 'true';
-
-      if (dashboardLink) {
-        if (isLoggedIn && !isGuest) {
-          dashboardLink.style.display = 'flex';
-        } else {
-          dashboardLink.style.display = 'none';
-        }
-      }
-
-      if (mobileDashboardLink) {
-        if (isLoggedIn && !isGuest) {
-          mobileDashboardLink.style.display = 'flex';
-        } else {
-          mobileDashboardLink.style.display = 'none';
-        }
+      if (mobileLink) {
+        mobileLink.style.display = (isLoggedIn && !isGuest) ? 'flex' : 'none';
       }
     });
 
-    // Mobile bottom navigation active state
-    const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
-    const currentPath = window.location.pathname;
-
-    mobileNavItems.forEach(item => {
-      const href = item.getAttribute('href');
-      // Check if current page matches the nav item
-      if (currentPath === '/' || currentPath.includes('index.html')) {
-        if (href === '#' || href === '/') {
-          item.classList.add('active');
-        }
-      } else if (href && currentPath.includes(href)) {
-        item.classList.add('active');
-      }
+    // Theme load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme');
     });
-
-    function toggleTheme() {
-      document.body.classList.toggle('light-theme');
-      // Save theme preference to localStorage if needed
-      const isLightTheme = document.body.classList.contains('light-theme');
-      localStorage.setItem('theme', isLightTheme ? 'light' : 'dark');
+    // ===== EMERGENCY HERO VISIBILITY FIX =====
+(function() {
+    // Run immediately
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.style.opacity = '1';
+        hero.style.visibility = 'visible';
+        hero.style.display = 'flex';
     }
-
-    // Load saved theme on page load
-    document.addEventListener('DOMContentLoaded', function () {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') {
-        document.body.classList.add('light-theme');
-      }
+    
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        heroTitle.style.opacity = '1';
+        heroTitle.style.visibility = 'visible';
+        heroTitle.style.color = 'var(--text-primary)';
+    }
+    
+    // Fix all words
+    document.querySelectorAll('.hero-title .word').forEach(word => {
+        word.style.opacity = '1';
+        word.style.visibility = 'visible';
+        word.style.transform = 'none';
+        word.style.color = 'var(--text-primary)';
     });
-    // Scroll To Top Button Logic
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-    if (scrollToTopBtn) {
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-          scrollToTopBtn.classList.add("show");
-        } else {
-          scrollToTopBtn.classList.remove("show");
-        }
-      });
-
-      scrollToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
+    
+    // Fix accent word
+    document.querySelectorAll('.hero-title .accent').forEach(accent => {
+        accent.style.color = 'var(--flame)';
+    });
+    
+    // Run again after load
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                heroTitle.style.opacity = '1';
+                heroTitle.style.visibility = 'visible';
+            }
+            
+            document.querySelectorAll('.hero-title .word').forEach(word => {
+                word.style.opacity = '1';
+                word.style.visibility = 'visible';
+                word.style.transform = 'none';
+            });
+        }, 500);
+    });
+    
+    // Run after loader disappears
+    const loader = document.getElementById('loader');
+    if (loader) {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class' && 
+                    loader.classList.contains('hidden')) {
+                    
+                    const heroTitle = document.querySelector('.hero-title');
+                    if (heroTitle) {
+                        heroTitle.style.opacity = '1';
+                        heroTitle.style.visibility = 'visible';
+                    }
+                }
+            });
         });
-      });
+        
+        observer.observe(loader, { attributes: true });
     }
+})();
 
-    // Carousel Functionality
-    const track = document.querySelector('.carousel-track');
-    const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-    const nextButton = document.querySelector('.carousel-button--right');
-    const prevButton = document.querySelector('.carousel-button--left');
-    const dotsNav = document.querySelector('.carousel-nav');
-    const dots = Array.from(document.querySelectorAll('.carousel-indicator'));
-
-    if (track && slides.length > 0 && nextButton && prevButton && dotsNav && dots.length > 0) {
-      let currentSlide = 0;
-      const slideCount = slides.length;
-      let autoplayInterval;
-
-      const updateSlides = () => {
-        slides.forEach((slide, index) => {
-          slide.classList.toggle('current-slide', index === currentSlide);
-        });
-        dots.forEach((dot, index) => {
-          dot.classList.toggle('current-slide', index === currentSlide);
-          dot.setAttribute('aria-label', `Go to slide ${index + 1}${index === currentSlide ? ' (current)' : ''}`);
-        });
-      };
-
-      const moveToSlide = (slideIndex) => {
-        currentSlide = slideIndex;
-        updateSlides();
-        resetAutoplay();
-      };
-
-      const nextSlide = () => {
-        currentSlide = (currentSlide + 1) % slideCount;
-        updateSlides();
-        resetAutoplay();
-      };
-
-      const prevSlide = () => {
-        currentSlide = (currentSlide - 1 + slideCount) % slideCount;
-        updateSlides();
-        resetAutoplay();
-      };
-
-      const startAutoplay = () => {
-        autoplayInterval = setInterval(nextSlide, 5000);
-      };
-
-      const stopAutoplay = () => {
-        if (autoplayInterval) {
-          clearInterval(autoplayInterval);
-        }
-      };
-
-      const resetAutoplay = () => {
-        stopAutoplay();
-        startAutoplay();
-      };
-
-      // Event listeners
-      nextButton.addEventListener('click', nextSlide);
-      prevButton.addEventListener('click', prevSlide);
-
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => moveToSlide(index));
-      });
-
-      // Touch/swipe support
-      let touchStartX = 0;
-      let touchEndX = 0;
-
-      track.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      });
-
-      track.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-      });
-
-      const handleSwipe = () => {
-        if (touchEndX < touchStartX - 50) {
-          nextSlide();
-        }
-        if (touchEndX > touchStartX + 50) {
-          prevSlide();
-        }
-      };
-
-      // Pause autoplay on hover
-      const carousel = document.querySelector('.carousel');
-      if (carousel) {
-        carousel.addEventListener('mouseenter', stopAutoplay);
-        carousel.addEventListener('mouseleave', startAutoplay);
-      }
-
-      // Initialize - set initial state first, then start autoplay
-      updateSlides();
-      startAutoplay();
-    }
+// Disable GSAP animations for hero if they're causing issues
+if (window.gsap) {
+    // Clear any GSAP animations on hero
+    gsap.set('.hero-title .word', { clearProps: 'all' });
+    gsap.set('.hero-subtitle', { clearProps: 'all' });
+    gsap.set('.hero-actions', { clearProps: 'all' });
+}
   </script>
+x
 
   <!-- Global Error Handler -->
   <script src="assets/js/main.js"></script>
+
+  <!-- PWA Components -->
+  <script src="website/components/offline-indicator.js"></script>
+  <script src="website/components/install-prompt.js"></script>
+  <script src="website/pwa.js"></script>
+
 </body>
 
 </html>

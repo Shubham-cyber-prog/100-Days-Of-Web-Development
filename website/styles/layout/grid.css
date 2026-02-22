@@ -1,133 +1,72 @@
-/* --- Layout: Grid & Container --- */
+/* --- Variables for Easy Control --- */
+:root {
+  --container-max: 1280px;
+  --container-pad: clamp(1rem, 5vw, 2.5rem); /* Fluid Padding */
+  --grid-gap: clamp(1rem, 3vw, 2rem);        /* Responsive Gaps */
+  --section-space: clamp(4rem, 10vh, 8rem);  /* Dynamic Section Spacing */
+}
 
+/* --- Optimized Container --- */
 .container {
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--container-padding);
-  padding-right: var(--container-padding);
-  max-width: var(--container-width-xl);
+  max-width: var(--container-max);
+  margin-inline: auto; /* Modern way for margin-left/right auto */
+  padding-inline: var(--container-pad);
 }
 
-/* Responsive Container Widths */
-@media (max-width: 1280px) {
-  .container {
-    max-width: 1024px;
-  }
+/* --- Smart Grid System (No more 100 media queries) --- */
+.grid {
+  display: grid;
+  gap: var(--grid-gap);
+  align-content: start;
 }
 
+/* Auto-Layout: Sabse best hai. Columns apne aap adjust honge bina Media Query ke */
+.grid-auto {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* --- Projects Section (Bento or Masonry style ready) --- */
+.projects-section #project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 1.5rem;
+}
+
+/* --- Responsive Fixes (Mobile First Approach) --- */
 @media (max-width: 1024px) {
-  .container {
-    max-width: 768px;
-  }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .container {
-    max-width: 100%;
+  .grid-3, .grid-2 { 
+    grid-template-columns: 1fr; 
+  }
+  
+  .section {
+    padding-block: calc(var(--section-space) / 1.5);
   }
 }
 
-/* Grid System */
-.grid {
-  display: grid;
-  gap: var(--space-6);
-}
+/* --- Modern Flex Utilities --- */
+.flex { display: flex; gap: var(--gap, 1rem); }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
 
-.grid-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.grid-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.grid-4 {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
-
-/* Projects specific horizontal layout */
-.projects-section .grid-4 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
-  justify-content: start;
-}
-
-/* Enhanced project card layout for better horizontal presentation */
-.projects-section #project-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-
-/* Stack on Mobile */
-@media (max-width: 900px) {
-  .grid-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  /* Stack grid-2 and grid-3 on small mobile */
-  .grid-2,
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
-
-  /* Maintain responsive columns for grid-4 (Projects) */
-  .grid-4 {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    /* Reduce gap on mobile */
-    padding: 0 0.5rem;
-  }
-
-  .grid {
-    gap: 1rem;
-  }
-}
-
-/* Flex Utilities */
-.flex {
-  display: flex;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
+/* "get-center" ko modern banaya */
 .get-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center; /* Flex se bhi fast aur clean center center */
 }
 
-.items-center {
-  align-items: center;
-}
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
 
-.justify-between {
-  justify-content: space-between;
-}
-
-.gap-2 {
-  gap: var(--space-2);
-}
-
-.gap-4 {
-  gap: var(--space-4);
-}
-
-/* Section Spacing */
+/* --- Section Spacing --- */
 .section {
-  padding-top: var(--space-16);
-  padding-bottom: var(--space-16);
+  padding-block: var(--section-space);
 }
