@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Drawing App</title>
+  <meta name="description"
+    content="Create digital art with our feature-rich Drawing App. Choose colors, sizes, and save your work as PNG.">
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <div class="app">
@@ -22,8 +26,8 @@
         <input type="color" id="colorPicker" value="#000000">
       </label>
 
-      <button id="clearBtn" class="btn danger">Clear</button>
-      <button id="saveBtn" class="btn success">Save PNG</button>
+      <button id="clearBtn" class="btn danger" aria-label="Clear drawing canvas">Clear</button>
+      <button id="saveBtn" class="btn success" aria-label="Save drawing as PNG">Save PNG</button>
     </div>
 
     <canvas id="canvas"></canvas>
@@ -33,4 +37,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
