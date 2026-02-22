@@ -1,0 +1,142 @@
+name: Code Quality Checks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.js'
+      - '**/*.css'
+      - '**/*.html'
+  push:
+    branches: [main]
+    paths:
+      - '**/*.js'
+      - '**/*.css'
+      - '**/*.html'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  lint-javascript:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint:js
+        continue-on-error: true
+
+      - name: ESLint Report
+        if: always()
+        run: |
+          echo "## ESLint Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "ESLint analyzes JavaScript code for potential errors and style issues." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Common Issues" >> $GITHUB_STEP_SUMMARY
+          echo "- Unused variables" >> $GITHUB_STEP_SUMMARY
+          echo "- Missing semicolons" >> $GITHUB_STEP_SUMMARY
+          echo "- Undefined variables" >> $GITHUB_STEP_SUMMARY
+          echo "- Incorrect syntax" >> $GITHUB_STEP_SUMMARY
+
+  lint-css:
+    name: Stylelint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Stylelint
+        run: npm run lint:css
+        continue-on-error: true
+
+      - name: Stylelint Report
+        if: always()
+        run: |
+          echo "## Stylelint Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Stylelint analyzes CSS for potential errors and style issues." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Common Issues" >> $GITHUB_STEP_SUMMARY
+          echo "- Invalid property values" >> $GITHUB_STEP_SUMMARY
+          echo "- Missing vendor prefixes" >> $GITHUB_STEP_SUMMARY
+          echo "- Duplicate selectors" >> $GITHUB_STEP_SUMMARY
+          echo "- Inconsistent naming conventions" >> $GITHUB_STEP_SUMMARY
+
+  lint-html:
+    name: HTMLHint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run HTMLHint
+        run: npm run lint:html
+        continue-on-error: true
+
+      - name: HTMLHint Report
+        if: always()
+        run: |
+          echo "## HTMLHint Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "HTMLHint analyzes HTML for potential errors and best practices." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Common Issues" >> $GITHUB_STEP_SUMMARY
+          echo "- Unclosed tags" >> $GITHUB_STEP_SUMMARY
+          echo "- Duplicate IDs" >> $GITHUB_STEP_SUMMARY
+          echo "- Missing required attributes" >> $GITHUB_STEP_SUMMARY
+          echo "- Invalid attribute values" >> $GITHUB_STEP_SUMMARY
+
+  code-quality-summary:
+    name: Code Quality Summary
+    runs-on: ubuntu-latest
+    needs: [lint-javascript, lint-css, lint-html]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Summary
+        run: |
+          echo "# Code Quality Check Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All linters have been executed. Please review individual job results for details." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Linters Executed" >> $GITHUB_STEP_SUMMARY
+          echo "- ESLint: JavaScript linting" >> $GITHUB_STEP_SUMMARY
+          echo "- Stylelint: CSS linting" >> $GITHUB_STEP_SUMMARY
+          echo "- HTMLHint: HTML linting" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## How to Fix Issues" >> $GITHUB_STEP_SUMMARY
+          echo "1. Run linters locally: \`npm run lint\`" >> $GITHUB_STEP_SUMMARY
+          echo "2. Fix reported issues in your code" >> $GITHUB_STEP_SUMMARY
+          echo "3. Commit and push the fixes" >> $GITHUB_STEP_SUMMARY
