@@ -5,12 +5,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Glass QR Generator</title>
+  <link rel="stylesheet" href="../shared/base.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
   <div class="container">
+    <!-- 🌙 Dark Mode Toggle -->
+    <div class="theme-toggle">
+    <label>
+    <input type="checkbox" id="darkToggle">
+    Dark Mode
+    </label>
+    </div>
+
     <h1>QR Code Generator</h1>
 
     <!-- Tabs -->
@@ -41,6 +50,20 @@
       </div>
 
       <button onclick="generateQR()">Generate QR</button>
+      <!-- 🎨 QR Customization -->
+      <div class="customize">
+      <h3>Customize QR</h3>
+
+      <label>QR Color</label>
+      <input type="color" id="qrColor" value="#000000">
+
+      <label>QR Size</label>
+      <input type="range" id="qrSize" min="150" max="300" value="180">
+
+      <label>Add Logo</label>
+      <input type="file" id="logoUpload" accept="image/*">
+      </div>
+
 
       <div class="qr-box" id="qrBox">
         <canvas id="qrCanvas"></canvas>
@@ -64,7 +87,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Visualizer & Validator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/tree-view.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="brand">
+                <i class="fa-solid fa-code-branch"></i>
+                <h1>JSON Visualizer</h1>
+            </div>
+            <div class="toolbar">
+                <button id="btn-theme" class="btn-icon" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="divider"></div>
+                <button id="btn-load-sample" class="btn-text">Load Sample</button>
+                <button id="btn-format" class="btn-text"><i class="fa-solid fa-indent"></i> Format</button>
+                <button id="btn-minify" class="btn-text"><i class="fa-solid fa-compress"></i> Minify</button>
+                <div class="divider"></div>
+                <label for="file-upload" class="btn-primary">
+                    <i class="fa-solid fa-upload"></i> Upload
+                </label>
+                <input type="file" id="file-upload" accept=".json" hidden>
+                <button id="btn-export" class="btn-primary-outline">
+                    <i class="fa-solid fa-download"></i> Export
+                </button>
+            </div>
+        </header>
+
+        <main class="workspace">
+            <!-- Left Pane: Input -->
+            <section class="pane input-pane">
+                <div class="pane-header">
+                    <h2>Raw JSON Input</h2>
+                    <span class="status-indicator" id="parse-status">Ready</span>
+                </div>
+                <div class="editor-container">
+                    <textarea id="json-input" placeholder="Paste your JSON here..." spellcheck="false"></textarea>
+                </div>
+            </section>
+
+            <!-- Resize Handle -->
+            <div class="resize-handle" id="resize-handle"></div>
+
+            <!-- Right Pane: Visualization -->
+            <section class="pane visual-pane">
+                <div class="pane-header">
+                    <h2>Visual Tree</h2>
+                    <div class="pane-controls">
+                        <button id="btn-expand" class="btn-small">Expand All</button>
+                        <button id="btn-collapse" class="btn-small">Collapse All</button>
+                        <div class="search-box">
+                            <i class="fa-solid fa-search"></i>
+                            <input type="text" id="tree-search" placeholder="Search keys...">
+                        </div>
+                    </div>
+                </div>
+                <div class="tree-container" id="tree-root">
+                    <div class="placeholder-text">
+                        <i class="fa-solid fa-folder-tree"></i>
+                        <p>Enter valid JSON to view tree structure</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <div class="stats">
+                <span id="stat-size">Size: 0 B</span>
+                <span class="dot">·</span>
+                <span id="stat-nodes">Nodes: 0</span>
+                <span class="dot">·</span>
+                <span id="stat-depth">Depth: 0</span>
+            </div>
+            <div class="validation-status" id="validation-status">
+                <i class="fa-solid fa-check-circle"></i> Valid JSON
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="./scripts/app.js"></script>
+</body>
+
+</html>

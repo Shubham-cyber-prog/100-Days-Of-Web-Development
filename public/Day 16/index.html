@@ -13,10 +13,16 @@
         <h1>🔐 Password Generator</h1>
         <p class="subtitle">Create strong and secure passwords</p>
 
-        <div class="password-box">
+        <!-- <div class="password-box">
             <input type="text" id="password" readonly>
             <button onclick="copyPassword()">Copy</button>
+        </div> -->
+        <div class="password-box">
+        <input type="password" id="password" readonly>
+        <button id="togglePassword" type="button">👁️</button>
+        <button id="copyBtn" type="button" onclick="copyPassword()">Copy</button>
         </div>
+
 
         <div class="option">
             <label>Password Length</label>
@@ -43,6 +49,15 @@
             <span>Password Strength:</span>
             <strong id="strengthText">—</strong>
         </div>
+        <div class="strength-bar">
+        <div id="strengthFill"></div>
+        </div>
+        <div class="history">
+        <h3>Recent Passwords</h3>
+        <ul id="historyList"></ul>
+        </div>
+
+
     </div>
 </div>
 
