@@ -163,3 +163,4 @@ function navbarToggleTheme() {
 // Export for use in other files
 window.navbarToggleTheme = navbarToggleTheme;
 window.updateNavbarDarkModeIcon = updateNavbarDarkModeIcon;
+
