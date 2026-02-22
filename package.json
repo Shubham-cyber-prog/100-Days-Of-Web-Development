@@ -8,10 +8,17 @@
         "lint:css": "stylelint \"**/*.css\"",
         "lint:html": "htmlhint \"**/*.html\"",
         "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+
+        "perf:audit": "node tools/performance-audit.js",
+        "perf:images": "node tools/image-optimizer.js",
+        "perf:report": "node tools/image-optimizer.js report",
+        "lighthouse": "lighthouse http://localhost:3000 --only-categories=performance --output=json --output-path=./lighthouse-report.json"
+
         "lint:fix": "eslint . --fix && stylelint \"**/*.css\" --fix",
         "format": "prettier --write \"**/*.{js,css,html,json,md}\"",
         "format:check": "prettier --check \"**/*.{js,css,html,json,md}\"",
         "prepare": "husky"
+
     },
     "keywords": [],
     "author": "",
