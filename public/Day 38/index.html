@@ -1,20 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Appointment Booking System</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f4f6;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+  </style>
 </head>
+
 <body>
 
   <div class="container">
     <h1>📅 Appointment Booking</h1>
 
     <form id="appointmentForm">
-      <input type="text" id="name" placeholder="Your Name" required>
-      <input type="date" id="date" required>
-      <input type="time" id="time" required>
-      <button type="submit">Book Appointment</button>
+      <input type="text" id="name" placeholder="Your Name" required aria-label="Your full name">
+      <input type="date" id="date" required aria-label="Appointment date">
+      <input type="time" id="time" required aria-label="Appointment time">
+      <button type="submit" aria-label="Submit appointment booking">Book Appointment</button>
     </form>
 
     <h2>Booked Appointments</h2>
@@ -23,4 +64,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

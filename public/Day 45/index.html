@@ -1,17 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Tool | Task Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --pm-bg: #f9fafb;
+            --task-complete: #10b981;
+        }
+
+        .container {
+            max-width: 700px;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin: 40px auto;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            transition: background 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+    </style>
   <meta charset="UTF-8">
   <title>Project Management</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 <header>
   <h1>Project Management</h1>
    <button class="add-main-card" onclick="addMainCard()">+ Add Column</button>
 </header>
 
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Add a new task..." aria-label="New task description">
+            <button id="addBtn" aria-label="Add task to list">Add Task</button>
+        </div>
+
+        <div class="filter-section" role="group" aria-label="Task filters">
+            <button class="filter-btn" data-filter="all" aria-label="Show all tasks">All</button>
+            <button class="filter-btn" data-filter="pending" aria-label="Show pending tasks">Pending</button>
+            <button class="filter-btn" data-filter="completed" aria-label="Show completed tasks">Completed</button>
+        </div>
+
+        <ul id="taskList" class="task-list"></ul>
 <main class="main-board" id="mainBoard">\
 </main>
 
@@ -35,4 +78,5 @@
 
 <script src="script.js"></script>
 </body>
+
 </html>
