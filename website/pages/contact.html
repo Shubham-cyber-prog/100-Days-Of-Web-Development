@@ -1,276 +1,602 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
-    <title>Contact | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <style>
-      .contact-wrapper {
-        padding-top: 120px;
-        max-width: 600px;
-        margin: 0 auto;
-      }
 
-      .form-glass {
-        background: var(--bg-surface);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--glass-border);
-        border-radius: 24px;
-        padding: 40px;
-        box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/website/assets/images/logo.png" />
+  <title>Contact | 100 Days of Web Dev</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../styles/index.css" />
+  
+  <!-- Contact Page Specific Styles -->
+  <link rel="stylesheet" href="../styles/pages/contact.css" />
+  
+  <script src="../scripts/components/sidebar-loader.js"></script>
+</head>
 
-  <body>
-    <header class="site-header">
-      <div class="nav-container" style="filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)) drop-shadow(0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent));">
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="contributors.html" class="nav-link">Contributors</a>
-          <a href="contact.html" class="nav-link active">Contact</a>
-        </nav>
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
+<body>
+  <!-- Header will be loaded by sidebar-loader -->
+  
+  <main class="container">
+    <div class="contact-wrapper">
+      <!-- Header with GSAP animation -->
+      <div class="contact-header animate-header">
+        <div class="header-badge">
+          <span class="badge-text">📬 Let's Connect</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="title-line">Get In</span>
+          <span class="title-line accent">Touch</span>
+        </h1>
+        <p class="hero-subtitle">
+          Have a question or want to collaborate? We'd love to hear from you. 
+          Send us a message and we'll respond as soon as possible.
+        </p>
+        <div class="header-decoration">
+          <span class="decoration-dot"></span>
+          <span class="decoration-dot"></span>
+          <span class="decoration-dot"></span>
+        </div>
+      </div>
 
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
-              margin-right: 15px;
-              background: none;
-              border: none;
-              cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
+      <!-- Contact Content with GSAP stagger -->
+      <div class="contact-content">
+        <!-- Contact Information Cards -->
+        <div class="contact-info-col animate-cards">
+          <h2 class="column-title">Contact Information</h2>
+          
+          <div class="info-card" data-delay="0.1">
+            <div class="card-icon">
+              <i class="fas fa-envelope"></i>
+              <div class="icon-glow"></div>
+            </div>
+            <div class="card-content">
+              <h3>Email</h3>
+              <p>
+                <a href="mailto:contact@100daysofwebdev.com" class="contact-link">
+                  contact@100daysofwebdev.com
+                </a>
+              </p>
+              <span class="card-action">Send email →</span>
+            </div>
+          </div>
 
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%; border-radius: 50%"
-              />
-            </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
+          <div class="info-card" data-delay="0.2">
+            <div class="card-icon">
+              <i class="fas fa-map-marker-alt"></i>
+              <div class="icon-glow"></div>
+            </div>
+            <div class="card-content">
+              <h3>Location</h3>
+              <p>Remote • Global</p>
+              <span class="card-action">Anywhere →</span>
+            </div>
+          </div>
+
+          <div class="info-card" data-delay="0.3">
+            <div class="card-icon">
+              <i class="fas fa-clock"></i>
+              <div class="icon-glow"></div>
+            </div>
+            <div class="card-content">
+              <h3>Response Time</h3>
+              <p>24-48 hours</p>
+              <span class="card-action">Fast reply →</span>
+            </div>
+          </div>
+
+          <!-- Social Links with hover animations -->
+          <div class="social-section">
+            <h3 class="social-title">Follow Us</h3>
+            <div class="social-grid">
+              <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" 
+                 target="_blank" class="social-link" title="GitHub">
+                <i class="fab fa-github"></i>
+                <span class="social-tooltip">GitHub</span>
+              </a>
+              <a href="https://twitter.com/" target="_blank" class="social-link" title="Twitter">
+                <i class="fa-brands fa-x-twitter"></i>
+                <span class="social-tooltip">Twitter</span>
+              </a>
+              <a href="https://discord.gg/SW7puwEm" target="_blank" class="social-link" title="Discord">
+                <i class="fab fa-discord"></i>
+                <span class="social-tooltip">Discord</span>
+              </a>
+              <a href="#" class="social-link" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+                <span class="social-tooltip">LinkedIn</span>
+              </a>
             </div>
           </div>
         </div>
-      </div>
-    </header>
 
-    <main class="container">
-      <div class="contact-wrapper animate-enter">
-        <div class="text-center mb-10">
-          <h1 style="font-size: var(--text-4xl); color:black; margin-bottom: 8px">
-            Establish Contact
-          </h1>
-          <p class="text-secondary">Send a transmission to the core team.</p>
-        </div>
-
-        <form class="form-glass flex flex-col gap-5">
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px">Identity</label>
-            <input
-              type="text"
-              class="form-input"
-              placeholder="Commander Name"
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            />
+        <!-- Premium Contact Form -->
+        <div class="contact-form-col animate-form">
+          <div class="form-header">
+            <h2 class="form-title">Send a Message</h2>
+            <div class="form-status">
+              <span class="status-dot"></span>
+              <span class="status-text">We're active</span>
+            </div>
+          </div>
+          
+          <!-- Message Box for Success/Error -->
+          <div id="messageBox" class="message-box">
+            <i class="fas fa-check-circle"></i>
+            <span id="messageText"></span>
           </div>
 
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px"
-              >Coordinates (Email)</label
-            >
-            <input
-              type="email"
-              class="form-input"
-              placeholder="user@domain.com"
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px"
-              >Transmission</label
-            >
-            <textarea
-              class="form-input"
-              rows="5"
-              placeholder="Message content..."
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            class="btn btn-primary"
-            style="margin-top: 10px"
-          >
-            Send Transmission
-          </button>
-        </form>
-      </div>
-    </main>
-
-    <!-- Professional Footer -->
-    <footer class="site-footer">
-      <div class="container footer-content">
-        <!-- Brand -->
-        <div class="footer-brand animate-enter">
-          <a href="dashboard.html" class="footer-logo">
-            <img src="../assets/images/logo.png" alt="Logo" />
-            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-          </a>
-          <p class="footer-desc">
-            A hyper-intensive protocol designed to forge elite web engineers
-            through daily deployment cycles.
-          </p>
-        </div>
-
-            <!-- Resources -->
-            <div class="footer-col animate-enter delay-200">
-                <h3>Resources</h3>
-                <nav class="footer-links">
-                    <a href="documentation.html" class="footer-link">Documentation</a>
-                    <a href="api-status.html" class="footer-link">API Status</a>
-                    <a href="contact.html" class="footer-link">Contact Comms</a>
-                    <a href="system-logic.html" class="footer-link">System Logic</a>
-            <!-- Connect -->
-            <div class="footer-col animate-enter delay-300">
-                <h3>Connect</h3>
-                <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-                <div class="footer-socials">
-                    <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" target="_blank"
-                        rel="noopener noreferrer" class="social-btn" aria-label="Github">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                            </path>
-                        </svg>
-                    </a>
-                    <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
-                        aria-label="Twitter" title="Coming soon">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                            </path>
-                        </svg>
-                    </a>
-                    <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
-                        aria-label="Discord">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z">
-                            </path>
-                        </svg>
-                    </a>
+          <form id="contactForm" class="premium-form">
+            <div class="form-group">
+              <label class="form-label">
+                Your Name <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" 
+                       name="name" 
+                       class="form-input" 
+                       placeholder="John Doe" 
+                       required 
+                       minlength="2" />
+                <div class="input-highlight"></div>
+                <div class="validation-icons">
+                  <i class="fas fa-check-circle valid-icon"></i>
+                  <i class="fas fa-exclamation-circle invalid-icon"></i>
                 </div>
+              </div>
+              <span class="error-message">Please enter your name (min. 2 characters)</span>
+              <div class="char-hint"></div>
             </div>
-        </div>
 
-        <!-- Connect -->
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Github"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Twitter"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Discord"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
-                ></path></svg
-            ></a>
+            <div class="form-group">
+              <label class="form-label">
+                Email Address <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" 
+                       name="email" 
+                       class="form-input" 
+                       placeholder="john@example.com" 
+                       required />
+                <div class="input-highlight"></div>
+                <div class="validation-icons">
+                  <i class="fas fa-check-circle valid-icon"></i>
+                  <i class="fas fa-exclamation-circle invalid-icon"></i>
+                </div>
+              </div>
+              <span class="error-message">Please enter a valid email address</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Subject <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fas fa-tag input-icon"></i>
+                <input type="text" 
+                       name="subject" 
+                       class="form-input" 
+                       placeholder="How can we help?" 
+                       required 
+                       minlength="3" />
+                <div class="input-highlight"></div>
+                <div class="validation-icons">
+                  <i class="fas fa-check-circle valid-icon"></i>
+                  <i class="fas fa-exclamation-circle invalid-icon"></i>
+                </div>
+              </div>
+              <span class="error-message">Please enter a subject (min. 3 characters)</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Message <span class="required">*</span>
+              </label>
+              <div class="input-wrapper textarea-wrapper">
+                <i class="fas fa-comment-dots input-icon"></i>
+                <textarea name="message" 
+                          class="form-input" 
+                          rows="5" 
+                          placeholder="Tell us more about your inquiry..." 
+                          required 
+                          minlength="10"></textarea>
+                <div class="input-highlight"></div>
+                <div class="validation-icons">
+                  <i class="fas fa-check-circle valid-icon"></i>
+                  <i class="fas fa-exclamation-circle invalid-icon"></i>
+                </div>
+              </div>
+              <span class="error-message">Please enter your message (min. 10 characters)</span>
+              <div class="char-counter">0/500</div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <div class="spinner"></div>
+              <span class="btn-text">
+                <i class="fas fa-paper-plane"></i>
+                <span>Send Message</span>
+              </span>
+              <div class="btn-glow"></div>
+            </button>
+          </form>
+
+          <!-- Trust indicators -->
+          <div class="form-footer">
+            <div class="trust-badge">
+              <i class="fas fa-shield-alt"></i>
+              <span>Your data is secure</span>
+            </div>
+            <div class="response-time">
+              <i class="fas fa-bolt"></i>
+              <span>Avg. response: 2h</span>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </main>
 
-      <div class="container footer-bottom">
-        <p class="copyright">
-          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
-        </p>
-        <p class="made-by">
-          Maintained by <span class="text-flame font-bold">Subham</span>
-          <svg
-            class="icon icon-sm heart-pulse"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            ></path>
-          </svg>
-        </p>
-      </div>
-    </footer>
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+  
+  <!-- Scripts -->
+  <script src="../scripts/components/footer-loader.js"></script>
+  <script src="../scripts/components/cursor.js"></script>
+  <script src="../scripts/auth/guard.js"></script>
+  <script src="../scripts/components/navigation.js"></script>
+  
+  <script>
+    // ==================== GSAP ANIMATIONS ====================
+    gsap.registerPlugin(ScrollTrigger);
 
-    <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/auth/guard.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
-  </body>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initial page load animation
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "power3.out"
+        }
+      });
+
+      // Header animation
+      tl.from('.contact-header', {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        clearProps: "all"
+      })
+      .from('.header-badge', {
+        scale: 0,
+        opacity: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)"
+      }, "-=0.5")
+      .from('.title-line', {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power4.out"
+      }, "-=0.3")
+      .from('.hero-subtitle', {
+        y: 30,
+        opacity: 0,
+        duration: 0.8
+      }, "-=0.5")
+      .from('.header-decoration .decoration-dot', {
+        scale: 0,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1
+      }, "-=0.3");
+
+      // Cards animation with stagger
+      gsap.from('.info-card', {
+        scrollTrigger: {
+          trigger: '.contact-info-col',
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        x: -50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "back.out(1.2)"
+      });
+
+      // Card icons animation
+      gsap.from('.card-icon', {
+        scrollTrigger: {
+          trigger: '.info-card',
+          start: 'top 80%'
+        },
+        scale: 0,
+        rotation: -180,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "elastic.out(1, 0.5)"
+      });
+
+      // Form animation
+      gsap.from('.contact-form-col', {
+        scrollTrigger: {
+          trigger: '.contact-form-col',
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        x: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+      });
+
+      // Form groups stagger
+      gsap.from('.form-group', {
+        scrollTrigger: {
+          trigger: '.premium-form',
+          start: 'top 80%'
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out"
+      });
+
+      // Social links animation
+      gsap.from('.social-link', {
+        scrollTrigger: {
+          trigger: '.social-grid',
+          start: 'top 90%'
+        },
+        scale: 0,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "back.out(1.7)"
+      });
+
+      // Continuous animations
+      gsap.to('.card-icon', {
+        y: -5,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+
+      gsap.to('.status-dot', {
+        scale: 1.2,
+        opacity: 0.8,
+        duration: 1,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+
+      gsap.to('.btn-submit', {
+        boxShadow: '0 10px 30px rgba(0, 229, 255, 0.3)',
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+    });
+
+    // ==================== FORM HANDLING ====================
+    const contactForm = document.getElementById('contactForm');
+    const formInputs = contactForm.querySelectorAll('.form-input');
+    const submitBtn = contactForm.querySelector('.btn-submit');
+    const messageBox = document.getElementById('messageBox');
+    const messageText = document.getElementById('messageText');
+    const charCounter = document.querySelector('.char-counter');
+    const messageField = document.querySelector('textarea[name="message"]');
+
+    // Character counter
+    if (messageField && charCounter) {
+      messageField.addEventListener('input', function() {
+        const length = this.value.length;
+        charCounter.textContent = `${length}/500`;
+        
+        // Change color as limit approaches
+        if (length > 450) {
+          charCounter.style.color = '#ff6b6b';
+        } else if (length > 400) {
+          charCounter.style.color = '#fbbf24';
+        } else {
+          charCounter.style.color = 'var(--text-secondary)';
+        }
+      });
+    }
+
+    // Real-time validation with animation
+    formInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validateField(this);
+        
+        // Add pulse animation on valid
+        if (this.classList.contains('valid')) {
+          gsap.fromTo(this.parentElement.querySelector('.valid-icon'),
+            { scale: 0 },
+            { scale: 1, duration: 0.3, ease: "back.out" }
+          );
+        }
+      });
+      
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.classList.remove('focused');
+        validateField(this);
+      });
+    });
+
+    function validateField(field) {
+      const value = field.value.trim();
+      const type = field.type;
+      const minLength = field.minLength || 0;
+      let isValid = false;
+      
+      if (type === 'email') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        isValid = emailRegex.test(value);
+      } else if (field.tagName === 'TEXTAREA') {
+        isValid = value.length >= 10 && value.length <= 500;
+      } else {
+        isValid = value.length >= (minLength || 2);
+      }
+      
+      const wrapper = field.parentElement;
+      
+      if (isValid) {
+        field.classList.remove('invalid');
+        field.classList.add('valid');
+        wrapper.classList.add('valid');
+        wrapper.classList.remove('invalid');
+      } else if (value.length > 0) {
+        field.classList.remove('valid');
+        field.classList.add('invalid');
+        wrapper.classList.add('invalid');
+        wrapper.classList.remove('valid');
+        
+        // Shake animation on invalid
+        gsap.to(field, {
+          x: [-5, 5, -5, 5, 0],
+          duration: 0.4,
+          ease: "power2.inOut"
+        });
+      } else {
+        field.classList.remove('valid', 'invalid');
+        wrapper.classList.remove('valid', 'invalid');
+      }
+    }
+
+    // Form submission
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validate all fields
+      let allValid = true;
+      formInputs.forEach(input => {
+        validateField(input);
+        if (!input.classList.contains('valid')) {
+          allValid = false;
+        }
+      });
+      
+      if (!allValid) {
+        showMessage('error', 'Please fill out all fields correctly.');
+        
+        // Scroll to first invalid field
+        const firstInvalid = document.querySelector('.form-input.invalid');
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+      
+      const formData = new FormData(this);
+      
+      // Show loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      messageBox.style.display = 'none';
+      
+      // Animate button
+      gsap.to(submitBtn, {
+        scale: 0.95,
+        duration: 0.2,
+        yoyo: true,
+        repeat: 1
+      });
+      
+      // Simulate form submission
+      setTimeout(() => {
+        // Success
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        
+        showMessage('success', '🚀 Message sent successfully! We\'ll get back to you within 24 hours.');
+        
+        // Animate success
+        gsap.to(messageBox, {
+          scale: [1, 1.02, 1],
+          duration: 0.5,
+          ease: "back.out"
+        });
+        
+        this.reset();
+        
+        // Clear validation states
+        formInputs.forEach(input => {
+          input.classList.remove('valid', 'invalid');
+          input.parentElement.classList.remove('valid', 'invalid');
+        });
+        
+        if (charCounter) {
+          charCounter.textContent = '0/500';
+          charCounter.style.color = 'var(--text-secondary)';
+        }
+        
+        // Hide message after 5 seconds
+        setTimeout(() => {
+          gsap.to(messageBox, {
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+              messageBox.style.display = 'none';
+              messageBox.style.opacity = 1;
+            }
+          });
+        }, 5000);
+      }, 2000);
+    });
+
+    function showMessage(type, text) {
+      messageBox.className = 'message-box ' + type;
+      messageBox.style.display = 'flex';
+      messageBox.style.opacity = '1';
+      messageText.textContent = text;
+      
+      const icon = messageBox.querySelector('i');
+      icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+    }
+
+    // ==================== THEME HANDLING ====================
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      // Animate theme change
+      gsap.to('body', {
+        opacity: 0.8,
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1,
+        onComplete: () => {
+          html.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+        }
+      });
+    }
+
+    // Initialize theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+</body>
+
 </html>

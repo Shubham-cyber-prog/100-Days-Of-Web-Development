@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Tree Explorer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f9f7f7 0%, #f0efef 100%);
+            color: #555;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 3rem;
+            color: #7b8fa1;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #9a9a9a;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tree-container {
+            flex: 2;
+            min-width: 300px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: auto;
+        }
+
+        .control-panel {
+            flex: 1;
+            min-width: 300px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .section-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.8rem;
+            color: #7b8fa1;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .decision-node {
+            background-color: #ffd6d6;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 0 auto 40px;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2);
+            border: 2px solid #ffb6c1;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .decision-node.active {
+            transform: scale(1.02);
+            box-shadow: 0 12px 25px rgba(255, 182, 193, 0.3);
+        }
+
+        .node-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.6rem;
+            color: #ff6b8b;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .node-description {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 25px;
+        }
+
+        .choices-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .choice-btn {
+            padding: 16px 25px;
+            background-color: #c9e4ff;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #5a8fc2;
+            flex: 1;
+            min-width: 180px;
+            max-width: 250px;
+            box-shadow: 0 5px 15px rgba(137, 196, 244, 0.2);
+        }
+
+        .choice-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(137, 196, 244, 0.3);
+        }
+
+        .choice-btn.choice-1 {
+            background-color: #c9e4ff;
+            color: #5a8fc2;
+        }
+
+        .choice-btn.choice-2 {
+            background-color: #d6f5d6;
+            color: #5a9e5a;
+        }
+
+        .choice-btn.choice-3 {
+            background-color: #fff3cd;
+            color: #b38f00;
+        }
+
+        .choice-btn.choice-4 {
+            background-color: #f0d9ff;
+            color: #8a66aa;
+        }
+
+        .path-history {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #b8e0c9;
+        }
+
+        .path-title {
+            font-weight: 600;
+            color: #7b8fa1;
+            margin-bottom: 10px;
+        }
+
+        .path-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .path-step {
+            background-color: #e3f2fd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #1976d2;
+        }
+
+        .result-container {
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .result-description {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 25px;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: #b8e0c9;
+            color: #457a5a;
+        }
+
+        .btn-primary:hover {
+            background-color: #a8d0b9;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(168, 208, 185, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #ffd6d6;
+            color: #ff6b8b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ffc6c6;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(255, 198, 198, 0.3);
+        }
+
+        .tree-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .tree-option {
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 5px solid;
+        }
+
+        .tree-option:hover {
+            transform: translateX(5px);
+        }
+
+        .tree-option.active {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .tree-1 { background-color: #ffd6d6; border-color: #ff6b8b; }
+        .tree-2 { background-color: #c9e4ff; border-color: #5a8fc2; }
+        .tree-3 { background-color: #d6f5d6; border-color: #5a9e5a; }
+        .tree-4 { background-color: #fff3cd; border-color: #b38f00; }
+        .tree-5 { background-color: #f0d9ff; border-color: #8a66aa; }
+
+        .tree-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .tree-desc {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .visual-path {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .path-node {
+            background-color: #ffd6d6;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #ff6b8b;
+            margin: 0 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .path-node::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            color: #ccc;
+            font-size: 1.5rem;
+        }
+
+        .path-node:last-child::after {
+            display: none;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #7b8fa1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #9a9a9a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #aaa;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #9a9a9a;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            .tree-container, .control-panel {
+                min-width: 100%;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .choices-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .choice-btn {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .visual-path {
+                flex-direction: column;
+            }
+            
+            .path-node {
+                margin: 10px 0;
+            }
+            
+            .path-node::after {
+                content: '↓';
+                right: 0;
+                bottom: -25px;
+            }
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .color-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 3px solid white;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-dot:hover {
+            transform: scale(1.2);
+        }
+
+        .pastel-1 { background-color: #ffd6d6; }
+        .pastel-2 { background-color: #c9e4ff; }
+        .pastel-3 { background-color: #d6f5d6; }
+        .pastel-4 { background-color: #fff3cd; }
+        .pastel-5 { background-color: #f0d9ff; }
+
+        .tree-visual {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            min-height: 300px;
+        }
+
+        .branch {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .branch-line {
+            width: 2px;
+            background-color: #ccc;
+            height: 50px;
+            margin: 10px 0;
+        }
+
+        .branch-choices {
+            display: flex;
+            gap: 30px;
+        }
+
+        .branch-node {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .branch-node:hover {
+            transform: scale(1.2);
+        }
+
+        .branch-node.active {
+            transform: scale(1.3);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-project-diagram"></i> Decision Tree Explorer</h1>
+            <p class="subtitle">Explore different paths and outcomes by making choices. Each decision leads you down a unique path with different results.</p>
+            
+            <div class="color-palette">
+                <div class="color-dot pastel-1" onclick="changeColorTheme(1)"></div>
+                <div class="color-dot pastel-2" onclick="changeColorTheme(2)"></div>
+                <div class="color-dot pastel-3" onclick="changeColorTheme(3)"></div>
+                <div class="color-dot pastel-4" onclick="changeColorTheme(4)"></div>
+                <div class="color-dot pastel-5" onclick="changeColorTheme(5)"></div>
+            </div>
+        </header>
+
+        <div class="app-container">
+            <div class="tree-container">
+                <h2 class="section-title">Current Decision Path</h2>
+                
+                <div class="decision-node active" id="currentNode">
+                    <div class="node-title" id="nodeTitle">Welcome to Decision Tree Explorer</div>
+                    <div class="node-description" id="nodeDescription">
+                        Choose a decision tree to start exploring different paths and outcomes. Each choice you make will lead you to new decisions and eventual results.
+                    </div>
+                    
+                    <div class="choices-container" id="choicesContainer">
+                        <!-- Choices will be dynamically added here -->
+                    </div>
+                </div>
+                
+                <div class="visual-path" id="visualPath">
+                    <!-- Visual path will be dynamically added here -->
+                </div>
+                
+                <div class="path-history">
+                    <div class="path-title">Your Path So Far:</div>
+                    <div class="path-steps" id="pathSteps">
+                        <div class="path-step">Start</div>
+                    </div>
+                </div>
+                
+                <div class="result-container" id="resultContainer">
+                    <div class="result-icon" id="resultIcon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="result-title" id="resultTitle">Path Complete!</div>
+                    <div class="result-description" id="resultDescription">
+                        You've reached the end of this decision path. Explore other trees or try different choices to see alternative outcomes.
+                    </div>
+                    
+                    <div class="result-actions">
+                        <button class="btn btn-primary" id="tryAnotherBtn">
+                            <i class="fas fa-redo"></i> Try Another Path
+                        </button>
+                        <button class="btn btn-secondary" id="resetTreeBtn">
+                            <i class="fas fa-home"></i> Start Over
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="decisionsCount">0</div>
+                        <div class="stat-label">Decisions Made</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="pathsExplored">0</div>
+                        <div class="stat-label">Paths Explored</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="currentTree">1</div>
+                        <div class="stat-label">Current Tree</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <h2 class="section-title">Decision Trees</h2>
+                <p style="margin-bottom: 20px; color: #777;">Select a decision tree to explore:</p>
+                
+                <div class="tree-list">
+                    <div class="tree-option tree-1 active" data-tree="1">
+                        <div class="tree-name">Career Path Explorer</div>
+                        <div class="tree-desc">Explore different career paths based on your skills and interests</div>
+                    </div>
+                    <div class="tree-option tree-2" data-tree="2">
+                        <div class="tree-name">Travel Destination Chooser</div>
+                        <div class="tree-desc">Find your perfect vacation based on preferences and budget</div>
+                    </div>
+                    <div class="tree-option tree-3" data-tree="3">
+                        <div class="tree-name">Learning Path Advisor</div>
+                        <div class="tree-desc">Discover the best learning path for your goals</div>
+                    </div>
+                    <div class="tree-option tree-4" data-tree="4">
+                        <div class="tree-name">Weekend Activity Planner</div>
+                        <div class="tree-desc">Plan your perfect weekend based on mood and weather</div>
+                    </div>
+                    <div class="tree-option tree-5" data-tree="5">
+                        <div class="tree-name">Personal Growth Guide</div>
+                        <div class="tree-desc">Explore paths for personal development and wellbeing</div>
+                    </div>
+                </div>
+                
+                <div class="section-title" style="margin-top: 40px;">Tree Visualization</div>
+                <div class="tree-visual" id="treeVisual">
+                    <!-- Tree visualization will be dynamically added here -->
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 15px;">
+                    <h3 style="color: #7b8fa1; margin-bottom: 10px;">How to Use</h3>
+                    <ol style="padding-left: 20px; color: #777;">
+                        <li>Select a decision tree from the list</li>
+                        <li>Read the current decision node</li>
+                        <li>Click on a choice button to proceed</li>
+                        <li>Follow the path to see different outcomes</li>
+                        <li>Try different choices to explore all possibilities</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Decision Tree Explorer &copy; 2023 | Explore different paths and see how choices lead to different outcomes</p>
+        </footer>
+    </div>
+
+    <script src="script.js">
+
+    </script>
+</body>
+</html>

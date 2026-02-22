@@ -61,8 +61,15 @@
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
 }
 
 /* ============================================
@@ -82,7 +89,7 @@
 }
 
 .toolbar-section {
-    margaregin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .toolbar-section:last-child {
@@ -408,36 +415,107 @@
     .blueprint-container {
         flex-direction: column;
     }
-    
+
     .blueprint-sidebar {
         width: 100%;
         max-height: 200px;
         border-right: none;
         border-bottom: 1px solid var(--glass-border);
     }
-    
+
     .blueprint-toolbar {
         padding: 15px;
     }
-    
+
     .toolbar-section {
         margin-bottom: 20px;
     }
-    
+
     .tool-buttons {
         grid-template-columns: repeat(3, 1fr);
     }
-    
+
     .blueprint-header {
         padding: 15px 20px;
         flex-direction: column;
         gap: 15px;
         align-items: flex-start;
     }
-    
+
     .zoom-controls {
         bottom: 10px;
         right: 10px;
         scale: 0.9;
     }
+}
+
+[data-theme="light"] .blueprint-sidebar {
+    background: white;
+    border-right-color: var(--border-light);
+}
+
+[data-theme="light"] .tool-btn {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .tool-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-core);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .tool-btn.active {
+    background: var(--accent-core);
+    color: white;
+    border-color: var(--accent-core);
+}
+
+[data-theme="light"] .action-btn {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .action-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-core);
+}
+
+[data-theme="light"] .collaborator-item {
+    background: white;
+    border-color: var(--border-light);
+}
+
+[data-theme="light"] .blueprint-header {
+    background: white;
+    border-bottom-color: var(--border-light);
+}
+
+[data-theme="light"] .room-id {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .canvas-wrapper {
+    background: #fdfdfd;
+}
+
+[data-theme="light"] .zoom-controls {
+    background: white;
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .zoom-btn {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .share-link-input {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-primary);
 }

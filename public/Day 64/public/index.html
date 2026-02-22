@@ -4,16 +4,55 @@
   <meta charset="UTF-8" />
   <title>Online Code Editor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../src/styles.css" />
+
+  <!-- CodeMirror CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+
+<link rel="stylesheet" href="../src/styles.css" />
 </head>
+
 <body>
 
-  <header class="header">
-    <h1>💻 Online Code Editor</h1>
-    <p>Frontend UI – ECWoC Day 64</p>
-  </header>
+<header class="header">
+  <h1>💻 Online Code Editor</h1>
+  <p>ADVANCED • Day 64</p>
 
-  <main class="editor-container">
+  <button id="themeBtn">🌙 Dark</button>
+</header>
+
+<main class="editor-container">
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+
+    <select id="languageSelect">
+      <option value="javascript">JavaScript</option>
+      <option value="htmlmixed">HTML</option>
+      <option value="css">CSS</option>
+    </select>
+
+    <button id="runBtn">▶ Run</button>
+    <button id="clearBtn">🧹 Clear</button>
+    <button id="saveBtn">💾 Save</button>
+
+    <button id="increaseFont">A+</button>
+    <button id="decreaseFont">A-</button>
+
+    <button id="fullBtn">⛶ Fullscreen</button>
+
+  </div>
+
+  <!-- Editor -->
+  <div class="editor-area">
+    <textarea id="codeEditor"></textarea>
+  </div>
+
+  <!-- Output -->
+  <div class="output-area">
+    <h3>Output</h3>
+    <iframe id="outputFrame"></iframe>
+  </div>
 
     <!-- Toolbar -->
     <!-- <div class="toolbar">
@@ -47,10 +86,29 @@
     <button id="fullscreenBtn">Full Screen</button>
   </div>
 
-    <!-- Editor Area -->
-    <div class="editor-area">
-      <textarea id="codeEditor" placeholder="Write your code here..."></textarea>
-    </div>
+  <div class="toolbar">
+
+    <select id="languageSelect">
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+      <option value="javascript">JavaScript</option>
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
+      <option value="java">Java</option>
+    </select>
+
+    <button id="runBtn">Run</button>
+    <button id="clearBtn">Clear</button>
+    <button id="saveBtn">Save</button>
+    <button id="downloadBtn">Download</button>
+    <button id="themeBtn">🌙 Theme</button>
+    <button id="fullscreenBtn">Full Screen</button>
+  </div>
+</main>
+
+
+<!-- CodeMirror Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
 
     <!-- Output -->
     <div class="output-area">
@@ -61,9 +119,11 @@
   <pre id="consoleOutput"></pre>
 </div>
     </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
 
-  </main>
+<script src="../src/app.js"></script>
 
-  <script src="../src/app.js"></script>
 </body>
 </html>
