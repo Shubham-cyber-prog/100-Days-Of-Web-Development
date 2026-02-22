@@ -13,6 +13,7 @@
 <div class="container">
     <header>
         <h1><i class="fas fa-chart-line"></i> Data Visualization Tool</h1>
+        <button id="theme-toggle">🌙 Toggle Theme</button>
         <p class="subtitle">Transform your data into insightful visualizations</p>
     </header>
 
@@ -74,14 +75,26 @@
 
                 <button id="update-chart" class="btn-primary">Update Visualization</button>
                 <button id="export-chart" class="btn-secondary">Export PNG</button>
+                <button id="export-csv" class="btn-secondary">Download CSV</button>
                 <button id="random-data" class="btn-secondary">Randomize Data</button>
+                <button id="reset-data">Reset Data</button>
             </div>
+
+
+            <select id="sort-data">
+            <option value="none">No Sort</option>
+             <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+            </select>
+
+            <input id="chart-title" placeholder="Enter chart title">
         </div>
 
         <div class="visualization-area">
             <div class="chart-container">
                 <canvas id="data-chart"></canvas>
             </div>
+            <div id="insights"></div>
 
             <div class="data-table-container">
                 <table id="data-table">
