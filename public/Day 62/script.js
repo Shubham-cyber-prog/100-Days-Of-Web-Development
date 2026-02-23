@@ -384,6 +384,8 @@ function renderProfile() {
 }
 
 renderProfile();
+renderProfile();
+renderProfile();
   profileBox.innerHTML = `
     <p style="color:red">${msg}</p>
   `;
