@@ -10,6 +10,12 @@ let members = JSON.parse(localStorage.getItem('expenseSplitter_members')) || [];
             updateBalances();
             updateSettlementUI();
         });
+        document.getElementById("searchExpense").addEventListener("input", function(e) {
+   const value = e.target.value.toLowerCase();
+   document.querySelectorAll(".expense-item").forEach(item => {
+      item.style.display = item.innerText.toLowerCase().includes(value) ? "" : "none";
+   });
+});
 
         
         function addMember() {
@@ -61,7 +67,7 @@ let members = JSON.parse(localStorage.getItem('expenseSplitter_members')) || [];
             const amount = parseFloat(document.getElementById('expenseAmount').value);
             const paidBy = document.getElementById('paidBy').value;
             const checkboxes = document.querySelectorAll('#splitCheckboxes input[type="checkbox"]:checked');
-            
+            const category = document.getElementById('expenseCategory').value;
             
             if (!title) {
                 alert('Please enter expense description');
@@ -72,6 +78,18 @@ let members = JSON.parse(localStorage.getItem('expenseSplitter_members')) || [];
                 alert('Please enter a valid amount');
                 return;
             }
+
+
+            <div class="input-group">
+  <label for="expenseCategory">Category</label>
+  <select id="expenseCategory">
+    <option>Food</option>
+    <option>Travel</option>
+    <option>Shopping</option>
+    <option>Entertainment</option>
+    <option>Other</option>
+  </select>
+</div>
             
             if (!paidBy) {
                 alert('Please select who paid');
@@ -90,16 +108,27 @@ let members = JSON.parse(localStorage.getItem('expenseSplitter_members')) || [];
             const splitAmount = amount / splitBetween.length;
             
            
-            const expense = {
-                id: Date.now().toString(),
-                title: title,
-                amount: amount,
-                paidBy: paidBy,
-                splitBetween: splitBetween,
-                splitAmount: splitAmount,
-                date: new Date().toLocaleDateString()
-            };
+            // const expense = {
+            //     id: Date.now().toString(),
+            //     title: title,
+            //     amount: amount,
+            //     paidBy: paidBy,
+            //     splitBetween: splitBetween,
+            //     splitAmount: splitAmount,
+            //     date: new Date().toLocaleDateString()
+            // };
             
+            const expense = {
+   id: Date.now().toString(),
+   title,
+   amount,
+   paidBy,
+   splitBetween,
+   splitAmount,
+   category,
+   date: new Date().toLocaleDateString()
+};
+
             expenses.push(expense);
             saveData();
             
@@ -199,6 +228,7 @@ let members = JSON.parse(localStorage.getItem('expenseSplitter_members')) || [];
                         <p>No expenses added yet</p>
                         <p style="font-size: 0.9rem; margin-top: 10px;">Add an expense to get started!</p>
                     </div>
+                    <div class="split-badge">${expense.category}</div>
                 `;
                 return;
             }
@@ -348,6 +378,7 @@ let members = JSON.parse(localStorage.getItem('expenseSplitter_members')) || [];
                 
                 settlementSuggestions.innerHTML = suggestionsHTML;
             }
+            showChart();
         }
 
        
@@ -561,3 +592,45 @@ let members = JSON.parse(localStorage.getItem('expenseSplitter_members')) || [];
                 alert('Sample data loaded!');
             }
         }
+
+
+        function toggleTheme() {
+   document.body.classList.toggle("dark");
+}
+
+
+function showChart() {
+   const categoryTotals = {};
+
+   expenses.forEach(e => {
+      categoryTotals[e.category] = 
+         (categoryTotals[e.category] || 0) + e.amount;
+   });
+
+   new Chart(document.getElementById("expenseChart"), {
+      type: "pie",
+      data: {
+         labels: Object.keys(categoryTotals),
+         datasets: [{
+            data: Object.values(categoryTotals)
+         }]
+      }
+   });
+}
+
+
+// 🌙 Dark mode toggle
+document.getElementById("darkToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    // Save mode
+    localStorage.setItem(
+        "darkMode",
+        document.body.classList.contains("dark")
+    );
+});
+
+// Load saved mode
+if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+}
