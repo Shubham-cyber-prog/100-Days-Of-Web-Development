@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Knowledge Quest - Quiz</title>
+    <meta name="description"
+        content="Challenge your knowledge with Knowledge Quest, a dynamic quiz application with multiple categories and difficulties.">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <link rel="stylesheet" href="styles.css" />
     <script defer src="script.js"></script>
@@ -15,136 +17,137 @@
 
 <body>
 
-<div class="background-shapes">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-</div>
-
-<div class="container">
-
-    <!-- HEADER -->
-    <div class="header">
-        <h1><i class="fas fa-brain"></i> Knowledge Quest</h1>
-        <p>Test your knowledge!</p>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
     </div>
 
+    <div class="container">
 
-    <!-- START SCREEN -->
-    <div class="screen active" id="start-screen">
-
-        <h2 class="screen-title">Choose Category</h2>
-
-        <div class="category-selector">
-            <button class="category-btn active" data-category="general">General</button>
-            <button class="category-btn" data-category="science">Science</button>
-            <button class="category-btn" data-category="history">History</button>
-            <button class="category-btn" data-category="geography">Geography</button>
+        <!-- HEADER -->
+        <div class="header">
+            <h1><i class="fas fa-brain"></i> Knowledge Quest</h1>
+            <p>Test your knowledge!</p>
         </div>
 
 
-        <h2 class="screen-title">Select Difficulty</h2>
+        <!-- START SCREEN -->
+        <div class="screen active" id="start-screen">
 
-        <div class="difficulty-selector">
-            <button class="difficulty-btn" data-difficulty="easy">E</button>
-            <button class="difficulty-btn active" data-difficulty="medium">M</button>
-            <button class="difficulty-btn" data-difficulty="hard">H</button>
+            <h2 class="screen-title">Choose Category</h2>
+
+            <div class="category-selector">
+                <button class="category-btn active" data-category="general">General</button>
+                <button class="category-btn" data-category="science">Science</button>
+                <button class="category-btn" data-category="history">History</button>
+                <button class="category-btn" data-category="geography">Geography</button>
+            </div>
+
+
+            <h2 class="screen-title">Select Difficulty</h2>
+
+            <div class="difficulty-selector">
+                <button class="difficulty-btn" data-difficulty="easy">E</button>
+                <button class="difficulty-btn active" data-difficulty="medium">M</button>
+                <button class="difficulty-btn" data-difficulty="hard">H</button>
+            </div>
+
+            <button id="start-btn" class="btn start-btn">
+                Start Quiz
+            </button>
+
         </div>
 
-        <button id="start-btn" class="btn start-btn">
-            Start Quiz
-        </button>
 
-    </div>
+        <!-- QUIZ SCREEN -->
+        <div class="screen" id="quiz-screen">
 
+            <div class="quiz-header">
 
-    <!-- QUIZ SCREEN -->
-    <div class="screen" id="quiz-screen">
+                <h2 id="question-text"></h2>
 
-        <div class="quiz-header">
+                <div class="quiz-info">
 
-            <h2 id="question-text"></h2>
+                    <div>
+                        Q: <span id="current-question">1</span>/<span id="total-question">5</span>
+                    </div>
 
-            <div class="quiz-info">
+                    <div class="timer-container">
+                        <i class="fas fa-clock"></i>
+                        <span id="timer">15</span>s
+                    </div>
 
-                <div>
-                    Q: <span id="current-question">1</span>/<span id="total-question">5</span>
-                </div>
+                    <div>
+                        Score: <span id="score">0</span>
+                    </div>
 
-                <div class="timer-container">
-                    <i class="fas fa-clock"></i>
-                    <span id="timer">15</span>s
-                </div>
-
-                <div>
-                    Score: <span id="score">0</span>
                 </div>
 
             </div>
 
-        </div>
 
-
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div id="progress" class="progress"></div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progress" class="progress"></div>
+                </div>
             </div>
+
+
+            <!-- ANSWERS -->
+            <div id="answer-container" class="answer-container"></div>
+
         </div>
 
 
-        <!-- ANSWERS -->
-        <div id="answer-container" class="answer-container"></div>
+        <!-- RESULT SCREEN -->
+        <div class="screen result-screen" id="result-screen">
+
+            <h1>Quiz Results</h1>
+
+            <div class="result-info">
+
+                <div class="score-circle" style="--score:0">
+                    <div class="score-text">0%</div>
+                </div>
+
+                <p>
+                    You scored
+                    <span id="final-score">0</span> /
+                    <span id="max-score">5</span>
+                </p>
+
+                <div id="result-message">Good Job!</div>
+
+                <div class="result-stats">
+
+                    <div class="stat">
+                        <div id="correct-answers" class="stat-value">0</div>
+                        <div class="stat-label">Correct</div>
+                    </div>
+
+                    <div class="stat">
+                        <div id="incorrect-answers" class="stat-value">0</div>
+                        <div class="stat-label">Wrong</div>
+                    </div>
+
+                    <div class="stat">
+                        <div id="accuracy" class="stat-value">0%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button id="restart-btn" class="btn">
+                Play Again
+            </button>
+
+        </div>
 
     </div>
-
-
-    <!-- RESULT SCREEN -->
-    <div class="screen result-screen" id="result-screen">
-
-        <h1>Quiz Results</h1>
-
-        <div class="result-info">
-
-            <div class="score-circle" style="--score:0">
-                <div class="score-text">0%</div>
-            </div>
-
-            <p>
-                You scored
-                <span id="final-score">0</span> /
-                <span id="max-score">5</span>
-            </p>
-
-            <div id="result-message">Good Job!</div>
-
-            <div class="result-stats">
-
-                <div class="stat">
-                    <div id="correct-answers" class="stat-value">0</div>
-                    <div class="stat-label">Correct</div>
-                </div>
-
-                <div class="stat">
-                    <div id="incorrect-answers" class="stat-value">0</div>
-                    <div class="stat-label">Wrong</div>
-                </div>
-
-                <div class="stat">
-                    <div id="accuracy" class="stat-value">0%</div>
-                    <div class="stat-label">Accuracy</div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <button id="restart-btn" class="btn">
-            Play Again
-        </button>
-
-    </div>
-
-</div>
 
 </body>
+
 </html>
