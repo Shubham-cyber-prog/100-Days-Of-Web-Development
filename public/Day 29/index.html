@@ -1,113 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Memory Games Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Games Dashboard</title>
+    <meta name="description"
+        content="A hub for memory-based games like Card Match and Sequence Memory to boost cognitive skills.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Memory Games Dashboard | Brain Training">
+    <meta property="og:description" content="Improve focus and recall with interactive memory challenges.">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Memory Games Dashboard | Brain Training">
+    <meta name="twitter:description" content="Improve focus and recall with interactive memory challenges.">
+    <link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <h1>
-        <i class="fa-solid fa-brain brain-icon"></i>
-        Memory Games Dashboard
-    </h1>
-</div>
+    <!-- HEADER -->
+    <div class="header">
+        <h1>
+            <i class="fa-solid fa-brain brain-icon"></i>
+            Memory Games Dashboard
+        </h1>
+    </div>
 
-<!-- WHAT IS WEBSITE -->
-<div class="section">
-    <h2>What is this Website?</h2>
+    <!-- WHAT IS WEBSITE -->
+    <div class="section">
+        <h2>What is this Website?</h2>
 
-    <div class="website-box">
-        <div class="info-cards">
+        <div class="website-box">
+            <div class="info-cards">
 
-            <div class="info-card">
-                <p>
-                    This platform contains multiple memory-based games designed to
-                    improve focus, recall, and cognitive skills in a fun and
-                    interactive way.
-                </p>
+                <div class="info-card">
+                    <p>
+                        This platform contains multiple memory-based games designed to
+                        improve focus, recall, and cognitive skills in a fun and
+                        interactive way.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <p><b>Made by:</b> Riya Sunil Kharade</p>
+                    <a href="https://www.linkedin.com/in/riyakharade/" target="_blank">🔗 LinkedIn</a><br>
+                    <a href="https://github.com/Riya-Kharade" target="_blank">🐙 GitHub</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- GAMES -->
+    <div class="section">
+        <h2>Memory Games</h2>
+
+        <div class="games-row">
+
+            <div class="game-card">
+                <img src="game1.png">
+                <div class="game-content">
+                    <h3>Card Match Memory</h3>
+                    <a href="card-match.html" class="start-btn">Start Game</a>
+                    <button class="read-btn" onclick="openModal()">Read More</button>
+                </div>
             </div>
 
-            <div class="info-card">
-                <p><b>Made by:</b> Riya Sunil Kharade</p>
-                <a href="https://www.linkedin.com/in/riyakharade/" target="_blank">🔗 LinkedIn</a><br>
-                <a href="https://github.com/Riya-Kharade" target="_blank">🐙 GitHub</a>
+            <div class="game-card">
+                <img src="game2.png">
+                <div class="game-content">
+                    <h3>Sequence Memory</h3>
+                    <a href="sequence-game.html" class="start-btn">Start Game</a>
+                    <button class="read-btn" onclick="openModal()">Read More</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <img src="game3.png">
+                <div class="game-content">
+                    <h3>Image Memory Game</h3>
+                    <a href="image-memory.html" class="start-btn">Start Game</a>
+                    <button class="read-btn" onclick="openModal()">Read More</button>
+                </div>
             </div>
 
         </div>
     </div>
-</div>
 
-<!-- GAMES -->
-<div class="section">
-    <h2>Memory Games</h2>
+    <!-- MODAL -->
+    <div class="modal-bg" id="modal">
+        <div class="modal">
+            <h3>How to Play</h3>
+            <ul>
+                <li>Observe the cards, patterns, or images carefully.</li>
+                <li>Remember their positions or sequence.</li>
+            </ul>
 
-    <div class="games-row">
+            <h3>Goal</h3>
+            <ul>
+                <li>Test and improve your memory skills.</li>
+            </ul>
 
-        <div class="game-card">
-            <img src="game1.png">
-            <div class="game-content">
-                <h3>Card Match Memory</h3>
-                <a href="card-match.html" class="start-btn">Start Game</a>
-                <button class="read-btn" onclick="openModal()">Read More</button>
-            </div>
+            <h3>How to Win / Score</h3>
+            <ul>
+                <li>Correct actions increase score.</li>
+                <li>Wrong moves may reset progress.</li>
+            </ul>
+
+            <button class="close-btn" onclick="closeModal()">Close</button>
         </div>
-
-        <div class="game-card">
-            <img src="game2.png">
-            <div class="game-content">
-                <h3>Sequence Memory</h3>
-                <a href="sequence-game.html" class="start-btn">Start Game</a>
-                <button class="read-btn" onclick="openModal()">Read More</button>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="game3.png">
-            <div class="game-content">
-                <h3>Image Memory Game</h3>
-                <a href="image-memory.html" class="start-btn">Start Game</a>
-                <button class="read-btn" onclick="openModal()">Read More</button>
-            </div>
-        </div>
-
     </div>
-</div>
 
-<!-- MODAL -->
-<div class="modal-bg" id="modal">
-    <div class="modal">
-        <h3>How to Play</h3>
-        <ul>
-            <li>Observe the cards, patterns, or images carefully.</li>
-            <li>Remember their positions or sequence.</li>
-        </ul>
+    <footer>
+        © 2026 Memory Games Project
+    </footer>
 
-        <h3>Goal</h3>
-        <ul>
-            <li>Test and improve your memory skills.</li>
-        </ul>
-
-        <h3>How to Win / Score</h3>
-        <ul>
-            <li>Correct actions increase score.</li>
-            <li>Wrong moves may reset progress.</li>
-        </ul>
-
-        <button class="close-btn" onclick="closeModal()">Close</button>
-    </div>
-</div>
-
-<footer>
-    © 2026 Memory Games Project
-</footer>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

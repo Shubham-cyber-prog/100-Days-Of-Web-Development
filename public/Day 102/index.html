@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StoryVerse | Interactive Storytelling Platform</title>
+    <meta name="description" content="A next-generation platform for interactive storytelling and digital narratives.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="StoryVerse | Interactive Narrative Engine">
+    <meta property="og:description" content="Unleash your imagination and explore player-driven stories in StoryVerse.">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="StoryVerse | Interactive Narrative Engine">
+    <meta name="twitter:description"
+        content="Unleash your imagination and explore player-driven stories in StoryVerse.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -76,13 +89,23 @@
         }
 
         @keyframes float {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-40px, -40px); }
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-40px, -40px);
+            }
         }
 
         @keyframes slide {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50px); }
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50px);
+            }
         }
 
         /* Floating Elements */
@@ -106,8 +129,15 @@
         }
 
         @keyframes floatElement {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(100px, -50px) scale(1.5); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(100px, -50px) scale(1.5);
+            }
         }
 
         /* Header */
@@ -153,8 +183,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .logo h1 {
@@ -330,8 +367,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Hero Section */
@@ -675,6 +719,7 @@
             font-size: 0.95rem;
             display: -webkit-box;
             -webkit-line-clamp: 3;
+            line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -968,8 +1013,13 @@
         }
 
         @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
         }
 
         .chapter-counter {
@@ -1531,7 +1581,7 @@
             .stories-grid {
                 grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             }
-            
+
             .hero h2 {
                 font-size: 3rem;
             }
@@ -1693,6 +1743,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Background Animation -->
     <div class="bg-animation">
@@ -1712,7 +1763,7 @@
                 <div class="logo-tagline">CHOICES CREATE REALITIES</div>
             </div>
         </div>
-        
+
         <nav>
             <button class="nav-btn active" onclick="showSection('home')">
                 <i class="fas fa-home"></i>
@@ -1735,7 +1786,7 @@
                 <span>Create</span>
             </button>
         </nav>
-        
+
         <div class="user-menu">
             <button class="notification-btn" onclick="toggleNotifications()">
                 <i class="fas fa-bell"></i>
@@ -1754,8 +1805,10 @@
             <div class="hero">
                 <div class="hero-content">
                     <h2>Welcome to StoryVerse</h2>
-                    <p>Immerse yourself in interactive stories where your choices shape reality. Explore infinite narratives across multiple genres. Every decision you make creates a new path, a new ending, a new universe.</p>
-                    
+                    <p>Immerse yourself in interactive stories where your choices shape reality. Explore infinite
+                        narratives across multiple genres. Every decision you make creates a new path, a new ending, a
+                        new universe.</p>
+
                     <div class="hero-stats">
                         <div class="hero-stat">
                             <div class="hero-stat-value">256+</div>
@@ -1770,7 +1823,7 @@
                             <div class="hero-stat-label">Active Readers</div>
                         </div>
                     </div>
-                    
+
                     <div class="hero-actions">
                         <button class="btn" onclick="startRandomStory()">
                             <i class="fas fa-random"></i>
@@ -1832,7 +1885,8 @@
                 </h2>
                 <div class="section-actions">
                     <div class="search-box">
-                        <input type="text" id="story-search" placeholder="Search stories..." class="form-control" style="width: 300px;">
+                        <input type="text" id="story-search" placeholder="Search stories..." class="form-control"
+                            style="width: 300px;">
                     </div>
                 </div>
             </div>
@@ -2034,15 +2088,17 @@
                             <i class="fas fa-heading"></i>
                             Story Title
                         </label>
-                        <input type="text" id="story-title" class="form-control" placeholder="Enter a captivating title..." value="The Quantum Nexus">
+                        <input type="text" id="story-title" class="form-control"
+                            placeholder="Enter a captivating title..." value="The Quantum Nexus">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="story-author">
                             <i class="fas fa-user-pen"></i>
                             Author Name
                         </label>
-                        <input type="text" id="story-author" class="form-control" placeholder="Your name or pen name..." value="Alex Johnson">
+                        <input type="text" id="story-author" class="form-control" placeholder="Your name or pen name..."
+                            value="Alex Johnson">
                     </div>
                 </div>
 
@@ -2063,7 +2119,7 @@
                             <option value="steampunk">Steampunk</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="story-theme">
                             <i class="fas fa-palette"></i>
@@ -2085,15 +2141,17 @@
                         <i class="fas fa-align-left"></i>
                         Story Description
                     </label>
-                    <textarea id="story-desc" class="form-control" placeholder="Describe your story...">A journey through collapsing realities where every choice creates new universes. You wake up with no memory in a sterile white room, facing three glowing doors that lead to different branches of existence.</textarea>
+                    <textarea id="story-desc" class="form-control"
+                        placeholder="Describe your story...">A journey through collapsing realities where every choice creates new universes. You wake up with no memory in a sterile white room, facing three glowing doors that lead to different branches of existence.</textarea>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="story-content">
                         <i class="fas fa-book"></i>
                         First Chapter Content
                     </label>
-                    <textarea id="story-content" class="form-control" placeholder="Write your story here...">Consciousness returns in fragments. You're floating in a void of shimmering particles, your form reconstructed from quantum data. A resonant hum fills the non-space as reality coalesces around you. Three gateways pulse with distinct energies—one blue and analytical, one red and passionate, one green and organic. Your choice will determine not just your path, but the very nature of the reality you'll inhabit.</textarea>
+                    <textarea id="story-content" class="form-control"
+                        placeholder="Write your story here...">Consciousness returns in fragments. You're floating in a void of shimmering particles, your form reconstructed from quantum data. A resonant hum fills the non-space as reality coalesces around you. Three gateways pulse with distinct energies—one blue and analytical, one red and passionate, one green and organic. Your choice will determine not just your path, but the very nature of the reality you'll inhabit.</textarea>
                 </div>
 
                 <div class="form-group">
@@ -2103,16 +2161,25 @@
                     </label>
                     <div style="display: grid; gap: 1rem;">
                         <div class="form-grid">
-                            <input type="text" class="form-control choice-input" placeholder="Choice 1 title..." value="Enter the Blue Door">
-                            <input type="text" class="form-control choice-desc-input" placeholder="Choice 1 description..." value="The door pulses with cold, analytical energy. It feels like stepping into a supercomputer's dream.">
+                            <input type="text" class="form-control choice-input" placeholder="Choice 1 title..."
+                                value="Enter the Blue Door">
+                            <input type="text" class="form-control choice-desc-input"
+                                placeholder="Choice 1 description..."
+                                value="The door pulses with cold, analytical energy. It feels like stepping into a supercomputer's dream.">
                         </div>
                         <div class="form-grid">
-                            <input type="text" class="form-control choice-input" placeholder="Choice 2 title..." value="Open the Red Door">
-                            <input type="text" class="form-control choice-desc-input" placeholder="Choice 2 description..." value="Warmth radiates from this portal, promising comfort and emotional depth. It calls to your heart.">
+                            <input type="text" class="form-control choice-input" placeholder="Choice 2 title..."
+                                value="Open the Red Door">
+                            <input type="text" class="form-control choice-desc-input"
+                                placeholder="Choice 2 description..."
+                                value="Warmth radiates from this portal, promising comfort and emotional depth. It calls to your heart.">
                         </div>
                         <div class="form-grid">
-                            <input type="text" class="form-control choice-input" placeholder="Choice 3 title..." value="Try the Green Door">
-                            <input type="text" class="form-control choice-desc-input" placeholder="Choice 3 description..." value="This entrance hums with organic, living energy. It feels primal and connected to nature.">
+                            <input type="text" class="form-control choice-input" placeholder="Choice 3 title..."
+                                value="Try the Green Door">
+                            <input type="text" class="form-control choice-desc-input"
+                                placeholder="Choice 3 description..."
+                                value="This entrance hums with organic, living energy. It feels primal and connected to nature.">
                         </div>
                     </div>
                 </div>
@@ -2147,15 +2214,15 @@
                     </button>
                 </div>
             </div>
-            
+
             <div class="story-text" id="story-text">
                 Loading story...
             </div>
-            
+
             <div class="choices-container" id="choices-container">
                 <!-- Choices will be loaded here -->
             </div>
-            
+
             <div class="reader-footer">
                 <div class="progress-container">
                     <div class="progress-bar">
@@ -2198,14 +2265,14 @@
             avgRating: 4.8,
             achievements: 42
         };
-        
+
         let userLibrary = {
             reading: [1, 2, 3, 5, 7],
             completed: [4, 6, 8, 10],
             favorites: [1, 3, 5, 7, 9],
             bookmarked: [1, 2]
         };
-        
+
         let readingStats = {
             choicesMade: 0,
             startTime: null,
@@ -2705,7 +2772,7 @@
         ];
 
         // ========== INITIALIZATION ==========
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             console.log('StoryVerse Ultimate Edition loaded!');
             createFloatingElements();
             loadFeaturedStories();
@@ -2737,27 +2804,27 @@
         // ========== ENHANCED NAVIGATION ==========
         function showSection(sectionId) {
             console.log(`Navigating to: ${sectionId}`);
-            
+
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
             });
-            
+
             // Update navigation buttons
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
+
             // Show selected section
             const section = document.getElementById(sectionId + '-section');
             if (section) {
                 section.classList.add('active');
-                
+
                 // Scroll to top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                
+
                 // Load section-specific content
-                switch(sectionId) {
+                switch (sectionId) {
                     case 'home':
                         loadFeaturedStories();
                         loadContinueReading();
@@ -2774,7 +2841,7 @@
                         break;
                 }
             }
-            
+
             // Set active nav button
             event.currentTarget.classList.add('active');
         }
@@ -2783,9 +2850,9 @@
         function loadFeaturedStories() {
             const container = document.getElementById('featured-stories');
             const featured = stories.filter(story => story.featured);
-            
+
             container.innerHTML = featured.map(story => createStoryCard(story)).join('');
-            
+
             // Add click events
             container.querySelectorAll('.story-card').forEach((card, index) => {
                 card.addEventListener('click', () => openStory(featured[index].id));
@@ -2795,9 +2862,9 @@
         function loadContinueReading() {
             const container = document.getElementById('continue-reading');
             const reading = stories.filter(story => userLibrary.reading.includes(story.id));
-            
+
             container.innerHTML = reading.map(story => createStoryCard(story)).join('');
-            
+
             // Add click events
             container.querySelectorAll('.story-card').forEach((card, index) => {
                 card.addEventListener('click', () => openStory(reading[index].id));
@@ -2807,7 +2874,7 @@
         function loadAllStories() {
             const container = document.getElementById('all-stories');
             container.innerHTML = stories.map(story => createStoryCard(story)).join('');
-            
+
             // Add click events
             container.querySelectorAll('.story-card').forEach((card, index) => {
                 card.addEventListener('click', () => openStory(stories[index].id));
@@ -2819,17 +2886,17 @@
             const libraryIds = [...userLibrary.reading, ...userLibrary.completed, ...userLibrary.favorites, ...userLibrary.bookmarked];
             const uniqueIds = [...new Set(libraryIds)];
             const libraryStories = stories.filter(story => uniqueIds.includes(story.id));
-            
+
             container.innerHTML = libraryStories.map(story => {
                 let badge = '';
                 if (userLibrary.favorites.includes(story.id)) badge = '⭐ FAVORITE';
                 else if (userLibrary.completed.includes(story.id)) badge = '✅ COMPLETED';
                 else if (userLibrary.reading.includes(story.id)) badge = '📖 READING';
                 else if (userLibrary.bookmarked.includes(story.id)) badge = '🔖 BOOKMARKED';
-                
+
                 return createStoryCard(story, badge);
             }).join('');
-            
+
             // Add click events
             container.querySelectorAll('.story-card').forEach((card, index) => {
                 card.addEventListener('click', () => openStory(libraryStories[index].id));
@@ -2879,42 +2946,42 @@
         // ========== ENHANCED STORY READER ==========
         function openStory(storyId) {
             console.log(`Opening story: ${storyId}`);
-            
+
             const story = stories.find(s => s.id === storyId);
             if (!story) {
                 showToast('Story not found!', 'error');
                 return;
             }
-            
+
             currentStory = story;
             currentChapter = 0;
             readingStats.startTime = new Date();
             readingStats.choicesMade = 0;
-            
+
             // Add to reading list if not already there
             if (!userLibrary.reading.includes(story.id)) {
                 userLibrary.reading.push(story.id);
             }
-            
+
             // Update UI
             updateReaderUI();
-            
+
             // Show loading animation
             showLoading();
-            
+
             // Simulate loading delay
             setTimeout(() => {
                 hideLoading();
-                
+
                 // Show reader with animation
                 const reader = document.getElementById('story-reader');
                 reader.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                
+
                 // Animate entrance
                 const content = document.querySelector('.reader-content');
                 content.style.animation = 'fadeIn 0.5s ease';
-                
+
                 showToast(`Now reading: ${story.title}`, 'info');
                 console.log('Story opened successfully');
             }, 800);
@@ -2922,12 +2989,12 @@
 
         function updateReaderUI() {
             if (!currentStory) return;
-            
+
             const chapter = currentStory.chapters[currentChapter];
-            
+
             // Update title
             document.getElementById('reader-title').textContent = currentStory.title;
-            
+
             // Update story text with enhanced formatting
             const storyText = document.getElementById('story-text');
             storyText.innerHTML = `
@@ -2940,7 +3007,7 @@
                     </div>
                 </div>
             `;
-            
+
             // Update choices
             const choicesContainer = document.getElementById('choices-container');
             if (chapter.choices && chapter.choices.length > 0) {
@@ -2969,13 +3036,13 @@
                     </button>
                 `;
             }
-            
+
             // Update progress
             updateProgress();
-            
+
             // Update stats
             document.getElementById('choice-count').textContent = readingStats.choicesMade;
-            
+
             const timeDiff = new Date() - readingStats.startTime;
             const minutes = Math.floor(timeDiff / 60000);
             document.getElementById('time-spent').textContent = minutes;
@@ -2983,24 +3050,24 @@
 
         function makeChoice(choiceIndex) {
             if (!currentStory) return;
-            
+
             const chapter = currentStory.chapters[currentChapter];
             const choice = chapter.choices[choiceIndex];
-            
+
             // Update stats
             readingStats.choicesMade++;
             userStats.choicesMade++;
-            
+
             // Visual feedback
             const choiceBtn = document.querySelectorAll('.choice-btn')[choiceIndex];
             choiceBtn.style.background = 'var(--gradient-primary)';
             choiceBtn.style.transform = 'scale(0.98)';
-            
+
             // Show toast for impact
             if (choice.impact) {
                 showToast(`Choice made: ${choice.impact}`, 'info');
             }
-            
+
             // Move to next chapter
             setTimeout(() => {
                 if (choice.nextChapter >= 0 && choice.nextChapter < currentStory.chapters.length) {
@@ -3017,11 +3084,11 @@
             // Calculate time spent
             const timeDiff = new Date() - readingStats.startTime;
             const minutes = Math.floor(timeDiff / 60000);
-            
+
             // Update stats
             userStats.storiesRead++;
             userStats.readingTime += minutes;
-            
+
             // Move from reading to completed
             const readingIndex = userLibrary.reading.indexOf(currentStory.id);
             if (readingIndex > -1) {
@@ -3030,13 +3097,13 @@
             if (!userLibrary.completed.includes(currentStory.id)) {
                 userLibrary.completed.push(currentStory.id);
             }
-            
+
             // Show completion message
             showToast(`Amazing! You completed "${currentStory.title}" in ${minutes} minutes with ${readingStats.choicesMade} choices!`, 'success');
-            
+
             // Update profile stats
             updateProfileStats();
-            
+
             // Close reader
             setTimeout(() => {
                 closeReader();
@@ -3046,7 +3113,7 @@
 
         function updateProgress() {
             if (!currentStory) return;
-            
+
             const progress = ((currentChapter + 1) / currentStory.chapters.length) * 100;
             document.getElementById('story-progress').style.width = `${progress}%`;
             document.getElementById('chapter-counter').textContent = `Chapter ${currentChapter + 1}/${currentStory.chapters.length}`;
@@ -3085,7 +3152,7 @@
                 { icon: 'fas fa-fire', text: '7-day reading streak achieved', time: '2 weeks ago' },
                 { icon: 'fas fa-pen', text: 'Published "The Last Archive"', time: '1 month ago' }
             ];
-            
+
             container.innerHTML = activities.map(activity => `
                 <div class="activity-item">
                     <div class="activity-icon">
@@ -3106,7 +3173,7 @@
         function loadGenreTags() {
             const container = document.getElementById('genre-tags');
             const genres = [...new Set(stories.map(story => story.genre))];
-            
+
             container.innerHTML = `
                 <div class="genre-tag active" onclick="filterByGenre('all')">All Genres</div>
                 ${genres.map(genre => `
@@ -3119,7 +3186,7 @@
             // Update active tag
             document.querySelectorAll('.genre-tag').forEach(tag => tag.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             // Filter stories
             const container = document.getElementById('all-stories');
             if (genre === 'all') {
@@ -3128,13 +3195,13 @@
                 const filtered = stories.filter(story => story.genre === genre);
                 container.innerHTML = filtered.map(story => createStoryCard(story)).join('');
             }
-            
+
             // Re-add click events
             container.querySelectorAll('.story-card').forEach((card, index) => {
                 const filteredStories = genre === 'all' ? stories : stories.filter(s => s.genre === genre);
                 card.addEventListener('click', () => openStory(filteredStories[index].id));
             });
-            
+
             showToast(`Showing ${genre === 'all' ? 'all' : genre} stories`, 'info');
         }
 
@@ -3146,28 +3213,28 @@
             const theme = document.getElementById('story-theme').value;
             const desc = document.getElementById('story-desc').value.trim();
             const content = document.getElementById('story-content').value.trim();
-            
+
             const choiceInputs = document.querySelectorAll('.choice-input');
             const choiceDescInputs = document.querySelectorAll('.choice-desc-input');
-            
+
             const choices = Array.from(choiceInputs).map((input, index) => ({
                 text: input.value.trim(),
                 description: choiceDescInputs[index]?.value.trim() || `Choice ${index + 1}`,
                 nextChapter: index + 1,
                 impact: ['+Logic', '+Emotion', '+Nature'][index] || '+Choice'
             }));
-            
+
             // Validation
             if (!title || !author || !desc || !content) {
                 showToast('Please fill in all required fields!', 'error');
                 return;
             }
-            
+
             if (choices.some(choice => !choice.text)) {
                 showToast('Please fill in all choice titles!', 'error');
                 return;
             }
-            
+
             // Create new story
             const newStory = {
                 id: stories.length + 1,
@@ -3197,16 +3264,16 @@
                     }
                 ]
             };
-            
+
             // Add to stories array
             stories.push(newStory);
-            
+
             // Add to user's library
             userLibrary.reading.push(newStory.id);
-            
+
             // Show success message
             showToast(`"${title}" published successfully!`, 'success');
-            
+
             // Reset form
             document.getElementById('story-title').value = '';
             document.getElementById('story-author').value = '';
@@ -3214,7 +3281,7 @@
             document.getElementById('story-content').value = '';
             choiceInputs.forEach(input => input.value = '');
             choiceDescInputs.forEach(input => input.value = '');
-            
+
             // Navigate to the new story
             setTimeout(() => {
                 openStory(newStory.id);
@@ -3250,7 +3317,7 @@
                     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1470&q=80'
                 ]
             };
-            
+
             const genreImages = images[genre] || images['fantasy'];
             return genreImages[Math.floor(Math.random() * genreImages.length)];
         }
@@ -3264,7 +3331,7 @@
         function filterLibrary(filter) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             showToast(`Showing ${filter} stories`, 'info');
             loadLibraryStories(); // In a real app, this would actually filter
         }
@@ -3272,10 +3339,10 @@
         function filterStories(filter) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             let filteredStories = [...stories];
-            
-            switch(filter) {
+
+            switch (filter) {
                 case 'featured':
                     filteredStories = stories.filter(s => s.featured);
                     break;
@@ -3287,15 +3354,15 @@
                     filteredStories = [...stories].sort((a, b) => b.readers - a.readers);
                     break;
             }
-            
+
             const container = document.getElementById('all-stories');
             container.innerHTML = filteredStories.map(story => createStoryCard(story)).join('');
-            
+
             // Re-add click events
             container.querySelectorAll('.story-card').forEach((card, index) => {
                 card.addEventListener('click', () => openStory(filteredStories[index].id));
             });
-            
+
             showToast(`Showing ${filter} stories`, 'info');
         }
 
@@ -3352,15 +3419,15 @@
                 info: 'fas fa-info-circle',
                 warning: 'fas fa-exclamation-triangle'
             };
-            
+
             toast.innerHTML = `
                 <i class="${icons[type] || icons.info}"></i>
                 <span>${message}</span>
             `;
-            
+
             toast.className = `toast ${type}`;
             toast.classList.add('show');
-            
+
             // Auto-hide after 5 seconds
             setTimeout(() => {
                 toast.classList.remove('show');
@@ -3376,18 +3443,18 @@
         }
 
         // ========== KEYBOARD SHORTCUTS ==========
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             // Ctrl/Cmd + S to save bookmark
             if ((e.ctrlKey || e.metaKey) && e.key === 's') {
                 e.preventDefault();
                 saveBookmark();
             }
-            
+
             // Escape to close reader
             if (e.key === 'Escape' && document.getElementById('story-reader').classList.contains('active')) {
                 closeReader();
             }
-            
+
             // Ctrl/Cmd + 1-5 for navigation
             if (e.ctrlKey || e.metaKey) {
                 const sections = ['home', 'discover', 'library', 'profile', 'create'];
@@ -3398,7 +3465,7 @@
                     if (btn) btn.click();
                 }
             }
-            
+
             // Space to continue in reader
             if (e.key === ' ' && document.getElementById('story-reader').classList.contains('active')) {
                 e.preventDefault();
@@ -3418,4 +3485,5 @@
         });
     </script>
 </body>
+
 </html>
