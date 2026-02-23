@@ -26,7 +26,7 @@ let allProjects = [];
 async function loadProjects() {
     try {
         // ✅ FIX 1: Correct path — page is in /pages/, data is in /data/
-        const response = await fetch('/website/data/projects.json');
+      const response = await fetch('../data/projects.json');
         if (!response.ok) throw new Error(`Failed to load projects: ${response.status}`);
         allProjects = await response.json();
         renderProjects();
