@@ -22,6 +22,11 @@ const saveNoteBtn = document.getElementById('saveNote');
 const clearNoteBtn = document.getElementById('clearNote');
 const readNoteBtn = document.getElementById('readNote');
 
+// Load previous conversation
+if (localStorage.getItem("voiceChat")) {
+    conversationLog.innerHTML = localStorage.getItem("voiceChat");
+}
+
 let isNoteRecording = false;
 let noteRecognition;
 
@@ -360,6 +365,33 @@ stopBtn.addEventListener('click', function() {
             speechSynthesis.speak(utterance);
         });
     }
+
+
+
+    // 🌦️ Weather API
+async function getWeather(city = "Pune") {
+    const apiKey = "YOUR_API_KEY"; // replace with your key
+
+    try {
+        const res = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
+
+        const data = await res.json();
+
+        if (data.cod !== 200) {
+            return "Sorry, I couldn't find weather for that city.";
+        }
+
+        const temp = data.main.temp;
+        const desc = data.weather[0].description;
+
+        return `The weather in ${city} is ${desc} with temperature ${temp} degree Celsius.`;
+
+    } catch {
+        return "Weather service is not available right now.";
+    }
+}
     
     // Process voice commands
     function processCommand(transcript) {
@@ -383,9 +415,24 @@ stopBtn.addEventListener('click', function() {
             response = `Today is ${dateString}`;
         }
         // Weather
+        // else if (command.includes('weather')) {
+        //     response = "I can't check real weather data, but it's always a beautiful day in the digital world!";
+        // }
+
         else if (command.includes('weather')) {
-            response = "I can't check real weather data, but it's always a beautiful day in the digital world!";
-        }
+    let city = "Pune";
+
+    const match = command.match(/weather in (.+)/);
+    if (match) {
+        city = match[1];
+    }
+
+    getWeather(city).then(response => {
+        addMessage("Voice Assistant", response);
+        speakText(response);
+    });
+    return;
+}
         // Search
         else if (command.includes('search for') || command.includes('find')) {
             const query = command.replace('search for', '').replace('find', '').trim();
@@ -461,6 +508,22 @@ stopBtn.addEventListener('click', function() {
         else if (command.includes('what can you do') || command.includes('help') || command.includes('commands')) {
             response = "I can tell you the time and date, tell jokes, perform calculations, search the web, and more. Try saying 'what time is it' or 'tell me a joke'.";
         }
+
+
+        // 🌐 Open websites
+else if (command.includes('open youtube')) {
+    window.open("https://www.youtube.com");
+    response = "Opening YouTube.";
+}
+else if (command.includes('open google')) {
+    window.open("https://www.google.com");
+    response = "Opening Google.";
+}
+else if (command.includes('open github')) {
+    window.open("https://github.com");
+    response = "Opening GitHub.";
+}
+
         // Unknown command
         else {
             response = "I'm not sure how to help with that. Try asking about the time, date, or ask me to tell a joke.";
@@ -494,7 +557,13 @@ stopBtn.addEventListener('click', function() {
         
         // Scroll to the bottom of conversation
         conversationLog.scrollTop = conversationLog.scrollHeight;
+        saveConversation();
     }
+
+    // 💾 Save conversation
+function saveConversation() {
+    localStorage.setItem("voiceChat", conversationLog.innerHTML);
+}
     
     // Update voice level visualization
     function updateVoiceLevel() {
@@ -538,11 +607,18 @@ stopBtn.addEventListener('click', function() {
         speakText("This is a test of the voice assistant. Everything is working correctly!");
     });
     
-    clearConversationBtn.addEventListener('click', function() {
-        conversationLog.innerHTML = '';
-        addMessage("Voice Assistant", "Conversation cleared. How can I help you?");
-    });
+    // clearConversationBtn.addEventListener('click', function() {
+    //     conversationLog.innerHTML = '';
+    //     addMessage("Voice Assistant", "Conversation cleared. How can I help you?");
+    // });
     
+
+    clearConversationBtn.addEventListener('click', function() {
+    conversationLog.innerHTML = '';
+    localStorage.removeItem("voiceChat");
+    addMessage("Voice Assistant", "Conversation cleared.");
+    });
+
     // Update recognition language when changed
     languageSelect.addEventListener('change', function() {
         if (recognition) {
@@ -564,4 +640,9 @@ stopBtn.addEventListener('click', function() {
     
     // Start the application
     init();
+});
+
+
+document.getElementById("theme-toggle").addEventListener("click", () => {
+   document.body.classList.toggle("dark");
 });
