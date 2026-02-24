@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>100 Days of Web Development | Command Center</title>
 
+  <!-- Design System -->
+  <link rel="stylesheet" href="website/styles/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -599,88 +602,23 @@
       let scrollY = 0;
       window.addEventListener('scroll', () => { scrollY = window.scrollY; });
 
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-
-      const clock = new THREE.Clock();
-      function animate() {
-        requestAnimationFrame(animate);
-        const t = clock.getElapsedTime();
-        particles.rotation.y = t * 0.04 + mouseX * 0.15;
-        particles.rotation.x = t * 0.02 - mouseY * 0.08;
-        camera.position.y = -scrollY * 0.002;
-        renderer.render(scene, camera);
-      }
-      animate();
-    })();
-
-    // ===== CUSTOM CURSOR =====
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let ringX = 0, ringY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-      ringX += (e.clientX - ringX) * 0.12;
-      ringY += (e.clientY - ringY) * 0.12;
-      ring.style.left = e.clientX + 'px';
-      ring.style.top = e.clientY + 'px';
-    });
-    // requestAnimationFrame ring lerp
-    function lerpRing() {
-      requestAnimationFrame(lerpRing);
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-    }
-    // Actually update properly
-    document.addEventListener('mousemove', (e) => {
-      gsap.to(ring, { x: e.clientX - 18, y: e.clientY - 18, duration: 0.15, ease: 'power2.out' });
-      gsap.to(dot, { x: e.clientX - 4, y: e.clientY - 4, duration: 0.05 });
-    });
-    document.querySelectorAll('a, button, .feature-card, .timeline-card, .testimonial-card').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
-    });
-    dot.style.position = 'fixed';
-    ring.style.position = 'fixed';
-    dot.style.left = ring.style.left = '-100px';
-
-    // ===== GSAP ANIMATIONS =====
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Hero animations - run after loader
-    setTimeout(() => {
-      const tl = gsap.timeline({ delay: 0.3 });
-      tl.from('.hero-title .word', {
-        y: 80,
-        opacity: 0,
-        duration: 0.9,
-        stagger: 0.1,
-        ease: 'power3.out'
-      })
-        .from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
-        .from('.hero-actions', { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
-        .from('.hero-eyebrow', { y: -20, opacity: 0, duration: 0.5, ease: 'power2.out' }, '<')
-        .from('.scroll-indicator', { opacity: 0, duration: 0.5 }, '-=0.2');
-    }, 1500);
-
-    // Scroll-triggered animations for all .gsap-up, .gsap-fade
-    document.querySelectorAll('.gsap-up').forEach(el => {
-      gsap.fromTo(el, { y: 50, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-      });
-    });
-    document.querySelectorAll('.gsap-fade').forEach(el => {
-      gsap.fromTo(el, { opacity: 0 }, {
-        opacity: 1, duration: 0.8, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-      });
-    });
+          <a href="https://twitter.com" 
+   class="social-btn" 
+   target="_blank" 
+   aria-label="X">
+   <i class="fa-brands fa-x-twitter"></i>
+</a>
+          <a href="https://www.linkedin.com/in/subham-nayak-00276930b/" class="social-btn" target="_blank"
+            aria-label="LinkedIn">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
     // Stagger feature cards
     gsap.fromTo('.feature-card', { y: 50, opacity: 0 }, {
