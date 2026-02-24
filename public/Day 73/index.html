@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>ML Path</title>
@@ -7,6 +8,25 @@
   <link rel="stylesheet" href="css/global.css" />
   <link rel="stylesheet" href="css/home.css" />
   <link rel="stylesheet" href="css/chatbot.css" />
+  <style>
+    :root {
+      --ml-accent: #6366f1;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('ml-bg.jpg');
+    }
+
+    .chapter-nav button.active {
+      background: var(--ml-accent);
+      color: white;
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 
 <body>
@@ -46,8 +66,8 @@
       <div class="chapter-right"></div>
     </div>
 
-    <button class="chapter-arrow left">‹</button>
-    <button class="chapter-arrow right">›</button>
+    <button class="chapter-arrow left" aria-label="Previous chapter">‹</button>
+    <button class="chapter-arrow right" aria-label="Next chapter">›</button>
   </section>
 
   <div id="footer"></div>
@@ -159,4 +179,5 @@
   </script>
 
 </body>
+
 </html>

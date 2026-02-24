@@ -9,6 +9,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <style>
+        :root {
+            --freelance-accent: #059669;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .navbar {
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,7 +47,7 @@
                 <a href="#how-it-works">How It Works</a>
                 <a href="#login" class="login-btn">Log In</a>
                 <a href="#signup" class="signup-btn">Sign Up</a>
-                <button id="theme-toggle" class="theme-toggle">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                     🌙
                 </button>
 
@@ -214,4 +237,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

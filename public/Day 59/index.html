@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Planner Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --meal-accent: #f97316;
+            --meal-bg: #fff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .header {
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <header class="header">
@@ -19,10 +36,10 @@
                 <h1>Meal Planner Pro</h1>
             </div>
             <div class="header-actions">
-                <button id="new-week" class="btn btn-outline">
+                <button id="new-week" class="btn btn-outline" aria-label="Create plan for new week">
                     <i class="fas fa-calendar-plus"></i> New Week
                 </button>
-                <button id="print-plan" class="btn btn-outline">
+                <button id="print-plan" class="btn btn-outline" aria-label="Print current meal plan">
                     <i class="fas fa-print"></i> Print
                 </button>
             </div>
@@ -109,27 +126,27 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="meal-name">Meal Name</label>
                             <input type="text" id="meal-name" placeholder="e.g., Chicken Salad">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="meal-description">Description</label>
                             <textarea id="meal-description" placeholder="Optional description or notes"></textarea>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="meal-ingredients">Ingredients (one per line)</label>
                             <textarea id="meal-ingredients" placeholder="Add ingredients here, one per line"></textarea>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="meal-recipe">Recipe Link (optional)</label>
                             <input type="text" id="meal-recipe" placeholder="https://example.com/recipe">
                         </div>
-                        
+
                         <div class="form-actions">
                             <button id="clear-form" class="btn btn-outline">
                                 <i class="fas fa-times"></i> Clear
@@ -231,9 +248,10 @@
                 <p>1. Use the planner settings to set your desired duration and meals per day.</p>
                 <p>2. Click on any meal slot in the calendar to add or edit a meal.</p>
                 <p>3. Use meal templates to quickly add common meals.</p>
-                
+
                 <h4>Features</h4>
-                <p>• <strong>Shopping List:</strong> Ingredients from your meals automatically populate the shopping list.</p>
+                <p>• <strong>Shopping List:</strong> Ingredients from your meals automatically populate the shopping
+                    list.</p>
                 <p>• <strong>Meal Templates:</strong> Save your favorite meals as templates for quick reuse.</p>
                 <p>• <strong>Export/Import:</strong> Save your meal plans as JSON files and import them later.</p>
                 <p>• <strong>Print:</strong> Print your meal plan or shopping list.</p>
@@ -241,8 +259,9 @@
         </div>
     </div>
     <button id="scrollToTopBtn" aria-label="Scroll to top">
-    <i class="fa-solid fa-arrow-up"></i>
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
     <script src="script.js"></script>
 </body>
+
 </html>

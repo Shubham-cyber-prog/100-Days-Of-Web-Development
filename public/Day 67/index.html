@@ -1,33 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Multiplayer Tic Tac Toe</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --ttt-x: #3b82f6;
+            --ttt-o: #ef4444;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .board {
+            grid-gap: 15px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            padding: 15px;
+        }
+
+        .cell {
+            background: white;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+
+        .cell:hover {
+            transform: scale(1.05);
+            background: #f8fafc;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>🎮 Multiplayer Tic-Tac-Toe</h1>
+    <h1>🎮 Multiplayer Tic-Tac-Toe</h1>
 
-<div class="room">
-    <input id="roomCode" placeholder="Room Code">
-    <button onclick="joinRoom()">Join</button>
-</div>
+    <div class="room">
+        <input id="roomCode" placeholder="Room Code" aria-label="Enter room code to join">
+        <button onclick="joinRoom()" aria-label="Join Tic-Tac-Toe room">Join</button>
+    </div>
 
-<p id="status">Join a room to start</p>
+    <p id="status">Join a room to start</p>
 
-<div class="board">
-    <div class="cell" data-i="0"></div>
-    <div class="cell" data-i="1"></div>
-    <div class="cell" data-i="2"></div>
-    <div class="cell" data-i="3"></div>
-    <div class="cell" data-i="4"></div>
-    <div class="cell" data-i="5"></div>
-    <div class="cell" data-i="6"></div>
-    <div class="cell" data-i="7"></div>
-    <div class="cell" data-i="8"></div>
-</div>
+    <div class="board">
+        <div class="cell" data-i="0"></div>
+        <div class="cell" data-i="1"></div>
+        <div class="cell" data-i="2"></div>
+        <div class="cell" data-i="3"></div>
+        <div class="cell" data-i="4"></div>
+        <div class="cell" data-i="5"></div>
+        <div class="cell" data-i="6"></div>
+        <div class="cell" data-i="7"></div>
+        <div class="cell" data-i="8"></div>
+    </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
