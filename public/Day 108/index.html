@@ -107,7 +107,8 @@
       </header>
 
       <div class="canvas-viewport" id="dropZone">
-        <div class="upload-placeholder" id="uploadPlaceholder">
+        <div class="upload-placeholder" id="uploadPlaceholder" role="button"
+          onclick="document.getElementById('imageUpload').click()" tabindex="0" aria-label="Upload image area">
           <div class="placeholder-content">
             <div class="icon-circle">
               <i class="fas fa-cloud-arrow-up"></i>
@@ -115,8 +116,12 @@
             <h2>Upload your masterpiece</h2>
             <p>Drag and drop an image or click the button below</p>
             <input type="file" id="imageUpload" accept="image/*" hidden aria-label="Upload image to edit" />
+
+            <button class="select-btn" aria-label="Choose image file from your device">
+
             <button class="select-btn" onclick="document.getElementById('imageUpload').click()"
               aria-label="Choose image file">
+
               Choose Image
             </button>
           </div>
