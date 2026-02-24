@@ -15,37 +15,23 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- Original Stylesheets -->
-  <link rel="stylesheet" href="website/styles/index.css" />
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="website/style.css">
   <link rel="stylesheet" href="website/styles/tracker.css" />
   <link rel="icon" type="image/png" href="website/assets/images/logo.png" />
 
-  <!-- Sidebar & Navbar Loaders -->
-  <script src="scripts/components/sidebar-loader.js"></script>
-  <!-- <script src="scripts/components/navbar-loader.js"></script> -->
-
-
   <!-- Navbar Loader -->
-   <link rel="stylesheet" href="website/style.css">
+  <script src="scripts/components/sidebar-loader.js"></script>
   <script src="scripts/components/navbar-loader.js"></script>
 
-  <!-- Fire Cursor - Commented out as file is missing -->
-  <!-- <link rel="stylesheet" href="firecursor.css"> -->
-  <link rel="stylesheet" href="website/styles/tracker.css" />
- 
   <!-- PWA -->
   <link rel="manifest" href="/manifest.webmanifest" />
   <meta name="theme-color" content="#ff7a18" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!-- FIXED: deprecated meta tag replaced -->
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Zenith" />
-
-  <style>
-   
-  </style>
 
 </head>
 
@@ -77,9 +63,7 @@
     </button>
 
     <!-- Navbar -->
-     <nav  id="mainNav">
-     
-    </nav>
+    <nav id="mainNav"></nav>
 
     <!-- Mobile Bottom Nav -->
     <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
@@ -241,12 +225,14 @@
             <h3>Open Source</h3>
             <p>All projects and resources are open source. Contribute to the codebase, collaborate with others, and
               become part of a growing ecosystem.</p>
-        </div>
-         <div class="feature-card gsap-up">
+          </div>
+          <div class="feature-card gsap-up">
             <div class="feature-icon-wrap">🧩</div>
             <h3>Collaborative Learning</h3>
-            <p>Join a community of learners and mentors. Share knowledge, get feedback, and grow together in a supportive environment.</p>
+            <p>Join a community of learners and mentors. Share knowledge, get feedback, and grow together in a
+              supportive environment.</p>
           </div>
+        </div>
       </section>
 
       <!-- COUNTER -->
@@ -512,11 +498,9 @@
   <!-- SCRIPTS -->
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <!-- GSAP CDN -->
+  <!-- GSAP (single version - removed duplicate) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <!-- Original project scripts -->
   <script src="assets/js/project-loader.js"></script>
@@ -550,6 +534,8 @@
     // ===== THREE.JS BACKGROUND =====
     (function () {
       const canvas = document.getElementById('bg-canvas');
+      if (!canvas) return;
+
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -568,11 +554,10 @@
         positions[i * 3] = (Math.random() - 0.5) * 30;
         positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
         positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
-        // Cyan to teal gradient
         const t = Math.random();
-        colors[i * 3] = 0;                    // R
-        colors[i * 3 + 1] = 0.6 + t * 0.4;  // G
-        colors[i * 3 + 2] = 0.8 + t * 0.2;  // B
+        colors[i * 3] = 0;
+        colors[i * 3 + 1] = 0.6 + t * 0.4;
+        colors[i * 3 + 2] = 0.8 + t * 0.2;
         sizes[i] = Math.random() * 2.5 + 0.5;
       }
 
@@ -599,27 +584,26 @@
         mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
       });
 
-      let scrollY = 0;
-      window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+      // FIXED: animate function was missing — added here
+      function animate() {
+        requestAnimationFrame(animate);
+        particles.rotation.y += 0.0003;
+        particles.rotation.x += 0.0001;
+        camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
+        camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.05;
+        renderer.render(scene, camera);
+      }
+      animate();
 
-          <a href="https://twitter.com" 
-   class="social-btn" 
-   target="_blank" 
-   aria-label="X">
-   <i class="fa-brands fa-x-twitter"></i>
-</a>
-          <a href="https://www.linkedin.com/in/subham-nayak-00276930b/" class="social-btn" target="_blank"
-            aria-label="LinkedIn">
-            <svg class="icon" viewBox="0 0 24 24">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2" />
-              <rect x="2" y="9" width="4" height="12" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
 
+    })(); // END Three.js IIFE
+
+    // ===== GSAP ANIMATIONS =====
     // Stagger feature cards
     gsap.fromTo('.feature-card', { y: 50, opacity: 0 }, {
       y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out',
@@ -635,26 +619,28 @@
     // Counter animation
     const counterSection = document.querySelector('.counter-section');
     let counted = false;
-    ScrollTrigger.create({
-      trigger: counterSection,
-      start: 'top 80%',
-      onEnter: () => {
-        if (counted) return;
-        counted = true;
-        document.querySelectorAll('.counter-num').forEach(el => {
-          const target = parseInt(el.dataset.target);
-          const valEl = el.querySelector('.val');
-          gsap.to({ val: 0 }, {
-            val: target,
-            duration: 1.8,
-            ease: 'power2.out',
-            onUpdate: function () {
-              valEl.textContent = Math.floor(this.targets()[0].val);
-            }
+    if (counterSection) {
+      ScrollTrigger.create({
+        trigger: counterSection,
+        start: 'top 80%',
+        onEnter: () => {
+          if (counted) return;
+          counted = true;
+          document.querySelectorAll('.counter-num').forEach(el => {
+            const target = parseInt(el.dataset.target);
+            const valEl = el.querySelector('.val');
+            gsap.to({ val: 0 }, {
+              val: target,
+              duration: 1.8,
+              ease: 'power2.out',
+              onUpdate: function () {
+                valEl.textContent = Math.floor(this.targets()[0].val);
+              }
+            });
           });
-        });
-      }
-    });
+        }
+      });
+    }
 
     // Testimonials stagger
     gsap.fromTo('.testimonial-card', { y: 40, opacity: 0 }, {
@@ -670,16 +656,20 @@
 
     // Navbar scroll effect
     const nav = document.getElementById('mainNav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      });
+    }
 
     // Scroll to top
     const scrollBtn = document.getElementById('scrollToTopBtn');
-    window.addEventListener('scroll', () => {
-      scrollBtn.classList.toggle('show', window.scrollY > 300);
-    });
-    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    if (scrollBtn) {
+      window.addEventListener('scroll', () => {
+        scrollBtn.classList.toggle('show', window.scrollY > 300);
+      });
+      scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
 
     // Auth dashboard link visibility
     document.addEventListener('DOMContentLoaded', () => {
@@ -695,86 +685,75 @@
     document.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme');
     });
-    // ===== EMERGENCY HERO VISIBILITY FIX =====
-(function() {
-    // Run immediately
-    const hero = document.querySelector('.hero');
-    if (hero) {
+
+    // ===== HERO VISIBILITY FIX =====
+    (function () {
+      const hero = document.querySelector('.hero');
+      if (hero) {
         hero.style.opacity = '1';
         hero.style.visibility = 'visible';
         hero.style.display = 'flex';
-    }
-    
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
+      }
+
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) {
         heroTitle.style.opacity = '1';
         heroTitle.style.visibility = 'visible';
         heroTitle.style.color = 'var(--text-primary)';
-    }
-    
-    // Fix all words
-    document.querySelectorAll('.hero-title .word').forEach(word => {
+      }
+
+      document.querySelectorAll('.hero-title .word').forEach(word => {
         word.style.opacity = '1';
         word.style.visibility = 'visible';
         word.style.transform = 'none';
         word.style.color = 'var(--text-primary)';
-    });
-    
-    // Fix accent word
-    document.querySelectorAll('.hero-title .accent').forEach(accent => {
+      });
+
+      document.querySelectorAll('.hero-title .accent').forEach(accent => {
         accent.style.color = 'var(--flame)';
-    });
-    
-    // Run again after load
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            const heroTitle = document.querySelector('.hero-title');
-            if (heroTitle) {
+      });
+
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          const heroTitle = document.querySelector('.hero-title');
+          if (heroTitle) {
+            heroTitle.style.opacity = '1';
+            heroTitle.style.visibility = 'visible';
+          }
+          document.querySelectorAll('.hero-title .word').forEach(word => {
+            word.style.opacity = '1';
+            word.style.visibility = 'visible';
+            word.style.transform = 'none';
+          });
+        }, 500);
+      });
+
+      const loaderEl = document.getElementById('loader');
+      if (loaderEl) {
+        const observer = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.attributeName === 'class' && loaderEl.classList.contains('hidden')) {
+              const heroTitle = document.querySelector('.hero-title');
+              if (heroTitle) {
                 heroTitle.style.opacity = '1';
                 heroTitle.style.visibility = 'visible';
+              }
             }
-            
-            document.querySelectorAll('.hero-title .word').forEach(word => {
-                word.style.opacity = '1';
-                word.style.visibility = 'visible';
-                word.style.transform = 'none';
-            });
-        }, 500);
-    });
-    
-    // Run after loader disappears
-    const loader = document.getElementById('loader');
-    if (loader) {
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.attributeName === 'class' && 
-                    loader.classList.contains('hidden')) {
-                    
-                    const heroTitle = document.querySelector('.hero-title');
-                    if (heroTitle) {
-                        heroTitle.style.opacity = '1';
-                        heroTitle.style.visibility = 'visible';
-                    }
-                }
-            });
+          });
         });
-        
-        observer.observe(loader, { attributes: true });
+        observer.observe(loaderEl, { attributes: true });
+      }
+    })();
+
+    // Clear GSAP hero animations if causing issues
+    if (window.gsap) {
+      gsap.set('.hero-title .word', { clearProps: 'all' });
+      gsap.set('.hero-subtitle', { clearProps: 'all' });
+      gsap.set('.hero-actions', { clearProps: 'all' });
     }
-})();
 
-// Disable GSAP animations for hero if they're causing issues
-if (window.gsap) {
-    // Clear any GSAP animations on hero
-    gsap.set('.hero-title .word', { clearProps: 'all' });
-    gsap.set('.hero-subtitle', { clearProps: 'all' });
-    gsap.set('.hero-actions', { clearProps: 'all' });
-}
   </script>
-x
-
-  <!-- Global Error Handler -->
-  <script src="assets/js/main.js"></script>
+  <!-- FIXED: removed duplicate main.js — was loaded twice -->
 
   <!-- PWA Components -->
   <script src="website/components/offline-indicator.js"></script>
