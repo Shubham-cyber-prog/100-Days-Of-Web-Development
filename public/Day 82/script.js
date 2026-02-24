@@ -226,6 +226,15 @@
             // Quiz navigation
             nextQuestionButton.addEventListener('click', showNextQuizQuestion);
             quitQuizButton.addEventListener('click', () => navigateToPage('lesson'));
+
+            // Dark mode toggle
+document.getElementById("theme-toggle").addEventListener("click", function () {
+    document.body.classList.toggle("dark");
+    
+    const icon = this.querySelector("i");
+    icon.classList.toggle("fa-moon");
+    icon.classList.toggle("fa-sun");
+});
         }
 
         function navigateToPage(page) {
@@ -281,6 +290,10 @@
                         <span class="course-category">${course.category}</span>
                         <h3 class="course-title">${course.title}</h3>
                         <p class="course-description">${course.description}</p>
+                         <div class="progress-container">
+                        <div class="progress-bar" style="width: ${course.progress || 40}%"></div>
+                        </div>
+                        <p class="progress-text">${course.progress || 40}% Completed</p>
                         <div class="course-meta">
                             <span><i class="fas fa-user"></i> ${course.instructor}</span>
                             <span><i class="fas fa-clock"></i> ${course.duration}</span>
@@ -347,7 +360,7 @@
             if (!course.enrolled) {
                 // Enroll in course
                 course.enrolled = true;
-                alert(`Successfully enrolled in "${course.title}"!`);
+                showToast(`Successfully enrolled in "${course.title}"!`);
                 
                 // Reload relevant sections
                 loadMyCourses();
@@ -369,7 +382,7 @@
                     currentLessonIndex = 0;
                     navigateToPage('lesson');
                 } else {
-                    alert(`Navigating to "${course.title}"`);
+                    showToast(`Successfully enrolled in "${course.title}"!`);
                     // In a real app, you would load the specific course content
                 }
             }
@@ -584,4 +597,22 @@
             const achievements = Math.floor(completedLessons / 5);
             document.getElementById('achievements').textContent = achievements;
         }
+
+
+        function showToast(message) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerText = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add("show");
+    }, 100);
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
     

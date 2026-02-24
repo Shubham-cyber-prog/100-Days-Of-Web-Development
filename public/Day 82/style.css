@@ -36,8 +36,18 @@
         }
 
         /* Header Styles */
-        header {
+        /* header {
             background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        } */
+
+        header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             box-shadow: var(--box-shadow);
             position: sticky;
             top: 0;
@@ -282,10 +292,17 @@
             margin-bottom: 8px;
         }
 
-        .progress-fill {
+        /* .progress-fill {
             height: 100%;
             background-color: var(--success);
             border-radius: 4px;
+        } */
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            border-radius: 4px;
+            transition: width 0.8s ease;
         }
 
         .progress-text {
@@ -643,3 +660,115 @@
             }
         }
    
+
+        /* ===== Dark Mode ===== */
+body.dark {
+    background: #0f172a;
+    color: #f1f5f9;
+}
+
+body.dark header,
+body.dark .course-card,
+body.dark .lesson-sidebar,
+body.dark .lesson-content,
+body.dark .quiz-container,
+body.dark .stat-card {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+body.dark .course-description,
+body.dark .stat-info p {
+    color: #cbd5e1;
+}
+
+body.dark footer {
+    background: #0f172a;
+}
+
+
+.page {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+
+.page.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Toast */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.4s ease;
+    z-index: 999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+.btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.course-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+
+/* Progress Bar */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #00c6ff);
+  border-radius: 10px;
+  transition: width 0.5s ease-in-out;
+}
+
+.progress-text {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #555;
+}
+
+/* Course Card Hover Animation */
+.course-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
