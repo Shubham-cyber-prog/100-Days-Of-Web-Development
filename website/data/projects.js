@@ -125,5 +125,5 @@ export const allProjects = [
     { day: 167, title: "Time Fracture Arena", tech: ["HTML", "CSS", "JS", "Canvas"] },
     { day: 168, title: "Gift Shop E-Commerce Website", tech: ["React","Typescript"] },
      {day: 239, title: "Code Snippet Manager", tech: ["React", "MongoDB"] },
-
+     { day: 243, title: "Tower Defense Game", tech: ["Canvas", "JS"] },
 ];
