@@ -1,0 +1,134 @@
+:root {
+    --bg-black: #050505;
+    --accent-primary: #00ffcc;
+    --accent-secondary: #ff00ff;
+    --text-main: #e0e0e0;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-ui: 'Orbitron', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.terminal-os {
+    background: var(--bg-black);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* CRT Scanline Effect */
+    background: radial-gradient(circle at center, #111 0%, #050505 100%);
+}
+
+body::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 1000;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+#game-container {
+    width: 95vw;
+    height: 90vh;
+    display: grid;
+    grid-template-areas:
+        "hud hud"
+        "term inv";
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 80px 1fr;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* HUD STYLING */
+.game-hud {
+    grid-area: hud;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.hud-item .label {
+    color: var(--accent-primary);
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.hud-item .value {
+    font-family: var(--font-ui);
+    letter-spacing: 1px;
+}
+
+.stat-bar {
+    width: 200px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    margin: 4px 0;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stat-bar .fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.health .fill {
+    background: linear-gradient(90deg, #ff4d4d, #ff0000);
+}
+
+.energy .fill {
+    background: linear-gradient(90deg, #4d94ff, #0066ff);
+}
+
+.stat-bar .text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    top: 0;
+    left: 0;
+    line-height: 14px;
+}
+
+@media (max-width: 1024px) {
+    #game-container {
+        grid-template-areas:
+            "hud"
+            "term"
+            "inv";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr 200px;
+    }
+
+    .inventory-tray {
+        display: none;
+        /* Hide for simplicity on mobile */
+    }
+}

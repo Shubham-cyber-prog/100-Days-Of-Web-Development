@@ -60,19 +60,81 @@ function downloadFile(name, content) {
 }
 
 /* Initial content */
-input.value = localStorage.getItem("markdown") || `# Markdown Live Editor 🚀
+input.value = localStorage.getItem("markdown") || `# Markdown Previewer
 
-Write **Markdown** on the left  
-See **Live Preview** on the right  
+### Introduction
+
+This document demonstrates commonly used Markdown syntax.  
+It can be used as sample content for a Markdown editor or previewer project.
+
+---
+
+## Prerequisites
+
+Before using this previewer, you should be familiar with:
+
+- Basic Markdown syntax
+- Writing plain text content
+
+---
+
+## Step 1 — Text Formatting
+
+This is *italic text*  
+This is **bold text**  
+This is ~~strikethrough text~~  
+
+This is \`inline code\`.
+
+---
+
+## Step 2 — Lists
+
+### Unordered List
+- Item one
+- Item two
+- Item three
+
+### Ordered List
+1. First item
+2. Second item
+3. Third item
+
+---
+
+## Step 3 — Blockquotes
+
+> This is a blockquote.
+>
+> > This is a nested blockquote.
+
+---
+
+## Step 4 — Horizontal Rule
+
+Use horizontal rules to separate sections:
+
+---
+
+## Step 5 — Tables
+
+| Feature | Supported |
+|--------|-----------|
+| Bold   | Yes       |
+| Italic | Yes       |
+| Lists  | Yes       |
+| Tables | Yes       |
+
+---
+
+## Step 6 — Code Blocks
 
 \`\`\`js
-console.log("Hello Markdown");
+const message = "Hello, Markdown!";
+console.log(message);
 \`\`\`
-
-- Clean UI
-- Fast preview
-- Download support
 `;
+
 
 render();
 

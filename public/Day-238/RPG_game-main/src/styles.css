@@ -1,0 +1,264 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #0a0a23;
+  font-family: "Press Start 2P", monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* GAME CARD */
+#game {
+  width: clamp(320px, 90vw, 520px);
+  margin: auto;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* 🟩 SCENE */
+.scene {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  border: 3px solid #0a0a23;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.scene-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scene-characters {
+  position: relative;
+  height: 100%;
+}
+
+.player {
+  position: absolute;
+  bottom: 10px;
+  left: 30px;
+  width: 64px;
+}
+
+.enemy {
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  width: 64px;
+}
+
+/* ANIMATIONS */
+.idle {
+  animation: idle 1.5s infinite ease-in-out;
+}
+
+.bounce {
+  animation: bounce 0.6s infinite alternate;
+}
+
+@keyframes idle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+/* STATS */
+#stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  border: 2px solid #0a0a23;
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+
+/* CONTROLS */
+#controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+button {
+  background: #feac32;
+  border: 2px solid #0a0a23;
+  padding: 6px;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+/* TEXT BOX */
+#text {
+  background: #0a0a23;  
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  line-height: 1.6;
+  min-height: 90px;
+}
+
+/* ⚔️ ATTACK ANIMATION */
+.player.attack {
+  animation: attackMove 0.3s ease-out;
+}
+
+@keyframes attackMove {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(30px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* 💥 ENEMY HIT SHAKE */
+.enemy.hit {
+  animation: hitShake 0.3s;
+}
+
+@keyframes hitShake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* ================= FULLSCREEN SCREENS ================= */
+
+.screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.screen-card {
+  background: rgba(15, 15, 40, 0.9);
+  border: 3px solid #0a0a23;
+  border-radius: 14px;
+  padding: 32px 28px;
+  max-width: 480px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* ================= GAME BOOT SCREEN ================= */
+
+.boot-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boot-content {
+  width: 100%;
+  max-width: 520px;
+  padding: 24px;
+  text-align: left;
+  color: white;
+}
+
+/* TITLE */
+.boot-title {
+  font-size: 32px;
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+}
+
+/* DIALOGUE BOX */
+.dialogue-box {
+  background: #0a0a23;
+  border: 3px solid #ffffff;
+  padding: 16px 18px;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* PRESS START */
+.press-start {
+  background: transparent;
+  color: #ffcc4c;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+
+/* ================= END SCREEN ================= */
+
+.end-title {
+  font-size: 26px;
+  margin-bottom: 16px;
+}
+
+.end-text {
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 26px;
+  opacity: 0.95;
+}
+
+/* ================= BUTTON ================= */
+
+.primary-btn {
+  background: linear-gradient(#ffcc4c, #ffac33);
+  border: 3px solid #0a0a23;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #0a0a23;
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.player.dodge {
+  animation: dodgeMove 0.3s ease-out;
+}
+
+@keyframes dodgeMove {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-20px); }
+  100% { transform: translateX(0); }
+}
