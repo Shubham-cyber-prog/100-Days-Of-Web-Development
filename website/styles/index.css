@@ -91,7 +91,7 @@
     padding-left: 1.25rem;
     padding-right: 1.25rem;
   }
-
+}
 
 .feedback-form {
   max-width: 480px;
@@ -345,5 +345,92 @@ body:not(.has-sidebar) .page-center {
 .no-sidebar-main {
   margin-left: 0 !important;
   width: 100% !important;
+}
+/* ===================================
+   GLOBAL MOBILE RESPONSIVENESS FIX
+   =================================== */
 
+@media (max-width: 768px) {
+
+  /* Prevent horizontal scroll */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Remove sidebar offset if present */
+  body.has-sidebar main,
+  main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Containers */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Grid collapse */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  /* Header/Navbar */
+  header,
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  /* Large titles shrink */
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  /* Cards full width */
+  .card,
+  .page-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Buttons full width */
+  .btn,
+  .btn-zenith-primary {
+    width: 100%;
+  }
+
+  /* Scroll button smaller */
+  #scrollToTopBtn {
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+}@media (max-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+
+  body.has-sidebar main {
+    margin-left: 0 !important;
+  }
+}img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

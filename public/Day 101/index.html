@@ -6,17 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Image-Particle Converter | OpenPlayground</title>
   <meta name="description"
-    content="Transform images into interactive particle systems with customizable physics and resolution.">
+    content="Transform images into interactive particle systems with customizable physics and resolution." />
   <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Particle Studio | Image to Atom Converter">
-  <meta property="og:description" content="Experience the magic of turning your photos into dynamic particle systems.">
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Particle Studio | Image to Atom Converter" />
+  <meta property="og:description"
+    content="Experience the magic of turning your photos into dynamic particle systems." />
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Particle Studio | Image to Atom Converter">
-  <meta name="twitter:description" content="Experience the magic of turning your photos into dynamic particle systems.">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Particle Studio | Image to Atom Converter" />
+  <meta name="twitter:description"
+    content="Experience the magic of turning your photos into dynamic particle systems." />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --ps-primary: #8b5cf6;
+      --ps-header-blur: 10px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 
 <body>
@@ -32,7 +44,7 @@
         <label for="imageUpload" class="upload-label">
           <i class="ri-upload-cloud-2-line"></i>
           <span>Upload Image</span>
-          <input type="file" id="imageUpload" accept="image/*" hidden />
+          <input type="file" id="imageUpload" accept="image/*" hidden aria-label="Upload image to convert" />
         </label>
         <p class="helper-text">Support: JPG, PNG, WebP (Max: 10MB)</p>
       </div>
@@ -44,7 +56,7 @@
           <label>Density (Resolution)</label>
           <span id="resolutionVal" class="value-tag">3</span>
         </div>
-        <input type="range" id="resolution" min="1" max="10" step="1" value="3" />
+        <input type="range" id="resolution" min="1" max="10" step="1" value="3" aria-label="Resolution density" />
       </div>
 
       <div class="control-group">
@@ -52,7 +64,7 @@
           <label>Particle Size</label>
           <span id="radiusVal" class="value-tag">2</span>
         </div>
-        <input type="range" id="radius" min="0.5" max="5" step="0.1" value="2" />
+        <input type="range" id="radius" min="0.5" max="5" step="0.1" value="2" aria-label="Particle size" />
       </div>
 
       <div class="control-group">
@@ -60,7 +72,8 @@
           <label>Interaction Radius</label>
           <span id="mouseRadiusVal" class="value-tag">150</span>
         </div>
-        <input type="range" id="mouseRadius" min="50" max="300" step="10" value="150" />
+        <input type="range" id="mouseRadius" min="50" max="300" step="10" value="150"
+          aria-label="Mouse interaction radius" />
       </div>
 
       <div class="control-group">
@@ -77,13 +90,13 @@
       <div class="divider"></div>
 
       <div class="action-buttons">
-        <button id="explodeBtn" class="btn secondary">
+        <button id="explodeBtn" class="btn secondary" aria-label="Explode particles">
           <i class="ri-fire-line"></i> Explode
         </button>
-        <button id="resetBtn" class="btn outline">
+        <button id="resetBtn" class="btn outline" aria-label="Reset simulation">
           <i class="ri-restart-line"></i> Reset
         </button>
-        <button id="saveBtn" class="btn primary">
+        <button id="saveBtn" class="btn primary" aria-label="Save current frame">
           <i class="ri-download-2-line"></i> Save Frame
         </button>
       </div>

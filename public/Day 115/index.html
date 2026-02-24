@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -15,10 +16,12 @@
             touch-action: none;
             user-select: none;
         }
+
         canvas {
             display: block;
             cursor: crosshair;
         }
+
         #ui-layer {
             position: absolute;
             top: 0;
@@ -28,6 +31,7 @@
             pointer-events: none;
             color: white;
         }
+
         .stats {
             position: absolute;
             top: 20px;
@@ -35,15 +39,17 @@
             font-size: 28px;
             font-weight: 900;
             color: #fbbf24;
-            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
         }
+
         .lives {
             position: absolute;
             top: 20px;
             right: 20px;
             font-size: 32px;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
         }
+
         #game-over {
             position: absolute;
             top: 50%;
@@ -58,37 +64,55 @@
             border: 4px solid #fbbf24;
             box-shadow: 0 0 50px rgba(251, 191, 36, 0.3);
         }
+
         .combo-popup {
             position: absolute;
             font-size: 48px;
             font-weight: 900;
             color: #ff0055;
-            text-shadow: 0 0 20px rgba(255,0,85,0.5);
+            text-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
             pointer-events: none;
             animation: popup 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
+
         @keyframes popup {
-            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-            50% { transform: scale(1.3) rotate(10deg); opacity: 1; }
-            100% { transform: scale(1) rotate(0deg); opacity: 0; transform: translateY(-100px); }
+            0% {
+                transform: scale(0) rotate(-20deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.3) rotate(10deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0;
+                transform: translateY(-100px);
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <canvas id="gameCanvas"></canvas>
+    <canvas id="gameCanvas"
+        aria-label="Fruit slicing game area. Slice appearing fruits with your mouse or finger."></canvas>
 
     <div id="ui-layer">
-        <div class="stats">
+        <div class="stats" role="status">
             <div class="tracking-tighter">SCORE: <span id="score">0</span></div>
             <div class="text-sm opacity-60 tracking-widest">BEST: <span id="best">0</span></div>
         </div>
         <div class="lives" id="lives">❤️❤️❤️</div>
-        
+
         <div id="game-over">
             <h1 class="text-5xl font-black mb-4 text-yellow-400 italic">ZEN ENDED</h1>
             <p class="text-2xl mb-6">Total Slices: <span id="final-score" class="text-white font-bold">0</span></p>
-            <button class="bg-yellow-500 hover:bg-yellow-400 text-black text-xl font-black py-4 px-10 rounded-full transition-all transform hover:scale-110" onclick="resetGame()">RESTART JOURNEY</button>
+            <button
+                class="bg-yellow-500 hover:bg-yellow-400 text-black text-xl font-black py-4 px-10 rounded-full transition-all transform hover:scale-110"
+                onclick="resetGame()" aria-label="Restart the game">RESTART JOURNEY</button>
         </div>
     </div>
 
@@ -120,18 +144,18 @@
         const FRUIT_DEFS = {
             watermelon: (ctx, r) => {
                 ctx.fillStyle = '#1b4332'; // Dark green rind
-                ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
                 ctx.fillStyle = '#2d6a4f'; // Light stripes
-                for(let i=0; i<8; i++) {
-                    ctx.rotate(Math.PI/4);
-                    ctx.fillRect(-2, -r, 4, r*2);
+                for (let i = 0; i < 8; i++) {
+                    ctx.rotate(Math.PI / 4);
+                    ctx.fillRect(-2, -r, 4, r * 2);
                 }
             },
             orange: (ctx, r) => {
                 ctx.fillStyle = '#fb923c';
-                ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
                 ctx.strokeStyle = '#f97316'; ctx.lineWidth = 2;
-                ctx.beginPath(); ctx.arc(0,0,r-4,0,Math.PI*2); ctx.stroke();
+                ctx.beginPath(); ctx.arc(0, 0, r - 4, 0, Math.PI * 2); ctx.stroke();
             },
             apple: (ctx, r) => {
                 ctx.fillStyle = '#ef4444';
@@ -139,20 +163,20 @@
                 ctx.arc(0, 2, r, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.fillStyle = '#422006'; // Stem
-                ctx.fillRect(-2, -r-2, 4, 8);
+                ctx.fillRect(-2, -r - 2, 4, 8);
             },
             bomb: (ctx, r) => {
-                const grad = ctx.createRadialGradient(-r/3, -r/3, 2, 0, 0, r);
+                const grad = ctx.createRadialGradient(-r / 3, -r / 3, 2, 0, 0, r);
                 grad.addColorStop(0, '#555');
                 grad.addColorStop(1, '#000');
                 ctx.fillStyle = grad;
-                ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
                 // Fuse
                 ctx.strokeStyle = '#aaa'; ctx.lineWidth = 3;
-                ctx.beginPath(); ctx.moveTo(0,-r); ctx.quadraticCurveTo(10,-r-15, 0, -r-25); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, -r); ctx.quadraticCurveTo(10, -r - 15, 0, -r - 25); ctx.stroke();
                 // Spark
                 ctx.fillStyle = Math.random() > 0.5 ? '#ffcc00' : '#ff4400';
-                ctx.beginPath(); ctx.arc(0, -r-25, 6 * Math.random() + 2, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(0, -r - 25, 6 * Math.random() + 2, 0, Math.PI * 2); ctx.fill();
             }
         };
 
@@ -186,7 +210,7 @@
             constructor() {
                 const isBomb = Math.random() < 0.2;
                 const type = isBomb ? FRUIT_TYPES[3] : FRUIT_TYPES[Math.floor(Math.random() * 3)];
-                
+
                 this.type = type;
                 this.x = Math.random() * (canvas.width - 200) + 100;
                 this.y = canvas.height + 100;
@@ -224,11 +248,11 @@
                     // Draw two halves flying apart
                     ctx.save();
                     ctx.rotate(this.sliceAngle);
-                    
+
                     // Half 1
                     ctx.save();
                     ctx.translate(-8, 0);
-                    ctx.beginPath(); ctx.arc(0,0,this.radius, Math.PI/2, Math.PI*1.5);
+                    ctx.beginPath(); ctx.arc(0, 0, this.radius, Math.PI / 2, Math.PI * 1.5);
                     ctx.clip();
                     FRUIT_DEFS[this.type.id](ctx, this.radius);
                     ctx.restore();
@@ -236,7 +260,7 @@
                     // Half 2
                     ctx.save();
                     ctx.translate(8, 0);
-                    ctx.beginPath(); ctx.arc(0,0,this.radius, -Math.PI/2, Math.PI/2);
+                    ctx.beginPath(); ctx.arc(0, 0, this.radius, -Math.PI / 2, Math.PI / 2);
                     ctx.clip();
                     FRUIT_DEFS[this.type.id](ctx, this.radius);
                     ctx.restore();
@@ -250,7 +274,7 @@
                 if (this.sliced || isGameOver) return;
                 this.sliced = true;
                 this.sliceAngle = angle;
-                
+
                 if (this.type.isBomb) {
                     triggerExplosion(this.x, this.y);
                 } else {
@@ -265,14 +289,14 @@
         function spawnJuice(x, y, color) {
             for (let i = 0; i < 20; i++) {
                 const s = Math.random() * 8 + 2;
-                particles.push(new Particle(x, y, color, s, (Math.random()-0.5)*15, (Math.random()-0.5)*15));
+                particles.push(new Particle(x, y, color, s, (Math.random() - 0.5) * 15, (Math.random() - 0.5) * 15));
             }
         }
 
         function triggerExplosion(x, y) {
             shakeAmount = 30;
             for (let i = 0; i < 50; i++) {
-                particles.push(new Particle(x, y, '#ffaa00', Math.random()*15, (Math.random()-0.5)*30, (Math.random()-0.5)*30));
+                particles.push(new Particle(x, y, '#ffaa00', Math.random() * 15, (Math.random() - 0.5) * 30, (Math.random() - 0.5) * 30));
             }
             gameOver();
         }
@@ -283,8 +307,8 @@
             if (comboCount >= 3) {
                 const pop = document.createElement('div');
                 pop.className = 'combo-popup';
-                pop.style.left = (canvas.width/2 - 100) + 'px';
-                pop.style.top = (canvas.height/2) + 'px';
+                pop.style.left = (canvas.width / 2 - 100) + 'px';
+                pop.style.top = (canvas.height / 2) + 'px';
                 pop.innerText = `COMBO X${comboCount}`;
                 document.getElementById('ui-layer').appendChild(pop);
                 setTimeout(() => pop.remove(), 600);
@@ -373,24 +397,24 @@
                 shakeAmount *= 0.9;
             }
 
-            ctx.setTransform(1,0,0,1,sx,sy);
+            ctx.setTransform(1, 0, 0, 1, sx, sy);
             ctx.fillStyle = '#111';
-            ctx.fillRect(-50, -50, canvas.width+100, canvas.height+100);
+            ctx.fillRect(-50, -50, canvas.width + 100, canvas.height + 100);
 
             // Spawning
             if (!isGameOver) {
                 spawnTimer--;
                 if (spawnTimer <= 0) {
-                    const batch = Math.floor(Math.random() * (difficulty/2)) + 1;
-                    for(let i=0; i<batch; i++) fruits.push(new Fruit());
+                    const batch = Math.floor(Math.random() * (difficulty / 2)) + 1;
+                    for (let i = 0; i < batch; i++) fruits.push(new Fruit());
                     spawnTimer = Math.max(25, 110 - (difficulty * 6));
                     difficulty += 0.03;
                 }
                 if (comboTimer > 0) comboTimer--; else comboCount = 0;
             }
 
-            particles.forEach((p, i) => { p.update(); p.draw(); if(p.alpha <= 0) particles.splice(i, 1); });
-            fruits.forEach((f, i) => { if(f.update()) fruits.splice(i, 1); else f.draw(); });
+            particles.forEach((p, i) => { p.update(); p.draw(); if (p.alpha <= 0) particles.splice(i, 1); });
+            fruits.forEach((f, i) => { if (f.update()) fruits.splice(i, 1); else f.draw(); });
 
             // Blade Trail
             if (slicePath.length > 1) {
@@ -409,4 +433,5 @@
         animate();
     </script>
 </body>
+
 </html>
