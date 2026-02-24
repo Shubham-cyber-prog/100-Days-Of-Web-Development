@@ -1,0 +1,150 @@
+.terminal-window {
+    grid-area: term;
+    background: rgba(10, 15, 12, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 255, 204, 0.2);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.1);
+}
+
+.terminal-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.terminal-header .controls {
+    display: flex;
+    gap: 8px;
+    margin-right: 20px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.red {
+    background: #ff5f56;
+}
+
+.yellow {
+    background: #ffbd2e;
+}
+
+.green {
+    background: #27c93f;
+}
+
+.terminal-header .title {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 2px;
+}
+
+.terminal-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--accent-primary);
+    text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+}
+
+.terminal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 204, 0.2);
+    border-radius: 3px;
+}
+
+.line {
+    margin-bottom: 8px;
+    animation: fadeIn 0.1s ease;
+}
+
+.line.system {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.line.active {
+    color: #fff;
+    border-left: 3px solid var(--accent-primary);
+    padding-left: 10px;
+}
+
+.terminal-input-wrapper {
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.prompt {
+    color: var(--accent-primary);
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+#terminal-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    width: 100%;
+    outline: none;
+}
+
+/* Inventory Tray Styling */
+.inventory-tray {
+    grid-area: inv;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.inventory-tray h3 {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--accent-secondary);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--accent-secondary);
+    padding-bottom: 5px;
+}
+
+#item-list {
+    list-style: none;
+}
+
+#item-list li.empty {
+    color: #444;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

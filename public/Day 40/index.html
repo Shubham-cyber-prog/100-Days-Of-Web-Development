@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Database</title>
+    <meta name="description" content="Search and explore your favorite movies and series using the OMDB API.">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
-        
+
         <header>
             <h1><i class="fas fa-film"></i> Movie Database</h1>
             <p class="subtitle">Search and discover movies from OMDB API</p>
         </header>
 
-        
+
         <div class="search-section">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search for movies (e.g., 'Inception', 'The Dark Knight')">
-                <button id="searchBtn">
+                <input type="text" id="searchInput"
+                    placeholder="Search for movies (e.g., 'Inception', 'The Dark Knight')">
+                <button id="searchBtn" aria-label="Search movies">
                     <i class="fas fa-search"></i> Search
                 </button>
-                <button id="randomBtn">
+                <button id="randomBtn" aria-label="Show random movie">
                     <i class="fas fa-random"></i> Random
                 </button>
             </div>
-            
+
             <div class="filters">
                 <select id="yearFilter">
                     <option value="">All Years</option>
-                    
+
                 </select>
                 <select id="typeFilter">
                     <option value="">All Types</option>
@@ -42,21 +47,21 @@
             </div>
         </div>
 
-        
+
         <div id="loading" class="loading hidden">
             <div class="spinner"></div>
             <p>Loading movies...</p>
         </div>
 
-        
+
         <div id="results" class="results">
             <div id="movieCount" class="movie-count"></div>
             <div id="movieGrid" class="movie-grid">
-                
+
             </div>
         </div>
 
-        
+
         <div id="movieModal" class="modal hidden">
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
@@ -64,7 +69,7 @@
             </div>
         </div>
 
-        
+
         <footer>
             <p>Powered by <a href="http://www.omdbapi.com/" target="_blank">OMDB API</a></p>
             <p class="api-notice">Free API tier limited to 1000 requests per day</p>
@@ -73,4 +78,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

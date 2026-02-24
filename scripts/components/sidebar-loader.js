@@ -1,0 +1,153 @@
+/**
+ * Sidebar Loader Component for Root Directory
+ * Loads the sidebar HTML and initializes active states
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadSidebar();
+});
+
+async function loadSidebar() {
+  try {
+    const response = await fetch('components/sidebar.html');
+    if (!response.ok) {
+      console.error('Failed to load sidebar');
+      return;
+    }
+    
+    const sidebarHTML = await response.text();
+    
+    // Insert sidebar at the beginning of body
+    document.body.insertAdjacentHTML('afterbegin', sidebarHTML);
+    
+    // Initialize sidebar after it's loaded
+    initializeSidebar();
+  } catch (error) {
+    console.error('Error loading sidebar:', error);
+  }
+}
+
+function initializeSidebar() {
+  // Set active link based on current page
+  const currentPath = window.location.pathname;
+  const sidebarLinks = document.querySelectorAll('.sidebar-link');
+  
+  sidebarLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    const dataPage = link.getAttribute('data-page');
+    
+    // For home page, check if we're at root or index.html
+    if (dataPage === 'home' && (currentPath === '/' || currentPath.endsWith('index.html') || currentPath.endsWith('/'))) {
+      link.classList.add('active');
+    } else if (href && currentPath.includes(href) && dataPage !== 'home') {
+      link.classList.add('active');
+    } else if (dataPage && currentPath.includes(dataPage) && dataPage !== 'home') {
+      link.classList.add('active');
+    }
+  });
+  
+  // Update theme icon in sidebar
+  updateSidebarThemeIcon();
+  setupSidebarToggle();
+}
+
+function updateSidebarThemeIcon() {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute('data-theme') || 'dark';
+  const themeBtn = document.getElementById('theme-toggle-sidebar');
+  
+  if (!themeBtn) return;
+  
+  if (currentTheme === 'light') {
+    // Sun Icon for light theme
+    themeBtn.innerHTML = `
+      <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <span>Theme</span>
+    `;
+  } else {
+    // Moon Icon for dark theme
+    themeBtn.innerHTML = `
+      <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <span>Theme</span>
+    `;
+  }
+}
+
+function setupSidebarToggle() {
+  const sidebar = document.querySelector('.sidebar-fixed');
+  const closeBtn = document.getElementById('sidebar-close-btn');
+  const openBtn = document.getElementById('sidebar-open-btn');
+
+  if (!sidebar) return;
+
+  // Check if we're on mobile
+  const isMobile = () => window.innerWidth <= 640;
+
+  // Restore saved state (only for desktop)
+  if (!isMobile() && localStorage.getItem('sidebarCollapsed') === 'true') {
+    sidebar.classList.add('sidebar-collapsed');
+    document.body.classList.add('sidebar-collapsed');
+  }
+
+  // Close button handler
+  closeBtn?.addEventListener('click', () => {
+    sidebar.classList.add('sidebar-collapsed');
+    document.body.classList.add('sidebar-collapsed');
+    // Also remove mobile-open class if present
+    sidebar.classList.remove('mobile-open');
+    document.body.classList.remove('sidebar-mobile-open');
+    localStorage.setItem('sidebarCollapsed', 'true');
+  });
+
+  // Open button handler
+  openBtn?.addEventListener('click', () => {
+    sidebar.classList.remove('sidebar-collapsed');
+    document.body.classList.remove('sidebar-collapsed');
+    // On mobile, add mobile-open class
+    if (isMobile()) {
+      sidebar.classList.add('mobile-open');
+      document.body.classList.add('sidebar-mobile-open');
+    }
+    localStorage.setItem('sidebarCollapsed', 'false');
+  });
+
+  // Debounce helper function
+  let resizeTimeout;
+  const debounce = (func, wait) => {
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(resizeTimeout);
+        func(...args);
+      };
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(later, wait);
+    };
+  };
+
+  // Handle window resize with debouncing
+  const handleResize = debounce(() => {
+    if (!isMobile()) {
+      // On desktop, remove mobile-open class
+      sidebar.classList.remove('mobile-open');
+      document.body.classList.remove('sidebar-mobile-open');
+    }
+  }, 150);
+
+  // Note: Event listener is not removed because sidebar persists for page lifetime
+  window.addEventListener('resize', handleResize);
+}
+
+// Export for use in navigation.js
+window.updateSidebarThemeIcon = updateSidebarThemeIcon;

@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login – LuxEstate</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+
+  <body>
+    <header class="navbar">
+      <div class="logo">LuxEstate</div>
+      <nav>
+        <a href="{% url 'home' %}">Home</a>
+      </nav>
+    </header>
+
+    <section
+      class="contact"
+      style="
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      
+
+      <form
+        method="POST"
+        action="{% url 'login' %}"
+        style="
+          background: #020617;
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        "
+      >
+        {% csrf_token %}
+
+        <h2 style="margin-bottom: 20px">Login</h2>
+
+        {% if messages %} {% for message in messages %}
+      <div class="error-message">{{ message }}</div>
+      {% endfor %} {% endif %}
+
+        <input type="text" name="username" placeholder="Username" required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+
+        <button type="submit">Login</button>
+
+        <p style="margin-top: 15px; font-size: 14px">
+          Don’t have an account?
+          <a href="{% url 'signup' %}" style="color: #38bdf8">Sign Up</a>
+        </p>
+      </form>
+    </section>
+  </body>
+</html>

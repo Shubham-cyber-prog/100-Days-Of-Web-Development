@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Zenith | 100 Days of Web Development</title>
+    <link rel="stylesheet" href="website/style.css">
+    <style>
+        .offline-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .offline-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .offline-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .offline-message {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 500px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .offline-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .retry-btn {
+            padding: 0.8rem 2rem;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
+        }
+
+        .cached-pages {
+            margin-top: 3rem;
+        }
+
+        .cached-pages h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .cached-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cached-list a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .cached-list a:hover {
+            border-color: var(--accent-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <svg class="offline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414" />
+        </svg>
+
+        <h1 class="offline-title">You're Offline</h1>
+        <p class="offline-message">
+            It looks like you've lost your internet connection. 
+            Don't worry, you can still access cached content while offline.
+        </p>
+
+        <div class="offline-actions">
+            <button class="retry-btn" onclick="window.location.reload()">
+                Try Again
+            </button>
+            <button class="retry-btn" style="background: transparent; border: 1px solid var(--accent-primary); color: var(--accent-primary);" onclick="window.history.back()">
+                Go Back
+            </button>
+        </div>
+
+        <div class="cached-pages">
+            <h3>Available Offline Pages</h3>
+            <ul class="cached-list">
+                <li><a href="/">Home</a></li>
+                <li><a href="website/projects.html">Projects</a></li>
+                <li><a href="website/contribute.html">Contribute</a></li>
+                <li><a href="website/structure.html">Structure</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
