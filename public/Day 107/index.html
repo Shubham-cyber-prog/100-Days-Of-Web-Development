@@ -1,67 +1,15 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Solar System Simulation</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1>🌌 Solar System Explorer</h1>
-      <p>Interactive 3D Solar System Simulation</p>
-    </header>
 
-    <div class="controls-panel">
-      <div class="control-item">
-        <label for="speed-slider">Speed</label>
-        <input
-          type="range"
-          id="speed-slider"
-          min="0"
-          max="3"
-          step="0.1"
-          value="1"
-        />
-        <span id="speed-value">1x</span>
-      </div>
-      <div class="control-item">
-        <button id="toggle-orbits" class="control-btn">Hide Orbits</button>
-      </div>
-      <div class="control-item">
-        <button id="toggle-labels" class="control-btn">Show Labels</button>
-      </div>
-    </div>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Interactive Solar System Explorer</title>
+    </head>
 
-    <canvas id="solarCanvas"></canvas>
-
-    <div id="planet-info" class="info-card hidden">
-      <div class="info-header">
-        <h2 id="planet-name"></h2>
-        <div class="header-right">
-          <span id="planet-emoji"></span>
-          <button id="close-info" class="close-btn" title="Close">×</button>
-        </div>
-      </div>
-      <div class="info-content">
-        <p id="planet-details"></p>
-        <div class="info-stats">
-          <div class="stat-item">
-            <span class="stat-label">Distance</span>
-            <span id="planet-distance" class="stat-value"></span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Orbital Period</span>
-            <span id="planet-period" class="stat-value"></span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Diameter</span>
-            <span id="planet-diameter" class="stat-value"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
-  </body>
-</html>
+    <body>
+      <div id="root"></div>
+      <script type="module" src="/src/main.tsx"></script>
+    </body>
+  </html>
+  
