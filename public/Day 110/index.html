@@ -338,28 +338,30 @@
             <p>Master web development with our comprehensive video library</p>
         </header>
 
-        <div class="controls">
+        <div class="controls" role="search">
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search tutorials...">
+                <input type="text" id="searchInput" placeholder="Search tutorials..."
+                    aria-label="Search through video tutorials">
             </div>
-            <div class="filter-tabs">
-                <button class="filter-btn active" data-level="all">All</button>
-                <button class="filter-btn" data-level="beginner">Beginner</button>
-                <button class="filter-btn" data-level="intermediate">Intermediate</button>
-                <button class="filter-btn" data-level="advanced">Advanced</button>
+            <div class="filter-tabs" role="group" aria-label="Filter by difficulty level">
+                <button class="filter-btn active" data-level="all" aria-label="Show all tutorials">All</button>
+                <button class="filter-btn" data-level="beginner" aria-label="Filter by beginner level">Beginner</button>
+                <button class="filter-btn" data-level="intermediate"
+                    aria-label="Filter by intermediate level">Intermediate</button>
+                <button class="filter-btn" data-level="advanced" aria-label="Filter by advanced level">Advanced</button>
             </div>
         </div>
 
-        <div class="stats">
-            <div class="stat-card">
+        <div class="stats" role="region" aria-label="Learning progress statistics">
+            <div class="stat-card" role="status">
                 <div class="stat-number" id="watchedCount">0</div>
                 <p>Videos Watched</p>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" role="status">
                 <div class="stat-number" id="totalTime">0h 0m</div>
                 <p>Total Watch Time</p>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" role="status" aria-live="polite">
                 <div class="stat-number" id="completionRate">0%</div>
                 <p>Completion Rate</p>
             </div>

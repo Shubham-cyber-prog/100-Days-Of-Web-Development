@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { margin: 0; overflow: hidden; background-color: #1a1a1a; font-family: sans-serif; }
-        canvas { display: block; }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            font-family: sans-serif;
+        }
+
+        canvas {
+            display: block;
+        }
+
         .ui-overlay {
             position: absolute;
             top: 20px;
@@ -16,6 +26,7 @@
             pointer-events: none;
             z-index: 10;
         }
+
         .controls {
             position: absolute;
             bottom: 30px;
@@ -26,6 +37,7 @@
             pointer-events: auto;
             z-index: 10;
         }
+
         button {
             pointer-events: auto;
             background: rgba(255, 255, 255, 0.1);
@@ -40,13 +52,16 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
         button:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
+
         button:active {
             transform: translateY(0);
         }
+
         .instructions {
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.8rem;
@@ -54,6 +69,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="ui-overlay">
@@ -65,9 +81,9 @@
         </div>
     </div>
 
-    <div class="controls">
-        <button onclick="scrambleCube()">Scramble</button>
-        <button onclick="resetCube()">Reset</button>
+    <div class="controls" role="toolbar" aria-label="Puzzle controls">
+        <button onclick="scrambleCube()" aria-label="Scramble the cube">Scramble</button>
+        <button onclick="resetCube()" aria-label="Reset the cube">Reset</button>
     </div>
 
     <script>
@@ -76,10 +92,10 @@
         const CUBIE_SIZE = 0.95;
         const COLORS = {
             front: 0xffffff, // White
-            back:  0xffff00, // Yellow
-            top:   0xff0000, // Red
-            bottom:0xffa500, // Orange
-            left:  0x0000ff, // Blue
+            back: 0xffff00, // Yellow
+            top: 0xff0000, // Red
+            bottom: 0xffa500, // Orange
+            left: 0x0000ff, // Blue
             right: 0x008000  // Green
         };
 
@@ -89,7 +105,7 @@
         let mouseDownPos = new THREE.Vector2();
         let mousePos = new THREE.Vector2();
         let raycaster = new THREE.Raycaster();
-        
+
         // Active rotation state
         let activeLayer = null;
         let rotationAxis = null;
@@ -97,7 +113,7 @@
         let selectedCubie = null;
         let selectedFaceNormal = null;
 
-        window.onload = function() {
+        window.onload = function () {
             init();
             animate();
         };
@@ -141,7 +157,7 @@
                 for (let y = -1; y <= 1; y++) {
                     for (let z = -1; z <= 1; z++) {
                         const geometry = new THREE.BoxGeometry(CUBIE_SIZE, CUBIE_SIZE, CUBIE_SIZE);
-                        
+
                         // Create materials for each face
                         const materials = [
                             new THREE.MeshLambertMaterial({ color: x === 1 ? COLORS.right : 0x222222 }), // Right
@@ -154,7 +170,7 @@
 
                         const cubie = new THREE.Mesh(geometry, materials);
                         cubie.position.set(x, y, z);
-                        
+
                         // Adding wireframe for edges
                         const edges = new THREE.EdgesGeometry(geometry);
                         const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 }));
@@ -215,7 +231,7 @@
         function startLayerRotation(dx, dy) {
             // Project mouse movement onto 3D axes to find rotation direction
             const vector = new THREE.Vector3(dx, dy, 0);
-            
+
             // Logic to determine which axis to rotate around based on face selected and drag direction
             // Simplified logic: determine axis by cross product of face normal and projected drag
             let axis;
@@ -256,10 +272,10 @@
 
         function rotateLayer(axis, value, angle) {
             if (angle === 0) return;
-            
+
             const layerCubies = cubies.filter(c => Math.abs(c.position[axis] - value) < 0.1);
             const rotationMatrix = new THREE.Matrix4();
-            
+
             if (axis === 'x') rotationMatrix.makeRotationX(angle);
             else if (axis === 'y') rotationMatrix.makeRotationY(angle);
             else rotationMatrix.makeRotationZ(angle);
@@ -269,7 +285,7 @@
                 // Update rotation
                 const q = new THREE.Quaternion().setFromRotationMatrix(rotationMatrix);
                 cubie.quaternion.premultiply(q);
-                
+
                 // Snap positions to integers to prevent drift
                 cubie.position.x = Math.round(cubie.position.x);
                 cubie.position.y = Math.round(cubie.position.y);
@@ -280,8 +296,8 @@
         function scrambleCube() {
             const axes = ['x', 'y', 'z'];
             const vals = [-1, 0, 1];
-            const angles = [Math.PI/2, -Math.PI/2];
-            
+            const angles = [Math.PI / 2, -Math.PI / 2];
+
             let count = 0;
             const interval = setInterval(() => {
                 const axis = axes[Math.floor(Math.random() * 3)];
@@ -306,13 +322,13 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            
+
             // Handle current layer rotation animation if active
             if (isDragging && activeLayer) {
                 const dx = mousePos.x - mouseDownPos.x;
                 const dy = mousePos.y - mouseDownPos.y;
                 const sensitivity = 4;
-                
+
                 // Real-time visual rotation feedback
                 const currentDelta = (Math.abs(dx) > Math.abs(dy) ? dx : -dy) * sensitivity;
                 const angleDiff = currentDelta - rotationAngle;
@@ -326,7 +342,7 @@
                         activeLayer.axis === 'z' ? 1 : 0
                     );
                     q.setFromAxisAngle(axisVec, angleDiff);
-                    
+
                     cubie.position.applyQuaternion(q);
                     cubie.quaternion.premultiply(q);
                 });
@@ -336,4 +352,5 @@
         }
     </script>
 </body>
+
 </html>

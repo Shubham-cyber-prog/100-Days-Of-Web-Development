@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,15 +13,18 @@
             overflow: hidden;
             font-family: 'Inter', sans-serif;
         }
+
         .glass {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         canvas {
             display: block;
             cursor: crosshair;
         }
+
         .control-group label {
             display: block;
             font-size: 0.75rem;
@@ -29,43 +33,55 @@
             margin-bottom: 0.5rem;
             color: #94a3b8;
         }
+
         input[type="range"] {
             width: 100%;
             accent-color: #3b82f6;
         }
+
         .btn {
             transition: all 0.2s;
         }
+
         .btn:active {
             transform: scale(0.95);
         }
+
         #ui-overlay {
             transition: opacity 0.3s;
         }
+
         .hidden-ui {
             opacity: 0;
             pointer-events: none;
         }
     </style>
 </head>
+
 <body>
 
     <canvas id="wallpaperCanvas"></canvas>
 
     <!-- UI Panel -->
     <div id="ui-overlay" class="fixed inset-0 p-6 flex flex-col justify-between pointer-events-none">
-        
+
         <!-- Top Bar -->
         <div class="flex justify-between items-start pointer-events-auto">
             <div>
-                <h1 class="text-2xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                <h1
+                    class="text-2xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
                     AESTHETICA
                 </h1>
                 <p class="text-xs text-slate-400">Generative Wallpaper Lab</p>
             </div>
             <div class="flex gap-2">
-                <button onclick="toggleUI()" class="glass p-2 rounded-full hover:bg-slate-700 transition btn" title="Toggle UI (H)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <button onclick="toggleUI()" class="glass p-2 rounded-full hover:bg-slate-700 transition btn"
+                    title="Toggle UI (H)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
                 </button>
             </div>
         </div>
@@ -73,12 +89,14 @@
         <!-- Controls Side Panel -->
         <div class="flex justify-between items-end">
             <div class="glass p-6 rounded-2xl w-80 pointer-events-auto shadow-2xl">
-                
+
                 <div class="space-y-6">
                     <!-- Engine Selection -->
                     <div class="control-group">
-                        <label>Engine Type</label>
-                        <select id="engineType" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <label for="engineType">Engine Type</label>
+                        <select id="engineType"
+                            class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            aria-label="Select generative engine">
                             <option value="polygons">Polygonal Mesh</option>
                             <option value="waves">Organic Waves</option>
                             <option value="particles">Cosmic Dust</option>
@@ -87,33 +105,52 @@
 
                     <!-- Complexity -->
                     <div class="control-group">
-                        <label id="complexityLabel">Complexity: 50</label>
-                        <input type="range" id="complexity" min="10" max="200" value="50">
+                        <label id="complexityLabel" for="complexity">Complexity: 50</label>
+                        <input type="range" id="complexity" min="10" max="200" value="50"
+                            aria-label="Adjust pattern complexity">
                     </div>
 
                     <!-- Speed -->
                     <div class="control-group">
-                        <label id="speedLabel">Movement: 1.0x</label>
-                        <input type="range" id="speed" min="0" max="50" value="10">
+                        <label id="speedLabel" for="speed">Movement: 1.0x</label>
+                        <input type="range" id="speed" min="0" max="50" value="10" aria-label="Adjust animation speed">
                     </div>
 
                     <!-- Color Mode -->
                     <div class="control-group">
                         <label>Palette</label>
-                        <div class="flex gap-2" id="paletteSelect">
-                            <button onclick="setPalette('neon')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-cyan-400 border-2 border-white"></button>
-                            <button onclick="setPalette('ocean')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 to-emerald-400"></button>
-                            <button onclick="setPalette('sunset')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-orange-500 to-rose-500"></button>
-                            <button onclick="setPalette('mono')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-200 to-slate-900"></button>
+                        <div class="flex gap-2" id="paletteSelect" role="radiogroup" aria-label="Choose color palette">
+                            <button onclick="setPalette('neon')"
+                                class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-cyan-400 border-2 border-white"
+                                aria-label="Neon palette"></button>
+                            <button onclick="setPalette('ocean')"
+                                class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 to-emerald-400"
+                                aria-label="Ocean palette"></button>
+                            <button onclick="setPalette('sunset')"
+                                class="w-8 h-8 rounded-full bg-gradient-to-tr from-orange-500 to-rose-500"
+                                aria-label="Sunset palette"></button>
+                            <button onclick="setPalette('mono')"
+                                class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-200 to-slate-900"
+                                aria-label="Monochrome palette"></button>
                         </div>
                     </div>
 
                     <div class="pt-4 border-t border-slate-700 flex flex-col gap-2">
-                        <button onclick="randomize()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg btn text-sm">
+                        <button onclick="randomize()"
+                            class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg btn text-sm"
+                            aria-label="Randomize settings">
                             Randomize
                         </button>
-                        <button onclick="exportWallpaper()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg btn text-sm flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                        <button onclick="exportWallpaper()"
+                            class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg btn text-sm flex items-center justify-center gap-2"
+                            aria-label="Export wallpaper as PNG">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" x2="12" y1="15" y2="3" />
+                            </svg>
                             Export 4K PNG
                         </button>
                     </div>
@@ -214,7 +251,7 @@
         function animate() {
             const engine = engineSelect.value;
             const speedMultiplier = speedInput.value / 10;
-            
+
             // Draw Background
             ctx.fillStyle = palette.bg;
             ctx.fillRect(0, 0, width, height);
@@ -228,12 +265,12 @@
             }
 
             frame++;
-            
+
             // Performance metrics
-            if(frame % 30 === 0) {
+            if (frame % 30 === 0) {
                 document.getElementById('fpsDisplay').innerText = `RENDER: ${engine.toUpperCase()}`;
             }
-            
+
             requestAnimationFrame(animate);
         }
 
@@ -269,7 +306,7 @@
                 ctx.strokeStyle = palette.colors[i % palette.colors.length];
                 ctx.globalAlpha = palette.opacity * 2;
                 ctx.lineWidth = 2;
-                
+
                 const yOffset = (height / count) * i + (height / (count * 2));
                 ctx.moveTo(0, yOffset);
 
@@ -315,7 +352,7 @@
         window.addEventListener('resize', resize);
         complexityInput.addEventListener('input', () => { generatePoints(); updateLabels(); });
         speedInput.addEventListener('input', updateLabels);
-        
+
         window.addEventListener('keydown', (e) => {
             if (e.key.toLowerCase() === 'h') toggleUI();
             if (e.key.toLowerCase() === 'r') randomize();
@@ -324,4 +361,5 @@
         init();
     </script>
 </body>
+
 </html>
