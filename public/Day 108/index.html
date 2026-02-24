@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
   <div class="app-container">
@@ -58,11 +60,13 @@
           <h3><i class="fas fa-sliders"></i> Adjustments</h3>
           <div class="slider-box">
             <label>Brightness</label>
-            <input type="range" id="brightnessSlider" min="-100" max="100" value="0" disabled>
+            <input type="range" id="brightnessSlider" min="-100" max="100" value="0" disabled
+              aria-label="Adjust brightness">
           </div>
           <div class="slider-box">
             <label>Contrast</label>
-            <input type="range" id="contrastSlider" min="-100" max="100" value="0" disabled>
+            <input type="range" id="contrastSlider" min="-100" max="100" value="0" disabled
+              aria-label="Adjust contrast">
           </div>
         </div>
 
@@ -96,7 +100,7 @@
           <button id="compareBtn" class="top-btn" disabled>
             <i class="fas fa-eye"></i> Original
           </button>
-          <button id="downloadBtn" class="primary-btn" disabled>
+          <button id="downloadBtn" class="primary-btn" disabled aria-label="Export and download image">
             <i class="fas fa-download"></i> Export Image
           </button>
         </div>
@@ -110,13 +114,14 @@
             </div>
             <h2>Upload your masterpiece</h2>
             <p>Drag and drop an image or click the button below</p>
-            <input type="file" id="imageUpload" accept="image/*" hidden />
-            <button class="select-btn" onclick="document.getElementById('imageUpload').click()">
+            <input type="file" id="imageUpload" accept="image/*" hidden aria-label="Upload image to edit" />
+            <button class="select-btn" onclick="document.getElementById('imageUpload').click()"
+              aria-label="Choose image file">
               Choose Image
             </button>
           </div>
         </div>
-        
+
         <div class="canvas-wrapper hidden" id="canvasWrapper">
           <canvas id="canvas"></canvas>
         </div>
@@ -136,5 +141,5 @@
   <!-- APP -->
   <script src="script.js"></script>
 </body>
-</html>
 
+</html>

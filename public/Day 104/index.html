@@ -46,7 +46,8 @@
         <div class="control-group">
           <h3><i class="fas fa-layer-group"></i> Model Library</h3>
           <div class="anim-controls">
-            <select id="modelSelect" class="styled-select" style="background-color: #414141;">
+            <select id="modelSelect" class="styled-select" style="background-color: #414141;"
+              aria-label="Select 3D model">
               <option value="sample.glb">Standard Sample</option>
               <option value="hound wep.glb">Hound Weapon</option>
               <option value="2015-bmw-i8_xs_car.glb">BMW I8</option>
@@ -59,7 +60,8 @@
           <h3><i class="fas fa-mountain-sun"></i> Environment</h3>
           <div class="slider-box">
             <label>Exposure</label>
-            <input type="range" id="exposureSlider" min="0" max="2" step="0.01" value="1.0">
+            <input type="range" id="exposureSlider" min="0" max="2" step="0.01" value="1.0"
+              aria-label="Environment exposure">
           </div>
           <div class="toggle-box">
             <label>Show Background</label>
@@ -72,15 +74,17 @@
           <h3><i class="fas fa-fill-drip"></i> Materials</h3>
           <div class="color-picker-box">
             <label>Tint Color</label>
-            <input type="color" id="colorPicker" value="#ffffff">
+            <input type="color" id="colorPicker" value="#ffffff" aria-label="Material tint color">
           </div>
           <div class="slider-box">
             <label>Metalness</label>
-            <input type="range" id="metalnessSlider" min="0" max="1" step="0.01" value="0.5">
+            <input type="range" id="metalnessSlider" min="0" max="1" step="0.01" value="0.5"
+              aria-label="Material metalness">
           </div>
           <div class="slider-box">
             <label>Roughness</label>
-            <input type="range" id="roughnessSlider" min="0" max="1" step="0.01" value="0.5">
+            <input type="range" id="roughnessSlider" min="0" max="1" step="0.01" value="0.5"
+              aria-label="Material roughness">
           </div>
         </div>
 
@@ -134,11 +138,12 @@
           <a href="demo.html">Home</a> / <span>3D Viewer</span>
         </div>
         <div class="top-actions">
-          <input type="file" id="fileUpload" accept=".glb,.gltf" hidden />
-          <button class="top-btn" onclick="document.getElementById('fileUpload').click()">
+          <input type="file" id="fileUpload" accept=".glb,.gltf" hidden aria-label="Upload GLB or GLTF model" />
+          <button class="top-btn" onclick="document.getElementById('fileUpload').click()"
+            aria-label="Import model from file">
             <i class="fas fa-file-import"></i> Import GLB
           </button>
-          <button id="screenshotBtn" class="primary-btn">
+          <button id="screenshotBtn" class="primary-btn" aria-label="Take screenshot of 3D scene">
             <i class="fas fa-camera"></i> Screenshot
           </button>
         </div>

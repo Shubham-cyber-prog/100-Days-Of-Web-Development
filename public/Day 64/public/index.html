@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Online Code Editor</title>
@@ -9,50 +10,50 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
 
-<link rel="stylesheet" href="../src/styles.css" />
+  <link rel="stylesheet" href="../src/styles.css" />
 </head>
 
 <body>
 
-<header class="header">
-  <h1>💻 Online Code Editor</h1>
-  <p>ADVANCED • Day 64</p>
+  <header class="header">
+    <h1>💻 Online Code Editor</h1>
+    <p>ADVANCED • Day 64</p>
 
-  <button id="themeBtn">🌙 Dark</button>
-</header>
+    <button id="themeBtn">🌙 Dark</button>
+  </header>
 
-<main class="editor-container">
+  <main class="editor-container">
 
-  <!-- Toolbar -->
-  <div class="toolbar">
+    <!-- Toolbar -->
+    <div class="toolbar">
 
-    <select id="languageSelect">
-      <option value="javascript">JavaScript</option>
-      <option value="htmlmixed">HTML</option>
-      <option value="css">CSS</option>
-    </select>
+      <select id="languageSelect">
+        <option value="javascript">JavaScript</option>
+        <option value="htmlmixed">HTML</option>
+        <option value="css">CSS</option>
+      </select>
 
-    <button id="runBtn">▶ Run</button>
-    <button id="clearBtn">🧹 Clear</button>
-    <button id="saveBtn">💾 Save</button>
+      <button id="runBtn">▶ Run</button>
+      <button id="clearBtn">🧹 Clear</button>
+      <button id="saveBtn">💾 Save</button>
 
-    <button id="increaseFont">A+</button>
-    <button id="decreaseFont">A-</button>
+      <button id="increaseFont">A+</button>
+      <button id="decreaseFont">A-</button>
 
-    <button id="fullBtn">⛶ Fullscreen</button>
+      <button id="fullBtn">⛶ Fullscreen</button>
 
-  </div>
+    </div>
 
-  <!-- Editor -->
-  <div class="editor-area">
-    <textarea id="codeEditor"></textarea>
-  </div>
+    <!-- Editor -->
+    <div class="editor-area">
+      <textarea id="codeEditor"></textarea>
+    </div>
 
-  <!-- Output -->
-  <div class="output-area">
-    <h3>Output</h3>
-    <iframe id="outputFrame"></iframe>
-  </div>
+    <!-- Output -->
+    <div class="output-area">
+      <h3>Output</h3>
+      <iframe id="outputFrame"></iframe>
+    </div>
 
     <!-- Toolbar -->
     <!-- <div class="toolbar">
@@ -67,6 +68,7 @@
       <button id="saveBtn">Save</button>
     </div> -->
 
+    <div class="toolbar">
   <div class="toolbar">
 
     <select id="languageSelect">
@@ -132,20 +134,36 @@
 <!-- CodeMirror Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
 
-    <!-- Output -->
-    <div class="output-area">
-      <h3>Output</h3>
-      <iframe id="outputFrame"></iframe>
+      <select id="languageSelect">
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+        <option value="javascript">JavaScript</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="java">Java</option>
+      </select>
+      <iframe id="outputFrame" title="Code execution output"></iframe>
       <div class="console">
-  <h3>Console</h3>
-  <pre id="consoleOutput"></pre>
-</div>
+        <h3>Console</h3>
+        <pre id="consoleOutput" aria-live="polite"></pre>
+      </div>
     </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+  </main>
 
-<script src="../src/app.js"></script>
+
+  <!-- CodeMirror Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+
+  <!-- Output -->
+  <div class="output-area">
+    <h3>Output</h3>
+    <iframe id="outputFrame"></iframe>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+
+    <script src="../src/app.js"></script>
 
 </body>
+
 </html>

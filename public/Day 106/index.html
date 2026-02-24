@@ -1,23 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Campus Dashboard | Day 106</title>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- D3.js -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        :root {
+            --sc-primary: #8b5cf6;
+            --sc-blur: 10px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar -->
@@ -30,7 +44,7 @@
 
             <!-- Dashboard Grid -->
             <div class="dashboard-grid">
-                
+
                 <!-- Stats Cards -->
                 <div class="stat-card" id="stat-students">
                     <div class="icon-box blue">
@@ -106,7 +120,7 @@
                     </div>
                     <div id="library-chart" class="viz-area"></div>
                 </div>
-                
+
                 <!-- Recent Activity Feed -->
                 <div class="chart-container" id="activity-container">
                     <div class="chart-header">
@@ -125,4 +139,5 @@
     <script src="js/shared.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
