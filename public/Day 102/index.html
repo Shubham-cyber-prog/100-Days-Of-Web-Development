@@ -2,19 +2,21 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StoryVerse | Interactive Storytelling Platform</title>
-    <meta name="description" content="A next-generation platform for interactive storytelling and digital narratives.">
+    <meta name="description"
+        content="A next-generation platform for interactive storytelling and digital narratives." />
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="StoryVerse | Interactive Narrative Engine">
-    <meta property="og:description" content="Unleash your imagination and explore player-driven stories in StoryVerse.">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="StoryVerse | Interactive Narrative Engine" />
+    <meta property="og:description"
+        content="Unleash your imagination and explore player-driven stories in StoryVerse." />
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="StoryVerse | Interactive Narrative Engine">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="StoryVerse | Interactive Narrative Engine" />
     <meta name="twitter:description"
-        content="Unleash your imagination and explore player-driven stories in StoryVerse.">
+        content="Unleash your imagination and explore player-driven stories in StoryVerse." />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&family=Space+Grotesk:wght@400;500;600&display=swap"
@@ -1764,36 +1766,31 @@
             </div>
         </div>
 
-        <nav>
-            <button class="nav-btn active" onclick="showSection('home')">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
+        <nav aria-label="Main Navigation">
+            <button class="nav-btn active" data-section="home" aria-label="Go to Home section">
+                <i class="fas fa-home"></i> Home
             </button>
-            <button class="nav-btn" onclick="showSection('discover')">
-                <i class="fas fa-compass"></i>
-                <span>Discover</span>
+            <button class="nav-btn" data-section="library" aria-label="Browse Story Library">
+                <i class="fas fa-book"></i> Library
             </button>
-            <button class="nav-btn" onclick="showSection('library')">
-                <i class="fas fa-bookmark"></i>
-                <span>Library</span>
+            <button class="nav-btn" data-section="community" aria-label="View Community stories">
+                <i class="fas fa-users"></i> Community
             </button>
-            <button class="nav-btn" onclick="showSection('profile')">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
+            <button class="nav-btn" data-section="create" aria-label="Create a new story">
+                <i class="fas fa-plus-circle"></i> Create
             </button>
-            <button class="nav-btn" onclick="showSection('create')">
-                <i class="fas fa-plus-circle"></i>
-                <span>Create</span>
+            <button class="nav-btn" data-section="dashboard" aria-label="Go to your Dashboard">
+                <i class="fas fa-chart-pie"></i> Stats
             </button>
         </nav>
 
         <div class="user-menu">
-            <button class="notification-btn" onclick="toggleNotifications()">
+            <button class="notification-btn" aria-label="View Notifications">
                 <i class="fas fa-bell"></i>
-                <span class="notification-badge" id="notification-count">3</span>
+                <span class="notification-badge">3</span>
             </button>
-            <div class="user-avatar" onclick="showSection('profile')">
-                AJ
+            <div class="user-avatar" aria-label="User Profile Menu">
+                JD
             </div>
         </div>
     </header>
