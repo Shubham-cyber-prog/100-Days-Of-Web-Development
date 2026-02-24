@@ -182,42 +182,42 @@ button{
         <p>Share your innovative project ideas and implementations with the community.</p>
     </div>
 
-    <form>
+    <form id="projectForm">
 
         <!-- Project Details -->
         <div class="form-section">
             <h2 class="section-title">Project Details</h2>
 
             <div class="form-group">
-                <label>Project Title *</label>
-                <input type="text" placeholder="Enter your project title">
+                <label for="projectTitle">Project Title *</label>
+                <input type="text" id="projectTitle" placeholder="Enter your project title" required>
             </div>
 
             <div class="form-group">
-                <label>Description *</label>
-                <textarea rows="4" placeholder="Describe your project, its features, and what makes it unique..."></textarea>
+                <label for="description">Description *</label>
+                <textarea id="description" rows="4" placeholder="Describe your project, its features, and what makes it unique..." required></textarea>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>Difficulty Level *</label>
-                    <select>
-                        <option>Select difficulty</option>
-                        <option>Beginner</option>
-                        <option>Intermediate</option>
-                        <option>Advanced</option>
-                        <option>Capstone</option>
+                    <label for="difficulty">Difficulty Level *</label>
+                    <select id="difficulty" required>
+                        <option value="">Select difficulty</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Capstone">Capstone</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Category</label>
-                    <select>
-                        <option>Select category</option>
-                        <option>Web App</option>
-                        <option>Game</option>
-                        <option>Tool</option>
-                        <option>Educational</option>
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="">Select category</option>
+                        <option value="Web App">Web App</option>
+                        <option value="Game">Game</option>
+                        <option value="Tool">Tool</option>
+                        <option value="Educational">Educational</option>
                     </select>
                 </div>
             </div>
@@ -228,13 +228,13 @@ button{
             <h2 class="section-title">Links & Resources</h2>
 
             <div class="form-group">
-                <label>Live Demo URL</label>
-                <input type="url" placeholder="https://your-project-demo.com">
+                <label for="liveDemoUrl">Live Demo URL</label>
+                <input type="url" id="liveDemoUrl" placeholder="https://your-project-demo.com">
             </div>
 
             <div class="form-group">
-                <label>Source Code URL *</label>
-                <input type="url" placeholder="https://github.com/username/project-repo">
+                <label for="sourceCodeUrl">Source Code URL *</label>
+                <input type="url" id="sourceCodeUrl" placeholder="https://github.com/username/project-repo" required>
             </div>
         </div>
 
@@ -243,8 +243,8 @@ button{
             <h2 class="section-title">Technologies Used</h2>
 
             <div class="form-group">
-                <label>Technologies *</label>
-                <input type="text" placeholder="HTML, CSS, JavaScript">
+                <label for="technologies">Technologies *</label>
+                <input type="text" id="technologies" placeholder="HTML, CSS, JavaScript" required>
             </div>
         </div>
 
@@ -253,20 +253,20 @@ button{
             <h2 class="section-title">Additional Information</h2>
 
             <div class="form-group">
-                <label>Learning Outcomes</label>
-                <textarea rows="3" placeholder="What did you learn?"></textarea>
+                <label for="learningOutcomes">Learning Outcomes</label>
+                <textarea id="learningOutcomes" rows="3" placeholder="What did you learn?"></textarea>
             </div>
 
             <div class="form-group">
-                <label>Challenges Faced</label>
-                <textarea rows="3" placeholder="Describe challenges..."></textarea>
+                <label for="challengesFaced">Challenges Faced</label>
+                <textarea id="challengesFaced" rows="3" placeholder="Describe challenges..."></textarea>
             </div>
         </div>
 
         <!-- Terms -->
         <div class="form-section">
             <div class="checkbox-label">
-                <input type="checkbox">
+                <input type="checkbox" id="agreeGuidelines">
                 <span>I agree to contribution guidelines</span>
             </div>
 
@@ -281,6 +281,52 @@ button{
     </form>
 
 </main>
+
+<script>
+    const form = document.getElementById('projectForm');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const projectTitle = document.getElementById('projectTitle').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const difficulty = document.getElementById('difficulty').value;
+        const sourceCodeUrl = document.getElementById('sourceCodeUrl').value.trim();
+        const technologies = document.getElementById('technologies').value.trim();
+
+        if (!projectTitle || !description || !difficulty || !sourceCodeUrl || !technologies) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+        if (!urlPattern.test(sourceCodeUrl)) {
+            alert('Please enter a valid URL for the Source Code URL.');
+            return;
+        }
+
+        const projectData = {
+            title: projectTitle,
+            description: description,
+            difficulty: difficulty,
+            category: document.getElementById('category').value,
+            liveDemoUrl: document.getElementById('liveDemoUrl').value.trim(),
+            sourceCodeUrl: sourceCodeUrl,
+            technologies: technologies,
+            learningOutcomes: document.getElementById('learningOutcomes').value.trim(),
+            challengesFaced: document.getElementById('challengesFaced').value.trim(),
+            agreedToGuidelines: document.getElementById('agreeGuidelines').checked
+        };
+
+        console.log('Project submitted:', projectData);
+        alert('Project submitted successfully!');
+        form.reset();
+    });
+
+    document.querySelector('.btn-secondary').addEventListener('click', function() {
+        form.reset();
+    });
+</script>
 
 </body>
 </html>
