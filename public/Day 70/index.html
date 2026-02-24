@@ -26,6 +26,29 @@
 </head>
 
 <body>
+<div class="container">
+    <header>
+        <h1><i class="fas fa-chart-line"></i> Data Visualization Tool</h1>
+        <button id="theme-toggle">🌙 Toggle Theme</button>
+        <p class="subtitle">Transform your data into insightful visualizations</p>
+    </header>
+
+    <div class="main-content">
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3><i class="fas fa-sliders-h"></i> Controls</h3>
+
+                <div class="control-group">
+                    <label for="chart-type"><i class="fas fa-chart-bar"></i> Chart Type</label>
+                    <select id="chart-type">
+                        <option value="bar">Bar</option>
+                        <option value="line">Line</option>
+                        <option value="pie">Pie</option>
+                        <option value="doughnut">Doughnut</option>
+                        <option value="radar">Radar</option>
+                        <option value="polar">Polar Area</option>
+                    </select>
+                </div>
     <div class="container">
         <header>
             <h1><i class="fas fa-chart-line"></i> Data Visualization Tool</h1>
@@ -76,6 +99,28 @@
                         </select>
                     </div>
 
+                <button id="update-chart" class="btn-primary">Update Visualization</button>
+                <button id="export-chart" class="btn-secondary">Export PNG</button>
+                <button id="export-csv" class="btn-secondary">Download CSV</button>
+                <button id="random-data" class="btn-secondary">Randomize Data</button>
+                <button id="reset-data">Reset Data</button>
+            </div>
+
+
+            <select id="sort-data">
+            <option value="none">No Sort</option>
+             <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+            </select>
+
+            <input id="chart-title" placeholder="Enter chart title">
+        </div>
+
+        <div class="visualization-area">
+            <div class="chart-container">
+                <canvas id="data-chart"></canvas>
+            </div>
+            <div id="insights"></div>
                     <div class="control-group checkbox-group">
                         <label><input type="checkbox" id="show-grid" checked> Show Grid</label>
                         <label><input type="checkbox" id="show-labels" checked> Show Labels</label>
