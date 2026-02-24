@@ -9,12 +9,28 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
+
+
 <body>
+
+  <!-- Animated Background -->
+<div class="animated-bg">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 
 <nav>
   <h1><span>Learning</span> Games</h1>
   <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
 </nav>
+
+<!-- 🌙 Dark Mode Toggle -->
+<div class="theme-toggle">
+  <button id="themeBtn">🌙</button>
+</div>
 
 <div class="container">
 
@@ -30,6 +46,11 @@
   <div class="game-card" onclick="openGame('guess')"><i class="fa-solid fa-hashtag"></i><h3>Number Guess</h3></div>
   <div class="game-card" onclick="openGame('typing')"><i class="fa-solid fa-keyboard"></i><h3>Typing Speed</h3></div>
 </div>
+
+<h3>🏆 Leaderboard</h3>
+<div id="leaderboard"></div>
+
+<div class="game-box"></div>
 
 <!-- GAMES -->
 
@@ -87,5 +108,9 @@
 <footer>© 2026 Open-Source Learning Games – Day 78</footer>
 
 <script src="script.js"></script>
+
+
+<!-- 🎯 Popup -->
+<div id="popup" class="popup">Great Job 🎉</div>
 </body>
 </html>
