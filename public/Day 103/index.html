@@ -19,6 +19,16 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    :root {
+      --rt-primary: #2563eb;
+      --rt-blur: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 
 <body>
@@ -29,16 +39,16 @@
       <h1>📘 README</h1>
 
       <nav>
-        <button class="nav-item active">Generator</button>
-        <button class="nav-item">Badges</button>
-        <button class="nav-item">GitHub Import</button>
-        <button class="nav-item">Templates</button>
-        <button class="nav-item">Export</button>
+        <button class="nav-item active" aria-label="Open Generator tool">Generator</button>
+        <button class="nav-item" aria-label="View Badge collection">Badges</button>
+        <button class="nav-item" aria-label="Import from GitHub">GitHub Import</button>
+        <button class="nav-item" aria-label="Browse Templates">Templates</button>
+        <button class="nav-item" aria-label="Export README">Export</button>
         <button class="nav-item" onclick="loadSampleREADME()">✨ Try Sample README</button>
       </nav>
 
       <div class="sidebar-footer">
-        <button id="themeToggle" class="icon-btn">🌙</button>
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode">🌙</button>
       </div>
     </aside>
     <!-- MAIN -->
@@ -48,8 +58,8 @@
         <h2>README Generator</h2>
 
         <h3>GitHub Import</h3>
-        <input id="githubUser" placeholder="GitHub Username" />
-        <input id="githubRepo" placeholder="Repository Name" />
+        <input id="githubUser" placeholder="GitHub Username" aria-label="GitHub Username" />
+        <input id="githubRepo" placeholder="Repository Name" aria-label="Repository Name" />
         <button onclick="importFromGitHub()">Import from GitHub</button>
 
         <h3>Badges</h3>

@@ -1,28 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>GitHub Stats Dashboard</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8">
+  <title>GitHub Stats Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --github-blur: 10px;
+      --accent: #2563eb;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(var(--github-blur));
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .repo-card {
+      transition: all 0.2s;
+    }
+
+    .repo-card:hover {
+      border-color: var(--accent);
+      transform: scale(1.02);
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <h1>📊 GitHub Dashboard</h1>
+  <header>
+    <h1>📊 GitHub Dashboard</h1>
 
-  <div class="searchBox">
-    <input type="text" id="username" placeholder="Enter GitHub Username">
-    <button id="searchBtn">Search</button>
-  </div>
+    <div class="searchBox">
+      <input type="text" id="username" placeholder="Enter GitHub Username" aria-label="GitHub username to search">
+      <button id="searchBtn" aria-label="Search profiles">Search</button>
+    </div>
 
-  <button id="themeToggle">🌙</button>
-</header>
+    <button id="themeToggle">🌙</button>
+  </header>
 
 
+  <main>
 <main>
   <aside class="profile">
     <img src="https://i.pravatar.cc/150?img=32">
@@ -41,29 +70,30 @@
     <div id="posts"></div>
   </section>
 
-<!-- PROFILE -->
-<section class="profile" id="profile">
-  <p class="hint">Search any GitHub username</p>
-</section>
+    <!-- PROFILE -->
+    <section class="profile" id="profile">
+      <p class="hint">Search any GitHub username</p>
+    </section>
 
 
-<!-- STATS -->
-<section class="stats" id="stats"></section>
+    <!-- STATS -->
+    <section class="stats" id="stats"></section>
 
 
-<!-- REPOS -->
-<section class="repos">
-  <h2>Top Repositories</h2>
-  <div id="repoList"></div>
-</section>
+    <!-- REPOS -->
+    <section class="repos">
+      <h2>Top Repositories</h2>
+      <div id="repoList"></div>
+    </section>
 
-</main>
-
-
-<!-- LOADER -->
-<div id="loader">Loading...</div>
+  </main>
 
 
-<script src="script.js"></script>
+  <!-- LOADER -->
+  <div id="loader">Loading...</div>
+
+
+  <script src="script.js"></script>
 </body>
+
 </html>
