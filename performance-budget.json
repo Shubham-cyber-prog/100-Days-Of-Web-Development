@@ -1,0 +1,89 @@
+{
+  "performance": {
+    "budgets": [
+      {
+        "resourceType": "script",
+        "budget": 100,
+        "unit": "kB",
+        "description": "Total JavaScript per page should not exceed 100KB uncompressed"
+      },
+      {
+        "resourceType": "stylesheet",
+        "budget": 50,
+        "unit": "kB",
+        "description": "Total CSS per page should not exceed 50KB uncompressed"
+      },
+      {
+        "resourceType": "image",
+        "budget": 200,
+        "unit": "kB",
+        "description": "Individual images should not exceed 200KB"
+      },
+      {
+        "resourceType": "total",
+        "budget": 500,
+        "unit": "kB",
+        "description": "Total page weight should not exceed 500KB"
+      },
+      {
+        "metric": "first-contentful-paint",
+        "budget": 1500,
+        "unit": "ms",
+        "description": "First Contentful Paint should be under 1.5 seconds"
+      },
+      {
+        "metric": "largest-contentful-paint",
+        "budget": 2500,
+        "unit": "ms",
+        "description": "Largest Contentful Paint should be under 2.5 seconds"
+      },
+      {
+        "metric": "cumulative-layout-shift",
+        "budget": 0.1,
+        "unit": "unitless",
+        "description": "Cumulative Layout Shift should be under 0.1"
+      },
+      {
+        "metric": "total-blocking-time",
+        "budget": 300,
+        "unit": "ms",
+        "description": "Total Blocking Time should be under 300ms"
+      },
+      {
+        "metric": "speed-index",
+        "budget": 3000,
+        "unit": "ms",
+        "description": "Speed Index should be under 3 seconds"
+      }
+    ],
+    "lighthouse": {
+      "performance": 90,
+      "accessibility": 90,
+      "best-practices": 80,
+      "seo": 80
+    }
+  },
+  "ci": {
+    "collect": {
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1
+        }
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", {"minScore": 0.9}],
+        "first-contentful-paint": ["error", {"maxNumericValue": 1500}],
+        "largest-contentful-paint": ["error", {"maxNumericValue": 2500}],
+        "cumulative-layout-shift": ["error", {"maxNumericValue": 0.1}],
+        "total-blocking-time": ["error", {"maxNumericValue": 300}],
+        "speed-index": ["error", {"maxNumericValue": 3000}]
+      }
+    }
+  }
+}
