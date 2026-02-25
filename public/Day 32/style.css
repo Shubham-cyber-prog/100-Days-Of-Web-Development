@@ -27,11 +27,23 @@ body {
 }
 
 /* Header */
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+} */
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
+
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  padding:18px 25px;
+  border-radius:14px;
 }
 
 .header h1 {
@@ -125,4 +137,47 @@ body {
 
 .activity-card:hover {
   transform: translateX(6px);
+}
+
+
+#dateTime{
+  font-size:14px;
+  opacity:0.7;
+}
+
+
+.progress{
+  height:6px;
+  background: rgba(255,255,255,0.3);
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.bar{
+  height:100%;
+  border-radius:10px;
+  background:white;
+  animation: grow 1.5s ease;
+}
+
+@keyframes grow{
+  from{width:0;}
+}
+
+.toast{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  background: var(--accent);
+  color:white;
+  padding:14px 20px;
+  border-radius:10px;
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.4s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
 }

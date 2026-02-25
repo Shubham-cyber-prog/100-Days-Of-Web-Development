@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Community Project | 100 Days of Web Dev</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+/* ===== GLOBAL STYLING ===== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body{
+    background: #0f0f0f;
+    color:#f5f5f5;
+    display:flex;
+    justify-content:center;
+}
+
+main{
+    width:100%;
+    max-width:1100px;
+    padding:60px 20px;
+}
+
+/* ===== HEADER ===== */
+
+.page-header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.page-header h1{
+    font-size:42px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.page-header p{
+    color:#aaa;
+    font-size:16px;
+}
+
+/* ===== CARD SECTION ===== */
+
+.form-section{
+    background:#1a1a1a;
+    padding:30px;
+    border-radius:14px;
+    margin-bottom:30px;
+    border:1px solid #2a2a2a;
+    transition:0.3s ease;
+}
+
+.form-section:hover{
+    border-color:#00bcd4;
+    box-shadow:0 0 20px rgba(0,188,212,0.15);
+}
+
+.section-title{
+    font-size:20px;
+    margin-bottom:25px;
+    color:#00bcd4;
+}
+
+/* ===== FORM ELEMENTS ===== */
+
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:500;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px 14px;
+    border-radius:8px;
+    border:1px solid #333;
+    background:#111;
+    color:white;
+    transition:0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    outline:none;
+    border-color:#00bcd4;
+    box-shadow:0 0 0 2px rgba(0,188,212,0.2);
+}
+
+textarea{
+    resize:vertical;
+}
+
+.form-row{
+    display:flex;
+    gap:20px;
+}
+
+.form-row .form-group{
+    flex:1;
+}
+
+/* ===== BUTTONS ===== */
+
+.form-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:15px;
+    margin-top:10px;
+}
+
+button{
+    padding:12px 24px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s ease;
+}
+
+.btn-primary{
+    background:#00bcd4;
+    color:black;
+}
+
+.btn-primary:hover{
+    background:#00e5ff;
+}
+
+.btn-secondary{
+    background:#2c2c2c;
+    color:white;
+}
+
+.btn-secondary:hover{
+    background:#444;
+}
+
+/* ===== CHECKBOX ===== */
+
+.checkbox-label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+}
+
+.checkbox-label input{
+    width:auto;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+    .form-row{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main>
+
+    <div class="page-header">
+        <h1>Submit Community Project</h1>
+        <p>Share your innovative project ideas and implementations with the community.</p>
+    </div>
+
+    <form id="projectForm">
+
+        <!-- Project Details -->
+        <div class="form-section">
+            <h2 class="section-title">Project Details</h2>
+
+            <div class="form-group">
+                <label for="projectTitle">Project Title *</label>
+                <input type="text" id="projectTitle" placeholder="Enter your project title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description *</label>
+                <textarea id="description" rows="4" placeholder="Describe your project, its features, and what makes it unique..." required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="difficulty">Difficulty Level *</label>
+                    <select id="difficulty" required>
+                        <option value="">Select difficulty</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Capstone">Capstone</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="">Select category</option>
+                        <option value="Web App">Web App</option>
+                        <option value="Game">Game</option>
+                        <option value="Tool">Tool</option>
+                        <option value="Educational">Educational</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="form-section">
+            <h2 class="section-title">Links & Resources</h2>
+
+            <div class="form-group">
+                <label for="liveDemoUrl">Live Demo URL</label>
+                <input type="url" id="liveDemoUrl" placeholder="https://your-project-demo.com">
+            </div>
+
+            <div class="form-group">
+                <label for="sourceCodeUrl">Source Code URL *</label>
+                <input type="url" id="sourceCodeUrl" placeholder="https://github.com/username/project-repo" required>
+            </div>
+        </div>
+
+        <!-- Technologies -->
+        <div class="form-section">
+            <h2 class="section-title">Technologies Used</h2>
+
+            <div class="form-group">
+                <label for="technologies">Technologies *</label>
+                <input type="text" id="technologies" placeholder="HTML, CSS, JavaScript" required>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="form-section">
+            <h2 class="section-title">Additional Information</h2>
+
+            <div class="form-group">
+                <label for="learningOutcomes">Learning Outcomes</label>
+                <textarea id="learningOutcomes" rows="3" placeholder="What did you learn?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="challengesFaced">Challenges Faced</label>
+                <textarea id="challengesFaced" rows="3" placeholder="Describe challenges..."></textarea>
+            </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="form-section">
+            <div class="checkbox-label">
+                <input type="checkbox" id="agreeGuidelines">
+                <span>I agree to contribution guidelines</span>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-secondary">Cancel</button>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-paper-plane"></i> Submit Project
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+</main>
+
+<script>
+    const form = document.getElementById('projectForm');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const projectTitle = document.getElementById('projectTitle').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const difficulty = document.getElementById('difficulty').value;
+        const sourceCodeUrl = document.getElementById('sourceCodeUrl').value.trim();
+        const technologies = document.getElementById('technologies').value.trim();
+
+        if (!projectTitle || !description || !difficulty || !sourceCodeUrl || !technologies) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+        if (!urlPattern.test(sourceCodeUrl)) {
+            alert('Please enter a valid URL for the Source Code URL.');
+            return;
+        }
+
+        const projectData = {
+            title: projectTitle,
+            description: description,
+            difficulty: difficulty,
+            category: document.getElementById('category').value,
+            liveDemoUrl: document.getElementById('liveDemoUrl').value.trim(),
+            sourceCodeUrl: sourceCodeUrl,
+            technologies: technologies,
+            learningOutcomes: document.getElementById('learningOutcomes').value.trim(),
+            challengesFaced: document.getElementById('challengesFaced').value.trim(),
+            agreedToGuidelines: document.getElementById('agreeGuidelines').checked
+        };
+
+        console.log('Project submitted:', projectData);
+        alert('Project submitted successfully!');
+        form.reset();
+    });
+
+    document.querySelector('.btn-secondary').addEventListener('click', function() {
+        form.reset();
+    });
+</script>
+
+</body>
+</html>
