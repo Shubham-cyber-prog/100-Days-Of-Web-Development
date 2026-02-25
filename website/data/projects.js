@@ -126,6 +126,6 @@ export const allProjects = [
     {day: 239, title: "Code Snippet Manager", tech: ["React", "MongoDB"] },
     { day: 241, title: "Google Docs Clone", tech: ["Socket.io", "React"] },
     { day: 244, title: "VS Code Clone (Browser)", tech: ["Monaco Editor", "React"] },
-
+    { day: 222, title: "API Documentation Generator", tech: ["Node.js"] },
 
 ];
