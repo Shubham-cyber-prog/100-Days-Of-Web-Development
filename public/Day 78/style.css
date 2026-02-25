@@ -56,6 +56,7 @@ nav h1 span{color:var(--primary)}
 .game-card:hover{
   transform:translateY(-6px);
   border-color:var(--primary);
+  box-shadow:0 10px 30px rgba(37,99,235,0.3);
 }
 .game-card i{
   font-size:36px;
@@ -121,3 +122,164 @@ input{
 .quiz-option.wrong{background:#ef4444}
 
 footer{text-align:center;padding:25px;color:var(--muted)}
+
+
+
+#leaderboard{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:14px;
+  margin-top:20px;
+}
+.lead-item{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid var(--border);
+}
+
+
+/* 🌙 Theme */
+:root{
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --text:#222;
+}
+
+.dark{
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#fff;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  transition:0.4s;
+}
+
+
+
+/* ✨ Glass effect */
+.game-box{
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.15);
+  border-radius: 15px;
+  padding: 20px;
+  border:1px solid rgba(255,255,255,0.3);
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  transition:0.3s;
+}
+
+.game-box:hover{
+  transform: translateY(-6px) scale(1.02);
+}
+
+
+.game{
+  display:none;
+  margin-top:30px;
+  animation:fadeSlide .6s ease forwards;
+}
+
+@keyframes fadeSlide{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+button{
+  border:none;
+  padding:12px 20px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+button:active{
+  transform:scale(0.95);
+}
+
+
+.popup{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#22c55e;
+  color:#fff;
+  padding:15px 20px;
+  border-radius:10px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.4s;
+}
+
+.popup.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
+
+.animated-bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  z-index:-1;
+  background:linear-gradient(120deg,#FF0000,#FFFF00,#0000ff);
+  background-size:300% 300%;
+  animation:gradientMove 12s ease infinite;
+}
+
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* Floating circles */
+.animated-bg span{
+  position:absolute;
+  display:block;
+  width:60px;
+  height:60px;
+  background:rgba(255,255,255,0.15);
+  border-radius:50%;
+  animation:float 18s linear infinite;
+  bottom:-150px;
+}
+
+/* Random positions */
+.animated-bg span:nth-child(1){ left:10%; animation-delay:0s;}
+.animated-bg span:nth-child(2){ left:30%; width:80px;height:80px; animation-delay:4s;}
+.animated-bg span:nth-child(3){ left:55%; animation-delay:2s;}
+.animated-bg span:nth-child(4){ left:75%; width:100px;height:100px; animation-delay:6s;}
+.animated-bg span:nth-child(5){ left:90%; animation-delay:8s;}
+
+@keyframes float{
+  0%{
+    transform:translateY(0) rotate(0deg);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(-1000px) rotate(720deg);
+    opacity:0;
+  }
+}

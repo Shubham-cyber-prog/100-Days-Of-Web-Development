@@ -49,6 +49,7 @@ x
   <main class="editor-container">
 
     <!-- Toolbar -->
+    <!-- <div class="toolbar">
     <div class="toolbar">
 
       <select id="languageSelect">
@@ -57,6 +58,29 @@ x
         <option value="css">CSS</option>
       </select>
 
+      <button id="runBtn">Run</button>
+      <button id="clearBtn">Clear</button>
+      <button id="saveBtn">Save</button>
+    </div> -->
+
+  <div class="toolbar">
+
+    <select id="languageSelect">
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+      <option value="javascript">JavaScript</option>
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
+      <option value="java">Java</option>
+    </select>
+
+    <button id="runBtn">Run</button>
+    <button id="clearBtn">Clear</button>
+    <button id="saveBtn">Save</button>
+    <button id="downloadBtn">Download</button>
+    <button id="themeBtn">🌙 Theme</button>
+    <button id="fullscreenBtn">Full Screen</button>
+  </div>
       <button id="runBtn">▶ Run</button>
       <button id="clearBtn">🧹 Clear</button>
       <button id="saveBtn">💾 Save</button>
@@ -77,6 +101,10 @@ x
     <div class="output-area">
       <h3>Output</h3>
       <iframe id="outputFrame"></iframe>
+      <div class="console">
+  <h3>Console</h3>
+  <pre id="consoleOutput"></pre>
+</div>
     </div>
 
 

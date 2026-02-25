@@ -55,10 +55,25 @@ if (slides.length > 0) {
 // Scroll To Top
 const scrollBtn = document.getElementById("scrollTop");
 
+window.addEventListener("scroll", () => {
+  scrollBtn.style.display = window.scrollY > 200 ? "block" : "none";
+});
+
+scrollBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+
+
+
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
 if (scrollBtn) {
   window.addEventListener("scroll", () => {
     scrollBtn.style.display = window.scrollY > 200 ? "block" : "none";
   });
+
 
   scrollBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
