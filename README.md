@@ -604,11 +604,8 @@ Read our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_O
 
 ---
 
-## 📊 Progress Tracker
 
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Shubham-cyber-prog&theme=radical" alt="GitHub Streak">
-</p>
+
 
 <p align="center">
   Track your own progress using our <a href="https://100dayswebdevelopment-ecwoc.netlify.app/website/pages/projects">Interactive Dashboard</a>
