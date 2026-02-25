@@ -123,9 +123,6 @@ export const allProjects = [
     { day: 151, title: "Mini Geo Guesser", tech: ["HTML", "CSS", "JS"] },   { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },{ day: 153, title: "Stopwatch Project", tech: ["HTML", "CSS", "JS"] },  { day: 154, title: "Snake Game", tech: ["HTML", "CSS", "JS"] },{ day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] },
     { day: 156, title: "URL Shortener", tech: ["HTML", "CSS", "JS"] }, { day: 157, title: "Shadow Quest", tech: ["HTML", "CSS", "JS"] }, { day: 158, title: "Match-3 Merge ", tech: ["HTML", "CSS", "JS"] }, { day: 159, title: "Alien Zoo Architect", tech: ["HTML", "CSS", "JS"] }, { day: 160, title: "Icebreaker Pilot", tech: ["HTML", "CSS", "JS"] },{ day: 161, title: "Drone Swarn Commander ", tech: ["HTML", "CSS", "JS"] }, { day: 162, title: "Volcanic Run ", tech: ["HTML", "CSS", "JS"] }, { day: 163, title: "Asteroid Forge ", tech: ["HTML", "CSS", "JS"] }, { day: 164, title: "", tech: ["HTML", "CSS", "JS"] }, { day: 165, title: "", tech: ["HTML", "CSS", "JS"] },
     { day: 167, title: "Time Fracture Arena", tech: ["HTML", "CSS", "JS", "Canvas"] },  { day: 168, title: "Gift Shop E-Commerce Website", tech: ["React","Typescript"] },{day: 239, title: "Code Snippet Manager", tech: ["React", "MongoDB"] },
-    {day: 239, title: "Code Snippet Manager", tech: ["React", "MongoDB"] },
-    { day: 241, title: "Google Docs Clone", tech: ["Socket.io", "React"] },
-    { day: 244, title: "VS Code Clone (Browser)", tech: ["Monaco Editor", "React"] },
-    { day: 222, title: "API Documentation Generator", tech: ["Node.js"] },
-
+    {day: 239, title: "Code Snippet Manager", tech: ["React", "MongoDB"] }, { day: 241, title: "Google Docs Clone", tech: ["Socket.io", "React"] }, { day: 245, title: "Netflix Clone", tech: ["Socket.io", "React"] },
+    { day: 244, title: "VS Code Clone (Browser)", tech: ["Monaco Editor", "React"] },{ day: 222, title: "API Documentation Generator", tech: ["Node.js"] },
 ];
