@@ -12,6 +12,21 @@ function render() {
   preview.innerHTML = marked.parse(input.value);
   charCount.textContent = `${input.value.length} characters`;
   localStorage.setItem("markdown", input.value);
+
+  // Word + Reading time
+const words = input.value.trim().split(/\s+/).filter(Boolean).length;
+const time = Math.ceil(words / 200);
+document.getElementById("readTime").textContent =
+  `${time} min read`;
+
+
+  const status = document.getElementById("saveStatus");
+status.textContent = "Saving...";
+setTimeout(() => {
+  status.textContent = "Saved";
+}, 400);
+
+
 }
 
 input.addEventListener("input", render);
@@ -135,3 +150,40 @@ themeToggle.addEventListener("click", () => {
   themeToggle.textContent = isDark ? "☀️ Light" : "🌙 Dark";
   localStorage.setItem("theme", isDark ? "dark" : "light");
 });
+
+
+
+document.getElementById("fullScreen").onclick = () => {
+  document.body.classList.toggle("fullscreen");
+};
+
+
+document.body.addEventListener("dragover", e => e.preventDefault());
+
+document.body.addEventListener("drop", e => {
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if (file && file.name.endsWith(".md")) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      input.value = reader.result;
+      render();
+    };
+    reader.readAsText(file);
+  }
+});
+
+
+document.getElementById("insertImage").onclick = () => {
+  const url = prompt("Enter image URL");
+  if (url) {
+    input.value += `\n![](${url})\n`;
+    render();
+  }
+};
+
+
+document.getElementById("splitToggle").onclick = () => {
+  document.querySelector(".preview")
+    .classList.toggle("hide");
+};
