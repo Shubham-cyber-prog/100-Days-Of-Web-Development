@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Powered Chat Application | Day 124 Project</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -47,11 +51,11 @@
                     <div class="config-input">
                         <label for="apiModel">AI Model</label>
                         <select id="apiModel" class="model-select">
-    <option value="llama-3.1-8b-instant">Llama 3.1 8B Instant (Recommended)</option>
-    <option value="llama-3.1-70b-versatile">Llama 3.1 70B Versatile</option>
-    <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
-    <option value="gemma2-9b-it">Gemma 2 9B</option>
-</select>
+                            <option value="llama-3.1-8b-instant">Llama 3.1 8B Instant (Recommended)</option>
+                            <option value="llama-3.1-70b-versatile">Llama 3.1 70B Versatile</option>
+                            <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                            <option value="gemma2-9b-it">Gemma 2 9B</option>
+                        </select>
                     </div>
                     <div class="config-actions">
                         <button class="btn btn-primary" id="saveConfig">
@@ -142,7 +146,8 @@
                                 <span><i class="fas fa-question"></i> Problem Solving</span>
                                 <span><i class="fas fa-book"></i> Learning & Research</span>
                             </div>
-                            <p class="welcome-tip">💡 <strong>Quick Tip:</strong> Use the action buttons below for common tasks!</p>
+                            <p class="welcome-tip">💡 <strong>Quick Tip:</strong> Use the action buttons below for
+                                common tasks!</p>
                         </div>
                     </div>
                 </div>
@@ -167,12 +172,14 @@
                                 </button>
                             </div>
                         </div>
-                        <textarea class="chat-input" id="chatInput" placeholder="Type your message here... Press Enter to send, Shift+Enter for new line" rows="3"></textarea>
+                        <textarea class="chat-input" id="chatInput"
+                            placeholder="Type your message here... Press Enter to send, Shift+Enter for new line"
+                            rows="3" aria-label="Chat message input"></textarea>
                         <div class="input-footer">
-                            <div class="char-count">
+                            <div class="char-count" role="status">
                                 <span id="charCount">0</span>/2000 characters
                             </div>
-                            <button class="send-btn" id="sendBtn">
+                            <button class="send-btn" id="sendBtn" aria-label="Send message">
                                 <i class="fas fa-paper-plane"></i>
                                 <span>Send</span>
                             </button>
@@ -213,14 +220,16 @@
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Secure Backend</h3>
-                    <p>API keys are securely stored on the server side. No sensitive information is exposed to the client.</p>
+                    <p>API keys are securely stored on the server side. No sensitive information is exposed to the
+                        client.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
                     <h3>Ultra-Fast Responses</h3>
-                    <p>Powered by Groq's LPU inference engine for lightning-fast AI responses through our secure server.</p>
+                    <p>Powered by Groq's LPU inference engine for lightning-fast AI responses through our secure server.
+                    </p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -241,14 +250,16 @@
                         <i class="fas fa-magic"></i>
                     </div>
                     <h3>Smart Actions</h3>
-                    <p>Quick-action buttons for common tasks: fix grammar, explain code, summarize text, or generate ideas.</p>
+                    <p>Quick-action buttons for common tasks: fix grammar, explain code, summarize text, or generate
+                        ideas.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <h3>Fully Responsive</h3>
-                    <p>Enjoy a seamless experience across all devices - desktop, tablet, or mobile with adaptive layouts.</p>
+                    <p>Enjoy a seamless experience across all devices - desktop, tablet, or mobile with adaptive
+                        layouts.</p>
                 </div>
             </div>
         </div>
@@ -310,7 +321,8 @@ npm start
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2024 AI Chat Application | Day 124 Project | Get Groq API key from <a href="https://console.groq.com" target="_blank">console.groq.com</a></p>
+                <p>© 2024 AI Chat Application | Day 124 Project | Get Groq API key from <a
+                        href="https://console.groq.com" target="_blank">console.groq.com</a></p>
             </div>
         </div>
     </footer>
@@ -320,4 +332,5 @@ npm start
 
     <script src="script.js"></script>
 </body>
+
 </html>

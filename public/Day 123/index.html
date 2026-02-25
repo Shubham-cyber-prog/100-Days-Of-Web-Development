@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +33,7 @@
             background: white;
             padding: 10px;
             border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         .ludo-board {
@@ -56,10 +57,21 @@
         }
 
         /* Base colors */
-        .base-red { background-color: var(--red); }
-        .base-green { background-color: var(--green); }
-        .base-yellow { background-color: var(--yellow); }
-        .base-blue { background-color: var(--blue); }
+        .base-red {
+            background-color: var(--red);
+        }
+
+        .base-green {
+            background-color: var(--green);
+        }
+
+        .base-yellow {
+            background-color: var(--yellow);
+        }
+
+        .base-blue {
+            background-color: var(--blue);
+        }
 
         .white-area {
             background: white;
@@ -79,17 +91,52 @@
         }
 
         /* Arrows and Stars */
-        .star::after { content: '★'; color: #333; font-size: 1.5rem; }
-        .arrow-red::after { content: '▲'; color: var(--red); font-size: 1.2rem; }
-        .arrow-green::after { content: '▶'; color: var(--green); font-size: 1.2rem; }
-        .arrow-yellow::after { content: '▼'; color: var(--yellow); font-size: 1.2rem; }
-        .arrow-blue::after { content: '◀'; color: var(--blue); font-size: 1.2rem; }
+        .star::after {
+            content: '★';
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .arrow-red::after {
+            content: '▲';
+            color: var(--red);
+            font-size: 1.2rem;
+        }
+
+        .arrow-green::after {
+            content: '▶';
+            color: var(--green);
+            font-size: 1.2rem;
+        }
+
+        .arrow-yellow::after {
+            content: '▼';
+            color: var(--yellow);
+            font-size: 1.2rem;
+        }
+
+        .arrow-blue::after {
+            content: '◀';
+            color: var(--blue);
+            font-size: 1.2rem;
+        }
 
         /* Path colors */
-        .path-red { background: var(--red) !important; }
-        .path-green { background: var(--green) !important; }
-        .path-yellow { background: var(--yellow) !important; }
-        .path-blue { background: var(--blue) !important; }
+        .path-red {
+            background: var(--red) !important;
+        }
+
+        .path-green {
+            background: var(--green) !important;
+        }
+
+        .path-yellow {
+            background: var(--yellow) !important;
+        }
+
+        .path-blue {
+            background: var(--blue) !important;
+        }
 
         .center-home {
             grid-area: 7/7/10/10;
@@ -100,27 +147,68 @@
 
         .tri {
             position: absolute;
-            width: 0; height: 0;
+            width: 0;
+            height: 0;
             border-style: solid;
         }
-        .tri-red { border-width: 0 40px 48px 40px; border-color: transparent transparent var(--red) transparent; bottom: 0; left: 0; }
-        .tri-green { border-width: 40px 0 40px 48px; border-color: transparent transparent transparent var(--green); left: 0; top: 0; }
-        .tri-yellow { border-width: 48px 40px 0 40px; border-color: var(--yellow) transparent transparent transparent; top: 0; left: 0; }
-        .tri-blue { border-width: 40px 48px 40px 0; border-color: transparent var(--blue) transparent transparent; right: 0; top: 0; }
+
+        .tri-red {
+            border-width: 0 40px 48px 40px;
+            border-color: transparent transparent var(--red) transparent;
+            bottom: 0;
+            left: 0;
+        }
+
+        .tri-green {
+            border-width: 40px 0 40px 48px;
+            border-color: transparent transparent transparent var(--green);
+            left: 0;
+            top: 0;
+        }
+
+        .tri-yellow {
+            border-width: 48px 40px 0 40px;
+            border-color: var(--yellow) transparent transparent transparent;
+            top: 0;
+            left: 0;
+        }
+
+        .tri-blue {
+            border-width: 40px 48px 40px 0;
+            border-color: transparent var(--blue) transparent transparent;
+            right: 0;
+            top: 0;
+        }
 
         .piece {
             width: 80%;
             height: 80%;
             border-radius: 50%;
             border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             cursor: pointer;
             z-index: 10;
             transition: transform 0.1s;
         }
-        .piece:hover { transform: scale(1.1); }
-        .piece.active { animation: pulse 0.6s infinite alternate; }
-        @keyframes pulse { from { box-shadow: 0 0 5px white; } to { box-shadow: 0 0 15px white; transform: scale(1.1); } }
+
+        .piece:hover {
+            transform: scale(1.1);
+        }
+
+        .piece.active {
+            animation: pulse 0.6s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                box-shadow: 0 0 5px white;
+            }
+
+            to {
+                box-shadow: 0 0 15px white;
+                transform: scale(1.1);
+            }
+        }
 
         .dice-box {
             background: #1f2937;
@@ -131,7 +219,8 @@
         }
 
         .die {
-            width: 50px; height: 50px;
+            width: 50px;
+            height: 50px;
             background: white;
             border-radius: 8px;
             margin: 10px auto;
@@ -141,19 +230,28 @@
             padding: 5px;
             cursor: pointer;
         }
-        .dot { background: #000; border-radius: 50%; width: 8px; height: 8px; margin: auto; }
+
+        .dot {
+            background: #000;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            margin: auto;
+        }
     </style>
 </head>
+
 <body class="p-4 flex flex-col lg:flex-row gap-8">
 
     <div class="flex flex-col gap-4">
         <h1 class="text-3xl font-black italic tracking-tighter">LUDO MASTER</h1>
-        <div id="status-card" class="bg-gray-800 p-4 rounded-lg">
-            <p id="turn-text" class="text-xl font-bold uppercase mb-2">RED'S TURN</p>
+        <div id="status-card" class="bg-gray-800 p-4 rounded-lg" role="region" aria-label="Game status">
+            <p id="turn-text" class="text-xl font-bold uppercase mb-2" role="status">RED'S TURN</p>
             <div id="player-list" class="space-y-2"></div>
         </div>
         <div class="dice-box">
-            <div id="die-ui" class="die" onclick="handleDiceRoll()">
+            <div id="die-ui" class="die" onclick="handleDiceRoll()" role="button" aria-label="Roll the dice"
+                tabindex="0">
                 <div class="dot" style="grid-area: 2/2"></div>
             </div>
             <p class="text-xs opacity-50 font-bold uppercase mt-2">Tap Dice</p>
@@ -175,20 +273,20 @@
     <script>
         const PLAYERS = ['red', 'green', 'yellow', 'blue'];
         const COLORS = { red: '#e61919', green: '#00a651', yellow: '#ffcc00', blue: '#0070e0' };
-        
+
         // Sequence of cells for the shared track
         const TRACK = [
-            [13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0],
-            [6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],
-            [1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],
-            [8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6]
+            [13, 6], [12, 6], [11, 6], [10, 6], [9, 6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [6, 0],
+            [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [0, 8],
+            [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [8, 14],
+            [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [14, 6]
         ];
 
         const HOME_PATHS = {
-            red: [[13,7],[12,7],[11,7],[10,7],[9,7],[8,7]],
-            green: [[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]],
-            yellow: [[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]],
-            blue: [[7,13],[7,12],[7,11],[7,10],[7,9],[7,8]]
+            red: [[13, 7], [12, 7], [11, 7], [10, 7], [9, 7], [8, 7]],
+            green: [[7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6]],
+            yellow: [[1, 7], [2, 7], [3, 7], [4, 7], [5, 7], [6, 7]],
+            blue: [[7, 13], [7, 12], [7, 11], [7, 10], [7, 9], [7, 8]]
         };
 
         const START_IDX = { red: 0, green: 13, yellow: 26, blue: 39 };
@@ -204,7 +302,7 @@
 
         function init() {
             const board = document.getElementById('board');
-            
+
             // Build Bases
             const basePositions = {
                 green: '1/1/7/7', yellow: '1/10/7/16',
@@ -217,7 +315,7 @@
                 base.style.gridArea = basePositions[color];
                 const whiteArea = document.createElement('div');
                 whiteArea.className = 'white-area';
-                for(let i=0; i<4; i++) {
+                for (let i = 0; i < 4; i++) {
                     const p = document.createElement('div');
                     p.className = 'pocket';
                     p.id = `pocket-${color}-${i}`;
@@ -230,15 +328,15 @@
             });
 
             // Build Tracks
-            for(let r=0; r<15; r++) {
-                for(let c=0; c<15; c++) {
+            for (let r = 0; r < 15; r++) {
+                for (let c = 0; c < 15; c++) {
                     // Only draw if it's a track cell
-                    if (isBase(r,c) || isCenter(r,c)) continue;
+                    if (isBase(r, c) || isCenter(r, c)) continue;
 
                     const cell = document.createElement('div');
                     cell.className = 'cell';
                     cell.id = `cell-${r}-${c}`;
-                    cell.style.gridArea = `${r+1}/${c+1}`;
+                    cell.style.gridArea = `${r + 1}/${c + 1}`;
 
                     // Add markings
                     const trackIdx = TRACK.findIndex(p => p[0] === r && p[1] === c);
@@ -278,10 +376,10 @@
             state.hasRolled = true;
 
             // Update Dice UI
-            const dots = { 1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9] };
+            const dots = { 1: [5], 2: [1, 9], 3: [1, 5, 9], 4: [1, 3, 7, 9], 5: [1, 3, 5, 7, 9], 6: [1, 3, 4, 6, 7, 9] };
             const dieUi = document.getElementById('die-ui');
             dieUi.innerHTML = '';
-            for(let i=1; i<=9; i++) {
+            for (let i = 1; i <= 9; i++) {
                 const d = document.createElement('div');
                 if (dots[state.dice].includes(i)) d.className = 'dot';
                 dieUi.appendChild(d);
@@ -305,7 +403,7 @@
 
         function movePiece(color, idx) {
             if (!state.hasRolled || color !== PLAYERS[state.turn] || !checkValidMove(color, idx)) return;
-            
+
             const p = state.pieces[color][idx];
             state.moving = true;
 
@@ -403,4 +501,5 @@
         init();
     </script>
 </body>
+
 </html>

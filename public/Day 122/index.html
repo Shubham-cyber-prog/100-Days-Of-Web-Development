@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,26 +11,32 @@
         :root {
             --primary-hue: 220;
         }
+
         body {
             background-color: #fafafa;
             color: #1a1a1a;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
+
         .color-card {
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
         }
+
         .color-card:hover {
             transform: translateY(-8px);
         }
+
         .hue-slider {
             -webkit-appearance: none;
+            appearance: none;
             width: 100%;
             height: 15px;
             border-radius: 10px;
             background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
             outline: none;
         }
+
         .hue-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -39,18 +46,21 @@
             background: white;
             border: 3px solid #1a1a1a;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         .glass-panel {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
+
         .preview-svg {
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
         }
     </style>
 </head>
+
 <body class="min-h-screen p-4 md:p-8">
 
     <div class="max-w-6xl mx-auto">
@@ -61,34 +71,43 @@
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
+
             <!-- Selection Panel -->
-            <div class="lg:col-span-1 space-y-8">
+            <aside class="lg:col-span-1 space-y-8" role="complementary" aria-label="Style Palette Controls">
                 <div class="glass-panel p-6 rounded-3xl shadow-sm">
                     <h2 class="text-xl font-semibold mb-6 flex items-center">
                         <i class="fas fa-palette mr-2 text-indigo-500"></i> Choose Base Color
                     </h2>
-                    
+
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-xs font-bold text-gray-400 uppercase mb-3">Slide to change Hue</label>
-                            <input type="range" min="0" max="360" value="220" class="hue-slider" id="hueInput">
+                            <label for="hueInput" class="block text-xs font-bold text-gray-400 uppercase mb-3">Slide to
+                                change Hue</label>
+                            <input type="range" min="0" max="360" value="220" class="hue-slider" id="hueInput"
+                                aria-label="Adjust base color hue">
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Saturation</label>
-                                <input type="range" min="0" max="100" value="70" class="w-full accent-indigo-600" id="satInput">
+                                <label for="satInput"
+                                    class="block text-xs font-bold text-gray-400 uppercase mb-2">Saturation</label>
+                                <input type="range" min="0" max="100" value="70" class="w-full accent-indigo-600"
+                                    id="satInput" aria-label="Adjust color saturation">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Lightness</label>
-                                <input type="range" min="20" max="90" value="50" class="w-full accent-indigo-600" id="lightInput">
+                                <label for="lightInput"
+                                    class="block text-xs font-bold text-gray-400 uppercase mb-2">Lightness</label>
+                                <input type="range" min="20" max="90" value="50" class="w-full accent-indigo-600"
+                                    id="lightInput" aria-label="Adjust color lightness">
                             </div>
                         </div>
 
                         <div class="pt-4 border-t border-gray-100">
-                            <label class="block text-xs font-bold text-gray-400 uppercase mb-3">Harmony Theory</label>
-                            <select id="harmonyType" class="w-full p-3 rounded-xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <label for="harmonyType"
+                                class="block text-xs font-bold text-gray-400 uppercase mb-3">Harmony Theory</label>
+                            <select id="harmonyType"
+                                class="w-full p-3 rounded-xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                aria-label="Select color harmony theory">
                                 <option value="complementary">Complementary (Contrast)</option>
                                 <option value="analogous" selected>Analogous (Adjacent)</option>
                                 <option value="triadic">Triadic (Balanced)</option>
@@ -102,58 +121,66 @@
                 <div class="bg-indigo-900 text-white p-6 rounded-3xl shadow-xl">
                     <h3 class="text-lg font-bold mb-2" id="theoryTitle">Analogous Harmony</h3>
                     <p class="text-indigo-200 text-sm leading-relaxed" id="theoryDesc">
-                        Analogous colors are next to each other on the color wheel. They create serene and comfortable designs, often found in nature.
+                        Analogous colors are next to each other on the color wheel. They create serene and comfortable
+                        designs, often found in nature.
                     </p>
                 </div>
+        </div>
+
+        <!-- Main Display -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- Palette Results -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="paletteGrid">
+                <!-- JS Injected -->
             </div>
 
-            <!-- Main Display -->
-            <div class="lg:col-span-2 space-y-8">
-                <!-- Palette Results -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="paletteGrid">
-                    <!-- JS Injected -->
-                </div>
+            <!-- Visual Preview Section -->
+            <div class="glass-panel p-8 rounded-3xl shadow-sm">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <!-- Simple SVG Outfit Illustration -->
+                        <svg class="preview-svg w-64 h-auto" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Shirt -->
+                            <path id="svgShirt" d="M50 50 L150 50 L170 120 L140 120 L140 200 L60 200 L60 120 L30 120 Z"
+                                fill="#4F46E5" />
+                            <!-- Pants -->
+                            <path id="svgPants" d="M65 200 L135 200 L145 290 L110 290 L100 240 L90 290 L55 290 Z"
+                                fill="#1F2937" />
+                            <!-- Details -->
+                            <circle cx="100" cy="35" r="20" fill="#E5E7EB" />
+                            <rect x="80" y="50" width="40" height="15" fill="rgba(0,0,0,0.1)" />
+                        </svg>
+                    </div>
+                    <div class="w-full md:w-1/2 space-y-6">
+                        <h3 class="text-2xl font-bold">Outfit Visualization</h3>
+                        <p class="text-gray-500">See how your selected harmony looks on a standard professional
+                            ensemble.</p>
 
-                <!-- Visual Preview Section -->
-                <div class="glass-panel p-8 rounded-3xl shadow-sm">
-                    <div class="flex flex-col md:flex-row items-center gap-12">
-                        <div class="w-full md:w-1/2 flex justify-center">
-                            <!-- Simple SVG Outfit Illustration -->
-                            <svg class="preview-svg w-64 h-auto" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Shirt -->
-                                <path id="svgShirt" d="M50 50 L150 50 L170 120 L140 120 L140 200 L60 200 L60 120 L30 120 Z" fill="#4F46E5" />
-                                <!-- Pants -->
-                                <path id="svgPants" d="M65 200 L135 200 L145 290 L110 290 L100 240 L90 290 L55 290 Z" fill="#1F2937" />
-                                <!-- Details -->
-                                <circle cx="100" cy="35" r="20" fill="#E5E7EB" />
-                                <rect x="80" y="50" width="40" height="15" fill="rgba(0,0,0,0.1)" />
-                            </svg>
-                        </div>
-                        <div class="w-full md:w-1/2 space-y-6">
-                            <h3 class="text-2xl font-bold">Outfit Visualization</h3>
-                            <p class="text-gray-500">See how your selected harmony looks on a standard professional ensemble.</p>
-                            
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm">
-                                    <span class="font-medium text-gray-700">Top Piece</span>
-                                    <div id="topBadge" class="px-3 py-1 rounded-full text-xs font-bold text-white uppercase">Primary</div>
-                                </div>
-                                <div class="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm">
-                                    <span class="font-medium text-gray-700">Bottom Piece</span>
-                                    <div id="bottomBadge" class="px-3 py-1 rounded-full text-xs font-bold text-white uppercase">Accent</div>
-                                </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm">
+                                <span class="font-medium text-gray-700">Top Piece</span>
+                                <div id="topBadge"
+                                    class="px-3 py-1 rounded-full text-xs font-bold text-white uppercase">Primary</div>
                             </div>
+                            <div class="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm">
+                                <span class="font-medium text-gray-700">Bottom Piece</span>
+                                <div id="bottomBadge"
+                                    class="px-3 py-1 rounded-full text-xs font-bold text-white uppercase">Accent</div>
+                            </div>
+                        </div>
 
-                            <button onclick="copyToClipboard()" class="w-full py-4 bg-black text-white rounded-2xl font-bold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
-                                <i class="far fa-copy"></i> Copy Hex Codes
-                            </button>
-                            <div id="toast" class="hidden text-center text-green-600 text-sm font-bold">Copied to clipboard!</div>
+                        <button onclick="copyToClipboard()"
+                            class="w-full py-4 bg-black text-white rounded-2xl font-bold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
+                            <i class="far fa-copy"></i> Copy Hex Codes
+                        </button>
+                        <div id="toast" class="hidden text-center text-green-600 text-sm font-bold">Copied to clipboard!
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
+    </div>
     </div>
 
     <script>
@@ -202,10 +229,10 @@
             const s = parseInt(satInput.value);
             const l = parseInt(lightInput.value);
             const type = harmonyType.value;
-            
+
             let colors = [];
 
-            switch(type) {
+            switch (type) {
                 case 'complementary':
                     colors = [
                         { h: h, s: s, l: l, label: 'Primary' },
@@ -249,7 +276,7 @@
             colors.forEach((color, index) => {
                 const hex = hslToHex(color.h, color.s, color.l);
                 const isDark = color.l < 55;
-                
+
                 const card = document.createElement('div');
                 card.className = 'color-card bg-white p-3 rounded-2xl shadow-sm';
                 card.innerHTML = `
@@ -270,13 +297,13 @@
             // Logic for which colors go where in the outfit
             const primaryHex = hslToHex(colors[0].h, colors[0].s, colors[0].l);
             const secondaryHex = hslToHex(colors[1].h, colors[1].s, colors[1].l);
-            
+
             svgShirt.style.fill = primaryHex;
             svgPants.style.fill = secondaryHex;
 
             document.getElementById('topBadge').style.backgroundColor = primaryHex;
             document.getElementById('bottomBadge').style.backgroundColor = secondaryHex;
-            
+
             // Adjust contrast for badge text
             document.getElementById('topBadge').style.color = colors[0].l < 55 ? 'white' : 'black';
             document.getElementById('bottomBadge').style.color = colors[1].l < 55 ? 'white' : 'black';
@@ -294,7 +321,7 @@
             dummy.select();
             document.execCommand("copy");
             document.body.removeChild(dummy);
-            
+
             const toast = document.getElementById('toast');
             toast.classList.remove('hidden');
             setTimeout(() => toast.classList.add('hidden'), 2000);
@@ -309,4 +336,5 @@
         window.onload = generatePalette;
     </script>
 </body>
+
 </html>
