@@ -33,6 +33,26 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Zenith" />
 
+  <style>
+   /* ===== PROJECT SEARCH HIGHLIGHT ===== */
+mark {
+  background: #ff7a18;
+  color: #000;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(255,122,24,0.8);
+  border: 2px solid #fff;
+}
+
+body.light-theme mark {
+  background: #00c6ff;
+  color: #fff;
+  border: 2px solid #000;
+  box-shadow: 0 0 8px rgba(0,198,255,0.8);
+}
+  </style>
+
 </head>
 
 <body>
@@ -498,9 +518,9 @@
   <!-- SCRIPTS -->
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- GSAP (single version - removed duplicate) -->
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <!-- Original project scripts -->
   <script src="assets/js/project-loader.js"></script>
@@ -509,6 +529,9 @@
   <script src="website/scripts/components/navigation.js"></script>
 
   <script>
+    // Register GSAP plugins
+    gsap.registerPlugin(ScrollTrigger);
+
     // ===== LOADER =====
     const loaderBar = document.getElementById('loaderBar');
     const loaderPct = document.getElementById('loaderPct');
@@ -584,16 +607,28 @@
         mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
       });
 
-      // FIXED: animate function was missing — added here
+      let scrollY = 0;
+      window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+
+      // Animation loop
       function animate() {
         requestAnimationFrame(animate);
-        particles.rotation.y += 0.0003;
-        particles.rotation.x += 0.0001;
+        particles.rotation.x += 0.0005;
+        particles.rotation.y += 0.0005;
         camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
         camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.05;
+        camera.position.z += (5 - scrollY * 0.001 - camera.position.z) * 0.05;
         renderer.render(scene, camera);
       }
       animate();
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
 
       window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -751,9 +786,32 @@
       gsap.set('.hero-subtitle', { clearProps: 'all' });
       gsap.set('.hero-actions', { clearProps: 'all' });
     }
+})();
 
+// Disable GSAP animations for hero if they're causing issues
+if (window.gsap) {
+    // Clear any GSAP animations on hero
+    gsap.set('.hero-title .word', { clearProps: 'all' });
+    gsap.set('.hero-subtitle', { clearProps: 'all' });
+    gsap.set('.hero-actions', { clearProps: 'all' });
+}
+
+// ===== THEME TOGGLE =====
+window.toggleTheme = function() {
+    const body = document.body;
+    const isLight = body.classList.contains('light-theme');
+    if (isLight) {
+        body.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        body.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
+    }
+};
   </script>
-  <!-- FIXED: removed duplicate main.js — was loaded twice -->
+<script>
+/* =====================================
+   PROJECT SEARCH – WORKING VERSION
 
   <!-- PWA Components -->
   <script src="website/components/offline-indicator.js"></script>
