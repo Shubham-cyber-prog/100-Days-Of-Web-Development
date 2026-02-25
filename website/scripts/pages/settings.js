@@ -10,11 +10,18 @@ class SettingsManager {
     }
 
     init() {
-        this.setupToggleSwitches();
-        this.loadUserData();
-        this.bindEvents();
-        this.applySettings();
+    this.setupToggleSwitches();
+    this.loadUserData();
+    this.bindEvents();
+    this.applySettings();
+
+    // 🔥 Apply theme on load
+    if (this.settings.autoTheme) {
+        this.detectSystemTheme();
+    } else {
+        this.applyTheme();
     }
+}
 
     // Load settings from localStorage
     loadSettings() {
