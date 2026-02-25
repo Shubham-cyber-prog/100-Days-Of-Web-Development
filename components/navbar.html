@@ -382,7 +382,12 @@
             .btn-install { width: 36px; height: 36px; padding: 0.5rem; }
             .nav-search input { font-size: 0.78rem; padding: 0.6rem 0.8rem 0.6rem 2.2rem; }
             .search-ic { left: 10px; }
-        }
+        }.highlight {
+    background-color: yellow;
+    color: black;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
     </style>
 </head>
 <body>
@@ -394,14 +399,16 @@
         <i class="fas fa-house"></i>
     </a>
 
-    <!-- SEARCH -->
-    <div class="nav-search">
-        <input type="text" id="searchInput" placeholder="Search anything…" aria-label="Search">
-        <i class="fas fa-magnifying-glass search-ic"></i>
-    </div>
-
+    
     <!-- RIGHT: Install + Profile -->
     <div class="nav-right">
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="icon-btn" title="Toggle theme">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
 
         <!-- Install Button -->
         <a href="#" class="btn-install" id="installBtn">

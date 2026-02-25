@@ -39,6 +39,8 @@ function initializeNavbar() {
   
   // Handle close on outside click
   handleOutsideClick();
+  // Initialize search functionality
+  initializeSearch();
 }
 
 function setActiveNavLink() {
@@ -162,5 +164,46 @@ function navbarToggleTheme() {
 
 // Export for use in other files
 window.navbarToggleTheme = navbarToggleTheme;
+
+function initializeSearch() {
+  const navSearchInput = document.getElementById('searchInput');
+  console.log('Nav search input found:', navSearchInput);
+  if (navSearchInput) {
+    let pendingValue = '';
+    const applySearch = () => {
+      const projectSearchInput = document.getElementById('projectSearch');
+      console.log('Project search input found:', projectSearchInput);
+      if (projectSearchInput && pendingValue !== projectSearchInput.value) {
+        projectSearchInput.value = pendingValue;
+        projectSearchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        // Scroll to projects section
+        const projectsSection = document.querySelector('.projects-section') || document.getElementById('project-gallery')?.closest('section');
+        if (projectsSection) {
+          projectsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+    navSearchInput.addEventListener('input', (e) => {
+      pendingValue = e.target.value.trim();
+      applySearch();
+    });
+    navSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const value = e.target.value.trim().toLowerCase();
+        // Check for day redirect
+        const dayMatch = value.match(/^day\s*(\d+)$/i) || value.match(/^(\d+)$/);
+        if (dayMatch) {
+          const dayNum = parseInt(dayMatch[1]);
+          const liveLink = `public/Day ${dayNum.toString().padStart(2, '0')}/index.html`;
+          window.location.href = liveLink;
+        }
+      }
+    });
+    // Try to apply initial value if any
+    setTimeout(applySearch, 100);
+    setTimeout(applySearch, 500);
+    setTimeout(applySearch, 1000);
+  }
+}
 window.updateNavbarDarkModeIcon = updateNavbarDarkModeIcon;
 

@@ -307,8 +307,23 @@ document.getElementById('projectSearch').addEventListener('input', (e) => {
     const cards = document.querySelectorAll('.project-card');
 
     cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        card.style.display = text.includes(term) ? 'flex' : 'none';
+        const titleEl = card.querySelector('.project-title');
+        if (titleEl) {
+            // Restore original text
+            if (titleEl.dataset.originalText) {
+                titleEl.innerHTML = titleEl.dataset.originalText;
+            } else {
+                titleEl.dataset.originalText = titleEl.innerHTML;
+            }
+
+            if (term) {
+                // Highlight matching text
+                const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                titleEl.innerHTML = titleEl.innerHTML.replace(regex, '<mark>$1</mark>');
+            }
+            // Always show all cards
+            card.style.display = 'flex';
+        }
     });
 });
 
