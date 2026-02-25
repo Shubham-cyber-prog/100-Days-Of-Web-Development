@@ -628,14 +628,6 @@ body.light-theme mark {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
-    })();
-
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-
     })(); // END Three.js IIFE
 
     // ===== GSAP ANIMATIONS =====
@@ -786,7 +778,6 @@ body.light-theme mark {
       gsap.set('.hero-subtitle', { clearProps: 'all' });
       gsap.set('.hero-actions', { clearProps: 'all' });
     }
-})();
 
 // Disable GSAP animations for hero if they're causing issues
 if (window.gsap) {
@@ -809,14 +800,35 @@ window.toggleTheme = function() {
     }
 };
   </script>
-<script>
-/* =====================================
-   PROJECT SEARCH – WORKING VERSION
-
   <!-- PWA Components -->
   <script src="website/components/offline-indicator.js"></script>
   <script src="website/components/install-prompt.js"></script>
   <script src="website/pwa.js"></script>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollToTopBtn" class="scroll-to-top-btn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    // Scroll to Top Functionality
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('show');
+      } else {
+        scrollToTopBtn.classList.remove('show');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
 
 </body>
 
