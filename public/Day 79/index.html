@@ -42,6 +42,11 @@
                 <h1>WebMail</h1>
             </div>
 
+            <div class="folder-item" data-folder="applications">
+                <i class="fas fa-briefcase"></i>
+                <span>Applications</span>
+            </div>
+            
             <button class="compose-btn" id="composeBtn">
                 <i class="fas fa-pen"></i>
                 <span>Compose</span>
@@ -93,6 +98,9 @@
         <div class="main-content">
             <div class="top-bar">
                 <div class="search-bar">
+                    <button id="themeToggle" class="action-btn">
+                    <i class="fas fa-moon"></i>
+                    </button>
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" placeholder="Search emails..."
                         aria-label="Search through your emails">
@@ -122,6 +130,10 @@
                                 <span>Delete</span>
                             </button>
                         </div>
+                        <select id="sortEmails">
+                        <option value="new">Newest</option>
+                        <option value="old">Oldest</option>
+                        </select>
                     </div>
 
                     <div class="email-list" id="emailList">
@@ -195,6 +207,7 @@
             <input type="text" class="compose-input" id="composeTo" placeholder="To">
             <input type="text" class="compose-input" id="composeSubject" placeholder="Subject">
             <textarea class="compose-textarea" id="composeBody" placeholder="Message"></textarea>
+            <input type="file" id="attachment">
         </div>
 
         <div class="compose-footer">
