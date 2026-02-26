@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Job Board</title>
+    <title>Job Board | Find Your Next Opportunity</title>
+    <meta name="description"
+        content="Explore top job opportunities and filter by category, location, and type on our interactive Job Board.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Job Board Pro | Carrer Discovery">
+    <meta property="og:description"
+        content="Connect with your dream job using our comprehensive search and filtering platform.">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Job Board Pro | Carrer Discovery">
+    <meta name="twitter:description"
+        content="Connect with your dream job using our comprehensive search and filtering platform.">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
+
 <body>
 
     <header class="header">
-         <div class="header-content">
+        <div class="header-content">
             <div class="logo">
                 <i class="fas fa-briefcase"></i>
                 <h1>Job Board</h1>
@@ -24,20 +35,20 @@
                     <i class="fas fa-moon"></i>
                     <span>Dark Mode</span>
                 </button>
-</div>
+            </div>
         </div>
     </header>
 
     <main class="container">
-        <section class = "filters-section">
+        <section class="filters-section">
             <div class="filters">
-                <div class = "search-box">
-                    <i class = "fas fa-search"></i>
-                    <input type="text" id = "searchInput" placeholder="Search jobs by title, company or keywords..." />
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search jobs by title, company or keywords..." />
                 </div>
 
-                <div class = "filter-group">
-                    <select id = "locationFilter">
+                <div class="filter-group">
+                    <select id="locationFilter">
                         <option value="all">📍 All Locations</option>
                         <option value="Remote">Remote</option>
                         <option value="Bangalore">Bangalore</option>
@@ -48,8 +59,8 @@
                     </select>
                 </div>
 
-                <div class = "filter-group">
-                    <select id = "typeFilter">
+                <div class="filter-group">
+                    <select id="typeFilter">
                         <option value="all">📋 All Types</option>
                         <option value="Full Time">💼 Full Time</option>
                         <option value="Part Time">⏰ Part Time</option>
@@ -70,43 +81,44 @@
                     </select>
                 </div>
 
-                <button id = "clearFilters" class = "clear-btn">
-                    <i class = "fas fa-times"></i>Clear Filters
+                <button id="clearFilters" class="clear-btn">
+                    <i class="fas fa-times"></i>Clear Filters
                 </button>
             </div>
 
-            <div class = "stats">
-                <div class = "stats-left">
-                <span id = "jobsCount">4 jobs found</span>
-                <span class="sort-indicator" id="currentSort">
-                    <i class="fas fa-sort-amount-down"></i>
+            <div class="stats">
+                <div class="stats-left">
+                    <span id="jobsCount">4 jobs found</span>
+                    <span class="sort-indicator" id="currentSort">
+                        <i class="fas fa-sort-amount-down"></i>
                         Sorted by: Newest First
-                </span>
+                    </span>
                 </div>
-                <button id = "toggleView" class = "view-toggle">
-                    <i class = "fas fa-th"></i>Grid View
+                <button id="toggleView" class="view-toggle">
+                    <i class="fas fa-th"></i>Grid View
                 </button>
             </div>
         </section>
 
-        <section class="jobs" id = "jobsContainer">
+        <section class="jobs" id="jobsContainer">
         </section>
 
-        <div class = "empty-state" id = "emptyState" style = "display: none;">
-            <i class = "fas fa-search"></i>
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <i class="fas fa-search"></i>
             <h3>No jobs found</h3>
             <p>Try adjusting your search or filter criteria</p>
-            <button id = "resetSearch" class = "reset-btn">Reset Search</button>
+            <button id="resetSearch" class="reset-btn">Reset Search</button>
         </div>
     </main>
 
-    <footer class = "footer">
+    <footer class="footer">
         <p>Job Board © 2024 | Find your dream job</p>
-        <a href = "#" id = "viewSavedJobs"><i class = "fas fa-bookmark"></i></a>
+        <a href="#" id="viewSavedJobs"><i class="fas fa-bookmark"></i></a>
     </footer>
     <button id="scrollToTopBtn" aria-label="Scroll to top">
-    <i class="fa-solid fa-arrow-up"></i>
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
     <script src="script.js"></script>
 </body>
+
 </html>

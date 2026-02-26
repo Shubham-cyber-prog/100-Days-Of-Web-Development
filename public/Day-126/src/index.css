@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 220 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
+    --primary: 172 66% 50%;
+    --primary-foreground: 220 30% 6%;
+    --secondary: 220 14% 90%;
+    --secondary-foreground: 220 20% 20%;
+    --muted: 220 14% 94%;
+    --muted-foreground: 220 10% 46%;
+    --accent: 172 66% 50%;
+    --accent-foreground: 220 30% 6%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 172 66% 50%;
+    --radius: 0.75rem;
+    --sidebar-background: 220 20% 97%;
+    --sidebar-foreground: 220 10% 40%;
+    --sidebar-primary: 172 66% 50%;
+    --sidebar-primary-foreground: 220 30% 6%;
+    --sidebar-accent: 220 14% 92%;
+    --sidebar-accent-foreground: 220 20% 20%;
+    --sidebar-border: 220 13% 88%;
+    --sidebar-ring: 172 66% 50%;
+
+    /* Custom tokens */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
+    --critical: 0 72% 51%;
+    --critical-foreground: 0 0% 100%;
+
+    --glow-primary: 172 66% 50%;
+    --surface-elevated: 0 0% 100%;
+    --code-bg: 220 20% 96%;
+    --code-line-highlight: 172 66% 50%;
+  }
+
+  .dark {
+    --background: 222 28% 7%;
+    --foreground: 210 20% 92%;
+    --card: 222 25% 10%;
+    --card-foreground: 210 20% 92%;
+    --popover: 222 25% 10%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 172 66% 50%;
+    --primary-foreground: 220 30% 6%;
+    --secondary: 222 20% 16%;
+    --secondary-foreground: 210 20% 85%;
+    --muted: 222 20% 14%;
+    --muted-foreground: 215 15% 55%;
+    --accent: 172 66% 50%;
+    --accent-foreground: 220 30% 6%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 20% 18%;
+    --input: 222 20% 18%;
+    --ring: 172 66% 50%;
+    --sidebar-background: 222 28% 6%;
+    --sidebar-foreground: 215 15% 55%;
+    --sidebar-primary: 172 66% 50%;
+    --sidebar-primary-foreground: 220 30% 6%;
+    --sidebar-accent: 222 20% 12%;
+    --sidebar-accent-foreground: 210 20% 85%;
+    --sidebar-border: 222 20% 14%;
+    --sidebar-ring: 172 66% 50%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
+    --critical: 0 72% 51%;
+    --critical-foreground: 0 0% 100%;
+
+    --glow-primary: 172 66% 50%;
+    --surface-elevated: 222 25% 12%;
+    --code-bg: 222 28% 8%;
+    --code-line-highlight: 172 66% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  html {
+    @apply dark;
+  }
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--glow-primary) / 0.15),
+                0 0 60px hsl(var(--glow-primary) / 0.05);
+  }
+
+  .glow-border {
+    box-shadow: 0 0 0 1px hsl(var(--glow-primary) / 0.3),
+                0 0 15px hsl(var(--glow-primary) / 0.1);
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(172 80% 40%));
+  }
+
+  .gradient-card {
+    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--surface-elevated)));
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(190 80% 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--glow-primary) / 0.1); }
+    50% { box-shadow: 0 0 30px hsl(var(--glow-primary) / 0.25); }
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) transparent;
+  }
+}
