@@ -27,7 +27,7 @@ const formatStopwatch = (ms) => {
 // COMPONENTS
 // =============================================
 
-const Sidebar = ({ activeTab, setActiveTab, theme, setTheme }) => (
+const Sidebar = ({ activeTab, setActiveTab, theme, setTheme, streak }) => (
     <div className="sidebar glass">
         <div className="brand">
             <div style={{
@@ -62,7 +62,7 @@ const Sidebar = ({ activeTab, setActiveTab, theme, setTheme }) => (
             </div>
 
             <div className="glass-highlight" style={{ padding: '1rem', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>Streak: 5 Days 🔥</p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>Streak: {streak} Days 🔥</p>
             </div>
         </div>
     </div>
@@ -386,7 +386,6 @@ const Dashboard = ({ entries, projects }) => {
     };
 
     const totalTime = entries.reduce((acc, curr) => acc + curr.duration, 0);
-    const streak = calculateStreak();
 
     return (
         <div style={{ marginTop: '1rem' }}>
@@ -441,6 +440,31 @@ const Dashboard = ({ entries, projects }) => {
 const App = () => {
     const [activeTab, setActiveTab] = useState('timer');
     const [theme, setTheme] = useState(() => localStorage.getItem('timeflow_theme') || 'dark');
+
+    // --- L3 ARCHITECTURAL IMPROVEMENT: REUSABLE STREAK LOGIC ---
+    const calculateStreakFromEntries = (data) => {
+        if (!data || data.length === 0) return 0;
+        const dates = [...new Set(data.map(e => e.date.split('T')[0]))].sort().reverse();
+        let streakCount = 0;
+        let today = new Date().toISOString().split('T')[0];
+        let yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        yesterday = yesterday.toISOString().split('T')[0];
+
+        if (dates[0] !== today && dates[0] !== yesterday) return 0;
+
+        let current = new Date(dates[0]);
+        for (let i = 0; i < dates.length; i++) {
+            const d = new Date(dates[i]);
+            const diff = (current - d) / (1000 * 60 * 60 * 24);
+            if (diff <= 1) {
+                streakCount++;
+                current = d;
+            } else break;
+        }
+        return streakCount;
+    };
+
     const [projects, setProjects] = useState(() => {
         const saved = localStorage.getItem('timeflow_projects');
         return saved ? JSON.parse(saved) : [{ id: 'default', name: 'General', color: '#6366f1' }];
@@ -464,6 +488,8 @@ const App = () => {
     useEffect(() => {
         localStorage.setItem('timeflow_entries', JSON.stringify(entries));
     }, [entries]);
+
+    const streak = useMemo(() => calculateStreakFromEntries(entries), [entries]);
 
     const saveEntry = (duration, projectId, note) => {
         const proj = projects.find(p => p.id === projectId);
@@ -496,7 +522,7 @@ const App = () => {
     return (
         <div className="app-container">
             <MeshBackground />
-            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} theme={theme} setTheme={setTheme} />
+            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} theme={theme} setTheme={setTheme} streak={streak} />
 
             <main>
                 <header style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
