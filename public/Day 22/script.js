@@ -1,3 +1,21 @@
+
+window.addEventListener("load", function() {
+  let tl = gsap.timeline();
+  
+  tl.from(".topbar h1", {
+    y: 34,
+    opacity: 0,
+    duration: 2,
+    delay: 0.5 
+  })
+  .from(".toolbar button", {
+    y: 34,
+    opacity: 0,
+    duration: 2,
+    stagger: 0.3 
+  }, "-=1.5"); 
+});
+
 const input = document.getElementById("markdownInput");
 const preview = document.getElementById("previewContent");
 const charCount = document.getElementById("charCount");
