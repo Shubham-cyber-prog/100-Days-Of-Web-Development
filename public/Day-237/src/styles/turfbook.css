@@ -1,0 +1,178 @@
+/* TurfBook Custom Styles */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1E1E1E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00E676;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1B5E20;
+}
+
+/* Neon glow effect */
+.neon-glow {
+  box-shadow: 0 0 10px rgba(0, 230, 118, 0.5),
+              0 0 20px rgba(0, 230, 118, 0.3),
+              0 0 30px rgba(0, 230, 118, 0.1);
+}
+
+.neon-glow-hover:hover {
+  box-shadow: 0 0 15px rgba(0, 230, 118, 0.6),
+              0 0 30px rgba(0, 230, 118, 0.4),
+              0 0 45px rgba(0, 230, 118, 0.2);
+}
+
+/* Text glow */
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 230, 118, 0.5),
+               0 0 20px rgba(0, 230, 118, 0.3);
+}
+
+/* Card elevation */
+.card-elevation {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5),
+              0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+.card-elevation-hover:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5),
+              0 10px 10px -5px rgba(0, 0, 0, 0.3),
+              0 0 30px rgba(0, 230, 118, 0.2);
+}
+
+/* Skeleton loading animation */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1E1E1E 0%,
+    #2A2A2A 50%,
+    #1E1E1E 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+/* Pulse animation for notifications */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 230, 118, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.8);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Slow pulse for notification icons */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s ease-in-out infinite;
+}
+
+/* Gradient background for hero sections */
+.gradient-bg {
+  background: linear-gradient(135deg, #1B5E20 0%, #121212 100%);
+}
+
+/* Backdrop blur effect */
+.backdrop-blur-custom {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Responsive transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid #00E676;
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background-color: #00E676;
+  color: #121212;
+}
+
+::-moz-selection {
+  background-color: #00E676;
+  color: #121212;
+}
+
+/* Prevent text selection on interactive elements */
+button, a {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Leaflet Map Popup Customization */
+.leaflet-popup-content-wrapper {
+  background: #1E1E1E !important;
+  color: #ffffff !important;
+  border: 1px solid #00E676 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 15px rgba(0, 230, 118, 0.3) !important;
+}
+
+.leaflet-popup-content {
+  margin: 12px !important;
+}
+
+.leaflet-popup-tip {
+  background: #1E1E1E !important;
+  border: 1px solid #00E676 !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  color: #00E676 !important;
+  font-size: 20px !important;
+  padding: 4px 8px !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: #ffffff !important;
+}

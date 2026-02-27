@@ -1,65 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Music Player</title>
+  <meta name="description" content="Interactive music player to search and listen to your favorite tracks and artists.">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1 class="app-title">🎵 Music Player</h1>
+  <h1 class="app-title">🎵 Music Player</h1>
 
-<main class="container">
+  <main class="container">
 
-  <!-- PLAYER -->
-  <section class="player-card">
-    <input id="search" type="text" placeholder="Search song or artist (Enter)">
+    <!-- PLAYER -->
+    <section class="player-card">
+      <input id="search" type="text" placeholder="Search song or artist (Enter)">
 
-    <div class="recommended">
-      <h4>Recommended</h4>
-      <ul id="recommendedList"></ul>
-    </div>
+      <div class="recommended">
+        <h4>Recommended</h4>
+        <ul id="recommendedList"></ul>
+      </div>
 
-    <div class="current placeholder" id="current">
-      <img id="cover" />
-      <h3 id="title">Nothing Playing</h3>
-      <p id="artist">Search a song</p>
-    </div>
+      <div class="current placeholder" id="current">
+        <img id="cover" />
+        <h3 id="title">Nothing Playing</h3>
+        <p id="artist">Search a song</p>
+      </div>
 
-    <div class="controls">
-      <button id="prev" disabled>⏮</button>
-      <button id="play" disabled>▶</button>
-      <button id="next" disabled>⏭</button>
-    </div>
+      <div class="controls">
+        <button id="prev" disabled aria-label="Previous track">⏮</button>
+        <button id="play" disabled aria-label="Play or pause">▶</button>
+        <button id="next" disabled aria-label="Next track">⏭</button>
+      </div>
 
-    <div class="time">
-      <span id="currentTime">0:00</span>
-      <span id="duration">0:00</span>
-    </div>
+      <div class="time">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
 
-    <input type="range" id="progress" value="0">
+      <input type="range" id="progress" value="0">
 
-    <div class="volume">
-      🔊 <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
-    </div>
+      <div class="volume">
+        🔊 <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+      </div>
 
-    <audio id="audio"></audio>
-  </section>
+      <audio id="audio"></audio>
+    </section>
 
-  <!-- PLAYLIST -->
-  <section class="playlist-card">
-    <h3>Search Results</h3>
+    <!-- PLAYLIST -->
+    <section class="playlist-card">
+      <h3>Search Results</h3>
 
-    <div id="resultsPlaceholder" class="results-placeholder">
-      🎶 Search to load songs
-    </div>
+      <div id="resultsPlaceholder" class="results-placeholder">
+        🎶 Search to load songs
+      </div>
 
-    <ul id="playlist"></ul>
-  </section>
+      <ul id="playlist"></ul>
+    </section>
 
-</main>
+  </main>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

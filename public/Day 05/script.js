@@ -1,232 +1,154 @@
 class Calculator {
-    constructor(previousOperandTextElement, currentOperandTextElement) {
-        this.previousOperandTextElement = previousOperandTextElement;
-        this.currentOperandTextElement = currentOperandTextElement;
-        this.clear();
+  constructor(prevEl, currEl) {
+    this.prevEl = prevEl;
+    this.currEl = currEl;
+    this.clear();
+  }
+
+  clear() {
+    this.current = '0';
+    this.previous = '';
+    this.operation = null;
+    this.waiting = false;
+  }
+
+  delete() {
+    if (this.current.length === 1) {
+      this.current = '0';
+    } else {
+      this.current = this.current.slice(0, -1);
+    }
+  }
+
+  appendNumber(num) {
+    if (num === '.' && this.current.includes('.')) return;
+
+    if (this.waiting) {
+      this.current = num === '.' ? '0.' : num;
+      this.waiting = false;
+      return;
     }
 
-    clear() {
-        this.currentOperand = '0';
-        this.previousOperand = '';
-        this.operation = undefined;
-        this.awaitingNextOperand = false;
+    this.current = this.current === '0' && num !== '.'
+      ? num
+      : this.current + num;
+  }
+
+  chooseOperation(op) {
+    if (this.waiting) {
+      this.operation = op;
+      return;
     }
 
-    delete() {
-        if (this.currentOperand === '0') return;
-        this.currentOperand = this.currentOperand.toString().slice(0, -1);
-        if (this.currentOperand === '' || this.currentOperand === '-') this.currentOperand = '0';
+    if (this.previous !== '') {
+      this.compute();
     }
 
-    appendNumber(number) {
-        if (number === '.' && this.currentOperand.includes('.')) return;
+    this.operation = op;
+    this.previous = this.current;
+    this.waiting = true;
+  }
 
-        if (this.awaitingNextOperand) {
-            this.currentOperand = (number === '.') ? '0.' : number.toString();
-            this.awaitingNextOperand = false;
-            return;
-        }
-        
-        if (this.currentOperand === '0' && number !== '.') {
-            this.currentOperand = number;
-        } else {
-            this.currentOperand = this.currentOperand.toString() + number.toString();
-        }
+  computeUnary(op) {
+    const value = parseFloat(this.current);
+    if (isNaN(value)) return;
+
+    switch (op) {
+      case '√':
+        if (value < 0) return alert('Invalid input');
+        this.current = Math.sqrt(value).toString();
+        break;
+      case 'x²':
+        this.current = Math.pow(value, 2).toString();
+        break;
+    }
+  }
+
+  compute() {
+    const prev = parseFloat(this.previous);
+    const curr = parseFloat(this.current);
+    if (isNaN(prev) || isNaN(curr)) return;
+
+    let result;
+    switch (this.operation) {
+      case '+': result = prev + curr; break;
+      case '-': result = prev - curr; break;
+      case '×': result = prev * curr; break;
+      case '÷':
+        if (curr === 0) return alert('Cannot divide by zero');
+        result = prev / curr;
+        break;
+      case '%':
+        result = prev % curr;
+        break;
+      case '^':
+        result = Math.pow(prev, curr);
+        break;
+      default:
+        return;
     }
 
-    chooseOperation(operation) {
-        if (this.currentOperand === '') return;
+    this.current = result.toString();
+    this.previous = '';
+    this.operation = null;
+  }
 
-        if (this.operation && this.awaitingNextOperand) {
-            this.operation = operation;
-            return;
-        }
-        
-        if (this.previousOperand !== '') {
-            this.compute();
-        }
-        
-        this.operation = operation;
-        this.previousOperand = this.currentOperand;
-        this.currentOperand = '0';
-        this.awaitingNextOperand = true;
-    }
+  format(num) {
+    const [int, dec] = num.split('.');
+    return dec ? `${Number(int).toLocaleString()}.${dec}` : Number(int).toLocaleString();
+  }
 
-    computeUnary(operation) {
-        const current = parseFloat(this.currentOperand);
-        if (isNaN(current)) return;
-
-        let result;
-        switch (operation) {
-            case '√':
-                if (current < 0) {
-                    alert("Invalid Input");
-                    return;
-                }
-                result = Math.sqrt(current);
-                break;
-            case 'x²':
-                result = Math.pow(current, 2);
-                break;
-            default:
-                return;
-        }
-        
-        this.currentOperand = result.toString();
-    }
-
-    compute() {
-        const prev = parseFloat(this.previousOperand);
-        const current = parseFloat(this.currentOperand);
-        if (isNaN(prev) || isNaN(current)) return;
-
-        let result;
-        switch (this.operation) {
-            case '+':
-                result = prev + current;
-                break;
-            case '-':
-                result = prev - current;
-                break;
-            case '×':
-                result = prev * current;
-                break;
-            case '÷':
-                if (current === 0) {
-                    alert('Cannot divide by zero');
-                    return;
-                }
-                result = prev / current;
-                break;
-            case '%':
-                if (current === 0) {
-                    alert('Cannot modulo by zero');
-                    return;
-                }
-                result = prev % current;
-                break;
-            case '^':
-                result = Math.pow(prev, current);
-                break;
-            default:
-                return;
-        }
-
-        this.currentOperand = result.toString();
-        this.operation = undefined;
-        this.previousOperand = '';
-    }
-
-    getDisplayNumber(number) {
-        const stringNumber = number.toString();
-        const [integerPart, decimalPart] = stringNumber.split('.');
-        const integerDisplay = isNaN(integerPart)
-            ? ''
-            : Number(integerPart).toLocaleString('en', { maximumFractionDigits: 0 });
-            
-        return decimalPart != null
-            ? `${integerDisplay}.${decimalPart}`
-            : integerDisplay;
-    }
-
-    updateDisplay() {
-        this.currentOperandTextElement.innerText =
-            this.getDisplayNumber(this.currentOperand);
-
-        if (this.operation != null) {
-            this.previousOperandTextElement.innerText =
-                `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
-        } else {
-            this.previousOperandTextElement.innerText = '';
-        }
-    }
+  update() {
+    this.currEl.innerText = this.format(this.current);
+    this.prevEl.innerText = this.operation ? `${this.previous} ${this.operation}` : '';
+  }
 }
 
-/* ---------- INITIALIZATION ---------- */
-
+/* INIT */
 document.addEventListener('DOMContentLoaded', () => {
+  const calc = new Calculator(
+    document.getElementById('previous-operand'),
+    document.getElementById('current-operand')
+  );
 
-    const numberButtons = document.querySelectorAll('.number');
-    const operationButtons = document.querySelectorAll('.operator');
-    const scientificButtons = document.querySelectorAll('.scientific');
-    const equalsButton = document.getElementById('equals');
-    const deleteButton = document.getElementById('delete');
-    const clearButton = document.getElementById('clear');
+  document.querySelectorAll('.number').forEach(btn =>
+    btn.onclick = () => { calc.appendNumber(btn.innerText); calc.update(); }
+  );
 
-    const previousOperandTextElement = document.getElementById('previous-operand');
-    const currentOperandTextElement = document.getElementById('current-operand');
+  document.querySelectorAll('.operator').forEach(btn =>
+    btn.onclick = () => { calc.chooseOperation(btn.innerText); calc.update(); }
+  );
 
-    const calculator = new Calculator(
-        previousOperandTextElement,
-        currentOperandTextElement
-    );
+  document.querySelectorAll('.scientific').forEach(btn =>
+    btn.onclick = () => { calc.computeUnary(btn.innerText); calc.update(); }
+  );
 
-    numberButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            calculator.appendNumber(button.innerText);
-            calculator.updateDisplay();
-        });
-    });
+  document.getElementById('equals').onclick = () => { calc.compute(); calc.update(); };
+  document.getElementById('clear').onclick = () => { calc.clear(); calc.update(); };
+  document.getElementById('delete').onclick = () => { calc.delete(); calc.update(); };
 
-    operationButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            calculator.chooseOperation(button.innerText);
-            calculator.updateDisplay();
-        });
-    });
-
-    scientificButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            calculator.computeUnary(button.innerText);
-            calculator.updateDisplay();
-        });
-    });
-
-    equalsButton.addEventListener('click', () => {
-        calculator.compute();
-        calculator.updateDisplay();
-    });
-
-    clearButton.addEventListener('click', () => {
-        calculator.clear();
-        calculator.updateDisplay();
-    });
-
-    deleteButton.addEventListener('click', () => {
-        calculator.delete();
-        calculator.updateDisplay();
-    });
-
-    /* ---------- KEYBOARD SUPPORT ---------- */
-    document.addEventListener('keydown', e => {
-        if ((e.key >= '0' && e.key <= '9') || e.key === '.') {
-            calculator.appendNumber(e.key);
-        } else if (['+', '-', '*', '/', '%', '^'].includes(e.key)) {
-            const map = { '*': '×', '/': '÷' };
-            calculator.chooseOperation(map[e.key] || e.key);
-        } else if (e.key === 'Enter') {
-            e.preventDefault();
-            calculator.compute();
-        } else if (e.key === 'Backspace') {
-            calculator.delete();
-        } else if (e.key === 'Escape') {
-            calculator.clear();
-        }
-        calculator.updateDisplay();
-    });
-
-    /* ---------- THEME SWITCH ---------- */
-    const themeSwitcher = document.getElementById('theme-switcher');
-    
-    if(!document.body.dataset.theme) {
-        document.body.dataset.theme = 'light'; 
+  /* Keyboard support */
+  document.addEventListener('keydown', e => {
+    if (!isNaN(e.key) || e.key === '.') calc.appendNumber(e.key);
+    if (['+', '-', '*', '/', '%', '^'].includes(e.key)) {
+      const map = { '*': '×', '/': '÷' };
+      calc.chooseOperation(map[e.key] || e.key);
     }
+    if (e.key === 'Enter') calc.compute();
+    if (e.key === 'Backspace') calc.delete();
+    if (e.key === 'Escape') calc.clear();
+    calc.update();
+  });
 
-    if (!themeSwitcher) return;
+  /* Theme */
+  const themeBtn = document.getElementById('theme-switcher');
+  document.body.dataset.theme = 'light';
 
-    themeSwitcher.addEventListener('click', () => {
-        const isDark = document.body.dataset.theme === 'dark';
-        document.body.dataset.theme = isDark ? 'light' : 'dark';
-        themeSwitcher.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
-    });
+  themeBtn.onclick = () => {
+    const dark = document.body.dataset.theme === 'dark';
+    document.body.dataset.theme = dark ? 'light' : 'dark';
+    themeBtn.innerText = dark ? 'Toggle Dark Mode' : 'Toggle Light Mode';
+  };
+
+  calc.update();
 });
