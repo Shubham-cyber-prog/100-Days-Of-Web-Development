@@ -94,7 +94,6 @@ scrollBtn.addEventListener("click", () => {
 
 
 
-
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 
