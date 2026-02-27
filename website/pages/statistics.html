@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/website/assets/images/logo.png" />
+  <title>Statistics | 100 Days of Web Dev</title>
+  <link rel="stylesheet" href="../styles/index.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      padding: 80px 20px 40px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .stat-card {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #22d3ee, #a78bfa);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .stat-value {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .progress-section {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 16px;
+      padding: 35px;
+      margin-bottom: 50px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22d3ee, #a78bfa);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .achievement-card {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .achievement-card.unlocked {
+      background: rgba(34, 211, 238, 0.1);
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+
+    .achievement-card:hover {
+      transform: scale(1.02);
+    }
+
+    .achievement-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      opacity: 0.5;
+    }
+
+    .achievement-card.unlocked .achievement-icon {
+      opacity: 1;
+    }
+
+    .achievement-name {
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 5px;
+    }
+
+    .achievement-desc {
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    .streak-display {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 50px;
+    }
+
+    .streak-fire {
+      font-size: 3rem;
+      animation: flicker 1s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .streak-info h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #f97316;
+      margin-bottom: 5px;
+    }
+
+    .streak-info p {
+      color: #94a3b8;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 50px;
+      color: #94a3b8;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #94a3b8;
+      text-decoration: none;
+      margin-bottom: 30px;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #22d3ee;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-value {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="dashboard.html" class="back-btn">
+      ← Back to Dashboard
+    </a>
+
+    <div class="header">
+      <h1>Your Progress Statistics</h1>
+      <p>Track your learning journey and achievements</p>
+    </div>
+
+    <div id="loading" class="loading">Loading your statistics...</div>
+
+    <div id="stats-content" style="display: none;">
+      <div class="streak-display">
+        <span class="streak-fire">🔥</span>
+        <div class="streak-info">
+          <h3 id="current-streak">0 Day Streak</h3>
+          <p id="longest-streak">Longest: 0 days</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📚</div>
+          <div class="stat-value" id="completed-days">0</div>
+          <div class="stat-label">Days Completed</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-value" id="completion-percent">0%</div>
+          <div class="stat-label">Completion Rate</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-value" id="total-points">0</div>
+          <div class="stat-label">Total Points</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-value" id="achievements-count">0</div>
+          <div class="stat-label">Achievements</div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="section-header">
+          <h2 class="section-title">Overall Progress</h2>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="overall-progress" style="width: 0%"></div>
+        </div>
+        <div class="progress-text">
+          <span id="progress-detail">0 of 100 days completed</span>
+          <span id="progress-percent">0%</span>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="section-header">
+          <h2 class="section-title">Achievements</h2>
+        </div>
+        <div class="achievements-grid" id="achievements-list">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { progressServiceAPI } from '../scripts/services/progressService.js';
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+
+    let currentUser = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initializeAuth();
+    });
+
+    function initializeAuth() {
+      const auth = getAuth();
+      onAuthStateChanged(auth, async (user) => {
+        currentUser = user;
+        if (user) {
+          await loadStatistics();
+        } else {
+          loadGuestStatistics();
+        }
+      });
+    }
+
+    async function loadStatistics() {
+      try {
+        await progressServiceAPI.initialize(currentUser);
+        const data = progressServiceAPI.getProgressData();
+        updateUI(data);
+      } catch (error) {
+        console.error('Error loading statistics:', error);
+        loadGuestStatistics();
+      }
+    }
+
+    function loadGuestStatistics() {
+      const data = progressServiceAPI.getLocalProgressData();
+      updateUI(data);
+    }
+
+    function updateUI(data) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('stats-content').style.display = 'block';
+
+      document.getElementById('completed-days').textContent = data.totalCompleted || 0;
+      document.getElementById('completion-percent').textContent = data.completionPercentage + '%';
+      document.getElementById('total-points').textContent = data.totalPoints || 0;
+      document.getElementById('achievements-count').textContent = data.unlockedAchievements || 0;
+
+      document.getElementById('current-streak').textContent = (data.currentStreak || 0) + ' Day Streak';
+      document.getElementById('longest-streak').textContent = 'Longest: ' + (data.longestStreak || 0) + ' days';
+
+      document.getElementById('overall-progress').style.width = data.completionPercentage + '%';
+      document.getElementById('progress-detail').textContent = `${data.totalCompleted || 0} of 100 days completed`;
+      document.getElementById('progress-percent').textContent = data.completionPercentage + '%';
+
+      renderAchievements(data.achievements || []);
+    }
+
+    function renderAchievements(achievements) {
+      const container = document.getElementById('achievements-list');
+      container.innerHTML = '';
+
+      if (!achievements || achievements.length === 0) {
+        container.innerHTML = '<p style="color: #94a3b8;">No achievements yet. Keep learning to unlock them!</p>';
+        return;
+      }
+
+      achievements.forEach(achievement => {
+        const card = document.createElement('div');
+        card.className = 'achievement-card' + (achievement.unlocked ? ' unlocked' : '');
+        card.innerHTML = `
+          <div class="achievement-icon">${achievement.icon || '🏅'}</div>
+          <div class="achievement-name">${achievement.name || achievement.title}</div>
+          <div class="achievement-desc">${achievement.description || ''}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+
+</html>
