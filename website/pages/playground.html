@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/website/assets/images/logo.png" />
+  <title>Code Playground | 100 Days of Web Dev</title>
+  <link rel="stylesheet" href="../styles/index.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      padding: 80px 20px 40px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      color: #0f172a;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(34, 211, 238, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #f1f5f9;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(30, 41, 59, 1);
+      border-color: rgba(34, 211, 238, 0.5);
+    }
+
+    .playground-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      min-height: calc(100vh - 200px);
+    }
+
+    .editors-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .preview-panel {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .editor-container {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .editor-header {
+      background: rgba(30, 41, 59, 0.9);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .editor-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    .editor-icon {
+      font-size: 1rem;
+    }
+
+    .editor-textarea {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #e2e8f0;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      padding: 16px;
+      resize: none;
+      outline: none;
+      min-height: 150px;
+    }
+
+    .editor-textarea::placeholder {
+      color: #64748b;
+    }
+
+    .editor-textarea:focus {
+      outline: none;
+    }
+
+    .preview-header {
+      background: #1e293b;
+      color: #f1f5f9;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preview-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .preview-content {
+      flex: 1;
+      padding: 0;
+      overflow: auto;
+      min-height: 400px;
+    }
+
+    .preview-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .template-selector {
+      margin-bottom: 20px;
+    }
+
+    .template-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .template-select {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px 16px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 8px;
+      color: #f1f5f9;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .template-select:hover {
+      border-color: rgba(34, 211, 238, 0.5);
+    }
+
+    .saved-snippets {
+      margin-top: 20px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      display: none;
+    }
+
+    .saved-snippets.active {
+      display: block;
+    }
+
+    .snippets-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #f1f5f9;
+    }
+
+    .snippets-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+    }
+
+    .snippet-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 8px;
+      padding: 15px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .snippet-card:hover {
+      border-color: rgba(34, 211, 238, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .snippet-name {
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 5px;
+    }
+
+    .snippet-date {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #94a3b8;
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #22d3ee;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: rgba(30, 41, 59, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 16px;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #f1f5f9;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 8px;
+      color: #f1f5f9;
+      font-size: 0.9rem;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: rgba(34, 211, 238, 0.5);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .playground-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .editors-panel {
+        order: 2;
+      }
+
+      .preview-panel {
+        order: 1;
+        min-height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .actions {
+        width: 100%;
+      }
+
+      .btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="dashboard.html" class="back-btn">
+      ← Back to Dashboard
+    </a>
+
+    <div class="header">
+      <h1>Code Playground</h1>
+      <div class="actions">
+        <button class="btn btn-secondary" id="loadTemplateBtn">
+          📋 Load Template
+        </button>
+        <button class="btn btn-secondary" id="saveSnippetBtn">
+          💾 Save Snippet
+        </button>
+        <button class="btn btn-secondary" id="viewSnippetsBtn">
+          📁 View Saved
+        </button>
+        <button class="btn btn-primary" id="runCodeBtn">
+          ▶️ Run Code
+        </button>
+      </div>
+    </div>
+
+    <div class="template-selector">
+      <label class="template-label">Choose a template to start:</label>
+      <select class="template-select" id="templateSelect">
+        <option value="">Select a template...</option>
+        <option value="basic">Basic HTML</option>
+        <option value="card">Card Component</option>
+        <option value="button">Button Styles</option>
+        <option value="animation">Simple Animation</option>
+        <option value="form">Contact Form</option>
+        <option value="counter">JavaScript Counter</option>
+      </select>
+    </div>
+
+    <div class="playground-layout">
+      <div class="editors-panel">
+        <div class="editor-container">
+          <div class="editor-header">
+            <span class="editor-title">
+              <span class="editor-icon">📄</span>
+              HTML
+            </span>
+          </div>
+          <textarea class="editor-textarea" id="htmlEditor" placeholder="Enter your HTML code here..."></textarea>
+        </div>
+
+        <div class="editor-container">
+          <div class="editor-header">
+            <span class="editor-title">
+              <span class="editor-icon">🎨</span>
+              CSS
+            </span>
+          </div>
+          <textarea class="editor-textarea" id="cssEditor" placeholder="Enter your CSS code here..."></textarea>
+        </div>
+
+        <div class="editor-container">
+          <div class="editor-header">
+            <span class="editor-title">
+              <span class="editor-icon">⚡</span>
+              JavaScript
+            </span>
+          </div>
+          <textarea class="editor-textarea" id="jsEditor" placeholder="Enter your JavaScript code here..."></textarea>
+        </div>
+      </div>
+
+      <div class="preview-panel">
+        <div class="preview-header">
+          <span class="preview-title">Live Preview</span>
+          <button class="btn btn-secondary" style="padding: 5px 12px; font-size: 0.8rem;" id="refreshBtn">
+            🔄 Refresh
+          </button>
+        </div>
+        <div class="preview-content">
+          <iframe class="preview-frame" id="previewFrame"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="saved-snippets" id="savedSnippets">
+      <h3 class="snippets-title">Saved Snippets</h3>
+      <div class="snippets-list" id="snippetsList">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="saveModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Save Snippet</h3>
+      <div class="form-group">
+        <label for="snippetName">Snippet Name</label>
+        <input type="text" class="form-input" id="snippetName" placeholder="Enter a name for your snippet">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="cancelSaveBtn">Cancel</button>
+        <button class="btn btn-primary" id="confirmSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const templates = {
+      basic: {
+        html: '<h1>Hello World!</h1>\n<p>Welcome to the code playground.</p>',
+        css: 'body {\n  font-family: Arial, sans-serif;\n  padding: 20px;\n  background: #f0f0f0;\n}\n\nh1 {\n  color: #333;\n}',
+        js: 'console.log("Hello from JavaScript!");'
+      },
+      card: {
+        html: '<div class="card">\n  <img src="https://via.placeholder.com/300" alt="Card Image">\n  <h2>Card Title</h2>\n  <p>This is a sample card component.</p>\n</div>',
+        css: '.card {\n  background: white;\n  border-radius: 10px;\n  padding: 20px;\n  box-shadow: 0 4px 6px rgba(0,0,0,0.1);\n  max-width: 300px;\n}\n\n.card img {\n  width: 100%;\n  border-radius: 5px;\n  margin-bottom: 10px;\n}\n\nh2 {\n  color: #333;\n  margin-bottom: 10px;\n}',
+        js: ''
+      },
+      button: {
+        html: '<button class="btn">Click Me!</button>\n<button class="btn btn-primary">Primary</button>',
+        css: '.btn {\n  padding: 12px 24px;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n  font-size: 16px;\n  margin: 10px;\n  background: #6c757d;\n  color: white;\n}\n\n.btn-primary {\n  background: #007bff;\n}\n\n.btn:hover {\n  opacity: 0.8;\n}',
+        js: 'document.querySelectorAll(".btn").forEach(btn => {\n  btn.addEventListener("click", () => {\n    alert("Button clicked!");\n  });\n});'
+      },
+      animation: {
+        html: '<div class="box"></div>',
+        css: '.box {\n  width: 100px;\n  height: 100px;\n  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);\n  animation: bounce 1s infinite;\n  margin: 50px auto;\n}\n\n@keyframes bounce {\n  0%, 100% { transform: translateY(0); }\n  50% { transform: translateY(-50px); }\n}',
+        js: ''
+      },
+      form: {
+        html: '<form id="contactForm">\n  <div>\n    <label>Name:</label>\n    <input type="text" id="name" required>\n  </div>\n  <div>\n    <label>Email:</label>\n    <input type="email" id="email" required>\n  </div>\n  <div>\n    <label>Message:</label>\n    <textarea id="message" rows="4" required></textarea>\n  </div>\n  <button type="submit">Send</button>\n</form>\n<div id="output"></div>',
+        css: 'form {\n  max-width: 400px;\n  margin: 20px auto;\n  padding: 20px;\n  background: white;\n  border-radius: 10px;\n}\n\ndiv {\n  margin-bottom: 15px;\n}\n\nlabel {\n  display: block;\n  margin-bottom: 5px;\n  font-weight: bold;\n}\n\ninput, textarea {\n  width: 100%;\n  padding: 8px;\n  border: 1px solid #ddd;\n  border-radius: 5px;\n  box-sizing: border-box;\n}\n\nbutton {\n  background: #007bff;\n  color: white;\n  padding: 10px 20px;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n}\n\n#output {\n  margin-top: 20px;\n  padding: 10px;\n  background: #d4edda;\n  border-radius: 5px;\n  display: none;\n}',
+        js: 'document.getElementById("contactForm").addEventListener("submit", (e) => {\n  e.preventDefault();\n  const name = document.getElementById("name").value;\n  const email = document.getElementById("email").value;\n  const message = document.getElementById("message").value;\n  \n  const output = document.getElementById("output");\n  output.innerHTML = `<strong>Thank you, ${name}!</strong><br>Your message has been sent.`;\n  output.style.display = "block";\n});'
+      },
+      counter: {
+        html: '<div class="counter">\n  <h1 id="count">0</h1>\n  <div class="buttons">\n    <button id="decrease">-</button>\n    <button id="increase">+</button>\n    <button id="reset">Reset</button>\n  </div>\n</div>',
+        css: '.counter {\n  text-align: center;\n  padding: 50px;\n}\n\n#count {\n  font-size: 72px;\n  margin: 20px 0;\n}\n\n.buttons {\n  display: flex;\n  gap: 10px;\n  justify-content: center;\n}\n\nbutton {\n  padding: 15px 30px;\n  font-size: 20px;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n  background: #007bff;\n  color: white;\n}\n\n#decrease { background: #dc3545; }\n#reset { background: #6c757d; }\nbutton:hover { opacity: 0.8; }',
+        js: 'let count = 0;\n\nconst countEl = document.getElementById("count");\nconst decreaseBtn = document.getElementById("decrease");\nconst increaseBtn = document.getElementById("increase");\nconst resetBtn = document.getElementById("reset");\n\ndecreaseBtn.addEventListener("click", () => {\n  count--;\n  updateDisplay();\n});\n\nincreaseBtn.addEventListener("click", () => {\n  count++;\n  updateDisplay();\n});\n\nresetBtn.addEventListener("click", () => {\n  count = 0;\n  updateDisplay();\n});\n\nfunction updateDisplay() {\n  countEl.textContent = count;\n}'
+      }
+    };
+
+    const htmlEditor = document.getElementById('htmlEditor');
+    const cssEditor = document.getElementById('cssEditor');
+    const jsEditor = document.getElementById('jsEditor');
+    const previewFrame = document.getElementById('previewFrame');
+    const templateSelect = document.getElementById('templateSelect');
+    const savedSnippets = document.getElementById('savedSnippets');
+    const snippetsList = document.getElementById('snippetsList');
+    const saveModal = document.getElementById('saveModal');
+
+    function updatePreview() {
+      const html = htmlEditor.value;
+      const css = cssEditor.value;
+      const js = jsEditor.value;
+
+      const content = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>
+            ${css}
+            body {
+              margin: 0;
+              padding: 20px;
+              box-sizing: border-box;
+            }
+            * {
+              box-sizing: border-box;
+            }
+          </style>
+        </head>
+        <body>
+          ${html}
+          <script>
+            ${js}
+          <\/script>
+        </body>
+        </html>
+      `;
+
+      const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+      doc.open();
+      doc.write(content);
+      doc.close();
+    }
+
+    function loadTemplate(templateName) {
+      if (templates[templateName]) {
+        htmlEditor.value = templates[templateName].html;
+        cssEditor.value = templates[templateName].css;
+        jsEditor.value = templates[templateName].js;
+        updatePreview();
+      }
+    }
+
+    function saveSnippet(name) {
+      const snippet = {
+        name: name,
+        html: htmlEditor.value,
+        css: cssEditor.value,
+        js: jsEditor.value,
+        date: new Date().toISOString()
+      };
+
+      const snippets = JSON.parse(localStorage.getItem('codeSnippets') || '[]');
+      snippets.push(snippet);
+      localStorage.setItem('codeSnippets', JSON.stringify(snippets));
+      alert('Snippet saved successfully!');
+    }
+
+    function loadSnippets() {
+      const snippets = JSON.parse(localStorage.getItem('codeSnippets') || '[]');
+      snippetsList.innerHTML = '';
+
+      if (snippets.length === 0) {
+        snippetsList.innerHTML = '<p style="color: #64748b;">No saved snippets yet.</p>';
+        return;
+      }
+
+      snippets.forEach((snippet, index) => {
+        const card = document.createElement('div');
+        card.className = 'snippet-card';
+        card.innerHTML = `
+          <div class="snippet-name">${snippet.name}</div>
+          <div class="snippet-date">${new Date(snippet.date).toLocaleDateString()}</div>
+        `;
+        card.addEventListener('click', () => {
+          htmlEditor.value = snippet.html;
+          cssEditor.value = snippet.css;
+          jsEditor.value = snippet.js;
+          updatePreview();
+        });
+        snippetsList.appendChild(card);
+      });
+    }
+
+    templateSelect.addEventListener('change', () => {
+      loadTemplate(templateSelect.value);
+    });
+
+    document.getElementById('runCodeBtn').addEventListener('click', updatePreview);
+    document.getElementById('refreshBtn').addEventListener('click', updatePreview);
+    document.getElementById('loadTemplateBtn').addEventListener('click', () => {
+      templateSelect.click();
+    });
+
+    document.getElementById('saveSnippetBtn').addEventListener('click', () => {
+      saveModal.classList.add('active');
+    });
+
+    document.getElementById('cancelSaveBtn').addEventListener('click', () => {
+      saveModal.classList.remove('active');
+    });
+
+    document.getElementById('confirmSaveBtn').addEventListener('click', () => {
+      const name = document.getElementById('snippetName').value.trim();
+      if (name) {
+        saveSnippet(name);
+        saveModal.classList.remove('active');
+        document.getElementById('snippetName').value = '';
+      } else {
+        alert('Please enter a name for your snippet.');
+      }
+    });
+
+    document.getElementById('viewSnippetsBtn').addEventListener('click', () => {
+      loadSnippets();
+      savedSnippets.classList.toggle('active');
+    });
+
+    htmlEditor.addEventListener('input', () => {
+      localStorage.setItem('htmlCode', htmlEditor.value);
+    });
+
+    cssEditor.addEventListener('input', () => {
+      localStorage.setItem('cssCode', cssEditor.value);
+    });
+
+    jsEditor.addEventListener('input', () => {
+      localStorage.setItem('jsCode', jsEditor.value);
+    });
+
+    window.addEventListener('load', () => {
+      htmlEditor.value = localStorage.getItem('htmlCode') || '';
+      cssEditor.value = localStorage.getItem('cssCode') || '';
+      jsEditor.value = localStorage.getItem('jsCode') || '';
+
+      if (htmlEditor.value || cssEditor.value || jsEditor.value) {
+        updatePreview();
+      } else {
+        loadTemplate('basic');
+      }
+    });
+
+    updatePreview();
+  </script>
+</body>
+
+</html>
