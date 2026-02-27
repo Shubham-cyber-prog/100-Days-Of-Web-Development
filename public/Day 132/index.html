@@ -392,10 +392,9 @@
       ],
       currentSlide: 0,
       selectedEl: null,
+      history: [],
+      historyIdx: -1,
     };
-
-    let history = [];
-    let historyIdx = -1;
 
     const workspace = document.getElementById('active-slide');
 
@@ -458,6 +457,7 @@
 
         // Interaction
         dom.onmousedown = e => {
+          e.stopPropagation();
           selectEl(el.id);
         };
 
@@ -661,25 +661,25 @@
     // --- Undo / Redo ---
     function saveHistory() {
       const snap = JSON.stringify(state);
-      if (history[historyIdx] === snap) return;
-      history = history.slice(0, historyIdx + 1);
-      history.push(snap);
-      if (history.length > 50) history.shift();
-      historyIdx = history.length - 1;
+      if (state.history[state.historyIdx] === snap) return;
+      state.history = state.history.slice(0, state.historyIdx + 1);
+      state.history.push(snap);
+      if (state.history.length > 50) state.history.shift();
+      state.historyIdx = state.history.length - 1;
     }
 
     function undo() {
-      if (historyIdx > 0) {
-        historyIdx--;
-        state = JSON.parse(history[historyIdx]);
+      if (state.historyIdx > 0) {
+        state.historyIdx--;
+        state = JSON.parse(state.history[state.historyIdx]);
         render();
       }
     }
 
     function redo() {
-      if (historyIdx < history.length - 1) {
-        historyIdx++;
-        state = JSON.parse(history[historyIdx]);
+      if (state.historyIdx < state.history.length - 1) {
+        state.historyIdx++;
+        state = JSON.parse(state.history[state.historyIdx]);
         render();
       }
     }
