@@ -92,6 +92,8 @@ async function renderProjects(filter = 'All') {
 
         const card = document.createElement('div');
         card.className = 'card project-card animate-enter';
+        card.setAttribute('role', 'article');
+        card.setAttribute('aria-label', `${project.title}, Day ${project.day}`);
         card.style.animationDelay = `${Math.min(delay, 1000)}ms`;
         delay += 30;
 
@@ -133,6 +135,7 @@ async function renderProjects(filter = 'All') {
         `;
 
         const codeChip = card.querySelector('.code-chip');
+        codeChip.setAttribute('aria-label', `View code for ${project.title}`);
         codeChip.onclick = (e) => {
             e.stopPropagation();
             window.open(codeLink, '_blank');
