@@ -1,0 +1,176 @@
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.dark {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --border: #334155;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s ease;
+}
+
+/* HEADER */
+header {
+  background: var(--card);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+
+header span { color: var(--primary); }
+
+#themeToggle {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h2 { font-size: 40px; }
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* SEARCH */
+.search-box input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 30px;
+}
+
+/* GRID */
+.courses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.course, .enroll-card {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: 0.3s;
+}
+
+.course:hover, .enroll-card:hover {
+  transform: translateY(-8px);
+}
+
+.course button,
+.enroll-card button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.course button {
+  background: linear-gradient(135deg,var(--primary),var(--primary-dark));
+  color: white;
+}
+
+.remove-btn { background: var(--danger); color:white; }
+
+.progress {
+  height: 8px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.5s ease;
+}
+
+.rating i {
+  cursor: pointer;
+  color: var(--border);
+}
+
+.rating i.active { color: var(--warning); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--success);
+  padding: 14px 22px;
+  border-radius: 10px;
+  color: white;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.4s;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Certificate */
+#certificateOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-box {
+  background: white;
+  padding: 50px;
+  border-radius: 20px;
+  max-width: 700px;
+  text-align: center;
+}
+
+@media print {
+  body * { visibility: hidden; }
+  .cert-box, .cert-box * { visibility: visible; }
+  .cert-box { position: absolute; left:0; top:0; }
+}
