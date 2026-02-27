@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/website/assets/images/logo.png" />
+  <title>Recommendations | 100 Days of Web Dev</title>
+  <link rel="stylesheet" href="../styles/index.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      padding: 80px 20px 40px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+
+    .search-section {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 15px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 12px 16px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 8px;
+      color: #f1f5f9;
+      font-size: 1rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: rgba(34, 211, 238, 0.5);
+    }
+
+    .search-btn {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(34, 211, 238, 0.3);
+    }
+
+    .section {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 16px;
+      padding: 35px;
+      margin-bottom: 40px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon {
+      font-size: 1.5rem;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .resource-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 25px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(34, 211, 238, 0.5);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .resource-type {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(34, 211, 238, 0.2);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #22d3ee;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .resource-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #f1f5f9;
+    }
+
+    .resource-desc {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .resource-meta {
+      display: flex;
+      gap: 15px;
+      font-size: 0.85rem;
+      color: #64748b;
+      flex-wrap: wrap;
+    }
+
+    .resource-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .difficulty {
+      color: #10b981;
+    }
+
+    .difficulty.intermediate {
+      color: #f59e0b;
+    }
+
+    .difficulty.advanced {
+      color: #ef4444;
+    }
+
+    .learning-paths {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+    }
+
+    .path-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .path-card.recommended {
+      border-color: rgba(34, 211, 238, 0.5);
+      background: rgba(34, 211, 238, 0.1);
+    }
+
+    .path-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .path-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .path-badge {
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      color: #0f172a;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .path-desc {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .path-progress {
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22d3ee, #a78bfa);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+
+    .next-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .step-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .step-card:hover {
+      border-color: rgba(34, 211, 238, 0.5);
+    }
+
+    .step-info h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #f1f5f9;
+    }
+
+    .step-info p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .step-priority {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .step-priority.high {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .step-priority.medium {
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 50px;
+      color: #94a3b8;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #94a3b8;
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #22d3ee;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      .resources-grid,
+      .learning-paths {
+        grid-template-columns: 1fr;
+      }
+
+      .step-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="dashboard.html" class="back-btn">
+      ← Back to Dashboard
+    </a>
+
+    <div class="header">
+      <h1>Personalized Recommendations</h1>
+      <p>Discover learning resources tailored to your progress</p>
+    </div>
+
+    <div class="search-section">
+      <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search for tutorials, documentation, or topics...">
+        <button class="search-btn" id="searchBtn">Search</button>
+      </div>
+    </div>
+
+    <div id="loading" class="loading">Loading your personalized recommendations...</div>
+
+    <div id="content" style="display: none;">
+      <div class="section" id="nextStepsSection">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">🎯</span>
+            Recommended Next Steps
+          </h2>
+        </div>
+        <div class="next-steps" id="nextStepsList">
+        </div>
+      </div>
+
+      <div class="section" id="basedOnProgressSection">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">📊</span>
+            Based on Your Progress
+          </h2>
+        </div>
+        <div class="resources-grid" id="progressResources">
+        </div>
+      </div>
+
+      <div class="section" id="similarTopicsSection">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">🔗</span>
+            Similar Topics
+          </h2>
+        </div>
+        <div class="resources-grid" id="similarResources">
+        </div>
+      </div>
+
+      <div class="section" id="learningPathsSection">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">🛤️</span>
+            Learning Paths
+          </h2>
+        </div>
+        <div class="learning-paths" id="learningPathsList">
+        </div>
+      </div>
+
+      <div class="section" id="externalResourcesSection">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">🌐</span>
+            External Resources
+          </h2>
+        </div>
+        <div class="resources-grid" id="externalResources">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import recommendationService from '../scripts/services/recommendationService.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadRecommendations();
+      setupEventListeners();
+    });
+
+    async function loadRecommendations() {
+      try {
+        const recommendations = await recommendationService.getRecommendations();
+        displayRecommendations(recommendations);
+      } catch (error) {
+        console.error('Error loading recommendations:', error);
+        document.getElementById('loading').textContent = 'Failed to load recommendations. Please try again.';
+      }
+    }
+
+    function displayRecommendations(recommendations) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+
+      displayNextSteps(recommendations.nextSteps);
+      displayProgressResources(recommendations.basedOnProgress);
+      displaySimilarResources(recommendations.similarTopics);
+      displayLearningPaths(recommendations.learningPaths);
+      displayExternalResources(recommendations.externalResources);
+    }
+
+    function displayNextSteps(steps) {
+      const container = document.getElementById('nextStepsList');
+      if (!steps || steps.length === 0) {
+        container.innerHTML = '<p style="color: #94a3b8;">No specific recommendations at this time. Keep learning!</p>';
+        return;
+      }
+
+      container.innerHTML = steps.map(step => `
+        <div class="step-card">
+          <div class="step-info">
+            <h4>${step.title}</h4>
+            <p>${step.description}</p>
+          </div>
+          <span class="step-priority ${step.priority}">${step.priority} Priority</span>
+        </div>
+      `).join('');
+    }
+
+    function displayProgressResources(resources) {
+      const container = document.getElementById('progressResources');
+      displayResources(container, resources);
+    }
+
+    function displaySimilarResources(resources) {
+      const container = document.getElementById('similarResources');
+      displayResources(container, resources);
+    }
+
+    function displayResources(container, resources) {
+      if (!resources || resources.length === 0) {
+        container.innerHTML = '<p style="color: #94a3b8;">No recommendations available.</p>';
+        return;
+      }
+
+      container.innerHTML = resources.map(resource => `
+        <a href="${resource.url}" target="_blank" class="resource-card">
+          <span class="resource-type">${resource.type}</span>
+          <h3 class="resource-title">${resource.title}</h3>
+          <p class="resource-desc">${resource.description}</p>
+          <div class="resource-meta">
+            <span class="difficulty ${resource.difficulty}">${resource.difficulty}</span>
+            <span>⏱️ ${resource.estimatedTime}</span>
+          </div>
+          ${resource.reason ? `<p style="margin-top: 10px; font-size: 0.8rem; color: #64748b;">💡 ${resource.reason}</p>` : ''}
+        </a>
+      `).join('');
+    }
+
+    function displayLearningPaths(paths) {
+      const container = document.getElementById('learningPathsList');
+      if (!paths || paths.length === 0) {
+        container.innerHTML = '<p style="color: #94a3b8;">No learning paths available.</p>';
+        return;
+      }
+
+      container.innerHTML = paths.map(path => `
+        <div class="path-card ${path.recommended ? 'recommended' : ''}">
+          <div class="path-header">
+            <h3 class="path-name">${path.name}</h3>
+            ${path.recommended ? '<span class="path-badge">Recommended</span>' : ''}
+          </div>
+          <p class="path-desc">${path.description}</p>
+          <div class="path-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${path.progress}%"></div>
+            </div>
+            <div class="progress-text">
+              <span>${path.progress}% Complete</span>
+              <span>${path.days.length} Days</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function displayExternalResources(resources) {
+      const container = document.getElementById('externalResources');
+      displayResources(container, resources);
+    }
+
+    function setupEventListeners() {
+      document.getElementById('searchBtn').addEventListener('click', handleSearch);
+      document.getElementById('searchInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSearch();
+      });
+    }
+
+    async function handleSearch() {
+      const query = document.getElementById('searchInput').value.trim();
+      if (!query) {
+        await loadRecommendations();
+        return;
+      }
+
+      try {
+        const results = recommendationService.searchResources(query);
+        displaySearchResults(results, query);
+      } catch (error) {
+        console.error('Error searching resources:', error);
+        alert('Failed to search resources. Please try again.');
+      }
+    }
+
+    function displaySearchResults(results, query) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+
+      const allSections = [
+        'nextStepsSection',
+        'basedOnProgressSection',
+        'similarTopicsSection',
+        'learningPathsSection',
+        'externalResourcesSection'
+      ];
+
+      allSections.forEach(sectionId => {
+        document.getElementById(sectionId).style.display = 'none';
+      });
+
+      if (results.length === 0) {
+        document.getElementById('basedOnProgressSection').style.display = 'block';
+        const container = document.getElementById('progressResources');
+        container.innerHTML = `<p style="color: #94a3b8; grid-column: 1 / -1; text-align: center; padding: 40px;">No results found for "${query}". Try different keywords.</p>`;
+        return;
+      }
+
+      document.getElementById('basedOnProgressSection').style.display = 'block';
+      const container = document.getElementById('progressResources');
+      container.innerHTML = `<p style="color: #94a3b8; grid-column: 1 / -1; margin-bottom: 20px;">Found ${results.length} results for "${query}"</p>`;
+      container.innerHTML += results.map(resource => `
+        <a href="${resource.url}" target="_blank" class="resource-card">
+          <span class="resource-type">${resource.type} • ${resource.category}</span>
+          <h3 class="resource-title">${resource.title}</h3>
+          <p class="resource-desc">${resource.description}</p>
+          <div class="resource-meta">
+            <span class="difficulty ${resource.difficulty}">${resource.difficulty}</span>
+            <span>⏱️ ${resource.estimatedTime}</span>
+          </div>
+        </a>
+      `).join('');
+
+      document.querySelector('#basedOnProgressSection .section-title').innerHTML = `
+        <span class="section-icon">🔍</span>
+        Search Results
+      `;
+    }
+  </script>
+</body>
+
+</html>
