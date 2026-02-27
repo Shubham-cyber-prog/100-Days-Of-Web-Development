@@ -39,6 +39,29 @@ async function loadProjects() {
 
 async function renderProjects(filter = 'All') {
     const grid = document.getElementById('projectsGrid');
+
+    if (!grid || allProjects.length === 0) {
+        return;
+    }
+
+    grid.innerHTML = '';
+
+    const skeletonCount = 8;
+    for (let i = 0; i < skeletonCount; i++) {
+        const skeleton = document.createElement('div');
+        skeleton.className = 'card skeleton-card';
+        skeleton.innerHTML = `
+            <div class="card-top">
+                <div class="skeleton-title"></div>
+                <div class="skeleton-chip"></div>
+            </div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+        `;
+        grid.appendChild(skeleton);
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 100));
     grid.innerHTML = '';
 
     // Load community projects
