@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Secure AI Assistant | Groq-Powered</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
     <style>
         /* ====== ROOT VARIABLES ====== */
         :root {
@@ -112,8 +114,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .logo-text h1 {
@@ -395,6 +404,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -579,12 +589,27 @@
             animation: typing 1.4s infinite ease-in-out;
         }
 
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
 
         @keyframes typing {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-            40% { transform: scale(1); opacity: 1; }
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .typing-text {
@@ -600,8 +625,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .welcome-icon {
@@ -612,8 +642,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .welcome-title {
@@ -854,6 +891,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1030,7 +1068,8 @@
             margin-top: 40px;
         }
 
-        .btn-primary, .btn-secondary {
+        .btn-primary,
+        .btn-secondary {
             flex: 1;
             padding: 18px;
             border-radius: var(--radius-lg);
@@ -1210,7 +1249,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .loading-text {
@@ -1244,12 +1285,12 @@
                 height: auto;
                 min-height: 100vh;
             }
-            
+
             .sidebar {
                 height: auto;
                 margin-bottom: 20px;
             }
-            
+
             .chat-container {
                 height: 70vh;
                 min-height: 600px;
@@ -1262,28 +1303,28 @@
                 align-items: flex-start;
                 gap: 16px;
             }
-            
+
             .header-actions {
                 width: 100%;
                 justify-content: flex-start;
             }
-            
+
             .message {
                 max-width: 95%;
             }
-            
+
             .features-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .welcome-message {
                 padding: 40px 20px;
             }
-            
+
             .welcome-title {
                 font-size: 28px;
             }
-            
+
             .welcome-subtitle {
                 font-size: 16px;
             }
@@ -1293,24 +1334,24 @@
             .input-wrapper {
                 flex-direction: column;
             }
-            
+
             .send-btn {
                 width: 100%;
                 height: 56px;
             }
-            
+
             .settings-actions {
                 flex-direction: column;
             }
-            
+
             .modal-body {
                 padding: 20px;
             }
-            
+
             .modal-header {
                 padding: 20px;
             }
-            
+
             .toast-container {
                 left: 20px;
                 right: 20px;
@@ -1332,9 +1373,26 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-5px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(5px);
+            }
         }
 
         .glow {
@@ -1381,6 +1439,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Security Badge -->
     <div class="security-badge">
@@ -1452,7 +1511,8 @@
             <header class="chat-header">
                 <div class="header-left">
                     <h2>AI Assistant</h2>
-                    <p>Ask me anything! I can help with coding, writing, analysis, and more. Your API key is securely encrypted.</p>
+                    <p>Ask me anything! I can help with coding, writing, analysis, and more. Your API key is securely
+                        encrypted.</p>
                 </div>
                 <div class="header-actions">
                     <button class="header-btn" id="clearChatBtn">
@@ -1477,8 +1537,9 @@
                         <i class="fas fa-robot"></i>
                     </div>
                     <h1 class="welcome-title">Welcome to Secure AI Assistant!</h1>
-                    <p class="welcome-subtitle">Your AI companion with enterprise-grade security. All API keys are encrypted and never leave your browser.</p>
-                    
+                    <p class="welcome-subtitle">Your AI companion with enterprise-grade security. All API keys are
+                        encrypted and never leave your browser.</p>
+
                     <div class="features-grid">
                         <div class="feature-card">
                             <div class="feature-icon">
@@ -1509,10 +1570,13 @@
                             <p class="feature-desc">Chat history saved locally in encrypted format</p>
                         </div>
                     </div>
-                    
-                    <div style="margin-top: 50px; font-size: 14px; color: var(--text-secondary); max-width: 800px; margin-left: auto; margin-right: auto;">
-                        <p style="font-weight: 600; margin-bottom: 15px; color: var(--text);">🎯 <strong>Quick Start:</strong></p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; text-align: left;">
+
+                    <div
+                        style="margin-top: 50px; font-size: 14px; color: var(--text-secondary); max-width: 800px; margin-left: auto; margin-right: auto;">
+                        <p style="font-weight: 600; margin-bottom: 15px; color: var(--text);">🎯 <strong>Quick
+                                Start:</strong></p>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; text-align: left;">
                             <div>1. <strong>Set API Key:</strong> Click Settings to add your Groq API key</div>
                             <div>2. <strong>Choose Model:</strong> Select from 4 powerful AI models</div>
                             <div>3. <strong>Start Chatting:</strong> Type your question and press Enter</div>
@@ -1539,17 +1603,13 @@
             <!-- Input Area -->
             <div class="input-container">
                 <div class="input-wrapper">
-                    <textarea 
-                        class="input-field" 
-                        id="messageInput" 
-                        placeholder="Ask me anything! (Shift+Enter for new line, Enter to send)"
-                        rows="1"
-                    ></textarea>
+                    <textarea class="input-field" id="messageInput"
+                        placeholder="Ask me anything! (Shift+Enter for new line, Enter to send)" rows="1"></textarea>
                     <button class="send-btn" id="sendButton">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
-                
+
                 <div class="input-actions">
                     <button class="action-btn" id="promptSuggestBtn">
                         <i class="fas fa-lightbulb"></i>
@@ -1587,15 +1647,13 @@
                         <i class="fas fa-key"></i>
                         Groq API Key
                     </label>
-                    <input 
-                        type="password" 
-                        id="apiKeyInput" 
-                        class="settings-input" 
-                        placeholder="Enter your Groq API key (starts with gsk_)"
-                    >
+                    <input type="password" id="apiKeyInput" class="settings-input"
+                        placeholder="Enter your Groq API key (starts with gsk_)">
                     <p class="settings-note">
-                        🔒 <strong>Secure Storage:</strong> Your API key is encrypted with AES-256 and stored locally in your browser. 
-                        <br>🔗 Get your API key from <a href="https://console.groq.com" target="_blank">console.groq.com</a>
+                        🔒 <strong>Secure Storage:</strong> Your API key is encrypted with AES-256 and stored locally in
+                        your browser.
+                        <br>🔗 Get your API key from <a href="https://console.groq.com"
+                            target="_blank">console.groq.com</a>
                     </p>
                 </div>
 
@@ -1604,15 +1662,8 @@
                         <i class="fas fa-thermometer-half"></i>
                         AI Temperature: <span id="tempValueDisplay" class="slider-current">0.7</span>
                     </label>
-                    <input 
-                        type="range" 
-                        id="temperatureSlider" 
-                        class="settings-slider" 
-                        min="0" 
-                        max="1" 
-                        step="0.1" 
-                        value="0.7"
-                    >
+                    <input type="range" id="temperatureSlider" class="settings-slider" min="0" max="1" step="0.1"
+                        value="0.7">
                     <div class="slider-values">
                         <span>More Focused</span>
                         <span>Balanced</span>
@@ -1625,15 +1676,8 @@
                         <i class="fas fa-ruler"></i>
                         Max Response Length: <span id="tokensValueDisplay" class="slider-current">1024 tokens</span>
                     </label>
-                    <input 
-                        type="range" 
-                        id="maxTokensSlider" 
-                        class="settings-slider" 
-                        min="256" 
-                        max="4096" 
-                        step="256" 
-                        value="1024"
-                    >
+                    <input type="range" id="maxTokensSlider" class="settings-slider" min="256" max="4096" step="256"
+                        value="1024">
                     <div class="slider-values">
                         <span>Short (256)</span>
                         <span>Medium (1024)</span>
@@ -1659,7 +1703,8 @@
                         <span>Encrypt all local data</span>
                     </div>
                     <p class="settings-note">
-                        📁 All data is stored in your browser's local storage. You can clear it anytime from browser settings.
+                        📁 All data is stored in your browser's local storage. You can clear it anytime from browser
+                        settings.
                     </p>
                 </div>
 
@@ -1674,8 +1719,10 @@
                     </button>
                 </div>
 
-                <div style="margin-top: 40px; padding: 20px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius-lg); border: 1px solid rgba(16, 185, 129, 0.3);">
-                    <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--secondary); display: flex; align-items: center; gap: 8px;">
+                <div
+                    style="margin-top: 40px; padding: 20px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius-lg); border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <h3
+                        style="font-size: 16px; margin-bottom: 12px; color: var(--secondary); display: flex; align-items: center; gap: 8px;">
                         <i class="fas fa-shield-alt"></i>
                         Security Information
                     </h3>
@@ -1721,7 +1768,7 @@
         // ============================================
         // SECURE CONFIGURATION & ENCRYPTION
         // ============================================
-        
+
         class SecureStorage {
             constructor() {
                 this.ENCRYPTION_KEY = 'SECURE_AI_ASSISTANT_V1_' + navigator.userAgent;
@@ -1739,7 +1786,7 @@
                     false,
                     ['deriveKey']
                 );
-                
+
                 return crypto.subtle.deriveKey(
                     {
                         name: 'PBKDF2',
@@ -1761,7 +1808,7 @@
                     const encoder = new TextEncoder();
                     const iv = crypto.getRandomValues(new Uint8Array(12));
                     const encoded = encoder.encode(JSON.stringify(data));
-                    
+
                     const encrypted = await crypto.subtle.encrypt(
                         {
                             name: 'AES-GCM',
@@ -1770,7 +1817,7 @@
                         key,
                         encoded
                     );
-                    
+
                     return {
                         iv: Array.from(iv),
                         data: Array.from(new Uint8Array(encrypted))
@@ -1787,11 +1834,11 @@
                     if (!encryptedData || !encryptedData.iv || !encryptedData.data) {
                         return null;
                     }
-                    
+
                     const key = await this.generateKey(this.ENCRYPTION_KEY);
                     const iv = new Uint8Array(encryptedData.iv);
                     const data = new Uint8Array(encryptedData.data);
-                    
+
                     const decrypted = await crypto.subtle.decrypt(
                         {
                             name: 'AES-GCM',
@@ -1800,7 +1847,7 @@
                         key,
                         data
                     );
-                    
+
                     const decoder = new TextDecoder();
                     return JSON.parse(decoder.decode(decrypted));
                 } catch (error) {
@@ -1823,7 +1870,7 @@
             async load(key) {
                 const encryptedStr = localStorage.getItem(key);
                 if (!encryptedStr) return null;
-                
+
                 try {
                     const encrypted = JSON.parse(encryptedStr);
                     return await this.decrypt(encrypted);
@@ -1844,7 +1891,7 @@
         // ============================================
         // APPLICATION STATE & CONFIG
         // ============================================
-        
+
         const CONFIG = {
             GROQ_API_URL: 'https://api.groq.com/openai/v1/chat/completions',
             DEFAULT_MODEL: 'llama3-8b-8192',
@@ -1873,7 +1920,7 @@
         // ============================================
         // DOM ELEMENTS
         // ============================================
-        
+
         const elements = {
             // Main containers
             messageInput: document.getElementById('messageInput'),
@@ -1881,13 +1928,13 @@
             chatMessages: document.getElementById('chatMessages'),
             welcomeMessage: document.getElementById('welcomeMessage'),
             typingIndicator: document.getElementById('typingIndicator'),
-            
+
             // Sidebar
             modelSelect: document.getElementById('modelSelect'),
             apiStatusText: document.getElementById('apiStatusText'),
             tokenCount: document.getElementById('tokenCount'),
             historyCount: document.getElementById('historyCount'),
-            
+
             // Buttons
             chatBtn: document.getElementById('chatBtn'),
             historyBtn: document.getElementById('historyBtn'),
@@ -1898,13 +1945,13 @@
             quickSettingsBtn: document.getElementById('quickSettingsBtn'),
             promptSuggestBtn: document.getElementById('promptSuggestBtn'),
             voiceInputBtn: document.getElementById('voiceInputBtn'),
-            
+
             // Modals
             settingsModal: document.getElementById('settingsModal'),
             historyModal: document.getElementById('historyModal'),
             closeSettingsBtn: document.getElementById('closeSettingsBtn'),
             closeHistoryBtn: document.getElementById('closeHistoryBtn'),
-            
+
             // Settings inputs
             apiKeyInput: document.getElementById('apiKeyInput'),
             temperatureSlider: document.getElementById('temperatureSlider'),
@@ -1914,17 +1961,17 @@
             saveHistoryCheckbox: document.getElementById('saveHistoryCheckbox'),
             encryptDataCheckbox: document.getElementById('encryptDataCheckbox'),
             autoClearCheckbox: document.getElementById('autoClearCheckbox'),
-            
+
             // Action buttons
             testApiBtn: document.getElementById('testApiBtn'),
             saveSettingsBtn: document.getElementById('saveSettingsBtn'),
-            
+
             // Toast & Loading
             toastContainer: document.getElementById('toastContainer'),
             loadingOverlay: document.getElementById('loadingOverlay'),
             loadingText: document.getElementById('loadingText'),
             loadingSubtext: document.getElementById('loadingSubtext'),
-            
+
             // History
             historyList: document.getElementById('historyList')
         };
@@ -1932,29 +1979,29 @@
         // ============================================
         // INITIALIZATION
         // ============================================
-        
+
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('🔐 Secure AI Assistant Initializing...');
-            
+
             // Initialize secure storage
             await initSecureStorage();
-            
+
             // Setup event listeners
             setupEventListeners();
-            
+
             // Load saved data
             await loadSettings();
             await loadChatHistory();
-            
+
             // Update UI
             updateUI();
-            
+
             // Auto-resize textarea
             setupAutoResize();
-            
+
             // Show welcome
             showToast('Secure AI Assistant Ready!', 'info');
-            
+
             console.log('✅ Secure AI Assistant Initialized');
         });
 
@@ -1964,11 +2011,11 @@
                 const testData = { test: 'encryption' };
                 const encrypted = await state.secureStorage.encrypt(testData);
                 const decrypted = await state.secureStorage.decrypt(encrypted);
-                
+
                 if (decrypted.test !== 'encryption') {
                     throw new Error('Encryption test failed');
                 }
-                
+
                 console.log('🔐 Encryption system: OK');
             } catch (error) {
                 console.error('🔒 Encryption system: FAILED - ', error);
@@ -1979,7 +2026,7 @@
         // ============================================
         // EVENT LISTENERS
         // ============================================
-        
+
         function setupEventListeners() {
             // Send message
             elements.sendButton.addEventListener('click', sendMessage);
@@ -1989,32 +2036,32 @@
                     sendMessage();
                 }
             });
-            
+
             // Navigation
             elements.chatBtn.addEventListener('click', () => switchView('chat'));
             elements.historyBtn.addEventListener('click', showHistory);
             elements.settingsBtn.addEventListener('click', showSettings);
-            
+
             // Chat actions
             elements.clearChatBtn.addEventListener('click', clearChat);
             elements.exportChatBtn.addEventListener('click', exportChat);
             elements.quickSettingsBtn.addEventListener('click', showSettings);
             elements.promptSuggestBtn.addEventListener('click', suggestPrompt);
             elements.voiceInputBtn.addEventListener('click', toggleVoiceInput);
-            
+
             // Model selection
             elements.modelSelect.addEventListener('change', updateModel);
-            
+
             // Settings
             elements.closeSettingsBtn.addEventListener('click', hideSettings);
             elements.closeHistoryBtn.addEventListener('click', hideHistory);
             elements.saveSettingsBtn.addEventListener('click', saveSettings);
             elements.testApiBtn.addEventListener('click', testApiConnection);
-            
+
             // Settings sliders
             elements.temperatureSlider.addEventListener('input', updateTempDisplay);
             elements.maxTokensSlider.addEventListener('input', updateTokensDisplay);
-            
+
             // Window events
             window.addEventListener('beforeunload', handleBeforeUnload);
             window.addEventListener('online', updateConnectionStatus);
@@ -2022,7 +2069,7 @@
         }
 
         function setupAutoResize() {
-            elements.messageInput.addEventListener('input', function() {
+            elements.messageInput.addEventListener('input', function () {
                 this.style.height = 'auto';
                 this.style.height = Math.min(this.scrollHeight, 200) + 'px';
             });
@@ -2031,69 +2078,69 @@
         // ============================================
         // CORE CHAT FUNCTIONS
         // ============================================
-        
+
         async function sendMessage() {
             const message = elements.messageInput.value.trim();
-            
+
             if (!message) {
                 showToast('Please enter a message', 'error');
                 elements.messageInput.classList.add('shake');
                 setTimeout(() => elements.messageInput.classList.remove('shake'), 500);
                 return;
             }
-            
+
             if (!state.apiKey) {
                 showToast('Please set your API key in Settings first', 'error');
                 showSettings();
                 return;
             }
-            
+
             // Check rate limit
             if (!checkRateLimit()) {
                 showToast('Rate limit exceeded. Please wait a moment.', 'warning');
                 return;
             }
-            
+
             // Hide welcome message
             elements.welcomeMessage.classList.add('hidden');
-            
+
             // Add user message
             addMessageToChat(message, 'user');
             state.currentChat.push({ role: 'user', content: message });
-            
+
             // Clear input
             elements.messageInput.value = '';
             elements.messageInput.style.height = 'auto';
             elements.messageInput.focus();
-            
+
             // Show typing indicator
             showTyping(true);
-            
+
             // Disable send button
             elements.sendButton.disabled = true;
-            
+
             try {
                 // Call Groq API
                 const response = await callGroqAPI(message);
-                
+
                 // Add AI response
                 addMessageToChat(response, 'ai');
                 state.currentChat.push({ role: 'assistant', content: response });
-                
+
                 // Update token count (estimate)
                 state.totalTokens += Math.ceil((message.length + response.length) / 4);
                 updateTokenCount();
-                
+
                 // Save to history
                 if (state.saveHistory) {
                     await saveToHistory(message, response);
                 }
-                
+
             } catch (error) {
                 console.error('API Error:', error);
-                
+
                 let errorMessage = 'Sorry, I encountered an error. ';
-                
+
                 if (error.message.includes('401') || error.message.includes('Unauthorized')) {
                     errorMessage += 'Please check your API key in Settings.';
                 } else if (error.message.includes('429')) {
@@ -2103,17 +2150,17 @@
                 } else {
                     errorMessage += error.message;
                 }
-                
+
                 addMessageToChat(errorMessage, 'ai');
                 showToast('Error: ' + error.message, 'error');
-                
+
             } finally {
                 // Hide typing indicator
                 showTyping(false);
-                
+
                 // Re-enable send button
                 elements.sendButton.disabled = false;
-                
+
                 // Scroll to bottom
                 scrollToBottom();
             }
@@ -2121,7 +2168,7 @@
 
         async function callGroqAPI(message) {
             showLoading(true, 'Communicating with AI...');
-            
+
             try {
                 const response = await fetch(CONFIG.GROQ_API_URL, {
                     method: 'POST',
@@ -2156,7 +2203,7 @@
 
                 const data = await response.json();
                 return data.choices[0].message.content;
-                
+
             } finally {
                 showLoading(false);
             }
@@ -2165,19 +2212,19 @@
         // ============================================
         // CHAT UI FUNCTIONS
         // ============================================
-        
+
         function addMessageToChat(content, sender) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}`;
-            
-            const time = new Date().toLocaleTimeString([], { 
-                hour: '2-digit', 
-                minute: '2-digit' 
+
+            const time = new Date().toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
             });
-            
+
             const formattedContent = formatMessage(content);
             const messageId = 'msg_' + Date.now();
-            
+
             messageDiv.innerHTML = `
                 <div class="avatar">
                     <i class="fas fa-${sender === 'user' ? 'user' : 'robot'}"></i>
@@ -2205,7 +2252,7 @@
                     </div>
                 </div>
             `;
-            
+
             elements.chatMessages.appendChild(messageDiv);
             scrollToBottom();
         }
@@ -2237,19 +2284,19 @@
                 // Line breaks
                 .replace(/\n\n/g, '</p><p>')
                 .replace(/\n/g, '<br>');
-            
+
             // Wrap in paragraph if needed
             if (!formatted.startsWith('<')) {
                 formatted = '<p>' + formatted + '</p>';
             }
-            
+
             // Highlight code blocks with Prism (if available)
             setTimeout(() => {
                 if (window.Prism) {
                     Prism.highlightAllUnder(elements.chatMessages);
                 }
             }, 100);
-            
+
             return formatted;
         }
 
@@ -2272,18 +2319,18 @@
         // ============================================
         // SETTINGS FUNCTIONS
         // ============================================
-        
+
         async function showSettings() {
             elements.settingsModal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
+
             // Load current settings
             elements.apiKeyInput.value = state.apiKey || '';
             elements.temperatureSlider.value = state.temperature;
             elements.maxTokensSlider.value = state.maxTokens;
             elements.saveHistoryCheckbox.checked = state.saveHistory;
             elements.encryptDataCheckbox.checked = state.encryptData;
-            
+
             updateTempDisplay();
             updateTokensDisplay();
         }
@@ -2306,17 +2353,17 @@
 
         async function saveSettings() {
             const apiKey = elements.apiKeyInput.value.trim();
-            
+
             if (apiKey && !apiKey.startsWith('gsk_')) {
                 showToast('Warning: API key format may be incorrect', 'warning');
             }
-            
+
             state.apiKey = apiKey;
             state.temperature = parseFloat(elements.temperatureSlider.value);
             state.maxTokens = parseInt(elements.maxTokensSlider.value);
             state.saveHistory = elements.saveHistoryCheckbox.checked;
             state.encryptData = elements.encryptDataCheckbox.checked;
-            
+
             // Save to secure storage
             const settings = {
                 apiKey: state.apiKey,
@@ -2327,17 +2374,17 @@
                 model: state.currentModel,
                 lastUpdated: new Date().toISOString()
             };
-            
+
             if (state.encryptData) {
                 await state.secureStorage.save(state.secureStorage.SETTINGS_KEY, settings);
             } else {
                 localStorage.setItem('ai_settings', JSON.stringify(settings));
             }
-            
+
             hideSettings();
             updateUI();
             showToast('Settings saved securely!', 'success');
-            
+
             // Test connection if API key is set
             if (state.apiKey) {
                 setTimeout(testApiConnection, 500);
@@ -2347,14 +2394,14 @@
         async function loadSettings() {
             try {
                 let settings;
-                
+
                 if (state.encryptData) {
                     settings = await state.secureStorage.load(state.secureStorage.SETTINGS_KEY);
                 } else {
                     const saved = localStorage.getItem('ai_settings');
                     settings = saved ? JSON.parse(saved) : null;
                 }
-                
+
                 if (settings) {
                     state.apiKey = settings.apiKey || '';
                     state.temperature = settings.temperature || CONFIG.DEFAULT_TEMPERATURE;
@@ -2362,7 +2409,7 @@
                     state.saveHistory = settings.saveHistory !== false;
                     state.encryptData = settings.encryptData !== false;
                     state.currentModel = settings.model || CONFIG.DEFAULT_MODEL;
-                    
+
                     console.log('✅ Settings loaded from secure storage');
                 }
             } catch (error) {
@@ -2374,17 +2421,17 @@
         async function loadChatHistory() {
             try {
                 let history;
-                
+
                 if (state.encryptData) {
                     history = await state.secureStorage.load('secure_ai_chat_history');
                 } else {
                     const saved = localStorage.getItem('ai_chat_history');
                     history = saved ? JSON.parse(saved) : null;
                 }
-                
+
                 state.chatHistory = history || [];
                 updateHistoryCount();
-                
+
             } catch (error) {
                 console.error('Error loading history:', error);
                 state.chatHistory = [];
@@ -2400,28 +2447,28 @@
                 model: state.currentModel,
                 tokens: Math.ceil((userMessage.length + aiResponse.length) / 4)
             };
-            
+
             state.chatHistory.unshift(chatEntry);
-            
+
             // Keep only last MAX_HISTORY entries
             if (state.chatHistory.length > CONFIG.MAX_HISTORY) {
                 state.chatHistory = state.chatHistory.slice(0, CONFIG.MAX_HISTORY);
             }
-            
+
             // Save to secure storage
             if (state.encryptData) {
                 await state.secureStorage.save('secure_ai_chat_history', state.chatHistory);
             } else {
                 localStorage.setItem('ai_chat_history', JSON.stringify(state.chatHistory));
             }
-            
+
             updateHistoryCount();
         }
 
         // ============================================
         // UTILITY FUNCTIONS
         // ============================================
-        
+
         function updateTempDisplay() {
             elements.tempValueDisplay.textContent = elements.temperatureSlider.value;
         }
@@ -2452,10 +2499,10 @@
                 elements.apiStatusText.textContent = 'API Key Required';
                 elements.apiStatusText.style.color = 'var(--warning)';
             }
-            
+
             // Update model selection
             elements.modelSelect.value = state.currentModel;
-            
+
             // Update token count
             updateTokenCount();
             updateHistoryCount();
@@ -2472,15 +2519,15 @@
         function checkRateLimit() {
             const now = Date.now();
             const minuteAgo = now - 60000; // 1 minute
-            
+
             // Remove old requests
             state.requestCount = state.requestCount.filter(time => time > minuteAgo);
-            
+
             // Check if limit exceeded
             if (state.requestCount.length >= CONFIG.RATE_LIMIT) {
                 return false;
             }
-            
+
             state.requestCount.push(now);
             return true;
         }
@@ -2489,9 +2536,9 @@
             // Update active button
             document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
             event.target.closest('.menu-btn').classList.add('active');
-            
+
             // Handle view switching
-            switch(view) {
+            switch (view) {
                 case 'chat':
                     // Already in chat view
                     break;
@@ -2501,24 +2548,24 @@
         // ============================================
         // ACTION FUNCTIONS
         // ============================================
-        
+
         function clearChat() {
             if (state.currentChat.length === 0) {
                 showToast('Chat is already empty', 'info');
                 return;
             }
-            
+
             if (confirm('Are you sure you want to clear the current chat?')) {
                 // Clear current chat
                 state.currentChat = [];
-                
+
                 // Remove all messages except welcome
                 const messages = elements.chatMessages.querySelectorAll('.message');
                 messages.forEach(msg => msg.remove());
-                
+
                 // Show welcome message
                 elements.welcomeMessage.classList.remove('hidden');
-                
+
                 showToast('Chat cleared', 'success');
             }
         }
@@ -2528,7 +2575,7 @@
                 showToast('History is already empty', 'info');
                 return;
             }
-            
+
             if (confirm('Are you sure you want to clear all chat history?')) {
                 state.chatHistory = [];
                 state.secureStorage.clear();
@@ -2550,15 +2597,15 @@
                 "What are the benefits of renewable energy?",
                 "Create a JavaScript function to debounce user input"
             ];
-            
+
             const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
             elements.messageInput.value = randomPrompt;
             elements.messageInput.focus();
-            
+
             // Auto-resize
             elements.messageInput.style.height = 'auto';
             elements.messageInput.style.height = Math.min(elements.messageInput.scrollHeight, 200) + 'px';
-            
+
             showToast('Prompt suggestion added!', 'info');
         }
 
@@ -2567,37 +2614,37 @@
                 showToast('Voice recognition not supported in your browser', 'error');
                 return;
             }
-            
+
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             const recognition = new SpeechRecognition();
-            
+
             recognition.lang = 'en-US';
             recognition.interimResults = false;
             recognition.maxAlternatives = 1;
-            
+
             recognition.onstart = () => {
                 showToast('🎤 Listening... Speak now!', 'info');
                 elements.voiceInputBtn.innerHTML = '<i class="fas fa-microphone-slash"></i> Stop';
                 elements.voiceInputBtn.style.background = 'var(--gradient-primary)';
                 elements.voiceInputBtn.style.color = 'white';
             };
-            
+
             recognition.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
                 elements.messageInput.value = transcript;
                 showToast('Voice input captured!', 'success');
             };
-            
+
             recognition.onerror = (event) => {
                 showToast('Voice recognition error: ' + event.error, 'error');
             };
-            
+
             recognition.onend = () => {
                 elements.voiceInputBtn.innerHTML = '<i class="fas fa-microphone"></i> Voice Input';
                 elements.voiceInputBtn.style.background = '';
                 elements.voiceInputBtn.style.color = '';
             };
-            
+
             recognition.start();
         }
 
@@ -2606,9 +2653,9 @@
                 showToast('Please enter your API key first', 'error');
                 return;
             }
-            
+
             showLoading(true, 'Testing API connection...');
-            
+
             try {
                 const response = await fetch(CONFIG.GROQ_API_URL, {
                     method: 'POST',
@@ -2622,7 +2669,7 @@
                         max_tokens: 10
                     })
                 });
-                
+
                 if (response.ok) {
                     showToast('✅ API connection successful!', 'success');
                 } else {
@@ -2640,27 +2687,27 @@
                 showToast('No chat to export', 'warning');
                 return;
             }
-            
+
             let chatText = `Secure AI Assistant Chat Export\n`;
             chatText += `Generated: ${new Date().toLocaleString()}\n`;
             chatText += `Model: ${state.currentModel}\n`;
             chatText += '='.repeat(50) + '\n\n';
-            
+
             state.currentChat.forEach((msg, index) => {
                 const role = msg.role === 'user' ? 'You' : 'AI';
                 chatText += `${role}:\n${msg.content}\n\n`;
             });
-            
+
             const blob = new Blob([chatText], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `ai-chat-${new Date().toISOString().slice(0,10)}.txt`;
+            a.download = `ai-chat-${new Date().toISOString().slice(0, 10)}.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            
+
             showToast('Chat exported successfully!', 'success');
         }
 
@@ -2675,7 +2722,7 @@
                 `;
                 return;
             }
-            
+
             let html = `
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h3 style="font-size: 16px; color: var(--text);">Recent Chats (${state.chatHistory.length})</h3>
@@ -2686,11 +2733,11 @@
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
             `;
-            
+
             state.chatHistory.forEach((chat, index) => {
                 const date = new Date(chat.timestamp);
                 const timeStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                
+
                 html += `
                     <div class="feature-card" style="text-align: left; cursor: pointer;" onclick="loadChatFromHistory(${index})">
                         <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
@@ -2712,7 +2759,7 @@
                     </div>
                 `;
             });
-            
+
             html += '</div>';
             elements.historyList.innerHTML = html;
         }
@@ -2720,23 +2767,23 @@
         function loadChatFromHistory(index) {
             const chat = state.chatHistory[index];
             if (!chat) return;
-            
+
             // Clear current chat
             clearChat();
-            
+
             // Hide welcome
             elements.welcomeMessage.classList.add('hidden');
-            
+
             // Add historical messages
             addMessageToChat(chat.user, 'user');
             addMessageToChat(chat.ai, 'ai');
-            
+
             // Update state
             state.currentChat = [
                 { role: 'user', content: chat.user },
                 { role: 'assistant', content: chat.ai }
             ];
-            
+
             hideHistory();
             showToast('Chat loaded from history', 'success');
         }
@@ -2744,7 +2791,7 @@
         // ============================================
         // UI UTILITIES
         // ============================================
-        
+
         function showToast(message, type = 'info', duration = 4000) {
             const toastId = 'toast_' + Date.now();
             const icons = {
@@ -2753,7 +2800,7 @@
                 warning: 'fas fa-exclamation-triangle',
                 info: 'fas fa-info-circle'
             };
-            
+
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.id = toastId;
@@ -2767,9 +2814,9 @@
                     <i class="fas fa-times"></i>
                 </button>
             `;
-            
+
             elements.toastContainer.appendChild(toast);
-            
+
             // Auto-remove after duration
             setTimeout(() => removeToast(toastId), duration);
         }
@@ -2800,21 +2847,21 @@
         // ============================================
         // MESSAGE ACTIONS
         // ============================================
-        
-        window.copyMessage = function(messageId) {
+
+        window.copyMessage = function (messageId) {
             const messageElement = document.getElementById(messageId);
             if (!messageElement) return;
-            
+
             const text = messageElement.textContent || messageElement.innerText;
             navigator.clipboard.writeText(text)
                 .then(() => showToast('Message copied to clipboard!', 'success'))
                 .catch(() => showToast('Failed to copy message', 'error'));
         };
 
-        window.saveMessage = function(messageId) {
+        window.saveMessage = function (messageId) {
             const messageElement = document.getElementById(messageId);
             if (!messageElement) return;
-            
+
             const text = messageElement.textContent || messageElement.innerText;
             const blob = new Blob([text], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
@@ -2825,14 +2872,14 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            
+
             showToast('Message saved as file!', 'success');
         };
 
         // ============================================
         // CLEANUP & SECURITY
         // ============================================
-        
+
         function handleBeforeUnload(e) {
             if (state.apiKey && elements.autoClearCheckbox?.checked) {
                 // Clear sensitive data on exit if auto-clear is enabled
@@ -2844,7 +2891,7 @@
         // ============================================
         // GLOBAL EXPORTS (for debugging)
         // ============================================
-        
+
         window.AIAssistant = {
             state,
             CONFIG,
@@ -2866,4 +2913,5 @@
         console.log('   • Data Encryption: ' + (state.encryptData ? '✓' : '✗'));
     </script>
 </body>
+
 </html>
