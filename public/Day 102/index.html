@@ -2802,6 +2802,12 @@
         function showSection(sectionId) {
             console.log(`Navigating to: ${sectionId}`);
 
+            const sectionIdMap = {
+                'community': 'discover',
+                'dashboard': 'profile'
+            };
+            const targetId = sectionIdMap[sectionId] || sectionId;
+
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
@@ -2813,7 +2819,7 @@
             });
 
             // Show selected section
-            const section = document.getElementById(sectionId + '-section');
+            const section = document.getElementById(targetId + '-section');
             if (section) {
                 section.classList.add('active');
 
@@ -2821,7 +2827,7 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
                 // Load section-specific content
-                switch (sectionId) {
+                switch (targetId) {
                     case 'home':
                         loadFeaturedStories();
                         loadContinueReading();
@@ -2837,11 +2843,22 @@
                         loadActivityFeed();
                         break;
                 }
-            }
 
-            // Set active nav button
-            event.currentTarget.classList.add('active');
+                // Set active nav button
+                const activeBtn = document.querySelector(`.nav-btn[data-section="${sectionId}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
         }
+
+        // Add Global Listener
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const section = e.currentTarget.getAttribute('data-section');
+                    if (section) showSection(section);
+                });
+            });
+        });
 
         // ========== STORY LOADING FUNCTIONS ==========
         function loadFeaturedStories() {

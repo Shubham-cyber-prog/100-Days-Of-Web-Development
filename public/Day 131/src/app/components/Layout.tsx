@@ -1,12 +1,12 @@
 import { ReactNode, useState } from 'react';
 import { Link, useLocation, Outlet } from 'react-router';
 import { useAuthStore } from '../stores/authStore';
-import { 
-  LayoutDashboard, 
-  Users, 
-  UserPlus, 
-  TrendingUp, 
-  BarChart3, 
+import {
+  LayoutDashboard,
+  Users,
+  UserPlus,
+  TrendingUp,
+  BarChart3,
   Settings,
   Menu,
   X,
@@ -39,6 +39,7 @@ export function Layout() {
 
       {/* Sidebar */}
       <aside
+        aria-label="Sidebar Navigation"
         className={`
           fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 
           transform transition-transform duration-200 ease-in-out lg:translate-x-0
@@ -63,11 +64,11 @@ export function Layout() {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+          <nav aria-label="Main" className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
             {navigation.map((item) => {
               const isActive = location.pathname === item.href;
               const Icon = item.icon;
-              
+
               return (
                 <Link
                   key={item.name}
@@ -75,10 +76,9 @@ export function Layout() {
                   onClick={() => setSidebarOpen(false)}
                   className={`
                     flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors
-                    ${
-                      isActive
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'text-gray-700 hover:bg-gray-100'
+                    ${isActive
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-gray-700 hover:bg-gray-100'
                     }
                   `}
                 >
@@ -124,7 +124,7 @@ export function Layout() {
         </header>
 
         {/* Page content */}
-        <main className="p-4 lg:p-8">
+        <main aria-label="Main Content" className="p-4 lg:p-8">
           <Outlet />
         </main>
       </div>
