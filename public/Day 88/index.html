@@ -14,7 +14,84 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style></style>
   </head>
+
+  <!-- OTP Verification Modal -->
+<div id="otpModal" class="otp-modal">
+  <div class="otp-box">
+    <h3>Verify OTP</h3>
+    <p>Enter the OTP sent to your email</p>
+    <input type="text" id="otpInput" placeholder="Enter OTP">
+    <button onclick="verifyOTP()">Verify</button>
+  </div>
+</div>
+
+
+<script>
+let generatedOTP = "";
+
+// Update your login button function
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  if(username === "" || password === "") {
+    alert("Fill all fields");
+    return;
+  }
+
+  // Generate OTP
+  generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+
+  alert("Demo OTP: " + generatedOTP); // simulate email OTP
+
+  document.getElementById("otpModal").style.display = "flex";
+}
+
+// Verify OTP
+function verifyOTP() {
+  const userOTP = document.getElementById("otpInput").value;
+
+  if(userOTP === generatedOTP) {
+    alert("Login Successful!");
+    window.location.href = "dashboard.html";
+  } else {
+    alert("Invalid OTP");
+  }
+}
+</script>
   <body class="pb-24 sm:pb-8">
+
+    <body>
+      <!-- Live Floating Background -->
+<div class="live-bg">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<!-- 🌊 Floating Wave Background -->
+<div class="wave-bg">
+    <svg viewBox="0 0 1440 320" class="wave wave1">
+        <path d="M0,160L80,170C160,180,320,200,480,192C640,180,800,140,960,133.3C1120,130,1280,150,1360,160L1440,170V320H0Z"></path>
+    </svg>
+
+    <svg viewBox="0 0 1440 320" class="wave wave2">
+        <path d="M0,200L120,210C240,220,480,240,720,200C960,160,1200,100,1320,90L1440,80V320H0Z"></path>
+    </svg>
+</div>
+    <!-- Floating Background -->
+<div class="floating-bg">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<div class="glow-particles"></div>
+    <div class="bg-blob blob1"></div>
+<div class="bg-blob blob2"></div>
     <!-- Auth Screen -->
     <div
       id="auth-screen"
