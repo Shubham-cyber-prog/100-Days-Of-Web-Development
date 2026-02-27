@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluid Dynamics Studio | SPH Physics Sandbox</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header id="hud-header">
+            <div class="brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                <span>FluidSync <span>v1.0</span></span>
+            </div>
+            <div class="stats">
+                <div class="stat-item">FPS: <span id="fps-val">0</span></div>
+                <div class="stat-item">Particles: <span id="part-val">0</span></div>
+                <div class="stat-item">Sim Time: <span id="time-val">0.00ms</span></div>
+            </div>
+            <div class="controls-top">
+                <button id="btn-save" class="icon-btn" title="Save Simulation">💾</button>
+                <button id="btn-load" class="icon-btn" title="Load Simulation">📂</button>
+                <button id="btn-reset" class="icon-btn" title="Clear All">♻️</button>
+            </div>
+        </header>
+
+        <main id="viewport-container">
+            <canvas id="sim-canvas"></canvas>
+
+            <aside id="toolbox">
+                <section class="tool-group">
+                    <h4>Add Elements</h4>
+                    <div class="tool-grid">
+                        <button class="tool-btn active" data-tool="water" title="Pour Water">💧 Liquid</button>
+                        <button class="tool-btn" data-tool="obstacle" title="Draw Barrier">🚧 Barrier</button>
+                        <button class="tool-btn" data-tool="gravity" title="Gravity Well">🕳️ Vortex</button>
+                    </div>
+                </section>
+
+                <section class="tool-group">
+                    <h4>Physics Presets</h4>
+                    <select id="fluid-preset">
+                        <option value="water">Standard Water</option>
+                        <option value="honey">High Viscosity (Honey)</option>
+                        <option value="oil">Low Tension (Oil)</option>
+                        <option value="custom">Custom Params</option>
+                    </select>
+                </section>
+
+                <section class="tool-group custom-params hidden">
+                    <div class="param-row">
+                        <label>Viscosity</label>
+                        <input type="range" id="param-visc" min="0" max="100" value="20">
+                    </div>
+                    <div class="param-row">
+                        <label>Surface Tension</label>
+                        <input type="range" id="param-tension" min="0" max="50" value="10">
+                    </div>
+                    <div class="param-row">
+                        <label>Density Target</label>
+                        <input type="range" id="param-density" min="1" max="50" value="25">
+                    </div>
+                </section>
+
+                <section class="tool-group">
+                    <h4>Visualization</h4>
+                    <div class="toggle-row">
+                        <label>Metaballs</label>
+                        <input type="checkbox" id="check-metaball" checked>
+                    </div>
+                    <div class="toggle-row">
+                        <label>Heatmap (Pressure)</label>
+                        <input type="checkbox" id="check-heatmap">
+                    </div>
+                    <div class="toggle-row">
+                        <label>Velocity Vectors</label>
+                        <input type="checkbox" id="check-vectors">
+                    </div>
+                </section>
+
+                <footer class="tool-actions">
+                    <button id="btn-pause" class="primary-btn">Pause Sim</button>
+                </footer>
+            </aside>
+
+            <div id="selection-overlay" class="hidden">
+                <div class="info-bubble">
+                    <p>Selected: <span id="sel-type">None</span></p>
+                    <p>Pressure: <span id="sel-press">0</span></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/sph.js"></script>
+    <script src="scripts/spatial.js"></script>
+    <script src="scripts/bodies.js"></script>
+    <script src="scripts/renderer.js"></script>
+    <script src="scripts/export.js"></script>
+    <script src="scripts/core.js"></script>
+</body>
+
+</html>

@@ -253,6 +253,32 @@ class ProgressService {
     }
 
     /**
+     * Award Nexus points for Quest completion
+     * @param {number} points - Points to award
+     */
+    async awardQuestPoints(points) {
+        if (!this.currentUser || !this.currentUser.uid) {
+            const localData = JSON.parse(localStorage.getItem('progressData') || '{}');
+            localData.nexusPoints = (localData.nexusPoints || 0) + points;
+            localStorage.setItem('progressData', JSON.stringify(localData));
+            this.notifyListeners();
+            return;
+        }
+
+        try {
+            const userRef = doc(db, 'users', this.currentUser.uid);
+            await updateDoc(userRef, {
+                nexusPoints: increment(points),
+                lastQuestAt: serverTimestamp()
+            });
+            console.log(`🏆 Neural Nexus: Awarded ${points} points`);
+            this.notifyListeners();
+        } catch (error) {
+            console.error('Error awarding points:', error);
+        }
+    }
+
+    /**
      * Listen to real-time Firestore updates
      * @param {Function} callback - Callback function when data changes
      * @returns {Function} Unsubscribe function
