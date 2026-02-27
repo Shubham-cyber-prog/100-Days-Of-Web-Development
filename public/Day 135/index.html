@@ -511,20 +511,18 @@
             err.innerText = 'Username already claimed.';
             err.classList.remove('hidden');
           } else {
-            // Store user metadata safely - no password stored client-side
             await setDoc(userRef, {
+              password: btoa(pass),
               createdAt: Date.now(),
               username: cleanUser,
-              uid: auth.currentUser.uid
             });
             window.proceedLogin(cleanUser);
           }
         } else {
-          // Simplified login for showcase - in real app would use Firebase Auth email/pass
-          if (userDoc.exists()) {
+          if (userDoc.exists() && userDoc.data().password === btoa(pass)) {
             window.proceedLogin(cleanUser);
           } else {
-            err.innerText = 'User not found.';
+            err.innerText = 'Invalid credentials.';
             err.classList.remove('hidden');
           }
         }
@@ -560,23 +558,8 @@
 
       if (unsubscribeMeds) unsubscribeMeds();
       const qMeds = collection(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'meds');
-      unsubscribeMeds = onSnapshot(qMeds, async snapshot => {
+      unsubscribeMeds = onSnapshot(qMeds, snapshot => {
         medications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-        // Day Reset Logic: Check if we need to reset takenToday
-        const today = new Date().toISOString().split('T')[0];
-        const lastReset = localStorage.getItem('medimitra_last_reset');
-
-        if (lastReset !== today) {
-          for (const med of medications) {
-            if (med.takenToday) {
-              const medRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'meds', med.id);
-              await updateDoc(medRef, { takenToday: false });
-            }
-          }
-          localStorage.setItem('medimitra_last_reset', today);
-        }
-
         renderSchedule();
         updateStats();
       });

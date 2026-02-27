@@ -1,22 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Google Feud Clone</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;700&display=swap');
-        
+
         body {
             font-family: 'Product Sans', Arial, sans-serif;
             background-color: #ffffff;
         }
 
-        .google-blue { color: #4285F4; }
-        .google-red { color: #EA4335; }
-        .google-yellow { color: #FBBC05; }
-        .google-green { color: #34A853; }
+        .google-blue {
+            color: #4285F4;
+        }
+
+        .google-red {
+            color: #EA4335;
+        }
+
+        .google-yellow {
+            color: #FBBC05;
+        }
+
+        .google-green {
+            color: #34A853;
+        }
 
         .answer-row {
             transition: all 0.3s ease;
@@ -39,7 +51,7 @@
             font-size: 3rem;
             font-weight: bold;
             color: #EA4335;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
         }
 
         /* Loading spinner */
@@ -51,40 +63,61 @@
             height: 30px;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
+
 <body class="flex flex-col items-center min-h-screen p-4">
 
     <!-- Header Section -->
     <header class="text-center mt-8 mb-4">
         <h1 class="text-5xl font-bold mb-2">
-            <span class="google-blue">G</span><span class="google-red">o</span><span class="google-yellow">o</span><span class="google-blue">g</span><span class="google-green">l</span><span class="google-red">e</span>
+            <span class="google-blue">G</span><span class="google-red">o</span><span class="google-yellow">o</span><span
+                class="google-blue">g</span><span class="google-green">l</span><span class="google-red">e</span>
             <span class="text-gray-700 ml-2">Feud</span>
         </h1>
-        <p class="text-gray-600 text-lg">How does Google <span class="font-bold text-black">autocomplete</span> this query?</p>
+        <p class="text-gray-600 text-lg">How does Google <span class="font-bold text-black">autocomplete</span> this
+            query?</p>
     </header>
 
     <!-- Main Game Container -->
     <main class="w-full max-w-2xl bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
-        
+
         <!-- Category Selection (Initial State) -->
         <div id="setup-screen" class="text-center py-10">
             <h2 class="text-2xl mb-6">Choose a category</h2>
             <div class="grid grid-cols-2 gap-4">
-                <button onclick="startGame('Culture')" class="p-4 border rounded-lg hover:bg-gray-50 transition font-bold text-lg">Culture</button>
-                <button onclick="startGame('People')" class="p-4 border rounded-lg hover:bg-gray-50 transition font-bold text-lg">People</button>
-                <button onclick="startGame('Questions')" class="p-4 border rounded-lg hover:bg-gray-50 transition font-bold text-lg">Questions</button>
-                <button onclick="startGame('Names')" class="p-4 border rounded-lg hover:bg-gray-50 transition font-bold text-lg">Names</button>
+                <button onclick="startGame('Culture')"
+                    class="p-4 border rounded-lg hover:bg-gray-50 transition font-bold text-lg">Culture</button>
+                <button onclick="startGame('People')"
+                    class="p-4 border rounded-lg hover:bg-gray-50 transition font-bold text-lg">People</button>
+                <button onclick="startGame('Questions')"
+                    class="p-4 border rounded-lg hover:bg-gray-50 transition font-bold text-lg">Questions</button>
+                <button onclick="startGame('Names')"
+                    class="p-4 border rounded-lg hover:bg-gray-50 transition font-bold text-lg">Names</button>
             </div>
         </div>
 
         <!-- Game Active Screen -->
         <div id="game-screen" class="hidden">
             <div class="relative mb-6">
-                <div class="flex items-center border rounded-full px-4 py-2 shadow-sm focus-within:shadow-md transition">
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <input type="text" id="guess-input" placeholder="Type your guess..." class="w-full ml-3 outline-none text-lg py-1" autocomplete="off">
+                <div
+                    class="flex items-center border rounded-full px-4 py-2 shadow-sm focus-within:shadow-md transition">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="guess-input" placeholder="Type your guess..."
+                        class="w-full ml-3 outline-none text-lg py-1" autocomplete="off">
                 </div>
                 <div id="query-display" class="mt-4 text-xl font-medium text-gray-700 px-4">
                     <!-- e.g., "Why is my..." -->
@@ -97,8 +130,10 @@
             </div>
 
             <div class="flex justify-center gap-4">
-                <button id="submit-guess" class="bg-gray-100 hover:bg-gray-200 px-8 py-2 rounded font-medium transition">Guess</button>
-                <button id="give-up" class="bg-gray-100 hover:bg-gray-200 px-8 py-2 rounded font-medium transition">Give Up</button>
+                <button id="submit-guess"
+                    class="bg-gray-100 hover:bg-gray-200 px-8 py-2 rounded font-medium transition">Guess</button>
+                <button id="give-up" class="bg-gray-100 hover:bg-gray-200 px-8 py-2 rounded font-medium transition">Give
+                    Up</button>
             </div>
         </div>
 
@@ -139,7 +174,9 @@
         <div class="bg-white rounded-xl p-8 max-w-sm w-full text-center">
             <h2 id="modal-title" class="text-3xl font-bold mb-2">Round Over</h2>
             <p id="modal-message" class="text-gray-600 mb-6">You earned 4,500 points this round!</p>
-            <button onclick="resetToHome()" class="bg-blue-500 text-white px-8 py-2 rounded-lg font-bold hover:bg-blue-600 transition">Next Round</button>
+            <button onclick="resetToHome()"
+                class="bg-blue-500 text-white px-8 py-2 rounded-lg font-bold hover:bg-blue-600 transition">Next
+                Round</button>
         </div>
     </div>
 
@@ -150,21 +187,21 @@
                 {
                     prefix: "Thomas ",
                     answers: [
-                        {phrase: "Jefferson", points: 10000}, {phrase: "Edison", points: 9000},
-                        {phrase: "Shelby", points: 8000}, {phrase: "Muller", points: 7000},
-                        {phrase: "The Tank Engine", points: 6000}, {phrase: "More", points: 5000},
-                        {phrase: "Hardy", points: 4000}, {phrase: "Sowell", points: 3000},
-                        {phrase: "Cook", points: 2000}, {phrase: "Mann", points: 1000}
+                        { phrase: "Jefferson", points: 10000 }, { phrase: "Edison", points: 9000 },
+                        { phrase: "Shelby", points: 8000 }, { phrase: "Muller", points: 7000 },
+                        { phrase: "The Tank Engine", points: 6000 }, { phrase: "More", points: 5000 },
+                        { phrase: "Hardy", points: 4000 }, { phrase: "Sowell", points: 3000 },
+                        { phrase: "Cook", points: 2000 }, { phrase: "Mann", points: 1000 }
                     ]
                 },
                 {
                     prefix: "Barack ",
                     answers: [
-                        {phrase: "Obama", points: 10000}, {phrase: "Obama age", points: 9000},
-                        {phrase: "Obama net worth", points: 8000}, {phrase: "Obama daughters", points: 7000},
-                        {phrase: "Obama birthday", points: 6000}, {phrase: "Obama height", points: 5000},
-                        {phrase: "Obama quotes", points: 4000}, {phrase: "Obama books", points: 3000},
-                        {phrase: "Obama foundation", points: 2000}, {phrase: "Obama twitter", points: 1000}
+                        { phrase: "Obama", points: 10000 }, { phrase: "Obama age", points: 9000 },
+                        { phrase: "Obama net worth", points: 8000 }, { phrase: "Obama daughters", points: 7000 },
+                        { phrase: "Obama birthday", points: 6000 }, { phrase: "Obama height", points: 5000 },
+                        { phrase: "Obama quotes", points: 4000 }, { phrase: "Obama books", points: 3000 },
+                        { phrase: "Obama foundation", points: 2000 }, { phrase: "Obama twitter", points: 1000 }
                     ]
                 }
             ],
@@ -172,21 +209,21 @@
                 {
                     prefix: "Star Wars is ",
                     answers: [
-                        {phrase: "on Disney Plus", points: 10000}, {phrase: "better than Star Trek", points: 9000},
-                        {phrase: "owned by Disney", points: 8000}, {phrase: "real", points: 7000},
-                        {phrase: "sci-fi or fantasy", points: 6000}, {phrase: "dead", points: 5000},
-                        {phrase: "overrated", points: 4000}, {phrase: "a movie", points: 3000},
-                        {phrase: "legendary", points: 2000}, {phrase: "ending", points: 1000}
+                        { phrase: "on Disney Plus", points: 10000 }, { phrase: "better than Star Trek", points: 9000 },
+                        { phrase: "owned by Disney", points: 8000 }, { phrase: "real", points: 7000 },
+                        { phrase: "sci-fi or fantasy", points: 6000 }, { phrase: "dead", points: 5000 },
+                        { phrase: "overrated", points: 4000 }, { phrase: "a movie", points: 3000 },
+                        { phrase: "legendary", points: 2000 }, { phrase: "ending", points: 1000 }
                     ]
                 },
                 {
                     prefix: "Video games make you ",
                     answers: [
-                        {phrase: "smarter", points: 10000}, {phrase: "violent", points: 9000},
-                        {phrase: "happy", points: 8000}, {phrase: "angry", points: 7000},
-                        {phrase: "tired", points: 6000}, {phrase: "fat", points: 5000},
-                        {phrase: "antisocial", points: 4000}, {phrase: "better at driving", points: 3000},
-                        {phrase: "stressed", points: 2000}, {phrase: "rich", points: 1000}
+                        { phrase: "smarter", points: 10000 }, { phrase: "violent", points: 9000 },
+                        { phrase: "happy", points: 8000 }, { phrase: "angry", points: 7000 },
+                        { phrase: "tired", points: 6000 }, { phrase: "fat", points: 5000 },
+                        { phrase: "antisocial", points: 4000 }, { phrase: "better at driving", points: 3000 },
+                        { phrase: "stressed", points: 2000 }, { phrase: "rich", points: 1000 }
                     ]
                 }
             ],
@@ -194,21 +231,21 @@
                 {
                     prefix: "Why is my ",
                     answers: [
-                        {phrase: "internet so slow", points: 10000}, {phrase: "poop green", points: 9000},
-                        {phrase: "cat crying", points: 8000}, {phrase: "skin itchy", points: 7000},
-                        {phrase: "hair falling out", points: 6000}, {phrase: "eye twitching", points: 5000},
-                        {phrase: "dog shaking", points: 4000}, {phrase: "laptop fan loud", points: 3000},
-                        {phrase: "fridge leaking", points: 2000}, {phrase: "phone getting hot", points: 1000}
+                        { phrase: "internet so slow", points: 10000 }, { phrase: "poop green", points: 9000 },
+                        { phrase: "cat crying", points: 8000 }, { phrase: "skin itchy", points: 7000 },
+                        { phrase: "hair falling out", points: 6000 }, { phrase: "eye twitching", points: 5000 },
+                        { phrase: "dog shaking", points: 4000 }, { phrase: "laptop fan loud", points: 3000 },
+                        { phrase: "fridge leaking", points: 2000 }, { phrase: "phone getting hot", points: 1000 }
                     ]
                 },
                 {
                     prefix: "Can dogs eat ",
                     answers: [
-                        {phrase: "grapes", points: 10000}, {phrase: "bananas", points: 9000},
-                        {phrase: "apples", points: 8000}, {phrase: "strawberries", points: 7000},
-                        {phrase: "blueberries", points: 6000}, {phrase: "watermelon", points: 5000},
-                        {phrase: "cheese", points: 4000}, {phrase: "tomatoes", points: 3000},
-                        {phrase: "chocolate", points: 2000}, {phrase: "eggs", points: 1000}
+                        { phrase: "grapes", points: 10000 }, { phrase: "bananas", points: 9000 },
+                        { phrase: "apples", points: 8000 }, { phrase: "strawberries", points: 7000 },
+                        { phrase: "blueberries", points: 6000 }, { phrase: "watermelon", points: 5000 },
+                        { phrase: "cheese", points: 4000 }, { phrase: "tomatoes", points: 3000 },
+                        { phrase: "chocolate", points: 2000 }, { phrase: "eggs", points: 1000 }
                     ]
                 }
             ],
@@ -216,11 +253,11 @@
                 {
                     prefix: "Alexander the ",
                     answers: [
-                        {phrase: "Great", points: 10000}, {phrase: "Great height", points: 9000},
-                        {phrase: "Great movie", points: 8000}, {phrase: "Great horse", points: 7000},
-                        {phrase: "Great quotes", points: 6000}, {phrase: "Great facts", points: 5000},
-                        {phrase: "Great empire", points: 4000}, {phrase: "Great death", points: 3000},
-                        {phrase: "Great tutor", points: 2000}, {phrase: "Great parents", points: 1000}
+                        { phrase: "Great", points: 10000 }, { phrase: "Great height", points: 9000 },
+                        { phrase: "Great movie", points: 8000 }, { phrase: "Great horse", points: 7000 },
+                        { phrase: "Great quotes", points: 6000 }, { phrase: "Great facts", points: 5000 },
+                        { phrase: "Great empire", points: 4000 }, { phrase: "Great death", points: 3000 },
+                        { phrase: "Great tutor", points: 2000 }, { phrase: "Great parents", points: 1000 }
                     ]
                 }
             ]
@@ -234,7 +271,7 @@
             best: 0,
             strikes: 0,
             currentQuery: "",
-            currentAnswers: [], 
+            currentAnswers: [],
             isRoundActive: false
         };
 
@@ -262,7 +299,7 @@
             await new Promise(r => setTimeout(r, 600));
 
             const data = fetchLocalData(category);
-            
+
             gameState.currentQuery = data.prefix;
             gameState.currentAnswers = data.answers.map(a => ({ ...a, revealed: false }));
             gameState.strikes = 0;
@@ -271,7 +308,7 @@
 
             renderBoard();
             updateStats();
-            
+
             loadingScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
             guessInput.focus();
@@ -281,9 +318,9 @@
             queryDisplay.innerHTML = `<span class="text-gray-400">Search:</span> ${gameState.currentQuery}<span class="animate-pulse">_</span>`;
             answersBoard.innerHTML = '';
             strikesDisplay.innerHTML = '';
-            
+
             // Render strikes
-            for(let i=0; i<gameState.strikes; i++) {
+            for (let i = 0; i < gameState.strikes; i++) {
                 const strike = document.createElement('div');
                 strike.className = 'strike-x';
                 strike.innerText = 'X';
@@ -293,11 +330,11 @@
             gameState.currentAnswers.forEach((ans, index) => {
                 const row = document.createElement('div');
                 row.className = `answer-row flex items-center justify-between px-4 py-2 border rounded ${ans.revealed ? 'answer-revealed' : 'answer-hidden'}`;
-                
+
                 const text = document.createElement('span');
                 text.className = "flex items-center gap-2 font-bold uppercase tracking-tight truncate mr-2";
                 text.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg> ${gameState.currentQuery} ${ans.revealed ? ans.phrase : '???'}`;
-                
+
                 const points = document.createElement('span');
                 points.className = `font-bold text-xl flex-shrink-0 ${ans.revealed ? 'text-blue-600' : 'text-transparent'}`;
                 points.innerText = ans.points.toLocaleString();
@@ -359,7 +396,7 @@
 
             setTimeout(() => {
                 if (gameState.score > gameState.best) gameState.best = gameState.score;
-                
+
                 document.getElementById('modal-title').innerText = isWin ? "Board Cleared!" : "Round Over";
                 document.getElementById('modal-message').innerText = `Current Score: ${gameState.score.toLocaleString()}`;
                 modal.classList.remove('hidden');
@@ -380,11 +417,12 @@
             if (e.key === 'Enter') handleGuess();
         });
         document.getElementById('give-up').addEventListener('click', () => {
-            if(confirm("Are you sure you want to see all answers?")) {
+            if (confirm("Are you sure you want to see all answers?")) {
                 endRound(false);
             }
         });
 
     </script>
 </body>
+
 </html>

@@ -7,9 +7,9 @@
   <title>Lumina AI | Premium Image Editor</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
 </head>
 
 <body>
@@ -117,8 +117,14 @@
             <p>Drag and drop an image or click the button below</p>
             <input type="file" id="imageUpload" accept="image/*" hidden aria-label="Upload image to edit" />
             <button class="select-btn" aria-label="Choose image file from your device">
-              Choose Image
-            </button>
+
+              <button class="select-btn" aria-label="Choose image file from your device">
+
+                <button class="select-btn" onclick="document.getElementById('imageUpload').click()"
+                  aria-label="Choose image file">
+
+                  Choose Image
+                </button>
           </div>
         </div>
 
