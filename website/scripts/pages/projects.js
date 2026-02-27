@@ -3,6 +3,7 @@ const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Developm
 // Import components with error handling
 let projectModal = null;
 let Notify = null;
+let communityService = null;
 
 // Dynamically import modules to prevent blocking if they fail
 (async () => {
@@ -11,13 +12,23 @@ let Notify = null;
         projectModal = modalModule.projectModal;
     } catch (error) {
         console.warn('Could not load ProjectModal:', error.message);
+        Notify = { error: (msg) => alert(msg) };
     }
-    
+
     try {
         const notifyModule = await import('../core/Notify.js');
         Notify = notifyModule.Notify;
     } catch (error) {
         console.warn('Could not load Notify:', error.message);
+        Notify = { error: (msg) => alert(msg) };
+    }
+
+    try {
+        const communityServiceModule = await import('../services/communityService.js');
+        communityService = communityServiceModule.communityService;
+    } catch (error) {
+        console.warn('Could not load communityService:', error.message);
+        communityService = { getApprovedProjects: () => [], formatProjectForGrid: (p) => ({ ...p, isCommunity: true }) };
     }
 })();
 
@@ -27,12 +38,21 @@ async function loadProjects() {
     try {
         const response = await fetch('../../data/projects.json');
         if (!response.ok) throw new Error('Failed to load projects');
-        allProjects = await response.json();
+        const data = await response.json();
+        allProjects = data.allProjects || data;
         renderProjects();
     } catch (error) {
         console.error('Error loading projects:', error);
-        if (Notify) {
-            Notify.error('Failed to load mission data.');
+        const grid = document.getElementById('projectsGrid');
+        if (grid) {
+            grid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem; background: rgba(255,100,100,0.1); border-radius: 16px; border: 1px solid rgba(255,100,100,0.3);">
+                    <i class="fa-solid fa-exclamation-triangle" style="font-size: 3rem; color: #ff6b6b; margin-bottom: 1rem;"></i>
+                    <h3 style="color: #ff6b6b; margin-bottom: 0.5rem;">Failed to Load Projects</h3>
+                    <p style="color: var(--text-secondary);">There was an error loading the project data. Please refresh the page or try again later.</p>
+                    <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.75rem 2rem; background: var(--accent-core); border: none; border-radius: 8px; color: white; cursor: pointer;">Retry</button>
+                </div>
+            `;
         }
     }
 }
