@@ -1,3 +1,7 @@
+
+function toggleTheme() {
+  document.body.classList.toggle("light-mode");
+}
 /**
  * Sidebar Loader Component for Root Directory
  * Loads the sidebar HTML and initializes active states
