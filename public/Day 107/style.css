@@ -331,3 +331,127 @@ canvas {
     max-width: calc(100vw - 40px);
   }
 }
+
+canvas {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* 🌌 Floating Galaxy Background */
+.space-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -2;
+  background: radial-gradient(ellipse at bottom, #05010d 0%, #000 100%);
+}
+
+/* Small stars */
+.stars,
+.stars2,
+.stars3 {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-repeat: repeat;
+}
+
+/* Layer 1 */
+.stars {
+  background-image: radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+                    radial-gradient(2px 2px at 60% 70%, #fff, transparent),
+                    radial-gradient(1px 1px at 40% 80%, #fff, transparent),
+                    radial-gradient(2px 2px at 80% 10%, #fff, transparent);
+  animation: moveStars 100s linear infinite;
+}
+
+/* Layer 2 */
+.stars2 {
+  background-image: radial-gradient(2px 2px at 10% 50%, #9fdcff, transparent),
+                    radial-gradient(1px 1px at 70% 20%, #ffffff, transparent),
+                    radial-gradient(2px 2px at 30% 90%, #ffd6ff, transparent);
+  animation: moveStars 160s linear infinite;
+  opacity: 0.9;
+}
+
+/* Layer 3 (big glowing stars) */
+.stars3 {
+  background-image: radial-gradient(3px 3px at 50% 50%, #fff, transparent),
+                    radial-gradient(3px 3px at 90% 30%, #a0e7ff, transparent);
+  animation: moveStars 240s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes moveStars {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+
+/* 🌌 Milky Way Galaxy Background */
+
+.galaxy-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Spiral Galaxy */
+.galaxy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.9) 2px, transparent 3px),
+    radial-gradient(circle at 30% 40%, rgba(173,216,230,0.7) 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.7) 2px, transparent 3px),
+    radial-gradient(circle at 60% 20%, rgba(200,200,255,0.6) 2px, transparent 3px);
+  background-size: 4px 4px;
+  box-shadow:
+    0 0 200px rgba(102,126,234,0.4),
+    0 0 400px rgba(118,75,162,0.3);
+  animation: rotateGalaxy 120s linear infinite;
+  opacity: 0.7;
+}
+
+/* Spiral glow effect */
+.galaxy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.8), transparent 70%),
+    conic-gradient(
+      from 0deg,
+      rgba(102,126,234,0.4),
+      transparent,
+      rgba(118,75,162,0.4),
+      transparent
+    );
+  mix-blend-mode: screen;
+}
+
+/* Rotation animation */
+@keyframes rotateGalaxy {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
