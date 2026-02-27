@@ -1136,31 +1136,39 @@ main {
   animation: pulse 2s ease infinite;
 }
 
-.hero-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(3rem, 9vw, 7.5rem);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  margin-bottom: 28px;
-  max-width: 900px;
-  color: var(--text-primary) !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  position: relative;
-  z-index: 15;
-  /* Remove all text-shadow and filters */
-  text-shadow: none !important;
-  filter: none !important;
-  /* Override any conflicting styles */
-  background: none;
-  -webkit-text-fill-color: initial;
+.hero-title .word {
+  font-size: 3.5rem;
+  font-weight: 700;
+  font-family: "Noto Sans", sans-serif;
+  margin-bottom: 1rem;
+
+  background-image: url("assets/images/cosmic-space-galaxy-stockcake.png");
+  background-size: 200% auto;
+  background-position: 0% 50;
+  background-repeat: no-repeat;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: animate 20s linear infinite;
+}
+@keyframes animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* FIX: Remove overflow hidden and ensure visibility */
+/* Ensure line is visible */
 .hero-title .line {
   display: block;
-  overflow: visible !important;  /* CRITICAL: Change from hidden to visible */
+  overflow: visible !important;
   margin: 0;
   padding: 0;
   height: auto;
@@ -1168,15 +1176,18 @@ main {
   visibility: visible !important;
 }
 
-.hero-title .word {
-  display: inline-block;
-  position: relative;
-  z-index: 15;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;  /* Remove any transforms */
-  color: var(--text-primary) !important;
+@keyframes textAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
+
 
 .hero-title .accent {
   color: var(--flame) !important;
