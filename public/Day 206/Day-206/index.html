@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku - Logic Puzzle</title>
+    <link rel="stylesheet" href="./styles/layout.css">
+    <link rel="stylesheet" href="./styles/themes.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Sudoku</h1>
+            <div class="header-controls">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <span class="icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="game-info">
+            <div class="info-item">
+                <span class="label">Difficulty:</span>
+                <span class="value" id="difficulty-display">Medium</span>
+            </div>
+            <div class="info-item timer-display">
+                <span class="label">Time:</span>
+                <span class="value" id="timer">00:00</span>
+            </div>
+        </div>
+
+        <div class="game-board" id="game-board">
+            <!-- 9x9 grid will be generated here -->
+        </div>
+
+        <div class="controls">
+            <div class="number-pad">
+                <button class="num-btn" data-num="1">1</button>
+                <button class="num-btn" data-num="2">2</button>
+                <button class="num-btn" data-num="3">3</button>
+                <button class="num-btn" data-num="4">4</button>
+                <button class="num-btn" data-num="5">5</button>
+                <button class="num-btn" data-num="6">6</button>
+                <button class="num-btn" data-num="7">7</button>
+                <button class="num-btn" data-num="8">8</button>
+                <button class="num-btn" data-num="9">9</button>
+                <button class="num-btn erase" data-num="0">✕</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="pencil-toggle">
+                    <span class="icon">✏️</span> Pencil
+                </button>
+                <button class="btn btn-secondary" id="hint-btn">
+                    <span class="icon">💡</span> Hint
+                </button>
+                <button class="btn btn-secondary" id="undo-btn">
+                    <span class="icon">↶</span> Undo
+                </button>
+                <button class="btn btn-secondary" id="redo-btn">
+                    <span class="icon">↷</span> Redo
+                </button>
+            </div>
+
+            <div class="game-actions">
+                <button class="btn btn-primary" id="new-game-btn">New Game</button>
+                <button class="btn btn-secondary" id="validate-btn">Check Solution</button>
+            </div>
+        </div>
+
+        <div class="difficulty-selector" id="difficulty-selector">
+            <h3>Select Difficulty</h3>
+            <div class="difficulty-buttons">
+                <button class="diff-btn" data-difficulty="easy">Easy</button>
+                <button class="diff-btn active" data-difficulty="medium">Medium</button>
+                <button class="diff-btn" data-difficulty="hard">Hard</button>
+            </div>
+            <button class="btn btn-primary" id="start-game-btn">Start Game</button>
+        </div>
+
+        <div class="modal" id="win-modal">
+            <div class="modal-content">
+                <h2>🎉 Congratulations!</h2>
+                <p>You solved the puzzle!</p>
+                <p class="completion-time">Time: <span id="final-time">00:00</span></p>
+                <button class="btn btn-primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/app.js"></script>
+</body>
+
+</html>

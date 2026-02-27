@@ -1,0 +1,108 @@
+/* EDITOR */
+#script-editor {
+    grid-area: editor;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.editor-header h2 {
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+}
+
+.step-container {
+    flex: 1;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.script-step {
+    background: rgba(0, 255, 65, 0.05);
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.editor-footer {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--accent-green);
+    padding: 1rem;
+    font-family: var(--font-code);
+    font-weight: 700;
+    cursor: pointer;
+    flex: 1;
+}
+
+.btn.run {
+    background: var(--accent-green);
+    color: black;
+}
+
+/* COMMAND DECK */
+#command-deck {
+    grid-area: deck;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+#command-deck h3 {
+    font-size: 0.7rem;
+    font-family: var(--font-ui);
+}
+
+.block-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.block {
+    border: 1px solid var(--border);
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.block:hover {
+    background: var(--border);
+}
+
+.block-desc {
+    margin-top: auto;
+    border-top: 2px solid var(--border);
+    padding-top: 1.5rem;
+}
+
+.block-desc h4 {
+    color: var(--accent-yellow);
+    margin-bottom: 10px;
+}
+
+.block-desc p {
+    font-size: 0.8rem;
+    color: #888;
+}
