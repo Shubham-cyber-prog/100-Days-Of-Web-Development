@@ -22,19 +22,21 @@
     }
 
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Inter", system-ui, -apple-system, sans-serif;
-      background: radial-gradient(circle at 20% 20%, rgba(255, 122, 24, 0.18), transparent 30%),
-                  radial-gradient(circle at 80% 10%, rgba(249, 200, 14, 0.14), transparent 30%),
-                  radial-gradient(circle at 50% 80%, rgba(255, 122, 24, 0.12), transparent 35%),
-                  var(--bg);
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 16px 64px;
-    }
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* 🌈 Floating animated gradient */
+  background: linear-gradient(270deg, #002C54, #C5001A, #FDF6F6, #31473A, #EDF4F2);
+  background-size: 400% 400%;
+  animation: gradientFlow 12s ease infinite;
+
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px 64px;
+}
 
     .shell {
       width: min(960px, 100%);
@@ -326,10 +328,99 @@
   --text: #0b132b;
   --muted: #555;
 }
+
+
+/* 🌌 Floating Background */
+.floating-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.floating-bg span {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  animation: float 25s linear infinite;
+}
+
+.floating-bg span:nth-child(1){ left: 10%; animation-duration: 18s;}
+.floating-bg span:nth-child(2){ left: 30%; animation-duration: 22s;}
+.floating-bg span:nth-child(3){ left: 55%; animation-duration: 20s;}
+.floating-bg span:nth-child(4){ left: 75%; animation-duration: 24s;}
+.floating-bg span:nth-child(5){ left: 90%; animation-duration: 28s;}
+
+@keyframes float {
+  0% { transform: translateY(100vh) scale(0.6); }
+  100% { transform: translateY(-10vh) scale(1.2); }
+}
+
+/* 🎨 Background Switcher */
+.bg-switcher {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 8px;
+}
+
+.bg-switcher button {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.bg-switcher button:nth-child(1){ background: #0b132b;}
+.bg-switcher button:nth-child(2){ background: #3a0066;}
+.bg-switcher button:nth-child(3){ background: #004d40;}
+.bg-switcher button:nth-child(4){ background: #ff7a18;}
+
+/* 🌊 Floating gradient animation */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
   </style>
 </head>
 <body>
-  <main class="shell">
+
+<!-- 🌌 Floating Background -->
+<div class="floating-bg">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<!-- 🎨 Background Theme Switcher -->
+<div class="bg-switcher">
+  <button data-theme="blue"></button>
+  <button data-theme="purple"></button>
+  <button data-theme="green"></button>
+  <button data-theme="sunset"></button>
+</div>
+
+<main class="shell">
     <header>
       <button id="theme-toggle" class="muted-btn">Toggle Theme</button>
       <span class="badge">Day 91 · LocalStorage</span>
@@ -594,6 +685,32 @@ filtered.forEach((todo) => {
     render();
   });
 });
+
+
+
+/* 🎨 Floating Background Theme Switcher */
+const themes = {
+  blue: "radial-gradient(circle at 20% 20%, rgba(255,122,24,0.18), transparent 30%), var(--bg)",
+  purple: "linear-gradient(135deg, #1a0033, #3a0066, #6600cc)",
+  green: "linear-gradient(135deg, #001f1f, #004d40, #00bfa5)",
+  sunset: "linear-gradient(135deg, #ff7a18, #ffb347, #ff6a00)"
+};
+
+const buttons = document.querySelectorAll(".bg-switcher button");
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const theme = btn.dataset.theme;
+    document.body.style.background = themes[theme];
+    localStorage.setItem("bg-theme", theme);
+  });
+});
+
+/* Load saved theme */
+const savedTheme = localStorage.getItem("bg-theme");
+if (savedTheme && themes[savedTheme]) {
+  document.body.style.background = themes[savedTheme];
+}
 
     render();
   </script>
