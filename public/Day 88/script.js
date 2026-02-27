@@ -258,4 +258,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 
         lucide.createIcons();
 
-        
+        function createGlowParticles() {
+    const container = document.querySelector(".glow-particles");
+
+    for (let i = 0; i < 30; i++) {
+        const span = document.createElement("span");
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.animationDuration = (5 + Math.random() * 8) + "s";
+        container.appendChild(span);
+    }
+}
+
+createGlowParticles();
