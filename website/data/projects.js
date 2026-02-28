@@ -136,5 +136,5 @@ export const allProjects = [
     { day: 257, title: "Database Schema Designer", tech: ["React"] },
     { day: 264, title: "Realtime Brainstorming Tool", tech: ["Socket.io"] },
     { day: 256, title: "Browser Based Docker UI", tech: ["Node.js"] },
-
+    { day: 259, title: "Thread Scheduling Simulator", tech: ["Next.js"] },
 ];
