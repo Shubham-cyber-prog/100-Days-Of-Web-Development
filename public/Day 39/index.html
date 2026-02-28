@@ -5,9 +5,203 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Online Learning Platform</title>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --text: #0f172a;
+      --muted: #64748b;
+    }
+
+    .dark {
+      --bg: #020617;
+      --card: #020617;
+      --border: #1e293b;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Inter, system-ui, sans-serif
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      transition: .3s
+    }
+
+    /* HEADER */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 span {
+      color: var(--primary)
+    }
+
+    #themeToggle {
+      border: 1px solid var(--border);
+      background: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 55px 20px
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 10px
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 650px;
+      margin: auto
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px
+    }
+
+    /* SEARCH */
+    .search-box {
+      margin-bottom: 30px
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 15px
+    }
+
+    /* COURSES GRID */
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px
+    }
+
+    .course {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 35px 25px;
+      text-align: center;
+      transition: .3s;
+    }
+
+    .course:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary)
+    }
+
+    .course i {
+      font-size: 42px;
+      color: var(--primary);
+      margin-bottom: 15px
+    }
+
+    .course p {
+      color: var(--muted)
+    }
+
+    .course button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer
+    }
+
+    /* SECTIONS */
+    .section {
+      margin-top: 60px
+    }
+
+    .section h2 {
+      margin-bottom: 20px
+    }
+
+    /* ENROLLED / WISHLIST CARD */
+    .enroll-card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 16px;
+      transition: .25s;
+    }
+
+    .enroll-card:hover {
+      border-color: var(--primary)
+    }
+
+    .star {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--warning);
+    }
+
+    .enroll-card button {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 8px;
+      background: var(--success);
+      color: white;
+      cursor: pointer;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--success);
+      color: white;
+      padding: 15px 22px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    /* CERTIFICATE */
+    #certificate {
+      display: none;
+      min-height: 100vh;
+      background: #fff;
+      padding: 60px;
+    }
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">

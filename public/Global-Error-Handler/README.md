@@ -48,7 +48,7 @@ That's it! The error handler is now active and will automatically:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Recipe App</title>
     <script src="../Global-Error-Handler/ErrorHandler.js"></script>
 </head>
@@ -104,7 +104,7 @@ That's it! The error handler is now active and will automatically:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Movie Database</title>
     <script src="../Global-Error-Handler/ErrorHandler.js"></script>
 </head>
@@ -174,7 +174,7 @@ That's it! The error handler is now active and will automatically:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Data Visualization</title>
     <script src="../Global-Error-Handler/ErrorHandler.js"></script>
 </head>
