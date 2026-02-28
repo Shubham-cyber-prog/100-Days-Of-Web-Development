@@ -2,7 +2,7 @@ const passwordResetTemplate = (resetUrl: string) => `
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Reset Your Password</title>
     <style>
         body {

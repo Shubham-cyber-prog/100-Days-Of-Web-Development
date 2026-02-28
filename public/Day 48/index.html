@@ -39,33 +39,28 @@
             display: none;
         }
 
-        .step-container.active {
-            display: block;
-            animation: fadeIn 0.4s ease-out;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyJet Flight Booking System</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --sky-primary: #1d4ed8;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        .seat {
-            width: 32px;
-            height: 32px;
-            margin: 4px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .seat.available { background-color: #334155; border: 1px solid #475569; }
-        .seat.selected { background-color: #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-        .seat.occupied { background-color: #1e293b; cursor: not-allowed; opacity: 0.3; }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-    </style>
+    .search-section {
+      background: linear-gradient(rgba(30, 58, 138, 0.8), rgba(30, 58, 138, 0.8)), url('sky.jpg');
+      background-size: cover;
+      border-radius: 16px;
+      color: white;
+      padding: 40px;
+    }
+  </style>
 </head>
 <body class="min-h-screen">
 
