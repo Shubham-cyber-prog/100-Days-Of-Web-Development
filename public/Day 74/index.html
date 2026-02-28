@@ -1,186 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Voice Assistant</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        :root {
+            --assistant-primary: #8b5cf6;
+            --assistant-bg: #0f172a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .assistant-indicator {
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--assistant-primary);
+            transition: transform 0.3s;
+        }
+
+        .assistant-indicator.listening {
+            transform: scale(1.1);
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1><i class="fas fa-robot"></i> Voice Assistant</h1>
             <p class="subtitle">A web-based assistant that listens and responds to your commands</p>
+            <button id="theme-toggle" class="btn-secondary">🌙 Dark Mode</button>
         </header>
 
         <main>
             <div class="assistant-container">
                 <div class="assistant-avatar">
-                    <div class="avatar-circle">
+                    <button class="control-btn" id="startBtn" aria-label="Activate voice assistant">
                         <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="control-btn" id="stopBtn" aria-label="Stop assistant" disabled>
+                        <i class="fas fa-stop"></i>
+                    </button>
+                    <div class="assistant-info">
+                        <h2>Voice Assistant</h2>
+                        <p class="assistant-status" id="assistantStatus">Ready to listen</p>
+                        <div class="voice-level" id="voiceLevel">
+                            <div class="level-bar"></div>
+                            <div class="level-bar"></div>
+                            <div class="level-bar"></div>
+                            <div class="level-bar"></div>
+                            <div class="level-bar"></div>
+                        </div>
                     </div>
-                    <div class="status-indicator" id="statusIndicator"></div>
-                </div>
-                
-                <div class="assistant-info">
-                    <h2>Voice Assistant</h2>
-                    <p class="assistant-status" id="assistantStatus">Ready to listen</p>
-                    <div class="voice-level" id="voiceLevel">
-                        <div class="level-bar"></div>
-                        <div class="level-bar"></div>
-                        <div class="level-bar"></div>
-                        <div class="level-bar"></div>
-                        <div class="level-bar"></div>
+
+                    <div class="control-buttons">
+                        <button id="startListening" class="btn btn-primary">
+                            <i class="fas fa-microphone"></i> Start Listening
+                        </button>
+                        <button id="stopListening" class="btn btn-secondary" disabled>
+                            <i class="fas fa-microphone-slash"></i> Stop Listening
+                        </button>
+                        <button id="speakTest" class="btn btn-info">
+                            <i class="fas fa-volume-up"></i> Test Voice
+                        </button>
                     </div>
                 </div>
-                
-                <div class="control-buttons">
-                    <button id="startListening" class="btn btn-primary">
-                        <i class="fas fa-microphone"></i> Start Listening
-                    </button>
-                    <button id="stopListening" class="btn btn-secondary" disabled>
-                        <i class="fas fa-microphone-slash"></i> Stop Listening
-                    </button>
-                    <button id="speakTest" class="btn btn-info">
-                        <i class="fas fa-volume-up"></i> Test Voice
-                    </button>
-                </div>
-            </div>
-            
-            <div class="content-section">
-                <div class="conversation-container">
-                    <h3><i class="fas fa-comments"></i> Conversation</h3>
-                    <div class="conversation-log" id="conversationLog">
-                        <div class="message assistant-message">
-                            <div class="message-header">
-                                <span class="sender">Voice Assistant</span>
-                                <span class="time">Just now</span>
+
+                <div class="content-section">
+                    <div class="conversation-container">
+                        <h3><i class="fas fa-comments"></i> Conversation</h3>
+                        <div class="conversation-log" id="conversationLog">
+                            <div class="message assistant-message">
+                                <div class="message-header">
+                                    <span class="sender">Voice Assistant</span>
+                                    <span class="time">Just now</span>
+                                </div>
+                                <div class="message-content">Hello! I'm your voice assistant. Click "Start Listening" or
+                                    say "Hello assistant" to begin.</div>
                             </div>
-                            <div class="message-content">Hello! I'm your voice assistant. Click "Start Listening" or say "Hello assistant" to begin.</div>
                         </div>
-                    </div>
-                    <button id="clearConversation" class="btn btn-outline">
-                        <i class="fas fa-trash"></i> Clear Conversation
-                    </button>
-                </div>
-                
-                <div class="commands-container">
-                    <h3><i class="fas fa-list-alt"></i> Available Commands</h3>
-                    <div class="commands-grid">
-                        <div class="command-card">
-                            <i class="fas fa-clock"></i>
-                            <h4>Time</h4>
-                            <p>"What time is it?" or "Tell me the time"</p>
-                        </div>
-                        <div class="command-card">
-                            <i class="fas fa-calendar"></i>
-                            <h4>Date</h4>
-                            <p>"What's today's date?" or "Current date"</p>
-                        </div>
-                        <div class="command-card">
-                            <i class="fas fa-sun"></i>
-                            <h4>Weather</h4>
-                            <p>"What's the weather like?" or "Weather today"</p>
-                        </div>
-                        <div class="command-card">
-                            <i class="fas fa-search"></i>
-                            <h4>Search</h4>
-                            <p>"Search for [query]" or "Find [query]"</p>
-                        </div>
-                        <div class="command-card">
-                            <i class="fas fa-calculator"></i>
-                            <h4>Calculate</h4>
-                            <p>"Calculate 5 + 3" or "What is 20% of 80"</p>
-                        </div>
-                        <div class="command-card">
-                            <i class="fas fa-joke"></i>
-                            <h4>Joke</h4>
-                            <p>"Tell me a joke" or "Make me laugh"</p>
-                        </div>
-                        <div class="command-card">
-                            <i class="fas fa-music"></i>
-                            <h4>Music</h4>
-                            <p>"Play music" or "Stop music"</p>
-                        </div>
-                        <div class="command-card">
-                            <i class="fas fa-question-circle"></i>
-                            <h4>Help</h4>
-                            <p>"What can you do?" or "Show commands"</p>
-                        </div>
+                        <button id="clearConversation" class="btn btn-outline">
+                            <i class="fas fa-trash"></i> Clear Conversation
+                        </button>
                     </div>
 
-                    <!-- Add this right after the commands-container closing div -->
-<div class="notes-container">
-    <div class="notes-header">
-        <h3><i class="fas fa-sticky-note"></i> Voice Notes</h3>
-        <button id="startNoteRecording" class="btn btn-outline btn-sm">
-            <i class="fas fa-microphone"></i> Dictate
-        </button>
-    </div>
-    <textarea id="voiceNotes" class="notes-textarea" placeholder="Click 'Dictate' button and speak to add notes here..."></textarea>
-    <div class="notes-actions">
-        <button id="saveNote" class="btn btn-outline btn-sm">
-            <i class="fas fa-save"></i> Save
-        </button>
-        <button id="clearNote" class="btn btn-outline btn-sm">
-            <i class="fas fa-trash"></i> Clear
-        </button>
-        <button id="readNote" class="btn btn-outline btn-sm">
-            <i class="fas fa-volume-up"></i> Read
-        </button>
-    </div>
-</div>
+                    <div class="commands-container">
+                        <h3><i class="fas fa-list-alt"></i> Available Commands</h3>
+                        <div class="commands-grid">
+                            <div class="command-card">
+                                <i class="fas fa-clock"></i>
+                                <h4>Time</h4>
+                                <p>"What time is it?" or "Tell me the time"</p>
+                            </div>
+                            <div class="command-card">
+                                <i class="fas fa-calendar"></i>
+                                <h4>Date</h4>
+                                <p>"What's today's date?" or "Current date"</p>
+                            </div>
+                            <div class="command-card">
+                                <i class="fas fa-sun"></i>
+                                <h4>Weather</h4>
+                                <p>"What's the weather like?" or "Weather today"</p>
+                            </div>
+                            <div class="command-card">
+                                <i class="fas fa-search"></i>
+                                <h4>Search</h4>
+                                <p>"Search for [query]" or "Find [query]"</p>
+                            </div>
+                            <div class="command-card">
+                                <i class="fas fa-calculator"></i>
+                                <h4>Calculate</h4>
+                                <p>"Calculate 5 + 3" or "What is 20% of 80"</p>
+                            </div>
+                            <div class="command-card">
+                                <i class="fas fa-joke"></i>
+                                <h4>Joke</h4>
+                                <p>"Tell me a joke" or "Make me laugh"</p>
+                            </div>
+                            <div class="command-card">
+                                <i class="fas fa-music"></i>
+                                <h4>Music</h4>
+                                <p>"Play music" or "Stop music"</p>
+                            </div>
+                            <div class="command-card">
+                                <i class="fas fa-question-circle"></i>
+                                <h4>Help</h4>
+                                <p>"What can you do?" or "Show commands"</p>
+                            </div>
+                        </div>
 
-                 
-                </div>
-            </div>
-            
-            <div class="settings-section">
-                <h3><i class="fas fa-cog"></i> Settings</h3>
-                <div class="settings-grid">
-                    <div class="setting">
-                        <label for="voiceSelect">Assistant Voice:</label>
-                        <select id="voiceSelect" class="select-control">
-                            <option value="">Loading voices...</option>
-                        </select>
-                    </div>
-                    <div class="setting">
-                        <label for="speedSelect">Speech Speed:</label>
-                        <select id="speedSelect" class="select-control">
-                            <option value="0.8">Slow</option>
-                            <option value="1" selected>Normal</option>
-                            <option value="1.2">Fast</option>
-                            <option value="1.5">Very Fast</option>
-                        </select>
-                    </div>
-                    <div class="setting">
-                        <label for="pitchSelect">Voice Pitch:</label>
-                        <select id="pitchSelect" class="select-control">
-                            <option value="0.8">Low</option>
-                            <option value="1" selected>Normal</option>
-                            <option value="1.2">High</option>
-                        </select>
-                    </div>
-                    <div class="setting">
-                        <label for="languageSelect">Language:</label>
-                        <select id="languageSelect" class="select-control">
-                            <option value="en-US">English (US)</option>
-                            <option value="en-GB">English (UK)</option>
-                            <option value="es-ES">Spanish</option>
-                            <option value="fr-FR">French</option>
-                            <option value="de-DE">German</option>
-                        </select>
+                        <!-- Add this right after the commands-container closing div -->
+                        <div class="notes-container">
+                            <div class="notes-header">
+                                <h3><i class="fas fa-sticky-note"></i> Voice Notes</h3>
+                                <button id="startNoteRecording" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-microphone"></i> Dictate
+                                </button>
+                            </div>
+                            <textarea id="voiceNotes" class="notes-textarea"
+                                placeholder="Click 'Dictate' button and speak to add notes here..."></textarea>
+                            <div class="notes-actions">
+                                <button id="saveNote" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-save"></i> Save
+                                </button>
+                                <button id="clearNote" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-trash"></i> Clear
+                                </button>
+                                <button id="readNote" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-volume-up"></i> Read
+                                </button>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
-            </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-cog"></i> Settings</h3>
+                    <div class="settings-grid">
+                        <div class="setting">
+                            <label for="voiceSelect">Assistant Voice:</label>
+                            <select id="voiceSelect" class="select-control">
+                                <option value="">Loading voices...</option>
+                            </select>
+                        </div>
+                        <div class="setting">
+                            <label for="speedSelect">Speech Speed:</label>
+                            <select id="speedSelect" class="select-control">
+                                <option value="0.8">Slow</option>
+                                <option value="1" selected>Normal</option>
+                                <option value="1.2">Fast</option>
+                                <option value="1.5">Very Fast</option>
+                            </select>
+                        </div>
+                        <div class="setting">
+                            <label for="pitchSelect">Voice Pitch:</label>
+                            <select id="pitchSelect" class="select-control">
+                                <option value="0.8">Low</option>
+                                <option value="1" selected>Normal</option>
+                                <option value="1.2">High</option>
+                            </select>
+                        </div>
+                        <div class="setting">
+                            <label for="languageSelect">Language:</label>
+                            <select id="languageSelect" class="select-control">
+                                <option value="en-US">English (US)</option>
+                                <option value="en-GB">English (UK)</option>
+                                <option value="es-ES">Spanish</option>
+                                <option value="fr-FR">French</option>
+                                <option value="de-DE">German</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
         </main>
-        
+
         <footer>
-            <p>Voice Assistant Web App | Use headphones for better experience | Click the microphone button or say "Hello assistant" to start</p>
+            <p>Voice Assistant Web App | Use headphones for better experience | Click the microphone button or say
+                "Hello assistant" to start</p>
         </footer>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>

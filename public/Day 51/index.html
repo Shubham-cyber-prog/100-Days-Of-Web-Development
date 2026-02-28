@@ -1,17 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Portfolio & Blog</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --portfolio-primary: #3b82f6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, white, transparent);
+            pointer-events: none;
+        }
+    </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -42,7 +68,7 @@
             </div>
             <div class="hero-image">
                 <img src="https://cdn4.iconfinder.com/data/icons/people-avatar-1-2/512/29-1024.png" alt="Developer">
-                
+
             </div>
         </div>
     </section>
@@ -53,8 +79,10 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>I'm a passionate web developer with 5+ years of experience creating digital solutions. I specialize in front-end development and user experience design.</p>
-                    <p>When I'm not coding, I write about technology, web development tips, and industry trends on my blog.</p>
+                    <p>I'm a passionate web developer with 5+ years of experience creating digital solutions. I
+                        specialize in front-end development and user experience design.</p>
+                    <p>When I'm not coding, I write about technology, web development tips, and industry trends on my
+                        blog.</p>
                     <div class="skills">
                         <h3>Skills</h3>
                         <div class="skill-tags">
@@ -109,7 +137,7 @@
                 <!-- Blog posts will be loaded by JavaScript -->
             </div>
             <div class="blog-actions">
-                <button id="loadMore" class="btn">Load More Posts</button>
+                <button id="loadMore" class="btn" aria-label="Load more blog posts">Load More Posts</button>
             </div>
         </div>
     </section>
@@ -144,7 +172,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy;  All rights reserved.</p>
+            <p>&copy; All rights reserved.</p>
             <p>Made with <i class="fas fa-heart"></i> by Rohit Shinde</p>
         </div>
     </footer>
@@ -153,7 +181,8 @@
     <button id="backToTop" class="back-to-top">
         <i class="fas fa-arrow-up"></i>
     </button>
-    
+
     <script src="script.js"></script>
 </body>
+
 </html>

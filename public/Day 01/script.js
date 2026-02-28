@@ -1,3 +1,23 @@
+document.addEventListener('DOMContentLoaded', function() {
+   
+    gsap.from(".logo", {
+        y: 60,
+        opacity: 0, 
+        duration: 1,
+        ease: "power2.out"
+    });
+
+    // Navigation links animation with stagger
+    gsap.from(".nav-links a", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power2.out",
+        delay: 0.3  
+    });
+});
+
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
