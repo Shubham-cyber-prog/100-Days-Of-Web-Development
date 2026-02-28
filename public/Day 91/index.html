@@ -306,11 +306,32 @@
         justify-content: flex-end;
       }
     }
+
+    .filters {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  color: #0c1024;
+  border-color: var(--accent);
+}
+
+.light-mode {
+  --bg: #f5f7ff;
+  --card: #ffffff;
+  --text: #0b132b;
+  --muted: #555;
+}
   </style>
 </head>
 <body>
   <main class="shell">
     <header>
+      <button id="theme-toggle" class="muted-btn">Toggle Theme</button>
       <span class="badge">Day 91 · LocalStorage</span>
       <div>
         <h1>Todo list, but it remembers</h1>
@@ -330,6 +351,12 @@
           <span class="chip">Completed <strong id="stat-completed">0</strong></span>
           <span class="chip">Open <strong id="stat-open">0</strong></span>
         </div>
+
+        <div class="filters">
+  <button type="button" class="muted-btn filter-btn active" data-filter="all">All</button>
+  <button type="button" class="muted-btn filter-btn" data-filter="open">Active</button>
+  <button type="button" class="muted-btn filter-btn" data-filter="completed">Completed</button>
+</div>
         <div class="actions">
           <button type="button" id="clear-completed" class="muted-btn">Clear completed</button>
           <button type="button" id="reset-all" class="muted-btn">Reset all</button>
@@ -346,6 +373,21 @@
   </main>
 
   <script>
+
+    const themeToggle = document.getElementById("theme-toggle");
+
+if (localStorage.getItem("theme") === "light") {
+  document.body.classList.add("light-mode");
+}
+
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+
+  const isLight = document.body.classList.contains("light-mode");
+  localStorage.setItem("theme", isLight ? "light" : "dark");
+});
+
     const storageKey = "day91-todos";
     const form = document.getElementById("todo-form");
     const input = document.getElementById("todo-input");
@@ -356,6 +398,9 @@
     const statOpen = document.getElementById("stat-open");
     const clearCompletedBtn = document.getElementById("clear-completed");
     const resetAllBtn = document.getElementById("reset-all");
+
+    const filterButtons = document.querySelectorAll(".filter-btn");
+let currentFilter = "all";
 
     let todos = loadTodos();
 
@@ -381,7 +426,17 @@
         emptyState.hidden = true;
       }
 
-      todos.forEach((todo) => {
+
+      let filtered = todos;
+
+if (currentFilter === "open") {
+  filtered = todos.filter(t => !t.done);
+} else if (currentFilter === "completed") {
+  filtered = todos.filter(t => t.done);
+}
+
+filtered.forEach((todo) => {
+      // todos.forEach((todo) => {
         const li = document.createElement("li");
         li.className = `todo-item${todo.done ? " completed" : ""}`;
         li.dataset.id = todo.id;
@@ -528,6 +583,17 @@
 
     clearCompletedBtn.addEventListener("click", clearCompleted);
     resetAllBtn.addEventListener("click", resetAll);
+
+    filterButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentFilter = btn.dataset.filter;
+
+    filterButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    render();
+  });
+});
 
     render();
   </script>
