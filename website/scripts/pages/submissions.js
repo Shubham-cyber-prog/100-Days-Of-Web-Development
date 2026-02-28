@@ -1,4 +1,6 @@
 import { firestoreService } from '../firestore.js';
+import graderService from '../core/graderService.js';
+import graderUI from '../components/GraderUI.js';
 
 // Global variables
 let currentUser = null;
@@ -18,8 +20,8 @@ async function initializeAuth() {
     // Check if user is logged in
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) {
-        // Redirect to login if not authenticated
-        window.location.href = 'login.html';
+        // Redirect to home if not authenticated
+        window.location.href = '../index.html';
         return;
     }
     currentUser = user;
@@ -257,6 +259,9 @@ function createSubmissionCard(submission) {
                 <button class="btn btn-outline review-btn" data-id="${submission.id}">
                     <i class="fas fa-star"></i> Rate & Review
                 </button>
+                <button class="btn btn-info grade-btn" data-id="${submission.id}">
+                    <i class="fas fa-search"></i> Grade Project
+                </button>
                 <a href="${submission.projectLink}" target="_blank" class="btn btn-primary">
                     <i class="fas fa-external-link-alt"></i> View Project
                 </a>
@@ -274,6 +279,10 @@ function createSubmissionCard(submission) {
     // Add event listeners
     card.querySelector('.review-btn').addEventListener('click', () => {
         openReviewModal(submission.id, submission.title, submission.author.username);
+    });
+
+    card.querySelector('.grade-btn').addEventListener('click', () => {
+        handleProjectGrading(submission);
     });
 
     return card;
@@ -409,5 +418,5 @@ function toggleUserMenu() {
 
 function handleLogout() {
     localStorage.removeItem('user');
-    window.location.href = 'login.html';
+    window.location.href = '../index.html';
 }

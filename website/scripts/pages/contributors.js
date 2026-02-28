@@ -13,6 +13,9 @@ const RETRY_CONFIG = {
     backoffMultiplier: 2
 };
 
+// Cache for contributor stats to avoid rate limiting
+const statsCache = new Map();
+
 /**
  * Fetches with exponential backoff retry mechanism
  */
@@ -46,30 +49,105 @@ async function fetchWithRetry(url, options = {}, retries = 0) {
     }
 }
 
+/**
+ * Fetches PR and issue counts for a contributor
+ */
+async function fetchContributorStats(username) {
+    // Check cache first
+    if (statsCache.has(username)) {
+        return statsCache.get(username);
+    }
+
+    try {
+        // Fetch PRs and Issues in parallel
+        const [prs, issues] = await Promise.all([
+            fetchWithRetry(
+                `https://api.github.com/search/issues?q=type:pr+author:${username}+repo:${REPO_OWNER}/${REPO_NAME}`,
+                { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+            ),
+            fetchWithRetry(
+                `https://api.github.com/search/issues?q=type:issue+author:${username}+repo:${REPO_OWNER}/${REPO_NAME}`,
+                { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+            )
+        ]);
+
+        const stats = {
+            prs: prs.total_count || 0,
+            issues: issues.total_count || 0
+        };
+
+        // Cache the results
+        statsCache.set(username, stats);
+        return stats;
+    } catch (error) {
+        console.warn(`Failed to fetch stats for ${username}:`, error);
+        return { prs: 0, issues: 0 };
+    }
+}
+
 async function fetchContributors() {
     const grid = document.getElementById('contributorsGrid');
 
     try {
         // Show loading state
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);"><p>Loading crew manifest...</p></div>';
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);"><p>🚀 Loading crew manifest...</p></div>';
 
-        const contributors = await fetchWithRetry(
-            `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors`,
-            { headers: { 'Accept': 'application/vnd.github.v3+json' } }
-        );
+        // Fetch all contributors with pagination
+        let allContributors = [];
+        let page = 1;
+        const perPage = 100; // GitHub's max
+        let hasMorePages = true;
 
-        // Validate response data
-        if (!Array.isArray(contributors) || contributors.length === 0) {
+        while (hasMorePages) {
+            const contributors = await fetchWithRetry(
+                `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=${perPage}&page=${page}&anon=1`,
+                { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+            );
+
+            // Validate response data
+            if (!Array.isArray(contributors)) {
+                throw new Error('Invalid response: expected array of contributors');
+            }
+
+            // If we got no contributors, stop
+            if (contributors.length === 0) {
+                break;
+            }
+
+            // Add contributors to the list
+            allContributors = allContributors.concat(contributors);
+
+            // Check if there are more pages
+            // Continue fetching as long as we get the max per_page amount
+            // If we got less than per_page, we've reached the last page
+            hasMorePages = contributors.length === perPage;
+            page++;
+            
+            // Safety check to prevent infinite loops (50 pages * 100 = 5000 max contributors)
+            if (page > 50) {
+                console.warn('Reached maximum page limit (50), stopping pagination');
+                break;
+            }
+        }
+
+        // Validate we have contributors
+        if (allContributors.length === 0) {
             throw new Error('Invalid response: no contributors found');
         }
 
-        // Clear placeholder
-        grid.innerHTML = '';
+        // Log total count for debugging (can be disabled in production if needed)
+        if (typeof console !== 'undefined' && console.log) {
+            console.log(`✅ Successfully loaded ${allContributors.length} contributors`);
+        }
 
         // Sort by contributions (descending)
-        contributors.sort((a, b) => b.contributions - a.contributions);
+        allContributors.sort((a, b) => b.contributions - a.contributions);
 
-        contributors.forEach((user, index) => {
+        // Clear placeholder and show initial cards
+        grid.innerHTML = '';
+
+        // Render cards immediately with loading placeholders for stats
+        allContributors.forEach((user, index) => {
             // Validate required fields
             if (!user.login || !user.avatar_url || !user.html_url) {
                 console.warn('Skipping contributor with missing data:', user);
@@ -80,6 +158,7 @@ async function fetchContributors() {
             card.className = 'card animate-enter';
             card.style.textAlign = 'center';
             card.style.animationDelay = `${index * 50}ms`;
+            card.id = `contributor-${user.login}`;
 
             card.innerHTML = `
                 <div style="position: relative; display: inline-block;">
@@ -90,16 +169,37 @@ async function fetchContributors() {
                     ${index < 3 ? `<span style="position: absolute; bottom: 10px; right: -5px; background: var(--accent-core); color: black; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold;">#${index + 1}</span>` : ''}
                 </div>
                 
-                <h4 style="margin-bottom: 4px;">${user.login}</h4>
-                <p class="text-flame" style="font-size: var(--text-sm); font-weight: bold;">
-                    ${user.contributions} Contributions
-                </p>
+                <h4 style="margin-bottom: 8px;">${user.login}</h4>
+                
+                <div style="display: flex; justify-content: center; gap: 12px; margin: 12px 0; font-size: var(--text-xs);">
+                    <div style="text-align: center;">
+                        <div style="font-weight: bold; color: var(--accent-core);" id="prs-${user.login}">...</div>
+                        <div style="color: var(--text-secondary);">PRs</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-weight: bold; color: var(--accent-core);" id="issues-${user.login}">...</div>
+                        <div style="color: var(--text-secondary);">Issues</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-weight: bold; color: var(--accent-core);">${user.contributions}</div>
+                        <div style="color: var(--text-secondary);">Commits</div>
+                    </div>
+                </div>
+                
                 <a href="${user.html_url}" target="_blank" class="btn btn-social" style="margin-top: 12px; width: 100%; justify-content: center; font-size: 0.8rem;">
-                    View Profile
+                    👤 View Profile
                 </a>
             `;
 
             grid.appendChild(card);
+
+            // Fetch stats asynchronously
+            fetchContributorStats(user.login).then(stats => {
+                const prsEl = document.getElementById(`prs-${user.login}`);
+                const issuesEl = document.getElementById(`issues-${user.login}`);
+                if (prsEl) prsEl.textContent = stats.prs;
+                if (issuesEl) issuesEl.textContent = stats.issues;
+            });
         });
 
     } catch (error) {
@@ -131,3 +231,26 @@ async function fetchContributors() {
 }
 
 document.addEventListener('DOMContentLoaded', fetchContributors);
+
+// Search functionality for contributors
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('contributorSearch');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('#contributorsGrid .card');
+
+        cards.forEach(card => {
+            const username = card.querySelector('h4')?.textContent.toLowerCase() || '';
+            const matches = username.includes(searchTerm);
+            
+            if (matches || searchTerm === '') {
+                card.style.display = '';
+                card.classList.add('animate-enter');
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});

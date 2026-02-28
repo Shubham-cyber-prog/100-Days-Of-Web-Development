@@ -34,6 +34,15 @@ body {
   flex-direction: column;
 }
 
+.player-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.player-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+}
+
 /* SEARCH */
 #search {
   padding: 12px;
@@ -77,6 +86,18 @@ body {
   object-fit: cover;
 }
 
+.current img {
+  box-shadow: 0 0 0 rgba(255,179,71,0.7);
+  animation: pulseGlow 3s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 15px rgba(255,179,71,0.4); }
+  50% { box-shadow: 0 0 35px rgba(255,179,71,0.9); }
+  100% { box-shadow: 0 0 15px rgba(255,179,71,0.4); }
+}
+
+
 .current.placeholder img {
   opacity: 0.4;
 }
@@ -98,6 +119,16 @@ body {
   cursor: pointer;
 }
 
+#play {
+  background: linear-gradient(135deg, #ffb347, #ffcc33);
+  transform: scale(1.15);
+  box-shadow: 0 10px 30px rgba(255,179,71,0.6);
+}
+
+#play:hover {
+  transform: scale(1.25);
+}
+
 .controls button:disabled {
   opacity: 0.5;
 }
@@ -111,9 +142,27 @@ body {
 }
 
 /* PROGRESS */
-#progress {
+/* #progress {
   margin: 8px 0;
+} */
+
+#progress {
+  appearance: none;
+  height: 6px;
+  border-radius: 5px;
+  background: #333;
+  overflow: hidden;
 }
+
+#progress::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #ffb347;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 
 /* VOLUME */
 .volume {
@@ -154,6 +203,14 @@ body {
   cursor: pointer;
 }
 
+#playlist li {
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#playlist li:hover {
+  transform: translateX(8px);
+}
+
 #playlist img {
   width: 45px;
   border-radius: 6px;
@@ -163,15 +220,39 @@ body {
   background: #333;
 }
 
-#playlist li.active {
+/* #playlist li.active {
   background: #ffb347;
   color: black;
   font-weight: 600;
+} */
+ #playlist li.active {
+  background: linear-gradient(135deg, #ffb347, #ffcc33);
+  color: black;
+  box-shadow: 0 0 20px rgba(255,179,71,0.7);
 }
+
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, #ffb34733, transparent 40%),
+    radial-gradient(circle at 80% 30%, #7f7fd533, transparent 40%),
+    radial-gradient(circle at 50% 80%, #86fde833, transparent 40%);
+  z-index: -1;
+}
+
 
 /* MOBILE */
 @media (max-width: 800px) {
   .container {
     grid-template-columns: 1fr;
   }
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

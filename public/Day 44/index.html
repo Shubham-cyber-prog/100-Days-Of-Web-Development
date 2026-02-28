@@ -1,34 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Advanced Chat App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Advanced Chat App | AI Interface</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --chat-primary: #8b5cf6;
+    }
+
+    .chat-container {
+      max-width: 500px;
+      margin: 20px auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-input button {
+      background: var(--chat-primary);
+      transition: transform 0.2s;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="chat-container">
+  <div class="chat-container">
 
-  <header class="chat-header">
-    <img src="https://i.pravatar.cc/50?img=12" class="avatar">
-    <div>
-      <h2>AI Assistant</h2>
-      <p id="status">Online</p>
-    </div>
-  </header>
+    <header class="chat-header">
+      <img src="https://i.pravatar.cc/50?img=12" class="avatar">
+      <div>
+        <h2>AI Assistant</h2>
+        <p id="status">Online</p>
+      </div>
+    </header>
 
-  <div class="chat-messages" id="messages"></div>
+    <div class="chat-messages" id="messages"></div>
 
-  <div class="typing" id="typing">AI is typing...</div>
+    <div class="typing" id="typing">AI is typing...</div>
 
-  <footer class="chat-input">
-    <input type="text" id="messageInput" placeholder="Type a message..." />
-    <button id="sendBtn">➤</button>
-  </footer>
+    <footer class="chat-input" role="form">
+      <input type="text" id="messageInput" placeholder="Type a message..." aria-label="Chat message input" />
+      <button id="sendBtn" aria-label="Send message">➤</button>
+    </footer>
 
-</div>
+  </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
