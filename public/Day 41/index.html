@@ -1,19 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GitHub Profile Finder</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Profile Finder | GitHub Search Tool</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --gh-blue: #0ea5e9;
+      --gh-dark: #0f172a;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      transition: all 0.3s ease;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    input {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--gh-blue);
+    }
+
+    button {
+      background: var(--gh-blue);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  </style>
 </head>
+
 <body>
 
   <div class="container">
     <h1>🔎 GitHub Profile Finder</h1>
 
     <div class="search-box">
-      <input type="text" id="username" placeholder="Enter GitHub username">
-      <button onclick="getProfile()">Search</button>
+      <input type="text" id="username" placeholder="Enter GitHub username" aria-label="GitHub username to search">
+      <button onclick="getProfile()" aria-label="Search GitHub profiles">Search</button>
     </div>
 
     <div id="profile"></div>
@@ -21,4 +69,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

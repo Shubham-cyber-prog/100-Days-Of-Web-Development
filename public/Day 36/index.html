@@ -1,62 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Fitness Tracker Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <title>Fitness Tracker Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        :root {
+            --fitness-primary: #4ade80;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .card {
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>🏋️ Fitness Tracker Dashboard</h1>
+    <div class="container">
+        <h1>🏋️ Fitness Tracker Dashboard</h1>
 
-    <!-- Recommendation -->
-    <div class="recommendation" id="recommendationBox">
-        Start your day by adding an activity 💪
-    </div>
-
-    <!-- Input -->
-    <div class="card">
-        <h2>Add Activity</h2>
-        <form id="fitnessForm">
-            <input type="text" id="activity" placeholder="Activity (Running, Yoga)" required>
-            <input type="number" id="duration" placeholder="Duration (minutes)" required>
-            <input type="number" id="calories" placeholder="Calories Burned" required>
-            <button type="submit">Add Activity</button>
-        </form>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats">
-        <div class="stat-box">
-            <h3>Activities</h3>
-            <p id="totalActivities">0</p>
+        <!-- Recommendation -->
+        <div class="recommendation" id="recommendationBox">
+            Start your day by adding an activity 💪
         </div>
-        <div class="stat-box">
-            <h3>Duration</h3>
-            <p id="totalDuration">0 min</p>
+
+        <!-- Input -->
+        <div class="card">
+            <h2>Add Activity</h2>
+            <form id="fitnessForm">
+                <input type="text" id="activity" placeholder="Activity (Running, Yoga)" required
+                    aria-label="Work out activity">
+                <input type="number" id="duration" placeholder="Duration (minutes)" required
+                    aria-label="Activity duration in minutes">
+                <input type="number" id="calories" placeholder="Calories Burned" required aria-label="Calories burned">
+                <button type="submit" aria-label="Add new activity to log">Add Activity</button>
+            </form>
         </div>
-        <div class="stat-box">
-            <h3>Calories</h3>
-            <p id="totalCalories">0 kcal</p>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-box">
+                <h3>Activities</h3>
+                <p id="totalActivities">0</p>
+            </div>
+            <div class="stat-box">
+                <h3>Duration</h3>
+                <p id="totalDuration">0 min</p>
+            </div>
+            <div class="stat-box">
+                <h3>Calories</h3>
+                <p id="totalCalories">0 kcal</p>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="card">
+            <h2>Calories Burned</h2>
+            <canvas id="calorieChart"></canvas>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="card">
+            <h2>Activity Log</h2>
+            <ul id="activityList"></ul>
         </div>
     </div>
 
-    <!-- Chart -->
-    <div class="card">
-        <h2>Calories Burned</h2>
-        <canvas id="calorieChart"></canvas>
-    </div>
-
-    <!-- Activity Log -->
-    <div class="card">
-        <h2>Activity Log</h2>
-        <ul id="activityList"></ul>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

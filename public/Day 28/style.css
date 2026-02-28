@@ -1,49 +1,96 @@
+:root {
+  --bg-gradient: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+  --primary: #081b31;
+  --win: #4caf50;
+  --lose: #e53935;
+  --text: #fff;
+}
+
+/* Dark Mode */
+body.dark {
+  --bg-gradient: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  --primary: #0f3460;
+}
+
 * {
   margin: 0;
   padding: 0;
   text-align: center;
+  font-family: "Poppins", sans-serif;
 }
 
+body {
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  transition: 0.5s;
+}
+/* Reset -> Moved to shared/base.css */
+
+/* Heading */
 h1 {
-  background-color: #081b31;
-  color: #fff;
+  background: var(--primary);
+  color: var(--text);
   height: 5rem;
   line-height: 5rem;
+  letter-spacing: 2px;
 }
 
+/* Theme button */
+#themeToggle {
+  margin-top: 1rem;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+#themeToggle:hover {
+  transform: scale(1.05);
+}
+
+/* Choices */
 .choice {
-  height: 165px;
-  width: 165px;
+  height: 170px;
+  width: 170px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 0.3s;
 }
 
+/* Micro-interaction effect */
 .choice:hover {
-  cursor: pointer;
-  background-color: #081b31;
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* Selected glow */
+.choice.active {
+  box-shadow: 0 0 25px #fff;
+  transform: scale(1.1);
 }
 
 img {
   height: 150px;
   width: 150px;
-  object-fit: cover;
   border-radius: 50%;
 }
 
 .choices {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 3rem;
-  margin-top: 5rem;
+  margin-top: 4rem;
 }
 
+/* Score */
 .score-board {
   display: flex;
   justify-content: center;
-  align-items: center;
   font-size: 2rem;
   margin-top: 3rem;
   gap: 5rem;
@@ -52,17 +99,34 @@ img {
 #user-score,
 #comp-score {
   font-size: 4rem;
+  transition: 0.3s;
 }
 
-.msg-container {
-  margin-top: 5rem;
+/* Score animation */
+.score-update {
+  transform: scale(1.3);
+}
+
+/* Message */
+/* .msg-container {
+  margin-top: 4rem;
+} */
+
+#msg {
+  background: var(--primary);
+  color: var(--text);
+  font-size: 1.8rem;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  transition: 0.3s;
 }
 
 #msg {
-  background-color: #081b31;
-  color: #fff;
-  font-size: 2rem;
-  display: inline;
-  padding: 1rem;
-  border-radius: 1rem;
+  display: inline-block;
+  width: auto;
+  max-width: 450px;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
 }
