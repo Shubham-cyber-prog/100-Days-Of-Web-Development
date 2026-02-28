@@ -377,6 +377,13 @@ questions.forEach(btn => {
 
     const item = btn.parentElement;
 
+    questions.forEach(q => {
+      const otherItem = q.parentElement;
+      if (otherItem !== item) {
+        otherItem.classList.remove("active");
+      }
+    });
+
     item.classList.toggle("active");
 
   });

@@ -1,20 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HarmonyStream - Music Streaming</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --harmony-primary: #1db954;
+            --player-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .now-playing-bar {
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .featured-card {
+            transition: transform 0.3s;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+
+        .featured-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
 </head>
+
 <body>
+    <div class="dynamic-bg"></div>
+<div class="particles"></div>
+    <div class="dynamic-bg"></div>
+<div class="particles"></div>
+    <!-- Live Background -->
+<div class="live-bg">
+    <div class="bg-gradient"></div>
+    <div class="particles"></div>
+</div>
+<!-- Dynamic Music Background -->
+<div class="dynamic-bg">
+    <div class="bg-overlay"></div>
+</div>
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
         <div class="logo">
             <i class="fas fa-music"></i>
             <h2>HarmonyStream</h2>
         </div>
-        
+
         <ul class="nav-menu">
             <li class="active"><i class="fas fa-home"></i> Home</li>
             <li><i class="fas fa-compass"></i> Discover</li>
@@ -22,7 +62,7 @@
             <li><i class="fas fa-history"></i> Recently Played</li>
             <li><i class="fas fa-plus-square"></i> Playlists</li>
         </ul>
-        
+
         <div class="user-playlists">
             <h3>Your Playlists</h3>
             <ul id="playlist-container">
@@ -30,10 +70,12 @@
             </ul>
             <button id="create-playlist-btn"><i class="fas fa-plus"></i> Create Playlist</button>
         </div>
-        
+
         <div class="now-playing-mini">
             <div class="mini-album-art">
-                <img id="mini-album-art" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Album Art">
+                <img id="mini-album-art"
+                    src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+                    alt="Album Art">
             </div>
             <div class="mini-track-info">
                 <h4 id="mini-track-title">Select a Song</h4>
@@ -46,12 +88,20 @@
     <main class="main-content">
         <!-- Header -->
         <header class="header">
-            <div class="search-bar">
+            <!-- <div class="search-bar">
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="Search songs, artists, albums...">
+            </div> -->
+            <div class="search-bar">
+    <i class="fas fa-search"></i>
+    <input type="text" id="search-input" placeholder="Search songs, artists, albums...">
+</div>
+
+                <input type="text" placeholder="Search songs, artists, albums..." aria-label="Search for music">
             </div>
             <div class="user-profile">
-                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Profile">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    alt="Profile">
                 <span>User</span>
             </div>
         </header>
@@ -117,7 +167,7 @@
                         <button class="view-btn"><i class="fas fa-th-large"></i></button>
                     </div>
                 </div>
-                
+
                 <div class="music-table">
                     <div class="table-header">
                         <div class="col-number">#</div>
@@ -125,7 +175,7 @@
                         <div class="col-album">Album</div>
                         <div class="col-duration"><i class="far fa-clock"></i></div>
                     </div>
-                    
+
                     <div class="song-list" id="song-list">
                         <!-- Songs will be populated by JavaScript -->
                     </div>
@@ -138,14 +188,16 @@
     <footer class="now-playing-bar">
         <div class="player-controls">
             <div class="current-song-info">
-                <img id="current-album-art" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Album Art">
+                <img id="current-album-art"
+                    src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    alt="Album Art">
                 <div class="song-details">
                     <h4 id="current-song-title">Select a Song</h4>
                     <p id="current-song-artist">Artist</p>
                 </div>
                 <button id="like-btn"><i class="far fa-heart"></i></button>
             </div>
-            
+
             <div class="playback-controls">
                 <button id="shuffle-btn"><i class="fas fa-random"></i></button>
                 <button id="prev-btn"><i class="fas fa-step-backward"></i></button>
@@ -153,7 +205,7 @@
                 <button id="next-btn"><i class="fas fa-step-forward"></i></button>
                 <button id="repeat-btn"><i class="fas fa-redo"></i></button>
             </div>
-            
+
             <div class="playback-progress">
                 <div class="progress-container">
                     <input type="range" id="progress-bar" min="0" max="100" value="0">
@@ -164,7 +216,7 @@
                     <span id="total-time">0:00</span>
                 </div>
             </div>
-            
+
             <div class="volume-controls">
                 <button id="mute-btn"><i class="fas fa-volume-up"></i></button>
                 <input type="range" id="volume-slider" min="0" max="100" value="70">
@@ -189,4 +241,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

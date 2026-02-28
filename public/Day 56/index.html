@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expense Splitter - Pure JS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel = "stylesheet" href = "style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel = "stylesheet" href = "style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
-        <header class="header">
+        <!-- <header class="header">
             <h1><i class="fas fa-money-bill-wave"></i> Expense Splitter</h1>
             <p>Split expenses with friends and family easily</p>
-        </header>
+            <button onclick="toggleTheme()">🌙</button>
+        </header> -->
+
+        <header class="header">
+    <h1><i class="fas fa-money-bill-wave"></i> Expense Splitter</h1>
+    <p>Split expenses with friends and family easily</p>
+
+    <!-- 🌙 Dark mode button -->
+    <button id="darkToggle" class="btn" style="margin-top:10px;">
+        🌙 Dark Mode
+    </button>
+</header>
 
         <div class="dashboard">
             
@@ -94,6 +106,7 @@
             </div>
             
             <div id="expensesTab" class="tab-content active">
+                <input type="text" id="searchExpense" placeholder="Search expense...">
                 <h2><i class="fas fa-list"></i> Recent Expenses</h2>
                 <div id="expensesList">
                     <!-- Expenses will be added here -->
@@ -118,6 +131,7 @@
                 <div id="settlementSuggestions" class="settlement">
                     <!-- Settlement suggestions will go here -->
                 </div>
+                <canvas id="expenseChart"></canvas>
             </div>
             
             <div id="settleTab" class="tab-content">
