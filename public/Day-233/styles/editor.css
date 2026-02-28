@@ -1,0 +1,82 @@
+#canvas-container {
+    position: relative;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+canvas {
+    display: block;
+}
+
+/* COMPONENT TRAY */
+.component-tray {
+    background: var(--glass-fill);
+    border-left: 1px solid var(--border-color);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.component-tray h3 {
+    font-size: 0.8rem;
+    color: var(--neon-cyan);
+    letter-spacing: 2px;
+}
+
+.module-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.module {
+    background: var(--neuron-off);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: grab;
+    transition: all 0.2s ease;
+}
+
+.module:hover,
+.module.active {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    background: rgba(0, 243, 255, 0.05);
+}
+
+.module-info h4 {
+    color: var(--neon-cyan);
+    margin-bottom: 0.5rem;
+}
+
+.module-info p {
+    font-size: 0.85rem;
+    color: #888;
+    line-height: 1.5;
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    padding: 1rem 2rem;
+    background: #111;
+    border: 1px solid var(--neon-cyan);
+    border-radius: 4px;
+    color: white;
+    font-family: var(--font-mono);
+    z-index: 1000;
+}
+
+.toast.hidden {
+    display: none;
+}

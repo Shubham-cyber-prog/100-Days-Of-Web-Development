@@ -1,0 +1,645 @@
+/* ===================================
+   Global Error Page Styles
+   =================================== */
+
+:root {
+    --color-primary: #3b82f6;
+    --color-primary-dark: #2563eb;
+    --color-secondary: #64748b;
+    --color-success: #10b981;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
+    --color-network: #8b5cf6;
+    --color-api: #f97316;
+    --color-runtime: #ec4899;
+    
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-dark: #0f172a;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #94a3b8;
+    
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================================
+   Base Styles
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* ===================================
+   Error Container
+   =================================== */
+
+.error-container {
+    width: 100%;
+    max-width: 650px;
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.error-content {
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    padding: 48px 40px;
+    box-shadow: var(--shadow-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.error-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-error));
+}
+
+/* ===================================
+   Error Icon
+   =================================== */
+
+.error-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    color: var(--color-error);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.error-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke-width: 2.5;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* ===================================
+   Error Title & Message
+   =================================== */
+
+.error-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.error-message {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.7;
+}
+
+/* ===================================
+   Error Badge
+   =================================== */
+
+.error-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    background: var(--color-error);
+    color: white;
+}
+
+.badge-network {
+    background: var(--color-network);
+}
+
+.badge-api {
+    background: var(--color-api);
+}
+
+.badge-runtime {
+    background: var(--color-runtime);
+}
+
+.badge-server {
+    background: var(--color-error);
+}
+
+.badge-notfound {
+    background: var(--color-warning);
+}
+
+.badge-auth {
+    background: var(--color-secondary);
+}
+
+/* ===================================
+   Error Details (Collapsible)
+   =================================== */
+
+.error-details {
+    margin: 24px 0;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    overflow: hidden;
+}
+
+.error-details summary {
+    padding: 14px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 14px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.error-details summary:hover {
+    background: #e2e8f0;
+    color: var(--text-primary);
+}
+
+.error-details[open] summary {
+    border-bottom: 1px solid #e2e8f0;
+    background: #e2e8f0;
+}
+
+.error-details-content {
+    padding: 20px;
+}
+
+.error-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+    text-align: left;
+}
+
+.error-detail-item:last-child {
+    border-bottom: none;
+}
+
+.error-detail-item strong {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-right: 12px;
+}
+
+.error-detail-item span {
+    color: var(--text-secondary);
+    word-break: break-all;
+    text-align: right;
+    max-width: 60%;
+}
+
+/* ===================================
+   Connection Status Indicator
+   =================================== */
+
+#connectionStatus {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-online {
+    background: var(--color-success);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-offline {
+    background: var(--color-error);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+@keyframes statusPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.1);
+    }
+}
+
+/* ===================================
+   Action Buttons
+   =================================== */
+
+.error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: 32px 0 24px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn svg {
+    flex-shrink: 0;
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid #e2e8f0;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #e2e8f0;
+    color: var(--text-primary);
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* ===================================
+   Error Suggestions
+   =================================== */
+
+.error-suggestions {
+    background: #fef3c7;
+    border: 1px solid #fde047;
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin-top: 24px;
+    text-align: left;
+}
+
+.error-suggestions h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 12px;
+}
+
+.error-suggestions ul {
+    list-style: none;
+    padding: 0;
+}
+
+.error-suggestions li {
+    color: #78350f;
+    font-size: 14px;
+    padding: 6px 0;
+    padding-left: 24px;
+    position: relative;
+}
+
+.error-suggestions li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #f59e0b;
+    font-weight: bold;
+}
+
+/* ===================================
+   Offline Indicator
+   =================================== */
+
+.offline-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 24px;
+    padding: 14px 20px;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+    font-size: 14px;
+    font-weight: 600;
+    animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+        margin: 0;
+        padding: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 100px;
+        margin-top: 24px;
+        padding: 14px 20px;
+    }
+}
+
+.offline-indicator svg {
+    flex-shrink: 0;
+}
+
+/* ===================================
+   Notification Toast
+   =================================== */
+
+.notification {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 16px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 9999;
+    min-width: 300px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.notification.show {
+    top: 20px;
+}
+
+.notification-success {
+    background: var(--color-success);
+    color: white;
+}
+
+.notification-error {
+    background: var(--color-error);
+    color: white;
+}
+
+.notification-info {
+    background: var(--color-primary);
+    color: white;
+}
+
+/* ===================================
+   Responsive Design
+   =================================== */
+
+@media (max-width: 640px) {
+    .error-content {
+        padding: 32px 24px;
+    }
+    
+    .error-title {
+        font-size: 24px;
+    }
+    
+    .error-icon {
+        width: 64px;
+        height: 64px;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .error-detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    
+    .error-detail-item span {
+        max-width: 100%;
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+    
+    .error-content {
+        padding: 24px 20px;
+    }
+    
+    .error-title {
+        font-size: 20px;
+    }
+    
+    .error-message {
+        font-size: 14px;
+    }
+    
+    .error-icon {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+/* ===================================
+   Dark Mode Support
+   =================================== */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1e293b;
+        --bg-secondary: #0f172a;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-light: #64748b;
+    }
+    
+    body {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+    
+    .error-details {
+        border-color: #334155;
+        background: var(--bg-secondary);
+    }
+    
+    .error-details summary:hover {
+        background: #334155;
+    }
+    
+    .error-details[open] summary {
+        border-bottom-color: #334155;
+        background: #334155;
+    }
+    
+    .error-detail-item {
+        border-bottom-color: #334155;
+    }
+    
+    .btn-secondary {
+        background: var(--bg-secondary);
+        border-color: #334155;
+    }
+    
+    .btn-secondary:hover:not(:disabled) {
+        background: #334155;
+        border-color: #475569;
+    }
+    
+    .error-suggestions {
+        background: #422006;
+        border-color: #78350f;
+    }
+    
+    .error-suggestions h3 {
+        color: #fde047;
+    }
+    
+    .error-suggestions li {
+        color: #fef3c7;
+    }
+    
+    .offline-indicator {
+        background: #450a0a;
+        border-color: #991b1b;
+        color: #fecaca;
+    }
+}
+
+/* ===================================
+   Accessibility
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.btn:focus,
+.error-details summary:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ===================================
+   Print Styles
+   =================================== */
+
+@media print {
+    body {
+        background: white;
+    }
+    
+    .error-content {
+        box-shadow: none;
+    }
+    
+    .error-actions,
+    .offline-indicator {
+        display: none;
+    }
+}
