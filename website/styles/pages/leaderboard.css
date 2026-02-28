@@ -530,58 +530,58 @@
     .leaderboard-main {
         padding: 1rem 0;
     }
-    
+
     .page-header h1 {
         font-size: 2rem;
     }
-    
+
     .leaderboard-controls {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .search-bar {
         max-width: none;
     }
-    
+
     .filter-tabs {
         justify-content: center;
     }
-    
+
     .podium {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .podium-place.first {
         order: 1;
     }
-    
+
     .table-header,
     .leaderboard-row {
         grid-template-columns: 50px 1fr 80px 60px;
     }
-    
+
     .projects-cell,
     .streak-cell,
     .badges-cell {
         display: none;
     }
-    
+
     .rank-info {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .rank-stats {
         justify-content: center;
     }
-    
+
     .modal-user-info {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .modal-stats {
         justify-content: center;
     }
@@ -592,17 +592,144 @@
         width: 60px;
         height: 60px;
     }
-    
+
     .rank-number {
         font-size: 2rem;
     }
-    
+
     .rank-stats {
         gap: 1rem;
     }
-    
+
     .modal-content {
         width: 95%;
         margin: 5% auto;
     }
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+
+[data-theme="light"] .leaderboard-main {
+    background: var(--bg-void);
+}
+
+[data-theme="light"] .page-header {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .search-bar input {
+    background: white;
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .filter-btn {
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .filter-btn.active,
+[data-theme="light"] .filter-btn:hover {
+    background: var(--accent-core);
+    color: white;
+    border-color: var(--accent-core);
+    box-shadow: 0 4px 12px var(--accent-alpha);
+}
+
+[data-theme="light"] .podium-place {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .podium-place.first {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+}
+
+[data-theme="light"] .podium-place.second {
+    background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+    color: #333;
+}
+
+[data-theme="light"] .podium-place.third {
+    background: linear-gradient(135deg, #cd7f32, #daa520);
+    color: #333;
+}
+
+[data-theme="light"] .podium-avatar img {
+    border-color: var(--border-light);
+}
+
+[data-theme="light"] .leaderboard-table {
+    background: white;
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .leaderboard-row {
+    border-bottom-color: var(--border-light);
+}
+
+[data-theme="light"] .leaderboard-row:hover {
+    background: var(--bg-secondary);
+}
+
+[data-theme="light"] .leaderboard-row.current-user {
+    background: var(--accent-alpha);
+}
+
+[data-theme="light"] .user-info h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .points-cell,
+[data-theme="light"] .projects-cell,
+[data-theme="light"] .streak-cell {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .your-rank-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .rank-number,
+[data-theme="light"] .rank-stats .stat span {
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .modal {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .modal-content {
+    background: white;
+    box-shadow: var(--shadow-xl);
+}
+
+[data-theme="light"] .modal-header {
+    border-bottom-color: var(--border-light);
+}
+
+[data-theme="light"] .modal-header h3,
+[data-theme="light"] .modal-details h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .modal-avatar img {
+    border-color: var(--border-light);
+}
+
+[data-theme="light"] .modal-progress h4,
+[data-theme="light"] .modal-achievements h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .comparison-bar.other {
+    background: var(--bg-secondary);
 }

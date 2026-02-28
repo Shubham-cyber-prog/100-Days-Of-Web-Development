@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Community Forum | 100 Days of Web Dev</title>
+
+  <!-- ============ GLOBAL RESET ============ -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      background: #f9fafb;
+      color: #111827;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+  </style>
+
+  <!-- ============ MAIN STYLES ============ -->
+  <style>
+    /* ================= LAYOUT ================= */
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      width: 100%;
+    }
+
+    /* ================= HEADER ================= */
+
+    .forum-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .forum-header h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .forum-header p {
+      color: #6b7280;
+      font-size: 17px;
+    }
+
+    /* ================= CONTROLS ================= */
+
+    .forum-controls {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 15px;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .btn-primary {
+      background: #0ea5e9;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0284c7;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    /* ================= CATEGORIES ================= */
+
+    .forum-categories {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .category-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1px solid #d1d5db;
+      background: white;
+      font-size: 14px;
+      transition: 0.3s ease;
+    }
+
+    .category-btn:hover {
+      border-color: #0ea5e9;
+      color: #0ea5e9;
+    }
+
+    .category-btn.active {
+      background: #0ea5e9;
+      color: white;
+      border-color: #0ea5e9;
+    }
+
+    /* ================= POSTS ================= */
+
+    .posts-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 80px;
+    }
+
+    .post-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      transition: 0.3s ease;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 25px;
+      width: 95%;
+      max-width: 500px;
+      border-radius: 14px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .close-btn {
+      background: none;
+      font-size: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .site-footer {
+      background: #f3f4f6;
+      padding: 60px 20px 30px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 50px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .footer-logo img {
+      width: 40px;
+    }
+
+    .footer-logo span {
+      color: #0ea5e9;
+    }
+
+    .footer-brand p {
+      color: #4b5563;
+      max-width: 350px;
+    }
+
+    .footer-col h3 {
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .footer-col a {
+      display: block;
+      margin-bottom: 10px;
+      color: #374151;
+      transition: 0.3s ease;
+    }
+
+    .footer-col a:hover {
+      color: #0ea5e9;
+      transform: translateX(3px);
+    }
+
+    .social-links a {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 6px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: #0ea5e9;
+      color: white;
+      border-color: #0ea5e9;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 40px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid #d1d5db;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .highlight {
+      color: #0ea5e9;
+      font-weight: 600;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 900px) {
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="container">
+
+    <!-- Header -->
+    <div class="forum-header">
+      <h1>Community Forum</h1>
+      <p>Discuss projects, share tips, ask questions, and collaborate on ideas</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="forum-controls">
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search posts..." />
+        <button id="searchBtn" class="btn btn-secondary">Search</button>
+      </div>
+
+      <button id="createPostBtn" class="btn btn-primary">Create Post</button>
+
+    </div>
+
+    <!-- Categories -->
+    <div class="forum-categories">
+
+      <button class="category-btn active" data-category="all">All Posts</button>
+      <button class="category-btn" data-category="general">General</button>
+      <button class="category-btn" data-category="help">Project Help</button>
+      <button class="category-btn" data-category="progress">Progress</button>
+
+    </div>
+
+    <!-- Posts -->
+    <div class="posts-container" id="postsContainer">
+      <div id="loadingIndicator" class="loading">Loading posts...</div>
+    </div>
+
+    <!-- Create Post Modal -->
+    <div id="createPostModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Create New Post</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <form id="createPostForm">
+          <div class="form-group">
+            <label for="postTitle">Title</label>
+            <input type="text" id="postTitle" placeholder="Enter post title" required />
+          </div>
+          <div class="form-group">
+            <label for="postCategory">Category</label>
+            <select id="postCategory" required>
+              <option value="general">General Discussion</option>
+              <option value="help">Project Help</option>
+              <option value="progress">Progress Sharing</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="postContent">Content</label>
+            <textarea id="postContent" rows="5" placeholder="Write your post content..." required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="cancelPostBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary">Post</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="site-footer">
+
+    <div class="footer-container">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+
+        <div class="footer-logo">
+          <img src="../assets/images/logo.png" alt="">
+          <h2>100 Days of<br><span>Web Dev</span></h2>
+        </div>
+
+        <p>
+          A hyper-intensive protocol designed to forge elite web engineers.
+        </p>
+
+      </div>
+
+      <!-- Navigation -->
+      <div class="footer-col">
+
+        <h3>Navigation</h3>
+
+        <a href="#">Home</a>
+        <a href="#">Archive</a>
+        <a href="#">Forum</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Crew</a>
+
+      </div>
+
+      <!-- Resources -->
+      <div class="footer-col">
+
+        <h3>Resources</h3>
+
+        <a href="#">Docs</a>
+        <a href="#">API</a>
+        <a href="#">Contact</a>
+        <a href="#">System</a>
+
+      </div>
+
+      <!-- Connect -->
+      <div class="footer-col">
+
+        <h3>Connect</h3>
+
+        <p>Join the signal frequency.</p>
+
+        <div class="social-links">
+          <a href="#">GitHub</a>
+          <a href="#">Twitter</a>
+          <a href="#">Discord</a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bottom -->
+    <div class="footer-bottom">
+
+      <p>© 2026 100 Days of Web Dev.</p>
+
+      <p>
+        Maintained by <span class="highlight">Subham</span> ❤️
+      </p>
+
+    </div>
+
+  </footer>
+
+</body>
+
+</html>
