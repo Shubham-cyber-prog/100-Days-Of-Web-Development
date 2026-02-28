@@ -439,12 +439,16 @@ const Dashboard = ({ entries, projects }) => {
 // =============================================
 
 const App = () => {
+    
+
     const [activeTab, setActiveTab] = useState('timer');
     const [theme, setTheme] = useState(() => localStorage.getItem('timeflow_theme') || 'dark');
     const [projects, setProjects] = useState(() => {
         const saved = localStorage.getItem('timeflow_projects');
         return saved ? JSON.parse(saved) : [{ id: 'default', name: 'General', color: '#6366f1' }];
     });
+
+    
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -493,8 +497,10 @@ const App = () => {
         document.body.removeChild(link);
     };
 
+    // return (
+        // <div className="app-container">
     return (
-        <div className="app-container">
+        <div className={`app-container ${theme}`}>
             <MeshBackground />
             <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} theme={theme} setTheme={setTheme} />
 
@@ -507,6 +513,12 @@ const App = () => {
                         <p style={{ color: 'var(--text-dim)', fontWeight: 500 }}>
                             {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                         </p>
+                    </div>
+
+                    <div className="theme-switcher">
+                    <button onClick={() => setTheme("calm")}>🌊 Calm</button>
+                    <button onClick={() => setTheme("neon")}>🌌 Neon</button>
+                    <button onClick={() => setTheme("sunset")}>🌅 Sunset</button>
                     </div>
                 </header>
 
