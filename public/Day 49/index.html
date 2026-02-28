@@ -1,17 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RecipeShare - Share Your Culinary Creations</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --recipe-accent: #f97316;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .navbar {
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('kitchen.jpg');
+        }
+    </style>
 </head>
+
 <body>
     <!-- Header & Navigation -->
     <header class="header">
@@ -28,8 +50,8 @@
                     <li><a href="#about">About</a></li>
                 </ul>
                 <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Search recipes...">
-                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                    <input type="text" id="search-input" placeholder="Search recipes..." aria-label="Search recipes">
+                    <button id="search-btn" aria-label="Perform search"><i class="fas fa-search"></i></button>
                 </div>
                 <div class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -47,7 +69,8 @@
                 <button class="btn-primary" id="share-recipe-btn">Share a Recipe</button>
             </div>
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cooking ingredients">
+                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    alt="Cooking ingredients">
             </div>
         </div>
     </section>
@@ -97,7 +120,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="recipe-title">Recipe Title *</label>
-                            <input type="text" id="recipe-title" placeholder="e.g., Grandma's Chocolate Chip Cookies" required>
+                            <input type="text" id="recipe-title" placeholder="e.g., Grandma's Chocolate Chip Cookies"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="recipe-category">Category *</label>
@@ -112,7 +136,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="prep-time">Prep Time (minutes) *</label>
@@ -127,13 +151,13 @@
                             <input type="number" id="servings" placeholder="e.g., 4" min="1" required>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="recipe-image">Image URL</label>
                         <input type="url" id="recipe-image" placeholder="https://example.com/image.jpg">
                         <small>Leave blank to use a default image</small>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="ingredients">Ingredients *</label>
                         <textarea id="ingredients" rows="4" placeholder="Enter each ingredient on a new line:
@@ -141,7 +165,7 @@
 - 1 cup sugar
 - 3 eggs" required></textarea>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="instructions">Instructions *</label>
                         <textarea id="instructions" rows="6" placeholder="Enter step-by-step instructions:
@@ -149,17 +173,18 @@
 2. Mix dry ingredients
 3. Add wet ingredients..." required></textarea>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="recipe-story">Your Story (Optional)</label>
-                        <textarea id="recipe-story" rows="3" placeholder="Share the story behind this recipe..."></textarea>
+                        <textarea id="recipe-story" rows="3"
+                            placeholder="Share the story behind this recipe..."></textarea>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="author-name">Your Name *</label>
                         <input type="text" id="author-name" placeholder="Enter your name" required>
                     </div>
-                    
+
                     <button type="submit" class="btn-primary">Share Recipe</button>
                 </form>
             </div>
@@ -172,8 +197,10 @@
             <h2 class="section-title">About RecipeShare</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>RecipeShare is a community-driven platform where food enthusiasts from around the world can share their favorite recipes, cooking tips, and culinary stories.</p>
-                    <p>Whether you're a professional chef or a home cook, everyone has something delicious to contribute!</p>
+                    <p>RecipeShare is a community-driven platform where food enthusiasts from around the world can share
+                        their favorite recipes, cooking tips, and culinary stories.</p>
+                    <p>Whether you're a professional chef or a home cook, everyone has something delicious to
+                        contribute!</p>
                     <div class="features">
                         <div class="feature">
                             <i class="fas fa-share-alt"></i>
@@ -193,7 +220,8 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="People cooking together">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        alt="People cooking together">
                 </div>
             </div>
         </div>
@@ -239,7 +267,8 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 RecipeShare. All rights reserved. | Made with <i class="fas fa-heart"></i> for food lovers</p>
+                <p>&copy; 2023 RecipeShare. All rights reserved. | Made with <i class="fas fa-heart"></i> for food
+                    lovers</p>
             </div>
         </div>
     </footer>
@@ -254,8 +283,9 @@
         </div>
     </div>
     <button id="scrollToTopBtn" aria-label="Scroll to top">
-    <i class="fa-solid fa-arrow-up"></i>
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
     <script src="script.js"></script>
 </body>
+
 </html>

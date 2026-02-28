@@ -1,30 +1,65 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BMI Calculator</title>
-<link rel="stylesheet" href="style.css">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator</title>
+    <meta name="description"
+        content="Calculate your Body Mass Index (BMI) and get personalized health insights with our BMI Calculator." />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BMI Calculator | Health & Fitness Tool" />
+    <meta property="og:description"
+        content="Calculate your BMI instantly and understand your weight category with our modern tool." />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BMI Calculator | Health & Fitness Tool" />
+    <meta name="twitter:description"
+        content="Calculate your BMI instantly and understand your weight category with our modern tool." />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
 <body>
     <div class="calculator-container">
         <h1 class="title animate-pop">BMI Calculator</h1>
         <div class="input-group animate-slide-up">
-        <label>Height</label>
-        <div class="unit-row">
-            <input type="number" id="height" placeholder="Enter height">
-            <select id="heightUnit">
-            <option value="cm">cm</option>
-            <option value="ft">ft</option>
-            </select>
-        </div>
+            <label>Height</label>
+            <div class="unit-row">
+                <input type="number" id="height" placeholder="Enter height">
+                <select id="heightUnit">
+                    <option value="cm">cm</option>
+                    <option value="ft">ft</option>
+                </select>
+            </div>
         </div>
 
         <div class="input-group animate-slide-up" style="animation-delay: 0.2s;">
-        <label>Weight</label>
-        <div class="unit-row">
-            <input type="number" id="weight" placeholder="Enter weight">
-            <select id="weightUnit">
-            <option value="kg">kg</option>
-            <option value="lb">lb</option>
+            <label>Weight</label>
+            <div class="unit-row">
+                <input type="number" id="weight" placeholder="Enter weight">
+                <select id="weightUnit">
+                    <option value="kg">kg</option>
+                    <option value="lb">lb</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Age -->
+        <div class="input-group animate-slide-up" style="animation-delay:0.3s;">
+            <label>Age</label>
+            <input type="number" id="age" placeholder="Enter age">
+        </div>
+
+        <!-- Gender -->
+        <div class="input-group animate-slide-up" style="animation-delay:0.35s;">
+            <label>Gender</label>
+            <select id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
             </select>
         </div>
-        </div>
+
 
         <button id="calculate-btn" class="animate-slide-up" style="animation-delay: 0.4s;">Calculate BMI</button>
         <button id="reset-btn" class="reset-btn">Reset</button>
@@ -34,6 +69,12 @@
             <div id="bmi-value" class="bmi-value">0</div>
             <div id="bmi-category" class="bmi-category">-</div>
             <div id="bmi-message" class="bmi-message">Enter your details to calculate</div>
+            <hr style="margin:15px 0">
+
+            <div id="bmr-result"></div>
+            <div id="bfp-result"></div>
+            <div id="diet-plan"></div>
+
         </div>
         <div class="bmi-scale animate-fade-in" style="animation-delay: 0.6s;">
             <div class="scale-item underweight">
@@ -57,5 +98,5 @@
 
     <script src="script.js"></script>
 </body>
-</html>
 
+</html>

@@ -1,24 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Day 42: HFT Market Tracker</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --hft-green: #22c55e;
+            --hft-red: #ef4444;
+        }
+
+        .terminal-container {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand {
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .brand:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
+
 <body>
 
     <div class="terminal-container">
         <header>
             <div class="brand">
-                <i class="fa-solid fa-chart-line"></i> 
+                <i class="fa-solid fa-chart-line"></i>
                 <span>QUANT<span class="highlight">HFT</span> TRACKER</span>
             </div>
-            
+
             <div class="search-box">
+                <label for="search-input" class="sr-only">Search Stocks</label>
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="search-input" placeholder="Search Ticker (e.g., AAPL)...">
+                <input type="text" id="search-input" placeholder="Search Ticker (e.g., AAPL)..."
+                    aria-label="Stock ticker search">
             </div>
 
             <div class="status-indicator">
@@ -27,7 +52,7 @@
         </header>
 
         <div class="stock-grid" id="stock-grid">
-            </div>
+        </div>
 
         <footer>
             <p>Simulated Low-Latency Feed • Day 42 Challenge</p>
@@ -36,4 +61,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

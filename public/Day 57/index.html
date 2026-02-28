@@ -1,24 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Habit Tracker</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --habit-primary: #10b981;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    input#habitInput {
+      padding: 12px;
+      border: 2px solid #e1e1e1;
+      border-radius: 8px;
+      width: 70%;
+      transition: border-color 0.2s;
+    }
+
+    input#habitInput:focus {
+      border-color: var(--habit-primary);
+      outline: none;
+    }
+
+    button {
+      background: var(--habit-primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  </style>
 </head>
+
 <body>
 
   <div class="container">
     <h1>🌱 Habit Tracker</h1>
 
     <div class="habit-form">
-      <input type="text" id="habitInput" placeholder="Enter a new habit..." />
-      <button onclick="addHabit()">Add Habit</button>
+      <input type="text" id="habitInput" placeholder="Enter a new habit..." aria-label="New habit name" />
+      <button onclick="addHabit()" aria-label="Add habit to tracker">Add Habit</button>
     </div>
+
+    <br/>
+    <input type="text" id="search" placeholder="Search habit..." />
+    <br/>
+
+    <div class="progress">
+  <div id="progressBar"></div>
+</div>
 
     <ul id="habitList"></ul>
   </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SynthCore | Modular Sound Synthesis Engine</title>
+    <meta name="description"
+        content="A professional-grade, node-based modular sound synthesis engine built with Web Audio API. Custom oscillators, filters, and ADSR modules." />
+    <link rel="stylesheet" href="styles/synth.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="brutalist-theme">
+    <header class="hud-header">
+        <div class="logo">
+            <span class="glitch" data-text="SYNTHCORE">SYNTHCORE</span>
+            <span class="version">v1.0.42_BETA</span>
+        </div>
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="label">CPU:</span>
+                <span id="cpu-load" class="value">2.4%</span>
+            </div>
+            <div class="status-item">
+                <span class="label">NODES:</span>
+                <span id="node-count" class="value">0</span>
+            </div>
+            <div class="status-item">
+                <span class="label">STATE:</span>
+                <span id="audio-state" class="value inactive">STANDBY</span>
+            </div>
+        </div>
+        <nav class="hud-controls">
+            <button id="start-engine" class="btn primary">INITIALIZE ENGINE</button>
+            <button id="save-patch" class="btn">EXPORT PATCH</button>
+            <button id="load-patch" class="btn">IMPORT PATCH</button>
+            <button id="clear-graph" class="btn danger">RESET CORE</button>
+        </nav>
+    </header>
+
+    <main class="workspace">
+        <aside class="sidebar node-palette">
+            <h3>SIGNAL GENERATORS</h3>
+            <div class="node-list">
+                <button class="add-node" data-type="oscillator">OSCILLATOR [OSC]</button>
+                <button class="add-node" data-type="noise">NOISE [NSE]</button>
+            </div>
+
+            <h3>SIGNAL PROCESSORS</h3>
+            <div class="node-list">
+                <button class="add-node" data-type="filter">FILTER [FLT]</button>
+                <button class="add-node" data-type="env">ENVELOPE [ENV]</button>
+                <button class="add-node" data-type="gain">GAIN [GCA]</button>
+                <button class="add-node" data-type="delay">DELAY [DLY]</button>
+            </div>
+
+            <h3>VISUALIZERS</h3>
+            <div class="node-list">
+                <button class="add-node" data-type="analyzer">FFT ANALYZER</button>
+                <button class="add-node" data-type="scope">OSCILLOSCOPE</button>
+            </div>
+
+            <div class="monitoring-panel">
+                <div class="vumeter-container">
+                    <div class="vumeter" id="master-vumeter">
+                        <div class="vumeter-fill"></div>
+                    </div>
+                    <label>MASTER DB</label>
+                </div>
+            </div>
+        </aside>
+
+        <section class="graph-container">
+            <canvas id="graph-canvas"></canvas>
+            <div id="node-overlay"></div>
+            <div class="graph-grid"></div>
+        </section>
+
+        <aside class="sidebar inspector">
+            <h3>INSPECTOR</h3>
+            <div id="node-settings" class="settings-content">
+                <p class="placeholder-text">SELECT A NODE TO EDIT PARAMETERS</p>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="hud-footer">
+        <div class="dock">
+            <div class="system-logs" id="log-output">
+                <p>> System initialized. Waiting for user interaction...</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Audio & Engine -->
+    <script src="scripts/core/audioBus.js" type="module"></script>
+
+    <!-- UI & Interaction -->
+    <script src="scripts/ui/graph.js" type="module"></script>
+    <script src="scripts/ui/analyzer.js" type="module"></script>
+    <script src="scripts/ui/scope.js" type="module"></script>
+
+    <!-- State Management -->
+    <script src="scripts/state/patches.js" type="module"></script>
+
+    <!-- Entry Point -->
+    <script type="module">
+        import { engine } from './scripts/core/audioBus.js';
+        import { graph } from './scripts/ui/graph.js';
+
+        document.getElementById('start-engine').addEventListener('click', async () => {
+            await engine.init();
+            document.getElementById('audio-state').textContent = 'ACTIVE';
+            document.getElementById('audio-state').classList.remove('inactive');
+            document.getElementById('audio-state').classList.add('active');
+            document.getElementById('start-engine').textContent = 'ENGINE HOT';
+            document.getElementById('start-engine').disabled = true;
+        });
+    </script>
+</body>
+
+</html>
