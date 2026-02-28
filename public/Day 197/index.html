@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Regex Crossword - Day 197</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="./styles/game.css" />
+</head>
+
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="header-left">
+                <h1><i class="fa-solid fa-microchip"></i> Regex Crossword</h1>
+                <p class="subtitle">Solve the grid using Regular Expressions</p>
+            </div>
+            <div class="header-right">
+                <div class="level-badge" id="level-display">Level 1</div>
+                <button id="btn-tutorial" class="btn-icon" title="How to play">
+                    <i class="fa-solid fa-question-circle"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="game-board-container">
+            <div class="crossword-layout" id="game-layout">
+                <!-- Row Regexes (Left) -->
+                <div class="row-clues" id="row-clues">
+                    <!-- Dynamic -->
+                </div>
+
+                <!-- Main Grid & Column Regexes -->
+                <div class="grid-section">
+                    <div class="col-clues" id="col-clues">
+                        <!-- Dynamic -->
+                    </div>
+                    <div id="crossword-grid" class="grid-body">
+                        <!-- Dynamic Grid of Inputs -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="game-footer">
+            <div class="stats-bar">
+                <span id="match-status">Status: Solving...</span>
+                <span class="timer" id="game-timer">00:00</span>
+            </div>
+            <div class="controls">
+                <button class="btn-secondary" id="btn-reset">Reset</button>
+                <button class="btn-secondary" id="btn-help">Hint</button>
+                <button class="btn-primary" id="btn-submit">Verify Solution</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="win-modal" class="modal">
+        <div class="modal-content">
+            <i class="fa-solid fa-trophy trophy-icon"></i>
+            <h2>Puzzle Solved!</h2>
+            <p>Your regex skills are impeccable.</p>
+            <div class="modal-stats">
+                <div class="stat">
+                    <span class="label">Time</span>
+                    <span class="value" id="final-time">0:45</span>
+                </div>
+            </div>
+            <button id="btn-next-level" class="btn-primary">Next Level</button>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/game.js"></script>
+</body>
+
+</html>
+
+<html>
+<head>
+    <title>SaaS Simulator</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <h1>SaaS Subscription Simulator</h1>
+
+    <div class="plans">
+        <div class="card">
+            <h2>Free</h2>
+            <p>$0/month</p>
+            <p>Limit: 5 API Calls</p>
+            <button onclick="selectPlan('Free')">Choose</button>
+        </div>
+
+        <div class="card pro">
+            <h2>Pro</h2>
+            <p>$20/month</p>
+            <p>Limit: 50 API Calls</p>
+            <button onclick="selectPlan('Pro')">Choose</button>
+        </div>
+
+        <div class="card enterprise">
+            <h2>Enterprise</h2>
+            <p>$100/month</p>
+            <p>Unlimited API Calls</p>
+            <button onclick="selectPlan('Enterprise')">Choose</button>
+        </div>
+    </div>
+
+    <div class="dashboard">
+        <h2>User Dashboard</h2>
+        <p>Current Plan: <span id="currentPlan">None</span></p>
+        <p>API Usage: <span id="usage">0</span></p>
+        <p>Total Revenue: $<span id="revenue">0</span></p>
+
+        <button onclick="simulateApiCall()">Simulate API Call</button>
+        <button onclick="resetUsage()">Reset Usage</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+

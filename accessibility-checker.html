@@ -282,6 +282,11 @@
         }
 
         // -------- COLOR CONTRAST --------
+        const textColorEl = document.getElementById("textColor");
+        const bgColorEl = document.getElementById("bgColor");
+        const contrastResult = document.getElementById("contrastResult");
+        const previewEl = document.getElementById("preview");
+
         function luminance(r, g, b) {
             const a = [r, g, b].map(v => {
                 v /= 255;
@@ -292,23 +297,28 @@
 
         function hexToRgb(hex) {
             hex = hex.replace("#", "");
+            if (hex.length === 3) {
+                hex = hex.split('').map(char => char + char).join('');
+            }
             return {
-                r: parseInt(hex.slice(0, 2), 16),
-                g: parseInt(hex.slice(2, 4), 16),
-                b: parseInt(hex.slice(4, 6), 16)
+                r: parseInt(hex.slice(0, 2), 16) || 0,
+                g: parseInt(hex.slice(2, 4), 16) || 0,
+                b: parseInt(hex.slice(4, 6), 16) || 0
             };
         }
 
         function checkContrast() {
-            const text = hexToRgb(textColor.value);
-            const bg = hexToRgb(bgColor.value);
+            const textHex = textColorEl.value;
+            const bgHex = bgColorEl.value;
+            const text = hexToRgb(textHex);
+            const bg = hexToRgb(bgHex);
 
             const L1 = luminance(text.r, text.g, text.b) + 0.05;
             const L2 = luminance(bg.r, bg.g, bg.b) + 0.05;
             const ratio = L1 > L2 ? (L1 / L2) : (L2 / L1);
 
-            preview.style.color = textColor.value;
-            preview.style.backgroundColor = bgColor.value;
+            previewEl.style.color = textHex;
+            previewEl.style.backgroundColor = bgHex;
 
             contrastResult.textContent =
                 ratio >= 4.5

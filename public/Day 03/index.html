@@ -1,110 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FlowBoard</title>
+  <meta name="description" content="FlowBoard - A streamlined task management and Kanban board application." />
   <link rel="stylesheet" href="style.css" />
   <script type="module" src="js/app.js"></script>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <h1>FlowBoard</h1>
-  <div class="nav-actions">
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-  🌙
-</button>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <h1>FlowBoard</h1>
+    <div class="nav-actions">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        🌙
+      </button>
 
-  </div>
-</nav>
+    </div>
+  </nav>
 
-<!-- TASK MODAL -->
-<div id="task-modal" class="modal hidden">
-  <div class="modal-content">
-    <h2>New Task</h2>
+  <!-- TASK MODAL -->
+  <div id="task-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>New Task</h2>
 
-    <input
-      type="text"
-      id="task-title"
-      placeholder="Task title"
-      autocomplete="off"
-    />
+      <input type="text" id="task-title" placeholder="Task title" autocomplete="off" />
 
-    <textarea
-      id="task-desc"
-      placeholder="Description"
-      rows="3"
-    ></textarea>
+      <textarea id="task-desc" placeholder="Description" rows="3"></textarea>
 
-    <select id="task-priority">
-      <option value="low">Low Priority</option>
-      <option value="medium" selected>Medium Priority</option>
-      <option value="high">High Priority</option>
-    </select>
+      <select id="task-priority">
+        <option value="low">Low Priority</option>
+        <option value="medium" selected>Medium Priority</option>
+        <option value="high">High Priority</option>
+      </select>
 
-    <div class="modal-actions">
-      <button id="save-task" class="primary-btn">Add Task</button>
-      <button class="secondary-btn" onclick="closeModal()">Cancel</button>
+      <div class="modal-actions">
+        <button id="save-task" class="primary-btn">Add Task</button>
+        <button class="secondary-btn" onclick="closeModal()">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- BOARD -->
-<main class="board">
+  <!-- BOARD -->
+  <main class="board">
 
-  <section
-  class="column"
-  id="todo"
-  ondragover="allowDrop(event)"
-  ondrop="drop(event)"
->
+    <section class="column" id="todo" ondragover="allowDrop(event)" ondrop="drop(event)">
 
-    <header class="column-header">
-      <h2>To-Do</h2>
-    </header>
+      <header class="column-header">
+        <h2>To-Do</h2>
+      </header>
 
-    <div class="task-list"></div>
+      <div class="task-list"></div>
 
-    <button class="add-btn" onclick="openModal('todo')">
-      + Add Task
-    </button>
-  </section>
+      <button class="add-btn" onclick="openModal('todo')">
+        + Add Task
+      </button>
+    </section>
 
-  <section class="column" id="progress" ondragover="allowDrop(event)" ondrop="drop(event)">
-    <header class="column-header">
-      <h2>In Progress</h2>
-    </header>
+    <section class="column" id="progress" ondragover="allowDrop(event)" ondrop="drop(event)">
+      <header class="column-header">
+        <h2>In Progress</h2>
+      </header>
 
-    <div class="task-list"></div>
+      <div class="task-list"></div>
 
-    <button class="add-btn" onclick="openModal('progress')">
-      + Add Task
-    </button>
-  </section>
+      <button class="add-btn" onclick="openModal('progress')">
+        + Add Task
+      </button>
+    </section>
 
-  <section class="column" id="done" ondragover="allowDrop(event)" ondrop="drop(event)">
-    <header class="column-header">
-      <h2>Done</h2>
-    </header>
+    <section class="column" id="done" ondragover="allowDrop(event)" ondrop="drop(event)">
+      <header class="column-header">
+        <h2>Done</h2>
+      </header>
 
-    <div class="task-list"></div>
+      <div class="task-list"></div>
 
-    <button class="add-btn" onclick="openModal('done')">
-      + Add Task
-    </button>
-  </section>
+      <button class="add-btn" onclick="openModal('done')">
+        + Add Task
+      </button>
+    </section>
 
-</main>
+  </main>
 
-<!-- FOOTER / PROGRESS -->
-<footer class="footer">
-  <p class="progress-label">Progress</p>
-  <div id="progress-bar">
-    <div id="progress-text">0%</div>
-  </div>
-</footer>
+  <!-- FOOTER / PROGRESS -->
+  <footer class="footer">
+    <p class="progress-label">Progress</p>
+    <div id="progress-bar">
+      <div id="progress-text">0%</div>
+    </div>
+  </footer>
 
 </body>
+
 </html>

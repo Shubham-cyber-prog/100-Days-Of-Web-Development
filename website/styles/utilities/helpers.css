@@ -1,5 +1,147 @@
-/* --- Responsive Helpers --- */
+/* ========================================
+   UTILITY HELPERS
+   Generic utility classes for layout, text, and visibility
+   ======================================== */
+
+/* Text Alignment */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Display & Visibility */
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+.block {
+    display: block;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Text Colors */
+.text-primary {
+    color: var(--text-primary);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+.text-tertiary {
+    color: var(--text-tertiary);
+}
+
+.text-accent {
+    color: var(--accent-core);
+}
+
+.text-success {
+    color: var(--accent-success);
+}
+
+.text-danger {
+    color: var(--accent-danger);
+}
+
+.text-warning {
+    color: var(--accent-warning);
+}
+
+/* Backgrounds */
+.bg-void {
+    background: var(--bg-void);
+}
+
+.bg-secondary {
+    background: var(--bg-secondary);
+}
+
+.bg-card {
+    background: var(--bg-card);
+}
+
+.bg-accent-alpha {
+    background: var(--accent-alpha);
+}
+
+/* Font Weights */
+.font-regular {
+    font-weight: var(--weight-regular);
+}
+
+.font-medium {
+    font-weight: var(--weight-medium);
+}
+
+.font-semibold {
+    font-weight: var(--weight-semibold);
+}
+
+.font-bold {
+    font-weight: var(--weight-bold);
+}
+
+/* Border Radius */
+.rounded-sm {
+    border-radius: var(--radius-sm);
+}
+
+.rounded-md {
+    border-radius: var(--radius-md);
+}
+
+.rounded-lg {
+    border-radius: var(--radius-lg);
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+/* Shadow Helpers */
+.shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Responsive Helpers */
+@media (max-width: 1024px) {
+    .hide-tablet {
+        display: none !important;
+    }
+}
+
 @media (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
+
     .auth-card {
         flex-direction: column;
         max-width: 450px;
@@ -7,7 +149,6 @@
 
     .auth-visual {
         display: none;
-        /* Hide visual on mobile for compactness, or can reduce to header */
     }
 
     .auth-form-side {
@@ -17,15 +158,45 @@
 }
 
 @media (max-width: 640px) {
-    .nav-links {
-        display: none;
-    }
-
     .hero h1 {
         font-size: 2.5rem;
     }
 }
 
-.hidden {
-    display: none;
+/* Flex Utilities */
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.gap-1 {
+    gap: var(--space-1);
+}
+
+.gap-2 {
+    gap: var(--space-2);
+}
+
+.gap-4 {
+    gap: var(--space-4);
+}
+
+/* Full width/height */
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
 }
