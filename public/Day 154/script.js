@@ -1,3 +1,16 @@
+
+// 🌈 Theme System
+function setTheme(theme) {
+    document.body.className = theme;
+    localStorage.setItem("snake_theme", theme);
+}
+
+// Load saved theme
+window.onload = () => {
+    const savedTheme = localStorage.getItem("snake_theme") || "ocean";
+    setTheme(savedTheme);
+};
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
