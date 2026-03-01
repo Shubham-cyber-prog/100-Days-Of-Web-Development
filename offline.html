@@ -1,133 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline - Zenith | 100 Days of Web Development</title>
-    <link rel="stylesheet" href="website/style.css">
-    <style>
-        .offline-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline | 100 Days of Web Development</title>
 
-        .offline-icon {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 2rem;
-            opacity: 0.8;
-        }
+<style>
+/* ===============================
+   GLOBAL RESET
+================================ */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", sans-serif;
+}
 
-        .offline-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+body{
+    min-height:100vh;
+    background: radial-gradient(circle at top left,#0f172a,#020617 60%);
+    color:#e2e8f0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
 
-        .offline-message {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            max-width: 500px;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
+/* ===============================
+   ANIMATED GRID BACKGROUND
+================================ */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation: moveGrid 25s linear infinite;
+}
 
-        .offline-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+@keyframes moveGrid{
+    from{ background-position:0 0; }
+    to{ background-position:40px 40px; }
+}
 
-        .retry-btn {
-            padding: 0.8rem 2rem;
-            background: var(--accent-primary);
-            color: white;
-            border: none;
-            border-radius: 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+/* ===============================
+   MAIN CONTAINER
+================================ */
+.container{
+    position:relative;
+    z-index:10;
+    width:90%;
+    max-width:700px;
+    padding:50px 40px;
+    background:rgba(15,23,42,0.85);
+    border:1px solid rgba(56,189,248,0.3);
+    border-radius:20px;
+    backdrop-filter: blur(20px);
+    text-align:center;
+    box-shadow:0 0 60px rgba(56,189,248,0.15);
+}
 
-        .retry-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
-        }
+/* ===============================
+   ICON
+================================ */
+.icon{
+    font-size:80px;
+    margin-bottom:25px;
+    color:#38bdf8;
+    animation: pulse 2s infinite ease-in-out;
+}
 
-        .cached-pages {
-            margin-top: 3rem;
-        }
+@keyframes pulse{
+    0%,100%{ transform:scale(1); opacity:0.8;}
+    50%{ transform:scale(1.1); opacity:1;}
+}
 
-        .cached-pages h3 {
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
+/* ===============================
+   TEXT
+================================ */
+h1{
+    font-size:42px;
+    margin-bottom:15px;
+    background:linear-gradient(90deg,#38bdf8,#818cf8);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
 
-        .cached-list {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+p{
+    font-size:18px;
+    color:#94a3b8;
+    margin-bottom:35px;
+    line-height:1.6;
+}
 
-        .cached-list a {
-            color: var(--accent-primary);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            background: var(--bg-card);
-            border-radius: 0.5rem;
-            border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
-        }
+/* ===============================
+   BUTTONS
+================================ */
+.buttons{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+}
 
-        .cached-list a:hover {
-            border-color: var(--accent-primary);
-        }
-    </style>
+.btn{
+    padding:12px 28px;
+    font-size:15px;
+    font-weight:600;
+    border-radius:30px;
+    cursor:pointer;
+    transition:0.3s;
+    border:none;
+}
+
+/* Primary */
+.btn-primary{
+    background:#38bdf8;
+    color:#0f172a;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(56,189,248,0.4);
+}
+
+/* Outline */
+.btn-outline{
+    background:transparent;
+    border:1px solid #38bdf8;
+    color:#38bdf8;
+}
+
+.btn-outline:hover{
+    background:#38bdf8;
+    color:#0f172a;
+}
+
+/* ===============================
+   OFFLINE LINKS
+================================ */
+.offline-links{
+    margin-top:10px;
+}
+
+.offline-links h3{
+    margin-bottom:20px;
+    font-size:18px;
+    color:#cbd5e1;
+}
+
+.links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.links a{
+    text-decoration:none;
+    color:#38bdf8;
+    padding:8px 18px;
+    border-radius:20px;
+    border:1px solid rgba(56,189,248,0.4);
+    transition:0.3s;
+}
+
+.links a:hover{
+    background:#38bdf8;
+    color:#0f172a;
+}
+
+/* ===============================
+   STATUS MESSAGE
+================================ */
+.status{
+    margin-top:25px;
+    font-size:14px;
+    color:#94a3b8;
+}
+.online{
+    color:#22c55e;
+}
+.offline{
+    color:#ef4444;
+}
+</style>
 </head>
+
 <body>
-    <div class="offline-container">
-        <svg class="offline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414" />
-        </svg>
 
-        <h1 class="offline-title">You're Offline</h1>
-        <p class="offline-message">
-            It looks like you've lost your internet connection. 
-            Don't worry, you can still access cached content while offline.
-        </p>
+<div class="container">
 
-        <div class="offline-actions">
-            <button class="retry-btn" onclick="window.location.reload()">
-                Try Again
-            </button>
-            <button class="retry-btn" style="background: transparent; border: 1px solid var(--accent-primary); color: var(--accent-primary);" onclick="window.history.back()">
-                Go Back
-            </button>
-        </div>
+    <div class="icon">📡</div>
 
-        <div class="cached-pages">
-            <h3>Available Offline Pages</h3>
-            <ul class="cached-list">
-                <li><a href="/">Home</a></li>
-                <li><a href="website/projects.html">Projects</a></li>
-                <li><a href="website/contribute.html">Contribute</a></li>
-                <li><a href="website/structure.html">Structure</a></li>
-            </ul>
+    <h1>You're Offline</h1>
+
+    <p>
+        It looks like you've lost your internet connection.
+        Don’t worry — you can still explore available cached pages.
+    </p>
+
+    <div class="buttons">
+        <button class="btn btn-primary" onclick="retryConnection()">Try Again</button>
+        <button class="btn btn-outline" onclick="goBack()">Go Back</button>
+    </div>
+
+    <div class="offline-links">
+        <h3>Available Offline Pages</h3>
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="public/">Projects</a>
+            <a href="masthead.html">Contributors</a>
         </div>
     </div>
+
+    <div class="status">
+        Status: <span id="connectionStatus" class="offline">Offline</span>
+    </div>
+
+</div>
+
+<script>
+
+/* ===============================
+   RETRY CONNECTION
+================================ */
+function retryConnection(){
+    window.location.reload();
+}
+
+/* ===============================
+   GO BACK FUNCTION
+================================ */
+function goBack(){
+    if(document.referrer !== ""){
+        window.history.back();
+    }else{
+        window.location.href = "/index.html";
+    }
+}
+
+/* ===============================
+   DETECT ONLINE STATUS
+================================ */
+const statusElement = document.getElementById("connectionStatus");
+
+function updateStatus(){
+    if(navigator.onLine){
+        statusElement.textContent = "Online";
+        statusElement.className = "online";
+    }else{
+        statusElement.textContent = "Offline";
+        statusElement.className = "offline";
+    }
+}
+
+window.addEventListener("online", updateStatus);
+window.addEventListener("offline", updateStatus);
+
+updateStatus();
+
+</script>
+
 </body>
 </html>
