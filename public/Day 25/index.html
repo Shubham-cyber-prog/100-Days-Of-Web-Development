@@ -1,20 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Quote Generator</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalized Quote Generator</title>
+  <meta name="description" content="Get inspired with our personalized quote generator featuring multiple categories." />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Quotes Generator | Daily Inspiration" />
+  <meta property="og:description" content="Discover motivational, life, and success quotes tailored to your interests." />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Quotes Generator | Daily Inspiration" />
+  <meta name="twitter:description"
+    content="Discover motivational, life, and success quotes tailored to your interests." />
+  <link rel="stylesheet" href="style.css" />
 </head>
+<body class="flex flex-col items-center justify-center p-4 md:p-8">
+
 <body>
 
-    <div class="container">
-        <h1>✨ Random Quote Generator</h1>
-        <p id="quote">Click the button to get a quote</p>
-        <p id="author"></p>
-        <button id="btn">New Quote</button>
+  <div class="container">
+
+    <h1>✨ Personalized Quotes</h1>
+
+    <!-- Category Section -->
+    <div class="category-box" id="categoryBox">
+      <p>Select Your Interest</p>
+
+      <select id="categorySelect">
+        <option value="">Choose Category</option>
+        <option value="motivation">Motivation</option>
+        <option value="life">Life</option>
+        <option value="success">Success</option>
+        <option value="study">Study</option>
+        <option value="love">Love</option>
+      </select>
+
+      <button id="saveCategory">Save Preference</button>
     </div>
 
-    <script src="app.js"></script>
+
+    <!-- Quote Section -->
+    <div class="quote-box hidden" id="quoteBox">
+
+      <p id="quote">Loading...</p>
+      <p id="author"></p>
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Theme Quote Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>✨ Personalized Quotes</h1>
+
+    <!-- Category Section -->
+    <div class="category-box" id="categoryBox">
+      <p>Select Your Interest</p>
+
+      <select id="categorySelect">
+        <option value="">Choose Category</option>
+<div class="container">
+
+<h1>✨ Theme Quote Hub</h1>
+
+<div class="section">
+    <h2>➕ Add Quote</h2>
+
+    <input type="text" id="newQuote" placeholder="Enter quote">
+    <input type="text" id="newAuthor" placeholder="Author">
+    <select id="newTheme">
+        <option value="">Select Theme</option>
+        <option value="motivation">Motivation</option>
+        <option value="life">Life</option>
+        <option value="success">Success</option>
+        <option value="study">Study</option>
+        <option value="love">Love</option>
+      </select>
+
+      <button id="saveCategory">Save Preference</button>
+    </div>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-4xl">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-12 fade-in">
+            <div class="inline-block px-4 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-semibold tracking-widest uppercase mb-4 text-indigo-300">
+                Aura Intelligence v1.1
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
+                Inspire Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Journey.</span>
+            </h1>
+            <p class="text-slate-400 text-lg max-w-xl mx-auto">
+                Select your vibe and let the algorithm curate the perfect wisdom for your current state of mind.
+            </p>
+        </header>
+
+        <!-- Configuration Panel -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 fade-in" style="animation-delay: 0.2s;">
+            <div class="md:col-span-2 glass-card rounded-3xl p-6 flex flex-col justify-center">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 block">Current Mood</label>
+                <div class="flex flex-wrap gap-3" id="mood-selector">
+                    <button onclick="setMood('hustle')" class="mood-btn px-6 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium active" data-mood="hustle">🔥 Hustle</button>
+                    <button onclick="setMood('calm')" class="mood-btn px-6 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-mood="calm">🌊 Calm</button>
+                    <button onclick="setMood('creative')" class="mood-btn px-6 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-mood="creative">🎨 Creative</button>
+                    <button onclick="setMood('stoic')" class="mood-btn px-6 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-mood="stoic">🏛️ Stoic</button>
+                </div>
+            </div>
+            <div class="glass-card rounded-3xl p-6 flex flex-col justify-center items-center text-center">
+                <button onclick="generateQuote()" id="generate-btn" class="btn-aura w-20 h-20 rounded-full flex items-center justify-center text-2xl shadow-xl hover:scale-110">
+                    ✨
+                </button>
+                <span class="mt-4 text-xs font-bold text-slate-500 uppercase">Manifest New</span>
+            </div>
+        </div>
+
+        <!-- Quote Display Card -->
+        <div id="quote-card" class="glass-card rounded-[2rem] p-10 md:p-20 relative overflow-hidden fade-in" style="animation-delay: 0.4s;">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+            
+            <div class="mb-8 opacity-20">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 7.55228 14.017 7V5C14.017 4.44772 14.4647 4 15.017 4H19.017C21.2261 4 23.017 5.79086 23.017 8V15C23.017 18.866 19.883 22 16.017 22H14.017V21ZM1 15V8C1 5.79086 2.79086 4 5 4H9C9.55228 4 10 4.44772 10 5V7C10 7.55228 9.55228 8 9 8H5C4.44772 8 4 8.44772 4 9V15C4 15.5523 4.44772 16 5 16H8C9.10457 16 10 16.8954 10 18V21H8C4.13401 22 1 18.866 1 15Z"/>
+                </svg>
+            </div>
+
+            <h2 id="quote-content" class="serif text-3xl md:text-5xl font-bold quote-text mb-8 leading-tight">
+                Your future is created by what you do today, not tomorrow.
+            </h2>
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-xl uppercase" id="author-initial">
+                        R
+                    </div>
+                    <div>
+                        <p id="quote-author" class="font-bold text-lg text-white">Robert Kiyosaki</p>
+                        <p class="text-xs text-slate-500 uppercase tracking-widest">Inspiration Provider</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="copyQuote()" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all group" title="Copy to Clipboard">
+                        <svg class="w-5 h-5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                    </button>
+                    <button onclick="shareTwitter()" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all group" title="Share on X">
+                        <svg class="w-5 h-5 text-slate-400 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center text-slate-500 text-sm fade-in" style="animation-delay: 0.6s;">
+            <p>&copy; 2024 Aura Engine • Library expanded with +40 wisdom artifacts</p>
+        </footer>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 glass-card px-6 py-3 rounded-full text-sm font-medium opacity-0 transition-all pointer-events-none translate-y-4">
+        Copied to clipboard! ✨
+    </div>
+
+    <script>
+        const quotes = {
+            hustle: [
+                { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+                { text: "Don't count the days, make the days count.", author: "Muhammad Ali" },
+                { text: "The future depends on what you do today.", author: "Mahatma Gandhi" },
+                { text: "Success is not final; failure is not fatal.", author: "Winston Churchill" },
+                { text: "Your ambition should be to get as much as possible out of yourself.", author: "Elon Musk" },
+                { text: "I find that the harder I work, the more luck I seem to have.", author: "Thomas Jefferson" },
+                { text: "Opportunities don't happen. You create them.", author: "Chris Grosser" },
+                { text: "Dream big and dare to fail.", author: "Norman Vaughan" },
+                { text: "Action is the foundational key to all success.", author: "Pablo Picasso" },
+                { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+                { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+                { text: "Hard work beats talent when talent doesn't work hard.", author: "Tim Notke" }
+            ],
+            calm: [
+                { text: "Peace comes from within. Do not seek it without.", author: "Buddha" },
+                { text: "The soul always knows what to do to heal itself.", author: "Caroline Myss" },
+                { text: "Nature does not hurry, yet everything is accomplished.", author: "Lao Tzu" },
+                { text: "Within you, there is a stillness and a sanctuary.", author: "Hermann Hesse" },
+                { text: "The present moment is the only time over which we have dominion.", author: "Thich Nhat Hanh" },
+                { text: "The quieter you become, the more you are able to hear.", author: "Rumi" },
+                { text: "Feelings are just clouds in a windy sky. Conscious breathing is my anchor.", author: "Thich Nhat Hanh" },
+                { text: "Slow down and everything you are chasing will come around and catch you.", author: "John De Paola" },
+                { text: "Surrender to what is. Let go of what was. Have faith in what will be.", author: "Sonia Ricotti" },
+                { text: "Do not let the behavior of others destroy your inner peace.", author: "Dalai Lama" },
+                { text: "Breath is the power behind all things. I breathe in and know that good things will happen.", author: "Tao Porchon-Lynch" }
+            ],
+            creative: [
+                { text: "Creativity takes courage.", author: "Henri Matisse" },
+                { text: "Everything you can imagine is real.", author: "Pablo Picasso" },
+                { text: "Art is the only way to run away without leaving home.", author: "Twyla Tharp" },
+                { text: "You can't use up creativity. The more you use, the more you have.", author: "Maya Angelou" },
+                { text: "An idea that is developed and put into action is more important than an idea that exists only as an idea.", author: "Edward de Bono" },
+                { text: "The chief enemy of creativity is 'good' sense.", author: "Pablo Picasso" },
+                { text: "Don't think. Thinking is the enemy of creativity. It's self-conscious, and anything self-conscious is lousy.", author: "Ray Bradbury" },
+                { text: "Creativity is intelligence having fun.", author: "Albert Einstein" },
+                { text: "Art is not what you see, but what you make others see.", author: "Edgar Degas" },
+                { text: "To live a creative life, we must lose our fear of being wrong.", author: "Joseph Chilton Pearce" },
+                { text: "Clean out a corner of your mind and creativity will instantly fill it.", author: "Dee Hock" }
+            ],
+            stoic: [
+                { text: "You have power over your mind — not outside events.", author: "Marcus Aurelius" },
+                { text: "We suffer more often in imagination than in reality.", author: "Seneca" },
+                { text: "It is not what happens to you, but how you react to it that matters.", author: "Epictetus" },
+                { text: "Luck is what happens when preparation meets opportunity.", author: "Seneca" },
+                { text: "Waste no more time arguing about what a good man should be. Be one.", author: "Marcus Aurelius" },
+                { text: "He who fears death will never do anything worth of a man who is alive.", author: "Seneca" },
+                { text: "Difficulty is what wakes up the genius.", author: "Nassim Taleb" },
+                { text: "The best revenge is to be unlike him who performed the injury.", author: "Marcus Aurelius" },
+                { text: "First say to yourself what you would be; and then do what you have to do.", author: "Epictetus" },
+                { text: "If it is not right do not do it; if it is not true do not say it.", author: "Marcus Aurelius" },
+                { text: "External things are not the problem. It’s your assessment of them. Which you can erase right now.", author: "Marcus Aurelius" }
+            ]
+        };
+
+        let currentMood = 'hustle';
+        const contentEl = document.getElementById('quote-content');
+        const authorEl = document.getElementById('quote-author');
+        const initialEl = document.getElementById('author-initial');
+        const cardEl = document.getElementById('quote-card');
+        const toastEl = document.getElementById('toast');
+
+        function setMood(mood) {
+            currentMood = mood;
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-500/20', 'border-indigo-500/50', 'text-indigo-300');
+                if(btn.dataset.mood === mood) {
+                    btn.classList.add('bg-indigo-500/20', 'border-indigo-500/50', 'text-indigo-300');
+                }
+            });
+            generateQuote();
+        }
+
+        function generateQuote() {
+            // Animation triggers
+            cardEl.classList.remove('fade-in');
+            cardEl.style.opacity = '0';
+            cardEl.style.transform = 'translateY(10px)';
+            
+            setTimeout(() => {
+                const moodQuotes = quotes[currentMood];
+                const randomQuote = moodQuotes[Math.floor(Math.random() * moodQuotes.length)];
+                
+                contentEl.textContent = randomQuote.text;
+                authorEl.textContent = randomQuote.author;
+                initialEl.textContent = randomQuote.author.charAt(0);
+                
+                cardEl.style.opacity = '1';
+                cardEl.style.transform = 'translateY(0)';
+                cardEl.classList.add('pulse-once');
+                
+                setTimeout(() => cardEl.classList.remove('pulse-once'), 400);
+            }, 300);
+        }
+
+        function copyQuote() {
+            const text = `"${contentEl.textContent}" — ${authorEl.textContent}`;
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            
+            showToast();
+        }
+
+        function showToast() {
+            toastEl.style.opacity = '1';
+            toastEl.style.transform = 'translate(-50%, -20px)';
+            setTimeout(() => {
+                toastEl.style.opacity = '0';
+                toastEl.style.transform = 'translate(-50%, 0)';
+            }, 2000);
+        }
+
+        function shareTwitter() {
+            const text = encodeURIComponent(`"${contentEl.textContent}" — ${authorEl.textContent} #AuraQuotes`);
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        }
+
+        // Initialize first state
+        window.onload = () => {
+            setMood('hustle');
+        };
+    </script>
 </body>
 </html>
