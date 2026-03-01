@@ -54,6 +54,7 @@ setInterval(() => {
 }, 4000);
 
 
+
   if (slides[i]) slides[i].classList.add("active");
 }
 
