@@ -65,7 +65,7 @@ document.getElementById("downloadMd").onclick = () => {
 };
 
 document.getElementById("downloadHtml").onclick = () => {
-  const html = `<html><body>${preview.innerHTML}</body></html>`;
+  const html = `<html lang='en'><body>${preview.innerHTML}</body></html>`;
   downloadFile("document.html", html);
 };
 

@@ -1649,10 +1649,8 @@
                     <input type="password" id="apiKeyInput" class="settings-input"
                         placeholder="Enter your Groq API key (starts with gsk_)">
                     <p class="settings-note">
-                        🔒 <strong>Secure Storage:</strong> Your API key is encrypted with AES-256 and stored locally in
-                        your browser.
-                        <br>🔗 Get your API key from <a href="https://console.groq.com"
-                            target="_blank">console.groq.com</a>
+                        🔒 <strong>Secure Storage:</strong> Your API key is encrypted with AES-256 and stored locally in your browser. 
+                        <br />🔗 Get your API key from <a href="https://console.groq.com" target="_blank">console.groq.com</a>
                     </p>
                 </div>
 
@@ -1726,11 +1724,11 @@
                         Security Information
                     </h3>
                     <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
-                        <strong>🔐 How your data is protected:</strong><br>
-                        1. API keys are encrypted using AES-256 encryption<br>
-                        2. All encryption/decryption happens locally in your browser<br>
-                        3. No data is sent to any server except Groq API<br>
-                        4. You can clear all data anytime from Settings<br>
+                        <strong>🔐 How your data is protected:</strong><br />
+                        1. API keys are encrypted using AES-256 encryption<br />
+                        2. All encryption/decryption happens locally in your browser<br />
+                        3. No data is sent to any server except Groq API<br />
+                        4. You can clear all data anytime from Settings<br />
                         5. Source code is open for security audit
                     </p>
                 </div>
@@ -2282,8 +2280,8 @@
                 .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
                 // Line breaks
                 .replace(/\n\n/g, '</p><p>')
-                .replace(/\n/g, '<br>');
-
+                .replace(/\n/g, '<br />');
+            
             // Wrap in paragraph if needed
             if (!formatted.startsWith('<')) {
                 formatted = '<p>' + formatted + '</p>';
