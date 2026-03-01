@@ -1,3 +1,45 @@
+/* 🌈 Floating Animated Background */
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 1s ease;
+}
+
+/* Default Ocean Theme */
+body.ocean {
+    background: linear-gradient(270deg, #FF8243, #FFC0CB, #FCE883, #069494, #50C878);
+    background-size: 600% 600%;
+    animation: floatingBG 12s ease infinite;
+}
+
+/* Neon Theme */
+body.neon {
+    background: linear-gradient(270deg,#FF00FF,#00FFFF,#FFFF00,#00FF00,#FF4500);
+    background-size: 600% 600%;
+    animation: floatingBG 10s ease infinite;
+}
+
+/* Sunset Theme */
+body.sunset {
+    background: linear-gradient(270deg, #f3e79b,#fab27f,#eb7f86,#b95e9a#5c53a5);
+    background-size: 600% 600%;
+    animation: floatingBG 12s ease infinite;
+}
+
+@keyframes floatingBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -10,6 +52,15 @@ body {
 
 .game-container {
     text-align: center;
+}
+
+.game-container {
+    text-align: center;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.15);
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 h1 {
@@ -58,4 +109,21 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+
+.theme-switcher {
+    margin-bottom: 10px;
+}
+
+.theme-switcher button {
+    margin: 5px;
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.theme-switcher button:hover {
+    transform: scale(1.1);
 }
