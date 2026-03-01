@@ -259,16 +259,16 @@
 
         div.innerHTML = `
       <input class="field-label" value="${f.label}"
-        oninput="updateLabel(${index},this.value)">
+        oninput="updateLabel(${index},this.value)" />
     `;
 
         if (f.type === "radio" || f.type === "checkbox") {
           f.options.forEach((opt, i) => {
             div.innerHTML += `
           <div class="option">
-            <input type="${f.type}" disabled>
+            <input type="${f.type}" disabled />
             <input type="text" value="${opt}"
-              oninput="updateOption(${index},${i},this.value)">
+              oninput="updateOption(${index},${i},this.value)" />
           </div>
         `;
           });
@@ -289,7 +289,7 @@
           div.innerHTML += `<textarea disabled></textarea>`;
         }
         else {
-          div.innerHTML += `<input type="${f.type}" disabled>`;
+          div.innerHTML += `<input type="${f.type}" disabled />`;
         }
 
         fieldsEl.appendChild(div);
