@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Professional Portfolio Preview | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/styles/main.css" />
+    <link rel="stylesheet" href="../assets/styles/career.css" />
+    <style>
+        .preview-body { background: #0f172a; padding: 4rem 1rem; color: #f1f5f9; display: flex; flex-direction: column; align-items: center; }
+        .preview-controls { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 1.5rem; border-radius: 200px; display: flex; gap: 1.5rem; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .control-btn { background: none; border: none; color: #94a3b8; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; transition: color 0.3s; }
+        .control-btn:hover { color: #fff; }
+        .control-separator { width: 1px; height: 1.5rem; background: rgba(255,255,255,0.1); }
+        .portfolio-root { width: 900px; max-width: 95%; background: white; border-radius: 0.5rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); transform-origin: top center; overflow: hidden; }
+        .portfolio-actions { display: flex; gap: 1rem; margin-top: 2rem; width: 900px; max-width: 95%; }
+        .btn-large { flex: 1; padding: 1rem; border: none; border-radius: 0.5rem; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.75rem; text-decoration: none; font-size: 1rem; }
+        .publish-btn { background: #6d28d9; color: white; }
+        .download-btn { background: #1e293b; color: #f1f5f9; border: 1px solid #334155; }
+        .btn-large:hover { opacity: 0.9; transform: translateY(-2px); }
+    </style>
+</head>
+<body class="preview-body">
+    <div class="preview-controls">
+        <button class="control-btn"><i class="fas fa-desktop"></i> Desktop</button>
+        <button class="control-btn"><i class="fas fa-tablet-alt"></i> Tablet</button>
+        <button class="control-btn"><i class="fas fa-mobile-alt"></i> Mobile</button>
+        <div class="control-separator"></div>
+        <button class="control-btn"><i class="fas fa-chevron-left"></i> Previous Template</button>
+        <button class="control-btn">Next Template <i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="portfolio-root" id="portfolio-container">
+        <!-- Live Portfolio Content Injected Here -->
+        <div class="skeleton-loader" style="height: 100vh; background: #fff;"></div>
+    </div>
+
+    <div class="portfolio-actions">
+        <a href="#" class="btn-large download-btn"><i class="fas fa-file-pdf"></i> Download PDF Resume</a>
+        <a href="#" class="btn-large publish-btn" id="btn-publish"><i class="fas fa-paper-plane"></i> Publish to Subdomain</a>
+    </div>
+
+    <script type="module">
+        import { careerService } from '../scripts/core/careerService.js';
+        import { resumeGenerator } from '../scripts/core/resumeGenerator.js';
+
+        async function initPreview() {
+            const projects = JSON.parse(localStorage.getItem('userProjects') || '[]');
+            const profile = JSON.parse(localStorage.getItem('profileData') || '{"fullName":"Pilot Developer","title":"Aspiring Engineer"}');
+            const resumeData = await careerService.generateResumeData(profile, projects);
+            
+            // Get template from URL or default
+            const urlParams = new URLSearchParams(window.location.search);
+            const templateId = urlParams.get('template') || 'minimal';
+            
+            const html = await resumeGenerator.generateHTML(resumeData, templateId);
+            document.getElementById('portfolio-container').innerHTML = html;
+        }
+
+        document.getElementById('btn-publish').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Your portfolio is now live at: pilot-dev.100days.web/ (Mock)');
+        });
+
+        window.onload = initPreview;
+    </script>
+</body>
+</html>

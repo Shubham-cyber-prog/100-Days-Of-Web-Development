@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glassmorphism Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.35);
+            --accent-soft: rgba(56, 189, 248, 0.12);
+            --glass-bg: rgba(12, 18, 35, 0.60);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.07);
+            --text: #f0f6ff;
+            --text-muted: rgba(255,255,255,0.45);
+            --red: #f87171;
+            --red-soft: rgba(248, 113, 113, 0.15);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            background: #060b18;
+            background-image:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(56, 189, 248, 0.09) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(139, 92, 246, 0.07) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.8rem 1rem;
+        }
+
+        /* ─── NAVBAR ─── */
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            padding: 0.55rem 0.65rem 0.55rem 0.85rem;
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.55),
+                0 0 0 0.5px rgba(255,255,255,0.06) inset,
+                0 1px 0 rgba(255,255,255,0.08) inset;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            position: relative;
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 12%; right: 12%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+            border-radius: 100px;
+            pointer-events: none;
+        }
+
+        /* ─── HOME ICON ─── */
+        .nav-home {
+            flex-shrink: 0;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: var(--glass-hover);
+            border: 1px solid var(--glass-border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text);
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: background 0.22s, box-shadow 0.22s, transform 0.15s, border-color 0.22s, color 0.22s;
+        }
+        .nav-home:hover {
+            background: var(--accent);
+            border-color: rgba(56,189,248,0.7);
+            box-shadow: 0 0 22px var(--accent-glow);
+            transform: scale(1.09);
+            color: #fff;
+        }
+        .nav-home:active { transform: scale(0.94); }
+
+        /* ─── SEARCH ─── */
+        .nav-search {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-ic {
+            position: absolute;
+            left: 16px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+        .nav-search input {
+            width: 100%;
+            padding: 0.76rem 1.2rem 0.76rem 2.75rem;
+            border-radius: 60px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.93rem;
+            font-weight: 400;
+            outline: none;
+            transition: background 0.2s, border-color 0.25s, box-shadow 0.25s;
+        }
+        .nav-search input::placeholder { color: var(--text-muted); }
+        .nav-search input:focus {
+            background: rgba(56,189,248,0.07);
+            border-color: rgba(56,189,248,0.5);
+            box-shadow: 0 0 0 3px rgba(56,189,248,0.12);
+        }
+        .nav-search input:focus + .search-ic { color: var(--accent); }
+
+        /* ─── RIGHT ─── */
+        .nav-right {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        /* ─── INSTALL BUTTON ─── */
+        .btn-install {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.62rem 1.15rem;
+            border-radius: 60px;
+            background: linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(99,102,241,0.12) 100%);
+            border: 1px solid rgba(56,189,248,0.32);
+            color: var(--accent);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.87rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s, background 0.2s;
+        }
+        .btn-install i { font-size: 0.82rem; }
+        .btn-install:hover {
+            border-color: rgba(56,189,248,0.7);
+            background: linear-gradient(135deg, rgba(56,189,248,0.25), rgba(99,102,241,0.2));
+            box-shadow: 0 0 22px rgba(56,189,248,0.28);
+            transform: translateY(-1px);
+        }
+        .btn-install:active { transform: scale(0.96); }
+
+        /* ─── PROFILE ─── */
+        .profile-wrap {
+            position: relative;
+        }
+
+        .profile-btn {
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(99,102,241,0.18));
+            border: 1.5px solid rgba(56,189,248,0.42);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+            overflow: hidden;
+            padding: 0;
+        }
+        .profile-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+        /* green dot */
+        .profile-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 1px; right: 1px;
+            width: 10px; height: 10px;
+            background: #4ade80;
+            border: 2px solid #060b18;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .profile-btn:hover,
+        .profile-btn.active {
+            border-color: rgba(56,189,248,0.8);
+            box-shadow: 0 0 22px var(--accent-glow);
+            transform: scale(1.07);
+        }
+
+        /* ─── DROPDOWN ─── */
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            width: 215px;
+            /* Solid dark bg — works perfectly in all browsers without backdrop-filter issues */
+            background: #0e1628;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 18px;
+            padding: 0.45rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.75), 0 0 0 0.5px rgba(255,255,255,0.04) inset;
+            list-style: none;
+            /* hidden */
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-10px) scale(0.97);
+            transform-origin: top right;
+            transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s 0.22s;
+            z-index: 99999;
+        }
+        .dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            transform: translateY(0) scale(1);
+            transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s 0s;
+        }
+
+        .dropdown-header {
+            padding: 0.75rem 0.9rem 0.65rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            margin-bottom: 0.35rem;
+        }
+        .d-name { font-size: 0.93rem; font-weight: 600; color: var(--text); }
+        .d-email { font-size: 0.76rem; color: var(--text-muted); margin-top: 2px; }
+
+        .dropdown li a {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 0.68rem 0.9rem;
+            border-radius: 11px;
+            color: rgba(255,255,255,0.78);
+            text-decoration: none;
+            font-size: 0.89rem;
+            font-weight: 500;
+            transition: background 0.15s, color 0.15s;
+        }
+        .d-icon {
+            width: 30px; height: 30px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            flex-shrink: 0;
+            transition: background 0.15s, color 0.15s;
+        }
+        .dropdown li a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+        .dropdown li a:hover .d-icon { background: var(--accent-soft); color: var(--accent); }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.07);
+            margin: 0.35rem 0;
+        }
+        .logout-item a:hover { background: var(--red-soft) !important; color: var(--red) !important; }
+        .logout-item a:hover .d-icon { background: rgba(248,113,113,0.15) !important; color: var(--red) !important; }
+
+        /* ─── TOAST ─── */
+        .toast {
+            position: fixed;
+            bottom: 2rem; left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #0e1628;
+            border: 1px solid rgba(56,189,248,0.35);
+            color: #fff;
+            padding: 0.7rem 1.4rem;
+            border-radius: 60px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.65);
+            transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
+            opacity: 0;
+            z-index: 99999;
+            white-space: nowrap;
+            display: flex; align-items: center; gap: 0.6rem;
+            pointer-events: none;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast i { color: var(--accent); }
+
+        /* ─── DEMO HINT ─── */
+        .demo-hint {
+            margin-top: 2.2rem;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.8rem;
+            display: flex; align-items: center; gap: 7px;
+        }
+        .demo-hint i { color: var(--accent); opacity: 0.55; }
+
+        /* ─── MOBILE ─── */
+        @media (max-width: 600px) {
+            body {
+                padding: 0.6rem 0.6rem;
+            }
+
+            .navbar {
+                border-radius: 20px;
+                padding: 0.5rem 0.5rem;
+                gap: 0.5rem;
+            }
+
+            /* Home icon slightly smaller */
+            .nav-home {
+                width: 40px; height: 40px;
+                font-size: 1rem;
+                flex-shrink: 0;
+            }
+
+            /* Search bar — smaller text, compact padding */
+            .nav-search input {
+                padding: 0.65rem 0.9rem 0.65rem 2.4rem;
+                font-size: 0.82rem;
+            }
+            .search-ic {
+                left: 12px;
+                font-size: 0.8rem;
+            }
+
+            /* Install — icon only on mobile */
+            .btn-install {
+                padding: 0.6rem 0.7rem;
+                border-radius: 50%;
+                min-width: 40px;
+                height: 40px;
+                justify-content: center;
+            }
+            .btn-install span { display: none; }
+            .btn-install i { font-size: 0.9rem; margin: 0; }
+
+            /* Profile button smaller */
+            .profile-btn {
+                width: 40px; height: 40px;
+            }
+            .profile-btn::after {
+                width: 8px; height: 8px;
+                bottom: 0; right: 0;
+            }
+
+            /* Dropdown — full width on mobile, anchored nicely */
+            .dropdown {
+                width: calc(100vw - 2.4rem);
+                right: 0;
+                left: auto;
+                max-width: 280px;
+                top: calc(100% + 10px);
+            }
+
+            /* Nav right gap tighter */
+            .nav-right {
+                gap: 0.4rem;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 380px) {
+            .navbar { gap: 0.35rem; }
+            .nav-home { width: 36px; height: 36px; font-size: 0.9rem; }
+            .profile-btn { width: 36px; height: 36px; }
+            .btn-install { width: 36px; height: 36px; padding: 0.5rem; }
+            .nav-search input { font-size: 0.78rem; padding: 0.6rem 0.8rem 0.6rem 2.2rem; }
+            .search-ic { left: 10px; }
+        }.highlight {
+    background-color: yellow;
+    color: black;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+
+    <!-- HOME — navigates to index.html -->
+    <a href="index.html" class="nav-home" aria-label="Go to Home">
+        <i class="fas fa-house"></i>
+    </a>
+
+    
+    <!-- RIGHT: Install + Profile -->
+    <div class="nav-right">
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="icon-btn" title="Toggle theme">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
+
+        <!-- Install Button -->
+        <a href="#" class="btn-install" id="installBtn">
+            <i class="fas fa-download"></i>
+            <span>Install</span>
+        </a>
+
+        <!-- Profile -->
+        <div class="profile-wrap" id="profileWrap">
+            <div class="profile-btn" id="profileBtn"
+                 role="button" tabindex="0"
+                 aria-haspopup="true" aria-expanded="false"
+                 title="My account">
+                <img 
+                    src="https://avatars.githubusercontent.com/Shubham-cyber-prog" 
+                    alt="Shubham"
+                    onerror="this.style.display='none'; this.parentNode.innerHTML+='<i class=&quot;fas fa-user&quot;></i>'"
+                 />
+            </div>
+
+            <ul class="dropdown" id="profileDropdown" role="menu">
+                <div class="dropdown-header">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <img src="https://avatars.githubusercontent.com/Shubham-cyber-prog" alt="Shubham" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(56,189,248,0.4);" />
+                        <div>
+                            <div class="d-name">Shubham</div>
+                            <div class="d-email">github.com/Shubham-cyber-prog</div>
+                        </div>
+                    </div>
+                </div>
+
+                <li role="none">
+                    <a href="#" role="menuitem" data-action="Profile">
+                        <span class="d-icon"><i class="fas fa-circle-user"></i></span>
+                        Profile
+                    </a>
+                </li>
+                <li role="none">
+                    <a href="career.html" role="menuitem" data-action="Career Launchpad" style="color: #38bdf8;">
+                        <span class="d-icon"><i class="fas fa-rocket"></i></span>
+                        Career Launchpad
+                    </a>
+                </li>
+                <li role="none">
+                    <a href="#" role="menuitem" data-action="Settings">
+                        <span class="d-icon"><i class="fas fa-gear"></i></span>
+                        Settings
+                    </a>
+                </li>
+                <div class="dropdown-divider" role="separator"></div>
+                <li role="none" class="logout-item">
+                    <a href="#" role="menuitem" data-action="Log Out">
+                        <span class="d-icon"><i class="fas fa-right-from-bracket"></i></span>
+                        Log Out
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="demo-hint">
+    <i class="fas fa-circle-info"></i>
+    Home navigates to index.html &nbsp;·&nbsp; Click profile icon to open menu
+</div>
+
+<div class="toast" id="toast">
+    <i class="fas fa-bolt"></i>
+    <span id="toastMsg">Done</span>
+</div>
+
+<script>
+(function () {
+    var profileBtn  = document.getElementById('profileBtn');
+    var dropdown    = document.getElementById('profileDropdown');
+    var profileWrap = document.getElementById('profileWrap');
+    var installBtn  = document.getElementById('installBtn');
+    var toast       = document.getElementById('toast');
+    var toastMsg    = document.getElementById('toastMsg');
+    var toastTimer  = null;
+    var isOpen      = false;
+
+    function showToast(msg) {
+        clearTimeout(toastTimer);
+        toastMsg.textContent = msg;
+        toast.classList.add('show');
+        toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2600);
+    }
+
+    function openMenu() {
+        isOpen = true;
+        dropdown.classList.add('open');
+        profileBtn.classList.add('active');
+        profileBtn.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMenu() {
+        isOpen = false;
+        dropdown.classList.remove('open');
+        profileBtn.classList.remove('active');
+        profileBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    /* Toggle on click */
+    profileBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        isOpen ? closeMenu() : openMenu();
+    });
+
+    /* Keyboard support */
+    profileBtn.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            isOpen ? closeMenu() : openMenu();
+        }
+    });
+
+    /* Close on outside click */
+    document.addEventListener('click', function (e) {
+        if (!profileWrap.contains(e.target)) closeMenu();
+    });
+
+    /* Escape key */
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && isOpen) closeMenu();
+    });
+
+    /* Dropdown item clicks */
+    var links = dropdown.querySelectorAll('a[data-action]');
+    for (var i = 0; i < links.length; i++) {
+        (function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                var action = link.getAttribute('data-action');
+                closeMenu();
+                showToast(action + ' clicked ✓');
+            });
+        })(links[i]);
+    }
+
+    /* Install button */
+    installBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        showToast('Installing… ⬇');
+    });
+
+})();
+</script>
+
+</body>
+</html>

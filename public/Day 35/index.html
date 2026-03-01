@@ -1,22 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NeonEats - Future Delivery</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --accent: #00f2fe;
+            --premium-bg: #0a0a0a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 50%, #1f1f1f 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+    </style>
 </head>
+
 <body data-page="home">
 
     <nav class="navbar">
         <div class="container flex nav-content">
             <a href="index.html" class="logo"><span class="text-gradient">Neon</span>Eats</a>
             <div class="flex nav-actions">
-                <select id="location-select"></select>
-                <a href="cart.html" class="cart-icon">🛒 <span id="cart-count" class="cart-count">0</span></a>
-                <a href="login.html" id="user-btn" class="btn btn-glass">Login</a>
-                <a href="foodmenu.html" class="view-menu-btn">View Menu</a>
+                <select id="location-select" aria-label="Select Delivery Location"></select>
+                <a href="cart.html" class="cart-icon" aria-label="View shopping cart">🛒 <span id="cart-count"
+                        class="cart-count">0</span></a>
+                <a href="login.html" id="user-btn" class="btn btn-glass" aria-label="Login to your account">Login</a>
+                <a href="foodmenu.html" class="view-menu-btn" aria-label="Browse full food menu">View Menu</a>
 
             </div>
         </div>
@@ -25,7 +54,8 @@
     <header class="hero">
         <div class="container">
             <h1>Craving the <span class="text-gradient">Future?</span></h1>
-            <input type="text" class="search-bar-lg" placeholder="Search for food, restaurants...">
+            <input type="text" class="search-bar-lg" placeholder="Search for food, restaurants..."
+                aria-label="Search food and restaurants">
         </div>
     </header>
 
@@ -53,4 +83,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
