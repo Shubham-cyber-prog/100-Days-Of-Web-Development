@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     margin: 0;
@@ -8,6 +8,38 @@ body {
     align-items: center;
     min-height: 100vh;
     color: #333;
+} */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+    overflow: hidden;
+    transition: background 0.5s ease;
+}
+
+/* Animated Gradient Background */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    z-index: -1;
+    animation: floatBG 15s infinite linear;
+    background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
+    background-size: 400% 400%;
+}
+
+@keyframes floatBG {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .container {
@@ -221,3 +253,52 @@ li:hover {
         min-width: auto;
     }
 }
+
+
+/* Purple Theme (Default) */
+body.purple::before {
+    background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
+}
+
+/* Blue Theme */
+body.blue::before {
+    background: linear-gradient(45deg, #2193b0, #6dd5ed, #2193b0);
+}
+
+/* Green Theme */
+body.green::before {
+    background: linear-gradient(45deg, #11998e, #38ef7d, #11998e);
+}
+
+/* Orange Theme */
+body.orange::before {
+    background: linear-gradient(45deg, #ff8008, #ffc837, #ff8008);
+}
+
+
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.theme-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.theme-btn:hover {
+    transform: scale(1.2);
+}
+
+.theme-btn[data-theme="purple"] { background: #764ba2; }
+.theme-btn[data-theme="blue"] { background: #2193b0; }
+.theme-btn[data-theme="green"] { background: #38ef7d; }
+.theme-btn[data-theme="orange"] { background: #ff8008; }
