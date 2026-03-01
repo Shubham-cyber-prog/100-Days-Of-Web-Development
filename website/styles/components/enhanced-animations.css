@@ -1,0 +1,458 @@
+/* ============================================
+   ENHANCED ANIMATIONS FOR PROJECT CARDS v1.0
+   Additional animations for improved UX
+   ============================================ */
+
+/* ============================================
+   SCROLL ANIMATION CLASSES
+   ============================================ */
+
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-animate.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   RIPPLE EFFECT
+   ============================================ */
+
+.card-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: rippleEffect 0.6s ease-out;
+  pointer-events: none;
+}
+
+@keyframes rippleEffect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   SPARKLE EFFECT
+   ============================================ */
+
+.sparkle-effect {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkle 1s ease-out forwards;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   PROGRESS BAR ANIMATION
+   ============================================ */
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: inherit;
+  transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: progressShimmer 2s infinite;
+}
+
+@keyframes progressShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================
+   CARD ENTRANCE ANIMATIONS
+   ============================================ */
+
+@keyframes cardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes cardFlipIn {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(-20deg) rotateX(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0) rotateX(0);
+  }
+}
+
+/* Apply entrance animation to project cards */
+.project-card {
+  animation: cardSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+/* Staggered animation */
+.project-card:nth-child(1) { animation-delay: 0.05s; }
+.project-card:nth-child(2) { animation-delay: 0.1s; }
+.project-card:nth-child(3) { animation-delay: 0.15s; }
+.project-card:nth-child(4) { animation-delay: 0.2s; }
+.project-card:nth-child(5) { animation-delay: 0.25s; }
+.project-card:nth-child(6) { animation-delay: 0.3s; }
+.project-card:nth-child(7) { animation-delay: 0.35s; }
+.project-card:nth-child(8) { animation-delay: 0.4s; }
+.project-card:nth-child(9) { animation-delay: 0.45s; }
+.project-card:nth-child(10) { animation-delay: 0.5s; }
+.project-card:nth-child(11) { animation-delay: 0.55s; }
+.project-card:nth-child(12) { animation-delay: 0.6s; }
+
+/* ============================================
+   ENHANCED HOVER EFFECTS
+   ============================================ */
+
+.project-card {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Glowing border effect on hover */
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.4),
+    rgba(118, 75, 162, 0.4),
+    rgba(255, 107, 107, 0.4)
+  );
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+  filter: blur(8px);
+}
+
+.project-card:hover::after {
+  opacity: 1;
+}
+
+/* Enhanced lift effect */
+.project-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 
+    0 25px 50px -12px rgba(102, 126, 234, 0.25),
+    0 0 0 1px rgba(102, 126, 234, 0.1) inset;
+}
+
+/* ============================================
+   TECH TAG ANIMATIONS
+   ============================================ */
+
+.tech-tag {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tech-tag::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.project-card:hover .tech-tag::before {
+  transform: translateX(100%);
+}
+
+.project-card:hover .tech-tag {
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   BUTTON ANIMATIONS
+   ============================================ */
+
+@keyframes buttonPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 8px rgba(102, 126, 234, 0);
+  }
+}
+
+.code-chip {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.code-chip:hover {
+  animation: buttonPulse 1s ease-in-out;
+  background: var(--accent-core);
+  color: var(--bg-primary);
+}
+
+/* ============================================
+   LOADING SKELETON
+   ============================================ */
+
+@keyframes shimmerLoading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-card {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmerLoading 2s infinite;
+  border-radius: var(--project-radius, 20px);
+  min-height: 280px;
+}
+
+/* ============================================
+   BADGE ANIMATIONS
+   ============================================ */
+
+.modal-badge,
+.difficulty-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-badge::before,
+.difficulty-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.modal-badge:hover::before,
+.difficulty-badge:hover::before {
+  transform: translateX(100%);
+}
+
+/* ============================================
+   CARD FLIP ANIMATION (OPTIONAL)
+   ============================================ */
+
+.card-flip-container {
+  perspective: 1000px;
+}
+
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-flip-container:hover .card-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.card-flip-front,
+.card-flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: inherit;
+}
+
+.card-flip-back {
+  transform: rotateY(180deg);
+}
+
+/* ============================================
+   FLOATING PARTICLES EFFECT
+   ============================================ */
+
+@keyframes floatParticle {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(
+      calc(var(--float-x, 50) * 1px),
+      calc(var(--float-y, -100) * 1px)
+    ) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--accent-core);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatParticle 3s ease-out forwards;
+}
+
+/* ============================================
+   GRADIENT TEXT ANIMATION
+   ============================================ */
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient-text {
+  background: linear-gradient(
+    270deg,
+    #667eea,
+    #764ba2,
+    #f093fb,
+    #667eea
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 5s ease infinite;
+}
+
+/* ============================================
+   PULSE EFFECT FOR IMPORTANT ELEMENTS
+   ============================================ */
+
+@keyframes gentlePulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+  }
+}
+
+.pulse-glow {
+  animation: gentlePulseGlow 2s ease-in-out infinite;
+}
+
+/* ============================================
+   ACCESSIBILITY - REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .tech-tag,
+  .code-chip,
+  .skeleton-card,
+  .animated-gradient-text,
+  .pulse-glow {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .project-card:hover {
+    transform: none !important;
+  }
+  
+  .card-flip-inner {
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .project-card:hover {
+    transform: translateY(-8px) scale(1.01);
+  }
+  
+  .project-card::after {
+    display: none;
+  }
+}

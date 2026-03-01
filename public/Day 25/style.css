@@ -1,163 +1,210 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
 }
 
-body {
-    height: 100vh;
-    display: grid;
-    place-items: center;
-    background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
-    overflow: hidden;
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 }
 
-/* Floating gradient blobs */
-body::before,
-body::after {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
-    filter: blur(120px);
-    opacity: 0.6;
-    z-index: -1;
+.container{
+    width:550px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+    color:white;
 }
 
-body::after {
-    bottom: -50px;
-    right: -50px;
-    background: linear-gradient(135deg, #f857a6, #ff5858);
+h1{
+    text-align:center;
+    margin-bottom:25px;
+    font-size:24px;
+    background:linear-gradient(90deg,#00f2fe,#4facfe);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
-/* Card */
-.container {
-    width: 420px;
-    padding: 40px 35px;
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.5),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    text-align: center;
-    color: #ffffff;
-    animation: popIn 0.9s ease;
+.section{
+    margin-bottom:30px;
 }
 
-/* Title */
-h1 {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
-    background: linear-gradient(90deg, #00f2fe, #4facfe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.section h2{
+    margin-bottom:12px;
+    font-size:18px;
 }
 
-/* Quote */
-#quote {
-    font-size: 19px;
-    line-height: 1.7;
-    margin-bottom: 18px;
-    position: relative;
-    padding: 0 10px;
-    animation: fadeSlide 0.6s ease;
+input, select{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    margin-bottom:10px;
+    font-size:14px;
 }
 
-#quote::before {
-    content: "❝";
-    font-size: 45px;
-    position: absolute;
-    left: -10px;
-    top: -20px;
-    color: rgba(255, 255, 255, 0.2);
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:25px;
+    font-weight:600;
+    cursor:pointer;
+    background:linear-gradient(135deg,#00f2fe,#4facfe);
+    transition:0.3s;
 }
 
-#quote::after {
-    content: "❞";
-    font-size: 45px;
-    position: absolute;
-    right: -10px;
-    bottom: -20px;
-    color: rgba(255, 255, 255, 0.2);
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px #4facfe;
+}
+
+/* ---------------- MODAL ---------------- */
+
+/* ---------------- STUNNING MODAL ---------------- */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    backdrop-filter:blur(8px);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    animation:fadeOverlay 0.3s ease;
+}
+
+@keyframes fadeOverlay{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.modal-content{
+    width:520px;
+    max-height:75vh;
+    background:linear-gradient(145deg,#1e293b,#0f172a);
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.8);
+    animation:modalPop 0.35s ease;
+    overflow-y:auto;
+    scroll-behavior:smooth;
+}
+
+/* Smooth pop animation */
+@keyframes modalPop{
+    from{opacity:0; transform:scale(0.85);}
+    to{opacity:1; transform:scale(1);}
+}
+
+/* Hide scrollbar (modern way) */
+.modal-content::-webkit-scrollbar{
+    width:0px;
+}
+
+.modal-content{
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+}
+
+/* Header */
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    gap:40px;
+}
+
+.modal-header h3{
+    font-size:18px;
+    background:linear-gradient(90deg,#00f2fe,#4facfe);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* Modern Close Button */
+.close-btn{
+    background:linear-gradient(135deg,#ff4e50,#f9d423);
+    border:none;
+    padding:6px 12px;
+    border-radius:20px;
+    max-width: fit-content;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+    color:black;
+}
+
+.close-btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 15px #ff4e50;
+}
+
+/* Quote Card Upgrade */
+.quote-card{
+    background:rgba(255,255,255,0.06);
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.08);
+    color:white;
+    transition:0.3s;
+}
+
+.quote-card:hover{
+    transform:translateY(-4px);
+    background:rgba(255,255,255,0.1);
+}
+
+/* Quote Text */
+.quote-card p{
+    font-size:15px;
+    margin-bottom:8px;
+    line-height:1.6;
 }
 
 /* Author */
-#author {
-    font-size: 14px;
-    font-weight: 500;
-    opacity: 0.75;
-    margin-bottom: 35px;
+.quote-card small{
+    opacity:0.7;
 }
 
-/* Button */
-button {
-    padding: 14px 34px;
-    border-radius: 40px;
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    color: #0f2027;
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
-    box-shadow: 
-        0 10px 30px rgba(79, 172, 254, 0.4),
-        inset 0 0 0 0 rgba(255, 255, 255, 0.3);
-    transition: all 0.35s ease;
+/* Copy Button */
+.copy-btn{
+    margin-top:8px;
+    background:linear-gradient(135deg,#00f2fe,#4facfe);
+    border:none;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-button:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 
-        0 18px 45px rgba(79, 172, 254, 0.6);
+.copy-btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 12px #4facfe;
 }
 
-button:active {
-    transform: scale(0.95);
+
+@keyframes fadeIn{
+    from{opacity:0; transform:scale(0.95);}
+    to{opacity:1; transform:scale(1);}
 }
 
-/* Animations */
-@keyframes popIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(20px);
+@media(max-width:600px){
+    .container{
+        width:90%;
     }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-@keyframes fadeSlide {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    .container {
-        width: 90%;
-        padding: 30px 25px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    #quote {
-        font-size: 17px;
+    .modal-content{
+        width:90%;
     }
 }

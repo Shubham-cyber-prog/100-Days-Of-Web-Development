@@ -1,0 +1,96 @@
+:root {
+    --bg-black: #050508;
+    --accent-green: #00ff41;
+    --accent-yellow: #ffcf00;
+    --accent-red: #ff3131;
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --border: rgba(0, 255, 65, 0.2);
+    --font-code: 'Fira Code', monospace;
+    --font-ui: 'Syncopate', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.rogue-os {
+    background: var(--bg-black);
+    color: var(--accent-green);
+    font-family: var(--font-code);
+    height: 100vh;
+    overflow: hidden;
+    /* Matrix-like feel */
+    background-image: linear-gradient(0deg, transparent 24%, var(--glass-bg) 25%, var(--glass-bg) 26%, transparent 27%, transparent 74%, var(--glass-bg) 75%, var(--glass-bg) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, var(--glass-bg) 25%, var(--glass-bg) 26%, transparent 27%, transparent 74%, var(--glass-bg) 75%, var(--glass-bg) 76%, transparent 77%, transparent);
+    background-size: 50px 50px;
+}
+
+#rogue-container {
+    padding: 2rem;
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
+        "arena arena"
+        "editor deck";
+    grid-template-columns: 1fr 350px;
+    grid-template-rows: 250px 1fr;
+    gap: 1.5rem;
+}
+
+/* ARENA */
+#arena-view {
+    grid-area: arena;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 5rem;
+    position: relative;
+}
+
+.mini-console {
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border);
+    padding: 10px;
+    font-size: 0.8rem;
+    overflow-y: auto;
+}
+
+/* UNIT UI */
+.unit {
+    text-align: center;
+}
+
+.sprite {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-ui);
+    margin-top: 20px;
+}
+
+.hp-pips {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.pip {
+    width: 15px;
+    height: 8px;
+    background: var(--accent-green);
+    border-radius: 2px;
+}
+
+.pip.depleted {
+    opacity: 0.2;
+}
+
+/* GLASSMORPHISM */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
