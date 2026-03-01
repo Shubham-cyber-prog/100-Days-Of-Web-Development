@@ -1,0 +1,323 @@
+:root {
+    --bg-dark: #0a0b10;
+    --bg-panel: #161a23;
+    --border: #2d3446;
+    --primary: #00f2ff;
+    /* Cyan */
+    --accent: #ff00ff;
+    /* Magenta */
+    --text-main: #e1e1e1;
+    --text-dim: #8a8d9a;
+    --success: #00ff88;
+    --error: #ff3e3e;
+    --grid-size: 60px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.game-container {
+    width: 90vw;
+    max-width: 1000px;
+    height: 85vh;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Header */
+.game-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-top: 0.25rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.level-badge {
+    background: rgba(0, 242, 255, 0.1);
+    color: var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Board Layout */
+.game-board-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    overflow: auto;
+}
+
+.crossword-layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+}
+
+/* Row Regex Clues */
+.row-clues {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 55px;
+    /* Offset for Col clues height */
+}
+
+.clue-box {
+    height: var(--grid-size);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.clue-box.valid {
+    color: var(--success);
+    border-color: rgba(0, 255, 136, 0.3);
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.clue-box.invalid {
+    color: var(--error);
+}
+
+/* Column Regex Clues */
+.grid-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.col-clues {
+    display: flex;
+    gap: 10px;
+}
+
+.col-clue {
+    width: var(--grid-size);
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    padding: 5px;
+}
+
+.col-clue.valid {
+    color: var(--success);
+    border-color: rgba(0, 255, 136, 0.3);
+    background: rgba(0, 255, 136, 0.05);
+}
+
+/* The Grid */
+.grid-body {
+    display: grid;
+    gap: 10px;
+}
+
+.cell-input {
+    width: var(--grid-size);
+    height: var(--grid-size);
+    background: #1e2430;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    transition: all 0.2s;
+}
+
+.cell-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+    background: #252b3a;
+}
+
+/* Footer & Controls */
+.game-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stats-bar {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+
+.timer {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+}
+
+button {
+    padding: 0.6rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #000;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 242, 255, 0.4);
+}
+
+.btn-secondary {
+    background: #2d3446;
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background: #3a4258;
+}
+
+.btn-icon {
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 1.25rem;
+    width: 40px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-panel);
+    border: 1px solid var(--primary);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.trophy-icon {
+    font-size: 4rem;
+    color: #ffd700;
+    margin-bottom: 1.5rem;
+}
+
+.modal-stats {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+}
+
+.label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    display: block;
+}
+
+.value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--success);
+}

@@ -1,0 +1,419 @@
+:root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #151b2e;
+    --bg-card: #1e2740;
+    --border: #2d3a5c;
+    --primary: #00d9ff;
+    --accent: #ff00aa;
+    --success: #00ff88;
+    --text-main: #e8eeff;
+    --text-dim: #8893b0;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.game-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    grid-template-rows: auto auto 1fr;
+    gap: 2rem;
+    min-height: 100vh;
+}
+
+/* Header */
+.game-header {
+    grid-column: 1 / -1;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+.header-left h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tagline {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-top: 0.25rem;
+}
+
+.header-right {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.stat-capsule {
+    background: rgba(0, 217, 255, 0.1);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.stat-capsule i {
+    color: var(--primary);
+}
+
+/* Settings Panel */
+.settings-panel {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.settings-panel label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.btn-difficulty {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-difficulty:hover {
+    background: rgba(0, 217, 255, 0.1);
+    border-color: var(--primary);
+    transform: translateX(4px);
+}
+
+.btn-difficulty.active {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+.theme-selector select {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #0099cc 100%);
+    color: #000;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 217, 255, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 217, 255, 0.5);
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Game Board */
+.game-board {
+    grid-column: 1;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    min-height: 600px;
+    display: grid;
+    gap: 1rem;
+    box-shadow: var(--shadow);
+    align-content: center;
+    justify-content: center;
+}
+
+.game-board.grid-easy {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.game-board.grid-medium {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.game-board.grid-hard {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.pre-game-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-dim);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pre-game-message i {
+    font-size: 4rem;
+    opacity: 0.3;
+}
+
+.pre-game-message h2 {
+    font-size: 1.5rem;
+}
+
+/* High Scores */
+.scores-panel {
+    grid-column: 2;
+    grid-row: 2 / 4;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    max-height: 700px;
+    overflow-y: auto;
+}
+
+.scores-panel h3 {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+}
+
+.score-entry {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.score-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.score-difficulty {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.score-time {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--success);
+}
+
+.score-details {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+}
+
+.no-scores {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    padding: 2rem 0;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    animation: slideUp 0.5s ease-out;
+    box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-icon {
+    font-size: 5rem;
+    color: #ffd700;
+    margin-bottom: 1.5rem;
+    animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.victory-message {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    margin: 1rem 0 2rem;
+}
+
+.final-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--success);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modal-actions button {
+    flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .game-container {
+        grid-template-columns: 1fr;
+    }
+
+    .scores-panel {
+        grid-column: 1;
+        grid-row: auto;
+        max-height: 400px;
+    }
+}

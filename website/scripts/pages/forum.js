@@ -1,4 +1,20 @@
-import { firestoreService } from '../firestore.js';
+import { db } from '../firebase-config.js';
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    query,
+    where,
+    orderBy,
+    serverTimestamp,
+    arrayUnion,
+    arrayRemove,
+    increment
+} from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
 
 // Global variables
@@ -34,13 +50,22 @@ function updateUIForAuth(user) {
 // Event listeners
 function setupEventListeners() {
     // Create post button
-    document.getElementById('createPostBtn').addEventListener('click', openCreatePostModal);
+    const createPostBtn = document.getElementById('createPostBtn');
+    if (createPostBtn) {
+        createPostBtn.addEventListener('click', openCreatePostModal);
+    }
 
     // Search
-    document.getElementById('searchBtn').addEventListener('click', handleSearch);
-    document.getElementById('searchInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleSearch();
-    });
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', handleSearch);
+    }
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSearch();
+        });
+    }
 
     // Categories
     document.querySelectorAll('.category-btn').forEach(btn => {
@@ -52,7 +77,22 @@ function setupEventListeners() {
     });
 
     // Create post form
-    document.getElementById('createPostForm').addEventListener('submit', handleCreatePost);
+    const createPostForm = document.getElementById('createPostForm');
+    if (createPostForm) {
+        createPostForm.addEventListener('submit', handleCreatePost);
+    }
+
+    // Cancel post button
+    const cancelPostBtn = document.getElementById('cancelPostBtn');
+    if (cancelPostBtn) {
+        cancelPostBtn.addEventListener('click', closeCreatePostModal);
+    }
+
+    // Close modal button
+    const closeBtn = document.querySelector('.close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeCreatePostModal);
+    }
 }
 
 // Category management
@@ -68,19 +108,50 @@ async function loadPosts() {
     try {
         showLoading(true);
         const postsContainer = document.getElementById('postsContainer');
+        if (!postsContainer) return;
+        
         postsContainer.innerHTML = '';
 
-        let posts;
-        if (currentSearchTerm) {
-            posts = await firestoreService.searchPosts(currentSearchTerm, currentCategory === 'all' ? null : currentCategory);
+        let postsQuery;
+        if (currentCategory === 'all') {
+            postsQuery = query(
+                collection(db, 'forum_posts'),
+                orderBy('createdAt', 'desc')
+            );
         } else {
-            posts = await firestoreService.getPosts(currentCategory === 'all' ? null : currentCategory);
+            postsQuery = query(
+                collection(db, 'forum_posts'),
+                where('category', '==', currentCategory),
+                orderBy('createdAt', 'desc')
+            );
         }
 
-        if (posts.length === 0) {
-            postsContainer.innerHTML = '<div class="no-posts">No posts found. Be the first to start a discussion!</div>';
+        const querySnapshot = await getDocs(postsQuery);
+        const posts = [];
+
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            posts.push({
+                id: doc.id,
+                ...data,
+                createdAt: data.createdAt
+            });
+        });
+
+        // Filter by search term if provided
+        let filteredPosts = posts;
+        if (currentSearchTerm) {
+            const searchTerm = currentSearchTerm.toLowerCase();
+            filteredPosts = posts.filter(post =>
+                post.title.toLowerCase().includes(searchTerm) ||
+                post.content.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        if (filteredPosts.length === 0) {
+            postsContainer.innerHTML = '<div class="no-posts" style="text-align: center; padding: 40px; color: #64748b;">No posts found. Be the first to start a discussion!</div>';
         } else {
-            posts.forEach(post => {
+            filteredPosts.forEach(post => {
                 const postElement = createPostElement(post);
                 postsContainer.appendChild(postElement);
             });
@@ -97,37 +168,47 @@ async function loadPosts() {
 function createPostElement(post) {
     const postDiv = document.createElement('div');
     postDiv.className = 'post-card';
+    postDiv.style.marginBottom = '20px';
+    postDiv.style.padding = '20px';
+    postDiv.style.background = 'white';
+    postDiv.style.borderRadius = '12px';
+    postDiv.style.border = '1px solid #e5e7eb';
+    postDiv.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+    
+    const isUpvoted = post.upvotedBy && currentUser && post.upvotedBy.includes(currentUser.uid);
+    const canDelete = currentUser && post.authorId === currentUser.uid;
+
     postDiv.innerHTML = `
-        <div class="post-header">
-            <div class="post-author">
-                <img src="${post.author.avatar || '/website/assets/images/pilot_avatar.png'}" alt="${post.author.username}" class="author-avatar">
-                <div class="author-info">
-                    <span class="author-name">${post.author.username}</span>
-                    <span class="post-time">${formatTime(post.createdAt)}</span>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <img src="${post.authorAvatar || '/website/assets/images/pilot_avatar.png'}" alt="${post.authorName}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />
+                <div>
+                    <div style="font-weight: 600; color: #111827;">${post.authorName || 'Anonymous'}</div>
+                    <div style="font-size: 0.85rem; color: #6b7280;">${formatTime(post.createdAt)}</div>
                 </div>
             </div>
-            <div class="post-category">${getCategoryName(post.category)}</div>
+            <div style="background: #f3f4f6; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; color: #6b7280; font-weight: 500;">${getCategoryName(post.category)}</div>
         </div>
-        <div class="post-content">
-            <h3 class="post-title">${post.title}</h3>
-            <p class="post-text">${post.content}</p>
+        <div style="margin-bottom: 15px;">
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; color: #111827;">${escapeHtml(post.title)}</h3>
+            <p style="color: #374151; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(post.content)}</p>
         </div>
-        <div class="post-actions">
-            <button class="action-btn upvote-btn ${post.upvotedBy && currentUser && post.upvotedBy.includes(currentUser.uid) ? 'upvoted' : ''}" data-post-id="${post.id}">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <button class="action-btn upvote-btn ${isUpvoted ? 'upvoted' : ''}" data-post-id="${post.id}" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer; transition: all 0.2s; ${isUpvoted ? 'border-color: #22d3ee; background: rgba(34, 211, 238, 0.1);' : ''}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M7 17L17 7M7 7h10v10"/>
                 </svg>
-                <span class="upvote-count">${post.upvotes}</span>
+                <span style="font-weight: 600;">${post.upvotes || 0}</span>
             </button>
-            <button class="action-btn comment-btn" data-post-id="${post.id}">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="action-btn comment-btn" data-post-id="${post.id}" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer; transition: all 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
-                <span class="comment-count">${post.commentCount}</span>
+                <span>${post.commentCount || 0}</span>
             </button>
-            ${currentUser && post.authorId === currentUser.uid ? `<button class="action-btn delete-btn" data-post-id="${post.id}">Delete</button>` : ''}
+            ${canDelete ? `<button class="action-btn delete-btn" data-post-id="${post.id}" style="padding: 6px 12px; border: 1px solid #ef4444; border-radius: 6px; background: white; color: #ef4444; cursor: pointer; transition: all 0.2s;">Delete</button>` : ''}
         </div>
-        <div class="comments-section" id="comments-${post.id}" style="display: none;">
+        <div class="comments-section" id="comments-${post.id}" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
             <!-- Comments will be loaded here -->
         </div>
     `;
@@ -137,9 +218,12 @@ function createPostElement(post) {
     const commentBtn = postDiv.querySelector('.comment-btn');
     const deleteBtn = postDiv.querySelector('.delete-btn');
 
-    upvoteBtn.addEventListener('click', () => handleUpvote(post.id));
-    commentBtn.addEventListener('click', () => toggleComments(post.id));
-
+    if (upvoteBtn) {
+        upvoteBtn.addEventListener('click', () => handleUpvote(post.id));
+    }
+    if (commentBtn) {
+        commentBtn.addEventListener('click', () => toggleComments(post.id));
+    }
     if (deleteBtn) {
         deleteBtn.addEventListener('click', () => handleDeletePost(post.id));
     }
@@ -155,12 +239,31 @@ async function handleUpvote(postId) {
     }
 
     try {
-        const result = await firestoreService.upvotePost(postId, currentUser.uid);
-        // Update UI
-        const upvoteBtn = document.querySelector(`.upvote-btn[data-post-id="${postId}"]`);
-        const countSpan = upvoteBtn.querySelector('.upvote-count');
-        countSpan.textContent = result.upvotes;
-        upvoteBtn.classList.toggle('upvoted', result.upvoted);
+        const postRef = doc(db, 'forum_posts', postId);
+        const postDoc = await getDoc(postRef);
+        
+        if (!postDoc.exists()) {
+            showError('Post not found.');
+            return;
+        }
+
+        const postData = postDoc.data();
+        const upvotedBy = postData.upvotedBy || [];
+        const isUpvoted = upvotedBy.includes(currentUser.uid);
+
+        if (isUpvoted) {
+            await updateDoc(postRef, {
+                upvotedBy: arrayRemove(currentUser.uid),
+                upvotes: increment(-1)
+            });
+        } else {
+            await updateDoc(postRef, {
+                upvotedBy: arrayUnion(currentUser.uid),
+                upvotes: increment(1)
+            });
+        }
+
+        loadPosts(); // Reload to update UI
     } catch (error) {
         console.error('Error upvoting post:', error);
         showError('Failed to upvote post.');
@@ -181,15 +284,31 @@ async function toggleComments(postId) {
 // Load comments
 async function loadComments(postId) {
     try {
-        const comments = await firestoreService.getComments(postId);
+        const commentsQuery = query(
+            collection(db, 'forum_posts', postId, 'comments'),
+            orderBy('createdAt', 'asc')
+        );
+        
+        const querySnapshot = await getDocs(commentsQuery);
+        const comments = [];
+        
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            comments.push({
+                id: doc.id,
+                ...data,
+                createdAt: data.createdAt
+            });
+        });
+
         const commentsSection = document.getElementById(`comments-${postId}`);
         commentsSection.innerHTML = '';
 
         if (comments.length === 0) {
-            commentsSection.innerHTML = '<div class="no-comments">No comments yet. Be the first to reply!</div>';
+            commentsSection.innerHTML = '<div style="color: #6b7280; font-size: 0.9rem; padding: 10px;">No comments yet. Be the first to reply!</div>';
         } else {
             comments.forEach(comment => {
-                const commentElement = createCommentElement(comment, postId);
+                const commentElement = createCommentElement(comment);
                 commentsSection.appendChild(commentElement);
             });
         }
@@ -204,33 +323,24 @@ async function loadComments(postId) {
 }
 
 // Create comment element
-function createCommentElement(comment, postId) {
+function createCommentElement(comment) {
     const commentDiv = document.createElement('div');
-    commentDiv.className = 'comment';
+    commentDiv.style.padding = '12px';
+    commentDiv.style.marginBottom = '10px';
+    commentDiv.style.background = '#f9fafb';
+    commentDiv.style.borderRadius = '8px';
+    commentDiv.style.border = '1px solid #e5e7eb';
+    
     commentDiv.innerHTML = `
-        <div class="comment-author">
-            <img src="${comment.author.avatar || '/website/assets/images/pilot_avatar.png'}" alt="${comment.author.username}" class="comment-avatar">
-            <div class="comment-info">
-                <span class="comment-author-name">${comment.author.username}</span>
-                <span class="comment-time">${formatTime(comment.createdAt)}</span>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <img src="${comment.authorAvatar || '/website/assets/images/pilot_avatar.png'}" alt="${comment.authorName}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" />
+            <div>
+                <div style="font-weight: 600; color: #111827; font-size: 0.9rem;">${escapeHtml(comment.authorName || 'Anonymous')}</div>
+                <div style="font-size: 0.8rem; color: #6b7280;">${formatTime(comment.createdAt)}</div>
             </div>
         </div>
-        <div class="comment-content">
-            <p>${comment.content}</p>
-        </div>
-        <div class="comment-actions">
-            <button class="comment-upvote-btn ${comment.upvotedBy && currentUser && comment.upvotedBy.includes(currentUser.uid) ? 'upvoted' : ''}" data-comment-id="${comment.id}" data-post-id="${postId}">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M7 7h10v10"/>
-                </svg>
-                <span class="upvote-count">${comment.upvotes}</span>
-            </button>
-        </div>
+        <div style="color: #374151; font-size: 0.9rem; line-height: 1.5; white-space: pre-wrap;">${escapeHtml(comment.content)}</div>
     `;
-
-    // Add upvote listener
-    const upvoteBtn = commentDiv.querySelector('.comment-upvote-btn');
-    upvoteBtn.addEventListener('click', () => handleCommentUpvote(postId, comment.id));
 
     return commentDiv;
 }
@@ -238,12 +348,10 @@ function createCommentElement(comment, postId) {
 // Create comment form
 function createCommentForm(postId) {
     const formDiv = document.createElement('div');
-    formDiv.className = 'comment-form';
+    formDiv.style.marginTop = '15px';
     formDiv.innerHTML = `
-        <div class="comment-input-group">
-            <textarea placeholder="Write a comment..." maxlength="1000" rows="3"></textarea>
-            <button class="btn btn-primary comment-submit-btn" data-post-id="${postId}">Comment</button>
-        </div>
+        <textarea id="comment-input-${postId}" placeholder="Write a comment..." rows="2" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; resize: vertical; font-family: inherit; font-size: 0.9rem;"></textarea>
+        <button class="comment-submit-btn" data-post-id="${postId}" style="margin-top: 8px; padding: 8px 16px; background: linear-gradient(135deg, #22d3ee, #a78bfa); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Comment</button>
     `;
 
     const submitBtn = formDiv.querySelector('.comment-submit-btn');
@@ -267,7 +375,22 @@ async function handleAddComment(postId, content) {
     }
 
     try {
-        await firestoreService.addComment(postId, currentUser.uid, { content });
+        const commentsRef = collection(db, 'forum_posts', postId, 'comments');
+        await addDoc(commentsRef, {
+            authorId: currentUser.uid,
+            authorName: currentUser.displayName || currentUser.email.split('@')[0],
+            authorAvatar: currentUser.photoURL || '',
+            content: content,
+            createdAt: serverTimestamp(),
+            upvotes: 0,
+            upvotedBy: []
+        });
+
+        // Update comment count
+        await updateDoc(doc(db, 'forum_posts', postId), {
+            commentCount: increment(1)
+        });
+
         await loadComments(postId); // Reload comments
         showSuccess('Comment added successfully!');
     } catch (error) {
@@ -276,19 +399,12 @@ async function handleAddComment(postId, content) {
     }
 }
 
-// Handle comment upvote
-async function handleCommentUpvote(postId, commentId) {
-    // Note: This would require additional Firestore methods for comment upvotes
-    // For now, we'll skip this feature
-    showError('Comment upvoting not implemented yet.');
-}
-
 // Handle delete post
 async function handleDeletePost(postId) {
     if (!confirm('Are you sure you want to delete this post?')) return;
 
     try {
-        await firestoreService.deletePost(postId, currentUser.uid);
+        await deleteDoc(doc(db, 'forum_posts', postId));
         loadPosts(); // Reload posts
         showSuccess('Post deleted successfully!');
     } catch (error) {
@@ -300,8 +416,10 @@ async function handleDeletePost(postId) {
 // Search
 function handleSearch() {
     const searchInput = document.getElementById('searchInput');
-    currentSearchTerm = searchInput.value.trim();
-    loadPosts();
+    if (searchInput) {
+        currentSearchTerm = searchInput.value.trim();
+        loadPosts();
+    }
 }
 
 // Create post modal
@@ -310,12 +428,21 @@ function openCreatePostModal() {
         showError('Please log in to create posts.');
         return;
     }
-    document.getElementById('createPostModal').style.display = 'block';
+    const modal = document.getElementById('createPostModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
 }
 
 function closeCreatePostModal() {
-    document.getElementById('createPostModal').style.display = 'none';
-    document.getElementById('createPostForm').reset();
+    const modal = document.getElementById('createPostModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+    const form = document.getElementById('createPostForm');
+    if (form) {
+        form.reset();
+    }
 }
 
 // Handle create post
@@ -332,7 +459,19 @@ async function handleCreatePost(e) {
     }
 
     try {
-        await firestoreService.createPost(currentUser.uid, { title, category, content });
+        await addDoc(collection(db, 'forum_posts'), {
+            authorId: currentUser.uid,
+            authorName: currentUser.displayName || currentUser.email.split('@')[0],
+            authorAvatar: currentUser.photoURL || '',
+            title: title,
+            category: category,
+            content: content,
+            createdAt: serverTimestamp(),
+            upvotes: 0,
+            upvotedBy: [],
+            commentCount: 0
+        });
+
         closeCreatePostModal();
         loadPosts(); // Reload posts
         showSuccess('Post created successfully!');
@@ -371,11 +510,13 @@ function formatTime(timestamp) {
 }
 
 function showLoading(show) {
-    document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = show ? 'block' : 'none';
+    }
 }
 
 function showError(message) {
-    // Simple alert for now, could be improved with toast notifications
     alert('Error: ' + message);
 }
 
@@ -383,10 +524,21 @@ function showSuccess(message) {
     alert('Success: ' + message);
 }
 
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
 // Close modal when clicking outside
 window.onclick = function(event) {
     const modal = document.getElementById('createPostModal');
-    if (event.target === modal) {
+    if (modal && event.target === modal) {
         closeCreatePostModal();
     }
 };

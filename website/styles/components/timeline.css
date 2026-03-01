@@ -13,7 +13,7 @@
     top: 1rem;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(to bottom, var(--accent-primary), var(--bg-hover));
+    background: linear-gradient(to bottom, var(--accent-core), var(--border-light));
 }
 
 .timeline-node {
@@ -27,39 +27,68 @@
     top: 0;
     width: 24px;
     height: 24px;
-    background: var(--bg-primary);
-    border: 2px solid var(--accent-primary);
+    background: var(--bg-void);
+    border: 2px solid var(--accent-core);
     border-radius: 50%;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 10px var(--accent-alpha);
 }
 
 .node-marker svg {
     width: 14px;
     height: 14px;
-    color: var(--accent-primary);
+    color: var(--accent-core);
 }
 
 .node-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
     padding: 1.5rem;
-    transition: border-color 0.2s;
+    transition: all 0.3s var(--ease-out);
+    box-shadow: var(--shadow-sm);
 }
 
 .node-card:hover {
-    border-color: var(--text-tertiary);
+    border-color: var(--accent-core);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
 }
 
 .node-meta {
     font-size: 0.8rem;
-    color: var(--accent-primary);
-    font-weight: 600;
+    color: var(--accent-core);
+    font-weight: var(--weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.5rem;
     display: block;
+}
+
+/* --- LIGHT MODE OVERRIDES --- */
+[data-theme="light"] .timeline-flow::before {
+    background: linear-gradient(to bottom, var(--accent-core), var(--border-light));
+}
+
+[data-theme="light"] .node-marker {
+    background: white;
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.1);
+}
+
+[data-theme="light"] .node-card {
+    background: white;
+    border-color: var(--border-light);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .node-card:hover {
+    border-color: var(--accent-core);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.1);
+}
+
+[data-theme="light"] .node-meta {
+    color: var(--accent-core);
 }
