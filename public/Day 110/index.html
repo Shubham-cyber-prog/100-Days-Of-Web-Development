@@ -20,12 +20,26 @@
             padding: 0;
             box-sizing: border-box;
         }
+        
+        /* body {
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
             min-height: 100vh;
             color: white;
+        } */
+        
+        body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        color: white;
+
+        /* 🌈 Live Gradient Background */
+        background: linear-gradient(270deg, #8B5CF6, #3B82F6, #06B6D4, #9333EA, #EC4899);
+        background-size: 400% 400%;
+        animation: gradientFlow 12s ease infinite;
+
         }
 
         .container {
@@ -327,6 +341,14 @@
             .header h1 {
                 font-size: 2rem;
             }
+        }
+
+
+        /* 🎨 Background animation */
+        @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
         }
     </style>
 </head>
