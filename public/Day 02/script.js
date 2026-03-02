@@ -7,6 +7,7 @@ menuBtn.addEventListener("click", () => {
 });
 
 
+
 // Mobile Menu Toggle (NovaFlow)
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
@@ -51,6 +52,7 @@ setInterval(() => {
   index = (index + 1) % slides.length;
   showSlide(index);
 }, 4000);
+
 
 
   if (slides[i]) slides[i].classList.add("active");
