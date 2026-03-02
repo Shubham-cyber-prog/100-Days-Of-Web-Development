@@ -105,3 +105,29 @@ lapBtn.addEventListener('click', recordLap);
 clearLapsBtn.addEventListener('click', clearLaps);
 
 renderLaps();
+// ============ DARK MODE TOGGLE (CSS Class Approach) ============
+const darkModeToggle = document.querySelector('.darkMode');
+const body = document.body;
+
+// Check for saved dark mode preference
+let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+// Apply saved preference on load
+if (isDarkMode) {
+    body.classList.add('dark-mode');
+    darkModeToggle.textContent = '☀️';
+} else {
+    darkModeToggle.textContent = '🌙';
+}
+
+// Toggle dark mode on click
+darkModeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    isDarkMode = body.classList.contains('dark-mode');
+    
+    // Update button icon
+    darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+    
+    // Save preference
+    localStorage.setItem('darkMode', isDarkMode);
+});

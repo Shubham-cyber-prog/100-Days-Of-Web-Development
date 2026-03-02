@@ -17,9 +17,71 @@ body {
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 350px;
+}
+
+.darkMode {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    /* padding: 35px; */
+    padding: 10px;
+    border-radius: none;
+    outline: none;
+    font-size: larger;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1a1a1a;
+}
+
+body.dark-mode .container {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .time-display {
+    color: #64b5f6;
+}
+
+body.dark-mode .laps-container h3 {
+    color: #aaaaaa;
+}
+
+body.dark-mode #lapsList li {
+    color: #cccccc;
+    border-bottom-color: #444444;
+}
+
+body.dark-mode #lapsList li .lap-number {
+    color: #ffffff;
+}
+
+body.dark-mode .clear {
+    color: #cccccc;
+    border-color: #555555;
+}
+
+body.dark-mode .darkMode {
+    background-color: #ffffff;
+    color: #000000;
 }
 
 h1 {
@@ -57,26 +119,53 @@ h1 {
     cursor: not-allowed;
 }
 
-.start { background-color: #2ecc71; color: white; }
-.start:hover:not(:disabled) { background-color: #27ae60; }
+.start {
+    background-color: #2ecc71;
+    color: white;
+}
 
-.stop { background-color: #e74c3c; color: white; }
-.stop:hover:not(:disabled) { background-color: #c0392b; }
+.start:hover:not(:disabled) {
+    background-color: #27ae60;
+}
 
-.lap { background-color: #f1c40f; color: #333; }
-.lap:hover:not(:disabled) { background-color: #f39c12; }
+.stop {
+    background-color: #e74c3c;
+    color: white;
+}
 
-.reset { background-color: #34495e; color: white; }
-.reset:hover { background-color: #2c3e50; }
+.stop:hover:not(:disabled) {
+    background-color: #c0392b;
+}
 
-.clear { 
-    background-color: transparent; 
-    color: #7f8c8d; 
+.lap {
+    background-color: #f1c40f;
+    color: #333;
+}
+
+.lap:hover:not(:disabled) {
+    background-color: #f39c12;
+}
+
+.reset {
+    background-color: #34495e;
+    color: white;
+}
+
+.reset:hover {
+    background-color: #2c3e50;
+}
+
+.clear {
+    background-color: transparent;
+    color: #7f8c8d;
     border: 1px solid #bdc3c7;
     margin-top: 10px;
     font-size: 0.8rem;
 }
-.clear:hover { background-color: #ecf0f1; }
+
+.clear:hover {
+    background-color: #ecf0f1;
+}
 
 .laps-container {
     border-top: 1px solid #eee;
