@@ -12,19 +12,19 @@
 
 <body>
   <div class="container">
-    <h1>Expense Tracker</h1>
+    <h1>💸 Expense Tracker</h1>
 
     <form id="expense-form">
       <input type="hidden" id="edit-id" />
+
       <div class="form-group">
         <label for="expense-name">Expense Name</label>
-        <input type="text" id="expense-name" placeholder="e.g., Grocery Shopping" />
-
+        <input type="text" id="expense-name" placeholder="e.g. Grocery Shopping" required />
       </div>
 
       <div class="form-group">
-        <label for="expense-amount">Amount ($)</label>
-        <input type="number" id="expense-amount" placeholder="0.00" step="0.01" min="0" />
+        <label for="expense-amount">Amount</label>
+        <input type="number" id="expense-amount" placeholder="0.00" step="0.01" min="0" required />
       </div>
 
       <div class="form-group">
@@ -35,6 +35,12 @@
           <option value="Shopping">Shopping</option>
           <option value="Other">Other</option>
         </select>
+      </div>
+
+      <!-- Date of expense -->
+      <div class="form-group">
+        <label for="expense-date">Date</label>
+        <input type="date" id="expense-date" />
       </div>
 
       <button type="submit" class="btn">Add Expense</button>
@@ -51,48 +57,9 @@
         <div class="empty-state">No expenses yet. Add your first expense above!</div>
       </div>
     </div>
+  </div>
 
-
-    <div class="container">
-      <h1>💸 Expense Tracker</h1>
-
-      <form id="expense-form">
-        <div class="form-group">
-          <label>Expense Name</label>
-          <input type="text" id="expense-name" placeholder="e.g. Grocery" />
-        </div>
-
-        <div class="form-group">
-          <label>Amount</label>
-          <input type="number" id="expense-amount" placeholder="0.00" min="1" />
-        </div>
-
-        <div class="form-group">
-          <label>Category</label>
-          <select id="expense-category">
-            <option value="Food">Food</option>
-            <option value="Travel">Travel</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn">Add Expense</button>
-      </form>
-
-      <div class="total-box">
-        <span>Total Expenses</span>
-        <h2 id="total-amount">₹0</h2>
-      </div>
-
-      <h3 class="list-title">Your Expenses</h3>
-      <div id="expenses-container" class="expenses-container">
-        <p class="empty">No expenses added yet.</p>
-
-      </div>
-    </div>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>
