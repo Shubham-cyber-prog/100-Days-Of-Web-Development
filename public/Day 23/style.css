@@ -1,89 +1,204 @@
+:root {
+  --primary: #38bdf8;
+  --secondary: #6366f1;
+  --glass: rgba(15, 23, 42, 0.85);
+  --input-bg: #0f172a;
+  --input-border: #334155;
+  --text: #ffffff;
+}
+
+/* RESET */
 * {
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-  
-  body {
-    background: #0f172a;
-    color: #e5e7eb;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .converter {
-    background: #020617;
-    padding: 2rem;
-    width: 320px;
-    border-radius: 14px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    color: #38bdf8;
-  }
-  
-  input {
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    margin-bottom: 1rem;
-    background: #020617;
-    color: #e5e7eb;
-    border: 1px solid #1e293b;
-  }
-  
-  .selectors {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  select {
-    flex: 1;
-    padding: 0.6rem;
-    border-radius: 8px;
-    background: #020617;
-    color: #e5e7eb;
-    border: 1px solid #1e293b;
-    outline: none;
-  }
-  
-  .selectors span {
-    color: #38bdf8;
-    font-size: 1.2rem;
-  }
-  
-  button {
-    width: 100%;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #38bdf8, #6366f1);
-    color: #020617;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  button:hover {
-    transform: translateY(-2px);
-  }
-  
-  .result {
-    margin-top: 1.2rem;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #a5b4fc;
-  }
-  
-  
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  color: var(--text);
+}
+
+/* Animated Background */
+.background {
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #1d4ed8, #6366f1);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  z-index: -1;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+/* Card */
+.converter {
+  width: 400px;
+  padding: 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(20px);
+  background: var(--glass);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.6);
+}
+
+/* Top */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#themeToggle {
+  border: none;
+  background: transparent;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px var(--primary);
+}
+
+/* SELECT FIXED PROPERLY */
+select {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: white;
+  font-size: 1rem;
+  appearance: none;
+  outline: none;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+/* Custom arrow */
+select {
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--primary) 50%),
+    linear-gradient(135deg, var(--primary) 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px var(--primary);
+}
+
+/* OPTION VISIBILITY FIX */
+option {
+  background: #0f172a;
+  color: white;
+}
+
+/* Selectors Row */
+.selectors {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+#swapBtn {
+  padding: 0.8rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  transition: 0.4s;
+}
+
+#swapBtn:hover {
+  transform: rotate(180deg) scale(1.1);
+}
+
+/* Convert Button */
+#convertBtn {
+  margin-top: 1rem;
+  padding: 0.9rem;
+  border-radius: 15px;
+  border: none;
+  font-weight: bold;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#convertBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--primary);
+}
+
+/* Result */
+.result {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  min-height: 35px;
+}
+
+.rate-info {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* History */
+.history {
+  margin-top: 1.5rem;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.history li {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  border-bottom: 1px solid #1e293b;
+  padding: 3px 0;
+}
+
+/* LIGHT MODE FIX */
+.light-mode {
+  --glass: rgba(255,255,255,0.85);
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --text: #000000;
+}
+
+.light-mode option {
+  background: white;
+  color: black;
+}

@@ -1,44 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Currency Converter</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Get real-time exchange rates and convert global currencies with ease." />
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Fixer Currency Converter | Real-time Rates" />
-  <meta property="og:description" content="Instant currency conversion tool powered by reliable financial data." />
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Fixer Currency Converter | Real-time Rates" />
-  <meta name="twitter:description" content="Instant currency conversion tool powered by reliable financial data." />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Dynamic Currency Converter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="converter">
-    <h1>Currency Converter</h1>
+<div class="background"></div>
 
-    <input type="number" id="amount" placeholder="Enter amount" value="1" />
-
-    <div class="selectors">
-      <select id="fromCurrency"></select>
-      <span>→</span>
-      <select id="toCurrency"></select>
-    </div>
-
-    <button id="convertBtn">Convert</button>
-
-    <div class="result" id="result">
-      Converted amount will appear here
-    </div>
+<div class="converter">
+  <div class="top-bar">
+    <h1>💱 Currency Converter</h1>
+    <button id="themeToggle">🌙</button>
   </div>
 
+  <input type="text" id="amount" placeholder="Enter amount" value="1">
 
-  <script src="script.js"></script>
+  <div class="selectors">
+    <select id="fromCurrency"></select>
+    <button id="swapBtn">⇄</button>
+    <select id="toCurrency"></select>
+  </div>
+
+  <button id="convertBtn">Convert</button>
+
+  <div class="rate-info" id="rateInfo"></div>
+  <div class="result" id="result"></div>
+
+  <div class="history">
+    <h3>Recent Conversions</h3>
+    <ul id="historyList"></ul>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
-
 </html>
