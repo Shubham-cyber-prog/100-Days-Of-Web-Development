@@ -110,3 +110,44 @@ button:hover{
 .hidden{
   display:none;
 }
+
+
+/* ===== FLOATING ANIMATED BACKGROUND ===== */
+body{
+  transition: background 0.6s ease;
+}
+
+/* Default Theme */
+body.ocean{
+  background: linear-gradient(270deg, #0ea5e9, #22d3ee, #6366f1);
+  background-size: 400% 400%;
+  animation: floatBG 15s ease infinite;
+}
+
+/* Sunset Theme */
+body.sunset{
+  background: linear-gradient(270deg, #ff7e5f, #feb47b, #ff9966);
+  background-size: 400% 400%;
+  animation: floatBG 15s ease infinite;
+}
+
+/* Neon Theme */
+body.neon{
+  background: linear-gradient(270deg, #00ffff, #ff00ff, #7f00ff);
+  background-size: 400% 400%;
+  animation: floatBG 15s ease infinite;
+}
+
+/* Galaxy Theme */
+body.galaxy{
+  background: linear-gradient(270deg, #020617, #1e1b4b, #4c1d95);
+  background-size: 400% 400%;
+  animation: floatBG 20s ease infinite;
+}
+
+/* Animation */
+@keyframes floatBG{
+  0%{ background-position: 0% 50%; }
+  50%{ background-position: 100% 50%; }
+  100%{ background-position: 0% 50%; }
+}

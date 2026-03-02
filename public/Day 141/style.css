@@ -473,3 +473,71 @@ h1, h2, h3, .brand {
 .animate-fade {
     animation: fadeIn 0.6s var(--spring) forwards;
 }
+
+
+
+/* 🌈 Floating Animated Background */
+
+.app-container {
+  min-height: 100vh;
+  transition: background 0.6s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Calm Theme 🌊 */
+.app-container.calm {
+  background: linear-gradient(135deg, #dbeafe, #e0f2fe, #f0f9ff);
+}
+
+/* Neon Theme 🌌 */
+.app-container.neon {
+  background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+}
+
+/* Sunset Theme 🌅 */
+.app-container.sunset {
+  background: linear-gradient(135deg, #f97316, #fb7185, #facc15);
+}
+
+/* Floating animation */
+.app-container::before {
+  content: "";
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 70%);
+  animation: floatBg 18s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes floatBg {
+  0% { transform: translate(0,0) rotate(0deg); }
+  50% { transform: translate(20%, 20%) rotate(180deg); }
+  100% { transform: translate(0,0) rotate(360deg); }
+}
+
+
+.theme-switcher {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.theme-switcher button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(8px);
+  transition: 0.3s;
+}
+
+.theme-switcher button:hover {
+  transform: scale(1.1);
+}
