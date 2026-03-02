@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Form with Lamp Toggle</title>
+<!-- Design System -->
+  <link rel="stylesheet" href="website/styles/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="website/style.css">
+  <link rel="stylesheet" href="website/styles/tracker.css" />
+  <link rel="icon" type="image/png" href="website/assets/images/logo.png" />
+
+  <!-- Navbar Loader -->
+  <script src="scripts/components/sidebar-loader.js"></script>
+  <script src="scripts/components/navbar-loader.js"></script>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#ff7a18" />
+  <!-- FIXED: deprecated meta tag replaced -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Zenith" />
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Lamp left, form right */
+    height: 100vh;
+    margin: 0;
+    padding: 0 50px;
+    overflow: hidden;
+  }
+
+  .lamp-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .lamp-container img {
+    width: 150px; /* lamp thoda bada */
+  }
+
+  .lamp-container p {
+    margin-top: 15px;
+    color: #ccc;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  form {
+    background: rgba(51, 51, 51, 0.95);
+    padding: 30px 35px;
+    border-radius: 15px;
+    width: 320px;
+    display: none;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    transition: all 0.4s ease;
+  }
+
+  form.show {
+    display: block;
+  }
+
+  form input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: none;
+  }
+
+  form button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #1a73e8;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  form button:hover {
+    background: #1558b0;
+  }
+
+  .success {
+    color: #0f0;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  @media(max-width: 900px){
+    body{
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lamp-container{
+      margin-bottom: 30px;
+    }
+    form{
+      width: 90%;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="cursor-ring" id="cursorRing"></div>
+ <script src="website/scripts/components/cursor.js"></script>
+<div class="lamp-container">
+  <img id="lamp" src="assets/lamp/lampoff.png" alt="Lamp Off">
+  <p>Click the lamp to open login form</p>
+</div>
+
+<form id="loginForm">
+  <h2 style="text-align:center;">Login</h2>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <button type="submit">Login</button>
+  <div class="success" id="successMsg"></div>
+</form>
+
+<script>
+  const lamp = document.getElementById('lamp');
+  const form = document.getElementById('loginForm');
+  let isLampOn = false;
+
+  // Lamp toggle
+  lamp.addEventListener('click', () => {
+    if(isLampOn){
+      lamp.src = 'assets/lamp/lampoff.png'; // Lamp off
+      form.classList.remove('show');
+    } else {
+      lamp.src = 'assets/lamp/lampon.png'; // Lamp on
+      form.classList.add('show');
+    }
+    isLampOn = !isLampOn;
+  });
+
+  // Form submission
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if(!email || !password){
+      alert("All fields are required!");
+      return;
+    }
+
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if(!email.match(emailPattern)){
+      alert("Invalid email!");
+      return;
+    }
+
+    document.getElementById('successMsg').textContent = `Login successful for ${email}`;
+    form.reset();
+  });
+</script>
+
+</body>
+</html>

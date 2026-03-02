@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Quest - Quiz Game</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Knowledge Quest - Quiz</title>
+    <meta name="description"
+        content="Challenge your knowledge with Knowledge Quest, a dynamic quiz application with multiple categories and difficulties." />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="styles.css" />
     <script defer src="script.js"></script>
 </head>
+
 <body>
+
     <div class="background-shapes">
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
@@ -16,78 +24,130 @@
     </div>
 
     <div class="container">
+
+        <!-- HEADER -->
         <div class="header">
             <h1><i class="fas fa-brain"></i> Knowledge Quest</h1>
-            <p>Test your knowledge and challenge your mind!</p>
+            <p>Test your knowledge!</p>
         </div>
 
-        <div class="screen active" id="start-screen" role="region" aria-label="Start Screen">
-            <div class="category-selector" role="group" aria-label="Quiz Categories">
-                <button class="category-btn active" data-category="general" aria-pressed="true">General</button>
-                <button class="category-btn" data-category="science" aria-pressed="false">Science</button>
-                <button class="category-btn" data-category="history" aria-pressed="false">History</button>
-                <button class="category-btn" data-category="geography" aria-pressed="false">Geography</button>
+
+        <!-- START SCREEN -->
+        <div class="screen active" id="start-screen">
+
+            <h2 class="screen-title">Choose Category</h2>
+
+            <div class="category-selector">
+                <button class="category-btn active" data-category="general">General</button>
+                <button class="category-btn" data-category="science">Science</button>
+                <button class="category-btn" data-category="history">History</button>
+                <button class="category-btn" data-category="geography">Geography</button>
             </div>
 
-            <div class="difficulty-selector" role="group" aria-label="Difficulty Levels">
-                <button class="difficulty-btn" data-difficulty="easy" aria-pressed="false" aria-label="Easy">E</button>
-                <button class="difficulty-btn active" data-difficulty="medium" aria-pressed="true" aria-label="Medium">M</button>
-                <button class="difficulty-btn" data-difficulty="hard" aria-pressed="false" aria-label="Hard">H</button>
+
+            <h2 class="screen-title">Select Difficulty</h2>
+
+            <div class="difficulty-selector">
+                <button class="difficulty-btn" data-difficulty="easy">E</button>
+                <button class="difficulty-btn active" data-difficulty="medium">M</button>
+                <button class="difficulty-btn" data-difficulty="hard">H</button>
             </div>
 
-            <button id="start-btn" class="btn">Start Quiz</button>
+            <button id="start-btn" class="btn start-btn">
+                Start Quiz
+            </button>
+
         </div>
 
-        <div class="screen" id="quiz-screen" role="region" aria-label="Quiz Screen" aria-live="polite">
+
+        <!-- QUIZ SCREEN -->
+        <div class="screen" id="quiz-screen">
+
             <div class="quiz-header">
-                <h2 id="question-text">Question goes here</h2>
+
+                <h2 id="question-text"></h2>
+
                 <div class="quiz-info">
-                    <p>Question <span id="current-question">1</span> of <span id="total-question">5</span></p>
-                    <div class="timer-container" role="timer" aria-live="assertive" aria-atomic="true">
+
+                    <div>
+                        Q: <span id="current-question">1</span>/<span id="total-question">5</span>
+                    </div>
+
+                    <div class="timer-container">
                         <i class="fas fa-clock"></i>
                         <span id="timer">15</span>s
                     </div>
-                    <p>Score: <span id="score">0</span></p>
+
+                    <div>
+                        Score: <span id="score">0</span>
+                    </div>
+
                 </div>
+
             </div>
 
+
             <div class="progress-container">
-                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar">
                     <div id="progress" class="progress"></div>
                 </div>
             </div>
 
-            <div id="answer-container" class="answer-container" role="group" aria-label="Answer Options"></div>
+
+            <!-- ANSWERS -->
+            <div id="answer-container" class="answer-container"></div>
+
         </div>
 
-        <div id="result-screen" class="screen result-screen" role="region" aria-label="Quiz Results">
+
+        <!-- RESULT SCREEN -->
+        <div class="screen result-screen" id="result-screen">
+
             <h1>Quiz Results</h1>
+
             <div class="result-info">
-                <div class="score-circle" style="--score: 0" role="img" aria-label="Score visualization">
+
+                <div class="score-circle" style="--score:0">
                     <div class="score-text">0%</div>
                 </div>
-                <p>You scored <span id="final-score">0</span> out of <span id="max-score">5</span></p>
-                <div id="result-message" role="status" aria-live="polite">Good Job!</div>
+
+                <p>
+                    You scored
+                    <span id="final-score">0</span> /
+                    <span id="max-score">5</span>
+                </p>
+
+                <div id="result-message">Good Job!</div>
+
                 <div class="result-stats">
+
                     <div class="stat">
-                        <div class="stat-value" id="correct-answers">0</div>
+                        <div id="correct-answers" class="stat-value">0</div>
                         <div class="stat-label">Correct</div>
                     </div>
+
                     <div class="stat">
-                        <div class="stat-value" id="incorrect-answers">0</div>
-                        <div class="stat-label">Incorrect</div>
+                        <div id="incorrect-answers" class="stat-value">0</div>
+                        <div class="stat-label">Wrong</div>
                     </div>
+
                     <div class="stat">
-                        <div class="stat-value" id="accuracy">0%</div>
+                        <div id="accuracy" class="stat-value">0%</div>
                         <div class="stat-label">Accuracy</div>
                     </div>
+
                 </div>
+
             </div>
-            <button id="restart-btn" class="btn">Play Again</button>
+
+            <button id="restart-btn" class="btn">
+                Play Again
+            </button>
+
         </div>
+
     </div>
 
-    
-  
 </body>
+
 </html>

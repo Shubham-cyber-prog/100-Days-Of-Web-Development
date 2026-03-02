@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Project Masthead</title>
+
+<style>
+
+:root{
+  --dark:#090dea;
+  --light:#3c83ee;
+  --bg:#f4f7ff;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",Arial,sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,var(--dark),var(--light));
+  min-height:100vh;
+  padding:40px 15px;
+}
+
+/* Container */
+.container{
+  max-width:1100px;
+  margin:auto;
+  background:white;
+  border-radius:18px;
+  padding:35px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* Header */
+.header{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.header h1{
+  color:var(--dark);
+  font-size:36px;
+}
+
+.header p{
+  color:#555;
+  margin-top:5px;
+}
+
+/* Sections */
+.section{
+  margin-bottom:45px;
+}
+
+.section-title{
+  font-size:26px;
+  color:var(--dark);
+  margin-bottom:18px;
+  border-left:6px solid var(--light);
+  padding-left:12px;
+}
+
+/* Card Grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+/* Card */
+.card{
+  background:var(--bg);
+  padding:22px;
+  border-radius:14px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  transition:0.3s;
+  text-align:center;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Admin */
+.admin-card img{
+  width:90px;
+  border-radius:50%;
+  border:3px solid var(--light);
+  margin-bottom:10px;
+}
+
+/* Contributors */
+.contributors{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:18px;
+}
+
+.contributor-card{
+  background:var(--bg);
+  padding:18px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  transition:0.3s;
+}
+
+.contributor-card:hover{
+  transform:scale(1.05);
+}
+
+.contributor-card img{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  border:2px solid var(--light);
+}
+
+/* Remove underline */
+a{
+  text-decoration:none;
+  color:var(--dark);
+  font-weight:600;
+}
+
+a:hover{
+  color:var(--light);
+}
+
+/* Button */
+.btn{
+  display:block;
+  margin:25px auto 0;
+  padding:12px 25px;
+  background:var(--dark);
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+  transition:0.3s;
+}
+
+.btn:hover{
+  background:var(--light);
+}
+
+/* Contact */
+.contact-card{
+  background:var(--bg);
+  padding:25px;
+  border-radius:14px;
+  text-align:center;
+  line-height:1.8;
+}
+
+/* Footer */
+.footer{
+  text-align:center;
+  color:#666;
+  margin-top:30px;
+  font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+  <h1>100 Days of Web Development</h1>
+  <p>ECWoC 2026 • Open Source Learning Challenge</p>
+</div>
+
+
+<!-- Vision & Mission -->
+<div class="section">
+
+<h2 class="section-title">🎯 Vision & Mission</h2>
+
+<div class="grid">
+
+  <div class="card">
+    <h3>Our Vision</h3>
+    <p>
+      Empower developers with practical skills,
+      real-world experience, and open-source exposure.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Our Mission</h3>
+    <p>
+      Build 150+ projects, promote daily coding,
+      and encourage collaborative learning.
+    </p>
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- Admin -->
+<div class="section">
+
+<h2 class="section-title">👨‍💻 Project Admin</h2>
+
+<div class="grid">
+
+  <div class="card admin-card">
+
+    <img src="https://avatars.githubusercontent.com/u/111553589?v=4">
+
+    <h3>Shubham</h3>
+
+    <p>Project Lead & Maintainer</p>
+
+    <a href="https://github.com/Shubham-cyber-prog" target="_blank">
+      GitHub Profile
+    </a>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- Contributors -->
+<div class="section">
+
+<h2 class="section-title">🌟 Contributors</h2>
+
+<div class="contributors" id="contributors"></div>
+
+<button class="btn" id="loadBtn" onclick="loadAll()">
+  Load All Contributors
+</button>
+
+</div>
+
+
+<!-- Contact -->
+<div class="section">
+
+<h2 class="section-title">📞 Contact</h2>
+
+<div class="contact-card">
+
+  <p>Email: support@100dayswebdev.com</p>
+
+  <p>
+    Discord:
+    <a href="https://discord.gg/BFTWMU6p" target="_blank">
+      Join Community
+    </a>
+  </p>
+
+  <p>
+    Website:
+    <a href="https://100dayswebdevelopment-ecwoc.netlify.app" target="_blank">
+      Visit Platform
+    </a>
+  </p>
+
+  <p>
+    GitHub:
+    <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" target="_blank">
+      Repository
+    </a>
+  </p>
+
+</div>
+
+</div>
+
+
+<!-- Footer -->
+<div class="footer">
+  © 2026 • 100 Days of Web Development • ECWoC
+</div>
+
+
+</div>
+
+
+<script>
+
+/* Repo Info */
+const OWNER = "Shubham-cyber-prog";
+const REPO = "100-Days-Of-Web-Development-ECWoC26";
+
+let allContributors=[];
+
+
+/* Load Contributors */
+async function loadTop(){
+
+  const res = await fetch(
+    `https://api.github.com/repos/${OWNER}/${REPO}/contributors`
+  );
+
+  allContributors = await res.json();
+
+  showContributors(10);
+}
+
+
+/* Display */
+function showContributors(count){
+
+  let box=document.getElementById("contributors");
+
+  box.innerHTML="";
+
+  allContributors.slice(0,count).forEach(user=>{
+
+    let div=document.createElement("div");
+
+    div.className="contributor-card";
+
+    div.innerHTML=`
+      <img src="${user.avatar_url}">
+      <p>${user.login}</p>
+      <p>Contributions: ${user.contributions}</p>
+      <a href="${user.html_url}" target="_blank">View Profile</a>
+    `;
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+/* Load All */
+function loadAll(){
+
+  showContributors(allContributors.length);
+
+  document.getElementById("loadBtn").style.display="none";
+}
+
+
+/* Init */
+loadTop();
+
+</script>
+
+</body>
+</html>

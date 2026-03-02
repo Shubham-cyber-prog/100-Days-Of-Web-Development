@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Auction Platform</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --auction-primary: #ef4444;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .auction-card {
+            border-radius: 16px;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .auction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar">
@@ -27,6 +45,9 @@
             <div class="user-actions">
                 <button id="login-btn" class="btn-outline"><i class="fas fa-sign-in-alt"></i> Login</button>
                 <button id="register-btn" class="btn-primary"><i class="fas fa-user-plus"></i> Register</button>
+                <button id="theme-toggle" class="btn-outline">
+                <i class="fas fa-moon"></i>
+                </button>
             </div>
         </nav>
     </header>
@@ -37,8 +58,9 @@
                 <h2>Find Unique Items & Amazing Deals</h2>
                 <p>Bid on exclusive items from around the world. Join live auctions now!</p>
                 <div class="search-bar">
-                    <input type="text" placeholder="Search for items...">
-                    <button class="btn-primary"><i class="fas fa-search"></i> Search</button>
+                    <input type="text" placeholder="Search for items..." aria-label="Search for auction items">
+                    <button class="btn-primary" aria-label="Perform search"><i class="fas fa-search"></i>
+                        Search</button>
                 </div>
             </div>
         </section>
@@ -142,8 +164,14 @@
         </div>
     </footer>
     <button id="scrollToTopBtn" aria-label="Scroll to top">
-    <i class="fa-solid fa-arrow-up"></i>
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
     <script src="script.js"></script>
+
+    <!-- Toast Notification Container -->
+<div id="toast-container"></div>
 </body>
+</html>
+
+
 </html>

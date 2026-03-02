@@ -1,80 +1,194 @@
-// Elements
-const taskInput = document.getElementById('taskInput');
-const addBtn = document.getElementById('addBtn');
-const taskList = document.getElementById('taskList');
-const filterBtns = document.querySelectorAll('.filter-btn');
+let mainCards = JSON.parse(localStorage.getItem("mainCards")) || [
+  {title:"To-Do", color:"#ff6b6b", tasks:[]},
+  {title:"Doing", color:"#feca57", tasks:[]},
+  {title:"Done", color:"#1dd1a1", tasks:[]}
+];
 
-// Load tasks from localStorage
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-renderTasks(tasks);
+function saveData(){ 
+    localStorage.setItem("mainCards", JSON.stringify(mainCards)); 
+}
 
-// Add Task
-addBtn.addEventListener('click', () => {
-    const taskText = taskInput.value.trim();
-    if (taskText === '') return;
+const mainBoard = document.getElementById("mainBoard");
 
-    const task = {
-        id: Date.now(),
-        text: taskText,
-        completed: false
+function renderBoard(){
+  mainBoard.innerHTML = "";
+
+  mainCards.forEach((card,i)=>{
+    const mainCard = document.createElement("div");
+    mainCard.className = "main-card";
+    mainCard.style.background = card.color;
+
+    const delBtn = document.createElement("button");
+    delBtn.className = "delete-card-btn";
+    delBtn.innerHTML = "🗑️"; 
+    delBtn.onclick = (e)=>{
+        e.stopPropagation(); 
+        if(confirm(`Delete column "${card.title}"?`)){
+            mainCards.splice(i,1);
+            saveData();
+            renderBoard();
+        }
     };
+    mainCard.appendChild(delBtn);
 
-    tasks.push(task);
-    saveTasks();
-    renderTasks(tasks);
-    taskInput.value = '';
-});
+    const titleInput = document.createElement("input");
+    titleInput.className = "column-title";
+    titleInput.value = card.title;
+    titleInput.onchange = ()=>{ mainCards[i].title = titleInput.value; saveData(); };
+    mainCard.appendChild(titleInput);
 
-// Task actions: complete/delete
-taskList.addEventListener('click', (e) => {
-    const id = e.target.closest('li')?.dataset.id;
-    if (!id) return;
+    const tasksDiv = document.createElement("div");
+    tasksDiv.className = "tasks";
 
-    if (e.target.classList.contains('complete-btn')) {
-        tasks = tasks.map(task => task.id == id ? {...task, completed: !task.completed} : task);
-    }
+    card.tasks.forEach((t,idx)=>{
+      const task = document.createElement("div");
+      task.className = "task";
+      task.textContent = t.text || t;
+      task.draggable = true;
 
-    if (e.target.classList.contains('delete-btn')) {
-        tasks = tasks.filter(task => task.id != id);
-    }
+      task.onclick = ()=>{
+        openTaskModal(i, idx);
+      }
 
-    saveTasks();
-    renderTasks(tasks);
-});
+      task.addEventListener("dragstart",()=>{task.classList.add("dragging")});
+      task.addEventListener("dragend",()=>{task.classList.remove("dragging")});
 
-// Filter tasks
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelector('.filter-btn.active')?.classList.remove('active');
-        btn.classList.add('active');
+      if(t.user || t.dueDate){
+        const infoDiv = document.createElement("div");
+        infoDiv.style.fontSize="12px";
+        infoDiv.style.marginTop="4px";
+        infoDiv.style.opacity="0.8";
+        infoDiv.innerHTML = 
+          (t.user?`👤 ${t.user} `:"") +
+          (t.dueDate?`⏰ ${new Date(t.dueDate).toLocaleString()}`:"");
+        task.appendChild(infoDiv);
+      }
 
-        const filter = btn.dataset.filter;
-        if (filter === 'all') renderTasks(tasks);
-        if (filter === 'completed') renderTasks(tasks.filter(t => t.completed));
-        if (filter === 'pending') renderTasks(tasks.filter(t => !t.completed));
+      tasksDiv.appendChild(task);
     });
-});
 
-// Functions
-function renderTasks(taskArray) {
-    taskList.innerHTML = '';
-    taskArray.forEach(task => {
-        const li = document.createElement('li');
-        li.className = `task-item ${task.completed ? 'completed' : ''}`;
-        li.dataset.id = task.id;
+    mainCard.appendChild(tasksDiv);
 
-        li.innerHTML = `
-            <span>${task.text}</span>
-            <div class="task-actions">
-                <button class="complete-btn">${task.completed ? 'Undo' : 'Complete'}</button>
-                <button class="delete-btn">Delete</button>
-            </div>
-        `;
+    const addTaskBtn = document.createElement("button");
+    addTaskBtn.className = "add-task-btn";
+    addTaskBtn.textContent = "+ Add Task";
+    addTaskBtn.onclick = ()=>{
+      const t = prompt("Enter task:");
+      if(t){ 
+        mainCards[i].tasks.push({text:t, user:"", dueDate:""});
+        saveData(); 
+        renderBoard(); 
+        enableDragDrop(); 
+      }
+    }
+    mainCard.appendChild(addTaskBtn);
 
-        taskList.appendChild(li);
-    });
+    mainBoard.appendChild(mainCard);
+
+    // Arrow except last
+    if(i<mainCards.length-1){
+      const arrow = document.createElement("div");
+      arrow.className = "arrow";
+      arrow.innerHTML = "➡️";
+      mainBoard.appendChild(arrow);
+    }
+  });
+
+  enableDragDrop();
+  updateGridWidth();
 }
 
-function saveTasks() {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+function addMainCard(){
+  const title = prompt("Enter column title:");
+  if(title){
+    const color = prompt("Enter color in hex (#xxxxxx):","#ff9ff3");
+    mainCards.push({title:title, color:color||"#ff9ff3", tasks:[]});
+    saveData();
+    renderBoard();
+  }
 }
+
+function enableDragDrop(){
+  const taskContainers = document.querySelectorAll(".tasks");
+  taskContainers.forEach(container=>{
+    container.addEventListener("dragover",e=>{
+      e.preventDefault();
+      const dragging = document.querySelector(".dragging");
+      const afterElement = getDragAfter(container,e.clientY);
+      if(afterElement==null) container.appendChild(dragging);
+      else container.insertBefore(dragging,afterElement);
+    });
+    container.addEventListener("drop",e=>{
+      mainCards.forEach((card,index)=>{
+        const containerDiv = document.querySelectorAll(".tasks")[index];
+        card.tasks = Array.from(containerDiv.children).map(t=>{
+          return t.__taskObj ? t.__taskObj : {text:t.textContent, user:"", dueDate:""};
+        });
+      });
+      saveData();
+    });
+  });
+}
+
+function getDragAfter(container,y){
+  const draggableElements = [...container.querySelectorAll(".task:not(.dragging)")];
+  return draggableElements.reduce((closest,child)=>{
+    const box = child.getBoundingClientRect();
+    const offset = y-box.top-box.height/2;
+    if(offset<0 && offset>closest.offset) return {offset:offset,element:child};
+    else return closest;
+  },{offset:Number.NEGATIVE_INFINITY}).element;
+}
+
+function updateGridWidth(){
+  const mainBoardWidth = mainCards.length * 350 + (mainCards.length-1)*60; 
+  mainBoard.style.setProperty('--grid-width', `${mainBoardWidth}px`);
+}
+
+const taskModal = document.getElementById("taskModal");
+const modalTaskText = document.getElementById("modalTaskText");
+const modalTaskUser = document.getElementById("modalTaskUser");
+const modalTaskDate = document.getElementById("modalTaskDate");
+const saveTaskBtn = document.getElementById("saveTaskBtn");
+const closeBtn = document.querySelector(".close-btn");
+
+let currentCardIndex = null;
+let currentTaskIndex = null;
+
+function openTaskModal(cardIdx, taskIdx){
+  currentCardIndex = cardIdx;
+  currentTaskIndex = taskIdx;
+  const task = mainCards[cardIdx].tasks[taskIdx];
+  modalTaskText.value = task.text || "";
+  modalTaskUser.value = task.user || "";
+  modalTaskDate.value = task.dueDate || "";
+  taskModal.style.display = "flex";
+}
+
+closeBtn.onclick = ()=> taskModal.style.display="none";
+window.onclick = e => { if(e.target==taskModal) taskModal.style.display="none"; }
+
+saveTaskBtn.onclick = ()=>{
+  const updatedTask = {
+    text: modalTaskText.value,
+    user: modalTaskUser.value,
+    dueDate: modalTaskDate.value
+  };
+  mainCards[currentCardIndex].tasks[currentTaskIndex] = updatedTask;
+  saveData();
+  renderBoard();
+  taskModal.style.display="none";
+}
+
+const deleteTaskBtn = document.getElementById("deleteTaskBtn");
+
+deleteTaskBtn.onclick = ()=>{
+  if(confirm("Are you sure you want to delete this task?")){
+    mainCards[currentCardIndex].tasks.splice(currentTaskIndex,1);
+    saveData();
+    renderBoard();
+    taskModal.style.display = "none";
+  }
+}
+
+renderBoard();

@@ -1,70 +1,801 @@
-/* --- Components: Buttons --- */
+/* ============================================
+   ULTRA BUTTONS v2.0
+   Professional button system with physics animations
+   ============================================ */
+
+/* ============================================
+   MOTION TOKENS
+   ============================================ */
+
+:root {
+  --btn-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --btn-ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+  --btn-ease-sharp:  cubic-bezier(0.16, 1, 0.3, 1);
+  --btn-duration-fast: 160ms;
+  --btn-duration-base: 320ms;
+}
+
+/* ============================================
+   BASE BUTTON
+   ============================================ */
 
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    padding: 0.75rem 1.5rem;
-    font-family: var(--font-display);
-    font-weight: var(--weight-bold);
-    font-size: var(--text-base);
-    border-radius: var(--radius-md);
-    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.72rem 1.5rem;
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold, 600);
+  font-size: var(--text-base, 0.9375rem);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  border-radius: var(--radius-md, 12px);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  isolation: isolate;
+
+  /* Base transition */
+  transition:
+    transform    var(--btn-duration-base) var(--btn-ease-spring),
+    box-shadow   var(--btn-duration-base) var(--btn-ease-smooth),
+    background   var(--btn-duration-fast) ease,
+    border-color var(--btn-duration-fast) ease,
+    color        var(--btn-duration-fast) ease,
+    opacity      var(--btn-duration-fast) ease;
+
+  will-change: transform, box-shadow;
 }
 
-/* Primary "Launch" Button */
+/* Ripple layer */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.18) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--btn-duration-fast) ease;
+  pointer-events: none;
+}
+
+.btn:hover::before  { opacity: 1; }
+.btn:active::before { opacity: 0.6; }
+
+/* Shimmer sweep on hover */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgba(255,255,255,0.12) 50%,
+    transparent
+  );
+  transition: left var(--btn-duration-base) var(--btn-ease-smooth);
+  pointer-events: none;
+}
+
+.btn:hover::after { left: 160%; }
+
+/* Active press */
+.btn:active {
+  transform: translateY(1px) scale(0.98) !important;
+  transition-duration: 80ms !important;
+}
+
+/* Disabled */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.42;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.3);
+}
+
+/* Focus ring */
+.btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ============================================
+   PRIMARY
+   ============================================ */
+
 .btn-primary {
-    background: var(--gradient-glow);
-color: var(--text-on-dark);
-box-shadow:var(--shadow-glow);}
+  background: var(--gradient-accent, linear-gradient(135deg, #8B5CF6, #7C3AED));
+  color: #fff;
+  box-shadow:
+    0 4px 14px rgba(139, 92, 246, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+}
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-glow);}
-
-.btn-primary:active {
-    transform: translateY(0);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 8px 28px rgba(139, 92, 246, 0.45),
+    0 2px 8px rgba(139, 92, 246, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.15);
 }
 
+/* ============================================
+   SECONDARY
+   ============================================ */
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: var(--text-primary, rgba(255,255,255,0.85));
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+/* ============================================
+   OUTLINE
+   ============================================ */
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--accent-core, #FF9D00);
+  color: var(--accent-core, #FF9D00);
+  box-shadow: inset 0 0 0 0 var(--accent-core, #FF9D00);
+  transition:
+    transform    var(--btn-duration-base) var(--btn-ease-spring),
+    box-shadow   var(--btn-duration-base) var(--btn-ease-smooth),
+    color        0.25s ease,
+    background   0.25s ease;
+}
+
+.btn-outline::before { display: none; }
+
+.btn-outline::after {
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgba(255,255,255,0.08) 50%,
+    transparent
+  );
+}
+
+.btn-outline:hover {
+  transform: translateY(-2px);
+  background: var(--accent-core, #FF9D00);
+  color: #000;
+  box-shadow:
+    0 6px 20px rgba(255, 157, 0, 0.35),
+    0 2px 6px rgba(255, 157, 0, 0.20);
+}
+
+/* ============================================
+   GHOST
+   ============================================ */
+
+.btn-ghost {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary, rgba(255,255,255,0.55));
+  box-shadow: none;
+}
+
+.btn-ghost::before { background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,0.08) 0%, transparent 60%); }
+.btn-ghost::after  { display: none; }
+
+.btn-ghost:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary, rgba(255,255,255,0.90));
+  box-shadow: none;
+}
+
+/* ============================================
+   DANGER
+   ============================================ */
+
+.btn-danger {
+  background: linear-gradient(135deg, #FF4D6D, #E11D48);
+  color: #fff;
+  box-shadow:
+    0 4px 14px rgba(225, 29, 72, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.btn-danger:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 8px 28px rgba(225, 29, 72, 0.45),
+    0 2px 8px rgba(225, 29, 72, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+/* ============================================
+   SUCCESS
+   ============================================ */
+
+.btn-success {
+  background: linear-gradient(135deg, #34D399, #059669);
+  color: #fff;
+  box-shadow:
+    0 4px 14px rgba(52, 211, 153, 0.30),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.btn-success:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 8px 28px rgba(52, 211, 153, 0.40),
+    0 2px 8px rgba(52, 211, 153, 0.20),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+/* ============================================
+   GLOW VARIANTS
+   ============================================ */
+
+.btn-glow-amber {
+  background: linear-gradient(135deg, #FF9D00, #FF6B00);
+  color: #000;
+  font-weight: 700;
+  box-shadow:
+    0 4px 20px rgba(255, 157, 0, 0.40),
+    inset 0 1px 0 rgba(255,255,255,0.20);
+}
+
+.btn-glow-amber:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 40px rgba(255, 157, 0, 0.50),
+    0 8px 24px rgba(255, 157, 0, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.20);
+}
+
+.btn-glow-sky {
+  background: linear-gradient(135deg, #38BDF8, #0284C7);
+  color: #fff;
+  box-shadow:
+    0 4px 20px rgba(56, 189, 248, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.btn-glow-sky:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 40px rgba(56, 189, 248, 0.45),
+    0 8px 24px rgba(56, 189, 248, 0.30),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.btn-glow-violet {
+  background: linear-gradient(135deg, #A78BFA, #7C3AED);
+  color: #fff;
+  box-shadow:
+    0 4px 20px rgba(167, 139, 250, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.btn-glow-violet:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 40px rgba(167, 139, 250, 0.45),
+    0 8px 24px rgba(167, 139, 250, 0.30),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+/* ============================================
+   GRADIENT BORDER (transparent with border)
+   ============================================ */
+
+.btn-gradient-border {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-primary, rgba(255,255,255,0.85));
+  border: none;
+  position: relative;
+  backdrop-filter: blur(8px);
+}
+
+.btn-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask:         linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  transition: opacity var(--btn-duration-base) ease;
+  pointer-events: none;
+}
+
+.btn-gradient-border::after { display: none; }
+
+.btn-gradient-border:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.08);
+}
+
+.btn-gradient-border:hover::before { opacity: 1; }
+
+/* ============================================
+   SOCIAL BUTTONS
+   ============================================ */
+
 .btn-social {
-    width: 100%;
-background: var(--bg-glass-panel);
-border: 1px solid var(--glass-border);
-color: var(--text-secondary);
-    font-family: var(--font-body);
-    font-weight: var(--weight-medium);
-    justify-content: center;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--text-secondary, rgba(255,255,255,0.60));
+  font-family: var(--font-body);
+  font-weight: 500;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
 .btn-social:hover {
-    background: var(--bg-glass-hover);
-border-color: var(--glass-highlight);
-color: var(--text-primary);
-    transform: translateY(-1px);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--text-primary, rgba(255,255,255,0.90));
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.10);
 }
 
-/* Social Brand Colors (Optional Hovers) */
+/* Brand tints */
 .btn-social.google:hover {
-    border-color: #EA4335;
-    color: #EA4335;
+  border-color: rgba(234, 67, 53, 0.60);
+  color: #EA4335;
+  box-shadow: 0 6px 20px rgba(234, 67, 53, 0.15);
 }
 
 .btn-social.github:hover {
-    border-color: #ffffff;
-    color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.50);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(255,255,255,0.08);
 }
 
 .btn-social.linkedin:hover {
-    border-color: #0077b5;
-    color: #0077b5;
+  border-color: rgba(0, 119, 181, 0.60);
+  color: #0A66C2;
+  box-shadow: 0 6px 20px rgba(0, 119, 181, 0.15);
 }
 
-/* Icon sizes */
+/* ============================================
+   ICON BUTTON
+   ============================================ */
+
 .btn-icon {
-    width: 20px;
-    height: 20px;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: var(--radius-md, 12px);
+  flex-shrink: 0;
 }
+
+.btn-icon svg,
+.btn-icon i {
+  width: 1.125rem;
+  height: 1.125rem;
+  font-size: 1.125rem;
+  transition: transform var(--btn-duration-base) var(--btn-ease-spring);
+}
+
+.btn-icon:hover svg,
+.btn-icon:hover i {
+  transform: scale(1.15);
+}
+
+.btn-icon.btn-icon-round {
+  border-radius: 50%;
+}
+
+/* ============================================
+   SIZES
+   ============================================ */
+
+.btn-xs {
+  padding: 0.38rem 0.85rem;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  gap: 0.35rem;
+}
+
+.btn-sm {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+
+.btn-lg {
+  padding: 0.9rem 2rem;
+  font-size: 1.0625rem;
+  border-radius: 14px;
+}
+
+.btn-xl {
+  padding: 1.1rem 2.5rem;
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+  border-radius: 16px;
+}
+
+/* ============================================
+   FULL WIDTH
+   ============================================ */
+
+.btn-block {
+  width: 100%;
+}
+
+/* ============================================
+   BUTTON GROUP
+   ============================================ */
+
+.btn-group {
+  display: inline-flex;
+  gap: 0;
+}
+
+.btn-group .btn {
+  border-radius: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-group .btn:focus,
+.btn-group .btn:hover {
+  z-index: 2;
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: var(--radius-md, 12px);
+  border-bottom-left-radius: var(--radius-md, 12px);
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: var(--radius-md, 12px);
+  border-bottom-right-radius: var(--radius-md, 12px);
+}
+
+.btn-group .btn-secondary:not(:last-child) {
+  border-right-color: transparent;
+}
+
+/* Segmented / pill group */
+.btn-group-pill .btn:first-child {
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+
+.btn-group-pill .btn:last-child {
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+
+/* ============================================
+   PILL SHAPE
+   ============================================ */
+
+.btn-pill {
+  border-radius: 100px !important;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+
+.btn.loading {
+  pointer-events: none;
+  color: transparent !important;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top-color: rgba(255,255,255,0.90);
+  border-radius: 50%;
+  animation: btn-spin 0.55s linear infinite;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn.loading[class*="outline"]::after,
+.btn.loading[class*="ghost"]::after {
+  border-color: rgba(0,0,0,0.15);
+  border-top-color: currentColor;
+}
+
+@keyframes btn-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ============================================
+   SUCCESS STATE (post-action)
+   ============================================ */
+
+.btn.success-state {
+  pointer-events: none;
+  background: linear-gradient(135deg, #34D399, #059669) !important;
+  color: #fff !important;
+  transform: none !important;
+  animation: btn-success-pop 0.4s var(--btn-ease-spring);
+}
+
+@keyframes btn-success-pop {
+  0%   { transform: scale(0.94); }
+  60%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================
+   ENTRANCE ANIMATION
+   ============================================ */
+
+.btn-animate-in {
+  animation: btn-appear 0.5s var(--btn-ease-spring) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes btn-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* ============================================
+   PULSE ATTENTION ANIMATION
+   ============================================ */
+
+.btn-pulse {
+  animation: btn-pulse-ring 2.5s ease-in-out infinite;
+}
+
+@keyframes btn-pulse-ring {
+  0%  { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.5), 0 4px 14px rgba(139, 92, 246, 0.35); }
+  60% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0), 0 4px 14px rgba(139, 92, 246, 0.35); }
+  100%{ box-shadow: 0 0 0 0 rgba(139, 92, 246, 0), 0 4px 14px rgba(139, 92, 246, 0.35); }
+}
+
+.btn-glow-amber.btn-pulse {
+  animation: btn-pulse-amber 2.5s ease-in-out infinite;
+}
+
+@keyframes btn-pulse-amber {
+  0%  { box-shadow: 0 0 0 0 rgba(255, 157, 0, 0.5), 0 4px 20px rgba(255, 157, 0, 0.35); }
+  60% { box-shadow: 0 0 0 10px rgba(255, 157, 0, 0), 0 4px 20px rgba(255, 157, 0, 0.35); }
+  100%{ box-shadow: 0 0 0 0 rgba(255, 157, 0, 0), 0 4px 20px rgba(255, 157, 0, 0.35); }
+}
+
+/* ============================================
+   LIGHT MODE
+   ============================================ */
+
+[data-theme="light"] .btn-primary {
+  background: var(--gradient-accent, linear-gradient(135deg, #7C3AED, #6D28D9));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.28);
+}
+
+[data-theme="light"] .btn-primary:hover {
+  box-shadow:
+    0 8px 28px rgba(124, 58, 237, 0.38),
+    0 2px 8px rgba(124, 58, 237, 0.20);
+}
+
+[data-theme="light"] .btn-secondary {
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: var(--text-primary, #111);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: #f8f8fb;
+  border-color: rgba(0, 0, 0, 0.14);
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+[data-theme="light"] .btn-ghost {
+  color: var(--text-secondary, rgba(0,0,0,0.55));
+}
+
+[data-theme="light"] .btn-ghost::before {
+  background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(0,0,0,0.06) 0%, transparent 60%);
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-primary, #111);
+}
+
+[data-theme="light"] .btn-outline {
+  border-color: var(--accent-core, #7C3AED);
+  color: var(--accent-core, #7C3AED);
+}
+
+[data-theme="light"] .btn-outline:hover {
+  background: var(--accent-core, #7C3AED);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.30);
+}
+
+[data-theme="light"] .btn-danger {
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+}
+
+[data-theme="light"] .btn-danger:hover {
+  box-shadow:
+    0 8px 28px rgba(220, 38, 38, 0.35),
+    0 2px 8px rgba(220, 38, 38, 0.18);
+}
+
+[data-theme="light"] .btn-success {
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+}
+
+[data-theme="light"] .btn-success:hover {
+  box-shadow:
+    0 8px 28px rgba(5, 150, 105, 0.35),
+    0 2px 8px rgba(5, 150, 105, 0.18);
+}
+
+[data-theme="light"] .btn-social {
+  background: #fff;
+  backdrop-filter: none;
+  border-color: rgba(0, 0, 0, 0.09);
+  color: var(--text-secondary, rgba(0,0,0,0.55));
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+[data-theme="light"] .btn-social:hover {
+  background: #f8f8fb;
+  border-color: rgba(0, 0, 0, 0.14);
+  color: var(--text-primary, #111);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+}
+
+[data-theme="light"] .btn-social.google:hover {
+  border-color: rgba(234, 67, 53, 0.50);
+  color: #EA4335;
+  background: rgba(234, 67, 53, 0.04);
+  box-shadow: 0 6px 18px rgba(234, 67, 53, 0.12);
+}
+
+[data-theme="light"] .btn-social.github:hover {
+  border-color: rgba(36, 41, 46, 0.40);
+  color: #24292e;
+  background: rgba(36, 41, 46, 0.04);
+  box-shadow: 0 6px 18px rgba(36, 41, 46, 0.10);
+}
+
+[data-theme="light"] .btn-social.linkedin:hover {
+  border-color: rgba(10, 102, 194, 0.50);
+  color: #0A66C2;
+  background: rgba(10, 102, 194, 0.04);
+  box-shadow: 0 6px 18px rgba(10, 102, 194, 0.12);
+}
+
+[data-theme="light"] .btn-gradient-border {
+  background: rgba(0,0,0,0.02);
+  color: var(--text-primary, #111);
+}
+
+[data-theme="light"] .btn-gradient-border::before {
+  background: linear-gradient(135deg, rgba(0,0,0,0.15), rgba(0,0,0,0.04), rgba(0,0,0,0.12));
+}
+
+[data-theme="light"] .btn-gradient-border:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+[data-theme="light"] .btn.loading::after {
+  border-color: rgba(0,0,0,0.12);
+  border-top-color: rgba(0,0,0,0.70);
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn::before,
+  .btn::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .btn:hover {
+    transform: none !important;
+  }
+}
+
+/* ============================================
+   USAGE REFERENCE
+   ============================================
+
+   ── Variants ───────────────────────────────
+   class="btn btn-primary"
+   class="btn btn-secondary"
+   class="btn btn-outline"
+   class="btn btn-ghost"
+   class="btn btn-danger"
+   class="btn btn-success"
+
+   ── Glow Variants ──────────────────────────
+   class="btn btn-glow-amber"
+   class="btn btn-glow-sky"
+   class="btn btn-glow-violet"
+
+   ── Sizes ──────────────────────────────────
+   class="btn btn-primary btn-xs"
+   class="btn btn-primary btn-sm"
+   class="btn btn-primary btn-lg"
+   class="btn btn-primary btn-xl"
+
+   ── Shapes ─────────────────────────────────
+   class="btn btn-primary btn-pill"
+   class="btn btn-icon btn-secondary"
+   class="btn btn-icon btn-icon-round btn-primary"
+   class="btn btn-block btn-primary"
+
+   ── Special ────────────────────────────────
+   class="btn btn-gradient-border"
+   class="btn btn-primary btn-pulse"
+   class="btn btn-primary loading"
+   class="btn btn-primary success-state"
+   class="btn btn-primary btn-animate-in" style="--delay:100ms"
+
+   ── Social ─────────────────────────────────
+   class="btn btn-social google"
+   class="btn btn-social github"
+   class="btn btn-social linkedin"
+
+   ── Group ──────────────────────────────────
+   <div class="btn-group">
+     <button class="btn btn-secondary">Left</button>
+     <button class="btn btn-secondary">Mid</button>
+     <button class="btn btn-secondary">Right</button>
+   </div>
+
+   ============================================ */

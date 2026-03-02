@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Advanced Code Editor & Compiler UI</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        :root {
+            --editor-bg: #1e1e1e;
+            --accent: #3b82f6;
+        }
+
+        .main-content {
+            display: flex;
+            height: calc(100vh - 100px);
+        }
+
+        .editor-container textarea {
+            background: var(--editor-bg);
+            color: #d4d4d4;
+            font-family: 'Fira Code', monospace;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
@@ -59,7 +78,7 @@
                 <div class="editor-container">
                     <textarea id="codeEditor" placeholder="// Start coding here..."></textarea>
                     <div class="language-selector">
-                        <select id="languageSelect">
+                        <select id="languageSelect" aria-label="Select programming language">
                             <option value="javascript">JavaScript</option>
                             <option value="html">HTML</option>
                             <option value="css">CSS</option>
@@ -121,4 +140,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
