@@ -105,3 +105,40 @@ lapBtn.addEventListener('click', recordLap);
 clearLapsBtn.addEventListener('click', clearLaps);
 
 renderLaps();
+
+
+/* 🎨 Theme switch logic */
+
+const themeButtons = document.querySelectorAll(".theme-switcher button");
+const floatingBg = document.querySelector(".floating-bg");
+
+// Load saved theme
+const savedTheme = localStorage.getItem("stopwatchTheme");
+if(savedTheme){
+    floatingBg.style.background = savedTheme;
+}
+
+themeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        let theme = "";
+
+        if(btn.dataset.theme === "blue"){
+            theme = "linear-gradient(270deg,#3b82f6,#06b6d4,#2563eb)";
+        }
+
+        if(btn.dataset.theme === "purple"){
+            theme = "linear-gradient(270deg,#8b5cf6,#ec4899,#a855f7)";
+        }
+
+        if(btn.dataset.theme === "green"){
+            theme = "linear-gradient(270deg,#22c55e,#10b981,#4ade80)";
+        }
+
+        if(btn.dataset.theme === "sunset"){
+            theme = "linear-gradient(270deg,#ff7a18,#ff4d6d,#ff9a8b)";
+        }
+
+        floatingBg.style.background = theme;
+        localStorage.setItem("stopwatchTheme", theme);
+    });
+});
