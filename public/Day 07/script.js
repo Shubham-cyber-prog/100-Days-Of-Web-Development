@@ -5,10 +5,16 @@ const form = document.getElementById("expense-form");
 const nameInput = document.getElementById("expense-name");
 const amountInput = document.getElementById("expense-amount");
 const categorySelect = document.getElementById("expense-category");
+
+const expensesContainer = document.getElementById("expenses-container");
+const totalAmountEl = document.getElementById("total-amount");
+
 const dateInput = document.getElementById("expense-date");
+
 const editIdInput = document.getElementById("edit-id");
 const expensesContainer = document.getElementById("expenses-container");
 const totalAmountEl = document.getElementById("total-amount");
+
 
 // =======================
 // Load Expenses from Storage
@@ -23,13 +29,12 @@ function loadExpenses() {
 // =======================
 // Save Expenses to Storage
 // =======================
+
 function saveExpenses() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
 
-// =======================
-// Add or Update Expense
-// =======================
+
 function handleExpense(name, amount, category, date) {
   const editId = editIdInput.value;
 
@@ -88,24 +93,38 @@ function renderExpenses() {
     return;
   }
 
+
+  expenses.forEach(exp => {
+    const div = document.createElement("div");
+    div.className = "expense-card";
+
+
   // Sort by date descending
   expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   expenses.forEach(exp => {
     const div = document.createElement("div");
     div.className = "expense-card";
+
     div.innerHTML = `
       <div class="expense-left">
         <strong>${exp.name}</strong>
         <span class="category ${exp.category}">${exp.category}</span>
+
+      </div>
+      <div class="amount">$${exp.amount.toFixed(2)}</div>
+      <div>
+
         <span class="expense-date">${new Date(exp.date).toLocaleDateString()}</span>
       </div>
       <div class="amount">₹${exp.amount.toFixed(2)}</div>
       <div class="expense-actions">
+
         <button class="edit-btn" onclick="editExpense(${exp.id})">Edit</button>
         <button class="delete-btn" onclick="deleteExpense(${exp.id})">Delete</button>
       </div>
     `;
+
     expensesContainer.appendChild(div);
   });
 }
@@ -117,6 +136,62 @@ function updateTotal() {
   const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
   totalAmountEl.textContent = `₹${total.toFixed(2)}`;
 }
+
+// Add or Update Expense
+function handleExpense(name, amount, category) {
+  const editId = editIdInput.value;
+
+  if (editId) {
+    // EDIT
+    expenses = expenses.map(exp =>
+      exp.id === Number(editId)
+        ? { ...exp, name, amount: Number(amount), category }
+        : exp
+    );
+    editIdInput.value = "";
+  } else {
+    // ADD
+    expenses.push({
+      id: Date.now(),
+      name,
+      amount: Number(amount),
+      category
+    });
+  }
+
+  saveExpenses();
+  renderExpenses();
+  updateTotal();
+}
+
+// Delete Expense
+function deleteExpense(id) {
+  expenses = expenses.filter(exp => exp.id !== id);
+  saveExpenses();
+  renderExpenses();
+  updateTotal();
+}
+
+// Edit Expense
+function editExpense(id) {
+  const expense = expenses.find(exp => exp.id === id);
+  if (!expense) return;
+
+  nameInput.value = expense.name;
+  amountInput.value = expense.amount;
+  categorySelect.value = expense.category;
+  editIdInput.value = expense.id;
+}
+
+// Validate
+function validate(name, amount) {
+  if (!name.trim() || amount <= 0) {
+    alert("Please enter valid expense details.");
+    return false;
+  }
+  return true;
+}
+
 
 // =======================
 // Validate Form Input
@@ -139,7 +214,7 @@ function validate(name, amount) {
   return valid;
 }
 
-// Form Submit Handler
+
 form.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -150,6 +225,14 @@ form.addEventListener("submit", e => {
 
   if (!validate(name, amount)) return;
 
+  handleExpense(name, amount, category);
+  form.reset();
+});
+
+// Init
+renderExpenses();
+updateTotal();
+
   handleExpense(name, amount, category, date);
 
   form.reset();
@@ -157,3 +240,4 @@ form.addEventListener("submit", e => {
 
 // Initialize App
 loadExpenses();
+
