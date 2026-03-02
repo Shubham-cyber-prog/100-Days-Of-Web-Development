@@ -60,33 +60,50 @@
         text-align: center;
         padding: 120px 0 60px;
       }
+/* Card base */
+#contributorsGrid .card {
+  position: relative;
+  border-radius: 14px;
+  background-color: black; /* solid background */
+  padding: 20px;
+  overflow: visible; /* pseudo-element outside visible */
+  z-index: 0;
+}
 
-      /* Contributors cards base: ensure smooth hover animation */
-      #contributorsGrid .card {
-        transition:
-          transform var(--duration-normal, 300ms) var(--ease-out-quad, ease-out),
-          box-shadow var(--duration-normal, 300ms)
-            var(--ease-out-quad, ease-out),
-          border-color var(--duration-fast, 150ms) var(--ease-out, ease-out);
-      }
+/* Neon border behind card, outside the border */
+#contributorsGrid .card::before {
+  content: "";
+  position: absolute;
+  top: -7px; /* border thickness */
+  left: -7px;
+  width: calc(100% + 14px); /* card + border*2 */
+  height: calc(100% + 14px);
+  border-radius: 16px;
+  background: conic-gradient(
+    #00f5ff,
+    #0099ff,
+    #0066ff,
+    #00f5ff
+  );
+  filter: blur(6px); /* soft glow */
+  animation: neonRotate 3s linear infinite;
+  z-index: -1; /* behind card */
+}
 
-      /* Orange-themed hover border for contributor cards with pop-out effect */
-      #contributorsGrid .card:hover {
-        transform: translateY(-12px) scale(1.05);
-        border-color: var(--accent-core);
-        box-shadow:
-          0 18px 40px -12px var(--accent-alpha),
-          0 0 0 1px var(--accent-core) inset;
-      }
+/* Inner content stays on top */
+#contributorsGrid .card > * {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
 
-      /* Orange-themed hover for "View Profile" buttons inside contributor cards */
-      #contributorsGrid .btn-social:hover {
-        border-color: var(--accent-core);
-        box-shadow:
-          0 8px 20px -5px var(--accent-alpha),
-          0 0 0 1px var(--accent-core) inset;
-      }
-    </style>
+/* Rotation animation */
+@keyframes neonRotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
     <script src="../scripts/components/sidebar-loader.js"></script>
 </head>
 
