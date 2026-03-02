@@ -114,5 +114,24 @@ searchInput.oninput = e => {
   ));
 };
 
+const themeToggleBtn = document.getElementById("theme-toggle-btn");
+
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  themeToggleBtn.textContent = "☀ ";
+}
+
+themeToggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    themeToggleBtn.textContent = "☀ ";
+  } else {
+    localStorage.setItem("theme", "light");
+    themeToggleBtn.textContent = "🌙 ";
+  }
+});
+
 /* Init */
 render();

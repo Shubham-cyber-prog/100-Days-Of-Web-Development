@@ -12,6 +12,10 @@
 
 <body>
   <div class="container">
+    <div class="theme-toggle">
+  <button id="theme-toggle-btn">🌙 Dark Mode</button>
+</div>
+
     <h1>💸 Expense Tracker</h1>
 
     <form id="expense-form">
@@ -50,6 +54,16 @@
       <div class="total-label">Total Expenses</div>
       <div class="total-amount" id="total-amount">$0.00</div>
     </div>
+
+    <div class="summary-box">
+  <h2>Expense Summary</h2>
+  <div class="summary-item">Highest: <span id="highest-expense">₹0</span></div>
+  <div class="summary-item">Lowest: <span id="lowest-expense">₹0</span></div>
+  <div class="summary-item">Food: <span id="food-total">₹0</span></div>
+  <div class="summary-item">Travel: <span id="travel-total">₹0</span></div>
+  <div class="summary-item">Shopping: <span id="shopping-total">₹0</span></div>
+  <div class="summary-item">Other: <span id="other-total">₹0</span></div>
+</div>
 
     <div class="expenses-list">
       <h2 class="expenses-header">Your Expenses</h2>
