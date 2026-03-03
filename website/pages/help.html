@@ -1,51 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Help & FAQ | 100 Days of Web Dev</title>
 
-<link rel="icon" href="../assets/images/logo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+a{
+  text-decoration:none;
 }
 
 body{
-  font-family: 'Inter', sans-serif;
-  background:#f5f7fb;
-  color:#111;
+  background: radial-gradient(circle at 20% 20%, #1e3a8a 0%, #0f172a 40%);
+  color:#e2e8f0;
+  min-height:100vh;
 }
 
+/* ================= NAV ================= */
 
-/* ================= MAIN WRAPPER ================= */
+nav{
+  padding:25px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
 
-.help-wrapper{
-  width:100%;
+.nav-container{
+  max-width:1200px;
+  margin:auto;
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 20px;
 }
 
+.nav-logo{
+  font-size:22px;
+  font-weight:700;
+}
 
-/* ================= CONTAINER ================= */
+.nav-logo span{
+  color:#38bdf8;
+}
+
+.nav-links{
+  display:flex;
+  gap:30px;
+}
+
+.nav-links a{
+  color:#94a3b8;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  color:#38bdf8;
+}
+
+/* ================= MAIN ================= */
 
 .help-container{
-  width:100%;
   max-width:1100px;
-  padding:60px 20px 100px;
+  margin:auto;
+  padding:80px 20px 120px;
 }
-
-
-/* ================= HEADER ================= */
 
 .help-header{
   text-align:center;
-  margin-bottom:50px;
+  margin-bottom:40px;
 }
 
 .help-header h1{
@@ -54,85 +83,76 @@ body{
 }
 
 .help-header p{
-  color:#666;
-  font-size:1.1rem;
+  color:#94a3b8;
 }
-
 
 /* ================= SEARCH ================= */
 
 .search-box{
   width:100%;
   max-width:500px;
-  margin:30px auto 50px;
+  margin:30px auto 60px;
   display:block;
   padding:14px 18px;
-  border-radius:10px;
-  border:1px solid #ddd;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:#1e293b;
+  color:white;
   font-size:1rem;
 }
 
-
-/* ================= CATEGORIES ================= */
+/* ================= CATEGORY CARDS ================= */
 
 .help-categories{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:25px;
+  gap:30px;
   margin-bottom:70px;
 }
 
 .category-card{
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:14px;
-  padding:25px 20px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:35px 20px;
   text-align:center;
   cursor:pointer;
   transition:0.3s;
 }
 
 .category-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  transform:translateY(-6px);
+  border-color:#38bdf8;
+  box-shadow:0 20px 40px rgba(56,189,248,0.15);
 }
 
 .category-icon{
-  font-size:2.3rem;
-  margin-bottom:12px;
-}
-
-.category-card h3{
-  margin-bottom:8px;
+  font-size:2rem;
+  margin-bottom:15px;
 }
 
 .category-card p{
-  color:#666;
-  font-size:0.95rem;
+  color:#94a3b8;
 }
 
-
-/* ================= FAQ SECTION ================= */
+/* ================= FAQ ================= */
 
 .faq-section{
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:16px;
-  padding:35px 40px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:40px;
   margin-bottom:40px;
 }
 
 .section-title{
-  font-size:1.6rem;
-  color:#0ea5e9;
+  color:#38bdf8;
   margin-bottom:25px;
 }
 
-
-/* ================= FAQ ITEM ================= */
-
 .faq-item{
-  border-bottom:1px solid #eee;
+  border-bottom:1px solid rgba(255,255,255,0.08);
   padding:15px 0;
 }
 
@@ -143,123 +163,113 @@ body{
 .faq-question{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  font-weight:600;
   cursor:pointer;
-}
-
-.expand-icon{
-  font-size:18px;
-  transition:0.3s;
-}
-
-.faq-item.active .expand-icon{
-  transform:rotate(180deg);
+  font-weight:600;
 }
 
 .faq-answer{
   display:none;
-  padding-top:10px;
-  color:#555;
-  line-height:1.6;
+  margin-top:10px;
+  color:#94a3b8;
 }
 
-.faq-answer.show{
+.faq-item.active .faq-answer{
   display:block;
 }
-
 
 /* ================= CONTACT ================= */
 
 .contact-section{
-  margin-top:70px;
-  background:linear-gradient(135deg,#0ea5e9,#0284c7);
-  border-radius:18px;
-  padding:45px 25px;
+  margin-top:80px;
+  background:linear-gradient(135deg,#38bdf8,#6366f1);
+  padding:50px;
+  border-radius:20px;
   text-align:center;
-  color:white;
-}
-
-.contact-section h2{
-  margin-bottom:10px;
 }
 
 .contact-section p{
-  margin-bottom:25px;
-}
-
-.contact-buttons{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  flex-wrap:wrap;
+  margin:15px 0 25px;
 }
 
 .contact-btn{
-  padding:12px 22px;
+  padding:12px 25px;
+  border-radius:30px;
   background:rgba(255,255,255,0.2);
   border:1px solid rgba(255,255,255,0.3);
-  border-radius:25px;
   color:white;
-  text-decoration:none;
-  transition:0.3s;
+  margin:5px;
+  display:inline-block;
 }
 
-.contact-btn:hover{
-  background:rgba(255,255,255,0.35);
+/* ================= FOOTER ================= */
+
+footer{
+  margin-top:100px;
+  padding:60px 20px;
+  border-top:1px solid rgba(255,255,255,0.08);
 }
 
+.footer-container{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:40px;
+}
+
+.footer-col a{
+  display:block;
+  margin-bottom:8px;
+  color:#94a3b8;
+}
+
+.footer-col a:hover{
+  color:#38bdf8;
+}
+
+.footer-bottom{
+  text-align:center;
+  margin-top:40px;
+  color:#94a3b8;
+  font-size:14px;
+}
 
 /* ================= RESPONSIVE ================= */
 
 @media(max-width:768px){
-
-  .help-header h1{
-    font-size:2.2rem;
+  .footer-container{
+    grid-template-columns:1fr;
   }
-
-  .faq-section{
-    padding:25px 22px;
-  }
-
-  .contact-buttons{
-    flex-direction:column;
-  }
-
 }
-
 </style>
 </head>
 
 <body>
 
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="nav-logo">100 Days of <span>Web Dev</span></div>
+    <div class="nav-links">
+      <a href="../../index.html">Home</a>
+      <a href="../../website/pages/projects.html">Projects</a>
+      <a href="../forum.html">Forum</a>
+      <a href="../leaderboard.html">Leaderboard</a>
+    </div>
+  </div>
+</nav>
 
-<div class="help-wrapper">
-
+<!-- MAIN -->
 <main class="help-container">
-
-
-<!-- ================= HEADER ================= -->
 
 <div class="help-header">
   <h1>❓ Help & FAQ</h1>
   <p>Find answers to common questions and get help with your journey</p>
 </div>
 
+<input type="text" class="search-box" placeholder="Search for help..." id="searchInput">
 
-<!-- ================= SEARCH ================= -->
-
-<input
-  type="text"
-  class="search-box"
-  placeholder="Search for help..."
-  id="searchInput"
-  onkeyup="searchFAQ()"
-/>
-
-
-<!-- ================= CATEGORIES ================= -->
-
+<!-- CATEGORY CARDS -->
 <div class="help-categories">
 
   <div class="category-card" onclick="scrollToSection('getting-started')">
@@ -288,151 +298,115 @@ body{
 
 </div>
 
-
-<!-- ================= GETTING STARTED ================= -->
+<!-- FAQ SECTIONS -->
 
 <div class="faq-section" id="getting-started">
-
 <h2 class="section-title">🚀 Getting Started</h2>
 
 <div class="faq-item">
-  <div class="faq-question" onclick="toggleFAQ(this)">
-    What is the 100 Days Challenge?
-    <span class="expand-icon">▼</span>
-  </div>
-  <div class="faq-answer">
-    A structured program to master web development through daily practice.
-  </div>
+  <div class="faq-question">What is the 100 Days Challenge? <span>▼</span></div>
+  <div class="faq-answer">A structured program to master web development through daily practice.</div>
 </div>
 
 <div class="faq-item">
-  <div class="faq-question" onclick="toggleFAQ(this)">
-    How do I start?
-    <span class="expand-icon">▼</span>
-  </div>
-  <div class="faq-answer">
-    Create an account and begin from Day 1.
-  </div>
+  <div class="faq-question">How do I start? <span>▼</span></div>
+  <div class="faq-answer">Create an account and begin from Day 1.</div>
 </div>
 
 </div>
-
-
-<!-- ================= PROGRESS ================= -->
 
 <div class="faq-section" id="progress-tracking">
-
 <h2 class="section-title">📊 Progress Tracking</h2>
 
 <div class="faq-item">
-  <div class="faq-question" onclick="toggleFAQ(this)">
-    How does tracking work?
-    <span class="expand-icon">▼</span>
-  </div>
-  <div class="faq-answer">
-    It uses daily activity visualization.
-  </div>
+  <div class="faq-question">How does tracking work? <span>▼</span></div>
+  <div class="faq-answer">It tracks daily submissions and visualizes your learning progress.</div>
 </div>
 
 </div>
-
-
-<!-- ================= TECH ================= -->
 
 <div class="faq-section" id="technical-issues">
-
 <h2 class="section-title">🔧 Technical Issues</h2>
 
 <div class="faq-item">
-  <div class="faq-question" onclick="toggleFAQ(this)">
-    Site not loading?
-    <span class="expand-icon">▼</span>
-  </div>
-  <div class="faq-answer">
-    Try refreshing and clearing cache.
-  </div>
+  <div class="faq-question">Site not loading? <span>▼</span></div>
+  <div class="faq-answer">Try refreshing and clearing cache.</div>
 </div>
 
 </div>
-
-
-<!-- ================= ACCOUNT ================= -->
 
 <div class="faq-section" id="account-settings">
-
 <h2 class="section-title">⚙️ Account & Settings</h2>
 
 <div class="faq-item">
-  <div class="faq-question" onclick="toggleFAQ(this)">
-    How to edit profile?
-    <span class="expand-icon">▼</span>
-  </div>
-  <div class="faq-answer">
-    Go to settings and update profile.
-  </div>
+  <div class="faq-question">How to edit profile? <span>▼</span></div>
+  <div class="faq-answer">Go to settings and update profile.</div>
 </div>
 
 </div>
 
-
-<!-- ================= CONTACT ================= -->
-
+<!-- CONTACT -->
 <div class="contact-section">
-
-<h2>Still Need Help?</h2>
-<p>Get in touch with our community</p>
-
-<div class="contact-buttons">
-
-<a href="#" class="contact-btn">💬 Join Discord</a>
-<a href="#" class="contact-btn">🐛 Report Issue</a>
-<a href="#" class="contact-btn">📧 Email Support</a>
-
+  <h2>Still Need Help?</h2>
+  <p>Get in touch with our community</p>
+  <a href="#" class="contact-btn">💬 Join Discord</a>
+  <a href="#" class="contact-btn">🐛 Report Issue</a>
+  <a href="#" class="contact-btn">📧 Email Support</a>
 </div>
-
-</div>
-
 
 </main>
-</div>
 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div>
+      <h2>100 Days of <span style="color:#38bdf8;">Web Dev</span></h2>
+      <p style="margin-top:10px;color:#94a3b8;">
+        A hyper-intensive protocol designed to forge elite web engineers.
+      </p>
+    </div>
 
-<!-- ================= SCRIPT ================= -->
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="../../index.html">Home</a>
+      <a href="../forum.html">Forum</a>
+      <a href="../leaderboard.html">Leaderboard</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="#">GitHub</a>
+      <a href="#">Twitter</a>
+      <a href="#">Discord</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 100 Days of Web Dev. Built with ❤️
+  </div>
+</footer>
 
 <script>
 
-function toggleFAQ(element){
-  const item = element.parentElement;
-  const answer = item.querySelector(".faq-answer");
-
-  item.classList.toggle("active");
-  answer.classList.toggle("show");
-}
+document.querySelectorAll(".faq-question").forEach(q=>{
+  q.addEventListener("click",()=>{
+    q.parentElement.classList.toggle("active");
+  });
+});
 
 function scrollToSection(id){
-  document.getElementById(id).scrollIntoView({
-    behavior:"smooth"
-  });
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
 
-function searchFAQ(){
-
-  const text = document.getElementById("searchInput").value.toLowerCase();
+document.getElementById("searchInput").addEventListener("input", function(){
+  const value = this.value.toLowerCase();
   const items = document.querySelectorAll(".faq-item");
 
   items.forEach(item=>{
-
-    const q = item.querySelector(".faq-question").textContent.toLowerCase();
-    const a = item.querySelector(".faq-answer").textContent.toLowerCase();
-
-    if(q.includes(text) || a.includes(text)){
-      item.style.display="block";
-    }else{
-      item.style.display = text==="" ? "block" : "none";
-    }
-
+    const text = item.innerText.toLowerCase();
+    item.style.display = text.includes(value) ? "block" : "none";
   });
-}
+});
 
 </script>
 
