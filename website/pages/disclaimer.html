@@ -12,209 +12,283 @@
 <link rel="icon" type="image/png" href="../assets/images/logo.png" />
 
 <style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+/* ======= GLOBAL RESET ======= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none; /* we'll use a custom trailing cursor */
 }
 
-body{
-  background:#000;
-  color:#fff;
-  font-family:'Inter',sans-serif;
+body {
+  background: #05070c;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* NAV */
-.nav-links{
-  display:flex;
-  justify-content:center;
-  gap:30px;
-  padding:20px 0;
+/* ======= FLOATING ORBS (MOVING & ANIMATED) ======= */
+.bg-orb {
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #4aa3ff55 0%, transparent 70%);
+  filter: blur(90px);
+  z-index: -1;
+  animation: float 18s ease-in-out infinite alternate;
 }
 
-.nav-link{
-  text-decoration:none;
-  color:#aaa;
-  font-weight:500;
+.orb1 { top: -120px; left: -100px; }
+.orb2 { bottom: -180px; right: -120px; animation-delay: 4s; }
+.orb3 { top: 40%; right: -180px; animation-delay: 8s; }
+
+@keyframes float {
+  0% { transform: translateY(-40px) translateX(-30px); }
+  50% { transform: translateY(40px) translateX(30px); }
+  100% { transform: translateY(-30px) translateX(-20px); }
 }
 
-.nav-link:hover{
-  color:#4aa3ff;
+/* ======= NAVIGATION ======= */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 22px 0;
+  backdrop-filter: blur(12px);
+  background: rgba(10, 15, 25, 0.7);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* MAIN WRAPPER */
-.legal-wrapper{
-  width:100%;
-  display:flex;
-  justify-content:center;
+.nav-link {
+  text-decoration: none;
+  color: #aaa;
+  font-weight: 500;
+  position: relative;
+  transition: 0.3s ease;
 }
 
-/* CONTENT */
-.legal-container{
-  width:100%;
-  max-width:1000px;
-  padding:60px 20px 80px;
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: #4aa3ff;
+  transition: 0.4s;
+  border-radius: 2px;
 }
 
-/* HEADER */
-.legal-header{
-  text-align:center;
-  margin-bottom:60px;
+.nav-link:hover {
+  color: #fff;
 }
 
-.legal-header h1{
-  font-size:3rem;
-  margin-bottom:15px;
+.nav-link:hover::after {
+  width: 100%;
 }
 
-.legal-header p{
-  max-width:700px;
-  margin:auto;
-  color:#bbb;
-  line-height:1.6;
-  font-size:1.1rem;
+/* ======= MAIN CONTAINER ======= */
+.legal-wrapper {
+  display: flex;
+  justify-content: center;
 }
 
-/* CARD LAYOUT */
-.legal-cards{
-  display:flex;
-  flex-direction:column;
-  gap:30px;
+.legal-container {
+  width: 100%;
+  max-width: 1100px;
+  padding: 80px 20px 120px;
 }
 
-/* CARD */
-.legal-card{
-  width:100%;
-  padding:30px 35px;
-  border-radius:16px;
-  border:1px solid rgba(0,150,255,0.4);
-  background:linear-gradient(145deg,#050505,#0b0b0b);
-  transition:0.3s ease;
+/* ======= HEADER ======= */
+.legal-header {
+  text-align: center;
+  margin-bottom: 80px;
+  animation: fadeDown 1s ease forwards;
 }
 
-.legal-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 25px rgba(0,150,255,0.25);
+.legal-header h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #4aa3ff, #7fd4ff, #4aa3ff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s linear infinite;
+  transition: transform 0.3s ease;
 }
 
-/* CARD HEADER */
-.card-header{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  margin-bottom:18px;
+.legal-header h1:hover {
+  transform: scale(1.05) rotateZ(2deg);
 }
 
-.card-icon{
-  font-size:1.4rem;
+.legal-header p {
+  max-width: 750px;
+  margin: auto;
+  color: #bbb;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
 }
 
-.card-header h3{
-  font-size:1.35rem;
-  color:#4aa3ff;
+.legal-header p:hover {
+  color: #fff;
 }
 
-/* TEXT */
-.legal-card p{
-  font-size:1rem;
-  line-height:1.7;
-  color:#ddd;
+/* ======= CARDS ======= */
+.legal-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
 }
 
-/* ================= FOOTER (UPDATED ONLY) ================= */
-
-.site-footer{
-  border-top:1px solid #111;
-  padding:60px 20px 30px;
-  margin-top:80px;
+.legal-card {
+  padding: 35px;
+  border-radius: 20px;
+  background: rgba(15, 20, 30, 0.9);
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  position: relative;
+  transform-style: preserve-3d;
+  opacity: 0;
+  transform: translateY(60px);
+  cursor: pointer;
 }
 
-.footer-content{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:50px;
-  align-items:start;
+.legal-card:hover {
+  box-shadow: 0 30px 80px rgba(74,163,255,0.35);
+  transform: scale(1.05) rotateX(5deg) rotateY(-5deg);
 }
 
-/* Brand */
-.footer-brand h2{
-  font-size:1.5rem;
-  margin-bottom:12px;
+/* ======= BORDER GLOW ANIMATION ======= */
+.legal-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(45deg, #4aa3ff, #7fd4ff, #4aa3ff);
+  background-size: 300% 300%;
+  animation: borderMove 6s linear infinite;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: 0.4s;
 }
 
-.footer-brand span{
-  color:#4aa3ff;
+.legal-card:hover::before {
+  opacity: 1;
 }
 
-.footer-brand p{
-  color:#aaa;
-  line-height:1.6;
-  max-width:320px;
+@keyframes borderMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Columns */
-.footer-col h3{
-  margin-bottom:15px;
-  color:#4aa3ff;
-  font-size:0.95rem;
-  letter-spacing:1px;
-  text-transform:uppercase;
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-.footer-links{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+.card-icon {
+  font-size: 1.6rem;
+  transition: transform 0.5s ease;
 }
 
-.footer-link{
-  text-decoration:none;
-  color:#aaa;
-  transition:0.3s ease;
+.legal-card:hover .card-icon {
+  transform: rotate(20deg) scale(1.3);
 }
 
-.footer-link:hover{
-  color:#4aa3ff;
-  transform:translateX(4px);
+.card-header h3 {
+  font-size: 1.4rem;
+  color: #4aa3ff;
 }
 
-/* Bottom */
-.footer-bottom{
-  max-width:1200px;
-  margin:40px auto 0;
-  padding-top:20px;
-  border-top:1px solid #111;
-  text-align:center;
-  color:#777;
-  font-size:0.9rem;
+.legal-card p {
+  color: #d2d2d2;
+  line-height: 1.7;
+  transition: color 0.3s;
 }
 
-/* RESPONSIVE */
-@media(max-width:900px){
-
-  .footer-content{
-    grid-template-columns:1fr 1fr;
-  }
-
+.legal-card:hover p {
+  color: #fff;
 }
 
-@media(max-width:600px){
-
-  .footer-content{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .footer-brand p{
-    margin:auto;
-  }
-
+/* ======= FOOTER ======= */
+.site-footer {
+  padding: 80px 20px 40px;
+  background: #0b0f17;
 }
 
+.footer-content {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.footer-link:hover {
+  color: #4aa3ff;
+  transform: translateX(8px);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 50px;
+  color: #666;
+}
+
+/* ======= ANIMATIONS ======= */
+@keyframes fadeDown {
+  from { transform: translateY(-40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+/* ======= TRAILING CURSOR ======= */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(74, 163, 255, 0.8);
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, background 0.3s ease;
+  mix-blend-mode: difference;
+  z-index: 9999;
+}
+
+.cursor-hover {
+  width: 50px;
+  height: 50px;
+  background: rgba(74, 163, 255, 0.3);
+}
 </style>
+
 </head>
 
 <body>
@@ -225,6 +299,9 @@ body{
   <a href="./about.html" class="nav-link">About</a>
   <a href="./contributors.html" class="nav-link">Contributors</a>
   <a href="./forum.html" class="nav-link">Forum</a>
+  <div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="bg-orb orb3"></div>
 </nav>
 
 <div class="legal-wrapper">
@@ -329,6 +406,55 @@ body{
   </div>
 
 </footer>
+<script>
+// Scroll reveal for cards
+const cards = document.querySelectorAll(".legal-card");
 
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = "translateY(0)";
+      entry.target.style.transition = "all 0.7s ease-out";
+    }
+  });
+},{threshold: 0.2});
+
+cards.forEach(card => observer.observe(card));
+
+// 3D mouse tilt
+cards.forEach(card => {
+  card.addEventListener("mousemove", e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / 15;
+    const rotateY = (centerX - x) / 15;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateX(0) rotateY(0) scale(1)";
+  });
+});
+
+// ======= TRAILING CURSOR =======
+const cursor = document.createElement("div");
+cursor.classList.add("cursor");
+document.body.appendChild(cursor);
+
+document.addEventListener("mousemove", e => {
+  cursor.style.top = `${e.clientY}px`;
+  cursor.style.left = `${e.clientX}px`;
+});
+
+const hoverElements = document.querySelectorAll(".legal-card, .nav-link, .footer-link");
+hoverElements.forEach(el => {
+  el.addEventListener("mouseenter", () => cursor.classList.add("cursor-hover"));
+  el.addEventListener("mouseleave", () => cursor.classList.remove("cursor-hover"));
+});
+</script>
 </body>
 </html>
