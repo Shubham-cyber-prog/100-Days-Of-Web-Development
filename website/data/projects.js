@@ -140,5 +140,5 @@ export const allProjects = [
     { day: 262, title: "Online Regex Builder", tech: ["Next.js"] },
     { day: 263, title: "Custom Shell in Browser", tech: ["Next.js"] },
     { day: 264, title: "Github Clone", tech: ["React"] },
-
+    { day: 266, title: "Kubernetes Architecture Visualizer", tech: ["Node.js"] }
 ];
