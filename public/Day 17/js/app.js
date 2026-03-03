@@ -1,76 +1,87 @@
-document.addEventListener("DOMContentLoaded", function(){
+function showSection(id,el){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 
-/* NAVIGATION */
-const navLinks = document.querySelectorAll(".nav-link");
-const sections = document.querySelectorAll(".section");
+  document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
+  el.classList.add("active");
+}
 
-navLinks.forEach(link=>{
-  link.addEventListener("click",function(){
-    navLinks.forEach(l=>l.classList.remove("active"));
-    this.classList.add("active");
-
-    sections.forEach(sec=>sec.classList.remove("active-section"));
-    document.getElementById(this.dataset.section)
-    .classList.add("active-section");
-  });
-});
-
-/* RATES */
-const rates={
-  USD:1,
-  INR:83,
-  GBP:0.79,
-  EUR:0.92,
-  JPY:148,
-  CAD:1.35
+const units={
+  length:{ meter:1, kilometer:1000, mile:1609.34 },
+  weight:{ kilogram:1, gram:0.001, pound:0.453592 }
 };
 
-const fromSelect=document.getElementById("fromCurrency");
-const toSelect=document.getElementById("toCurrency");
+function populateUnits(){
+  const category=document.getElementById("category").value;
+  const from=document.getElementById("fromUnit");
+  const to=document.getElementById("toUnit");
 
-Object.keys(rates).forEach(currency=>{
-  fromSelect.innerHTML+=`<option value="${currency}">${currency}</option>`;
-  toSelect.innerHTML+=`<option value="${currency}">${currency}</option>`;
-});
+  document.getElementById("selectedCategory").innerText=category;
 
-/* CONVERT */
-window.convertCurrency=function(){
-  const amount=parseFloat(document.getElementById("amount").value);
-  const from=fromSelect.value;
-  const to=toSelect.value;
+  from.innerHTML="";
+  to.innerHTML="";
 
-  if(isNaN(amount)){
-    alert("Enter valid amount");
-    return;
+  if(category==="temperature"){
+    ["celsius","fahrenheit","kelvin"].forEach(u=>{
+      from.innerHTML+=`<option>${u}</option>`;
+      to.innerHTML+=`<option>${u}</option>`;
+    });
+  }else{
+    Object.keys(units[category]).forEach(u=>{
+      from.innerHTML+=`<option>${u}</option>`;
+      to.innerHTML+=`<option>${u}</option>`;
+    });
+  }
+}
+
+document.getElementById("category").addEventListener("change",populateUnits);
+populateUnits();
+
+function convert(){
+  const category=document.getElementById("category").value;
+  const value=parseFloat(document.getElementById("inputValue").value);
+  const from=document.getElementById("fromUnit").value;
+  const to=document.getElementById("toUnit").value;
+
+  if(isNaN(value)) return;
+
+  let result;
+
+  if(category==="temperature"){
+    result=convertTemp(value,from,to);
+  }else{
+    result=value*units[category][from]/units[category][to];
   }
 
-  const usdValue=amount/rates[from];
-  const converted=usdValue*rates[to];
+  const output=`${value} ${from} → ${result.toFixed(4)} ${to}`;
+  document.getElementById("result").innerText=output;
+  document.getElementById("latestResult").innerText=output;
 
-  document.getElementById("resultMain").innerText=
-  `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+  addHistory(output);
+}
 
-  document.getElementById("reverseRate").innerText=
-  `1 ${to} = ${(rates[from]/rates[to]).toFixed(4)} ${from}`;
-};
+function convertTemp(val,from,to){
+  if(from===to) return val;
+  if(from==="celsius"){
+    if(to==="fahrenheit") return val*9/5+32;
+    if(to==="kelvin") return val+273.15;
+  }
+  if(from==="fahrenheit"){
+    if(to==="celsius") return (val-32)*5/9;
+    if(to==="kelvin") return (val-32)*5/9+273.15;
+  }
+  if(from==="kelvin"){
+    if(to==="celsius") return val-273.15;
+    if(to==="fahrenheit") return (val-273.15)*9/5+32;
+  }
+}
 
-/* SWAP */
-document.getElementById("swapBtn").addEventListener("click",()=>{
-  [fromSelect.value,toSelect.value]=
-  [toSelect.value,fromSelect.value];
-});
+function addHistory(text){
+  const li=document.createElement("li");
+  li.innerText=text;
+  document.getElementById("historyList").appendChild(li);
+}
 
-/* CHART */
-new Chart(document.getElementById("rateChart"),{
-  type:"bar",
-  data:{
-    labels:Object.keys(rates),
-    datasets:[{
-      data:Object.values(rates),
-      backgroundColor:"#38bdf8"
-    }]
-  },
-  options:{plugins:{legend:{display:false}}}
-});
-
-});
+function clearHistory(){
+  document.getElementById("historyList").innerHTML="";
+}
