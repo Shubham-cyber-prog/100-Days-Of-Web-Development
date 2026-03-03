@@ -350,6 +350,14 @@ window.addEventListener("scroll", () => {
     }
 });
 
+allProjects.push({
+  day: 249,
+  title: "stats generator",
+  description: "A brief description of your Day 249 project.",
+  folder: "Day249MiniProject",
+  level: "Intermediate",
+  tech: ["HTML", "CSS", "JS"],
+});
 scrollToTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
