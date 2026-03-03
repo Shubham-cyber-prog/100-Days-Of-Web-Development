@@ -1,41 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Dynamic Currency Converter</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalX Currency Converter</title>
+
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<div class="background"></div>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <h2>🌍 Converter</h2>
+  <ul>
+    <li class="nav-link active" data-section="dashboard">Dashboard</li>
+    <li class="nav-link" data-section="countries">Countries</li>
+    <li class="nav-link" data-section="analytics">Analytics</li>
+  </ul>
+</aside>
 
-<div class="converter">
-  <div class="top-bar">
-    <h1>💱 Currency Converter</h1>
-    <button id="themeToggle">🌙</button>
-  </div>
+<!-- MAIN -->
+<main class="main">
 
-  <input type="text" id="amount" placeholder="Enter amount" value="1">
+<!-- DASHBOARD -->
+<section id="dashboard" class="section active-section">
 
-  <div class="selectors">
-    <select id="fromCurrency"></select>
-    <button id="swapBtn">⇄</button>
-    <select id="toCurrency"></select>
-  </div>
-
-  <button id="convertBtn">Convert</button>
-
-  <div class="rate-info" id="rateInfo"></div>
-  <div class="result" id="result"></div>
-
-  <div class="history">
-    <h3>Recent Conversions</h3>
-    <ul id="historyList"></ul>
-  </div>
+<div class="card">
+<h3>What is a Currency Converter?</h3>
+<p>
+Convert currencies between countries. Supports INR ↔ USD and major currencies.
+</p>
 </div>
 
-<script src="script.js"></script>
+<div class="card">
+<h3>Currency Converter</h3>
+
+<div class="conversion-row">
+<div class="field">
+<label>From Country</label>
+<select id="fromCurrency"></select>
+</div>
+
+<button id="swapBtn" class="swap-btn">⇄</button>
+
+<div class="field">
+<label>To Country</label>
+<select id="toCurrency"></select>
+</div>
+</div>
+
+<div class="amount-row">
+<input type="number" id="amount" placeholder="Enter Amount">
+<button onclick="convertCurrency()">Convert</button>
+</div>
+
+<div class="result-box">
+<p id="resultMain"></p>
+<p id="reverseRate"></p>
+</div>
+
+</div>
+</section>
+
+<!-- COUNTRIES -->
+<section id="countries" class="section">
+
+<div class="card">
+<h3>Supported Countries</h3>
+
+<div class="country-grid">
+
+<div class="country-card">
+<img src="https://flagcdn.com/w80/us.png">
+<h4>USA</h4>
+<span>USD</span>
+</div>
+
+<div class="country-card">
+<img src="https://flagcdn.com/w80/in.png">
+<h4>India</h4>
+<span>INR</span>
+</div>
+
+<div class="country-card">
+<img src="https://flagcdn.com/w80/gb.png">
+<h4>UK</h4>
+<span>GBP</span>
+</div>
+
+<div class="country-card">
+<img src="https://flagcdn.com/w80/eu.png">
+<h4>Europe</h4>
+<span>EUR</span>
+</div>
+
+<div class="country-card">
+<img src="https://flagcdn.com/w80/jp.png">
+<h4>Japan</h4>
+<span>JPY</span>
+</div>
+
+<div class="country-card">
+<img src="https://flagcdn.com/w80/ca.png">
+<h4>Canada</h4>
+<span>CAD</span>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ANALYTICS -->
+<section id="analytics" class="section">
+<div class="card">
+<h3>Exchange Rate Overview</h3>
+<canvas id="rateChart"></canvas>
+</div>
+</section>
+
+</main>
+
+<script src="js/app.js"></script>
 </body>
 </html>
