@@ -139,5 +139,5 @@ export const allProjects = [
     { day: 259, title: "Thread Scheduling Simulator", tech: ["Next.js"] },
     { day: 263, title: "Custom Shell in Browser", tech: ["Next.js"] },
     { day: 264, title: "Github Clone", tech: ["React"] }, { day: 265, title: "Web Scraping Dashboard", tech: ["React"] },
-
+    { day: 254, title: "Subscription Tracker", tech: ["Next.js"] },
 ];
