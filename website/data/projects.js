@@ -145,3 +145,11 @@ export const allProjects = [
     { day: 264, title: "Github Clone", tech: ["React"] }, { day: 265, title: "Web Scraping Dashboard", tech: ["React"] },
 
 ];
+allProjects.push({
+  day: 249,
+  title: "Mini Project - [Your Project Name]",
+  description: "A brief description of your Day 249 project.",
+  folder: "Day249MiniProject",
+  level: "Intermediate",
+  tech: ["HTML", "CSS", "JS"],
+});
