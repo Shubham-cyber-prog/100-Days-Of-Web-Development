@@ -147,5 +147,24 @@ urlInput.addEventListener('keypress', (e) => {
 });
 urlList.addEventListener('click', handleCopy);
 
+
+// Theme Switcher Logic
+const themeButtons = document.querySelectorAll('.theme-btn');
+
+// Load saved theme
+const savedTheme = localStorage.getItem('selectedTheme') || 'purple';
+document.body.classList.add(savedTheme);
+
+themeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const theme = button.dataset.theme;
+
+        document.body.classList.remove('purple', 'blue', 'green', 'orange');
+        document.body.classList.add(theme);
+
+        localStorage.setItem('selectedTheme', theme);
+    });
+});
+
 displayUrls();
 handleRedirect();

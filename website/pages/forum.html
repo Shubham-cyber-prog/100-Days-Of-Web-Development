@@ -1,485 +1,419 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Forum | 100 Days of Web Dev</title>
 
-  <title>Community Forum | 100 Days of Web Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- ============ GLOBAL RESET ============ -->
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", Arial, sans-serif;
-    }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
 
-    body {
-      background: #f9fafb;
-      color: #111827;
-      line-height: 1.6;
-    }
+a{
+  text-decoration:none !important;
+}
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+body{
+  background: radial-gradient(circle at 20% 20%, #1e3a8a 0%, #0f172a 40%);
+  color:#e2e8f0;
+  min-height:100vh;
+  transition:0.4s;
+}
 
-    button {
-      cursor: pointer;
-      border: none;
-      outline: none;
-    }
-  </style>
+/* LIGHT MODE */
+body.light{
+  background:#f8fafc;
+  color:#0f172a;
+}
 
-  <!-- ============ MAIN STYLES ============ -->
-  <style>
-    /* ================= LAYOUT ================= */
+body.light nav{
+  border-bottom:1px solid #e2e8f0;
+}
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 60px 20px;
-      width: 100%;
-    }
+body.light .nav-links a{
+  color:#475569;
+}
 
-    /* ================= HEADER ================= */
+body.light .nav-links a:hover{
+  color:#2563eb;
+}
 
-    .forum-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+body.light .hero p,
+body.light .card p,
+body.light .footer-col h4,
+body.light .footer-bottom{
+  color:#64748b;
+}
 
-    .forum-header h1 {
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
+body.light .search-wrapper input,
+body.light .btn-outline,
+body.light .categories button,
+body.light .card{
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  color:#0f172a;
+}
 
-    .forum-header p {
-      color: #6b7280;
-      font-size: 17px;
-    }
+body.light .categories button.active{
+  background:#2563eb;
+  color:white;
+}
 
-    /* ================= CONTROLS ================= */
+body.light footer{
+  border-top:1px solid #e2e8f0;
+}
 
-    .forum-controls {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-    }
+/* ================= NAV ================= */
 
-    .search-bar {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-      max-width: 700px;
-    }
+nav{
+  width:100%;
+  padding:25px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
 
-    .search-input {
-      flex: 1;
-      padding: 12px 16px;
-      border-radius: 10px;
-      border: 1px solid #d1d5db;
-      font-size: 15px;
-    }
+.nav-container{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 20px;
+}
 
-    .btn {
-      padding: 12px 22px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      transition: 0.3s ease;
-    }
+.nav-logo{
+  font-size:22px;
+  font-weight:700;
+}
 
-    .btn-primary {
-      background: #0ea5e9;
-      color: white;
-    }
+.nav-logo span{
+  color:#38bdf8;
+}
 
-    .btn-primary:hover {
-      background: #0284c7;
-    }
+.nav-links{
+  display:flex;
+  gap:30px;
+  align-items:center;
+}
 
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
+.nav-links a{
+  color:#94a3b8;
+  font-weight:500;
+  transition:0.3s;
+}
 
-    .btn-secondary:hover {
-      background: #d1d5db;
-    }
+.nav-links a:hover{
+  color:#38bdf8;
+}
 
-    /* ================= CATEGORIES ================= */
+/* TOGGLE BUTTON */
+.theme-toggle{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.15);
+  background:transparent;
+  color:white;
+  cursor:pointer;
+  font-size:16px;
+}
 
-    .forum-categories {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
+body.light .theme-toggle{
+  border:1px solid #cbd5e1;
+  color:#0f172a;
+}
 
-    .category-btn {
-      padding: 8px 18px;
-      border-radius: 20px;
-      border: 1px solid #d1d5db;
-      background: white;
-      font-size: 14px;
-      transition: 0.3s ease;
-    }
+/* ================= HERO ================= */
 
-    .category-btn:hover {
-      border-color: #0ea5e9;
-      color: #0ea5e9;
-    }
+.hero{
+  max-width:900px;
+  margin:100px auto 70px;
+  text-align:center;
+  padding:0 20px;
+}
 
-    .category-btn.active {
-      background: #0ea5e9;
-      color: white;
-      border-color: #0ea5e9;
-    }
+.hero h1{
+  font-size:48px;
+  font-weight:800;
+  margin-bottom:15px;
+}
 
-    /* ================= POSTS ================= */
+.hero p{
+  color:#94a3b8;
+  font-size:18px;
+  margin-bottom:40px;
+}
 
-    .posts-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 25px;
-      margin-bottom: 80px;
-    }
+/* ================= SEARCH AREA ================= */
 
-    .post-card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      transition: 0.3s ease;
-    }
+.search-wrapper{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
 
-    .post-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    }
+.search-wrapper input{
+  width:450px;
+  max-width:100%;
+  padding:14px 18px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:#1e293b;
+  color:white;
+}
 
-    /* ================= MODAL ================= */
+.btn{
+  padding:14px 24px;
+  border-radius:12px;
+  font-weight:600;
+  transition:0.3s;
+}
 
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
+.btn-primary{
+  background:linear-gradient(135deg,#38bdf8,#6366f1);
+  color:white;
+}
 
-    .modal-content {
-      background: white;
-      padding: 25px;
-      width: 95%;
-      max-width: 500px;
-      border-radius: 14px;
-    }
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(99,102,241,0.4);
+}
 
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
+.btn-outline{
+  background:#1e293b;
+  border:1px solid rgba(255,255,255,0.08);
+  color:#cbd5e1;
+}
 
-    .close-btn {
-      background: none;
-      font-size: 20px;
-    }
+.btn-outline:hover{
+  background:#334155;
+}
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+/* ================= CATEGORY TABS ================= */
 
-    .form-group label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 6px;
-    }
+.categories{
+  margin-top:40px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
 
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-    }
+.categories button{
+  padding:8px 20px;
+  border-radius:30px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:#1e293b;
+  color:#cbd5e1;
+  transition:0.3s;
+}
 
-    .form-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 15px;
-    }
+.categories button.active,
+.categories button:hover{
+  background:#38bdf8;
+  color:white;
+}
 
-    /* ================= FOOTER ================= */
+/* ================= POSTS ================= */
 
-    .site-footer {
-      background: #f3f4f6;
-      padding: 60px 20px 30px;
-    }
+.posts{
+  max-width:1100px;
+  margin:80px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:30px;
+  padding:0 20px;
+}
 
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 50px;
-    }
+.card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:25px;
+  border-radius:18px;
+  transition:0.3s;
+}
 
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
+.card:hover{
+  transform:translateY(-6px);
+  border-color:#38bdf8;
+  box-shadow:0 20px 40px rgba(56,189,248,0.15);
+}
 
-    .footer-logo img {
-      width: 40px;
-    }
+.card h3{
+  margin-bottom:10px;
+}
 
-    .footer-logo span {
-      color: #0ea5e9;
-    }
+.card p{
+  color:#94a3b8;
+}
 
-    .footer-brand p {
-      color: #4b5563;
-      max-width: 350px;
-    }
+/* ================= FOOTER ================= */
 
-    .footer-col h3 {
-      font-size: 14px;
-      letter-spacing: 1px;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-    }
+footer{
+  margin-top:120px;
+  padding:70px 20px 40px;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
 
-    .footer-col a {
-      display: block;
-      margin-bottom: 10px;
-      color: #374151;
-      transition: 0.3s ease;
-    }
+.footer-container{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:40px;
+}
 
-    .footer-col a:hover {
-      color: #0ea5e9;
-      transform: translateX(3px);
-    }
+.footer-title span{
+  color:#38bdf8;
+}
 
-    .social-links a {
-      display: inline-block;
-      margin-right: 10px;
-      padding: 6px 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 20px;
-      font-size: 14px;
-      transition: 0.3s ease;
-    }
+.footer-col h4{
+  margin-bottom:15px;
+  color:#94a3b8;
+}
 
-    .social-links a:hover {
-      background: #0ea5e9;
-      color: white;
-      border-color: #0ea5e9;
-    }
+.footer-col a{
+  display:block;
+  margin-bottom:8px;
+  color:#cbd5e1;
+  transition:0.3s;
+}
 
-    .footer-bottom {
-      max-width: 1200px;
-      margin: 40px auto 0;
-      padding-top: 20px;
-      border-top: 1px solid #d1d5db;
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+.footer-col a:hover{
+  color:#38bdf8;
+}
 
-    .highlight {
-      color: #0ea5e9;
-      font-weight: 600;
-    }
+.footer-bottom{
+  margin-top:50px;
+  text-align:center;
+  color:#94a3b8;
+  font-size:14px;
+}
 
-    /* ================= RESPONSIVE ================= */
+@media(max-width:900px){
+  .footer-container{
+    grid-template-columns:1fr 1fr;
+  }
+}
 
-    @media (max-width: 900px) {
-      .footer-container {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .footer-container {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-  </style>
+@media(max-width:600px){
+  .footer-container{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- ================= MAIN ================= -->
-
-  <main class="container">
-
-    <!-- Header -->
-    <div class="forum-header">
-      <h1>Community Forum</h1>
-      <p>Discuss projects, share tips, ask questions, and collaborate on ideas</p>
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="nav-logo">100 Days of <span>Web Dev</span></div>
+    <div class="nav-links">
+      <a href="../../index.html">Home</a>
+      <a href="../../website/pages/projects.html">Projects</a>
+      <a href="forum.html">Forum</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
     </div>
+  </div>
+</nav>
 
-    <!-- Controls -->
-    <div class="forum-controls">
+<!-- HERO -->
+<section class="hero">
+  <h1>Community Forum</h1>
+  <p>Discuss projects, share ideas, and grow together as developers.</p>
 
-      <div class="search-bar">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search posts..." />
-        <button id="searchBtn" class="btn btn-secondary">Search</button>
-      </div>
+  <div class="search-wrapper">
+    <input type="text" placeholder="Search posts...">
+    <button class="btn btn-outline">Search</button>
+    <button class="btn btn-primary">Create Post</button>
+  </div>
 
-      <button id="createPostBtn" class="btn btn-primary">Create Post</button>
+  <div class="categories">
+    <button class="active">All Posts</button>
+    <button>General</button>
+    <button>Project Help</button>
+    <button>Progress</button>
+  </div>
+</section>
 
-    </div>
+<!-- POSTS -->
+<section class="posts">
+  <div class="card">
+    <h3>How to center a div properly?</h3>
+    <p>Need help understanding flexbox alignment and best practices.</p>
+  </div>
 
-    <!-- Categories -->
-    <div class="forum-categories">
+  <div class="card">
+    <h3>Day 10 Progress Update 🚀</h3>
+    <p>Completed my first responsive layout using grid and flexbox.</p>
+  </div>
 
-      <button class="category-btn active" data-category="all">All Posts</button>
-      <button class="category-btn" data-category="general">General</button>
-      <button class="category-btn" data-category="help">Project Help</button>
-      <button class="category-btn" data-category="progress">Progress</button>
+  <div class="card">
+    <h3>Best way to structure CSS?</h3>
+    <p>Looking for advice on scalable CSS architecture.</p>
+  </div>
+</section>
 
-    </div>
-
-    <!-- Posts -->
-    <div class="posts-container" id="postsContainer">
-      <div id="loadingIndicator" class="loading">Loading posts...</div>
-    </div>
-
-    <!-- Create Post Modal -->
-    <div id="createPostModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Create New Post</h2>
-          <button class="close-btn">&times;</button>
-        </div>
-        <form id="createPostForm">
-          <div class="form-group">
-            <label for="postTitle">Title</label>
-            <input type="text" id="postTitle" placeholder="Enter post title" required />
-          </div>
-          <div class="form-group">
-            <label for="postCategory">Category</label>
-            <select id="postCategory" required>
-              <option value="general">General Discussion</option>
-              <option value="help">Project Help</option>
-              <option value="progress">Progress Sharing</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="postContent">Content</label>
-            <textarea id="postContent" rows="5" placeholder="Write your post content..." required></textarea>
-          </div>
-          <div class="form-actions">
-            <button type="button" class="btn btn-secondary" id="cancelPostBtn">Cancel</button>
-            <button type="submit" class="btn btn-primary">Post</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- ================= FOOTER ================= -->
-
-  <footer class="site-footer">
-
-    <div class="footer-container">
-
-      <!-- Brand -->
-      <div class="footer-brand">
-
-        <div class="footer-logo">
-          <img src="../assets/images/logo.png" alt="">
-          <h2>100 Days of<br><span>Web Dev</span></h2>
-        </div>
-
-        <p>
-          A hyper-intensive protocol designed to forge elite web engineers.
-        </p>
-
-      </div>
-
-      <!-- Navigation -->
-      <div class="footer-col">
-
-        <h3>Navigation</h3>
-
-        <a href="#">Home</a>
-        <a href="#">Archive</a>
-        <a href="#">Forum</a>
-        <a href="#">Leaderboard</a>
-        <a href="#">Crew</a>
-
-      </div>
-
-      <!-- Resources -->
-      <div class="footer-col">
-
-        <h3>Resources</h3>
-
-        <a href="#">Docs</a>
-        <a href="#">API</a>
-        <a href="#">Contact</a>
-        <a href="#">System</a>
-
-      </div>
-
-      <!-- Connect -->
-      <div class="footer-col">
-
-        <h3>Connect</h3>
-
-        <p>Join the signal frequency.</p>
-
-        <div class="social-links">
-          <a href="#">GitHub</a>
-          <a href="#">Twitter</a>
-          <a href="#">Discord</a>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- Bottom -->
-    <div class="footer-bottom">
-
-      <p>© 2026 100 Days of Web Dev.</p>
-
-      <p>
-        Maintained by <span class="highlight">Subham</span> ❤️
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div>
+      <h2 class="footer-title">100 Days of <span>Web Dev</span></h2>
+      <p style="margin-top:15px;color:#94a3b8;">
+        A hyper-intensive protocol designed to forge elite web engineers.
       </p>
-
     </div>
 
-  </footer>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="../../index.html">Home</a>
+      <a href="#">Archive</a>
+      <a href="forum.html">Forum</a>
+      <a href="leaderboard.html">Leaderboard</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Docs</a>
+      <a href="#">API</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="#">GitHub</a>
+      <a href="#">Twitter</a>
+      <a href="#">Discord</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 100 Days of Web Dev. Built with ❤️
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){
+  document.body.classList.toggle("light");
+  localStorage.setItem("theme",
+    document.body.classList.contains("light") ? "light" : "dark"
+  );
+}
+
+if(localStorage.getItem("theme")==="light"){
+  document.body.classList.add("light");
+}
+</script>
 
 </body>
-
 </html>
