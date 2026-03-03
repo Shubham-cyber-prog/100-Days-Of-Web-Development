@@ -5,39 +5,61 @@ let cards = JSON.parse(localStorage.getItem('cards')) || [
 ];
 
 let index = 0;
-const cardEl = document.getElementById('card');
+
+const card = document.getElementById('card');
+const inner = document.getElementById('inner');
+const counter = document.getElementById('counter');
+
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const addBtn = document.getElementById('addCard');
+const deleteBtn = document.getElementById('deleteCard');
+const clearBtn = document.getElementById('clearAll');
+
 const qInput = document.getElementById('question');
 const aInput = document.getElementById('answer');
 
-function renderCard(animationClass = 'popin') {
+function saveToLocal() {
+  localStorage.setItem('cards', JSON.stringify(cards));
+}
+
+function renderCard() {
+  card.classList.remove('flip');
+
   if (cards.length === 0) {
-    cardEl.innerHTML = '<div class="front">No cards available</div>';
-    cardEl.className = 'card show';
+    inner.innerHTML = `
+      <div class="front">No cards available 😔</div>
+      <div class="back"></div>
+    `;
+    counter.textContent = "";
     return;
   }
 
-  const card = cards[index];
-  cardEl.innerHTML = `<div class="front">${card.q}</div><div class="back">${card.a}</div>`;
-  cardEl.className = `card show ${animationClass}`;
+  const current = cards[index];
 
-  setTimeout(() => { cardEl.classList.remove(animationClass); }, 400);
+  inner.innerHTML = `
+    <div class="front">${current.q}</div>
+    <div class="back">${current.a}</div>
+  `;
+
+  counter.textContent = `${index + 1} / ${cards.length}`;
 }
 
-cardEl.addEventListener('click', () => {
-  cardEl.classList.toggle('flip');
+card.addEventListener('click', () => {
+  if (cards.length === 0) return;
+  card.classList.toggle('flip');
 });
 
 nextBtn.addEventListener('click', () => {
+  if (cards.length === 0) return;
   index = (index + 1) % cards.length;
-  renderCard('slide-in-right');
+  renderCard();
 });
 
 prevBtn.addEventListener('click', () => {
+  if (cards.length === 0) return;
   index = (index - 1 + cards.length) % cards.length;
-  renderCard('slide-in-left');
+  renderCard();
 });
 
 addBtn.addEventListener('click', () => {
@@ -45,23 +67,42 @@ addBtn.addEventListener('click', () => {
   const a = aInput.value.trim();
 
   if (!q || !a) {
-    shakeAddBox();
+    alert("Please enter both fields");
     return;
   }
 
   cards.push({ q, a });
-  localStorage.setItem('cards', JSON.stringify(cards));
-  qInput.value = '';
-  aInput.value = '';
+  saveToLocal();
+
+  qInput.value = "";
+  aInput.value = "";
+
   index = cards.length - 1;
-  renderCard('popin');
+  renderCard();
 });
 
-function shakeAddBox() {
-  const addBox = document.querySelector('.add');
-  addBox.style.transform = 'translateX(-10px)';
-  setTimeout(() => { addBox.style.transform = 'translateX(10px)'; }, 100);
-  setTimeout(() => { addBox.style.transform = 'translateX(0)'; }, 200);
-}
+deleteBtn.addEventListener('click', () => {
+  if (cards.length === 0) return;
 
-renderCard('popin');
+  cards.splice(index, 1);
+  if (index > 0) index--;
+
+  saveToLocal();
+  renderCard();
+});
+
+clearBtn.addEventListener('click', () => {
+  if (!confirm("Delete all cards?")) return;
+  cards = [];
+  saveToLocal();
+  renderCard();
+});
+
+/* Keyboard Support */
+document.addEventListener('keydown', (e) => {
+  if (e.key === "ArrowRight") nextBtn.click();
+  if (e.key === "ArrowLeft") prevBtn.click();
+  if (e.key === " ") card.click();
+});
+
+renderCard();
