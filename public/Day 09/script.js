@@ -1,137 +1,85 @@
-let notes = JSON.parse(localStorage.getItem("quicknotes")) || [];
-let isEditing = false;
-let editId = null;
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+let draggedIndex = null;
 
-const app = document.getElementById("app");
-const searchInput = document.getElementById("search-input");
-const modal = document.getElementById("modal-overlay");
-const titleInput = document.getElementById("note-title");
-const bodyInput = document.getElementById("note-body");
-const modalTitle = document.getElementById("modal-title");
-const saveBtn = document.getElementById("save-btn");
-const cancelBtn = document.getElementById("cancel-btn");
-
-/* Helpers */
-function saveNotes() {
-  localStorage.setItem("quicknotes", JSON.stringify(notes));
+function toggleTheme(){
+  document.body.classList.toggle("light");
 }
 
-function today() {
-  return new Date().toLocaleDateString();
+function saveNotes(){
+  localStorage.setItem("notes", JSON.stringify(notes));
 }
 
-/* Render */
-function render(list = notes) {
-  app.innerHTML = "";
+function addNote(){
+  const text = document.getElementById("noteText").value.trim();
+  const category = document.getElementById("category").value;
+  const color = document.getElementById("color").value;
 
-  const addCard = document.createElement("div");
-  addCard.className = "note-card add-card";
-  addCard.textContent = "+ Add Note";
-  addCard.onclick = () => openModal();
-  app.appendChild(addCard);
+  if(text === ""){
+    alert("Note cannot be empty!");
+    return;
+  }
 
-  list.forEach(note => {
-    const card = document.createElement("div");
-    card.className = "note-card";
-    card.innerHTML = `
-      <div>
-        <div class="note-title">${note.title}</div>
-        <div class="note-body">${note.body}</div>
-      </div>
-      <div class="note-footer">
-        <span>${note.date}</span>
-        <div>
-          <button class="icon-btn" onclick="editNote('${note.id}')">✏️</button>
-          <button class="icon-btn delete" onclick="deleteNote('${note.id}')">🗑️</button>
-        </div>
-      </div>
-    `;
-    app.appendChild(card);
+  notes.unshift({
+    id: Date.now(),
+    content:text,
+    category:category,
+    color:color,
+    date:new Date().toLocaleString()
+  });
+
+  document.getElementById("noteText").value="";
+  saveNotes();
+  renderNotes();
+}
+
+function deleteNote(id){
+  notes = notes.filter(note=>note.id!==id);
+  saveNotes();
+  renderNotes();
+}
+
+function updateNote(id,value){
+  notes = notes.map(note=>{
+    if(note.id===id){
+      note.content=value;
+    }
+    return note;
+  });
+  saveNotes();
+}
+
+function renderNotes(){
+  const grid=document.getElementById("notesGrid");
+  grid.innerHTML="";
+  const search=document.getElementById("searchInput").value.toLowerCase();
+
+  notes.forEach((note,index)=>{
+    if(note.content.toLowerCase().includes(search)){
+      const div=document.createElement("div");
+      div.className="note";
+      div.style.background=note.color;
+      div.draggable=true;
+
+      div.ondragstart=()=>draggedIndex=index;
+      div.ondragover=e=>e.preventDefault();
+      div.ondrop=()=>{
+        const draggedItem=notes[draggedIndex];
+        notes.splice(draggedIndex,1);
+        notes.splice(index,0,draggedItem);
+        saveNotes();
+        renderNotes();
+      };
+
+      div.innerHTML=`
+      <button class="delete-btn" onclick="deleteNote(${note.id})">×</button>
+      <textarea oninput="updateNote(${note.id}, this.value)">${note.content}</textarea>
+      <small>Category: ${note.category}</small>
+      <small>${note.date}</small>
+      `;
+
+      grid.appendChild(div);
+    }
   });
 }
 
-/* Modal */
-function openModal(edit = false, id = null) {
-  modal.classList.add("active");
-  isEditing = edit;
-  editId = id;
-
-  if (edit) {
-    const note = notes.find(n => n.id === id);
-    titleInput.value = note.title;
-    bodyInput.value = note.body;
-    modalTitle.textContent = "Edit Note";
-  } else {
-    titleInput.value = "";
-    bodyInput.value = "";
-    modalTitle.textContent = "Add Note";
-  }
-}
-
-function closeModal() {
-  modal.classList.remove("active");
-}
-
-/* Actions */
-saveBtn.onclick = () => {
-  const title = titleInput.value.trim() || "Untitled";
-  const body = bodyInput.value.trim();
-  if (!body) return;
-
-  if (isEditing) {
-    notes = notes.map(n =>
-      n.id === editId ? { ...n, title, body } : n
-    );
-  } else {
-    notes.unshift({
-      id: Date.now().toString(),
-      title,
-      body,
-      date: today()
-    });
-  }
-
-  saveNotes();
-  render();
-  closeModal();
-};
-
-cancelBtn.onclick = closeModal;
-
-window.deleteNote = id => {
-  notes = notes.filter(n => n.id !== id);
-  saveNotes();
-  render();
-};
-
-window.editNote = id => openModal(true, id);
-
-searchInput.oninput = e => {
-  const q = e.target.value.toLowerCase();
-  render(notes.filter(n =>
-    n.title.toLowerCase().includes(q) ||
-    n.body.toLowerCase().includes(q)
-  ));
-};
-
-const themeToggleBtn = document.getElementById("theme-toggle-btn");
-
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
-  themeToggleBtn.textContent = "☀ ";
-}
-
-themeToggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-
-  if (document.body.classList.contains("dark")) {
-    localStorage.setItem("theme", "dark");
-    themeToggleBtn.textContent = "☀ ";
-  } else {
-    localStorage.setItem("theme", "light");
-    themeToggleBtn.textContent = "🌙 ";
-  }
-});
-
-/* Init */
-render();
+renderNotes();
