@@ -140,14 +140,14 @@ export const allProjects = [
     { day: 262, title: "Online Regex Builder", tech: ["Next.js"] },
     { day: 263, title: "Custom Shell in Browser", tech: ["Next.js"] },
     { day: 264, title: "Github Clone", tech: ["React"] },
-    { day: 266, title: "Kubernetes Architecture Visualizer", tech: ["Node.js"] }
+    { day: 266, title: "Kubernetes Architecture Visualizer", tech: ["Node.js"] },
     { day: 263, title: "Custom Shell in Browser", tech: ["Next.js"] },
     { day: 264, title: "Github Clone", tech: ["React"] }, { day: 265, title: "Web Scraping Dashboard", tech: ["React"] },
 
-    { day: 267, title: "Microservices Architecture Simulator", tech: ["Next.js"] },
+    { day: 267, title: "Microservices Architecture Simulator", tech: ["Next.js"] },{ day: 269, title: "Smart Attendance Tracker", tech: ["Next.js"] },
 
     { day: 254, title: "Subscription Tracker", tech: ["Next.js"] },
-
+    { day: 273, title: "Project Scaffold Generator", tech: ["Node.js"] },
 ];
 allProjects.push({
   day: 249,
