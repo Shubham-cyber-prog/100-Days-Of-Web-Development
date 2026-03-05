@@ -137,7 +137,23 @@ export const allProjects = [
     { day: 264, title: "Realtime Brainstorming Tool", tech: ["Socket.io"] },
     { day: 256, title: "Browser Based Docker UI", tech: ["Node.js"] },
     { day: 259, title: "Thread Scheduling Simulator", tech: ["Next.js"] },
+    { day: 262, title: "Online Regex Builder", tech: ["Next.js"] },
+    { day: 263, title: "Custom Shell in Browser", tech: ["Next.js"] },
+    { day: 264, title: "Github Clone", tech: ["React"] },
+    { day: 266, title: "Kubernetes Architecture Visualizer", tech: ["Node.js"] },
     { day: 263, title: "Custom Shell in Browser", tech: ["Next.js"] },
     { day: 264, title: "Github Clone", tech: ["React"] }, { day: 265, title: "Web Scraping Dashboard", tech: ["React"] },
 
+    { day: 267, title: "Microservices Architecture Simulator", tech: ["Next.js"] },{ day: 269, title: "Smart Attendance Tracker", tech: ["Next.js"] },
+
+    { day: 254, title: "Subscription Tracker", tech: ["Next.js"] },
+    { day: 273, title: "Project Scaffold Generator", tech: ["Node.js"] },
 ];
+allProjects.push({
+  day: 249,
+  title: "Mini Project - [Your Project Name]",
+  description: "A brief description of your Day 249 project.",
+  folder: "Day249MiniProject",
+  level: "Intermediate",
+  tech: ["HTML", "CSS", "JS"],
+});

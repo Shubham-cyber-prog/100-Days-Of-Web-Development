@@ -1,79 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <title>Tip Calculator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description"
-        content="Quickly calculate tips and split bills effortlessly with our modern Tip Calculator." />
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Tip Calculator | Quick Bill Splitter" />
-    <meta property="og:description"
-        content="Calculate tips and split costs instantly with a simple and clean interface." />
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Tip Calculator | Quick Bill Splitter" />
-    <meta name="twitter:description"
-        content="Calculate tips and split costs instantly with a simple and clean interface." />
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Tip Calculator - Restaurant Edition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root{
+  --bg:#0f172a;
+  --card:#1e293b;
+  --primary:#f97316;
+  --accent:#10b981;
+  --text:#f8fafc;
+  --muted:#94a3b8;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  color:var(--text);
+}
+
+/* NAV */
+nav{
+  display:flex;
+  justify-content:space-between;
+  padding:20px 40px;
+  background:#111827;
+}
+
+nav h2{
+  color:var(--primary);
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:60px 20px;
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:600px;
+  margin:auto;
+}
+
+/* INFO CARDS */
+.info{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  max-width:1100px;
+  margin:40px auto;
+}
+
+.info-card{
+  background:var(--card);
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  transition:0.3s;
+}
+
+.info-card:hover{
+  transform:translateY(-5px);
+  background:#293548;
+}
+
+/* MAIN APP */
+.app{
+  max-width:1100px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
+
+/* INPUT CARD */
+.input-card{
+  background:var(--card);
+  padding:30px;
+  border-radius:25px;
+}
+
+.input-card label{
+  display:block;
+  margin-top:20px;
+  margin-bottom:8px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:#111827;
+  color:white;
+}
+
+.tip-buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.tip-buttons button{
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:#293548;
+  color:white;
+  cursor:pointer;
+}
+
+.tip-buttons button.active{
+  background:var(--primary);
+}
+
+.people{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:15px;
+}
+
+.people button{
+  width:40px;
+  height:40px;
+  border:none;
+  border-radius:12px;
+  background:var(--primary);
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* RECEIPT CARD */
+.receipt{
+  background:#fff;
+  color:#000;
+  padding:30px;
+  border-radius:25px;
+}
+
+.receipt h3{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.receipt-line{
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+}
+
+.total{
+  font-weight:bold;
+  border-top:1px dashed #000;
+  padding-top:10px;
+}
+
+button.export{
+  margin-top:20px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:var(--accent);
+  color:white;
+  cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .info{
+    grid-template-columns:1fr;
+  }
+  .app{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
-
 <body>
-    <div class="app">
-        <div class="card">
-            <h2 class="title">Tip Calculator</h2>
-            <button class="theme-toggle">🌙</button>
-            <!-- Bill Amount -->
-            <div class="field">
-                <label>Bill Amount</label>
-                <div class="input-group">
-                    <span class="currency">₹</span>
-                    <input type="number" placeholder="0.0" />
-                </div>
-            </div>
 
-            <!-- Tip Section -->
-            <div class="field">
-                <label>Select Tip %</label>
-                <div class="tip-buttons">
-                    <button>5%</button>
-                    <button>10%</button>
-                    <button>15%</button>
-                    <button>20%</button>
-                </div>
-                <input type="number" class="custom-tip" placeholder="Custom %" />
-            </div>
+<nav>
+<h2>Restaurant Smart Bill</h2>
+</nav>
 
-            <!-- People Count -->
-            <div class="field">
-                <label>Number of People</label>
-                <div class="people-control">
-                    <button class="minus">-</button>
-                    <span class="count">1</span>
-                    <button class="plus">+</button>
-                </div>
-            </div>
+<section class="hero">
+<h1>Split Bills Like a Pro</h1>
+<p>Designed for restaurants & friends dining together. Generate professional receipt and export PDF instantly.</p>
+</section>
 
-            <!-- Results -->
-            <div class="result">
-                <div class="row">
-                    <span>Tip / Person</span>
-                    <strong>₹0.00</strong>
-                </div>
-                <div class="row">
-                    <span>Total / Person</span>
-                    <strong>₹0.00</strong>
-                </div>
-            </div>
+<section class="info">
+<div class="info-card">
+<h3>🍽 Restaurant Style</h3>
+<p>Clean and elegant dining interface.</p>
+</div>
+<div class="info-card">
+<h3>🧾 Receipt Generator</h3>
+<p>Auto generates formatted bill receipt.</p>
+</div>
+<div class="info-card">
+<h3>📄 Export PDF</h3>
+<p>Download bill summary instantly.</p>
+</div>
+</section>
 
-            <!-- Reset -->
-            <button class='reset-btn'>Reset</button>
-        </div>
-    </div>
+<section class="app">
 
-    <script src="script.js"></script>
+<div class="input-card">
+<label>Bill Amount (₹)</label>
+<input type="number" id="bill">
+
+<label>Select Tip %</label>
+<div class="tip-buttons">
+<button data-tip="5">5%</button>
+<button data-tip="10">10%</button>
+<button data-tip="15">15%</button>
+<button data-tip="20">20%</button>
+</div>
+
+<label>Number of People</label>
+<div class="people">
+<button id="minus">-</button>
+<span id="peopleCount">1</span>
+<button id="plus">+</button>
+</div>
+</div>
+
+<div class="receipt">
+<h3>Restaurant Receipt</h3>
+
+<div class="receipt-line">
+<span>Bill</span>
+<span id="rBill">₹0.00</span>
+</div>
+
+<div class="receipt-line">
+<span>Tip</span>
+<span id="rTip">₹0.00</span>
+</div>
+
+<div class="receipt-line total">
+<span>Total / Person</span>
+<span id="rTotal">₹0.00</span>
+</div>
+
+<button class="export" onclick="exportPDF()">Export PDF</button>
+</div>
+
+</section>
+
+<footer>
+© 2026 Riya Sunil Kharade — Premium Edition
+</footer>
+
+<script>
+const clickSound=new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
+
+let bill=0,tip=0,people=1;
+
+const billInput=document.getElementById("bill");
+const peopleCount=document.getElementById("peopleCount");
+
+billInput.addEventListener("input",()=>{
+  bill=parseFloat(billInput.value)||0;
+  calculate();
+});
+
+document.querySelectorAll(".tip-buttons button").forEach(btn=>{
+  btn.onclick=()=>{
+    clickSound.play();
+    document.querySelectorAll(".tip-buttons button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    tip=parseInt(btn.dataset.tip);
+    calculate();
+  };
+});
+
+document.getElementById("plus").onclick=()=>{
+  clickSound.play();
+  people++;
+  peopleCount.innerText=people;
+  calculate();
+};
+
+document.getElementById("minus").onclick=()=>{
+  clickSound.play();
+  if(people>1)people--;
+  peopleCount.innerText=people;
+  calculate();
+};
+
+function calculate(){
+  const tipAmount=bill*(tip/100);
+  const total=(bill+tipAmount)/people;
+
+  document.getElementById("rBill").innerText="₹"+bill.toFixed(2);
+  document.getElementById("rTip").innerText="₹"+tipAmount.toFixed(2);
+  document.getElementById("rTotal").innerText="₹"+total.toFixed(2);
+}
+
+async function exportPDF(){
+  const { jsPDF } = window.jspdf;
+  const doc=new jsPDF();
+  doc.text("Restaurant Bill Receipt",20,20);
+  doc.text("Bill: ₹"+bill.toFixed(2),20,40);
+  doc.text("Tip: ₹"+(bill*(tip/100)).toFixed(2),20,50);
+  doc.text("People: "+people,20,60);
+  doc.text("Total Per Person: ₹"+document.getElementById("rTotal").innerText.replace("₹",""),20,70);
+  doc.save("restaurant-bill.pdf");
+}
+</script>
+
 </body>
-
 </html>
