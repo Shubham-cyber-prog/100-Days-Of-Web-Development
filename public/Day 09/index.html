@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QuickNotes</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<header>
-  <h1>⚡ QuickNotes</h1>
-  <div class="search-bar">
-    <input type="text" id="search-input" placeholder="Search notes..." />
-  </div>
-  <div class="theme-toggle">
-  <button id="theme-toggle-btn" style="font-size: x-large; border-radius: 5px;">🌙</button>
-</div>
-</header>
+  <header>
+    <h1>⚡ QuickNotes</h1>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search notes..." />
+    </div>
+    <div class="theme-toggle">
+      <button id="theme-toggle-btn" style="font-size: x-large; border-radius: 5px;">🌙</button>
+    </div>
+  </header>
 
-<section class="intro">
-  <h2>Your personal space for quick thoughts 📝</h2>
-  <p>
-    Create, edit, search, and manage your notes easily.
-    All notes are saved locally in your browser.
-  </p>
-</section>
+  <section class="intro">
+    <h2>Your personal space for quick thoughts 📝</h2>
+    <p>
+      Create, edit, search, and manage your notes easily.
+      All notes are saved locally in your browser.
+    </p>
+  </section>
 
-<main class="notes-grid" id="app"></main>
+  <main class="notes-grid" id="app"></main>
 
-<!-- Modal -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
-    <h2 id="modal-title">Add Note</h2>
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2 id="modal-title">Add Note</h2>
 
-    <input type="text" id="note-title" placeholder="Title" />
-    <textarea id="note-body" placeholder="Write your note here..."></textarea>
+      <input type="text" id="note-title" placeholder="Title" />
+      <textarea id="note-body" placeholder="Write your note here..."></textarea>
 
-    <div class="modal-actions">
-      <button class="btn cancel" id="cancel-btn">Cancel</button>
-      <button class="btn save" id="save-btn">Save</button>
+      <div class="modal-actions">
+        <label for="note-reminder">Set Reminder:</label>
+        <input type="datetime-local" id="note-reminder" />
+        <button class="btn cancel" id="cancel-btn">Cancel</button>
+        <button class="btn save" id="save-btn">Save</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
