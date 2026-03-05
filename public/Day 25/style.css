@@ -1,210 +1,282 @@
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
 body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+
+min-height:100vh;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+
+color:white;
+
+padding:20px;
+
 }
 
 .container{
-    width:550px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(20px);
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.5);
-    color:white;
+
+max-width:600px;
+width:100%;
+
+background:rgba(255,255,255,0.07);
+
+padding:35px;
+
+border-radius:20px;
+
+backdrop-filter:blur(15px);
+
+box-shadow:0 20px 40px rgba(0,0,0,0.5);
+
+text-align:center;
+
 }
 
-h1{
-    text-align:center;
-    margin-bottom:25px;
-    font-size:24px;
-    background:linear-gradient(90deg,#00f2fe,#4facfe);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+
+
+.header h1{
+
+font-size:30px;
+
+margin-bottom:10px;
+
+background:linear-gradient(90deg,#00f2fe,#4facfe);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
 }
 
-.section{
-    margin-bottom:30px;
+.header p{
+
+opacity:.7;
+
+margin-bottom:25px;
+
 }
 
-.section h2{
-    margin-bottom:12px;
-    font-size:18px;
+
+
+.controls{
+
+margin-bottom:30px;
+
 }
 
-input, select{
-    width:100%;
-    padding:10px;
-    border-radius:8px;
-    border:none;
-    margin-bottom:10px;
-    font-size:14px;
+.controls h3{
+
+margin-bottom:12px;
+
+font-size:16px;
+
+opacity:.9;
+
 }
 
-button{
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:25px;
-    font-weight:600;
-    cursor:pointer;
-    background:linear-gradient(135deg,#00f2fe,#4facfe);
-    transition:0.3s;
+
+
+.moods{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+margin-bottom:20px;
+
 }
 
-button:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 15px #4facfe;
+
+
+.mood-btn{
+
+border:none;
+
+padding:8px 16px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,0.1);
+
+cursor:pointer;
+
+transition:.3s;
+
+color:white;
+
 }
 
-/* ---------------- MODAL ---------------- */
 
-/* ---------------- STUNNING MODAL ---------------- */
 
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.75);
-    backdrop-filter:blur(8px);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    animation:fadeOverlay 0.3s ease;
+.mood-btn:hover{
+
+background:#4facfe;
+
 }
 
-@keyframes fadeOverlay{
-    from{opacity:0;}
-    to{opacity:1;}
+
+
+.mood-btn.active{
+
+background:#4facfe;
+
 }
 
-.modal-content{
-    width:520px;
-    max-height:75vh;
-    background:linear-gradient(145deg,#1e293b,#0f172a);
-    border-radius:25px;
-    padding:25px;
-    box-shadow:0 30px 80px rgba(0,0,0,0.8);
-    animation:modalPop 0.35s ease;
-    overflow-y:auto;
-    scroll-behavior:smooth;
+
+
+.generate{
+
+width:100%;
+
+padding:12px;
+
+border:none;
+
+border-radius:30px;
+
+background:linear-gradient(135deg,#00f2fe,#4facfe);
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
 }
 
-/* Smooth pop animation */
-@keyframes modalPop{
-    from{opacity:0; transform:scale(0.85);}
-    to{opacity:1; transform:scale(1);}
+
+
+.generate:hover{
+
+transform:scale(1.05);
+
 }
 
-/* Hide scrollbar (modern way) */
-.modal-content::-webkit-scrollbar{
-    width:0px;
-}
 
-.modal-content{
-    -ms-overflow-style:none;
-    scrollbar-width:none;
-}
 
-/* Header */
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-    gap:40px;
-}
-
-.modal-header h3{
-    font-size:18px;
-    background:linear-gradient(90deg,#00f2fe,#4facfe);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-/* Modern Close Button */
-.close-btn{
-    background:linear-gradient(135deg,#ff4e50,#f9d423);
-    border:none;
-    padding:6px 12px;
-    border-radius:20px;
-    max-width: fit-content;
-    cursor:pointer;
-    font-weight:600;
-    transition:0.3s;
-    color:black;
-}
-
-.close-btn:hover{
-    transform:scale(1.1);
-    box-shadow:0 0 15px #ff4e50;
-}
-
-/* Quote Card Upgrade */
 .quote-card{
-    background:rgba(255,255,255,0.06);
-    padding:15px;
-    border-radius:15px;
-    margin-bottom:15px;
-    backdrop-filter:blur(10px);
-    border:1px solid rgba(255,255,255,0.08);
-    color:white;
-    transition:0.3s;
-}
 
-.quote-card:hover{
-    transform:translateY(-4px);
-    background:rgba(255,255,255,0.1);
-}
+margin-top:25px;
 
-/* Quote Text */
-.quote-card p{
-    font-size:15px;
-    margin-bottom:8px;
-    line-height:1.6;
-}
+background:rgba(255,255,255,0.08);
 
-/* Author */
-.quote-card small{
-    opacity:0.7;
-}
+padding:30px;
 
-/* Copy Button */
-.copy-btn{
-    margin-top:8px;
-    background:linear-gradient(135deg,#00f2fe,#4facfe);
-    border:none;
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:12px;
-    cursor:pointer;
-    transition:0.3s;
-}
+border-radius:20px;
 
-.copy-btn:hover{
-    transform:scale(1.1);
-    box-shadow:0 0 12px #4facfe;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+
 }
 
 
-@keyframes fadeIn{
-    from{opacity:0; transform:scale(0.95);}
-    to{opacity:1; transform:scale(1);}
+
+.quote-icon{
+
+font-size:30px;
+
+opacity:.3;
+
+margin-bottom:15px;
+
 }
+
+
+
+#quote{
+
+font-size:20px;
+
+line-height:1.6;
+
+margin-bottom:20px;
+
+}
+
+
+
+#author{
+
+opacity:.8;
+
+margin-bottom:20px;
+
+}
+
+
+
+.actions{
+
+display:flex;
+
+justify-content:center;
+
+gap:10px;
+
+}
+
+
+
+.actions button{
+
+padding:8px 16px;
+
+border:none;
+
+border-radius:20px;
+
+background:rgba(255,255,255,0.1);
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+
+.actions button:hover{
+
+background:#4facfe;
+
+}
+
+
+
+footer{
+
+margin-top:30px;
+
+opacity:.6;
+
+font-size:13px;
+
+}
+
+
 
 @media(max-width:600px){
-    .container{
-        width:90%;
-    }
-    .modal-content{
-        width:90%;
-    }
+
+.container{
+
+padding:25px;
+
+}
+
+#quote{
+
+font-size:18px;
+
+}
+
 }

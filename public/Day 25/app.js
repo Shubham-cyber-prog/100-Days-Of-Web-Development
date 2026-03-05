@@ -1,126 +1,132 @@
-let quotes = JSON.parse(localStorage.getItem("themeQuotes")) || [
+let currentMood = "hustle";
 
-    // MOTIVATION
-    {quote:"Discipline beats motivation.", author:"Unknown", theme:"motivation"},
-    {quote:"Push yourself, because no one else will do it for you.", author:"Unknown", theme:"motivation"},
-    {quote:"Success starts with self-belief.", author:"Unknown", theme:"motivation"},
-    {quote:"Small progress is still progress.", author:"Unknown", theme:"motivation"},
-    {quote:"Your only limit is your mindset.", author:"Unknown", theme:"motivation"},
-    {quote:"Hard days build strong people.", author:"Unknown", theme:"motivation"},
-    {quote:"Don’t stop until you’re proud.", author:"Unknown", theme:"motivation"},
+const quote = document.getElementById("quote");
+const author = document.getElementById("author");
 
-    // LIFE
-    {quote:"Life rewards courage.", author:"Unknown", theme:"life"},
-    {quote:"Peace begins when expectations end.", author:"Buddha", theme:"life"},
-    {quote:"Happiness depends upon ourselves.", author:"Aristotle", theme:"life"},
-    {quote:"Live less out of habit and more out of intent.", author:"Unknown", theme:"life"},
-    {quote:"The meaning of life is to give life meaning.", author:"Unknown", theme:"life"},
-    {quote:"Life becomes easier when you learn to accept.", author:"Unknown", theme:"life"},
-    {quote:"What you think, you become.", author:"Buddha", theme:"life"},
+const quotes = {
 
-    // SUCCESS
-    {quote:"Success is consistency.", author:"Robin Sharma", theme:"success"},
-    {quote:"Success is built daily, not overnight.", author:"Unknown", theme:"success"},
-    {quote:"Dream big. Start small. Act now.", author:"Robin Sharma", theme:"success"},
-    {quote:"Work in silence. Let results make noise.", author:"Unknown", theme:"success"},
-    {quote:"Failure is not opposite of success; it’s part of success.", author:"Arianna Huffington", theme:"success"},
-    {quote:"Focus on goals, not obstacles.", author:"Unknown", theme:"success"},
-    {quote:"Success begins outside your comfort zone.", author:"Unknown", theme:"success"},
+hustle:[
+{text:"Success usually comes to those who are too busy to be looking for it.",author:"Henry David Thoreau"},
+{text:"Don’t watch the clock; do what it does. Keep going.",author:"Sam Levenson"},
+{text:"Opportunities don't happen. You create them.",author:"Chris Grosser"},
+{text:"The secret of getting ahead is getting started.",author:"Mark Twain"},
+{text:"Dream big and dare to fail.",author:"Norman Vaughan"},
+{text:"Success is walking from failure to failure with no loss of enthusiasm.",author:"Winston Churchill"},
+{text:"Hard work beats talent when talent doesn’t work hard.",author:"Tim Notke"},
+{text:"Success is not final; failure is not fatal.",author:"Winston Churchill"},
+{text:"Push yourself because no one else will do it for you.",author:"Unknown"},
+{text:"The harder you work, the luckier you get.",author:"Gary Player"},
+{text:"Work hard in silence. Let success make the noise.",author:"Frank Ocean"},
+{text:"Don’t stop until you’re proud.",author:"Unknown"},
+{text:"Small progress is still progress.",author:"Unknown"}
+],
 
-    // STUDY
-    {quote:"Study now, shine later.", author:"Unknown", theme:"study"},
-    {quote:"Learning never exhausts the mind.", author:"Leonardo da Vinci", theme:"study"},
-    {quote:"The expert in anything was once a beginner.", author:"Helen Hayes", theme:"study"},
-    {quote:"Don’t watch the clock; do what it does. Keep going.", author:"Sam Levenson", theme:"study"},
-    {quote:"Education is the passport to the future.", author:"Malcolm X", theme:"study"},
-    {quote:"Your future is created by what you do today.", author:"Unknown", theme:"study"},
-    {quote:"Success in exams comes from daily effort.", author:"Unknown", theme:"study"},
+calm:[
+{text:"Peace comes from within. Do not seek it without.",author:"Buddha"},
+{text:"The quieter you become, the more you can hear.",author:"Rumi"},
+{text:"Calm mind brings inner strength.",author:"Dalai Lama"},
+{text:"Nature does not hurry, yet everything is accomplished.",author:"Lao Tzu"},
+{text:"Within you, there is a stillness.",author:"Hermann Hesse"},
+{text:"Slow down and everything you chase will come.",author:"John De Paola"},
+{text:"Breath is the power behind all things.",author:"Tao Porchon-Lynch"},
+{text:"Serenity is not freedom from storm.",author:"Unknown"},
+{text:"Stillness is where creativity is born.",author:"Eckhart Tolle"},
+{text:"Peace begins with a smile.",author:"Mother Teresa"}
+],
 
-    // LOVE
-    {quote:"Love grows with effort.", author:"Unknown", theme:"love"},
-    {quote:"Where there is love, there is life.", author:"Mahatma Gandhi", theme:"love"},
-    {quote:"Love is friendship set on fire.", author:"Jeremy Taylor", theme:"love"},
-    {quote:"To love deeply is to live fully.", author:"Unknown", theme:"love"},
-    {quote:"Real love feels safe, not stressful.", author:"Unknown", theme:"love"},
-    {quote:"Love is built on trust and patience.", author:"Unknown", theme:"love"},
-    {quote:"The best thing to hold onto in life is each other.", author:"Audrey Hepburn", theme:"love"}
-];
+creative:[
+{text:"Creativity takes courage.",author:"Henri Matisse"},
+{text:"Everything you can imagine is real.",author:"Pablo Picasso"},
+{text:"Creativity is intelligence having fun.",author:"Albert Einstein"},
+{text:"Art is not what you see but what you make others see.",author:"Edgar Degas"},
+{text:"You can’t use up creativity.",author:"Maya Angelou"},
+{text:"Creativity involves breaking patterns.",author:"Edward de Bono"},
+{text:"Imagination is the beginning of creation.",author:"George Bernard Shaw"},
+{text:"Every artist was first an amateur.",author:"Ralph Waldo Emerson"},
+{text:"To live a creative life we must lose fear of being wrong.",author:"Joseph Pearce"},
+{text:"Creativity flows when curiosity grows.",author:"Unknown"}
+],
+
+stoic:[
+{text:"You have power over your mind.",author:"Marcus Aurelius"},
+{text:"We suffer more in imagination than reality.",author:"Seneca"},
+{text:"It is not what happens but how you react.",author:"Epictetus"},
+{text:"Luck is what happens when preparation meets opportunity.",author:"Seneca"},
+{text:"Waste no time arguing what a good man should be.",author:"Marcus Aurelius"},
+{text:"Difficulties strengthen the mind.",author:"Seneca"},
+{text:"Man conquers the world by conquering himself.",author:"Zeno"},
+{text:"The obstacle is the way.",author:"Marcus Aurelius"},
+{text:"He who fears death will never do anything worth doing.",author:"Seneca"},
+{text:"External things are not the problem.",author:"Marcus Aurelius"}
+]
+
+};
 
 
 
-const addBtn = document.getElementById("addBtn");
-const searchBtn = document.getElementById("searchBtn");
-const modal = document.getElementById("modal");
-const modalQuotes = document.getElementById("modalQuotes");
-const closeModal = document.getElementById("closeModal");
+/* ---------- CATEGORY BUTTONS ---------- */
 
+document.querySelectorAll(".mood-btn").forEach(btn => {
 
-addBtn.addEventListener("click", () => {
+btn.addEventListener("click",()=>{
 
-    const text = document.getElementById("newQuote").value.trim();
-    const author = document.getElementById("newAuthor").value.trim();
-    const theme = document.getElementById("newTheme").value;
+document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("active"));
 
-    if(!text || !author || !theme){
-        alert("Fill all fields");
-        return;
-    }
+btn.classList.add("active");
 
-    quotes.push({quote:text, author:author, theme:theme});
-    localStorage.setItem("themeQuotes", JSON.stringify(quotes));
+currentMood = btn.dataset.mood;
 
-    document.getElementById("newQuote").value="";
-    document.getElementById("newAuthor").value="";
-    document.getElementById("newTheme").value="";
+generateQuote();
 
-    alert("Quote Added!");
+});
+
 });
 
 
-searchBtn.addEventListener("click", () => {
+/* ---------- GENERATE QUOTE ---------- */
 
-    const theme = document.getElementById("searchTheme").value;
+function generateQuote(){
 
-    if(!theme){
-        alert("Select a theme");
-        return;
-    }
+const moodQuotes = quotes[currentMood];
 
-    modalQuotes.innerHTML="";
-    const filtered = quotes.filter(q => q.theme === theme);
+const random = moodQuotes[Math.floor(Math.random()*moodQuotes.length)];
 
-    if(filtered.length === 0){
-        modalQuotes.innerHTML="<p>No quotes found.</p>";
-    }
+quote.textContent = random.text;
 
-    filtered.forEach(q => {
-        const div = document.createElement("div");
-        div.classList.add("quote-card");
+author.textContent = "— " + random.author;
 
-        div.innerHTML = `
-            <p>"${q.quote}"</p>
-            <small>— ${q.author}</small><br>
-            <button class="copy-btn">Copy</button>
-        `;
+}
 
-        div.querySelector(".copy-btn").addEventListener("click", () => {
-            navigator.clipboard.writeText(`"${q.quote}" — ${q.author}`);
-            alert("Copied to clipboard!");
-        });
 
-        modalQuotes.appendChild(div);
-    });
+/* ---------- GENERATE BUTTON ---------- */
 
-    modal.style.display="flex";
+document.getElementById("generateBtn").addEventListener("click",generateQuote);
+
+
+/* ---------- COPY BUTTON ---------- */
+
+document.getElementById("copyBtn").addEventListener("click",()=>{
+
+const text = `"${quote.textContent}" ${author.textContent}`;
+
+navigator.clipboard.writeText(text);
+
+alert("Quote copied!");
+
 });
 
 
-closeModal.addEventListener("click", () => {
-    modal.style.display="none";
+/* ---------- TWITTER SHARE ---------- */
+
+document.getElementById("twitterBtn").addEventListener("click",()=>{
+
+const text = encodeURIComponent(`"${quote.textContent}" ${author.textContent}`);
+
+window.open(`https://twitter.com/intent/tweet?text=${text}`);
+
 });
 
-modal.addEventListener("click", (e) => {
-    if(e.target === modal){
-        modal.style.display="none";
-    }
-});
+
+/* ---------- INITIAL LOAD ---------- */
+
+window.onload = generateQuote;
