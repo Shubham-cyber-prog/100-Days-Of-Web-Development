@@ -8,7 +8,6 @@ const playBtn = document.getElementById("play");
 const prevBtn = document.getElementById("prev");
 const nextBtn = document.getElementById("next");
 const shuffleBtn = document.getElementById("shuffle");
-const loopBtn = document.getElementById("loop");
 const progress = document.getElementById("progress");
 const volume = document.getElementById("volume");
 const themeToggle = document.getElementById("themeToggle");
@@ -24,7 +23,6 @@ const current = document.getElementById("current");
 let songs = [];
 let currentIndex = -1;
 let isShuffle = false;
-let loopMode = 0; // 0: off, 1: all, 2: one
 
 /* THEME TOGGLE */
 function initTheme() {
@@ -102,12 +100,9 @@ async function searchSongs(query, autoLoadFirst = false) {
     li.onclick = () => loadSong(index);
     playlist.appendChild(li);
   });
-
-  // Enable shuffle and loop buttons when songs are loaded
+  // Enable shuffle button when songs are loaded
   if (songs.length > 0) {
     shuffleBtn.disabled = false;
-    loopBtn.disabled = false;
-  }
 
   // Auto-load first song if requested (for The Weeknd on page load)
   if (autoLoadFirst && songs.length > 0) {
@@ -115,7 +110,7 @@ async function searchSongs(query, autoLoadFirst = false) {
       loadSong(0);
     }, 1000); // Wait a bit for the UI to update
   }
-}
+}}
 
 /* LOAD SONG */
 function loadSong(index) {
@@ -130,12 +125,17 @@ function loadSong(index) {
 
   current.classList.remove("placeholder");
   playBtn.disabled = prevBtn.disabled = nextBtn.disabled = false;
-
-  // Keep shuffle and loop buttons enabled as long as there are songs
+  // Keep shuffle button enabled as long as there are songs
   if (songs.length > 0) {
     shuffleBtn.disabled = false;
-    loopBtn.disabled = false;
+
+  // Auto-load first song if requested (for The Weeknd on page load)
+  if (autoLoadFirst && songs.length > 0) {
+    setTimeout(() => {
+      loadSong(0);
+    }, 1000); // Wait a bit for the UI to update
   }
+}
 
   highlightActive();
   audio.play();
@@ -154,18 +154,6 @@ shuffleBtn.addEventListener("click", () => {
   shuffleBtn.classList.toggle("active", isShuffle);
   shuffleBtn.title = isShuffle ? "Shuffle: ON - Click to disable" : "Shuffle: OFF - Click to enable";
   console.log("Shuffle mode:", isShuffle ? "ON" : "OFF");
-});
-
-/* LOOP */
-loopBtn.addEventListener("click", () => {
-  loopMode = (loopMode + 1) % 3; // Cycle: 0 → 1 → 2 → 0
-  
-  loopBtn.classList.toggle("active", loopMode > 0);
-  loopBtn.classList.toggle("loop-one", loopMode === 2);
-  
-  const modes = ["OFF", "ALL", "ONE"];
-  loopBtn.title = `Loop: ${modes[loopMode]} - Click to change`;
-  console.log("Loop mode:", modes[loopMode]);
 });
 
 function getNextIndex() {
