@@ -279,6 +279,48 @@ app.get("/make-server-74f6a23f/auth/me", requireAuth, async (c) => {
 // LEAD ENDPOINTS
 // ============================================
 
+// Lead Scoring Algorithm (0-100)
+const calculateLeadScore = (lead: any): number => {
+  let score = 0;
+  
+  // Status scoring (40 points max)
+  const statusScores: Record<string, number> = {
+    'new': 20,
+    'contacted': 30,
+    'qualified': 40,
+    'unqualified': 5,
+    'converted': 0,
+  };
+  score += statusScores[lead.status] || 0;
+  
+  // Source quality (25 points max)
+  const sourceScores: Record<string, number> = {
+    'referral': 25,
+    'website': 20,
+    'social': 15,
+    'email': 15,
+    'phone': 10,
+    'other': 5,
+  };
+  score += sourceScores[lead.source] || 0;
+  
+  // Data completeness (20 points max)
+  if (lead.phone && lead.phone.length > 0) score += 10;
+  if (lead.notes && lead.notes.length > 20) score += 10;
+  
+  // Engagement/recency (15 points max)
+  const daysSinceCreation = (Date.now() - new Date(lead.createdAt).getTime()) / (1000 * 60 * 60 * 24);
+  if (daysSinceCreation < 7) {
+    score += 15; // Fresh lead
+  } else if (daysSinceCreation < 30) {
+    score += 10;
+  } else if (daysSinceCreation < 90) {
+    score += 5;
+  }
+  
+  return Math.min(100, Math.max(0, score));
+};
+
 // Create lead
 app.post("/make-server-74f6a23f/leads", requireAuth, async (c) => {
   try {
@@ -304,6 +346,9 @@ app.post("/make-server-74f6a23f/leads", requireAuth, async (c) => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
+    
+    // Calculate lead score
+    lead.score = calculateLeadScore(lead);
 
     await kv.set(`lead:${leadId}`, lead);
 
@@ -362,6 +407,9 @@ app.patch("/make-server-74f6a23f/leads/:id", requireAuth, async (c) => {
       id: leadId, // Ensure ID doesn't change
       updatedAt: new Date().toISOString()
     };
+    
+    // Recalculate lead score
+    updatedLead.score = calculateLeadScore(updatedLead);
 
     await kv.set(`lead:${leadId}`, updatedLead);
 
@@ -681,6 +729,217 @@ app.get("/make-server-74f6a23f/analytics/dashboard", requireAuth, async (c) => {
   } catch (error) {
     console.log('Get analytics error:', error);
     return c.json({ error: 'Failed to fetch analytics' }, 500);
+  }
+});
+
+// ============================================
+// TASK ROUTES
+// ============================================
+
+// Create task
+app.post("/make-server-74f6a23f/tasks", requireAuth, async (c) => {
+  try {
+    const user = c.get('user');
+    const body = await c.req.json();
+    
+    const task = {
+      id: crypto.randomUUID(),
+      ...body,
+      createdBy: user.id,
+      createdByName: user.user_metadata?.name || user.email,
+      assignedToName: body.assignedTo === user.id 
+        ? (user.user_metadata?.name || user.email)
+        : body.assignedToName || 'Unknown',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    await kv.set(`task:${task.id}`, task);
+    return c.json({ task }, 201);
+  } catch (error) {
+    console.log('Create task error:', error);
+    return c.json({ error: 'Failed to create task' }, 500);
+  }
+});
+
+// Get all tasks
+app.get("/make-server-74f6a23f/tasks", requireAuth, async (c) => {
+  try {
+    const user = c.get('user');
+    const userData = await kv.get(`user:${user.id}`);
+    const role = userData?.role || user.user_metadata?.role || 'sales_rep';
+
+    let tasks = await kv.getByPrefix('task:');
+
+    // Filter based on role
+    if (role === 'sales_rep') {
+      tasks = tasks.filter((t: any) => t.assignedTo === user.id || t.createdBy === user.id);
+    }
+
+    // Sort by due date
+    tasks.sort((a: any, b: any) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+
+    return c.json({ tasks });
+  } catch (error) {
+    console.log('Get tasks error:', error);
+    return c.json({ error: 'Failed to fetch tasks' }, 500);
+  }
+});
+
+// Update task
+app.patch("/make-server-74f6a23f/tasks/:id", requireAuth, async (c) => {
+  try {
+    const id = c.req.param('id');
+    const updates = await c.req.json();
+    
+    const existingTask = await kv.get(`task:${id}`);
+    if (!existingTask) {
+      return c.json({ error: 'Task not found' }, 404);
+    }
+
+    const updatedTask = {
+      ...existingTask,
+      ...updates,
+      updatedAt: new Date().toISOString(),
+      ...(updates.status === 'completed' && !existingTask.completedAt
+        ? { completedAt: new Date().toISOString() }
+        : {}),
+    };
+
+    await kv.set(`task:${id}`, updatedTask);
+    return c.json({ task: updatedTask });
+  } catch (error) {
+    console.log('Update task error:', error);
+    return c.json({ error: 'Failed to update task' }, 500);
+  }
+});
+
+// Delete task
+app.delete("/make-server-74f6a23f/tasks/:id", requireAuth, async (c) => {
+  try {
+    const id = c.req.param('id');
+    await kv.del(`task:${id}`);
+    return c.json({ success: true });
+  } catch (error) {
+    console.log('Delete task error:', error);
+    return c.json({ error: 'Failed to delete task' }, 500);
+  }
+});
+
+// ============================================
+// EMAIL ROUTES
+// ============================================
+
+// Send email
+app.post("/make-server-74f6a23f/emails/send", requireAuth, async (c) => {
+  try {
+    const user = c.get('user');
+    const body = await c.req.json();
+    
+    const email = {
+      id: crypto.randomUUID(),
+      ...body,
+      sentBy: user.id,
+      sentByName: user.user_metadata?.name || user.email,
+      sentAt: new Date().toISOString(),
+      opened: false,
+    };
+
+    await kv.set(`email:${email.id}`, email);
+    
+    // In a real app, you would integrate with an email service like SendGrid, AWS SES, etc.
+    // For demo purposes, we just store the email record
+    
+    return c.json({ email }, 201);
+  } catch (error) {
+    console.log('Send email error:', error);
+    return c.json({ error: 'Failed to send email' }, 500);
+  }
+});
+
+// Get sent emails
+app.get("/make-server-74f6a23f/emails", requireAuth, async (c) => {
+  try {
+    const user = c.get('user');
+    let emails = await kv.getByPrefix('email:');
+    
+    // Filter to show only user's sent emails
+    emails = emails.filter((e: any) => e.sentBy === user.id);
+    
+    // Sort by sent date (newest first)
+    emails.sort((a: any, b: any) => new Date(b.sentAt).getTime() - new Date(a.sentAt).getTime());
+
+    return c.json({ emails });
+  } catch (error) {
+    console.log('Get emails error:', error);
+    return c.json({ error: 'Failed to fetch emails' }, 500);
+  }
+});
+
+// Get email templates
+app.get("/make-server-74f6a23f/emails/templates", requireAuth, async (c) => {
+  try {
+    const templates = await kv.getByPrefix('email_template:');
+    
+    // If no templates exist, create default ones
+    if (templates.length === 0) {
+      const defaultTemplates = [
+        {
+          id: crypto.randomUUID(),
+          name: 'Follow-up Email',
+          subject: 'Following up on our conversation',
+          body: 'Hi {{name}},\n\nI wanted to follow up on our previous conversation. Do you have any questions I can help answer?\n\nBest regards,\n{{sender}}',
+          category: 'follow_up',
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: crypto.randomUUID(),
+          name: 'Proposal Email',
+          subject: 'Proposal for {{company}}',
+          body: 'Hi {{name}},\n\nPlease find attached our proposal for your review. I\'m excited about the opportunity to work together.\n\nLooking forward to your feedback.\n\nBest regards,\n{{sender}}',
+          category: 'proposal',
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: crypto.randomUUID(),
+          name: 'Welcome Email',
+          subject: 'Welcome to our service!',
+          body: 'Hi {{name}},\n\nWelcome! We\'re thrilled to have you on board. Here are some resources to help you get started.\n\nIf you have any questions, don\'t hesitate to reach out.\n\nBest regards,\n{{sender}}',
+          category: 'onboarding',
+          createdAt: new Date().toISOString(),
+        },
+      ];
+      
+      for (const template of defaultTemplates) {
+        await kv.set(`email_template:${template.id}`, template);
+      }
+      
+      return c.json({ templates: defaultTemplates });
+    }
+
+    return c.json({ templates });
+  } catch (error) {
+    console.log('Get email templates error:', error);
+    return c.json({ error: 'Failed to fetch templates' }, 500);
+  }
+});
+
+// Create email template
+app.post("/make-server-74f6a23f/emails/templates", requireAuth, async (c) => {
+  try {
+    const body = await c.req.json();
+    
+    const template = {
+      id: crypto.randomUUID(),
+      ...body,
+      createdAt: new Date().toISOString(),
+    };
+
+    await kv.set(`email_template:${template.id}`, template);
+    return c.json({ template }, 201);
+  } catch (error) {
+    console.log('Create template error:', error);
+    return c.json({ error: 'Failed to create template' }, 500);
   }
 });
 
