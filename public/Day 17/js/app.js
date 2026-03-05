@@ -1,62 +1,87 @@
-const categorySelect = document.getElementById("category");
-const inputValue = document.getElementById("inputValue");
-const fromUnit = document.getElementById("fromUnit");
-const toUnit = document.getElementById("toUnit");
-const result = document.getElementById("result");
-const swapBtn = document.getElementById("swapBtn");
-const themeToggle = document.getElementById("themeToggle");
+function showSection(id,el){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 
-function formatUnit(u) {
-    return u.charAt(0).toUpperCase() + u.slice(1);
+  document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
+  el.classList.add("active");
 }
 
-function updateUnits() {
-    const units = Object.keys(UNIT_DATA[categorySelect.value].units);
-    fromUnit.innerHTML = toUnit.innerHTML = "";
-    units.forEach(u => {
-        fromUnit.innerHTML += `<option value="${u}">${formatUnit(u)}</option>`;
-        toUnit.innerHTML += `<option value="${u}">${formatUnit(u)}</option>`;
+const units={
+  length:{ meter:1, kilometer:1000, mile:1609.34 },
+  weight:{ kilogram:1, gram:0.001, pound:0.453592 }
+};
+
+function populateUnits(){
+  const category=document.getElementById("category").value;
+  const from=document.getElementById("fromUnit");
+  const to=document.getElementById("toUnit");
+
+  document.getElementById("selectedCategory").innerText=category;
+
+  from.innerHTML="";
+  to.innerHTML="";
+
+  if(category==="temperature"){
+    ["celsius","fahrenheit","kelvin"].forEach(u=>{
+      from.innerHTML+=`<option>${u}</option>`;
+      to.innerHTML+=`<option>${u}</option>`;
     });
-    convert();
+  }else{
+    Object.keys(units[category]).forEach(u=>{
+      from.innerHTML+=`<option>${u}</option>`;
+      to.innerHTML+=`<option>${u}</option>`;
+    });
+  }
 }
 
-async function convert() {
-    const value = parseFloat(inputValue.value);
-    if (isNaN(value)) return result.textContent = "";
+document.getElementById("category").addEventListener("change",populateUnits);
+populateUnits();
 
-    const from = fromUnit.value;
-    const to = toUnit.value;
+function convert(){
+  const category=document.getElementById("category").value;
+  const value=parseFloat(document.getElementById("inputValue").value);
+  const from=document.getElementById("fromUnit").value;
+  const to=document.getElementById("toUnit").value;
 
-    const output = await convertValue(value, categorySelect.value, from, to);
-    result.textContent = `${value} ${formatUnit(from)} → ${output} ${formatUnit(to)}`;
+  if(isNaN(value)) return;
 
-    if (from !== to) addToHistory(result.textContent);
+  let result;
+
+  if(category==="temperature"){
+    result=convertTemp(value,from,to);
+  }else{
+    result=value*units[category][from]/units[category][to];
+  }
+
+  const output=`${value} ${from} → ${result.toFixed(4)} ${to}`;
+  document.getElementById("result").innerText=output;
+  document.getElementById("latestResult").innerText=output;
+
+  addHistory(output);
 }
 
-swapBtn.onclick = () => {
-    [fromUnit.value, toUnit.value] = [toUnit.value, fromUnit.value];
-    convert();
-};
-
-categorySelect.onchange = updateUnits;
-inputValue.oninput = convert;
-fromUnit.onchange = convert;
-toUnit.onchange = convert;
-
-document.getElementById("clearHistory").onclick = () => {
-    localStorage.removeItem("unit_converter_history");
-    renderHistory();
-};
-
-themeToggle.onclick = () => {
-    document.body.classList.toggle("light");
-    localStorage.setItem("theme",
-        document.body.classList.contains("light") ? "light" : "dark");
-};
-
-if (localStorage.getItem("theme") === "light") {
-    document.body.classList.add("light");
-    themeToggle.textContent = "☀️";
+function convertTemp(val,from,to){
+  if(from===to) return val;
+  if(from==="celsius"){
+    if(to==="fahrenheit") return val*9/5+32;
+    if(to==="kelvin") return val+273.15;
+  }
+  if(from==="fahrenheit"){
+    if(to==="celsius") return (val-32)*5/9;
+    if(to==="kelvin") return (val-32)*5/9+273.15;
+  }
+  if(from==="kelvin"){
+    if(to==="celsius") return val-273.15;
+    if(to==="fahrenheit") return (val-273.15)*9/5+32;
+  }
 }
 
-updateUnits();
+function addHistory(text){
+  const li=document.createElement("li");
+  li.innerText=text;
+  document.getElementById("historyList").appendChild(li);
+}
+
+function clearHistory(){
+  document.getElementById("historyList").innerHTML="";
+}
