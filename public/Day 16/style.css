@@ -1,136 +1,379 @@
-* {
-    box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Inter",sans-serif;
 }
 
-body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #000000, #ffffff);
+body{
+
+background:#f4f6fb;
+
+color:#222;
+
+transition:.3s;
+
 }
 
-.wrapper {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+/* HERO */
+
+.hero{
+
+background:linear-gradient(135deg,#667eea,#764ba2);
+
+color:white;
+
+padding:40px 20px;
+
+text-align:center;
+
 }
 
-.card {
-    background: white;
-    width: 380px;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+nav{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+max-width:1100px;
+
+margin:auto;
+
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 5px;
+.logo{
+
+font-size:22px;
+
+font-weight:700;
+
 }
 
-.subtitle {
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
+#themeToggle{
+
+background:white;
+
+border:none;
+
+padding:10px;
+
+border-radius:8px;
+
+cursor:pointer;
+
 }
 
-.password-box {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+.hero-content{
+
+margin-top:40px;
+
 }
 
-.password-box input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+.hero h1{
+
+font-size:40px;
+
+margin-bottom:10px;
+
 }
 
-.password-box button {
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    background: #667eea;
-    color: white;
-    cursor: pointer;
+.hero p{
+
+opacity:.9;
+
 }
 
-.option {
-    margin-bottom: 12px;
+
+
+/* FEATURES */
+
+.features{
+
+display:flex;
+
+justify-content:center;
+
+gap:25px;
+
+padding:50px 20px;
+
+flex-wrap:wrap;
+
 }
 
-.generate-btn {
-    width: 100%;
-    padding: 12px;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
+.feature-card{
+
+background:white;
+
+width:260px;
+
+padding:25px;
+
+border-radius:12px;
+
+text-align:center;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+
+transition:.3s;
+
 }
 
-.generate-btn:hover {
-    background: #5a67d8;
+.feature-card i{
+
+font-size:32px;
+
+color:#667eea;
+
+margin-bottom:12px;
+
 }
 
-.strength {
-    margin-top: 15px;
-    text-align: center;
+.feature-card:hover{
+
+transform:translateY(-6px);
+
 }
 
-/* Show/Hide button */
-#togglePassword {
-    background: #ddd;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
+
+
+/* GENERATOR */
+
+.generator{
+
+display:flex;
+
+justify-content:center;
+
+padding-bottom:60px;
+
 }
 
-/* History */
-.history {
-    margin-top: 20px;
-    max-height: 120px;
-    overflow-y: auto;
+.card{
+
+width:500px;
+
+background:white;
+
+padding:35px;
+
+border-radius:16px;
+
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
+
 }
 
-.history ul {
-    padding: 0;
-    list-style: none;
+.card h2{
+
+text-align:center;
+
+margin-bottom:20px;
+
 }
 
-.history li {
-    background: #f3f3f3;
-    padding: 6px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    font-size: 12px;
+
+
+/* PASSWORD BOX */
+
+.password-box{
+
+display:flex;
+
+gap:10px;
+
+margin-bottom:20px;
+
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-    .card {
-        width: 90%;
-        padding: 20px;
-    }
+.password-box input{
+
+flex:1;
+
+padding:12px;
+
+border-radius:8px;
+
+border:1px solid #ccc;
+
+font-size:16px;
+
 }
 
-.strength-bar {
-    width: 100%;
-    height: 8px;
-    background: #eee;
-    border-radius: 5px;
-    margin-top: 8px;
-    overflow: hidden;
+.password-box button{
+
+padding:12px;
+
+border:none;
+
+border-radius:8px;
+
+background:#667eea;
+
+color:white;
+
+cursor:pointer;
+
 }
 
-#strengthFill {
-    height: 100%;
-    width: 0%;
-    transition: 0.3s ease;
+
+
+/* OPTIONS */
+
+.option{
+
+margin-bottom:14px;
+
+}
+
+
+
+/* BUTTON */
+
+.generate-btn{
+
+width:100%;
+
+padding:14px;
+
+background:#667eea;
+
+border:none;
+
+color:white;
+
+border-radius:10px;
+
+font-size:16px;
+
+cursor:pointer;
+
+margin-top:10px;
+
+transition:.3s;
+
+}
+
+.generate-btn:hover{
+
+background:#5a67d8;
+
+}
+
+
+
+/* STRENGTH */
+
+.strength{
+
+margin-top:15px;
+
+display:flex;
+
+justify-content:space-between;
+
+}
+
+.strength-bar{
+
+height:8px;
+
+background:#eee;
+
+border-radius:6px;
+
+margin-top:6px;
+
+overflow:hidden;
+
+}
+
+#strengthFill{
+
+height:100%;
+
+width:0%;
+
+transition:.3s;
+
+}
+
+
+
+/* HISTORY */
+
+.history{
+
+margin-top:20px;
+
+max-height:120px;
+
+overflow:auto;
+
+}
+
+.history li{
+
+background:#f1f1f1;
+
+padding:6px;
+
+margin-bottom:5px;
+
+border-radius:6px;
+
+}
+
+
+
+/* FOOTER */
+
+footer{
+
+text-align:center;
+
+padding:20px;
+
+background:#111;
+
+color:white;
+
+transition:.3s;
+
+}
+
+footer:hover{
+
+background:#333;
+
+}
+
+
+
+/* DARK MODE */
+
+.dark{
+
+background:#0f172a;
+
+color:white;
+
+}
+
+.dark .card,
+
+.dark .feature-card{
+
+background:#1e293b;
+
+color:white;
+
+}
+
+.dark .hero{
+
+background:linear-gradient(135deg,#1e293b,#0f172a);
+
 }
