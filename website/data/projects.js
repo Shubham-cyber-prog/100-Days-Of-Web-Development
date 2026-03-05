@@ -145,6 +145,7 @@ export const allProjects = [
     { day: 264, title: "Github Clone", tech: ["React"] }, { day: 265, title: "Web Scraping Dashboard", tech: ["React"] },
     { day: 267, title: "Microservices Architecture Simulator", tech: ["Next.js"] },
     { day: 254, title: "Subscription Tracker", tech: ["Next.js"] },
+    { day: 270, title: "Phishing URL Detection Tool", tech: ["Next.js"] },
     { day: 272, title: "Firewall Rules Simulator", tech: ["React"] },
     { day: 267, title: "Microservices Architecture Simulator", tech: ["Next.js"] },{ day: 269, title: "Smart Attendance Tracker", tech: ["Next.js"] },
     { day: 273, title: "Splitwise Clone", tech: ["Next.js"] },{ day: 254, title: "Subscription Tracker", tech: ["Next.js"] },
