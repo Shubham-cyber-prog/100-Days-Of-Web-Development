@@ -2,78 +2,189 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Password Generator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Secure and customizable password generator tool for creating strong passwords." />
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Password Generator | Secure Tools" />
-    <meta property="og:description" content="Generate strong, secure passwords with custom length and character types." />
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Password Generator | Secure Tools" />
-    <meta name="twitter:description"
-        content="Generate strong, secure passwords with custom length and character types." />
-    <link rel="stylesheet" href="style.css" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Secure Password Generator</title>
+
+<meta name="description" content="Generate strong and secure passwords instantly with modern password generator tool">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 </head>
+
 
 <body>
 
-    <div class="wrapper">
-        <div class="card">
-            <h1>🔐 Password Generator</h1>
-            <p class="subtitle">Create strong and secure passwords</p>
+<header class="hero">
 
-            <!-- <div class="password-box">
-            <input type="text" id="password" readonly>
-            <button onclick="copyPassword()">Copy</button>
-        </div> -->
-            <div class="password-box">
-                <input type="password" id="password" readonly>
-                <button id="togglePassword" type="button">👁️</button>
-                <button id="copyBtn" type="button" onclick="copyPassword()">Copy</button>
-            </div>
+<nav>
 
+<h2 class="logo">SecurePass</h2>
 
-            <div class="option">
-                <label>Password Length</label>
-                <input type="range" id="length" min="6" max="20" value="12">
-                <span id="lengthValue">12</span>
-            </div>
+<button id="themeToggle">
+<i class="fa-solid fa-moon"></i>
+</button>
 
-            <div class="option">
-                <label><input type="checkbox" id="uppercase" checked> Uppercase Letters</label>
-            </div>
-            <div class="option">
-                <label><input type="checkbox" id="lowercase" checked> Lowercase Letters</label>
-            </div>
-            <div class="option">
-                <label><input type="checkbox" id="numbers" checked> Numbers</label>
-            </div>
-            <div class="option">
-                <label><input type="checkbox" id="symbols"> Symbols</label>
-            </div>
+</nav>
 
-            <button class="generate-btn" onclick="generatePassword()">Generate Password</button>
+<div class="hero-content">
 
-            <div class="strength">
-                <span>Password Strength:</span>
-                <strong id="strengthText">—</strong>
-            </div>
-            <div class="strength-bar">
-                <div id="strengthFill"></div>
-            </div>
-            <div class="history">
-                <h3>Recent Passwords</h3>
-                <ul id="historyList"></ul>
-            </div>
+<h1>Generate Strong & Secure Passwords</h1>
+
+<p>Protect your accounts with powerful randomly generated passwords.</p>
+
+</div>
+
+</header>
 
 
-        </div>
-    </div>
 
-    <script src="script.js"></script>
+<section class="features">
+
+<div class="feature-card">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+<h3>Secure</h3>
+
+<p>Strong encryption style passwords for better security.</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-bolt"></i>
+
+<h3>Instant</h3>
+
+<p>Generate passwords instantly with customizable options.</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<h3>History</h3>
+
+<p>Access previously generated passwords easily.</p>
+
+</div>
+
+</section>
+
+
+
+<section class="generator">
+
+<div class="card">
+
+<h2>Password Generator</h2>
+
+
+<div class="password-box">
+
+<input type="password" id="password" readonly>
+
+<button id="togglePassword"><i class="fa-solid fa-eye"></i></button>
+
+<button id="copyBtn"><i class="fa-solid fa-copy"></i></button>
+
+</div>
+
+
+<div class="option">
+
+<label>Password Length</label>
+
+<input type="range" id="length" min="6" max="24" value="12">
+
+<span id="lengthValue">12</span>
+
+</div>
+
+
+
+<div class="option">
+
+<label><input type="checkbox" id="uppercase" checked> Uppercase</label>
+
+</div>
+
+<div class="option">
+
+<label><input type="checkbox" id="lowercase" checked> Lowercase</label>
+
+</div>
+
+<div class="option">
+
+<label><input type="checkbox" id="numbers" checked> Numbers</label>
+
+</div>
+
+<div class="option">
+
+<label><input type="checkbox" id="symbols"> Symbols</label>
+
+</div>
+
+
+
+<button class="generate-btn" id="generateBtn">
+
+<i class="fa-solid fa-key"></i> Generate Password
+
+</button>
+
+
+
+<div class="strength">
+
+<span>Password Strength</span>
+
+<strong id="strengthText">—</strong>
+
+</div>
+
+<div class="strength-bar">
+
+<div id="strengthFill"></div>
+
+</div>
+
+
+
+<div class="history">
+
+<h3>Recent Passwords</h3>
+
+<ul id="historyList"></ul>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<footer>
+
+<p>© 2026 SecurePass • Built for ECWOC</p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
 </body>
 
 </html>
