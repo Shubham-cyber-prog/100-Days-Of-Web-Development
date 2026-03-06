@@ -11,8 +11,11 @@ import {
   Instagram,
   ExternalLink
 } from "lucide-react";
+import { useLanguage } from "./LanguageSwitcher";
 
 export function Footer() {
+  const { t } = useLanguage();
+  
   const quickLinks = [
     "RTI Information",
     "Public Grievances", 
@@ -61,13 +64,13 @@ export function Footer() {
                 <span className="text-white font-bold">MEA</span>
               </div>
               <div>
-                <h3 className="font-bold">Ministry of External Affairs</h3>
-                <p className="text-sm text-primary-foreground/80">Government of India</p>
+                <h3 className="font-bold">{t('header.title')}</h3>
+                <p className="text-sm text-primary-foreground/80">{t('header.subtitle')}</p>
               </div>
             </div>
             
             <p className="text-primary-foreground/80 mb-6">
-              The Ministry of External Affairs is responsible for India's foreign relations and diplomatic missions worldwide, promoting India's interests and values globally.
+              {t('footer.description')}
             </p>
 
             <div className="space-y-3">
@@ -120,7 +123,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold mb-4">Services</h4>
+            <h4 className="font-semibold mb-4">{t('footer.services')}</h4>
             <div className="space-y-2">
               {services.map((service, index) => (
                 <Button
@@ -211,8 +214,7 @@ export function Footer() {
               className="w-8 h-6 object-cover rounded"
             />
             <div className="text-sm text-primary-foreground/80">
-              <div>© 2025 Ministry of External Affairs</div>
-              <div>Government of India. All rights reserved.</div>
+              <div>{t('footer.copyright')}</div>
             </div>
           </div>
         </div>

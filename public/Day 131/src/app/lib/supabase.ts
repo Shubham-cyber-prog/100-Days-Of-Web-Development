@@ -45,8 +45,8 @@ export async function apiRequest<T = any>(
     const data = await response.json();
 
     if (!response.ok) {
-      // Don't log 401 errors for /auth/me as they're expected when not authenticated
-      if (!(response.status === 401 && endpoint === '/auth/me')) {
+      // Don't log 401 errors as they're expected in demo mode
+      if (response.status !== 401) {
         console.error(`API Error [${endpoint}]:`, data.error || response.statusText);
       }
       throw new Error(data.error || `Request failed with status ${response.status}`);
@@ -54,8 +54,8 @@ export async function apiRequest<T = any>(
 
     return data;
   } catch (error) {
-    // Don't log 401 errors for /auth/me as they're expected when not authenticated
-    if (!(error instanceof Error && error.message.includes('401') && endpoint === '/auth/me')) {
+    // Don't log 401 errors as they're expected in demo mode
+    if (!(error instanceof Error && error.message.includes('401'))) {
       console.error(`API Request failed [${endpoint}]:`, error);
     }
     throw error;

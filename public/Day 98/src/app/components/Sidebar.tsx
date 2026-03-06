@@ -1,11 +1,15 @@
 import { Link, useLocation } from 'react-router';
-import { LayoutDashboard, ClipboardCheck, FileText, Calendar, User } from 'lucide-react';
+import { LayoutDashboard, ClipboardCheck, FileText, Calendar, User, Bell, GraduationCap, Book, Clock } from 'lucide-react';
 
 const navItems = [
   { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { path: '/timetable', icon: Clock, label: 'Timetable' },
   { path: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
   { path: '/assignments', icon: FileText, label: 'Assignments' },
+  { path: '/grades', icon: GraduationCap, label: 'Grades' },
   { path: '/events', icon: Calendar, label: 'Events' },
+  { path: '/library', icon: Book, label: 'Library' },
+  { path: '/notifications', icon: Bell, label: 'Notifications' },
   { path: '/profile', icon: User, label: 'Profile' },
 ];
 

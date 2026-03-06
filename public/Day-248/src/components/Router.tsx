@@ -6,8 +6,10 @@ import { NewsPage } from "./pages/NewsPage";
 import { NewsDetailPage } from "./pages/NewsDetailPage";
 import { ContactPage } from "./pages/ContactPage";
 import { ForeignRelationsPage } from "./pages/ForeignRelationsPage";
+import { EmbassyLocatorPage } from "./pages/EmbassyLocatorPage";
+import { TravelAdvisoriesPage } from "./pages/TravelAdvisoriesPage";
 
-export type Page = 'home' | 'about' | 'consular-services' | 'news' | 'news-detail' | 'contact' | 'foreign-relations';
+export type Page = 'home' | 'about' | 'consular-services' | 'news' | 'news-detail' | 'contact' | 'foreign-relations' | 'embassy-locator' | 'travel-advisories';
 
 interface RouterProps {
   currentPage: Page;
@@ -32,6 +34,10 @@ export function Router({ currentPage, setCurrentPage, newsId }: RouterProps) {
         return <ContactPage setCurrentPage={setCurrentPage} />;
       case 'foreign-relations':
         return <ForeignRelationsPage setCurrentPage={setCurrentPage} />;
+      case 'embassy-locator':
+        return <EmbassyLocatorPage setCurrentPage={setCurrentPage} />;
+      case 'travel-advisories':
+        return <TravelAdvisoriesPage setCurrentPage={setCurrentPage} />;
       default:
         return <HomePage setCurrentPage={setCurrentPage} />;
     }
