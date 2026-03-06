@@ -318,6 +318,10 @@ canvas {
   border-radius: 10px;
 }
 
+.viewport {
+  background: transparent;
+}
+
 @media (max-width: 768px) {
   .app-container {
     position: relative;
@@ -344,5 +348,84 @@ canvas {
 
   .viewport {
     width: 100%;
+  }
+  
+  
+}
+
+
+
+/* ===== LIVE FLOATING COLOR BACKGROUND ===== */
+
+body {
+  background: linear-gradient(270deg, #0f172a, #312e81, #7c3aed, #ec4899, #06b6d4);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+}
+
+/* Smooth gradient animation */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating colorful bubbles */
+.floating-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.floating-bg span {
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  animation: floatUp 20s linear infinite;
+  bottom: -150px;
+}
+
+/* Different sizes and positions */
+.floating-bg span:nth-child(1) {
+  left: 10%;
+  width: 80px;
+  height: 80px;
+  animation-duration: 18s;
+}
+.floating-bg span:nth-child(2) {
+  left: 25%;
+  animation-duration: 22s;
+}
+.floating-bg span:nth-child(3) {
+  left: 50%;
+  width: 150px;
+  height: 150px;
+}
+.floating-bg span:nth-child(4) {
+  left: 75%;
+  width: 90px;
+  height: 90px;
+}
+.floating-bg span:nth-child(5) {
+  left: 90%;
+  animation-duration: 25s;
+}
+
+/* Floating animation */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-1200px) rotate(360deg);
+    opacity: 0;
   }
 }
