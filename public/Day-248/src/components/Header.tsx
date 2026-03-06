@@ -2,17 +2,20 @@ import { Search, Menu, Globe, Phone, Mail } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { useLanguage } from "./LanguageSwitcher";
 
 export function Header() {
+  const { language, setLanguage, t } = useLanguage();
+  
   const mainNavItems = [
-    "Home",
-    "About MEA",
-    "Foreign Relations",
-    "Consular Services", 
-    "Indian Diaspora",
-    "Media Center",
-    "Tenders",
-    "Career"
+    { key: 'nav.home', label: t('nav.home'), route: 'home' },
+    { key: 'nav.about', label: t('nav.about'), route: 'about' },
+    { key: 'nav.foreign', label: t('nav.foreign'), route: 'foreign-relations' },
+    { key: 'nav.consular', label: t('nav.consular'), route: 'consular-services' },
+    { key: 'nav.diaspora', label: t('nav.diaspora'), route: 'home' },
+    { key: 'nav.media', label: t('nav.media'), route: 'news' },
+    { key: 'nav.tenders', label: t('nav.tenders'), route: 'home' },
+    { key: 'nav.career', label: t('nav.career'), route: 'home' }
   ];
 
   return (
@@ -32,9 +35,14 @@ export function Header() {
               </span>
             </div>
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-primary-foreground hover:bg-primary-foreground/10"
+                onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
+              >
                 <Globe className="h-4 w-4 mr-1" />
-                हिंदी
+                {t('header.hindi')}
               </Button>
               <span className="text-sm">A+ | A | A-</span>
             </div>
@@ -51,8 +59,8 @@ export function Header() {
               <span className="text-white font-bold">MEA</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-primary">Ministry of External Affairs</h1>
-              <p className="text-sm text-muted-foreground">Government of India</p>
+              <h1 className="text-xl font-bold text-primary">{t('header.title')}</h1>
+              <p className="text-sm text-muted-foreground">{t('header.subtitle')}</p>
             </div>
           </div>
 
@@ -60,7 +68,7 @@ export function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <div className="relative">
               <Input
-                placeholder="Search..."
+                placeholder={t('header.search')}
                 className="w-64 pr-10"
               />
               <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -77,8 +85,17 @@ export function Header() {
             <SheetContent side="right" className="w-72">
               <nav className="flex flex-col space-y-4 mt-8">
                 {mainNavItems.map((item) => (
-                  <Button key={item} variant="ghost" className="justify-start">
-                    {item}
+                  <Button 
+                    key={item.key} 
+                    variant="ghost" 
+                    className="justify-start"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        (window as any).setCurrentPage?.(item.route);
+                      }
+                    }}
+                  >
+                    {item.label}
                   </Button>
                 ))}
               </nav>
@@ -92,33 +109,18 @@ export function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-1">
             {mainNavItems.map((item) => {
-              const getPageRoute = (navItem: string) => {
-                switch (navItem) {
-                  case 'About MEA':
-                    return 'about';
-                  case 'Foreign Relations':
-                    return 'foreign-relations';
-                  case 'Consular Services':
-                    return 'consular-services';
-                  case 'Media Center':
-                    return 'news';
-                  default:
-                    return 'home';
-                }
-              };
-
               return (
                 <Button
-                  key={item}
+                  key={item.key}
                   variant="ghost"
                   className="text-secondary-foreground hover:bg-secondary-foreground/10 px-4 py-3 rounded-none cursor-pointer"
                   onClick={() => {
                     if (typeof window !== 'undefined') {
-                      (window as any).setCurrentPage?.(getPageRoute(item));
+                      (window as any).setCurrentPage?.(item.route);
                     }
                   }}
                 >
-                  {item}
+                  {item.label}
                 </Button>
               );
             })}
