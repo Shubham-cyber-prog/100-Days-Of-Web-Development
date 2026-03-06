@@ -5,6 +5,10 @@ import { Attendance } from './pages/Attendance';
 import { Assignments } from './pages/Assignments';
 import { Events } from './pages/Events';
 import { Profile } from './pages/Profile';
+import { Notifications } from './pages/Notifications';
+import { Grades } from './pages/Grades';
+import { Timetable } from './pages/Timetable';
+import { Library } from './pages/Library';
 import { Layout } from './components/Layout';
 
 export const router = createBrowserRouter([
@@ -21,6 +25,10 @@ export const router = createBrowserRouter([
         Component: Dashboard,
       },
       {
+        path: 'timetable',
+        Component: Timetable,
+      },
+      {
         path: 'attendance',
         Component: Attendance,
       },
@@ -29,8 +37,20 @@ export const router = createBrowserRouter([
         Component: Assignments,
       },
       {
+        path: 'grades',
+        Component: Grades,
+      },
+      {
         path: 'events',
         Component: Events,
+      },
+      {
+        path: 'library',
+        Component: Library,
+      },
+      {
+        path: 'notifications',
+        Component: Notifications,
       },
       {
         path: 'profile',
