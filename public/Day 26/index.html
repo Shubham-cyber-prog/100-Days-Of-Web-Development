@@ -2,41 +2,84 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Gallery</title>
-  <meta name="description" content="A sleek and responsive image gallery with lightbox support." />
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Modern Image Gallery | Media Showcase" />
-  <meta property="og:description" content="View beautiful high-resolution images in a modern, responsive gallery." />
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Modern Image Gallery | Media Showcase" />
-  <meta name="twitter:description" content="View beautiful high-resolution images in a modern, responsive gallery." />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Advanced Image Gallery</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-  <h1 class="title">📸 Image Gallery</h1>
+<header class="hero">
 
-  <!-- ADD IMAGE -->
-  <div class="add-image">
-    <input type="text" id="imageUrl" placeholder="Paste image URL here..." />
-    <button id="addImageBtn">Add Image</button>
-  </div>
+<div class="hero-content">
 
-  <!-- GALLERY -->
-  <div class="gallery" id="gallery"></div>
+<h1>📸 Image Gallery</h1>
 
-  <!-- LIGHTBOX -->
-  <div id="lightbox">
-    <span id="close">&times;</span>
-    <img id="lightbox-img" src="" />
-  </div>
+<p>Explore beautiful collections of nature, animals, food and travel</p>
 
-  <script src="script.js"></script>
+</div>
+
+</header>
+<!-- SEARCH -->
+
+<input type="text" id="searchInput" placeholder="Search images..." class="search">
+
+<!-- FILTER BUTTONS -->
+
+<div class="filters">
+
+<button data-category="all" class="active">All</button>
+<button data-category="nature">Nature</button>
+<button data-category="animals">Animals</button>
+<button data-category="food">Food</button>
+<button data-category="travel">Travel</button>
+
+</div>
+
+
+<!-- ADD IMAGE -->
+
+<div class="add-image">
+
+<input type="text" id="imageUrl" placeholder="Image URL">
+
+<input type="text" id="imageCaption" placeholder="Caption">
+
+<select id="imageCategory">
+<option value="nature">Nature</option>
+<option value="animals">Animals</option>
+<option value="food">Food</option>
+<option value="travel">Travel</option>
+</select>
+
+<button id="addImageBtn">Add Image</button>
+
+</div>
+
+
+<!-- GALLERY -->
+
+<div class="gallery" id="gallery"></div>
+
+
+<!-- LIGHTBOX -->
+
+<div id="lightbox">
+
+<span id="close">&times;</span>
+
+<img id="lightbox-img">
+
+<p id="lightbox-caption"></p>
+
+</div>
+
+
+<script src="script.js"></script>
+
 </body>
-
 </html>
