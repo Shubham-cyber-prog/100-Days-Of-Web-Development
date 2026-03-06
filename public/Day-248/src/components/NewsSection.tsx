@@ -3,8 +3,11 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Calendar, Clock, ArrowRight, Newspaper } from "lucide-react";
+import { useLanguage } from "./LanguageSwitcher";
 
 export function NewsSection() {
+  const { t } = useLanguage();
+  
   const featuredNews = [
     {
       id: 1,
@@ -54,9 +57,9 @@ export function NewsSection() {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-primary mb-4">Latest News & Updates</h2>
+          <h2 className="text-3xl font-bold text-primary mb-4">{t('news.title')}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Stay informed about India's diplomatic activities and foreign policy developments
+            {t('news.subtitle')}
           </p>
         </div>
 
@@ -88,7 +91,7 @@ export function NewsSection() {
                 <h3 className="text-xl font-bold mb-3">{featuredNews[0].title}</h3>
                 <p className="text-muted-foreground mb-4">{featuredNews[0].excerpt}</p>
                 <Button className="bg-primary hover:bg-primary/90">
-                  Read Full Article
+                  {t('news.readmore')}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </CardContent>
@@ -144,7 +147,7 @@ export function NewsSection() {
                   </Button>
                 ))}
                 <Button variant="outline" className="w-full mt-4">
-                  View All Press Releases
+                  {t('news.viewall')}
                 </Button>
               </CardContent>
             </Card>
@@ -152,21 +155,21 @@ export function NewsSection() {
             {/* Important Announcements */}
             <Card className="bg-orange-50 border-orange-200">
               <CardHeader>
-                <CardTitle className="text-orange-800">Important Announcements</CardTitle>
+                <CardTitle className="text-orange-800">{t('hero.announcement')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   <div className="p-3 bg-white rounded border-l-4 border-orange-500">
-                    <h5 className="font-medium text-sm">Travel Advisory Update</h5>
-                    <p className="text-sm text-muted-foreground">Updated guidelines for international travel</p>
+                    <h5 className="font-medium text-sm">{t('hero.announcement2')}</h5>
+                    <p className="text-sm text-muted-foreground">{t('hero.announcement3')}</p>
                   </div>
                   <div className="p-3 bg-white rounded border-l-4 border-blue-500">
-                    <h5 className="font-medium text-sm">Consular Hours Change</h5>
+                    <h5 className="font-medium text-sm">{t('services.consular.title') || 'Consular Hours Change'}</h5>
                     <p className="text-sm text-muted-foreground">Revised timings for consular services</p>
                   </div>
                 </div>
                 <Button variant="outline" size="sm" className="w-full mt-4">
-                  View All Announcements
+                  {t('hero.viewall')}
                 </Button>
               </CardContent>
             </Card>

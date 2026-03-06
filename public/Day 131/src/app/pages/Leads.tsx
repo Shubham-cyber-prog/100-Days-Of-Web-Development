@@ -12,7 +12,8 @@ import { useAuthStore } from '../stores/authStore';
 import { leadService, customerService } from '../services/api';
 import type { Lead } from '../types';
 import { toast } from 'sonner';
-import { Plus, Search, Edit2, Trash2, UserCheck, Phone, Mail } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, UserCheck, Phone, Mail, TrendingUp, Sparkles } from 'lucide-react';
+import { Progress } from '../components/ui/progress';
 
 export function Leads() {
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -20,6 +21,7 @@ export function Leads() {
   const [filteredLeads, setFilteredLeads] = useState<Lead[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [sortBy, setSortBy] = useState<'score' | 'date'>('score');
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingLead, setEditingLead] = useState<Lead | null>(null);
@@ -40,7 +42,7 @@ export function Leads() {
 
   useEffect(() => {
     filterLeads();
-  }, [leads, searchQuery, statusFilter]);
+  }, [leads, searchQuery, statusFilter, sortBy]);
 
   const loadLeads = async () => {
     if (!accessToken) {
@@ -53,7 +55,7 @@ export function Leads() {
       const data = await leadService.getAll(accessToken);
       setLeads(data);
     } catch (error) {
-      toast.error('Failed to load leads');
+      // Silently fail for demo mode - don't show error toast on initial load
       console.error('Load leads error:', error);
     } finally {
       setIsLoading(false);
@@ -75,7 +77,35 @@ export function Leads() {
       filtered = filtered.filter((lead) => lead.status === statusFilter);
     }
 
+    // Sort by score or date
+    if (sortBy === 'score') {
+      filtered.sort((a, b) => (b.score || 0) - (a.score || 0));
+    } else {
+      filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
+
     setFilteredLeads(filtered);
+  };
+
+  const getScoreColor = (score?: number) => {
+    if (!score) return 'text-gray-400';
+    if (score >= 70) return 'text-green-600 dark:text-green-400';
+    if (score >= 40) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
+  };
+
+  const getScoreBgColor = (score?: number) => {
+    if (!score) return 'bg-gray-100 dark:bg-gray-800';
+    if (score >= 70) return 'bg-green-50 dark:bg-green-900/20';
+    if (score >= 40) return 'bg-yellow-50 dark:bg-yellow-900/20';
+    return 'bg-red-50 dark:bg-red-900/20';
+  };
+
+  const getScoreLabel = (score?: number) => {
+    if (!score) return 'Not Scored';
+    if (score >= 70) return 'Hot Lead';
+    if (score >= 40) return 'Warm Lead';
+    return 'Cold Lead';
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -162,22 +192,27 @@ export function Leads() {
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
-      new: 'bg-blue-100 text-blue-700',
-      contacted: 'bg-yellow-100 text-yellow-700',
-      qualified: 'bg-green-100 text-green-700',
-      unqualified: 'bg-red-100 text-red-700',
-      converted: 'bg-purple-100 text-purple-700',
+      new: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
+      contacted: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300',
+      qualified: 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300',
+      unqualified: 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300',
+      converted: 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300',
     };
-    return colors[status] || 'bg-gray-100 text-gray-700';
+    return colors[status] || 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300';
   };
+
+  const hotLeadsCount = leads.filter(l => (l.score || 0) >= 70).length;
+  const avgScore = leads.length > 0
+    ? Math.round(leads.reduce((sum, l) => sum + (l.score || 0), 0) / leads.length)
+    : 0;
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Leads</h1>
-          <p className="text-gray-600 mt-1">Manage and track your sales leads</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Leads</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Manage and track your sales leads with AI-powered scoring</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={(open) => {
           setIsDialogOpen(open);
@@ -288,6 +323,52 @@ export function Leads() {
         </Dialog>
       </div>
 
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg">
+                <TrendingUp className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Hot Leads</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{hotLeadsCount}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Score ≥ 70</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Avg Lead Score</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{avgScore}</p>
+                <Progress value={avgScore} className="mt-2 h-2" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg">
+                <UserCheck className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Total Leads</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{leads.length}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">All time</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Filters */}
       <Card>
         <CardContent className="p-4">
@@ -314,6 +395,15 @@ export function Leads() {
                 <SelectItem value="converted">Converted</SelectItem>
               </SelectContent>
             </Select>
+            <Select value={sortBy} onValueChange={(value) => setSortBy(value as 'score' | 'date')}>
+              <SelectTrigger className="w-full md:w-48">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="score">Sort by Score</SelectItem>
+                <SelectItem value="date">Sort by Date</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
@@ -335,6 +425,7 @@ export function Leads() {
                   <TableRow>
                     <TableHead>Name</TableHead>
                     <TableHead>Contact</TableHead>
+                    <TableHead>Lead Score</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Source</TableHead>
                     <TableHead>Assigned To</TableHead>
@@ -357,6 +448,21 @@ export function Leads() {
                               {lead.phone}
                             </div>
                           )}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className={`flex items-center gap-3 p-2 rounded-lg ${getScoreBgColor(lead.score)}`}>
+                          <div className="flex flex-col">
+                            <div className="flex items-center gap-2">
+                              <span className={`text-2xl font-bold ${getScoreColor(lead.score)}`}>
+                                {lead.score || 0}
+                              </span>
+                              <Sparkles className={`w-4 h-4 ${getScoreColor(lead.score)}`} />
+                            </div>
+                            <span className="text-xs text-gray-600 dark:text-gray-400">
+                              {getScoreLabel(lead.score)}
+                            </span>
+                          </div>
                         </div>
                       </TableCell>
                       <TableCell>

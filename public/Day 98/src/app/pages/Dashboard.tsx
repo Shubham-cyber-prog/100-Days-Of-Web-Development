@@ -1,7 +1,9 @@
 import { DashboardCard } from '../components/DashboardCard';
 import { Badge } from '../components/ui/badge';
 import { Progress } from '../components/ui/progress';
-import { Calendar, Bell, FileText, TrendingUp } from 'lucide-react';
+import { Button } from '../components/ui/button';
+import { Calendar, Bell, FileText, TrendingUp, Book, GraduationCap, Clock, MessageSquare } from 'lucide-react';
+import { Link } from 'react-router';
 
 const upcomingEvents = [
   { id: 1, title: 'Physics Lab Session', date: 'Feb 22, 2026', time: '10:00 AM' },
@@ -24,6 +26,35 @@ const announcements = [
 export function Dashboard() {
   return (
     <div className="p-8 space-y-6">
+      <DashboardCard title="Quick Actions">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <Link to="/timetable">
+            <Button variant="outline" className="w-full h-20 flex-col gap-2 rounded-xl hover:bg-primary/5 hover:border-primary">
+              <Clock className="w-5 h-5 text-primary" />
+              <span className="text-sm">Timetable</span>
+            </Button>
+          </Link>
+          <Link to="/library">
+            <Button variant="outline" className="w-full h-20 flex-col gap-2 rounded-xl hover:bg-primary/5 hover:border-primary">
+              <Book className="w-5 h-5 text-primary" />
+              <span className="text-sm">Library</span>
+            </Button>
+          </Link>
+          <Link to="/grades">
+            <Button variant="outline" className="w-full h-20 flex-col gap-2 rounded-xl hover:bg-primary/5 hover:border-primary">
+              <GraduationCap className="w-5 h-5 text-primary" />
+              <span className="text-sm">Grades</span>
+            </Button>
+          </Link>
+          <Link to="/notifications">
+            <Button variant="outline" className="w-full h-20 flex-col gap-2 rounded-xl hover:bg-primary/5 hover:border-primary">
+              <Bell className="w-5 h-5 text-primary" />
+              <span className="text-sm">Notifications</span>
+            </Button>
+          </Link>
+        </div>
+      </DashboardCard>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <DashboardCard title="Attendance" className="bg-gradient-to-br from-primary/5 to-primary/10">
           <div className="space-y-3">

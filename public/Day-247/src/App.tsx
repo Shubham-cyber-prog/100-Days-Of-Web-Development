@@ -9,9 +9,12 @@ import { SearchResults } from './components/SearchResults';
 import { BookingFlow } from './components/BookingFlow';
 import { PNRChecker } from './components/PNRChecker';
 import { LiveTrainTracker } from './components/LiveTrainTracker';
+import { BookingHistory } from './components/BookingHistory';
 import { Train } from './utils/mockData';
+import { UserProvider } from './contexts/UserContext';
+import { Toaster } from './components/ui/sonner';
 
-type View = 'home' | 'search' | 'booking' | 'pnr' | 'tracking';
+type View = 'home' | 'search' | 'booking' | 'pnr' | 'tracking' | 'bookings';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<View>('home');
@@ -67,9 +70,16 @@ export default function App() {
     window.scrollTo(0, 0);
   };
 
+  const handleViewBookings = () => {
+    setCurrentView('bookings');
+    window.scrollTo(0, 0);
+  };
+
   return (
-    <div className="min-h-screen">
-      <Header onNavigate={handleBackToHome} />
+    <UserProvider>
+      <div className="min-h-screen">
+        <Toaster position="top-center" richColors />
+        <Header onNavigate={handleBackToHome} onViewBookings={handleViewBookings} />
 
       {currentView === 'home' && (
         <>
@@ -132,6 +142,18 @@ export default function App() {
           <Footer />
         </>
       )}
+
+      {currentView === 'bookings' && (
+        <>
+          <div className="py-12 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <BookingHistory />
+            </div>
+          </div>
+          <Footer />
+        </>
+      )}
     </div>
+    </UserProvider>
   );
 }
