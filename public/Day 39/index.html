@@ -1,273 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Online Learning Platform</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root {
-      --primary: #2563eb;
-      --success: #16a34a;
-      --warning: #f59e0b;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --border: #e5e7eb;
-      --text: #0f172a;
-      --muted: #64748b;
-    }
+<title>Online Learning Platform</title>
 
-    .dark {
-      --bg: #020617;
-      --card: #020617;
-      --border: #1e293b;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-    }
+<link rel="stylesheet" href="style.css">
 
-    * {
-      box-sizing: border-box;
-      font-family: Inter, system-ui, sans-serif
-    }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      transition: .3s
-    }
-
-    /* HEADER */
-    header {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 span {
-      color: var(--primary)
-    }
-
-    #themeToggle {
-      border: 1px solid var(--border);
-      background: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    /* HERO */
-    .hero {
-      text-align: center;
-      padding: 55px 20px
-    }
-
-    .hero h2 {
-      font-size: 36px;
-      margin-bottom: 10px
-    }
-
-    .hero p {
-      color: var(--muted);
-      max-width: 650px;
-      margin: auto
-    }
-
-    /* CONTAINER */
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px
-    }
-
-    /* SEARCH */
-    .search-box {
-      margin-bottom: 30px
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      font-size: 15px
-    }
-
-    /* COURSES GRID */
-    .courses {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px
-    }
-
-    .course {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 35px 25px;
-      text-align: center;
-      transition: .3s;
-    }
-
-    .course:hover {
-      transform: translateY(-8px);
-      border-color: var(--primary)
-    }
-
-    .course i {
-      font-size: 42px;
-      color: var(--primary);
-      margin-bottom: 15px
-    }
-
-    .course p {
-      color: var(--muted)
-    }
-
-    .course button {
-      margin-top: 15px;
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background: var(--primary);
-      color: white;
-      cursor: pointer
-    }
-
-    /* SECTIONS */
-    .section {
-      margin-top: 60px
-    }
-
-    .section h2 {
-      margin-bottom: 20px
-    }
-
-    /* ENROLLED / WISHLIST CARD */
-    .enroll-card {
-      position: relative;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 16px;
-      transition: .25s;
-    }
-
-    .enroll-card:hover {
-      border-color: var(--primary)
-    }
-
-    .star {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      font-size: 18px;
-      cursor: pointer;
-      color: var(--warning);
-    }
-
-    .enroll-card button {
-      margin-top: 12px;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 8px;
-      background: var(--success);
-      color: white;
-      cursor: pointer;
-    }
-
-    /* TOAST */
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--success);
-      color: white;
-      padding: 15px 22px;
-      border-radius: 10px;
-      display: none;
-    }
-
-    /* CERTIFICATE */
-    #certificate {
-      display: none;
-      min-height: 100vh;
-      background: #fff;
-      padding: 60px;
-    }
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-  <h1><span>Online</span> Learning</h1>
-  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+
+<h1><span>Online</span> Learning</h1>
+
+<button id="themeToggle">🌙</button>
+
 </header>
 
+
 <section class="hero">
-  <h2>Learn Skills That Matter</h2>
-  <p>Track progress, rate courses, and earn certificates.</p>
+
+<h2>Learn Skills That Matter</h2>
+
+<p>Choose a course, enroll, and start learning instantly.</p>
+
 </section>
+
+
 
 <section class="container">
 
-  <!-- CERTIFICATE -->
-  <div id="certificate">
-    <div class="cert-box">
-      <h1>Certificate of Completion</h1>
-      <p>This certifies that</p>
-      <h2 id="certName">Student Name</h2>
-      <p>has successfully completed</p>
-      <h2 id="certCourse"></h2>
-      <p>Date: <span id="certDate"></span></p>
-      <br />
-      <button onclick="window.print()">Download Certificate (PDF)</button>
-    </div>
-  </div>
+<div class="search-box">
 
-  <div id="courseList" class="courses"></div>
+<input
+type="text"
+id="searchInput"
+placeholder="Search courses..."
+>
 
-  <div class="section">
-    <h2>My Enrolled Courses</h2>
-    <div id="enrolledList"></div>
-  </div>
+</div>
 
-  <div class="section">
-    <h2>Wishlist</h2>
-    <div id="wishlistList"></div>
-  </div>
+
+<h2>Available Courses</h2>
+
+<div id="courseList" class="courses"></div>
+
+
+<h2>Your Cart</h2>
+
+<div id="cartList"></div>
+
+<button id="checkoutBtn">Proceed to Payment</button>
+
+
+<h2>My Courses</h2>
+
+<div id="myCourses"></div>
+
 
 </section>
 
-<div id="toast" class="toast"></div>
 
-<!-- Certificate Modal -->
-<div id="certificateOverlay">
-  <div class="cert-box">
-    <h1>Certificate of Completion</h1>
-    <p>This certifies that</p>
-    <h2>Student Name</h2>
-    <p>has successfully completed</p>
-    <h2 id="certCourse"></h2>
-    <p>Date: <span id="certDate"></span></p>
-    <button onclick="window.print()">Download PDF</button>
-    <button onclick="closeCertificate()">Close</button>
-  </div>
+<!-- PAYMENT MODAL -->
+
+<div id="paymentModal" class="modal">
+
+<div class="modal-content">
+
+<h2>Payment Method</h2>
+
+<p>Select payment option</p>
+
+<button onclick="processPayment()">Pay Online</button>
+
+<button onclick="closeModal()">Cancel</button>
+
 </div>
 
+</div>
+
+
 <script src="script.js"></script>
+
 </body>
 </html>

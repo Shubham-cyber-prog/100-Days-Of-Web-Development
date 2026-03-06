@@ -2,96 +2,154 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>Social Media Dashboard | Analytics at a Glance</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Monitor your social media growth and daily engagement with this sleek analytics dashboard." />
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="SocialInsights | Performance Dashboard" />
-  <meta property="og:description"
-    content="Track followers and activity across multiple platforms in one centralized view." />
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SocialInsights | Performance Dashboard" />
-  <meta name="twitter:description"
-    content="Track followers and activity across multiple platforms in one centralized view." />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>Social Media Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
-  <header class="header">
-    <h1>📊 Social Media Dashboard</h1>
-    <div id="dateTime"></div>
-    <button id="themeToggle">🌙 Dark Mode</button>
-  </header>
+<header class="header">
 
-  <section class="overview">
-    <div class="card facebook">
-      <h3>Facebook</h3>
-      <p class="count" id="fbFollowers">0</p>
-      <span>Followers</span>
-    </div>
+<h1>📊 Social Media Dashboard</h1>
 
-    <div class="card twitter">
-      <h3>Twitter</h3>
-      <p class="count" id="twFollowers">0</p>
-      <span>Followers</span>
-    </div>
-
-    <div class="card instagram">
-      <h3>Instagram</h3>
-      <p class="count" id="igFollowers">0</p>
-      <span>Followers</span>
-    </div>
-
-    <div class="card youtube">
-      <h3>YouTube</h3>
-      <p class="count" id="ytSubscribers">0</p>
-      <span>Subscribers</span>
-    </div>
-  </section>
-
-  <section class="activity">
-    <h2>📈 Today's Activity</h2>
-
-    <div class="activity-card">
-      <span>👍 Likes</span>
-      <strong>1,240</strong>
-      <div class="progress">
-  <div class="bar" style="width:75%"></div>
+<div class="header-right">
+<span id="dateTime"></span>
+<button id="themeToggle">🌙 Dark Mode</button>
 </div>
-    </div>
 
-    <div class="activity-card">
-      <span>💬 Comments</span>
-      <strong>430</strong>
-      <div class="progress">
-  <div class="bar" style="width:75%"></div>
+</header>
+
+
+<!-- PLATFORM OVERVIEW -->
+
+<section class="overview">
+
+<div class="card facebook">
+<h3>Facebook</h3>
+<p class="count" id="fbFollowers">0</p>
+<span>Followers</span>
 </div>
-    </div>
 
-    <div class="activity-card">
-      <span>🔁 Shares</span>
-      <strong>310</strong>
-      <div class="progress">
-  <div class="bar" style="width:75%"></div>
+<div class="card twitter">
+<h3>Twitter</h3>
+<p class="count" id="twFollowers">0</p>
+<span>Followers</span>
 </div>
-    </div>
 
-    <div class="activity-card">
-      <span>👀 Views</span>
-      <strong>18,600</strong>
-      <div class="progress">
-  <div class="bar" style="width:75%"></div>
+<div class="card instagram">
+<h3>Instagram</h3>
+<p class="count" id="igFollowers">0</p>
+<span>Followers</span>
 </div>
-    </div>
-  </section>
 
-  <script src="script.js"></script>
-  <div class="toast" id="toast">🔥 Welcome back! Dashboard updated.</div>
+<div class="card youtube">
+<h3>YouTube</h3>
+<p class="count" id="ytSubscribers">0</p>
+<span>Subscribers</span>
+</div>
+
+</section>
+
+
+<!-- POST CREATION -->
+
+<section class="post-section">
+
+<h2>Create Post</h2>
+
+<textarea id="postInput" placeholder="Write something..."></textarea>
+
+<div class="post-actions">
+
+<select id="platformSelect">
+<option value="facebook">Facebook</option>
+<option value="twitter">Twitter</option>
+<option value="instagram">Instagram</option>
+<option value="youtube">YouTube</option>
+</select>
+
+<button id="createPost">Publish Post</button>
+
+</div>
+
+</section>
+
+
+<!-- STORIES -->
+
+<section class="stories">
+
+<h2>Stories</h2>
+
+<div class="story-container" id="storyContainer"></div>
+
+<button id="addStory">Add Story</button>
+
+</section>
+
+
+<!-- POSTS FEED -->
+
+<section class="feed">
+
+<h2>Recent Posts</h2>
+
+<div id="postFeed"></div>
+
+</section>
+
+
+<!-- ACTIVITY -->
+
+<section class="activity">
+
+<h2>Today's Activity</h2>
+
+<div class="activity-card">
+<span>👍 Likes</span>
+<strong id="likesCount">0</strong>
+</div>
+
+<div class="activity-card">
+<span>💬 Comments</span>
+<strong id="commentsCount">0</strong>
+</div>
+
+<div class="activity-card">
+<span>🔁 Shares</span>
+<strong id="sharesCount">0</strong>
+</div>
+
+<div class="activity-card">
+<span>👀 Views</span>
+<strong id="viewsCount">0</strong>
+</div>
+
+</section>
+
+
+<!-- CHART -->
+
+<section class="chart-section">
+
+<h2>Engagement Analytics</h2>
+
+<canvas id="engagementChart"></canvas>
+
+</section>
+
+
+<div class="toast" id="toast">
+🔥 Welcome back! Dashboard updated.
+</div>
+
+<script src="script.js"></script>
+
 </body>
-
 </html>

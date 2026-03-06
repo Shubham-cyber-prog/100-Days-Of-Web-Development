@@ -4,6 +4,8 @@ import { Dashboard } from './pages/Dashboard';
 import { Leads } from './pages/Leads';
 import { Customers } from './pages/Customers';
 import { Deals } from './pages/Deals';
+import { Tasks } from './pages/Tasks';
+import { EmailPage } from './pages/Email';
 import { Reports } from './pages/Reports';
 import { Settings } from './pages/Settings';
 
@@ -26,6 +28,14 @@ export const router = createBrowserRouter([
       {
         path: '/deals',
         element: <Deals />,
+      },
+      {
+        path: '/tasks',
+        element: <Tasks />,
+      },
+      {
+        path: '/email',
+        element: <EmailPage />,
       },
       {
         path: '/reports',

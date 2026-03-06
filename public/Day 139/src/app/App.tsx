@@ -7,6 +7,11 @@ import { CourseDetail } from './screens/CourseDetail';
 import { VideoLesson } from './screens/VideoLesson';
 import { InstructorDashboard } from './screens/InstructorDashboard';
 import { AdminPanel } from './screens/AdminPanel';
+import { QuizBuilder } from './screens/QuizBuilder';
+import { Achievements } from './screens/Achievements';
+import { CalendarView } from './screens/CalendarView';
+import { LiveClasses } from './screens/LiveClasses';
+import { StudyGroups } from './screens/StudyGroups';
 import { Button } from './components/ui/Button';
 import { Badge } from './components/ui/Badge';
 
@@ -73,9 +78,14 @@ function App() {
                 <Route path="/" element={<StudentDashboard />} />
                 <Route path="/course-detail" element={<CourseDetail />} />
                 <Route path="/video-lesson" element={<VideoLesson />} />
+                <Route path="/achievements" element={<Achievements />} />
+                <Route path="/calendar" element={<CalendarView />} />
+                <Route path="/live-classes" element={<LiveClasses />} />
+                <Route path="/study-groups" element={<StudyGroups />} />
                 
                 {/* Instructor Routes */}
                 <Route path="/instructor" element={<InstructorDashboard />} />
+                <Route path="/quiz-builder" element={<QuizBuilder />} />
                 
                 {/* Admin Routes */}
                 <Route path="/admin" element={<AdminPanel />} />

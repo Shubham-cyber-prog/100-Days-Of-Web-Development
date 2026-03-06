@@ -145,7 +145,7 @@ export function Deals() {
       setDeals(dealsData);
       setCustomers(customersData);
     } catch (error) {
-      toast.error('Failed to load deals');
+      // Silently fail for demo mode - don't show error toast on initial load
       console.error('Load deals error:', error);
     } finally {
       setIsLoading(false);
