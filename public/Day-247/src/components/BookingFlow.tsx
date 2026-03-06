@@ -18,8 +18,11 @@ import {
   Calendar,
   Train,
   MapPin,
+  Download,
 } from 'lucide-react';
 import { Train as TrainType, Passenger, generatePNR, getStationName } from '../utils/mockData';
+import { SeatSelection } from './SeatSelection';
+import { useUser } from '../contexts/UserContext';
 
 interface BookingFlowProps {
   train: TrainType;
@@ -36,6 +39,9 @@ export function BookingFlow({ train, selectedClass, onBack, onComplete }: Bookin
   const [contact, setContact] = useState({ email: '', phone: '' });
   const [payment, setPayment] = useState({ cardNumber: '', cvv: '', expiry: '' });
   const [processing, setProcessing] = useState(false);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const [generatedPNR, setGeneratedPNR] = useState('');
+  const { addBooking, user } = useUser();
 
   const totalAmount = train.classes[selectedClass].price * passengers.length;
   const gst = Math.round(totalAmount * 0.05);
@@ -76,15 +82,58 @@ export function BookingFlow({ train, selectedClass, onBack, onComplete }: Bookin
     // Simulate payment processing
     setTimeout(() => {
       const pnr = generatePNR();
-      setStep(4);
+      setGeneratedPNR(pnr);
+      
+      // Save booking to user's history
+      if (user) {
+        const newBooking = {
+          pnr,
+          train,
+          passengers,
+          status: 'CNF' as const,
+          bookingDate: new Date().toISOString().split('T')[0],
+          journeyDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          totalAmount: finalAmount,
+          class: selectedClass,
+        };
+        addBooking(newBooking);
+      }
+      
+      setStep(5);
       setProcessing(false);
-      setTimeout(() => {
-        onComplete(pnr);
-      }, 3000);
     }, 2500);
   };
 
-  const progressValue = (step / 4) * 100;
+  const handleDownloadTicket = () => {
+    const ticketContent = `
+IRCTC E-TICKET
+=====================================
+PNR: ${generatedPNR}
+Train: ${train.name} (${train.number})
+Class: ${selectedClass}
+From: ${getStationName(train.from)}
+To: ${getStationName(train.to)}
+Departure: ${train.departure}
+Arrival: ${train.arrival}
+
+PASSENGERS:
+${passengers.map((p, i) => `${i + 1}. ${p.name} (${p.age}Y, ${p.gender}) - Seat: ${selectedSeats[i] || 'N/A'}`).join('\n')}
+
+Total Amount: ₹${finalAmount}
+=====================================
+Thank you for booking with IRCTC!
+    `;
+    
+    const element = document.createElement('a');
+    const file = new Blob([ticketContent], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = `IRCTC-Ticket-${generatedPNR}.txt`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
+  const progressValue = (step / 5) * 100;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -94,10 +143,10 @@ export function BookingFlow({ train, selectedClass, onBack, onComplete }: Bookin
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <h3 className="font-semibold text-gray-900">Booking Progress</h3>
-              <span className="text-sm text-gray-600">Step {step} of 4</span>
+              <span className="text-sm text-gray-600">Step {step} of 5</span>
             </div>
             <Progress value={progressValue} className="h-2" />
-            <div className="grid grid-cols-4 gap-2 text-xs">
+            <div className="grid grid-cols-5 gap-2 text-xs">
               <div className={`text-center ${step >= 1 ? 'text-[#0058A3] font-semibold' : 'text-gray-400'}`}>
                 Review
               </div>
@@ -105,10 +154,13 @@ export function BookingFlow({ train, selectedClass, onBack, onComplete }: Bookin
                 Passengers
               </div>
               <div className={`text-center ${step >= 3 ? 'text-[#0058A3] font-semibold' : 'text-gray-400'}`}>
-                Payment
+                Seats
               </div>
               <div className={`text-center ${step >= 4 ? 'text-[#0058A3] font-semibold' : 'text-gray-400'}`}>
-                Confirmation
+                Payment
+              </div>
+              <div className={`text-center ${step >= 5 ? 'text-[#0058A3] font-semibold' : 'text-gray-400'}`}>
+                Confirm
               </div>
             </div>
           </div>
@@ -322,15 +374,35 @@ export function BookingFlow({ train, selectedClass, onBack, onComplete }: Bookin
                 disabled={!canProceedToPayment()}
                 className="flex-1 bg-purple-600 hover:bg-purple-700"
               >
-                Proceed to Payment
+                Proceed to Seat Selection
               </Button>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {/* Step 3: Payment */}
+      {/* Step 3: Seat Selection */}
       {step === 3 && (
+        <>
+          <SeatSelection
+            trainClass={selectedClass}
+            totalPassengers={passengers.length}
+            onSeatsSelected={(seats) => {
+              setSelectedSeats(seats);
+              setStep(4);
+            }}
+          />
+          <div className="mt-4">
+            <Button variant="outline" onClick={() => setStep(2)} className="w-full">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Passengers
+            </Button>
+          </div>
+        </>
+      )}
+
+      {/* Step 4: Payment */}
+      {step === 4 && (
         <Card className="shadow-xl">
           <CardHeader className="bg-gradient-to-r from-green-600 to-emerald-600 text-white">
             <CardTitle className="flex items-center text-2xl">
@@ -417,7 +489,7 @@ export function BookingFlow({ train, selectedClass, onBack, onComplete }: Bookin
             </div>
 
             <div className="flex gap-3">
-              <Button variant="outline" onClick={() => setStep(2)} className="flex-1" disabled={processing}>
+              <Button variant="outline" onClick={() => setStep(3)} className="flex-1" disabled={processing}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back
               </Button>
@@ -443,8 +515,8 @@ export function BookingFlow({ train, selectedClass, onBack, onComplete }: Bookin
         </Card>
       )}
 
-      {/* Step 4: Confirmation */}
-      {step === 4 && (
+      {/* Step 5: Confirmation */}
+      {step === 5 && (
         <Card className="shadow-xl">
           <CardContent className="p-12 text-center space-y-6">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
@@ -456,14 +528,36 @@ export function BookingFlow({ train, selectedClass, onBack, onComplete }: Bookin
             </div>
             <div className="p-6 bg-blue-50 rounded-lg">
               <p className="text-sm text-gray-600 mb-2">Your PNR Number</p>
-              <p className="text-3xl font-bold text-[#0058A3]">{generatePNR()}</p>
+              <p className="text-3xl font-bold text-[#0058A3]">{generatedPNR}</p>
             </div>
+            
+            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+              <p className="text-sm font-semibold text-gray-900 mb-2">Selected Seats:</p>
+              <div className="flex flex-wrap gap-2">
+                {selectedSeats.map((seat, index) => (
+                  <Badge key={index} className="bg-green-600">
+                    Seat {seat}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            
             <div className="space-y-2 text-sm text-gray-600">
               <p>✅ Ticket sent to {contact.email}</p>
               <p>✅ SMS sent to +91 {contact.phone}</p>
-              <p>✅ Payment successful</p>
+              <p>✅ Payment successful - ₹{finalAmount}</p>
+              <p>✅ Seats confirmed: {selectedSeats.join(', ')}</p>
             </div>
-            <Button className="w-full bg-[#0058A3] hover:bg-[#004080]">Download Ticket</Button>
+            
+            <div className="space-y-3">
+              <Button onClick={handleDownloadTicket} className="w-full bg-[#0058A3] hover:bg-[#004080]">
+                <Download className="mr-2 h-4 w-4" />
+                Download E-Ticket
+              </Button>
+              <Button variant="outline" onClick={() => onComplete(generatedPNR)} className="w-full">
+                Back to Home
+              </Button>
+            </div>
           </CardContent>
         </Card>
       )}

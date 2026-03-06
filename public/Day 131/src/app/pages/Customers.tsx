@@ -60,7 +60,7 @@ export function Customers() {
       const data = await customerService.getAll(accessToken);
       setCustomers(data);
     } catch (error) {
-      toast.error('Failed to load customers');
+      // Silently fail for demo mode - don't show error toast on initial load
       console.error('Load customers error:', error);
     } finally {
       setIsLoading(false);

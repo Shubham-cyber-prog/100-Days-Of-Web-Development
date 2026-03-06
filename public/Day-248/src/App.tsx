@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { Router, Page } from "./components/Router";
+import { LanguageProvider } from "./components/LanguageSwitcher";
+import { EmergencyHelpline } from "./components/EmergencyHelpline";
+import { AccessibilityPanel } from "./components/AccessibilityPanel";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -13,10 +16,14 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <Router currentPage={currentPage} setCurrentPage={setCurrentPage} newsId={newsId} />
-      <Footer />
-    </div>
+    <LanguageProvider>
+      <div className="min-h-screen bg-background">
+        <Header />
+        <Router currentPage={currentPage} setCurrentPage={setCurrentPage} newsId={newsId} />
+        <Footer />
+        <EmergencyHelpline />
+        <AccessibilityPanel />
+      </div>
+    </LanguageProvider>
   );
 }

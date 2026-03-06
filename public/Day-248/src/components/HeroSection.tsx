@@ -3,8 +3,11 @@ import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ChevronRight, Calendar, MapPin } from "lucide-react";
+import { useLanguage } from "./LanguageSwitcher";
 
 export function HeroSection() {
+  const { t } = useLanguage();
+  
   return (
     <section className="bg-gradient-to-r from-blue-50 to-orange-50 py-12">
       <div className="container mx-auto px-4">
@@ -13,23 +16,23 @@ export function HeroSection() {
           <div className="space-y-6">
             <div className="space-y-4">
               <Badge variant="secondary" className="bg-orange-100 text-orange-800">
-                Latest Update
+                {t('hero.announcement')}
               </Badge>
               <h2 className="text-4xl font-bold text-primary leading-tight">
-                Strengthening India's Global Partnerships
+                {t('hero.welcome')}
               </h2>
               <p className="text-lg text-muted-foreground">
-                The Ministry of External Affairs continues to enhance diplomatic relations and promote India's interests on the global stage through strategic partnerships and multilateral engagement.
+                {t('hero.description')}
               </p>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="bg-primary hover:bg-primary/90">
-                Consular Services
+                {t('nav.consular')}
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
               <Button variant="outline" size="lg">
-                Latest News
+                {t('news.viewall')}
               </Button>
             </div>
 
@@ -37,15 +40,15 @@ export function HeroSection() {
             <div className="grid grid-cols-3 gap-4 pt-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">190+</div>
-                <div className="text-sm text-muted-foreground">Diplomatic Missions</div>
+                <div className="text-sm text-muted-foreground">{t('stats.missions')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">32M+</div>
-                <div className="text-sm text-muted-foreground">Indian Diaspora</div>
+                <div className="text-sm text-muted-foreground">{t('stats.diaspora')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">150+</div>
-                <div className="text-sm text-muted-foreground">Countries Relations</div>
+                <div className="text-sm text-muted-foreground">{t('stats.countries')}</div>
               </div>
             </div>
           </div>
@@ -64,8 +67,8 @@ export function HeroSection() {
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
                   <div className="flex-1">
-                    <h4 className="font-medium text-sm">Upcoming Diplomatic Visit</h4>
-                    <p className="text-sm text-muted-foreground">Foreign Minister to visit Southeast Asian nations</p>
+                    <h4 className="font-medium text-sm">{t('hero.announcement1')}</h4>
+                    <p className="text-sm text-muted-foreground">{t('hero.announcement2')}</p>
                     <div className="flex items-center space-x-4 mt-2 text-xs text-muted-foreground">
                       <span className="flex items-center">
                         <Calendar className="h-3 w-3 mr-1" />

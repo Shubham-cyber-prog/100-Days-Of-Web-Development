@@ -1,5 +1,5 @@
 import { apiRequest } from '../lib/supabase';
-import type { User, Lead, Customer, Deal, Interaction, DashboardStats } from '../types';
+import type { User, Lead, Customer, Deal, Interaction, DashboardStats, Task, EmailTemplate, Email } from '../types';
 
 // ============================================
 // AUTHENTICATION SERVICES
@@ -156,5 +156,76 @@ export const analyticsService = {
       method: 'GET',
     }, token);
     return data;
+  },
+};
+
+// ============================================
+// TASK SERVICES
+// ============================================
+
+export const taskService = {
+  async create(task: Partial<Task>, token: string) {
+    const data = await apiRequest<{ task: Task }>('/tasks', {
+      method: 'POST',
+      body: JSON.stringify(task),
+    }, token);
+    return data.task;
+  },
+
+  async getAll(token: string) {
+    const data = await apiRequest<{ tasks: Task[] }>('/tasks', {
+      method: 'GET',
+    }, token);
+    return data.tasks;
+  },
+
+  async update(id: string, updates: Partial<Task>, token: string) {
+    const data = await apiRequest<{ task: Task }>(`/tasks/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+    }, token);
+    return data.task;
+  },
+
+  async delete(id: string, token: string) {
+    await apiRequest(`/tasks/${id}`, {
+      method: 'DELETE',
+    }, token);
+  },
+};
+
+// ============================================
+// EMAIL SERVICES
+// ============================================
+
+export const emailService = {
+  async sendEmail(email: Partial<Email>, token: string) {
+    const data = await apiRequest<{ email: Email }>('/emails/send', {
+      method: 'POST',
+      body: JSON.stringify(email),
+    }, token);
+    return data.email;
+  },
+
+  async getTemplates(token: string) {
+    const data = await apiRequest<{ templates: EmailTemplate[] }>('/emails/templates', {
+      method: 'GET',
+    }, token);
+    return data.templates;
+  },
+
+  async createTemplate(template: Partial<EmailTemplate>, token: string) {
+    const data = await apiRequest<{ template: EmailTemplate }>('/emails/templates', {
+      method: 'POST',
+      body: JSON.stringify(template),
+    }, token);
+    return data.template;
+  },
+
+  async getSentEmails(token: string) {
+    const data = await apiRequest<{ emails: Email[] }>('/emails', {
+      method: 'GET',
+    }, token);
+    return data.emails;
   },
 };

@@ -1,14 +1,27 @@
 import { useState } from 'react';
 import { Button } from './ui/button';
-import { Menu, X, User, Moon, Sun } from 'lucide-react';
+import { Menu, X, User, Moon, Sun, LogOut, History } from 'lucide-react';
+import { useUser } from '../contexts/UserContext';
+import { AuthModal } from './AuthModal';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 
 interface HeaderProps {
   onNavigate: () => void;
+  onViewBookings?: () => void;
 }
 
-export function Header({ onNavigate }: HeaderProps) {
+export function Header({ onNavigate, onViewBookings }: HeaderProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const { user, isLoggedIn, logout } = useUser();
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -17,6 +30,11 @@ export function Header({ onNavigate }: HeaderProps) {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsMobileMenuOpen(false);
   };
 
   const navigationItems = [
@@ -71,13 +89,43 @@ export function Header({ onNavigate }: HeaderProps) {
 
               {/* Login/Signup - Desktop */}
               <div className="hidden sm:flex items-center space-x-2">
-                <Button variant="ghost" className="text-[#0058A3]">
-                  <User className="h-4 w-4 mr-2" />
-                  Login
-                </Button>
-                <Button className="bg-[#0058A3] hover:bg-[#004080] text-white">
-                  Sign Up
-                </Button>
+                {isLoggedIn ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="text-[#0058A3]">
+                        <User className="h-4 w-4 mr-2" />
+                        {user?.name}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={onViewBookings} className="cursor-pointer">
+                        <History className="h-4 w-4 mr-2" />
+                        My Bookings
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer">
+                        <User className="h-4 w-4 mr-2" />
+                        Profile Settings
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <>
+                    <Button variant="ghost" className="text-[#0058A3]" onClick={() => setShowAuthModal(true)}>
+                      <User className="h-4 w-4 mr-2" />
+                      Login
+                    </Button>
+                    <Button className="bg-[#0058A3] hover:bg-[#004080] text-white" onClick={() => setShowAuthModal(true)}>
+                      Sign Up
+                    </Button>
+                  </>
+                )}
               </div>
 
               {/* Mobile Menu Button */}
@@ -146,26 +194,65 @@ export function Header({ onNavigate }: HeaderProps) {
 
                 {/* Auth Buttons */}
                 <div className="pt-4 border-t space-y-3">
-                  <Button 
-                    variant="ghost" 
-                    className="w-full text-[#0058A3] justify-start"
-                    onClick={toggleMobileMenu}
-                  >
-                    <User className="h-4 w-4 mr-2" />
-                    Login
-                  </Button>
-                  <Button 
-                    className="w-full bg-[#0058A3] hover:bg-[#004080] text-white"
-                    onClick={toggleMobileMenu}
-                  >
-                    Sign Up
-                  </Button>
+                  {isLoggedIn ? (
+                    <>
+                      <div className="px-3 py-2 bg-blue-50 rounded-md">
+                        <p className="text-sm font-semibold text-[#0058A3]">{user?.name}</p>
+                        <p className="text-xs text-gray-600">{user?.email}</p>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start"
+                        onClick={() => {
+                          onViewBookings?.();
+                          toggleMobileMenu();
+                        }}
+                      >
+                        <History className="h-4 w-4 mr-2" />
+                        My Bookings
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start text-red-600"
+                        onClick={handleLogout}
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Logout
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-[#0058A3] justify-start"
+                        onClick={() => {
+                          setShowAuthModal(true);
+                          toggleMobileMenu();
+                        }}
+                      >
+                        <User className="h-4 w-4 mr-2" />
+                        Login
+                      </Button>
+                      <Button 
+                        className="w-full bg-[#0058A3] hover:bg-[#004080] text-white"
+                        onClick={() => {
+                          setShowAuthModal(true);
+                          toggleMobileMenu();
+                        }}
+                      >
+                        Sign Up
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal open={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </>
   );
 }
