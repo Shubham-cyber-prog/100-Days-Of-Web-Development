@@ -7,6 +7,11 @@ import { TraineesModule } from './components/modules/TraineesModule';
 import { CoursesModule } from './components/modules/CoursesModule';
 import { TrainersModule } from './components/modules/TrainersModule';
 import { ScheduleModule } from './components/modules/ScheduleModule';
+import { ReportsAnalyticsModule } from './components/modules/ReportsAnalyticsModule';
+import { CertificateGeneratorModule } from './components/modules/CertificateGeneratorModule';
+import { AttendanceTrackingModule } from './components/modules/AttendanceTrackingModule';
+import { ResourceLibraryModule } from './components/modules/ResourceLibraryModule';
+import { UserPermissionsModule } from './components/modules/UserPermissionsModule';
 
 export default function App() {
   const [activeModule, setActiveModule] = useState('dashboard');
@@ -25,6 +30,16 @@ export default function App() {
         return <TrainersModule />;
       case 'schedule':
         return <ScheduleModule />;
+      case 'reports-analytics':
+        return <ReportsAnalyticsModule />;
+      case 'certificates':
+        return <CertificateGeneratorModule />;
+      case 'attendance':
+        return <AttendanceTrackingModule />;
+      case 'resources':
+        return <ResourceLibraryModule />;
+      case 'permissions':
+        return <UserPermissionsModule />;
       default:
         return <DashboardModule />;
     }

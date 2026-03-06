@@ -377,7 +377,36 @@
 
       .tab-content.active {
         display: block;
-      }
+      }/* Scroll To Top Button */
+
+#scrollTopBtn{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg,#00e6a8,#64ffda);
+    color: #000;
+    border: none;
+    padding: 14px 16px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(100,255,218,0.7);
+    transition: all 0.3s ease;
+}
+
+#scrollTopBtn:hover{
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 0 25px rgba(100,255,218,1);
+}
+
+/* Dark Mode */
+
+body.dark-mode #scrollTopBtn{
+    background: linear-gradient(135deg,#64ffda,#00bfa5);
+    color:white;
+}
     </style>
     <script src="../scripts/components/sidebar-loader.js"></script>
 </head>
@@ -820,9 +849,9 @@
       </div>
     </footer>
 
-    <button id="scrollToTopBtn" aria-label="Scroll to top">
-      <i class="fa-solid fa-arrow-up"></i>
-    </button>
+    <button id="scrollTopBtn" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
     <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/components/navigation.js"></script>
@@ -936,4 +965,22 @@
 
     <!-- Component Loaders -->    <script src="../scripts/components/footer-loader.js"></script>
   </body>
+    <script>
+    const scrollBtn = document.getElementById("scrollTopBtn");
+
+window.onscroll = function () {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollBtn.style.display = "block";
+    } else {
+        scrollBtn.style.display = "none";
+    }
+};
+
+scrollBtn.addEventListener("click", function () {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+  </script>
 </html>

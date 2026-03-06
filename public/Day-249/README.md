@@ -1,7 +1,7 @@
 
-  # Car Dealership Ecommerce Website
+  # Advanced Social Media UI System
 
-  This is a code bundle for Car Dealership Ecommerce Website. The original project is available at https://www.figma.com/design/ctrri2cDBS9GwSYLFwYHq0/Car-Dealership-Ecommerce-Website.
+  This is a code bundle for Advanced Social Media UI System. The original project is available at https://www.figma.com/design/cIxxMU86WAStV42HfEp8jY/Advanced-Social-Media-UI-System.
 
   ## Running the code
 

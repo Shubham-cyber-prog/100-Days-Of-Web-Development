@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, BookOpen, Video, Calendar, MessageSquare, Settings, ChevronLeft, ChevronRight, Users, BarChart } from 'lucide-react';
+import { Home, BookOpen, Video, Calendar, MessageSquare, Settings, ChevronLeft, ChevronRight, Users, BarChart, Award, UserPlus, ClipboardList } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
 interface SidebarProps {
@@ -13,8 +13,10 @@ export function Sidebar({ role }: SidebarProps) {
   const studentLinks = [
     { icon: Home, label: 'Dashboard', path: '/' },
     { icon: BookOpen, label: 'My Courses', path: '/courses' },
-    { icon: Video, label: 'Lessons', path: '/lessons' },
+    { icon: Video, label: 'Live Classes', path: '/live-classes' },
     { icon: Calendar, label: 'Calendar', path: '/calendar' },
+    { icon: UserPlus, label: 'Study Groups', path: '/study-groups' },
+    { icon: Award, label: 'Achievements', path: '/achievements' },
     { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
     { icon: Settings, label: 'Settings', path: '/settings' },
   ];
@@ -22,6 +24,8 @@ export function Sidebar({ role }: SidebarProps) {
   const instructorLinks = [
     { icon: Home, label: 'Dashboard', path: '/instructor' },
     { icon: BookOpen, label: 'Courses', path: '/instructor/courses' },
+    { icon: ClipboardList, label: 'Quiz Builder', path: '/quiz-builder' },
+    { icon: Video, label: 'Live Classes', path: '/live-classes' },
     { icon: Users, label: 'Students', path: '/instructor/students' },
     { icon: BarChart, label: 'Analytics', path: '/instructor/analytics' },
     { icon: MessageSquare, label: 'Discussions', path: '/discussions' },
@@ -50,7 +54,7 @@ export function Sidebar({ role }: SidebarProps) {
         </button>
       </div>
       
-      <nav className="flex-1 px-3">
+      <nav className="flex-1 px-3 overflow-y-auto">
         {links.map((link) => {
           const Icon = link.icon;
           const isActive = location.pathname === link.path;

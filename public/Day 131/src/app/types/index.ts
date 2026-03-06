@@ -23,6 +23,7 @@ export interface Lead {
   assignedTo: string;
   assignedToName: string;
   notes: string;
+  score?: number; // Lead scoring (0-100)
   createdAt: string;
   updatedAt: string;
 }
@@ -59,6 +60,7 @@ export interface Deal {
   stage: DealStage;
   customerId: string;
   closeDate: string | null;
+  probability?: number; // Win probability (0-100)
   ownerId: string;
   ownerName: string;
   createdAt: string;
@@ -79,6 +81,68 @@ export interface Interaction {
   createdAt: string;
 }
 
+// Task types
+export type TaskStatus = 'pending' | 'in_progress' | 'completed' | 'cancelled';
+export type TaskPriority = 'low' | 'medium' | 'high' | 'urgent';
+
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: TaskStatus;
+  priority: TaskPriority;
+  dueDate: string;
+  assignedTo: string;
+  assignedToName: string;
+  relatedTo?: {
+    type: 'lead' | 'customer' | 'deal';
+    id: string;
+    name: string;
+  };
+  createdBy: string;
+  createdByName: string;
+  createdAt: string;
+  updatedAt: string;
+  completedAt?: string;
+}
+
+// Email types
+export interface EmailTemplate {
+  id: string;
+  name: string;
+  subject: string;
+  body: string;
+  category: 'follow_up' | 'proposal' | 'onboarding' | 'general';
+  createdAt: string;
+}
+
+export interface Email {
+  id: string;
+  to: string;
+  subject: string;
+  body: string;
+  templateId?: string;
+  relatedTo?: {
+    type: 'lead' | 'customer' | 'deal';
+    id: string;
+  };
+  sentBy: string;
+  sentByName: string;
+  sentAt: string;
+  opened?: boolean;
+  openedAt?: string;
+}
+
+// Dashboard Widget types
+export interface DashboardWidget {
+  id: string;
+  type: 'stats' | 'chart' | 'list';
+  title: string;
+  position: number;
+  visible: boolean;
+  config?: any;
+}
+
 // Analytics types
 export interface DashboardStats {
   totalLeads: number;
@@ -87,6 +151,23 @@ export interface DashboardStats {
   totalRevenue: number;
   pipelineValue: number;
   activeDeals: number;
+}
+
+// Search types
+export interface SearchResult {
+  id: string;
+  type: 'lead' | 'customer' | 'deal' | 'task';
+  title: string;
+  subtitle: string;
+  metadata?: string;
+}
+
+export interface SavedFilter {
+  id: string;
+  name: string;
+  entityType: 'lead' | 'customer' | 'deal';
+  filters: any;
+  createdAt: string;
 }
 
 // API Response types

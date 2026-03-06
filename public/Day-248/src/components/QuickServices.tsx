@@ -8,70 +8,77 @@ import {
   Building, 
   GraduationCap,
   ChevronRight,
-  ExternalLink
+  ExternalLink,
+  AlertTriangle,
+  Phone
 } from "lucide-react";
+import { useLanguage } from "./LanguageSwitcher";
 
 export function QuickServices() {
+  const { t } = useLanguage();
+  
   const services = [
     {
       icon: CreditCard,
-      title: "Passport Services",
-      description: "Apply for new passport, renewal, and related services",
+      title: t('services.passport.title'),
+      description: t('services.passport.desc'),
       link: "#",
       highlight: true
     },
     {
       icon: FileText,
-      title: "Visa Services",
-      description: "Visa information and application procedures",
+      title: t('services.visa.title'),
+      description: t('services.visa.desc'),
+      link: "#"
+    },
+    {
+      icon: AlertTriangle,
+      title: t('services.travel.title'),
+      description: t('services.travel.desc'),
+      link: "travel-advisories",
+      route: true
+    },
+    {
+      icon: Globe,
+      title: t('services.embassy.title'),
+      description: t('services.embassy.desc'),
+      link: "embassy-locator",
+      route: true
+    },
+    {
+      icon: Phone,
+      title: t('services.emergency.title'),
+      description: t('services.emergency.desc'),
       link: "#"
     },
     {
       icon: Users,
-      title: "Indian Diaspora",
-      description: "Services for overseas Indian community",
-      link: "#"
-    },
-    {
-      icon: Globe,
-      title: "Diplomatic Missions",
-      description: "Find Indian embassies and consulates worldwide",
-      link: "#"
-    },
-    {
-      icon: Building,
-      title: "Trade & Commerce",
-      description: "Trade promotion and commercial services",
-      link: "#"
-    },
-    {
-      icon: GraduationCap,
-      title: "Cultural Exchange",
-      description: "Educational and cultural programs",
+      title: t('services.oci.title'),
+      description: t('services.oci.desc'),
       link: "#"
     }
   ];
 
   const quickLinks = [
-    "Emergency Travel Document",
-    "Consular Fees",
-    "Attestation Services",
-    "Registration Services",
-    "Grievance Portal",
-    "Download Forms"
+    t('services.link1'),
+    t('services.link2'),
+    t('services.link3'),
+    t('services.link4'),
+    t('services.link5'),
+    t('services.link6')
   ];
 
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-primary mb-4">Services & Quick Links</h2>
+          <h2 className="text-3xl font-bold text-primary mb-4">{t('services.title')}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Access essential consular and diplomatic services with ease
+            {t('services.subtitle')}
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mb-12">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
@@ -99,8 +106,13 @@ export function QuickServices() {
                     variant={service.highlight ? "default" : "outline"} 
                     size="sm" 
                     className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    onClick={() => {
+                      if (service.route && typeof window !== 'undefined') {
+                        (window as any).setCurrentPage?.(service.link);
+                      }
+                    }}
                   >
-                    Access Service
+                    {t('services.access')}
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 </CardContent>
@@ -113,7 +125,7 @@ export function QuickServices() {
         <Card className="bg-secondary/50">
           <CardHeader>
             <CardTitle className="flex items-center">
-              <span>Quick Links</span>
+              <span>{t('services.quicklinks')}</span>
               <ExternalLink className="ml-2 h-4 w-4" />
             </CardTitle>
           </CardHeader>
