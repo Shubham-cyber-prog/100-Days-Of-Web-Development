@@ -1,120 +1,98 @@
-// inputs
-const billInput = document.querySelector(".input-group input");
-const tipButtons = document.querySelectorAll(".tip-buttons button");
-const customTipInput = document.querySelector(".custom-tip");
-const minusBtn = document.querySelector(".minus");
-const plusBtn = document.querySelector(".plus");
-const peopleCountEl = document.querySelector(".count");
+let bill=0;
+let tip=0;
+let people=1;
 
+const billInput=document.getElementById("bill");
+const tipButtons=document.querySelectorAll(".tip-buttons button");
+const tipAmountEl=document.getElementById("tipAmount");
+const totalAmountEl=document.getElementById("totalAmount");
+const peopleCountEl=document.getElementById("peopleCount");
 
-// outputs
-const tipPerPersonEL = document.querySelector(".result .row:first-child strong");
-const totalPerPersonEl = document.querySelector(".result .row:last-child strong");
+billInput.addEventListener("input",e=>{
+  bill=parseFloat(e.target.value)||0;
+  calculate();
+});
 
+tipButtons.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    tipButtons.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    tip=parseInt(btn.dataset.tip);
+    calculate();
+  });
+});
 
-// reset
-const resetBtn = document.querySelector(".reset-btn");
+document.getElementById("plus").onclick=()=>{
+  people++;
+  peopleCountEl.innerText=people;
+  calculate();
+};
 
+document.getElementById("minus").onclick=()=>{
+  if(people>1)people--;
+  peopleCountEl.innerText=people;
+  calculate();
+};
 
-let billAmount = 0;
-let tipPercent = 0;
-let peopleCount = 1;
-
-
-function calculate() {
-    if ( billAmount <= 0 || peopleCount <= 0 ) {
-        tipPerPersonEL.textContent = "₹0.00";
-        totalPerPersonEl.textContent = "₹0.00";
-        return;
-    }
-
-    const tipAmount = billAmount * (tipPercent / 100);
-    const tipPerPerson = tipAmount / peopleCount;
-    const totalPerPerson = (billAmount + tipAmount) / peopleCount;
-
-    tipPerPersonEL.textContent = `₹${tipPerPerson.toFixed(2)}`;
-    totalPerPersonEl.textContent = `₹${totalPerPerson.toFixed(2)}`;
+function animateValue(el,start,end,duration){
+  let startTime=null;
+  function animation(currentTime){
+    if(!startTime)startTime=currentTime;
+    const progress=Math.min((currentTime-startTime)/duration,1);
+    el.innerText=(start+(end-start)*progress).toFixed(2);
+    if(progress<1)requestAnimationFrame(animation);
+  }
+  requestAnimationFrame(animation);
 }
 
+function calculate(){
+  if(bill<=0)return;
+  const tipTotal=bill*(tip/100);
+  const tipPer=tipTotal/people;
+  const totalPer=(bill+tipTotal)/people;
 
-function clearActiveTips() {
-    tipButtons.forEach(btn => btn.classList.remove("active"));
+  animateValue(tipAmountEl,0,tipPer,500);
+  animateValue(totalAmountEl,0,totalPer,500);
+
+  updateChart(tipTotal,bill);
 }
 
+document.getElementById("reset").onclick=()=>{
+  bill=0;tip=0;people=1;
+  billInput.value="";
+  peopleCountEl.innerText="1";
+  tipAmountEl.innerText="0.00";
+  totalAmountEl.innerText="0.00";
+};
 
-// bill input
-billInput.addEventListener("input", () => {
-    billAmount = parseFloat(billInput.value) || 0;
-    calculate();
+/* CHART */
+const ctx=document.getElementById("breakdownChart");
+const chart=new Chart(ctx,{
+  type:"doughnut",
+  data:{
+    labels:["Bill","Tip"],
+    datasets:[{
+      data:[0,0],
+      backgroundColor:["#8b5cf6","#10b981"]
+    }]
+  }
 });
 
-
-// tip buttons
-tipButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        clearActiveTips();
-        button.classList.add("active");
-
-        tipPercent = parseInt(button.textContent);
-        customTipInput.value = "";
-
-        calculate();
-    });
-});
-
-
-// custom tip
-customTipInput.addEventListener("input", () => {
-    clearActiveTips();
-    tipPercent = parseFloat(customTipInput.value) || 0;
-    calculate();
-});
-
-
-// people count
-plusBtn.addEventListener("click", () => {
-    peopleCount++;
-    peopleCountEl.textContent = peopleCount;
-    calculate();
-});
-
-minusBtn.addEventListener("click", () => {
-    if (peopleCount > 1) {
-        peopleCount--;
-        peopleCountEl.textContent = peopleCount;
-        calculate();
-    }
-});
-
-
-// reset
-resetBtn.addEventListener("click", () => {
-    billAmount = 0;
-    tipPercent = 0;
-    peopleCount = 1;
-
-    billInput.value = "";
-    customTipInput.value = "";
-    peopleCountEl.textContent = "1";
-
-    clearActiveTips();
-
-    tipPerPersonEL.textContent = "₹0.00";
-    totalPerPersonEl.textContent = "₹0.00";
-});
-
-// dark mode toggle
-const themeToggle = document.querySelector(".theme-toggle");
-
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    themeToggle.textContent = "☀️";
+function updateChart(tipAmount,billAmount){
+  chart.data.datasets[0].data=[billAmount,tipAmount];
+  chart.update();
 }
 
-themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-
-    const isDark = document.body.classList.contains("dark");
-    themeToggle.textContent = isDark ? "☀️" : "🌙";
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+/* LOTTIE */
+lottie.loadAnimation({
+  container:document.getElementById("lottie"),
+  renderer:"svg",
+  loop:true,
+  autoplay:true,
+  path:"https://assets3.lottiefiles.com/packages/lf20_jcikwtux.json"
 });
+
+/* DARK MODE */
+document.getElementById("themeToggle").onclick=()=>{
+  document.body.classList.toggle("dark");
+};
