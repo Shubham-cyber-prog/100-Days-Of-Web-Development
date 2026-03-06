@@ -1,99 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FlowBoard</title>
-  <meta name="description" content="FlowBoard - A streamlined task management and Kanban board application." />
-  <link rel="stylesheet" href="style.css" />
-  <script type="module" src="js/app.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowBoard</title>
+
+<style>
+:root{
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#fff;
+  --primary:#38bdf8;
+}
+.light{
+  --bg:#f5f5f5;
+  --card:#ffffff;
+  --text:#111;
+  --primary:#2563eb;
+}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  padding:20px;
+  background:var(--card);
+}
+.theme-toggle{
+  padding:8px 15px;
+  border:none;
+  border-radius:20px;
+  background:var(--primary);
+  cursor:pointer;
+}
+.board{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  padding:40px;
+  flex-wrap:wrap;
+}
+.column{
+  background:var(--card);
+  padding:20px;
+  border-radius:15px;
+  width:300px;
+  min-height:400px;
+  display:flex;
+  flex-direction:column;
+}
+.column h2{
+  margin-bottom:15px;
+}
+.task-list{
+  flex:1;
+}
+.task{
+  background:var(--bg);
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:10px;
+  cursor:pointer;
+  position:relative;
+  transition:0.3s;
+}
+.task:hover{
+  transform:scale(1.03);
+}
+.delete-btn{
+  position:absolute;
+  top:8px;
+  right:10px;
+  background:red;
+  border:none;
+  color:white;
+  border-radius:50%;
+  width:22px;
+  height:22px;
+  cursor:pointer;
+}
+.add-btn{
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:var(--primary);
+  cursor:pointer;
+}
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.hidden{
+  display:none;
+}
+.modal-content{
+  background:var(--card);
+  padding:20px;
+  border-radius:10px;
+  width:300px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.modal-content input,
+.modal-content textarea,
+.modal-content select{
+  padding:8px;
+  border-radius:6px;
+  border:1px solid var(--primary);
+  background:var(--bg);
+  color:var(--text);
+}
+.modal-content button{
+  padding:8px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+.primary-btn{
+  background:var(--primary);
+}
+.secondary-btn{
+  background:gray;
+  color:white;
+}
+.footer{
+  text-align:center;
+  padding:20px;
+}
+#progress-bar{
+  width:60%;
+  height:20px;
+  background:#ccc;
+  margin:10px auto;
+  border-radius:20px;
+  overflow:hidden;
+}
+#progress-fill{
+  height:100%;
+  width:0%;
+  background:var(--primary);
+  transition:0.3s;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <h1>FlowBoard</h1>
-    <div class="nav-actions">
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-        🌙
-      </button>
+<nav class="navbar">
+<h1>FlowBoard</h1>
+<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+</nav>
 
-    </div>
-  </nav>
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+<div class="modal-content">
+<h3>New Task</h3>
+<input id="title" placeholder="Task title">
+<textarea id="desc" placeholder="Description"></textarea>
+<select id="priority">
+<option value="Low">Low</option>
+<option value="Medium">Medium</option>
+<option value="High">High</option>
+</select>
+<button class="primary-btn" onclick="addTask()">Add</button>
+<button class="secondary-btn" onclick="closeModal()">Cancel</button>
+</div>
+</div>
 
-  <!-- TASK MODAL -->
-  <div id="task-modal" class="modal hidden">
-    <div class="modal-content">
-      <h2>New Task</h2>
+<!-- BOARD -->
+<div class="board">
 
-      <input type="text" id="task-title" placeholder="Task title" autocomplete="off" />
+<div class="column">
+<h2>To-Do</h2>
+<div class="task-list" id="todo-list"></div>
+<button class="add-btn" onclick="openModal('todo')">+ Add Task</button>
+</div>
 
-      <textarea id="task-desc" placeholder="Description" rows="3"></textarea>
+<div class="column">
+<h2>Done</h2>
+<div class="task-list" id="done-list"></div>
+<button class="add-btn" onclick="openModal('done')">+ Add Task</button>
+</div>
 
-      <select id="task-priority">
-        <option value="low">Low Priority</option>
-        <option value="medium" selected>Medium Priority</option>
-        <option value="high">High Priority</option>
-      </select>
+</div>
 
-      <div class="modal-actions">
-        <button id="save-task" class="primary-btn">Add Task</button>
-        <button class="secondary-btn" onclick="closeModal()">Cancel</button>
-      </div>
-    </div>
-  </div>
+<footer class="footer">
+<h3>Progress</h3>
+<div id="progress-bar">
+<div id="progress-fill"></div>
+</div>
+<p id="progress-text">0%</p>
+</footer>
 
-  <!-- BOARD -->
-  <main class="board">
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let currentStatus = "todo";
 
-    <section class="column" id="todo" ondragover="allowDrop(event)" ondrop="drop(event)">
+function toggleTheme(){
+  document.body.classList.toggle("light");
+}
 
-      <header class="column-header">
-        <h2>To-Do</h2>
-      </header>
+function openModal(status){
+  currentStatus = status;
+  document.getElementById("modal").classList.remove("hidden");
+}
 
-      <div class="task-list"></div>
+function closeModal(){
+  document.getElementById("modal").classList.add("hidden");
+}
 
-      <button class="add-btn" onclick="openModal('todo')">
-        + Add Task
-      </button>
-    </section>
+function addTask(){
+  const title = document.getElementById("title").value.trim();
+  const desc = document.getElementById("desc").value.trim();
+  const priority = document.getElementById("priority").value;
 
-    <section class="column" id="progress" ondragover="allowDrop(event)" ondrop="drop(event)">
-      <header class="column-header">
-        <h2>In Progress</h2>
-      </header>
+  if(title === ""){
+    alert("Task title required!");
+    return;
+  }
 
-      <div class="task-list"></div>
+  const task = {
+    id: Date.now(),
+    title,
+    desc,
+    priority,
+    status: currentStatus
+  };
 
-      <button class="add-btn" onclick="openModal('progress')">
-        + Add Task
-      </button>
-    </section>
+  tasks.push(task);
+  saveTasks();
 
-    <section class="column" id="done" ondragover="allowDrop(event)" ondrop="drop(event)">
-      <header class="column-header">
-        <h2>Done</h2>
-      </header>
+  document.getElementById("title").value="";
+  document.getElementById("desc").value="";
+  closeModal();
+  renderTasks();
+}
 
-      <div class="task-list"></div>
+function deleteTask(id){
+  tasks = tasks.filter(task => task.id !== id);
+  saveTasks();
+  renderTasks();
+}
 
-      <button class="add-btn" onclick="openModal('done')">
-        + Add Task
-      </button>
-    </section>
+function toggleDone(id){
+  tasks = tasks.map(task => {
+    if(task.id === id){
+      task.status = task.status === "done" ? "todo" : "done";
+    }
+    return task;
+  });
+  saveTasks();
+  renderTasks();
+}
 
-  </main>
+function saveTasks(){
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
-  <!-- FOOTER / PROGRESS -->
-  <footer class="footer">
-    <p class="progress-label">Progress</p>
-    <div id="progress-bar">
-      <div id="progress-text">0%</div>
-    </div>
-  </footer>
+function renderTasks(){
+  document.getElementById("todo-list").innerHTML="";
+  document.getElementById("done-list").innerHTML="";
+
+  tasks.forEach(task=>{
+    const div=document.createElement("div");
+    div.className="task";
+    div.innerHTML=`
+      <strong>${task.title}</strong>
+      <small>${task.desc}</small>
+      <small>Priority: ${task.priority}</small>
+      <button class="delete-btn" onclick="deleteTask(${task.id})">×</button>
+    `;
+    div.onclick = () => toggleDone(task.id);
+
+    if(task.status==="todo"){
+      document.getElementById("todo-list").appendChild(div);
+    } else {
+      document.getElementById("done-list").appendChild(div);
+    }
+  });
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = tasks.length;
+  const done = tasks.filter(t=>t.status==="done").length;
+  const percent = total===0 ? 0 : Math.round((done/total)*100);
+  document.getElementById("progress-fill").style.width = percent+"%";
+  document.getElementById("progress-text").innerText = percent+"% Completed";
+}
+
+renderTasks();
+</script>
 
 </body>
-
 </html>
