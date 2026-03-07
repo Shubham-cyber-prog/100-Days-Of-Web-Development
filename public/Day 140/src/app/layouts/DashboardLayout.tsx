@@ -25,6 +25,11 @@ import {
   User,
   CreditCard,
   Menu,
+  FlaskConical,
+  Eye,
+  Clock,
+  Shield,
+  UserCircle,
 } from "lucide-react";
 import { cn } from "../components/ui/utils";
 import MobileNav from "../components/MobileNav";
@@ -37,6 +42,17 @@ const navigation = [
   { name: "Audience", href: "/audience", icon: Users },
   { name: "Templates", href: "/templates", icon: FileText },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
+];
+
+const advancedFeatures = [
+  { name: "A/B Testing", href: "/ab-testing", icon: FlaskConical },
+  { name: "Email Preview", href: "/preview", icon: Eye },
+  { name: "Send Time Optimizer", href: "/send-time", icon: Clock },
+  { name: "Deliverability", href: "/deliverability", icon: Shield },
+  { name: "Contacts", href: "/contacts", icon: UserCircle },
+];
+
+const settingsNav = [
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 
@@ -67,26 +83,78 @@ export default function DashboardLayout() {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-1 p-4">
-            {navigation.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.href);
-              return (
-                <button
-                  key={item.name}
-                  onClick={() => navigate(item.href)}
-                  className={cn(
-                    "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
-                    active
-                      ? "bg-primary text-white"
-                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                  )}
-                >
-                  <Icon className="w-5 h-5" />
-                  {item.name}
-                </button>
-              );
-            })}
+          <nav className="flex-1 space-y-6 p-4 overflow-y-auto">
+            {/* Main Navigation */}
+            <div className="space-y-1">
+              {navigation.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.href);
+                return (
+                  <button
+                    key={item.name}
+                    onClick={() => navigate(item.href)}
+                    className={cn(
+                      "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
+                      active
+                        ? "bg-primary text-white"
+                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    )}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Advanced Features Section */}
+            <div className="space-y-1">
+              <h3 className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                Advanced Features
+              </h3>
+              {advancedFeatures.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.href);
+                return (
+                  <button
+                    key={item.name}
+                    onClick={() => navigate(item.href)}
+                    className={cn(
+                      "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
+                      active
+                        ? "bg-primary text-white"
+                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    )}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Settings */}
+            <div className="space-y-1">
+              {settingsNav.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.href);
+                return (
+                  <button
+                    key={item.name}
+                    onClick={() => navigate(item.href)}
+                    className={cn(
+                      "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
+                      active
+                        ? "bg-primary text-white"
+                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    )}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
           </nav>
 
           {/* User Profile */}

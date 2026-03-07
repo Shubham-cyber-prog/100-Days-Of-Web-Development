@@ -5,6 +5,9 @@ import { Upload } from './pages/Upload';
 import { ReviewResults } from './pages/ReviewResults';
 import { History } from './pages/History';
 import { Settings } from './pages/Settings';
+import { BatchAnalysis } from './pages/BatchAnalysis';
+import { AIChat } from './pages/AIChat';
+import { CodeComparison } from './pages/CodeComparison';
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +19,9 @@ export const router = createBrowserRouter([
       { path: 'review/:id', Component: ReviewResults },
       { path: 'history', Component: History },
       { path: 'settings', Component: Settings },
+      { path: 'batch', Component: BatchAnalysis },
+      { path: 'ai-chat', Component: AIChat },
+      { path: 'comparison', Component: CodeComparison },
     ],
   },
 ]);

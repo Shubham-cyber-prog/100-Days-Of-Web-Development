@@ -8,6 +8,11 @@ import AudiencePage from "./pages/AudiencePage";
 import TemplatesPage from "./pages/TemplatesPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import SettingsPage from "./pages/SettingsPage";
+import ABTestingPage from "./pages/ABTestingPage";
+import EmailPreviewPage from "./pages/EmailPreviewPage";
+import SendTimeOptimizerPage from "./pages/SendTimeOptimizerPage";
+import DeliverabilityPage from "./pages/DeliverabilityPage";
+import ContactManagerPage from "./pages/ContactManagerPage";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +30,11 @@ export const router = createBrowserRouter([
       { path: "templates", Component: TemplatesPage },
       { path: "analytics", Component: AnalyticsPage },
       { path: "settings", Component: SettingsPage },
+      { path: "ab-testing", Component: ABTestingPage },
+      { path: "preview", Component: EmailPreviewPage },
+      { path: "send-time", Component: SendTimeOptimizerPage },
+      { path: "deliverability", Component: DeliverabilityPage },
+      { path: "contacts", Component: ContactManagerPage },
     ],
   },
 ]);

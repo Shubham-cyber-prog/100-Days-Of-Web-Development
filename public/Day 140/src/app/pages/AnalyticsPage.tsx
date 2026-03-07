@@ -51,6 +51,8 @@ const engagementData = [
   { name: "Inactive", value: 5, color: "#EF4444" },
 ];
 
+const COLORS = ["#22C55E", "#4F46E5", "#F59E0B", "#EF4444"];
+
 const deviceData = [
   { device: "Mobile", opens: 12500 },
   { device: "Desktop", opens: 8900 },
@@ -143,7 +145,7 @@ export default function AnalyticsPage() {
             <CardDescription>Performance over time</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={openRateTrendData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
@@ -186,7 +188,7 @@ export default function AnalyticsPage() {
             <CardDescription>Best performing campaigns</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={clickPerformanceData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
@@ -213,7 +215,7 @@ export default function AnalyticsPage() {
             <CardDescription>Distribution by engagement level</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -227,7 +229,7 @@ export default function AnalyticsPage() {
                     dataKey="value"
                   >
                     {engagementData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip
@@ -250,7 +252,7 @@ export default function AnalyticsPage() {
             <CardDescription>Device usage breakdown</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={deviceData} layout="vertical">
                   <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
