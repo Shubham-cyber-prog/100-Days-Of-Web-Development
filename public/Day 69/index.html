@@ -2,93 +2,173 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>ShopEase – Open Source E-Commerce</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    :root {
-      --shop-accent: #6d28d9;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    html {
-      scroll-behavior: smooth;
-    }
+<title>🛍 ShopEase – Open Source Store</title>
 
-    header {
-      backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
+<link rel="stylesheet" href="style.css">
 
-    .cart-btn {
-      background: var(--shop-accent);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 99px;
-      cursor: pointer;
-    }
-  </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Quicksand:wght@600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-  <header>
-    <h1>🛍️ ShopEase</h1>
+<!-- NAVBAR -->
 
-    <input type="text" placeholder="Search products..." onkeyup="searchProducts(this.value)"
-      aria-label="Search for products">
+<div class="navbar">
 
-    <select onchange="filterByCategory(this.value)" aria-label="Filter products by category">
-      <option value="All">All</option>
-      <option value="Electronics">Electronics</option>
-      <option value="Accessories">Accessories</option>
-      <option value="Fashion">Fashion</option>
-      <option value="Home">Home</option>
-    </select>
+<div class="logo">🛍 ShopEase</div>
+
+<div class="nav-links">
+
+<a onclick="showPage('home')">Home</a>
+<a onclick="showPage('shop')">Shop</a>
+<a onclick="showPage('categories')">Categories</a>
+<a onclick="showPage('about')">About</a>
+<a onclick="showPage('contact')">Contact</a>
+
+</div>
+
+<div class="cart">
+🛒 Cart (<span id="cartCount">0</span>)
+</div>
+
+</div>
 
 
-  <div class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
-  <button onclick="toggleTheme()">🌙</button>
-</header>
+<!-- HOME PAGE -->
 
-    <div class="cart-btn" onclick="openCart()" aria-label="View shopping cart">🛒 Cart (<span id="cartCount">0</span>)
-    </div>
-  </header>
+<div id="home" class="page active">
+
+<section class="hero">
+
+<h1>Modern Open Source Store</h1>
+
+<p>Build your own e-commerce store quickly using this template.</p>
+
+<button onclick="showPage('shop')">Start Shopping</button>
+
+</section>
+
+</div>
 
 
-  <section class="products" id="productList"></section>
+<!-- SHOP PAGE -->
 
-  <!-- PRODUCT MODAL -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <img id="modalImg" />
-      <h3 id="modalName"></h3>
-      <p id="modalPrice"></p>
-      <button onclick="addToCart()">Add to Cart</button>
-      <button class="close-btn" onclick="closeModal()">Close</button>
-    </div>
-  </div>
+<div id="shop" class="page">
 
-  <!-- CART -->
-  <section class="cart-page" id="cartPage">
-    <h2>Your Cart</h2>
-    <div id="cartItems"></div>
-    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
-  </section>
+<section class="section">
 
-  <!-- CHECKOUT -->
-  <section class="checkout-page" id="checkoutPage">
-    <h2>Checkout</h2>
-    <input placeholder="Full Name">
-    <input placeholder="Address">
-    <input placeholder="Card Number">
-    <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
-  </section>
+<h2 class="section-title">Featured Products</h2>
 
-  <script src="script.js"></script>
+<div class="product-grid">
+
+<div class="product-card">
+<img src="https://picsum.photos/300?1">
+<h3>Wireless Headphones</h3>
+<p>₹2999</p>
+<button onclick="addCart()">Add to Cart</button>
+</div>
+
+<div class="product-card">
+<img src="https://picsum.photos/300?2">
+<h3>Smart Watch</h3>
+<p>₹3999</p>
+<button onclick="addCart()">Add to Cart</button>
+</div>
+
+<div class="product-card">
+<img src="https://picsum.photos/300?3">
+<h3>Sneakers</h3>
+<p>₹1999</p>
+<button onclick="addCart()">Add to Cart</button>
+</div>
+
+<div class="product-card">
+<img src="https://picsum.photos/300?4">
+<h3>Backpack</h3>
+<p>₹1499</p>
+<button onclick="addCart()">Add to Cart</button>
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- CATEGORIES -->
+
+<div id="categories" class="page">
+
+<section class="section">
+
+<h2 class="section-title">Categories</h2>
+
+<div class="category-grid">
+
+<div class="category-card">Electronics</div>
+<div class="category-card">Fashion</div>
+<div class="category-card">Accessories</div>
+<div class="category-card">Home</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- ABOUT -->
+
+<div id="about" class="page">
+
+<section class="section">
+
+<div class="info">
+
+<h2>About ShopEase</h2>
+
+<p>
+This open source template helps developers quickly build e-commerce websites.
+</p>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- CONTACT -->
+
+<div id="contact" class="page">
+
+<section class="section">
+
+<div class="info">
+
+<h2>Contact</h2>
+
+<p>Email: support@shopease.com</p>
+
+</div>
+
+</section>
+
+</div>
+
+
+<footer>
+
+© 2026 ShopEase Open Source Template
+
+</footer>
+
+<script src="script.js"></script>
+
 </body>
-
 </html>
