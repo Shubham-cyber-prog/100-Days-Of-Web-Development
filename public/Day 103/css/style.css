@@ -40,6 +40,7 @@ body {
 /* =====================
    LAYOUT
 ===================== */
+
 .app-shell {
   display: flex;
   height: 100vh;
@@ -48,18 +49,26 @@ body {
 /* =====================
    SIDEBAR
 ===================== */
+
 .sidebar {
-  width: 220px;
+  width: 240px;
   background: var(--sidebar);
-  padding: 1rem;
+  padding: 1.4rem 1rem;
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
 }
 
 .sidebar h1 {
-  font-size: 1rem;
-  margin-bottom: 1.2rem;
+  font-size: 1.1rem;
+  margin-bottom: 1.4rem;
+  color: var(--text);
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .sidebar-footer {
@@ -68,19 +77,18 @@ body {
   border-top: 1px solid var(--border);
 }
 
+/* NAV ITEMS */
 
 .nav-item {
-  padding: 0.6rem 0.85rem;
+  padding: 0.65rem 0.9rem;
   border-radius: 10px;
   border: none;
   background: transparent;
   cursor: pointer;
   text-align: left;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
 
-  /* NEW */
-  margin-bottom: 0.35rem;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
@@ -98,32 +106,36 @@ body {
 /* =====================
    WORKSPACE
 ===================== */
+
 .workspace {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 1.2rem;
-  padding: 1.2rem;
+  grid-template-columns: 1fr 420px;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  overflow-y: auto;
 }
 
 /* =====================
-   EDITOR (PRIMARY)
+   EDITOR
 ===================== */
+
 .editor {
   background: var(--card);
   border-radius: 14px;
-  padding: 1.4rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 1.6rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   overflow-y: auto;
 }
 
 .editor h2 {
   margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 .editor h3 {
   margin-top: 2rem;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
@@ -131,19 +143,20 @@ body {
 }
 
 .editor hr {
-  margin: 1.5rem 0;
+  margin: 1.6rem 0;
   border: none;
   border-top: 1px solid var(--border);
 }
 
 /* =====================
-   INPUTS (FIXED)
+   INPUTS
 ===================== */
+
 input,
 textarea {
   width: 100%;
-  padding: 0.75rem 0.85rem;
-  margin-bottom: 0.75rem;
+  padding: 0.8rem 0.9rem;
+  margin-bottom: 0.9rem;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -152,19 +165,20 @@ textarea {
 }
 
 textarea {
-  min-height: 100px;
+  min-height: 110px;
+  resize: vertical;
 }
 
 /* =====================
-   BADGES (CALM)
+   BADGES
 ===================== */
-/* BADGES – checkbox on the right */
+
 .checkbox-group {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem 1rem;
-  background: #fafafa;
-  padding: 0.8rem;
+  gap: 0.7rem 1rem;
+  background: var(--surface);
+  padding: 0.9rem;
   border-radius: 10px;
   border: 1px solid var(--border);
 }
@@ -173,65 +187,34 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* 👈 THIS moves checkbox to right */
-  gap: 0.5rem;
   font-size: 0.9rem;
   cursor: pointer;
-  padding: 0.3rem 0.4rem;
+  padding: 0.35rem 0.45rem;
 }
 
 .checkbox-group span {
   order: 1;
-  /* text first */
 }
 
 .checkbox-group input {
   order: 2;
-  /* checkbox last (right side) */
   accent-color: var(--primary);
 }
 
-/* =====================
-   BADGES – DARK MODE FIX
-===================== */
 body.dark .checkbox-group {
   background: var(--surface);
-  /* dark surface */
-  border: 1px solid var(--border);
 }
-
-body.dark .checkbox-group label {
-  color: var(--text);
-  /* full contrast text */
-}
-
-body.dark .checkbox-group span {
-  color: var(--text);
-  /* badge label text */
-}
-
-body.dark .checkbox-group input {
-  accent-color: var(--primary);
-  /* blue checkbox */
-}
-
-body.dark .checkbox-group label:hover {
-  background: rgba(37, 99, 235, 0.08);
-  border-radius: 6px;
-}
-
 
 /* =====================
    BUTTONS
 ===================== */
+
 .btn-group {
   display: flex;
-  gap: 0.8rem;
-  /* was 0.6rem */
-  margin-top: 0.8rem;
+  gap: 0.9rem;
+  margin-top: 1rem;
   flex-wrap: wrap;
 }
-
 
 button {
   padding: 0.7rem 1rem;
@@ -241,7 +224,6 @@ button {
   color: var(--text);
   cursor: pointer;
   font-size: 0.9rem;
-
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
@@ -250,7 +232,7 @@ button:hover {
 }
 
 button:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 button.primary {
@@ -263,17 +245,23 @@ button.primary:hover {
   background: #1d4ed8;
 }
 
-
 /* =====================
-   PREVIEW (SECONDARY)
+   PREVIEW PANEL
 ===================== */
+
 .preview-panel {
   background: var(--card);
   border-radius: 14px;
-  padding: 1.2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 1.4rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   overflow-y: auto;
 }
+
+.preview-panel h2 {
+  margin-top: 0;
+}
+
+/* EMPTY STATE */
 
 .preview-empty {
   margin-top: 3rem;
@@ -282,12 +270,13 @@ button.primary:hover {
 }
 
 /* =====================
-   SCORE
+   SCORE BOX
 ===================== */
+
 .score-box {
   background: var(--surface);
   border-radius: 12px;
-  padding: 0.8rem;
+  padding: 0.9rem;
   margin-bottom: 1rem;
 }
 
@@ -308,12 +297,27 @@ button.primary:hover {
 /* =====================
    RESPONSIVE
 ===================== */
-@media (max-width: 900px) {
+
+@media (max-width: 1000px) {
+
   .workspace {
     grid-template-columns: 1fr;
   }
 
   .preview-panel {
-    display: none;
+    margin-top: 1rem;
   }
+
+}
+
+@media (max-width: 700px) {
+
+  .sidebar {
+    width: 200px;
+  }
+
+  .editor {
+    padding: 1.2rem;
+  }
+
 }
