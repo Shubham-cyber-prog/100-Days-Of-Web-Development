@@ -11,6 +11,11 @@ import Projects from "./pages/projects/Projects";
 import Messages from "./pages/messages/Messages";
 import Settings from "./pages/settings/Settings";
 import DesignSystem from "./pages/design-system/DesignSystem";
+import Notifications from "./pages/notifications/Notifications";
+import Activity from "./pages/activity/Activity";
+import Team from "./pages/team/Team";
+import Reports from "./pages/reports/Reports";
+import Profile from "./pages/profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +35,11 @@ const router = createBrowserRouter([
       { path: "users", element: <Users /> },
       { path: "projects", element: <Projects /> },
       { path: "messages", element: <Messages /> },
+      { path: "notifications", element: <Notifications /> },
+      { path: "activity", element: <Activity /> },
+      { path: "team", element: <Team /> },
+      { path: "reports", element: <Reports /> },
+      { path: "profile", element: <Profile /> },
       { path: "settings", element: <Settings /> },
       { path: "design-system", element: <DesignSystem /> },
     ],
