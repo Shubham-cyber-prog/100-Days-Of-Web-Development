@@ -36,29 +36,29 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 
 const viewsData = [
-  { date: "Feb 17", views: 4200, uniqueVisitors: 2800 },
-  { date: "Feb 18", views: 3800, uniqueVisitors: 2500 },
-  { date: "Feb 19", views: 5100, uniqueVisitors: 3200 },
-  { date: "Feb 20", views: 4600, uniqueVisitors: 3000 },
-  { date: "Feb 21", views: 5800, uniqueVisitors: 3800 },
-  { date: "Feb 22", views: 6200, uniqueVisitors: 4100 },
-  { date: "Feb 23", views: 5400, uniqueVisitors: 3600 },
+  { id: "v1", date: "Feb 17", views: 4200, uniqueVisitors: 2800 },
+  { id: "v2", date: "Feb 18", views: 3800, uniqueVisitors: 2500 },
+  { id: "v3", date: "Feb 19", views: 5100, uniqueVisitors: 3200 },
+  { id: "v4", date: "Feb 20", views: 4600, uniqueVisitors: 3000 },
+  { id: "v5", date: "Feb 21", views: 5800, uniqueVisitors: 3800 },
+  { id: "v6", date: "Feb 22", views: 6200, uniqueVisitors: 4100 },
+  { id: "v7", date: "Feb 23", views: 5400, uniqueVisitors: 3600 },
 ];
 
 const categoryData = [
-  { name: "Development", value: 45, color: "#4f46e5" },
-  { name: "Backend", value: 32, color: "#10b981" },
-  { name: "Design", value: 28, color: "#ec4899" },
-  { name: "Security", value: 19, color: "#ef4444" },
-  { name: "DevOps", value: 24, color: "#f59e0b" },
+  { id: "cat1", name: "Development", value: 45, color: "#4f46e5" },
+  { id: "cat2", name: "Backend", value: 32, color: "#10b981" },
+  { id: "cat3", name: "Design", value: 28, color: "#ec4899" },
+  { id: "cat4", name: "Security", value: 19, color: "#ef4444" },
+  { id: "cat5", name: "DevOps", value: 24, color: "#f59e0b" },
 ];
 
 const engagementData = [
-  { month: "Oct", articles: 12, views: 24000, avgTime: 4.2 },
-  { month: "Nov", articles: 18, views: 32000, avgTime: 4.5 },
-  { month: "Dec", articles: 22, views: 41000, avgTime: 4.8 },
-  { month: "Jan", articles: 28, views: 52000, avgTime: 5.1 },
-  { month: "Feb", articles: 35, views: 67000, avgTime: 5.4 },
+  { id: "e1", month: "Oct", articles: 12, views: 24000, avgTime: 4.2 },
+  { id: "e2", month: "Nov", articles: 18, views: 32000, avgTime: 4.5 },
+  { id: "e3", month: "Dec", articles: 22, views: 41000, avgTime: 4.8 },
+  { id: "e4", month: "Jan", articles: 28, views: 52000, avgTime: 5.1 },
+  { id: "e5", month: "Feb", articles: 35, views: 67000, avgTime: 5.4 },
 ];
 
 const topArticles = [
@@ -256,7 +256,6 @@ export function AnalyticsPage() {
                       <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                   <XAxis
                     dataKey="date"
                     tick={{ fontSize: 12 }}
@@ -344,7 +343,6 @@ export function AnalyticsPage() {
           <CardContent>
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={engagementData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="#9ca3af" />
                 <YAxis tick={{ fontSize: 12 }} stroke="#9ca3af" />
                 <Tooltip
