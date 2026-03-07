@@ -1,33 +1,132 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TaskMaster | Advanced Kanban Project Management</title>
-  <link rel="stylesheet" href="style.css" />
 
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8">
+<title>Ultimate Kanban Board</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Quicksand:wght@600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-  <div id="root"></div>
 
-  <!-- React and ReactDOM from CDN -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<header class="navbar">
 
-  <!-- Babel Standalone for JSX transformation -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<h2>Ultimate Kanban Board</h2>
 
-  <!-- SortableJS removed in favor of native implementation -->
+<div class="nav-tools">
 
-  <!-- Main Application Script -->
-  <script type="text/babel" src="script.js"></script>
+<input id="search" placeholder="Search tasks...">
+
+<button onclick="toggleDark()">🌙</button>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<h1>Ultimate Kanban Board</h1>
+
+<p>Drag-drop tasks, labels, team collaboration</p>
+
+</section>
+
+
+<section class="board">
+
+<div class="column">
+
+<h3>To Do</h3>
+
+<div class="task-list" id="todo"></div>
+
+<button onclick="openModal('todo')">+ Add Task</button>
+
+</div>
+
+
+<div class="column">
+
+<h3>In Progress</h3>
+
+<div class="task-list" id="progress"></div>
+
+<button onclick="openModal('progress')">+ Add Task</button>
+
+</div>
+
+
+<div class="column">
+
+<h3>Done</h3>
+
+<div class="task-list" id="done"></div>
+
+<button onclick="openModal('done')">+ Add Task</button>
+
+</div>
+
+</section>
+
+
+<!-- MODAL -->
+
+<div id="modal" class="modal">
+
+<div class="modal-content">
+
+<h3>Task Details</h3>
+
+<input id="taskTitle" placeholder="Task title">
+
+<input id="taskDate" type="date">
+
+<select id="taskPriority">
+
+<option value="">Priority</option>
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+
+</select>
+
+<select id="taskLabel">
+
+<option value="">Label</option>
+<option value="green">Feature</option>
+<option value="blue">UI</option>
+<option value="red">Bug</option>
+
+</select>
+
+<select id="taskAvatar">
+
+<option value="">Assign Member</option>
+<option value="🧑‍💻">Dev</option>
+<option value="🎨">Designer</option>
+<option value="📊">Manager</option>
+
+</select>
+
+<div class="modal-buttons">
+
+<button onclick="saveTask()">Save</button>
+<button onclick="closeModal()">Cancel</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="script.js"></script>
+
 </body>
-
 </html>
