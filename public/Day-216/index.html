@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deep Nebula | Procedural Universe Explorer</title>
+    <link rel="stylesheet" href="styles/nav.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <canvas id="universe-canvas"></canvas>
+
+    <div id="ui-layer">
+        <div id="hud">
+            <div class="hud-panel stats-group">
+                <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--accent);">DEEP NEBULA</h2>
+                <div>COORDS [X]: <span id="pos-x">0</span></div>
+                <div>COORDS [Y]: <span id="pos-y">0</span></div>
+                <div>SCALE: <span id="zoom-val">1.0</span> LY</div>
+            </div>
+
+            <div id="sidebar" class="hud-panel">
+                <h4 style="font-size: 0.8rem; margin-bottom: 0.75rem; color: var(--text-dim);">LOCATIONS</h4>
+                <div id="bookmark-list"></div>
+                <button id="btn-add-bookmark" style="width: 100%; margin-top: 1rem;">Bookmark Position</button>
+            </div>
+        </div>
+
+        <div id="controls">
+            <button id="btn-home">RESET CAMERA</button>
+            <button id="btn-random">RANDOM GALAXY</button>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="scripts/noise.js"></script>
+    <script src="scripts/camera.js"></script>
+    <script src="scripts/galaxy.js"></script>
+    <script src="scripts/starSystem.js"></script>
+    <script src="scripts/render.js"></script>
+    <script src="scripts/bookmarks.js"></script>
+
+    <script>
+        class App {
+            constructor() {
+                this.canvas = document.getElementById('universe-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.resize();
+
+                this.camera = new Camera(this.canvas);
+                this.renderer = new UniverseRenderer(this.canvas, this.ctx);
+                this.bookmarks = new BookmarkManager();
+
+                this.galaxy = new Galaxy(42);
+                this.systems = []; // Star systems discovered
+
+                this.isDragging = false;
+                this.lastMouse = { x: 0, y: 0 };
+
+                this.init();
+            }
+
+            init() {
+                window.addEventListener('resize', () => this.resize());
+                this.setupEvents();
+                this.bookmarks.renderList();
+                this.loop();
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            setupEvents() {
+                window.addEventListener('wheel', (e) => {
+                    const factor = e.deltaY > 0 ? 1.1 : 0.9;
+                    this.camera.zoomAt(e.clientX, e.clientY, factor);
+                });
+
+                window.addEventListener('mousedown', (e) => {
+                    this.isDragging = true;
+                    this.lastMouse = { x: e.clientX, y: e.clientY };
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if (this.isDragging) {
+                        const dx = e.clientX - this.lastMouse.x;
+                        const dy = e.clientY - this.lastMouse.y;
+                        this.camera.x -= dx * this.camera.zoom;
+                        this.camera.y -= dy * this.camera.zoom;
+                        this.lastMouse = { x: e.clientX, y: e.clientY };
+                    }
+                });
+
+                window.addEventListener('mouseup', () => this.isDragging = false);
+
+                document.getElementById('btn-home').onclick = () => this.goto(0, 0, 1.0);
+                document.getElementById('btn-random').onclick = () => {
+                    this.galaxy = new Galaxy(Math.random() * 1000000);
+                    this.goto(0, 0, 1.0);
+                };
+
+                document.getElementById('btn-add-bookmark').onclick = () => {
+                    const name = prompt("Bookmark Name:", "Discovery");
+                    if (name) this.bookmarks.save(name, this.camera.x, this.camera.y, this.camera.zoom);
+                };
+            }
+
+            goto(x, y, zoom) {
+                this.camera.x = x;
+                this.camera.y = y;
+                this.camera.targetZoom = zoom;
+                this.camera.zoom = zoom;
+            }
+
+            loop() {
+                this.camera.update();
+
+                // Clear and render
+                this.ctx.fillStyle = '#020617';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                this.renderer.drawParallaxLayers(this.camera);
+                this.renderer.drawNebula(this.camera);
+
+                // Draw Galaxy stars
+                this.galaxy.render(this.ctx, this.camera);
+
+                // Discovered systems (Mock local clusters)
+                // When zoom is deep enough, show procedural systems
+                if (this.camera.zoom < 0.5) {
+                    // Logic to find/gen systems near current camera would go here
+                    // Simple example with one system at 100, 100
+                    if (!this.mainSystem) this.mainSystem = new StarSystem(99, 100, 100);
+                    this.mainSystem.update(0.016);
+                    this.mainSystem.render(this.ctx, this.camera);
+                }
+
+                this.updateHUD();
+                requestAnimationFrame(() => this.loop());
+            }
+
+            updateHUD() {
+                document.getElementById('pos-x').textContent = Math.round(this.camera.x);
+                document.getElementById('pos-y').textContent = Math.round(this.camera.y);
+                document.getElementById('zoom-val').textContent = this.camera.zoom.toFixed(4);
+            }
+        }
+
+        window.onload = () => { window.app = new App(); };
+    </script>
+</body>
+
+</html>
+Riverside:

@@ -1,0 +1,138 @@
+/* Side Panel Styling */
+.side-panel {
+    width: 300px;
+    background: var(--bg-dark);
+    border-left: 3px solid var(--accent);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-section {
+    padding: 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.panel-section h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+/* Inventory */
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.inventory-slot {
+    aspect-ratio: 1;
+    background: var(--bg-darker);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.inventory-slot:hover {
+    border-color: var(--accent);
+    transform: scale(1.05);
+}
+
+.inventory-slot.selected {
+    border-color: var(--xp);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.inventory-slot.empty {
+    opacity: 0.3;
+}
+
+.inventory-slot .item-icon {
+    font-size: 2rem;
+}
+
+.inventory-slot .item-count {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 0.8rem;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+/* Player Stats */
+.player-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    padding: 0.3rem;
+    background: var(--bg-darker);
+    border: 1px solid var(--border);
+}
+
+.stat-row span:last-child {
+    color: var(--health);
+    font-weight: bold;
+}
+
+/* Controls Info */
+.controls-info {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.controls-info p {
+    margin: 0.3rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Item Tooltip */
+.item-tooltip {
+    position: absolute;
+    background: var(--bg-dark);
+    border: 2px solid var(--accent);
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.item-tooltip .item-name {
+    color: var(--xp);
+    font-weight: bold;
+}
+
+.item-tooltip .item-effect {
+    color: var(--health);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .side-panel {
+        width: 100%;
+        max-height: 300px;
+        border-left: none;
+        border-top: 3px solid var(--accent);
+    }
+
+    .inventory-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}

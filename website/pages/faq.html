@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FAQ | 100 Days of Web Development</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#000;
+  color:#fff;
+  font-family:'Inter',sans-serif;
+}
+
+/* NAV */
+.nav-links{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  padding:20px 0;
+}
+
+.nav-link{
+  text-decoration:none;
+  color:#aaa;
+  font-weight:500;
+}
+
+.nav-link:hover{
+  color:#4aa3ff;
+}
+
+/* MAIN */
+.faq-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
+.faq-container{
+  width:100%;
+  max-width:1000px;
+  padding:60px 20px 80px;
+}
+
+/* HEADER */
+.faq-header{
+  text-align:center;
+  margin-bottom:50px;
+}
+
+.faq-header h1{
+  font-size:3rem;
+  margin-bottom:15px;
+}
+
+.faq-header p{
+  max-width:700px;
+  margin:auto;
+  color:#bbb;
+  line-height:1.6;
+  font-size:1.1rem;
+}
+
+/* FAQ LIST */
+.faq-list{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+/* ITEM */
+.faq-item{
+  border:1px solid rgba(0,150,255,0.4);
+  border-radius:14px;
+  background:linear-gradient(145deg,#050505,#0b0b0b);
+  overflow:hidden;
+  transition:0.3s;
+}
+
+.faq-item:hover{
+  box-shadow:0 0 25px rgba(0,150,255,0.2);
+}
+
+/* QUESTION */
+.faq-question{
+  width:100%;
+  background:none;
+  border:none;
+  outline:none;
+  color:#4aa3ff;
+  padding:22px 26px;
+  font-size:1.15rem;
+  font-weight:600;
+  text-align:left;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.faq-question span{
+  font-size:1.4rem;
+  transition:0.3s;
+}
+
+/* ANSWER */
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease;
+  padding:0 26px;
+}
+
+.faq-answer p{
+  color:#ddd;
+  line-height:1.7;
+  padding-bottom:22px;
+  font-size:1rem;
+}
+
+/* ACTIVE */
+.faq-item.active .faq-answer{
+  max-height:300px;
+}
+
+.faq-item.active .faq-question span{
+  transform:rotate(180deg);
+}
+/* ===================== FOOTER ===================== */
+
+.site-footer{
+  background:#0b0b0b;
+  border-top:1px solid rgba(255,255,255,0.08);
+  margin-top:80px;
+  padding-top:60px;
+}
+
+.footer-container{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  gap:60px;
+  padding:0 20px 50px 20px;
+  flex-wrap:wrap;
+}
+
+.footer-col{
+  flex:1;
+  min-width:220px;
+}
+
+.footer-logo{
+  font-size:1.5rem;
+  margin-bottom:15px;
+}
+
+.footer-logo span{
+  color:#4da3ff;
+}
+
+.footer-desc{
+  color:#aaa;
+  line-height:1.6;
+  font-size:0.95rem;
+}
+
+.footer-col h3{
+  margin-bottom:15px;
+  font-size:1.1rem;
+  color:white;
+}
+
+.footer-col ul{
+  list-style:none;
+}
+
+.footer-col li{
+  margin-bottom:10px;
+}
+
+.footer-col a{
+  text-decoration:none;
+  color:#aaa;
+  transition:0.3s;
+}
+
+.footer-col a:hover{
+  color:#4da3ff;
+}
+
+.footer-bottom{
+  text-align:center;
+  padding:20px;
+  border-top:1px solid rgba(255,255,255,0.05);
+  color:#777;
+  font-size:0.9rem;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+  .footer-container{
+    flex-direction:column;
+    gap:40px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav class="nav-links">
+  <a href="../../index.html" class="nav-link">Home</a>
+  <a href="./projects.html" class="nav-link">Projects</a>
+  <a href="./about.html" class="nav-link">About</a>
+  <a href="./contributors.html" class="nav-link">Contributors</a>
+  <a href="./forum.html" class="nav-link">Forum</a>
+</nav>
+
+<!-- MAIN -->
+<div class="faq-wrapper">
+<main class="faq-container">
+
+  <!-- HEADER -->
+  <div class="faq-header">
+    <h1>Frequently Asked Questions</h1>
+    <p>
+      Find answers to common questions about the 100 Days of Web Development
+      project, contributions, certificates, and usage.
+    </p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What is the 100 Days of Web Development Challenge?
+        <span>⌄</span>
+      </button>
+      <div class="faq-answer">
+        <p>
+          It is a learning challenge where participants build projects daily
+          using HTML, CSS, and JavaScript to improve frontend skills.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How can I contribute to this project?
+        <span>⌄</span>
+      </button>
+      <div class="faq-answer">
+        <p>
+          You can fork the repository, create a branch, add your improvements,
+          and submit a pull request following the CONTRIBUTING guidelines.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Who can participate in this challenge?
+        <span>⌄</span>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Anyone interested in learning web development can participate,
+          regardless of experience level.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I get a contributor certificate?
+        <span>⌄</span>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Contributors can generate certificates from the Certificate Generator
+          page using their GitHub username.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Are the projects free to use?
+        <span>⌄</span>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Yes, all projects are open-source and available under the MIT License.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How is my progress tracked?
+        <span>⌄</span>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Progress is tracked through GitHub commits, project submissions,
+          and activity on the platform.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Where can I report bugs or issues?
+        <span>⌄</span>
+      </button>
+      <div class="faq-answer">
+        <p>
+          You can report bugs by opening an issue on the GitHub repository.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Is technical support available?
+        <span>⌄</span>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Support is provided through GitHub issues and the community forum.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+</div>
+
+<!-- FOOTER -->
+<!-- ===================== FOOTER ===================== -->
+
+<footer class="site-footer">
+
+  <div class="footer-container">
+
+    <!-- Brand Section -->
+    <div class="footer-col">
+      <h2 class="footer-logo">
+        100 Days of <span>Web Dev</span>
+      </h2>
+      <p class="footer-desc">
+        A community-driven platform focused on improving web development
+        skills through daily practice and structured projects.
+      </p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="footer-col">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="./projects.html">Projects</a></li>
+        <li><a href="./contributors.html">Contributors</a></li>
+        <li><a href="./structure.html">Structure</a></li>
+      </ul>
+    </div>
+
+    <!-- Legal -->
+    <div class="footer-col">
+      <h3>Legal</h3>
+      <ul>
+        <li><a href="cookie-policy.html">Cookies</a></li>
+        <li><a href="./disclaimer.html">Disclaimer</a></li>
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="./faq.html">FAQ</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 100 Days of Web Development. All rights reserved.</p>
+  </div>
+
+</footer>
+
+
+
+<!-- JS -->
+<script>
+
+const questions = document.querySelectorAll(".faq-question");
+
+questions.forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    const item = btn.parentElement;
+
+    questions.forEach(q => {
+      const otherItem = q.parentElement;
+      if (otherItem !== item) {
+        otherItem.classList.remove("active");
+      }
+    });
+
+    item.classList.toggle("active");
+
+  });
+
+});
+  document.querySelectorAll(".footer-col a").forEach(link=>{
+    link.addEventListener("click",()=>window.scrollTo(0,0));
+  });
+</script>
+
+</body>
+</html>

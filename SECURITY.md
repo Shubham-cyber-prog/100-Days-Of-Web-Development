@@ -2,20 +2,41 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+This section lists the versions of the project that are currently supported with security updates.
 
 | Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| ------- | ----------------- |
+| 5.1.x   | ✅ Supported       |
+| 5.0.x   | ❌ Not Supported   |
+| 4.0.x   | ✅ Supported       |
+| < 4.0   | ❌ Not Supported   |
+
+> :information_source: It is recommended to always use the latest supported version to ensure your project is secure.
+
+---
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability in this project, please report it **privately** to the maintainers.  
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+### How to Report
+
+- Send an email to: **[Insert security contact email here]**  
+- Include as much detail as possible about the vulnerability:  
+  - Steps to reproduce  
+  - Expected vs actual behavior  
+  - Impact assessment  
+
+### Response and Timeline
+
+- You can expect an **acknowledgment within 48 hours** of reporting.  
+- The maintainers will review the issue and provide updates as a fix is developed.  
+- Once resolved, a **security advisory** will be published, and you will be credited unless you request anonymity.  
+
+### Scope
+
+This policy applies to all versions listed as supported in the table above. Vulnerabilities reported for unsupported versions may not receive updates.
+
+---
+
+Thank you for helping keep this project secure!

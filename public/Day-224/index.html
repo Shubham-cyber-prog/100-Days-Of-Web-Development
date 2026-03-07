@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuantumSim | Visual Quantum Circuit Emulator</title>
+    <meta name="description"
+        content="A high-fidelity quantum circuit emulator. Experiment with Hadamard gates, CNOT entanglement, and Bloch Sphere state visualization." />
+    <link rel="stylesheet" href="styles/quantum.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;600;800&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="quantum-theme">
+    <div class="app-layout">
+        <!-- Sidebar Controls -->
+        <aside class="gate-palette">
+            <div class="brand">
+                <span class="logo-symbol">|Ψ⟩</span>
+                <h1>QuantumSim</h1>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>SINGLE QUBIT GATES</h3>
+                <div class="gate-tools">
+                    <div class="gate-tool h-gate" draggable="true" data-gate="H">H</div>
+                    <div class="gate-tool x-gate" draggable="true" data-gate="X">X</div>
+                    <div class="gate-tool y-gate" draggable="true" data-gate="Y">Y</div>
+                    <div class="gate-tool z-gate" draggable="true" data-gate="Z">Z</div>
+                    <div class="gate-tool s-gate" draggable="true" data-gate="S">S</div>
+                    <div class="gate-tool t-gate" draggable="true" data-gate="T">T</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>CONTROLLED GATES</h3>
+                <div class="gate-tools">
+                    <div class="gate-tool cx-gate" draggable="true" data-gate="CX">CX</div>
+                    <div class="gate-tool swap-gate" draggable="true" data-gate="SWAP">SWAP</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>QUBIT CONFIG</h3>
+                <div class="config-controls">
+                    <label>Qubits: <span id="qubit-count-val">3</span>
+                        <input type="range" id="qubit-slider" min="1" max="5" value="3">
+                    </label>
+                    <button id="btn-reset" class="btn-secondary">RESET CIRCUIT</button>
+                    <button id="btn-run" class="btn-primary">RUN EMULATION</button>
+                </div>
+            </div>
+
+            <div class="system-logs" id="quantum-logs">
+                <p>> System initialized. |000⟩</p>
+            </div>
+        </aside>
+
+        <!-- Main Workbench -->
+        <main class="workbench">
+            <header class="workbench-header">
+                <div class="circuit-status">
+                    <span class="status-indicator online"></span>
+                    <strong>EMULATOR CORE:</strong>
+                    <span id="core-status">READY</span>
+                </div>
+                <div class="circuit-meta">
+                    <span class="badge">COMPLEX MATH: ACTIVE</span>
+                    <span class="badge">TENSOR PRODUCT: ACTIVE</span>
+                </div>
+            </header>
+
+            <section class="circuit-area">
+                <div id="circuit-wire-container" class="wire-container">
+                    <!-- Dynamic Qubit wires generated here -->
+                </div>
+            </section>
+
+            <section class="data-viz-area">
+                <!-- State Probabilities -->
+                <div class="data-card prob-card">
+                    <h4>PROBABILITY AMPLITUDE</h4>
+                    <div id="probability-viz" class="prob-grid"></div>
+                </div>
+
+                <!-- Simulation Metrics -->
+                <div class="data-card state-card">
+                    <h4>STATE VECTOR |Ψ⟩</h4>
+                    <div id="state-vector-display" class="vector-view"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Visualization Console -->
+        <aside class="visual-console">
+            <div class="console-tabs">
+                <button class="tab active">BLOCH SPHERE</button>
+            </div>
+
+            <div class="bloch-viewer" id="bloch-container">
+                <canvas id="bloch-canvas"></canvas>
+            </div>
+
+            <div class="measurement-panel">
+                <h4>MEASUREMENT RESULTS</h4>
+                <div id="measurement-chart" class="measurement-stats">
+                    <p class="hint">Run simulation to observe collapses.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Math Engine -->
+    <script src="scripts/math/complex.js" type="module"></script>
+    <script src="scripts/math/matrix.js" type="module"></script>
+
+    <!-- Core Simulation -->
+    <script src="scripts/core/gates.js" type="module"></script>
+    <script src="scripts/core/circuit.js" type="module"></script>
+
+    <!-- UI Interaction -->
+    <script src="scripts/ui/composer.js" type="module"></script>
+    <script src="scripts/ui/bloch.js" type="module"></script>
+    <script src="scripts/ui/probs.js" type="module"></script>
+
+    <script type="module">
+        import { composer } from './scripts/ui/composer.js';
+        composer.init();
+    </script>
+</body>
+
+</html>

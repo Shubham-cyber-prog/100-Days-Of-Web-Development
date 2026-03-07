@@ -2,10 +2,76 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Home Dashboard</title>
     <style>
+        /* 🌌 Floating Animated Background */
+
+body {
+    position: relative;
+    overflow-x: hidden;
+   background: linear-gradient(135deg, #001f1f, #004d40, #114c44);
+}
+
+/* Background container */
+.floating-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Floating circles */
+.floating-bg span {
+    position: absolute;
+    display: block;
+    width: 200px;
+    height: 200px;
+    background: rgba(0, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    animation: float 25s linear infinite;
+}
+
+/* Different positions & animation delays */
+.floating-bg span:nth-child(1) {
+    left: 10%;
+    animation-duration: 20s;
+}
+.floating-bg span:nth-child(2) {
+    left: 30%;
+    animation-duration: 25s;
+    width: 150px;
+    height: 150px;
+}
+.floating-bg span:nth-child(3) {
+    left: 50%;
+    animation-duration: 18s;
+}
+.floating-bg span:nth-child(4) {
+    left: 70%;
+    animation-duration: 22s;
+}
+.floating-bg span:nth-child(5) {
+    left: 85%;
+    animation-duration: 28s;
+}
+
+/* Floating animation */
+@keyframes float {
+    0% {
+        transform: translateY(100vh) scale(0.5);
+    }
+    100% {
+        transform: translateY(-10vh) scale(1.2);
+    }
+}
+
+
         * {
             margin: 0;
             padding: 0;
@@ -405,6 +471,14 @@
 </head>
 
 <body>
+    <!-- 🌌 Floating Animated Background -->
+<div class="floating-bg">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
     <div class="container">
         <!-- Header -->
         <header>

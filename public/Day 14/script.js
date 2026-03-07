@@ -7,8 +7,11 @@ const audio = document.getElementById("audio");
 const playBtn = document.getElementById("play");
 const prevBtn = document.getElementById("prev");
 const nextBtn = document.getElementById("next");
+const shuffleBtn = document.getElementById("shuffle");
+const loopBtn = document.getElementById("loop");
 const progress = document.getElementById("progress");
 const volume = document.getElementById("volume");
+const themeToggle = document.getElementById("themeToggle");
 
 const currentTimeEl = document.getElementById("currentTime");
 const durationEl = document.getElementById("duration");
@@ -20,6 +23,36 @@ const current = document.getElementById("current");
 
 let songs = [];
 let currentIndex = -1;
+let isShuffle = false;
+let loopMode = 0; // 0: off, 1: all, 2: one
+
+/* THEME TOGGLE */
+function initTheme() {
+  const savedTheme = localStorage.getItem("theme") || "dark-mode";
+  document.body.classList.toggle("light-mode", savedTheme === "light-mode");
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const isLight = document.body.classList.contains("light-mode");
+  themeToggle.textContent = isLight ? "☀️" : "🌙";
+}
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+  const theme = document.body.classList.contains("light-mode") ? "light-mode" : "dark-mode";
+  localStorage.setItem("theme", theme);
+  updateThemeIcon();
+});
+
+initTheme();
+
+/* AUTO LOAD THE WEEKND ON PAGE LOAD */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    searchSongs("The Weeknd", true);
+  }, 500); // Small delay to ensure everything is loaded
+});
 
 /* RECOMMENDED */
 ["Arijit Singh","Taylor Swift","Ed Sheeran","The Weeknd","Coldplay"]
@@ -35,7 +68,7 @@ searchInput.addEventListener("keydown", e => {
   if (e.key === "Enter") searchSongs(searchInput.value);
 });
 
-async function searchSongs(query) {
+async function searchSongs(query, autoLoadFirst = false) {
   if (!query) return;
 
   playlist.innerHTML = "";
@@ -50,6 +83,7 @@ async function searchSongs(query) {
 
   if (!data.results.length) {
     resultsPlaceholder.style.display = "block";
+    resultsPlaceholder.textContent = "🎶 No songs found";
     return;
   }
 
@@ -68,6 +102,19 @@ async function searchSongs(query) {
     li.onclick = () => loadSong(index);
     playlist.appendChild(li);
   });
+
+  // Enable shuffle and loop buttons when songs are loaded
+  if (songs.length > 0) {
+    shuffleBtn.disabled = false;
+    loopBtn.disabled = false;
+  }
+
+  // Auto-load first song if requested (for The Weeknd on page load)
+  if (autoLoadFirst && songs.length > 0) {
+    setTimeout(() => {
+      loadSong(0);
+    }, 1000); // Wait a bit for the UI to update
+  }
 }
 
 /* LOAD SONG */
@@ -84,6 +131,12 @@ function loadSong(index) {
   current.classList.remove("placeholder");
   playBtn.disabled = prevBtn.disabled = nextBtn.disabled = false;
 
+  // Keep shuffle and loop buttons enabled as long as there are songs
+  if (songs.length > 0) {
+    shuffleBtn.disabled = false;
+    loopBtn.disabled = false;
+  }
+
   highlightActive();
   audio.play();
 }
@@ -95,12 +148,43 @@ function highlightActive() {
   });
 }
 
+/* SHUFFLE */
+shuffleBtn.addEventListener("click", () => {
+  isShuffle = !isShuffle;
+  shuffleBtn.classList.toggle("active", isShuffle);
+  shuffleBtn.title = isShuffle ? "Shuffle: ON - Click to disable" : "Shuffle: OFF - Click to enable";
+  console.log("Shuffle mode:", isShuffle ? "ON" : "OFF");
+});
+
+/* LOOP */
+loopBtn.addEventListener("click", () => {
+  loopMode = (loopMode + 1) % 3; // Cycle: 0 → 1 → 2 → 0
+  
+  loopBtn.classList.toggle("active", loopMode > 0);
+  loopBtn.classList.toggle("loop-one", loopMode === 2);
+  
+  const modes = ["OFF", "ALL", "ONE"];
+  loopBtn.title = `Loop: ${modes[loopMode]} - Click to change`;
+  console.log("Loop mode:", modes[loopMode]);
+});
+
+function getNextIndex() {
+  if (isShuffle && songs.length > 1) {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * songs.length);
+    } while (newIndex === currentIndex);
+    return newIndex;
+  }
+  return (currentIndex + 1) % songs.length;
+}
+
 /* CONTROLS */
 playBtn.onclick = () => audio.paused ? audio.play() : audio.pause();
 audio.onplay = () => playBtn.textContent = "⏸";
 audio.onpause = () => playBtn.textContent = "▶";
 
-nextBtn.onclick = () => loadSong((currentIndex + 1) % songs.length);
+nextBtn.onclick = () => loadSong(getNextIndex());
 prevBtn.onclick = () => loadSong((currentIndex - 1 + songs.length) % songs.length);
 
 /* TIME */
@@ -122,3 +206,4 @@ function formatTime(t) {
 /* VOLUME */
 volume.oninput = () => audio.volume = volume.value;
 audio.onended = () => nextBtn.click();
+

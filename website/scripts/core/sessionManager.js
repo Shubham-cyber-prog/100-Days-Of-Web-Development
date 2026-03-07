@@ -400,7 +400,11 @@ class SessionManager {
   async handleIdleTimeout() {
     console.log('Session idle timeout reached');
     await this.terminateSession();
-    window.location.href = '/website/pages/login.html?reason=idle';
+    // Redirect to home page instead of login
+    const homePath = window.location.pathname.includes('/pages/')
+        ? '../index.html'
+        : 'index.html';
+    window.location.href = homePath + '?reason=idle';
   }
 
   /**

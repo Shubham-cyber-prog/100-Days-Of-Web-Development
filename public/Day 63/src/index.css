@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 7%;
+    --foreground: 210 40% 96%;
+
+    --card: 220 20% 10%;
+    --card-foreground: 210 40% 96%;
+
+    --popover: 220 20% 10%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 200 100% 55%;
+    --primary-foreground: 220 20% 7%;
+
+    --secondary: 220 20% 16%;
+    --secondary-foreground: 210 40% 96%;
+
+    --muted: 220 15% 14%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 280 80% 60%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 200 100% 55%;
+
+    --radius: 0.75rem;
+
+    --success: 150 70% 45%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 40 90% 55%;
+    --warning-foreground: 220 20% 7%;
+
+    --glass: 220 20% 12%;
+    --glass-border: 220 15% 22%;
+    --glass-highlight: 220 20% 18%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(200, 100%, 55%), hsl(280, 80%, 60%));
+    --gradient-bg: radial-gradient(ellipse at 20% 50%, hsl(200, 100%, 15%, 0.4) 0%, transparent 50%),
+                   radial-gradient(ellipse at 80% 20%, hsl(280, 80%, 15%, 0.3) 0%, transparent 50%),
+                   radial-gradient(ellipse at 50% 80%, hsl(200, 60%, 10%, 0.3) 0%, transparent 50%);
+
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 210 40% 96%;
+    --sidebar-primary: 200 100% 55%;
+    --sidebar-primary-foreground: 220 20% 7%;
+    --sidebar-accent: 220 20% 14%;
+    --sidebar-accent-foreground: 210 40% 96%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 200 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-glass/60 backdrop-blur-xl border border-glass-border rounded-xl;
+  }
+
+  .glass-strong {
+    @apply bg-glass/80 backdrop-blur-2xl border border-glass-border rounded-xl;
+  }
+
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-bg {
+    background: var(--gradient-bg);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(200 100% 55% / 0.3), 0 0 60px hsl(200 100% 55% / 0.1);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px hsl(280 80% 60% / 0.3), 0 0 60px hsl(280 80% 60% / 0.1);
+  }
+}

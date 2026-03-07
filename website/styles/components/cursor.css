@@ -1,186 +1,70 @@
 /* ----------------------------------------------------
-   LIQUID FLAME TRAIL
+   MODERN LIQUID PLASMA CURSOR
    ---------------------------------------------------- */
 
-/* Ensure the system cursor is visible */
-html,
-body {
-    cursor: auto;
+:root {
+    --cursor-color: #00f2ff; /* Cyan Plasma */
+    --cursor-glow: rgba(0, 242, 255, 0.5);
 }
 
-/* Container for all trail segments */
-/* CRITICAL: Attached to html/doc element to avoid body offsets */
+body {
+    /* Hide the default cursor for a premium feel */
+    cursor: none !important;
+}
+
 #cursor-trail-container {
     position: fixed;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 999999;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-/* Individual segment of the liquid trail */
-.trail-segment {
-    position: absolute;
     top: 0;
     left: 0;
-    width: 20px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999999;
+}
+
+/* The Leading Glow Dot */
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: #fff;
     border-radius: 50%;
     pointer-events: none;
-    will-change: transform;
-    /* Optimized for movement */
-
-    /* Center positioning relative to point */
-    transform-origin: center center;
-
-    /* Base Liquid Style */
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    filter: blur(2px);
+    z-index: 1000001;
+    box-shadow: 0 0 15px #fff, 0 0 30px var(--cursor-color);
 }
 
-/* Heat/Color Levels (Head to Tail gradient) */
-.trail-segment.heat-0 {
-    background: #FFFFFF;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
-    width: 18px;
-    height: 18px;
-    margin-left: -9px;
-    margin-top: -9px;
-    opacity: 0.95;
-}
-
-.trail-segment.heat-1 {
-    background: #60A5FA;
-    /* Light Blue */
-    box-shadow: 0 0 12px rgba(96, 165, 250, 0.6);
-    opacity: 0.85;
-}
-
-.trail-segment.heat-2 {
-    background: #3B82F6;
-    /* Blue */
-    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-    opacity: 0.75;
-}
-
-.trail-segment.heat-3 {
-    background: #1D4ED8;
-    /* Dark Blue */
-    box-shadow: 0 0 8px rgba(29, 78, 216, 0.4);
-    opacity: 0.65;
-}
-
-.trail-segment.heat-4 {
-    background: #1E40AF;
-    /* Darker Blue */
-    box-shadow: 0 0 6px rgba(30, 64, 175, 0.3);
-    opacity: 0.55;
-    /* Make tail smaller */
-    transform: scale(0.8);
-}
-
-/* 
-   BOOST MODE - Activated on Interactive Hover 
-   Transforms into a high-energy Cyan/Blue plasma
-*/
-#cursor-trail-container.boost .trail-segment {
-    filter: blur(3px);
-}
-
-#cursor-trail-container.boost .trail-segment.heat-0 {
-    background: #00FFFF;
-    /* Cyan Core */
-    box-shadow: 0 0 30px #00FFFF, 0 0 60px #00FFFF;
-    width: 24px;
-    height: 24px;
-    margin-left: -12px;
-    margin-top: -12px;
-}
-
-#cursor-trail-container.boost .trail-segment.heat-1 {
-    background: #60A5FA;
-    box-shadow: 0 0 25px #60A5FA;
-}
-
-#cursor-trail-container.boost .trail-segment.heat-2 {
-    background: #3B82F6;
-    box-shadow: 0 0 20px #3B82F6;
-}
-
-#cursor-trail-container.boost .trail-segment.heat-3,
-#cursor-trail-container.boost .trail-segment.heat-4 {
-    background: #1D4ED8;
-    box-shadow: 0 0 15px #1D4ED8;
-    opacity: 0.5;
-}
-
-/* 
-   FALLBACKS & ACCESSIBILITY 
-*/
-@media (pointer: coarse) {
-    #cursor-trail-container {
-        display: none !important;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #cursor-trail-container {
-        display: none !important;
-    }
-}
-
-#cursor-trail-container,
-#cursor-trail-container .trail-segment {
-    display: none !important;
-    pointer-events: none !important;
-}
-
-
-/* Cursor ring (outer circle) */
+/* The Elastic Ring */
 .cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  width: 36px;        /* adjust if needed */
-  height: 36px;
-  border-radius: 50%;
-
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  background: transparent;
-
-  /* 🔑 THIS IS THE CRITICAL PART */
-  transform: translate(-50%, -50%);
-
-  box-shadow: none;
-  filter: none;
-
-  pointer-events: none;
-  z-index: 1000000;
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--cursor-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000000;
+    mix-blend-mode: exclusion; /* Unique inverse effect on hover */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Individual Trail Segments (Liquid Blobs) */
+.trail-segment {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--cursor-color);
+    pointer-events: none;
+    opacity: 0.6;
+    filter: blur(4px);
+    will-change: transform;
+}
 
-/* Cursor dot (inner orange point) */
-.cursor-dot {
-  position: fixed;
-  left: 0;
-  top: 0;
-
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-
-  background: orange;
-
-  /* CONTROLLED glow — not white */
-  box-shadow: 0 0 6px rgba(255, 165, 0, 0.6);
-
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 1000001; /* above ring */
+/* Interaction State */
+.cursor-active .cursor-ring {
+    transform: scale(1.5);
+    background: var(--cursor-glow);
+    border-color: transparent;
 }

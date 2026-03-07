@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Project Submissions | 100 Days of Web Dev</title>
+
+<link rel="stylesheet"
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+/* ========== RESET ========== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, Arial, sans-serif;
+}
+
+/* ========== BODY ========== */
+body{
+  background:#0f172a;
+  color:#f8fafc;
+  min-height:100vh;
+}
+
+/* ========== MAIN CONTAINER ========== */
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+/* ========== PAGE HEADER ========== */
+.page-header{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.page-header h1{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.page-header p{
+  color:#94a3b8;
+  font-size:16px;
+}
+
+/* ========== CARD STYLE ========== */
+.card{
+  background:#020617;
+  border-radius:12px;
+  padding:25px;
+  margin-bottom:30px;
+  border:1px solid #1e293b;
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+/* ========== BUTTONS ========== */
+.btn{
+  padding:12px 22px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.btn-primary{
+  background:#0ea5e9;
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#0284c7;
+}
+
+.btn-secondary{
+  background:#334155;
+  color:white;
+}
+
+.btn-secondary:hover{
+  background:#475569;
+}
+
+/* ========== SUBMIT SECTION ========== */
+.submit-section{
+  text-align:center;
+}
+
+/* ========== SEARCH & FILTERS ========== */
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  justify-content:center;
+  align-items:center;
+}
+
+.controls input{
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  width:260px;
+  background:#020617;
+  color:white;
+  border:1px solid #1e293b;
+}
+
+.controls input:focus{
+  outline:none;
+  border-color:#0ea5e9;
+}
+
+/* Tabs */
+.tabs{
+  display:flex;
+  gap:10px;
+}
+
+.tabs button{
+  background:#020617;
+  border:1px solid #1e293b;
+  color:white;
+  padding:10px 16px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.tabs button.active,
+.tabs button:hover{
+  background:#0ea5e9;
+  border-color:#0ea5e9;
+}
+
+/* ========== GRID ========== */
+.submission-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+}
+
+/* Project Card */
+.project-card{
+  background:#020617;
+  border:1px solid #1e293b;
+  border-radius:12px;
+  padding:20px;
+  transition:0.3s;
+}
+
+.project-card:hover{
+  transform:translateY(-5px);
+  border-color:#0ea5e9;
+}
+
+/* ========== LOAD MORE ========== */
+.load-more{
+  text-align:center;
+}
+
+/* ========== MODAL ========== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-box{
+  background:#020617;
+  padding:25px;
+  border-radius:12px;
+  width:100%;
+  max-width:500px;
+  border:1px solid #1e293b;
+}
+
+/* ========== FORM ========== */
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  font-size:14px;
+}
+
+.form-group input,
+.form-group textarea{
+  width:100%;
+  padding:10px;
+  border-radius:6px;
+  border:1px solid #1e293b;
+  background:#0f172a;
+  color:white;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+  outline:none;
+  border-color:#0ea5e9;
+}
+
+/* ========== ACTIONS ========== */
+.form-actions{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<main>
+
+<!-- HEADER -->
+<div class="page-header">
+  <h1>Project Submissions</h1>
+  <p>Share your projects and get feedback from the community.</p>
+</div>
+
+<!-- SUBMIT BUTTON -->
+<div class="card submit-section">
+  <button class="btn btn-primary" id="openModal">
+    <i class="fas fa-plus"></i> Submit Your Project
+  </button>
+</div>
+
+<!-- SEARCH + FILTER -->
+<div class="card">
+  <div class="controls">
+
+    <input type="text" placeholder="Search submissions..." />
+
+    <div class="tabs">
+      <button class="active">All</button>
+      <button>Featured</button>
+      <button>Recent</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUBMISSION GRID -->
+<div class="card">
+
+  <div class="submission-grid">
+
+    <!-- CARD 1 -->
+    <div class="project-card">
+      <h3>Weather App</h3>
+      <p>Real-time weather dashboard</p>
+      <small>HTML • CSS • JS</small>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="project-card">
+      <h3>Todo Manager</h3>
+      <p>Task management system</p>
+      <small>React • Firebase</small>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="project-card">
+      <h3>Portfolio Website</h3>
+      <p>Personal portfolio</p>
+      <small>HTML • CSS</small>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LOAD MORE -->
+<div class="card load-more">
+  <button class="btn btn-secondary">
+    Load More Submissions
+  </button>
+</div>
+
+</main>
+
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <h2 style="margin-bottom:15px;">Submit Project</h2>
+
+    <form>
+
+      <div class="form-group">
+        <label>Project Title *</label>
+        <input type="text" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description *</label>
+        <textarea rows="3" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Project Link *</label>
+        <input type="url" required>
+      </div>
+
+      <div class="form-group">
+        <label>Tech Stack</label>
+        <input type="text">
+      </div>
+
+      <div class="form-actions">
+
+        <button type="button" class="btn btn-secondary" id="closeModal">
+          Cancel
+        </button>
+
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const modal = document.getElementById("modal");
+const openBtn = document.getElementById("openModal");
+const closeBtn = document.getElementById("closeModal");
+
+openBtn.onclick = ()=> modal.classList.add("active");
+closeBtn.onclick = ()=> modal.classList.remove("active");
+
+</script>
+
+</body>
+</html>

@@ -1,24 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Habit Tracker</title>
-  <link rel="stylesheet" href="style.css" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Habit Tracker</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>🌱 Habit Tracker</h1>
+<!-- NAVBAR -->
 
-    <div class="habit-form">
-      <input type="text" id="habitInput" placeholder="Enter a new habit..." />
-      <button onclick="addHabit()">Add Habit</button>
-    </div>
+<header class="navbar">
 
-    <ul id="habitList"></ul>
-  </div>
+<h2 class="logo">HabitTrack</h2>
 
-  <script src="script.js"></script>
+<nav>
+
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('about')">About</button>
+<button onclick="showPage('habits')">My Habits</button>
+<button onclick="showPage('searchPage')">Search</button>
+<button onclick="showPage('progressPage')">Progress</button>
+
+</nav>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>HabitTrack</h1>
+
+<div class="hero-tags">
+
+<span>Habit Building & Daily Tracking</span>
+<span>Healthy Routine · Strong Mind</span>
+
+</div>
+
+</section>
+
+
+
+<main>
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+<div class="card">
+
+<h2>Introduction</h2>
+
+<p>
+HabitTrack helps users build good daily routines by tracking habits,
+monitoring streaks, and visualizing progress.
+</p>
+
+<div class="runner">🏃</div>
+
+</div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about" class="page">
+
+<div class="card">
+
+<h2>About Habit Tracker</h2>
+
+<p>
+Habit tracking helps improve discipline, productivity,
+and consistency by building positive routines.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- MY HABITS -->
+
+<section id="habits" class="page">
+
+<div class="card">
+
+<h2>My Habits</h2>
+
+<div class="habit-form">
+
+<input type="text" id="habitInput" placeholder="Enter new habit">
+
+<button onclick="addHabit()">Add Habit</button>
+
+</div>
+
+<ul id="habitList"></ul>
+
+</div>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<section id="searchPage" class="page">
+
+<div class="card">
+
+<h2>Search Habits</h2>
+
+<input type="text" id="searchHabit" placeholder="Search habit...">
+
+<ul id="searchResults"></ul>
+
+</div>
+
+</section>
+
+
+<!-- PROGRESS -->
+
+<section id="progressPage" class="page">
+
+<div class="card">
+
+<h2>Progress Overview</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h3 id="totalHabits">0</h3>
+<p>Total Habits</p>
+</div>
+
+<div class="stat">
+<h3 id="completedHabits">0</h3>
+<p>Completed Today</p>
+</div>
+
+<div class="stat">
+<h3 id="bestStreak">0</h3>
+<p>Best Streak</p>
+</div>
+
+</div>
+
+<div class="progress">
+
+<div id="progressBar"></div>
+
+</div>
+
+<p id="progressText"></p>
+
+</div>
+
+</section>
+
+
+</main>
+
+<script src="script.js"></script>
+
 </body>
 </html>

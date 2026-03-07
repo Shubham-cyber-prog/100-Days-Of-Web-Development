@@ -19,8 +19,11 @@
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   transition: background-color 0.25s ease, color 0.25s ease;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -29,15 +32,18 @@ body {
 }
 
 /* NAVBAR */
+
 .navbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 16px 32px;
   background: var(--card);
   box-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
 
 /* BOARD */
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -48,6 +54,7 @@ body {
 }
 
 /* COLUMN */
+
 .column {
   background: linear-gradient(180deg, var(--card), var(--card-alt));
   box-shadow: 0 10px 30px var(--shadow);
@@ -57,11 +64,13 @@ body {
   flex-direction: column;
   min-height: 420px;
 }
+
 .column:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 40px var(--shadow);
 }
 
+/* TASK */
 
 .task {
   background: var(--card-alt);
@@ -70,11 +79,13 @@ body {
   border-radius: 14px;
   cursor: grab;
 }
+
 .task:hover {
   transform: scale(1.03);
   box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
+/* ADD BUTTON */
 
 .add-btn {
   background: linear-gradient(135deg, var(--primary), #7c72ff);
@@ -83,12 +94,15 @@ body {
   border-radius: 14px;
   color: white;
   cursor: pointer;
+  margin-top: auto;
 }
+
 .add-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
 }
 
+/* MODAL */
 
 .modal {
   position: fixed;
@@ -104,13 +118,26 @@ body {
 }
 
 .modal-content {
-  background: #0b1220;
+  background: var(--card);
   padding: 24px;
   border-radius: 16px;
+  min-width: 300px;
 }
+
+/* FOOTER */
 
 .footer {
   max-width: 1200px;
   margin: 20px auto;
   padding: 0 32px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
 }

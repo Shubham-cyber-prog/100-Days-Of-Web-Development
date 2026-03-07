@@ -1,12 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StayHub - Hotel Booking System</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        :root {
+            --premium-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --premium-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 80px;
+            background: var(--premium-gradient);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            box-shadow: var(--premium-shadow);
+        }
+    </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -23,10 +50,10 @@
                     <li><a href="#" onclick="showSection('about')">About</a></li>
                 </ul>
                 <div class="nav-actions">
-                    <button class="btn btn-outline" onclick="showLoginModal()">
+                    <button class="btn btn-outline" onclick="showLoginModal()" aria-label="Login to account">
                         <i class="fas fa-user"></i> Login
                     </button>
-                    <button class="btn btn-primary" onclick="toggleBookingCart()">
+                    <button class="btn btn-primary" onclick="toggleBookingCart()" aria-label="View booking cart">
                         <i class="fas fa-shopping-cart"></i>
                         <span id="cartCount">0</span>
                     </button>
@@ -43,13 +70,14 @@
                 <div class="hero-content">
                     <h1>Find Your Perfect Stay</h1>
                     <p>Discover amazing hotels and resorts worldwide</p>
-                    
+
                     <!-- Search Widget -->
                     <div class="search-widget">
                         <div class="search-row">
                             <div class="search-field">
-                                <label><i class="fas fa-map-marker-alt"></i> Destination</label>
-                                <input type="text" id="destinationInput" placeholder="City or Hotel">
+                                <label for="destinationInput"><i class="fas fa-map-marker-alt"></i> Destination</label>
+                                <input type="text" id="destinationInput" placeholder="City or Hotel"
+                                    aria-label="Destination">
                             </div>
                             <div class="search-field">
                                 <label><i class="fas fa-calendar"></i> Check-in</label>
@@ -106,11 +134,12 @@
                 <!-- Filters Sidebar -->
                 <div class="filters-sidebar" id="filtersSidebar">
                     <h3>Filters</h3>
-                    
+
                     <div class="filter-group">
                         <h4>Price Range</h4>
                         <div class="price-range">
-                            <input type="range" id="priceRange" min="0" max="500" value="500" oninput="updatePriceFilter()">
+                            <input type="range" id="priceRange" min="0" max="500" value="500"
+                                oninput="updatePriceFilter()">
                             <div class="price-labels">
                                 <span>$0</span>
                                 <span id="priceValue">$500</span>
@@ -135,7 +164,8 @@
                             <label><input type="checkbox" value="spa" onchange="applyFilters()"> Spa</label>
                             <label><input type="checkbox" value="gym" onchange="applyFilters()"> Gym</label>
                             <label><input type="checkbox" value="parking" onchange="applyFilters()"> Parking</label>
-                            <label><input type="checkbox" value="restaurant" onchange="applyFilters()"> Restaurant</label>
+                            <label><input type="checkbox" value="restaurant" onchange="applyFilters()">
+                                Restaurant</label>
                         </div>
                     </div>
 
@@ -174,9 +204,9 @@
             <div class="container">
                 <h2>About StayHub</h2>
                 <div class="about-content">
-                    <p>StayHub is your trusted partner for finding and booking the perfect accommodation. 
-                    With thousands of hotels worldwide, we make travel planning simple and affordable.</p>
-                    
+                    <p>StayHub is your trusted partner for finding and booking the perfect accommodation.
+                        With thousands of hotels worldwide, we make travel planning simple and affordable.</p>
+
                     <div class="features-grid">
                         <div class="feature-card">
                             <i class="fas fa-globe"></i>
@@ -311,4 +341,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

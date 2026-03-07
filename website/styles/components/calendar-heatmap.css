@@ -267,15 +267,20 @@
 }
 
 @keyframes fireAnimation {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1) rotate(-5deg);
     }
+
     25% {
         transform: scale(1.1) rotate(5deg);
     }
+
     50% {
         transform: scale(1) rotate(-3deg);
     }
+
     75% {
         transform: scale(1.05) rotate(3deg);
     }
@@ -345,6 +350,7 @@
         opacity: 0;
         transform: translateY(4px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -390,6 +396,7 @@
         opacity: 0;
         transform: translateX(20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -401,6 +408,7 @@
         opacity: 1;
         transform: translateX(0);
     }
+
     to {
         opacity: 0;
         transform: translateX(20px);
@@ -469,9 +477,12 @@
 }
 
 @keyframes firePulse {
-    0%, 100% {
+
+    0%,
+    100% {
         text-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
     }
+
     50% {
         text-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
     }
@@ -619,64 +630,139 @@
 }
 
 /* ============================================
-   DARK/LIGHT MODE SUPPORT
+   LIGHT MODE OVERRIDES
    ============================================ */
 
-@media (prefers-color-scheme: light) {
-    .calendar-heatmap {
-        background: rgba(255, 255, 255, 0.9);
-        border-color: rgba(0, 0, 0, 0.1);
+[data-theme="light"] .calendar-heatmap {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="light"] .heatmap-title h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .heatmap-title .contribution-count {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .color-scheme-select {
+    background: var(--bg-input);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .color-scheme-select:hover {
+    background: var(--bg-hover);
+}
+
+[data-theme="light"] .export-btn {
+    background: var(--bg-input);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .export-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .month-label,
+[data-theme="light"] .day-label {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .heatmap-footer {
+    border-top-color: var(--border-light);
+}
+
+[data-theme="light"] .streak-stat {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+}
+
+[data-theme="light"] .streak-value {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .legend-label {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .heatmap-tooltip {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .heatmap-tooltip strong {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .heatmap-tooltip span {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .streak-widget {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .streak-widget-stat {
+    background: var(--bg-secondary);
+}
+
+[data-theme="light"] .streak-widget-stat .value {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .streak-widget-mini-chart .day {
+    background: var(--border-light);
+}
+
+[data-theme="light"] .streak-freeze-indicator.used {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-tertiary);
+}
+
+/* Light Mode Cell Colors (GitHub-style greens) */
+[data-theme="light"] .level-0 {
+    background-color: #ebedf0;
+}
+
+[data-theme="light"] .level-1 {
+    background-color: #9be9a8;
+}
+
+[data-theme="light"] .level-2 {
+    background-color: #40c463;
+}
+
+[data-theme="light"] .level-3 {
+    background-color: #30a14e;
+}
+
+[data-theme="light"] .level-4 {
+    background-color: #216e39;
+}
+
+/* Pulse animation for light mode */
+@keyframes firePulseLight {
+
+    0%,
+    100% {
+        text-shadow: 0 0 10px rgba(249, 115, 22, 0.2);
     }
 
-    .heatmap-title h3 {
-        color: #24292f;
+    50% {
+        text-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
     }
+}
 
-    .heatmap-title .contribution-count {
-        color: #57606a;
-    }
-
-    .color-scheme-select {
-        background: rgba(0, 0, 0, 0.03);
-        border-color: rgba(0, 0, 0, 0.1);
-        color: #24292f;
-    }
-
-    .export-btn {
-        background: rgba(0, 0, 0, 0.03);
-        border-color: rgba(0, 0, 0, 0.1);
-        color: #57606a;
-    }
-
-    .month-label,
-    .day-label {
-        color: #57606a;
-    }
-
-    .streak-stat {
-        background: rgba(0, 0, 0, 0.02);
-        border-color: rgba(0, 0, 0, 0.05);
-    }
-
-    .streak-value {
-        color: #24292f;
-    }
-
-    .legend-label {
-        color: #57606a;
-    }
-
-    .heatmap-tooltip {
-        background: #fff;
-        border-color: rgba(0, 0, 0, 0.1);
-        color: #24292f;
-    }
-
-    .heatmap-tooltip strong {
-        color: #24292f;
-    }
-
-    .heatmap-tooltip span {
-        color: #57606a;
-    }
+[data-theme="light"] .streak-widget-stat.fire .value {
+    animation: firePulseLight 2s ease-in-out infinite;
 }

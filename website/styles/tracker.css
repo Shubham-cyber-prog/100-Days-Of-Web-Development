@@ -1,0 +1,88 @@
+/* Tracker Styles */
+
+/* Completed State for Project Card */
+.project-card.completed {
+    border-color: #4ade80; /* Green-400 */
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
+}
+
+.project-card.completed .project-title {
+    color: #4ade80;
+}
+
+.project-card.completed::before {
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    opacity: 0.1;
+}
+
+/* Tracker Toggle Button */
+.tracker-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    z-index: 10; /* Ensure it's clickable above card link */
+}
+
+.tracker-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: scale(1.1);
+}
+
+.project-card.completed .tracker-btn {
+    background: #4ade80;
+    border-color: #4ade80;
+    color: #0f172a; /* Dark background color */
+}
+
+/* Progress Summary Container */
+#progress-summary {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    margin: 0 auto 2rem;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.progress-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    color: #e2e8f0;
+}
+
+.progress-count {
+    font-weight: 700;
+    color: #4ade80;
+}
+
+.progress-bar-container {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-left: 1.5rem;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4ade80, #22c55e);
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 4px;
+}
