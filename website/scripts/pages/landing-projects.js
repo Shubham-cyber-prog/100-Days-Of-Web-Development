@@ -25,9 +25,11 @@ function renderProjects(filter = '') {
         const difficulty = getDifficulty(project.day);
         const searchString = `${project.title} ${difficulty} ${project.tech.join(' ')}`.toLowerCase();
 
-        // Filter logic
-        if (searchTerm && !searchString.includes(searchTerm)) {
-            return;
+        // Highlight matching text in title
+        let highlightedTitle = project.title;
+        if (searchTerm) {
+            const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            highlightedTitle = project.title.replace(regex, '<mark>$1</mark>');
         }
 
         let folderName = folderMap[project.day];
@@ -96,7 +98,7 @@ function renderProjects(filter = '') {
             </div>
             <div class="card-divider"></div>
             <h3 class="project-title" style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
-                ${project.title}
+                ${highlightedTitle}
             </h3>
             <div class="tech-stack" style="margin-bottom: 0.5rem;">
                 ${techTags}

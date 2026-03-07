@@ -1,296 +1,85 @@
+// =======================
+// Load Expenses From LocalStorage
+// =======================
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
+// =======================
 // DOM Elements
+// =======================
 const form = document.getElementById("expense-form");
 const nameInput = document.getElementById("expense-name");
 const amountInput = document.getElementById("expense-amount");
 const categorySelect = document.getElementById("expense-category");
-const totalAmountEl = document.getElementById("total-amount");
-const expensesContainer = document.getElementById("expenses-container");
+const dateInput = document.getElementById("expense-date");
 const editIdInput = document.getElementById("edit-id");
 
-// Load expenses
-function loadExpenses() {
-  const data = localStorage.getItem("expenses");
-  if (data) {
-    expenses = JSON.parse(data);
-    renderExpenses();
-    updateTotal();
-  }
-}
-
-}
-
-// Save to localStorage
-function saveExpenses() {
-  localStorage.setItem("expenses", JSON.stringify(expenses));
-}
-
-// Add or Update Expense
-function handleExpense(name, amount, category) {
-  const editId = editIdInput.value;
-
-  if (editId) {
-    // EDIT
-    expenses = expenses.map(exp =>
-      exp.id === Number(editId)
-        ? { ...exp, name, amount: Number(amount), category }
-        : exp
-    );
-    editIdInput.value = "";
-  } else {
-    // ADD
-    expenses.push({
-      id: Date.now(),
-      name,
-      amount: Number(amount),
-      category
-    });
-  }
-
-  saveExpenses();
-  renderExpenses();
-  updateTotal();
-}
-
-
-}
-
-// Save to localStorage
-function saveExpenses() {
-  localStorage.setItem("expenses", JSON.stringify(expenses));
-}
-
-// Add or Update Expense
-function handleExpense(name, amount, category) {
-  const editId = editIdInput.value;
-
-  if (editId) {
-    // EDIT
-    expenses = expenses.map(exp =>
-      exp.id === Number(editId)
-        ? { ...exp, name, amount: Number(amount), category }
-        : exp
-    );
-    editIdInput.value = "";
-  } else {
-    // ADD
-    expenses.push({
-      id: Date.now(),
-      name,
-      amount: Number(amount),
-      category
-    });
-  }
-
-  saveExpenses();
-  renderExpenses();
-  updateTotal();
-}
-
-
-// Add or Update Expense
-function handleExpense(name, amount, category) {
-  const editId = editIdInput.value;
-
-  if (editId) {
-    // EDIT
-    expenses = expenses.map(exp =>
-      exp.id === Number(editId)
-        ? { ...exp, name, amount: Number(amount), category }
-        : exp
-    );
-    editIdInput.value = "";
-  } else {
-    // ADD
-    expenses.push({
-      id: Date.now(),
-      name,
-      amount: Number(amount),
-      category
-    });
-  }
-
-  saveExpenses();
-  renderExpenses();
-  updateTotal();
-}
-
-// Delete Expense
-function deleteExpense(id) {
-  expenses = expenses.filter(exp => exp.id !== id);
-  saveExpenses();
-  renderExpenses();
-  updateTotal();
-}
-
-// Edit Expense
-function editExpense(id) {
-  const expense = expenses.find(exp => exp.id === id);
-  if (!expense) return;
-
-  nameInput.value = expense.name;
-  amountInput.value = expense.amount;
-  categorySelect.value = expense.category;
-  editIdInput.value = expense.id;
-}
-
-// Render Expenses
-function renderExpenses() {
-  if (expenses.length === 0) {
-    expensesContainer.innerHTML =
-      '<div class="empty-state">No expenses yet. Add your first expense above!</div>';
-    return;
-  }
-
-  expensesContainer.innerHTML = expenses
-    .map(
-      exp => `
-    <div class="expense-item">
-      <div class="expense-details">
-        <div class="expense-name">${exp.name}</div>
-        <span class="expense-category">${exp.category}</span>
-      </div>
-
-      <div class="expense-amount">$${exp.amount.toFixed(2)}</div>
-
-      <div>
-        <button class="edit-btn" onclick="editExpense(${exp.id})">Edit</button>
-        <button class="delete-btn" onclick="deleteExpense(${exp.id})">Delete</button>
-      </div>
-    </div>
-  `
-    )
-    .join("");
-}
-
-// Update Total
-function updateTotal() {
-  const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-  totalAmountEl.textContent = `$${total.toFixed(2)}`;
-}
-
-// Validate
-function validate(name, amount) {
-  let valid = true;
-  nameInput.classList.remove("error");
-  amountInput.classList.remove("error");
-
-  if (!name.trim()) {
-    nameInput.classList.add("error");
-    valid = false;
-  }
-
-  if (!amount || amount <= 0) {
-    amountInput.classList.add("error");
-    valid = false;
-  }
-
-  return valid;
-}
-
-// Submit
-form.addEventListener("submit", e => {
-  e.preventDefault();
-
-  const name = nameInput.value;
-  const amount = amountInput.value;
-  const category = categorySelect.value;
-
-  if (!validate(name, amount)) return;
-
-  handleExpense(name, amount, category);
-
-  form.reset();
-});
-
-// Init
-loadExpenses();
-
-}
-
-// Save to localStorage
-function saveExpenses() {
-  localStorage.setItem("expenses", JSON.stringify(expenses));
-}
-
-// Add or Update Expense
-function handleExpense(name, amount, category) {
-  const editId = editIdInput.value;
-
-  if (editId) {
-    // EDIT
-    expenses = expenses.map(exp =>
-      exp.id === Number(editId)
-        ? { ...exp, name, amount: Number(amount), category }
-        : exp
-    );
-    editIdInput.value = "";
-  } else {
-    // ADD
-    expenses.push({
-      id: Date.now(),
-      name,
-      amount: Number(amount),
-      category
-    });
-  }
-
-  saveExpenses();
-  renderExpenses();
-  updateTotal();
-}
-
-// Delete Expense
-function deleteExpense(id) {
-  expenses = expenses.filter(exp => exp.id !== id);
-  saveExpenses();
-  renderExpenses();
-  updateTotal();
-}
-
-// Edit Expense
-function editExpense(id) {
-  const expense = expenses.find(exp => exp.id === id);
-  if (!expense) return;
-
-
-
-const form = document.getElementById("expense-form");
-const nameInput = document.getElementById("expense-name");
-const amountInput = document.getElementById("expense-amount");
-const categoryInput = document.getElementById("expense-category");
 const expensesContainer = document.getElementById("expenses-container");
 const totalAmountEl = document.getElementById("total-amount");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+// Summary Elements
+const highestEl = document.getElementById("highest-expense");
+const lowestEl = document.getElementById("lowest-expense");
+const foodTotalEl = document.getElementById("food-total");
+const travelTotalEl = document.getElementById("travel-total");
+const shoppingTotalEl = document.getElementById("shopping-total");
+const otherTotalEl = document.getElementById("other-total");
 
-  const name = nameInput.value.trim();
-  const amount = Number(amountInput.value);
-  const category = categoryInput.value;
 
-  if (!name || amount <= 0) return;
-
-  expenses.push({
-    id: Date.now(),
-    name,
-    amount,
-    category
-  });
-
-  saveAndRender();
-  form.reset();
-});
-
-function saveAndRender() {
+// =======================
+// Save To LocalStorage
+// =======================
+function saveExpenses() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
-
-  renderExpenses();
-  updateTotal();
 }
 
+
+// =======================
+// Add or Edit Expense
+// =======================
+function handleExpense(name, amount, category, date) {
+  const editId = editIdInput.value;
+
+  if (editId) {
+    // EDIT
+    expenses = expenses.map(exp =>
+      exp.id === Number(editId)
+        ? { ...exp, name, amount, category, date }
+        : exp
+    );
+    editIdInput.value = "";
+  } else {
+    // ADD
+    expenses.push({
+      id: Date.now(),
+      name,
+      amount,
+      category,
+      date
+    });
+  }
+
+  saveExpenses();
+  renderExpenses();
+  updateTotal();
+  updateSummary();
+}
+
+
+// =======================
+// Delete Expense
+// =======================
+function deleteExpense(id) {
+  expenses = expenses.filter(exp => exp.id !== id);
+  saveExpenses();
+  renderExpenses();
+  updateTotal();
+  updateSummary();
+}
+
+
+// =======================
 // Edit Expense
+// =======================
 function editExpense(id) {
   const expense = expenses.find(exp => exp.id === id);
   if (!expense) return;
@@ -298,118 +87,156 @@ function editExpense(id) {
   nameInput.value = expense.name;
   amountInput.value = expense.amount;
   categorySelect.value = expense.category;
+  dateInput.value = expense.date;
   editIdInput.value = expense.id;
 }
 
+
+// =======================
 // Render Expenses
-function renderExpenses() {
-  if (expenses.length === 0) {
-    expensesContainer.innerHTML =
-      '<div class="empty-state">No expenses yet. Add your first expense above!</div>';
-    return;
-  }
-
-  expensesContainer.innerHTML = expenses
-    .map(
-      exp => `
-    <div class="expense-item">
-      <div class="expense-details">
-        <div class="expense-name">${exp.name}</div>
-        <span class="expense-category">${exp.category}</span>
-      </div>
-
-      <div class="expense-amount">$${exp.amount.toFixed(2)}</div>
-
-      <div>
-        <button class="edit-btn" onclick="editExpense(${exp.id})">Edit</button>
-        <button class="delete-btn" onclick="deleteExpense(${exp.id})">Delete</button>
-      </div>
-    </div>
-  `
-    )
-    .join("");
-}
-
-// Update Total
-function updateTotal() {
-  const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-  totalAmountEl.textContent = `$${total.toFixed(2)}`;
-}
-
-// Validate
-function validate(name, amount) {
-  let valid = true;
-  nameInput.classList.remove("error");
-  amountInput.classList.remove("error");
-
-  if (!name.trim()) {
-    nameInput.classList.add("error");
-    valid = false;
-  }
-
-  if (!amount || amount <= 0) {
-    amountInput.classList.add("error");
-    valid = false;
-  }
-
-  return valid;
-}
-
-// Submit
-form.addEventListener("submit", e => {
-  e.preventDefault();
-
-  const name = nameInput.value;
-  const amount = amountInput.value;
-  const category = categorySelect.value;
-
-  if (!validate(name, amount)) return;
-
-  handleExpense(name, amount, category);
-
-  form.reset();
-});
-
-// Init
-loadExpenses();
-
-
-
-
+// =======================
 function renderExpenses() {
   expensesContainer.innerHTML = "";
 
   if (expenses.length === 0) {
-    expensesContainer.innerHTML = `<p class="empty">No expenses added yet.</p>`;
+    expensesContainer.innerHTML =
+      `<p class="empty">No expenses added yet.</p>`;
     return;
   }
 
-  expenses.forEach(exp => {
+  // Sort by newest date
+  const sortedExpenses = [...expenses].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  sortedExpenses.forEach(exp => {
     const div = document.createElement("div");
     div.className = "expense-card";
+
     div.innerHTML = `
       <div class="expense-left">
         <strong>${exp.name}</strong>
         <span class="category ${exp.category}">${exp.category}</span>
+        <small>${new Date(exp.date).toLocaleDateString()}</small>
       </div>
-      <div class="amount">₹${exp.amount}</div>
-      <button class="delete-btn" onclick="deleteExpense(${exp.id})">Delete</button>
+
+      <div class="action-buttons">
+        <span class="amount">₹${exp.amount.toFixed(2)}</span>
+        <button class="edit-btn" onclick="editExpense(${exp.id})">Edit</button>
+        <button class="delete-btn" onclick="deleteExpense(${exp.id})">Delete</button>
+      </div>
     `;
+
     expensesContainer.appendChild(div);
   });
 }
 
-function deleteExpense(id) {
-  expenses = expenses.filter(e => e.id !== id);
-  saveAndRender();
-}
 
+// =======================
+// Update Total
+// =======================
 function updateTotal() {
-  const total = expenses.reduce((sum, e) => sum + e.amount, 0);
-  totalAmountEl.textContent = `₹${total}`;
+  const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+  totalAmountEl.textContent = `₹${total.toFixed(2)}`;
 }
 
-// Load on refresh
+
+// =======================
+// Update Summary Section
+// =======================
+function updateSummary() {
+  if (expenses.length === 0) {
+    highestEl.textContent = "₹0";
+    lowestEl.textContent = "₹0";
+    foodTotalEl.textContent = "₹0";
+    travelTotalEl.textContent = "₹0";
+    shoppingTotalEl.textContent = "₹0";
+    otherTotalEl.textContent = "₹0";
+    return;
+  }
+
+  const amounts = expenses.map(exp => exp.amount);
+
+  const highest = Math.max(...amounts);
+  const lowest = Math.min(...amounts);
+
+  const categoryTotals = {
+    Food: 0,
+    Travel: 0,
+    Shopping: 0,
+    Other: 0
+  };
+
+  expenses.forEach(exp => {
+    categoryTotals[exp.category] += exp.amount;
+  });
+
+  highestEl.textContent = `₹${highest.toFixed(2)}`;
+  lowestEl.textContent = `₹${lowest.toFixed(2)}`;
+  foodTotalEl.textContent = `₹${categoryTotals.Food.toFixed(2)}`;
+  travelTotalEl.textContent = `₹${categoryTotals.Travel.toFixed(2)}`;
+  shoppingTotalEl.textContent = `₹${categoryTotals.Shopping.toFixed(2)}`;
+  otherTotalEl.textContent = `₹${categoryTotals.Other.toFixed(2)}`;
+}
+
+
+// =======================
+// Validate Form
+// =======================
+function validate(name, amount) {
+  if (!name.trim() || amount <= 0) {
+    alert("Please enter valid expense details.");
+    return false;
+  }
+  return true;
+}
+
+
+// =======================
+// Form Submit
+// =======================
+form.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const name = nameInput.value.trim();
+  const amount = Number(amountInput.value);
+  const category = categorySelect.value;
+  const date =
+    dateInput.value || new Date().toISOString().split("T")[0];
+
+  if (!validate(name, amount)) return;
+
+  handleExpense(name, amount, category, date);
+  form.reset();
+});
+
+// =======================
+// Dark Mode Toggle
+// =======================
+const themeToggleBtn = document.getElementById("theme-toggle-btn");
+
+// Load saved theme
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  themeToggleBtn.textContent = "☀ Light Mode";
+}
+
+themeToggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    themeToggleBtn.textContent = "☀ Light Mode";
+  } else {
+    localStorage.setItem("theme", "light");
+    themeToggleBtn.textContent = "🌙 Dark Mode";
+  }
+});
+
+
+// =======================
+// Initialize App
+// =======================
 renderExpenses();
 updateTotal();
-
+updateSummary();

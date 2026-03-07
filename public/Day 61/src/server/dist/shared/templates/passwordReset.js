@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const passwordResetTemplate = (resetUrl) => `
 <!DOCTYPE html>
-<html>
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Reset Your Password</title>
     <style>
         body {

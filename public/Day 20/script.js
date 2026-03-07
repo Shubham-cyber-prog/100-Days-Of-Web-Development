@@ -1,3 +1,23 @@
+/* 🌙 Dark Mode */
+const darkToggle = document.getElementById("darkToggle");
+
+darkToggle.addEventListener("change", () => {
+  document.body.classList.toggle("light");
+
+  localStorage.setItem("theme",
+    document.body.classList.contains("light") ? "light" : "dark");
+});
+
+/* Load saved theme */
+if (localStorage.getItem("theme") === "light") {
+  document.body.classList.add("light");
+  darkToggle.checked = true;
+}
+
+
+const qrCanvas = document.getElementById("qrCanvas");
+const qrBox = document.getElementById("qrBox");
+const downloadBtn = document.getElementById("downloadBtn");
 import { byId, $, $$, create } from "../shared/utils.js";
 
 const qrCanvas = byId("qrCanvas");
@@ -16,6 +36,37 @@ function switchTab(tab) {
 }
 
 /* QR */
+// function generateQR() {
+//   let data = "";
+
+//   if (currentTab === "text") {
+//     data = document.getElementById("textInput").value.trim();
+//   }
+
+//   if (currentTab === "wifi") {
+//     const ssid = document.getElementById("ssid").value;
+//     const pass = document.getElementById("wifiPass").value;
+//     data = `WIFI:T:WPA;S:${ssid};P:${pass};;`;
+//   }
+
+//   if (currentTab === "contact") {
+//     const name = document.getElementById("name").value;
+//     const phone = document.getElementById("phone").value;
+//     const email = document.getElementById("email").value;
+//     data = `BEGIN:VCARD\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
+//   }
+
+//   if (!data) {
+//     alert("Please fill the fields");
+//     return;
+//   }
+
+//   QRCode.toCanvas(qrCanvas, data, { width: 180, margin: 2 });
+//   qrBox.style.display = "block";
+//   downloadBtn.style.display = "block";
+// }
+
+
 function generateQR() {
   let data = "";
 
@@ -41,10 +92,46 @@ function generateQR() {
     return;
   }
 
-  QRCode.toCanvas(qrCanvas, data, { width: 180, margin: 2 });
+  /* 🎨 Custom options */
+  const color = document.getElementById("qrColor").value;
+  const size = document.getElementById("qrSize").value;
+
+  QRCode.toCanvas(qrCanvas, data, {
+    width: size,
+    margin: 2,
+    color: {
+      dark: color,
+      light: "#ffffff"
+    }
+  }, () => {
+    addLogo(); // add logo after QR
+  });
+
   qrBox.style.display = "block";
   downloadBtn.style.display = "block";
 }
+
+
+
+function addLogo() {
+  const logoInput = document.getElementById("logoUpload");
+  if (!logoInput.files[0]) return;
+
+  const ctx = qrCanvas.getContext("2d");
+  const img = new Image();
+
+  img.onload = () => {
+    const size = qrCanvas.width * 0.2;
+    const x = (qrCanvas.width - size) / 2;
+    const y = (qrCanvas.height - size) / 2;
+
+    ctx.drawImage(img, x, y, size, size);
+  };
+
+  img.src = URL.createObjectURL(logoInput.files[0]);
+}
+
+
 
 /* Download */
 function downloadQR() {

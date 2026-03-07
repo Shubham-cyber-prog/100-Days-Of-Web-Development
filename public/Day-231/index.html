@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zenith // Command-Line RPG</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/terminal.css" />
+    <!-- Google Fonts for that premium feel -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;900&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="terminal-os">
+    <div id="game-container">
+        <!-- Glassmorphism HUD -->
+        <header class="game-hud">
+            <div class="hud-item profile">
+                <span class="label">OPERATOR:</span>
+                <span class="value" id="player-name">GUEST_USER</span>
+            </div>
+            <div class="hud-item stats">
+                <div class="stat-bar health">
+                    <div class="fill" id="hp-bar" style="width: 100%;"></div>
+                    <span class="text">HP: 100/100</span>
+                </div>
+                <div class="stat-bar energy">
+                    <div class="fill" id="en-bar" style="width: 100%;"></div>
+                    <span class="text">EN: 50/50</span>
+                </div>
+            </div>
+            <div class="hud-item coordinates">
+                <span class="label">SECTOR:</span>
+                <span class="value" id="current-sector">VOID-00</span>
+            </div>
+        </header>
+
+        <!-- Main Terminal Interface -->
+        <main class="terminal-window">
+            <div class="terminal-header">
+                <div class="controls">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="title">ZENITH CORE v1.0.4</div>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+                <div class="line system">Initializing Zenith Kernel... [SUCCESS]</div>
+                <div class="line system">Loading Story Modules... [SUCCESS]</div>
+                <div class="line system">Establishing Neural Link... [CONNECTED]</div>
+                <div class="line active">Type 'help' to see available commands.</div>
+            </div>
+            <div class="terminal-input-wrapper">
+                <span class="prompt">></span>
+                <input type="text" id="terminal-input" autofocus autocomplete="off">
+            </div>
+        </main>
+
+        <!-- Side Panels -->
+        <aside class="inventory-tray" id="inventory">
+            <h3>LOGISTICS_DECK</h3>
+            <ul id="item-list">
+                <li class="empty">NO_ITEMS_FOUND</li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Script Entry -->
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>

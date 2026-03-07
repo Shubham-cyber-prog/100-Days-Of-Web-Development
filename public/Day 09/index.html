@@ -1,45 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QuickNotes</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickNotes Pro</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header>
-  <h1>⚡ QuickNotes</h1>
-  <div class="search-bar">
-    <input type="text" id="search-input" placeholder="Search notes..." />
+<nav class="navbar">
+  <h1>QuickNotes Pro</h1>
+  <button class="toggle-btn" onclick="toggleTheme()">🌙</button>
+</nav>
+
+<div class="container">
+
+  <div class="controls">
+    <input type="text" id="noteText" placeholder="Write a note...">
+
+    <select id="category">
+      <option value="General">General</option>
+      <option value="Work">Work</option>
+      <option value="Study">Study</option>
+      <option value="Personal">Personal</option>
+    </select>
+
+    <select id="color">
+      <option value="#1e293b">Default</option>
+      <option value="#f87171">Red</option>
+      <option value="#34d399">Green</option>
+      <option value="#60a5fa">Blue</option>
+      <option value="#fbbf24">Yellow</option>
+    </select>
+
+    <button onclick="addNote()">Add Note</button>
+
+    <input type="text" id="searchInput" placeholder="Search notes..." oninput="renderNotes()">
   </div>
-</header>
 
-<section class="intro">
-  <h2>Your personal space for quick thoughts 📝</h2>
-  <p>
-    Create, edit, search, and manage your notes easily.
-    All notes are saved locally in your browser.
-  </p>
-</section>
+  <div class="notes-grid" id="notesGrid"></div>
 
-<main class="notes-grid" id="app"></main>
-
-<!-- Modal -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
-    <h2 id="modal-title">Add Note</h2>
-
-    <input type="text" id="note-title" placeholder="Title" />
-    <textarea id="note-body" placeholder="Write your note here..."></textarea>
-
-    <div class="modal-actions">
-      <button class="btn cancel" id="cancel-btn">Cancel</button>
-      <button class="btn save" id="save-btn">Save</button>
-    </div>
-  </div>
 </div>
 
-<script src="script.js"></script>
+  <header>
+    <h1>⚡ QuickNotes</h1>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search notes..." />
+    </div>
+    <div class="theme-toggle">
+      <button id="theme-toggle-btn" style="font-size: x-large; border-radius: 5px;">🌙</button>
+    </div>
+  </header>
+
+  <section class="intro">
+    <h2>Your personal space for quick thoughts 📝</h2>
+    <p>
+      Create, edit, search, and manage your notes easily.
+      All notes are saved locally in your browser.
+    </p>
+  </section>
+
+  <main class="notes-grid" id="app"></main>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2 id="modal-title">Add Note</h2>
+
+      <input type="text" id="note-title" placeholder="Title" />
+      <textarea id="note-body" placeholder="Write your note here..."></textarea>
+
+      <div class="modal-actions">
+        <label for="note-reminder">Set Reminder:</label>
+        <input type="datetime-local" id="note-reminder" />
+        <button class="btn cancel" id="cancel-btn">Cancel</button>
+        <button class="btn save" id="save-btn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
+
 </html>

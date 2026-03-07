@@ -1,78 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Dice Roller</title>
-  <link rel="stylesheet" href="styles.css" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dice Roller</title>
+
+<link rel="stylesheet" href="styles.css">
+
 </head>
+
 <body>
 
-  <div class="card">
-    <h2>🎲 Dice Roller</h2>
+<div class="container">
 
-    <div class="scene">
-      <div class="cube" id="cube">
-        <div class="face front"><span class="dot center"></span></div>
-        <div class="face back">
-          <span class="dot top-left"></span>
-          <span class="dot bottom-right"></span>
-        </div>
-        <div class="face right">
-          <span class="dot top-left"></span>
-          <span class="dot center"></span>
-          <span class="dot bottom-right"></span>
-        </div>
-        <div class="face left">
-          <span class="dot top-left"></span>
-          <span class="dot top-right"></span>
-          <span class="dot bottom-left"></span>
-          <span class="dot bottom-right"></span>
-        </div>
-        <div class="face top">
-          <span class="dot top-left"></span>
-          <span class="dot top-right"></span>
-          <span class="dot center"></span>
-          <span class="dot bottom-left"></span>
-          <span class="dot bottom-right"></span>
-        </div>
-        <div class="face bottom">
-          <span class="dot top-left"></span>
-          <span class="dot top-right"></span>
-          <span class="dot center-left"></span>
-          <span class="dot center-right"></span>
-          <span class="dot bottom-left"></span>
-          <span class="dot bottom-right"></span>
-        </div>
-      </div>
-    </div>
+<header>
 
-        <button id="rollBtn">Roll Dice</button>
-        <p id="resultText">Roll the dice!</p>
-        <p id="rollCount">Total Rolls: 0</p>
-        <button id="resetBtn">Reset</button>
+<h1>🎲 Dice Roller</h1>
 
-        <audio id="rollSound" src="https://assets.mixkit.co/active_storage/sfx/2001/2001-preview.mp3"></audio>
+<button id="themeToggle">🌙</button>
+
+</header>
 
 
-    <div class="buttons">
-      <button id="rollBtn">Roll Dice</button>
-      <button id="resetBtn">Reset</button>
-    </div>
+<div class="dice-area">
 
-    <p id="resultText">Roll the dice!</p>
+<div class="dice" id="dice">
 
-    <div class="history">
-      <h4>Roll History</h4>
-      <ul id="historyList"></ul>
-    </div>
-  </div>
+<span class="dot one"></span>
+<span class="dot two"></span>
+<span class="dot three"></span>
+<span class="dot four"></span>
+<span class="dot five"></span>
+<span class="dot six"></span>
 
-  <footer class="footer">
-    <p>Made by @RiyaKharade</p>
-    <a href="https://github.com/riya-kharade" target="_blank">GitHub</a>
-  </footer>
+</div>
 
-  <script src="script.js"></script>
+</div>
+
+
+<div class="controls">
+
+<button id="rollBtn">Roll Dice</button>
+
+<button id="resetBtn">Reset</button>
+
+</div>
+
+
+<p id="result">Roll the dice</p>
+
+<p id="counter">Total Rolls : 0</p>
+
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>

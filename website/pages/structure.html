@@ -1,238 +1,248 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
-    <title>Structure | Mission Control</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <style>
-      .tree-container {
-        border-left: 2px solid var(--border-light);
-        padding-left: var(--space-6);
-        margin-left: var(--space-4);
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Structure | 100 Days of Web Dev</title>
+
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* BODY */
+    body {
+      background: #0f172a;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: #020617;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    header h2 {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    nav a {
+      color: #cbd5e1;
+      margin-left: 20px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    /* MAIN */
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    /* PAGE TITLE */
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .page-header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    .page-header p {
+      color: #94a3b8;
+      font-size: 16px;
+    }
+
+    /* CARD */
+    .card {
+      background: #020617;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+      border: 1px solid #1e293b;
+    }
+
+    /* TREE */
+    .tree {
+      font-family: monospace;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .folder {
+      color: #38bdf8;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .file {
+      color: #cbd5e1;
+      margin-left: 25px;
+    }
+
+    .sub-folder {
+      margin-left: 25px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #020617;
+      border-top: 1px solid #1e293b;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
       }
 
-      .tree-item {
-        position: relative;
-        margin-bottom: var(--space-4);
+      nav a {
+        margin: 0 10px;
       }
-
-      .tree-item::before {
-        content: "";
-        position: absolute;
-        left: -26px;
-        /* -24px padding + -2px border */
-        top: 12px;
-        width: 20px;
-        height: 2px;
-        background: var(--border-light);
-      }
-
-      .folder-name {
-        display: flex;
-        align-items: center;
-        gap: var(--space-2);
-        font-family: var(--font-mono);
-        color: var(--accent-orbit);
-        margin-bottom: var(--space-2);
-      }
-
-      .file-list {
-        padding-left: var(--space-6);
-        border-left: 2px solid rgba(255, 255, 255, 0.05);
-      }
-
-      .file-item {
-        color: var(--text-secondary);
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
-        margin-bottom: var(--space-2);
-      }
-    </style>
-    <script src="../scripts/components/sidebar-loader.js"></script>
+    }
+  </style>
 </head>
 
-  <body>
-    <header class="site-header">
-        <div class="nav-container" style="filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)) drop-shadow(0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent));">
-            <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
-            </a>
+<body>
 
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Dashboard</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="favorites.html" class="nav-link">Favorites</a>
-                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contributors.html" class="nav-link">Contributors</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </nav>
+  <!-- HEADER -->
+  <header>
+    <h2>100 Days of Web Dev</h2>
 
-            <div class="nav-user">
-                <button class="mobile-toggle" onclick="toggleMobileMenu()">
-                    <svg class="icon icon-lg" viewBox="0 0 24 24">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="projects.html">Projects</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="structure.html">Structure</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="margin-right: 15px; background: none; border: none; cursor: pointer;">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary)">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
+  <!-- MAIN -->
+  <main>
+    <div class="container">
 
-                <div class="user-avatar-wrapper">
-                    <button class="user-avatar" onclick="toggleUserMenu()">
-                        <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%" />
-                    </button>
-                    <!-- Dropdown -->
-                    <div class="user-dropdown">
-                        <a href="profile.html" class="dropdown-item">View Profile</a>
-                        <a href="settings.html" class="dropdown-item">Settings</a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item text-danger" onclick="handleLogout()">
-                            Log Out
-                        </button>
-                    </div>
-                </div>
-            </div>
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </header>
-
-
-    <main class="container section">
-      <div class="text-center" style="padding-top: 100px;">
-        <h1 style="text-align: center;">System Architecture</h1>
-        <p style="text-align: center;">Blueprints of the station.</p>
+      <!-- TITLE -->
+      <div class="page-header">
+        <h1>📁 System Structure</h1>
+        <p>Project Folder Architecture Overview</p>
       </div>
 
-      <div class="card animate-enter" style="max-width: 800px; margin: 0 auto; margin-top: 70px;">
-        <div class="tree-container">
-          <!-- Root -->
-          <div class="tree-item">
-            <div class="folder-name">📁 100-Days-Of-Web-Development/</div>
+      <!-- CARD -->
+      <div class="card">
 
-            <div class="file-list">
-              <div class="file-item">📄 README.md</div>
-              <div class="file-item">📄 index.html (Redirector)</div>
+        <div class="tree">
 
-              <!-- Website -->
-              <div class="tree-item" style="margin-top: var(--space-4)">
-                <div class="folder-name">📁 website/</div>
-                <div class="file-list">
-                  <div class="tree-item">
-                    <div class="folder-name">📁 pages/</div>
-                    <div class="file-list">
-                      <div class="file-item">📄 login.html</div>
-                      <div class="file-item">📄 dashboard.html</div>
-                      <div class="file-item">📄 projects.html</div>
-                    </div>
-                  </div>
+          <div class="folder">📁 100-Days-Of-Web-Development/</div>
 
-                  <div class="tree-item">
-                    <div class="folder-name">📁 styles/</div>
-                    <div class="file-list">
-                      <div class="file-item">📁 tokens/ (colors, type)</div>
-                      <div class="file-item">📁 base/</div>
-                      <div class="file-item">📁 components/</div>
-                    </div>
-                  </div>
+          <div class="file">📄 README.md</div>
+          <div class="file">📄 index.html</div>
 
-                  <div class="tree-item">
-                    <div class="folder-name">📁 scripts/</div>
-                    <div class="file-list">
-                      <div class="file-item">📁 auth/ (guard.js)</div>
-                      <div class="file-item">📁 core/</div>
-                      <div class="file-item">📁 pages/</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="sub-folder">
+
+            <div class="folder">📁 website/</div>
+
+            <div class="sub-folder">
+
+              <div class="folder">📁 pages/</div>
+
+              <div class="file">📄 login.html</div>
+              <div class="file">📄 dashboard.html</div>
+              <div class="file">📄 projects.html</div>
+              <div class="file">📄 favorites.html</div>
+              <div class="file">📄 structure.html</div>
+
             </div>
+
+            <div class="sub-folder">
+
+              <div class="folder">📁 styles/</div>
+
+              <div class="file">📁 base/</div>
+              <div class="file">📁 components/</div>
+              <div class="file">📁 pages/</div>
+
+            </div>
+
+            <div class="sub-folder">
+
+              <div class="folder">📁 scripts/</div>
+
+              <div class="file">📁 auth/</div>
+              <div class="file">📁 core/</div>
+              <div class="file">📁 pages/</div>
+
+            </div>
+
+            <div class="sub-folder">
+
+              <div class="folder">📁 assets/</div>
+
+              <div class="file">📁 images/</div>
+              <div class="file">📁 icons/</div>
+
+            </div>
+
           </div>
+
         </div>
+
       </div>
-    </main>
 
-        <!-- Footer -->
-<div id="footer-placeholder"></div><script src="../scripts/components/footer-loader.js"></script>
-<footer class="site-footer" style="display: none;">
-    <div class="container footer-content">
-        <div class="footer-brand animate-enter">
-            <a href="#" class="footer-logo">
-                <!-- <img src="website/assets/images/logo.png" alt="Logo"> -->
-                <h2>100 Days of<br><span class="text-flame">Web Dev</span></h2>
-            </a>
-            <p class="footer-desc">
-                A hyper-intensive protocol designed to forge elite web engineers through daily deployment cycles.
-            </p>
-        </div>
-
-        <div class="footer-col animate-enter delay-100">
-            <h3>Navigation</h3>
-            <nav class="footer-links">
-                <a href="#" class="footer-link">Home Base</a>
-                <a href="website/pages/projects.html" class="footer-link">Archive</a>
-                <a href="website/pages/about.html" class="footer-link">Leaderboard</a>
-                <a href="website/pages/contributors.html" class="footer-link">Crew</a>
-            </nav>
-        </div>
-
-        <div class="footer-col animate-enter delay-200">
-            <h3>Resources</h3>
-            <nav class="footer-links">
-                <a href="documentation.html" class="footer-link">Documentation</a>
-                <a href="api-status.html" class="footer-link">API Status</a>
-                <a href="contact.html" class="footer-link">Contact Comms</a>
-                <a href="system-logic.html" class="footer-link">System Logic</a>
-            </nav>
-        </div>
-
-        <div class="footer-col animate-enter delay-300">
-            <h3>Connect</h3>
-            <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-            <div class="footer-socials">
-                <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26.git"
-                    target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Github">
-                    <img src="website/assets/images/github.png" alt="GitHub" class="icon">
-                </a>
-
-                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Twitter (X)">
-                    <img src="website/assets/images/twitter.png" alt="Twitter/X" class="icon">
-                </a>
-
-                <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
-                    aria-label="Discord">
-                    <img src="website/assets/images/discord.png" alt="Discord" class="icon">
-                </a>
-            </div>
-        </div>
     </div>
+  </main>
 
-    <div class="container footer-bottom">
-        <p class="copyright">&copy; 2026 100 Days of Web Dev. All Systems Nominal.</p>
-        <p class="made-by">
-            Maintained by <span class="text-flame font-bold">Subham</span>
-            <svg class="icon icon-sm heart-pulse" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                </path>
-            </svg>
-        </p>
-    </div>
-</footer>
+  <!-- FOOTER -->
+  <footer>
+    © 2026 100 Days of Web Dev | All Rights Reserved
+  </footer>
 
-    <script src="../scripts/auth/guard.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
-  </body>
+  <!-- JS -->
+  <script>
+    // Small animation on load
+    window.onload = () => {
+      document.querySelector(".card").style.opacity = "0";
+      document.querySelector(".card").style.transform = "translateY(30px)";
+
+      setTimeout(() => {
+        document.querySelector(".card").style.transition = "0.6s";
+        document.querySelector(".card").style.opacity = "1";
+        document.querySelector(".card").style.transform = "translateY(0)";
+      }, 200);
+    };
+  </script>
+
+</body>
 </html>

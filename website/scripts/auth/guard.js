@@ -94,7 +94,6 @@
         'contributors.html',
         'structure.html',
         'profile.html',
-        'contact.html',
         '404.html',
         'api-status.html',
         'documentation.html',

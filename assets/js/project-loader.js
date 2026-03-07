@@ -52,7 +52,7 @@
     /**
      * Create a project card element
      */
-    function createProjectCard(project, delay) {
+    function createProjectCard(project, delay, highlightedTitle = null) {
         const card = document.createElement('div');
         card.className = 'card project-card animate-enter';
         card.style.animationDelay = `${Math.min(delay, 1000)}ms`;
@@ -80,6 +80,8 @@
                 </span>
             `).join('');
 
+        const titleHTML = highlightedTitle || project.title;
+
         card.innerHTML = `
             <div class="card-top">
                 <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; max-width: calc(100% - 40px);">
@@ -89,7 +91,7 @@
             </div>
             <div class="card-divider"></div>
             <h3 class="project-title" style="font-size: var(--text-lg); margin-bottom: 0.5rem; line-height: 1.3;">
-                ${project.title}
+                ${titleHTML}
             </h3>
             <div class="tech-stack" style="margin-bottom: 0.5rem;">
                 ${techTags}
@@ -156,18 +158,21 @@
         const searchTerm = filter.toLowerCase();
         let delay = 0;
         let count = 0;
+        const maxCount = searchTerm ? allProjects.length : 4; // Show all when searching
 
         for (const project of allProjects) {
-            // Apply limit of 4 projects for landing page
-            if (count >= 4) break;
+            if (count >= maxCount) break;
 
             const searchString = `${project.title} ${project.level} ${(project.tech || []).join(' ')}`.toLowerCase();
 
-            if (searchTerm && !searchString.includes(searchTerm)) {
-                continue;
+            // Highlight matching text in title
+            let highlightedTitle = project.title;
+            if (searchTerm) {
+                const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                highlightedTitle = project.title.replace(regex, '<mark>$1</mark>');
             }
 
-            const card = createProjectCard(project, delay);
+            const card = createProjectCard(project, delay, highlightedTitle);
             gallery.appendChild(card);
             delay += 30;
             count++;
