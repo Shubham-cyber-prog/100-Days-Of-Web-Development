@@ -12,7 +12,20 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Mail, TrendingUp, Users, MousePointerClick, ArrowUpRight, Sparkles } from "lucide-react";
+import { 
+  Mail, 
+  TrendingUp, 
+  Users, 
+  MousePointerClick, 
+  ArrowUpRight, 
+  Sparkles,
+  FlaskConical,
+  Eye,
+  Clock,
+  Shield,
+  UserCircle,
+  ChevronRight
+} from "lucide-react";
 import { useNavigate } from "react-router";
 
 const performanceData = [
@@ -136,19 +149,9 @@ export default function DashboardPage() {
             <CardDescription>Opens and clicks over the last 7 days</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={performanceData}>
-                  <defs>
-                    <linearGradient id="colorOpens" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#4F46E5" stopOpacity={0} />
-                    </linearGradient>
-                    <linearGradient id="colorClicks" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#22C55E" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
                   <XAxis dataKey="date" stroke="#64748B" fontSize={12} />
                   <YAxis stroke="#64748B" fontSize={12} />
@@ -164,16 +167,16 @@ export default function DashboardPage() {
                     dataKey="opens"
                     stroke="#4F46E5"
                     strokeWidth={2}
-                    fillOpacity={1}
-                    fill="url(#colorOpens)"
+                    fill="#4F46E5"
+                    fillOpacity={0.2}
                   />
                   <Area
                     type="monotone"
                     dataKey="clicks"
                     stroke="#22C55E"
                     strokeWidth={2}
-                    fillOpacity={1}
-                    fill="url(#colorClicks)"
+                    fill="#22C55E"
+                    fillOpacity={0.2}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -214,6 +217,87 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Advanced Features Quick Access */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Advanced Features</CardTitle>
+              <CardDescription>Powerful tools to optimize your email marketing</CardDescription>
+            </div>
+            <Badge variant="secondary">New</Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <button
+              onClick={() => navigate("/ab-testing")}
+              className="flex flex-col items-center gap-3 p-6 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <FlaskConical className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold mb-1">A/B Testing</h3>
+                <p className="text-xs text-muted-foreground">Test & optimize campaigns</p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigate("/preview")}
+              className="flex flex-col items-center gap-3 p-6 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-950 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Eye className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold mb-1">Email Preview</h3>
+                <p className="text-xs text-muted-foreground">Preview across devices</p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigate("/send-time")}
+              className="flex flex-col items-center gap-3 p-6 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-950 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Clock className="w-6 h-6 text-green-600 dark:text-green-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold mb-1">Send Time AI</h3>
+                <p className="text-xs text-muted-foreground">Optimize send timing</p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigate("/deliverability")}
+              className="flex flex-col items-center gap-3 p-6 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-yellow-100 dark:bg-yellow-950 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Shield className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold mb-1">Deliverability</h3>
+                <p className="text-xs text-muted-foreground">Check spam scores</p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigate("/contacts")}
+              className="flex flex-col items-center gap-3 p-6 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-950 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <UserCircle className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold mb-1">Contacts</h3>
+                <p className="text-xs text-muted-foreground">Manage subscribers</p>
+              </div>
+            </button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Recent Campaigns */}
       <Card>

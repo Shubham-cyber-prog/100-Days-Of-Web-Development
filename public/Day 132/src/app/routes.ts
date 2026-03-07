@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import { RootLayout } from "./components/root-layout";
 import LandingPage from "./pages/landing";
 import LoginPage from "./pages/login";
 import DashboardLayout from "./pages/dashboard/layout";
@@ -11,23 +12,28 @@ import SettingsPage from "./pages/dashboard/settings";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    Component: LandingPage,
-  },
-  {
-    path: "/login",
-    Component: LoginPage,
-  },
-  {
-    path: "/dashboard",
-    Component: DashboardLayout,
+    Component: RootLayout,
     children: [
-      { index: true, Component: DashboardHome },
-      { path: "chat", Component: ChatPage },
-      { path: "tasks", Component: TasksPage },
-      { path: "integrations", Component: IntegrationsPage },
-      { path: "analytics", Component: AnalyticsPage },
-      { path: "settings", Component: SettingsPage },
+      {
+        path: "/",
+        Component: LandingPage,
+      },
+      {
+        path: "/login",
+        Component: LoginPage,
+      },
+      {
+        path: "/dashboard",
+        Component: DashboardLayout,
+        children: [
+          { index: true, Component: DashboardHome },
+          { path: "chat", Component: ChatPage },
+          { path: "tasks", Component: TasksPage },
+          { path: "integrations", Component: IntegrationsPage },
+          { path: "analytics", Component: AnalyticsPage },
+          { path: "settings", Component: SettingsPage },
+        ],
+      },
     ],
   },
 ]);

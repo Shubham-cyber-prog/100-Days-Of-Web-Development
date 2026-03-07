@@ -1,156 +1,178 @@
-let habitList = document.getElementById("habitList");
-let habitInput = document.getElementById("habitInput");
-
 let habits = JSON.parse(localStorage.getItem("habits")) || [];
 
-let lastReset = localStorage.getItem("lastReset");
+const habitList = document.getElementById("habitList");
+const searchResults = document.getElementById("searchResults");
 
-function resetDaily() {
-  let today = new Date().toDateString();
+function showPage(page){
 
-  if (lastReset !== today) {
-    habits.forEach(h => h.completed = false);
-    localStorage.setItem("lastReset", today);
-    saveHabits();
-  }
-}
-
-resetDaily();
-
-function saveHabits() {
-  localStorage.setItem("habits", JSON.stringify(habits));
-}
-
-function renderHabits() {
-  habitList.innerHTML = "";
-
-  habits.forEach((habit, index) => {
-    let li = document.createElement("li");
-    li.className = habit.completed ? "completed" : "";
-
-    let span = document.createElement("span");
-    span.textContent = habit.name;
-
-    let streak = document.createElement("small");
-streak.textContent = `🔥 ${habit.streak || 0} days`;
-span.appendChild(document.createElement("br"));
-span.appendChild(streak);
-
-    let actions = document.createElement("div");
-    actions.className = "actions";
-
-    let completeBtn = document.createElement("button");
-    completeBtn.textContent = "✔";
-    completeBtn.className = "complete-btn";
-    completeBtn.onclick = () => toggleComplete(index);
-
-    let deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "✖";
-    deleteBtn.className = "delete-btn";
-    deleteBtn.onclick = () => deleteHabit(index);
-
-    actions.appendChild(completeBtn);
-    actions.appendChild(deleteBtn);
-
-    li.appendChild(span);
-    li.appendChild(actions);
-
-    habitList.appendChild(li);
-  });
-
-  let completed = habits.filter(h => h.completed).length;
-let percent = habits.length ? (completed / habits.length) * 100 : 0;
-document.getElementById("progressBar").style.width = percent + "%";
-}
-
-function addHabit() {
-  let habitText = habitInput.value.trim();
-  if (habitText === "") return;
-
-  // habits.push({ name: habitText, completed: false });
-  habits.push({
-  name: habitText,
-  completed: false,
-  streak: 0,
-  lastCompleted: null
-});
-  habitInput.value = "";
-  saveHabits();
-  renderHabits();
-}
-
-// function toggleComplete(index) {
-//   habits[index].completed = !habits[index].completed;
-//   saveHabits();
-//   renderHabits();
-// }
-
-function toggleComplete(index) {
-  let today = new Date().toDateString();
-  let habit = habits[index];
-
-  if (!habit.completed) {
-    habit.completed = true;
-
-    if (habit.lastCompleted === today) return;
-
-    let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    if (habit.lastCompleted === yesterday.toDateString()) {
-      habit.streak++;
-    } else {
-      habit.streak = 1;
-    }
-
-    habit.lastCompleted = today;
-  } else {
-    habit.completed = false;
-  }
-
-  saveHabits();
-  renderHabits();
-}
-
-
-
-let search = document.getElementById("search");
-
-search.addEventListener("input", () => {
-  let value = search.value.toLowerCase();
-  let filtered = habits.filter(h => h.name.toLowerCase().includes(value));
-  renderFiltered(filtered);
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
 });
 
-function renderFiltered(list) {
-  habitList.innerHTML = "";
+document.getElementById(page).classList.add("active");
 
-  list.forEach((habit, index) => {
-    let li = document.createElement("li");
-    li.textContent = habit.name;
-    habitList.appendChild(li);
-  });
+renderHabits();
+updateStats();
+
 }
 
-function deleteHabit(index) {
-  habits.splice(index, 1);
-  saveHabits();
-  renderHabits();
+function saveHabits(){
+localStorage.setItem("habits", JSON.stringify(habits));
 }
+
+function addHabit(){
+
+let input = document.getElementById("habitInput");
+
+let text = input.value.trim();
+
+if(!text) return;
+
+habits.push({
+name:text,
+completed:false,
+streak:0,
+lastCompleted:null
+});
+
+input.value="";
+
+saveHabits();
+
+renderHabits();
+updateStats();
+
+}
+
+function renderHabits(){
+
+habitList.innerHTML="";
+
+habits.forEach((habit,index)=>{
+
+let li=document.createElement("li");
+
+li.className = habit.completed ? "completed" : "";
+
+li.innerHTML = `
+
+<span>
+${habit.name}<br>
+<small>🔥 ${habit.streak} days</small>
+</span>
+
+<div class="actions">
+
+<button onclick="toggleHabit(${index})">✔</button>
+<button onclick="editHabit(${index})">✏</button>
+<button onclick="deleteHabit(${index})">✖</button>
+
+</div>
+
+`;
+
+habitList.appendChild(li);
+
+});
+
+updateProgress();
+
+}
+
+function toggleHabit(index){
+
+let habit = habits[index];
+
+let today = new Date().toDateString();
+
+habit.completed = !habit.completed;
+
+if(habit.completed){
+
+if(habit.lastCompleted !== today){
+
+habit.streak++;
+habit.lastCompleted = today;
+
+}
+
+}
+
+saveHabits();
+renderHabits();
+
+}
+
+function deleteHabit(index){
+
+habits.splice(index,1);
+
+saveHabits();
+
+renderHabits();
+updateStats();
+
+}
+
+function editHabit(index){
+
+let newName = prompt("Edit habit", habits[index].name);
+
+if(!newName) return;
+
+habits[index].name = newName;
+
+saveHabits();
 
 renderHabits();
 
-
-if ("Notification" in window) {
-  Notification.requestPermission();
 }
 
-function remind() {
-  if (Notification.permission === "granted") {
-    new Notification("Habit Reminder", {
-      body: "Don't forget your habits today! 💪"
-    });
-  }
+document.getElementById("searchHabit").addEventListener("input",function(){
+
+let value = this.value.toLowerCase();
+
+searchResults.innerHTML="";
+
+let filtered = habits.filter(h=>h.name.toLowerCase().includes(value));
+
+filtered.forEach(h=>{
+
+let li=document.createElement("li");
+li.textContent=h.name;
+
+searchResults.appendChild(li);
+
+});
+
+});
+
+function updateStats(){
+
+document.getElementById("totalHabits").innerText = habits.length;
+
+let completed = habits.filter(h=>h.completed).length;
+
+document.getElementById("completedHabits").innerText = completed;
+
+let best = Math.max(...habits.map(h=>h.streak),0);
+
+document.getElementById("bestStreak").innerText = best;
+
 }
 
-setTimeout(remind, 5000);
+function updateProgress(){
+
+let completed = habits.filter(h=>h.completed).length;
+
+let percent = habits.length ? (completed/habits.length)*100 : 0;
+
+document.getElementById("progressBar").style.width = percent+"%";
+
+document.getElementById("progressText").innerText =
+percent.toFixed(0)+"% habits completed";
+
+}
+
+renderHabits();
+updateStats();
