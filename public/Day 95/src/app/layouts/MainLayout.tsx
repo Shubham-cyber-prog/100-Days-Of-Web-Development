@@ -8,7 +8,11 @@ import {
   Search,
   Bell,
   ChevronDown,
-  Palette
+  Palette,
+  UserCircle,
+  Activity,
+  UsersRound,
+  FileText
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
@@ -27,8 +31,12 @@ import { Badge } from "../components/ui/badge";
 const navigation = [
   { name: "Dashboard", path: "/", icon: LayoutDashboard },
   { name: "Users", path: "/users", icon: Users },
+  { name: "Team", path: "/team", icon: UsersRound },
   { name: "Projects", path: "/projects", icon: FolderKanban },
   { name: "Messages", path: "/messages", icon: MessageSquare },
+  { name: "Notifications", path: "/notifications", icon: Bell },
+  { name: "Activity Log", path: "/activity", icon: Activity },
+  { name: "Reports", path: "/reports", icon: FileText },
   { name: "Settings", path: "/settings", icon: Settings },
   { name: "Design System", path: "/design-system", icon: Palette },
 ];
@@ -103,14 +111,16 @@ export default function MainLayout() {
             </div>
 
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="w-5 h-5" />
-                {notifications > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs">
-                    {notifications}
-                  </Badge>
-                )}
-              </Button>
+              <Link to="/notifications">
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="w-5 h-5" />
+                  {notifications > 0 && (
+                    <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs">
+                      {notifications}
+                    </Badge>
+                  )}
+                </Button>
+              </Link>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -129,11 +139,17 @@ export default function MainLayout() {
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Billing</DropdownMenuItem>
-                  <DropdownMenuItem>Team</DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile">Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/team">Team</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings">Settings</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link to="/auth/login">Log out</Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
