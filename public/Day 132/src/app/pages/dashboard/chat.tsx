@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Send, Mic, Paperclip, Bot, User, Sparkles } from "lucide-react";
+import { Send, Mic, Paperclip, Bot, User, Sparkles, MicOff } from "lucide-react";
 import { Card, CardContent } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -25,6 +25,7 @@ export default function ChatPage() {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const suggestedPrompts = [
@@ -78,6 +79,17 @@ export default function ChatPage() {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  const toggleRecording = () => {
+    setIsRecording(!isRecording);
+    if (!isRecording) {
+      // Start recording simulation
+      setTimeout(() => {
+        setIsRecording(false);
+        setInput("This is a voice transcription demo");
+      }, 3000);
     }
   };
 
@@ -213,6 +225,30 @@ export default function ChatPage() {
 
           {/* Input Area */}
           <div className="p-6 border-t border-white/40">
+            {isRecording && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-red-50 to-pink-50 border border-red-200"
+              >
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ repeat: Infinity, duration: 1 }}
+                  className="w-3 h-3 bg-red-500 rounded-full"
+                />
+                <span className="text-sm font-medium text-red-700">Recording... Speak now</span>
+                <div className="flex-1 flex gap-1 justify-end">
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{ height: ["8px", "20px", "8px"] }}
+                      transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.1 }}
+                      className="w-1 bg-red-400 rounded-full"
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            )}
             <div className="flex gap-2">
               <Button
                 variant="ghost"
@@ -228,13 +264,17 @@ export default function ChatPage() {
                   onKeyPress={handleKeyPress}
                   placeholder="Type your message..."
                   className="rounded-2xl pr-12 bg-white/50 border-2 focus:border-[#4f46e5] transition-all"
+                  disabled={isRecording}
                 />
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 rounded-xl"
+                  className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-xl ${
+                    isRecording ? "text-red-500" : ""
+                  }`}
+                  onClick={toggleRecording}
                 >
-                  <Mic className="w-5 h-5" />
+                  {isRecording ? <MicOff className="w-5 h-5 animate-pulse" /> : <Mic className="w-5 h-5" />}
                 </Button>
               </div>
               <Button

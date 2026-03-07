@@ -1,7 +1,16 @@
 import { motion } from "motion/react";
-import { TrendingUp, TrendingDown, Activity, Users, MessageSquare, Zap } from "lucide-react";
+import { TrendingUp, TrendingDown, Activity, Users, MessageSquare, Zap, Download, FileText, FileSpreadsheet } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
 import {
   LineChart,
   Line,
@@ -82,11 +91,37 @@ export default function AnalyticsPage() {
   return (
     <div className="space-y-6 max-w-7xl">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] bg-clip-text text-transparent">
-          Analytics Dashboard
-        </h1>
-        <p className="text-gray-600">Insights and performance metrics</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] bg-clip-text text-transparent">
+            Analytics Dashboard
+          </h1>
+          <p className="text-gray-600">Insights and performance metrics</p>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="rounded-2xl bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] hover:opacity-90 shadow-lg shadow-indigo-500/30">
+              <Download className="w-4 h-4 mr-2" />
+              Export Report
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="rounded-2xl">
+            <DropdownMenuLabel>Download as</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="rounded-xl">
+              <FileText className="w-4 h-4 mr-2" />
+              PDF Document
+            </DropdownMenuItem>
+            <DropdownMenuItem className="rounded-xl">
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              Excel Spreadsheet
+            </DropdownMenuItem>
+            <DropdownMenuItem className="rounded-xl">
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              CSV File
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Stats Grid */}

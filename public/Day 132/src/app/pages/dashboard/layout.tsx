@@ -14,7 +14,10 @@ import {
   Menu,
   X,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Moon,
+  Sun,
+  Command,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -28,10 +31,13 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import { Badge } from "../../components/ui/badge";
+import { useTheme } from "../../contexts/theme-context";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../components/ui/tooltip";
 
 export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: Bot },
@@ -176,6 +182,41 @@ export default function DashboardLayout() {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={toggleTheme}
+                      className="rounded-xl hover:bg-white/60"
+                    >
+                      {theme === "light" ? (
+                        <Moon className="w-5 h-5" />
+                      ) : (
+                        <Sun className="w-5 h-5" />
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Toggle theme (⌘T)</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" className="rounded-xl">
+                      <Command className="w-5 h-5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Command palette (⌘K)</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              
               <Button variant="ghost" size="icon" className="rounded-xl relative">
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-[#06b6d4] rounded-full" />
