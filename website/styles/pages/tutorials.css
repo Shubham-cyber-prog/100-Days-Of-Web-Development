@@ -371,7 +371,8 @@
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
+    /* 16:9 aspect ratio */
     margin-bottom: 1.5rem;
 }
 
@@ -436,47 +437,47 @@
     .tutorials-main {
         padding: 1rem 0;
     }
-    
+
     .page-header h1 {
         font-size: 2rem;
     }
-    
+
     .tutorials-controls {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .search-bar {
         max-width: none;
     }
-    
+
     .filter-tabs {
         justify-content: center;
         flex-wrap: wrap;
     }
-    
+
     .tutorials-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .progress-overview {
         grid-template-columns: 1fr;
     }
-    
+
     .resources-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .modal-content {
         width: 95%;
         margin: 5% auto;
     }
-    
+
     .modal-body {
         padding: 1rem;
     }
-    
+
     .video-meta {
         flex-direction: column;
         align-items: flex-start;
@@ -488,22 +489,75 @@
     .tutorial-info {
         padding: 1rem;
     }
-    
+
     .tutorial-thumbnail {
         height: 150px;
     }
-    
+
     .play-overlay {
         width: 50px;
         height: 50px;
         font-size: 1.2rem;
     }
-    
+
     .progress-card {
         padding: 1rem;
     }
-    
+
     .progress-card i {
         font-size: 1.5rem;
     }
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+
+[data-theme="light"] .tutorials-main {
+    background: var(--bg-void);
+}
+
+[data-theme="light"] .page-header {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .filter-btn {
+    border-color: var(--accent-core);
+    color: var(--accent-core);
+}
+
+[data-theme="light"] .filter-btn.active,
+[data-theme="light"] .filter-btn:hover {
+    background: var(--accent-core);
+    color: white;
+}
+
+[data-theme="light"] .progress-card {
+    background: white;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+}
+
+[data-theme="light"] .tutorial-card {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .tutorial-title {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .tutorial-description {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .resource-card {
+    background: white;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+}
+
+[data-theme="light"] .modal-content {
+    background: white;
 }

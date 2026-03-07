@@ -24,10 +24,10 @@ class ProfileDataEnhancer {
       'Day 61', 'Day 62', 'Day 63', 'Day 64', 'Day 65', 'Day 66', 'Day 67', 'Day 68', 'Day 69', 'Day 70',
       'Day 71', 'Day 72', 'Day 73', 'Day 74', 'Day 75', 'Day 76', 'Day 77', 'Day 78', 'Day 79', 'Day 80',
       'Day 81', 'Day 82', 'Day 83', 'Day 84', 'Day 85', 'Day 86', 'Day 87', 'Day 88', 'Day 89', 'Day 90',
-      'Day 91', 'Day 92', 'Day 93', 'Day 94', 'Day 96', 'Day100', 'Day 101', 'Day 102', 'Day 103', 'Day 104', 'Day 105',
-      'Day 107', 'Day 108', 'day-111', 'Day 110', 'Day 130', 'Day 145', 'Day 151', 'Day 152 - Newsly',
+      'Day 91', 'Day 92', 'Day 93', 'Day 94', 'Day 96', 'Day 100', 'Day 101', 'Day 102', 'Day 103', 'Day 104', 'Day 105',
+      'Day 107', 'Day 108', 'Day 111', 'Day 110', 'Day 130', 'Day 145', 'Day 151', 'Day 152 - Newsly',
       'Day 153', 'Day 154', 'Day 155', 'Day 156', 'Day 157', 'Day 158', 'Day 159', 'Day 160',
-      'Day 161', 'Day 162', 'Day 163', 'Day 164', 'Day 167', 'Day161', 'Day-35'
+      'Day 161', 'Day 162', 'Day 163', 'Day 164', 'Day 167'
     ];
     return dayFolders.length;
   }

@@ -1,0 +1,337 @@
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --accent-primary: #00ff41;
+    /* CRT Green */
+    --accent-danger: #ff003c;
+    --accent-warning: #ffcc00;
+    --text-main: #e0e0e0;
+    --text-dim: #777;
+    --border-width: 2px;
+    --grid-size: 20px;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Space Grotesk', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header HUD */
+.hud-header {
+    height: 60px;
+    border-bottom: var(--border-width) solid var(--text-main);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 40px;
+    background: var(--bg-secondary);
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo .glitch {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text-main);
+    position: relative;
+}
+
+.logo .version {
+    font-size: 0.6rem;
+    color: var(--accent-primary);
+}
+
+.status-bar {
+    display: flex;
+    gap: 20px;
+}
+
+.status-item {
+    font-size: 0.8rem;
+}
+
+.status-item .label {
+    color: var(--text-dim);
+}
+
+.status-item .value.active {
+    color: var(--accent-primary);
+}
+
+.status-item .value.inactive {
+    color: var(--accent-danger);
+}
+
+.hud-controls {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn {
+    background: transparent;
+    border: 1px solid var(--text-main);
+    color: var(--text-main);
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background: var(--text-main);
+    color: var(--bg-primary);
+}
+
+.btn.primary {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.btn.primary:hover {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+.btn.danger {
+    border-color: var(--accent-danger);
+    color: var(--accent-danger);
+}
+
+.btn.danger:hover {
+    background: var(--accent-danger);
+    color: var(--bg-primary);
+}
+
+/* Workspace Layout */
+.workspace {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 250px;
+    background: var(--bg-secondary);
+    border-right: var(--border-width) solid var(--text-main);
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.inspector {
+    border-right: none;
+    border-left: var(--border-width) solid var(--text-main);
+}
+
+.sidebar h3 {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--text-dim);
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.node-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.add-node {
+    background: var(--bg-primary);
+    border: 1px solid var(--text-dim);
+    color: var(--text-main);
+    padding: 10px;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.add-node:hover {
+    border-color: var(--accent-primary);
+    background: #00ff4111;
+}
+
+/* Graph Area */
+.graph-container {
+    flex: 1;
+    position: relative;
+    background-color: var(--bg-primary);
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+    overflow: hidden;
+}
+
+#graph-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#node-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Node Elements */
+.synth-node {
+    position: absolute;
+    width: 160px;
+    background: var(--bg-secondary);
+    border: var(--border-width) solid var(--text-main);
+    pointer-events: all;
+    user-select: none;
+}
+
+.synth-node header {
+    background: var(--text-main);
+    color: var(--bg-primary);
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+}
+
+.synth-node .node-ports {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.port {
+    width: 12px;
+    height: 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--text-main);
+    cursor: crosshair;
+}
+
+.port.input {
+    margin-left: -6px;
+}
+
+.port.output {
+    margin-right: -6px;
+}
+
+/* VU Meter */
+.monitoring-panel {
+    margin-top: auto;
+}
+
+.vumeter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.vumeter {
+    height: 10px;
+    background: #222;
+    border: 1px solid var(--text-dim);
+    position: relative;
+    overflow: hidden;
+}
+
+.vumeter-fill {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-primary) 70%, var(--accent-warning) 85%, var(--accent-danger) 95%);
+    transition: width 0.1s ease;
+}
+
+.vumeter-container label {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+}
+
+/* Footer Logs */
+.hud-footer {
+    height: 100px;
+    border-top: var(--border-width) solid var(--text-main);
+    background: var(--bg-secondary);
+    padding: 10px 20px;
+}
+
+.system-logs {
+    height: 100%;
+    overflow-y: auto;
+    font-size: 0.7rem;
+    color: var(--accent-primary);
+    opacity: 0.8;
+}
+
+.system-logs p {
+    margin-bottom: 4px;
+}
+
+/* Inspector Controls */
+.control-group {
+    margin-bottom: 15px;
+}
+
+.control-group label {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent-primary);
+}
+
+select {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-main);
+    border: 1px solid var(--text-dim);
+    padding: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+}
+
+.placeholder-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 50px;
+}

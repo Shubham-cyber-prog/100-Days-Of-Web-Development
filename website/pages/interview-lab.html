@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Interview Lab | Professional Career Launchpad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/styles/main.css" />
+</head>
+<body class="bg-dark">
+    <nav id="navbar-container"></nav>
+
+    <main class="container py-4">
+        <header class="mb-4">
+            <h1 class="text-primary"><i class="fas fa-microchip"></i> Interview <span class="text-accent">Simulator</span></h1>
+            <p class="text-secondary">Practice technical and behavioral interviews with real-time AI feedback.</p>
+        </header>
+
+        <div class="row">
+            <div class="col-8">
+                <div id="interview-coach-container"></div>
+            </div>
+            <div class="col-4">
+                <div class="card p-3 mb-3 bg-secondary">
+                    <h4>Session History</h4>
+                    <div id="session-history-list">
+                        <p class="text-muted">No sessions yet. Start your first simulator above.</p>
+                    </div>
+                </div>
+                <div class="card p-3 bg-accent-soft">
+                    <h4>Market Confidence</h4>
+                    <div class="confidence-meter text-center py-2">
+                        <span style="font-size: 2.5rem;">72%</span>
+                        <p class="mb-0">Average Clarity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { InterviewCoach } from '../scripts/components/InterviewCoach.js';
+        
+        window.onload = () => {
+            const coach = new InterviewCoach('interview-coach-container');
+            coach.render();
+            
+            document.addEventListener('click', (e) => {
+                if(e.target.id === 'btn-submit-answer') {
+                    const text = document.getElementById('interview-response').value;
+                    if(!text) return alert('Please enter a response.');
+                    coach.submitResponse(text);
+                }
+                
+                if(e.target.id === 'btn-next-q') {
+                    coach.currentQuestion = (coach.currentQuestion + 1) % coach.questions.length;
+                    coach.render();
+                }
+            });
+        };
+    </script>
+</body>
+</html>

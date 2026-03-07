@@ -1,567 +1,414 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Help & FAQ | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <link rel="stylesheet" href="../styles/pages/help.css">
-    <style>
-      .help-container {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 2rem;
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help & FAQ | 100 Days of Web Dev</title>
 
-      .help-header {
-        text-align: center;
-        margin-bottom: 3rem;
-      }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-      .help-header h1 {
-        font-size: 2.5rem;
-        color: var(--text-primary);
-        margin-bottom: 0.5rem;
-      }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
 
-      .search-box {
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto 3rem;
-        padding: 1rem;
-        background: var(--bg-glass-panel);
-        border: 1px solid var(--glass-border);
-        border-radius: var(--radius-lg);
-        color: var(--text-primary);
-        font-size: 1rem;
-      }
+a{
+  text-decoration:none;
+}
 
-      .help-categories {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 3rem;
-      }
+body{
+  background: radial-gradient(circle at 20% 20%, #1e3a8a 0%, #0f172a 40%);
+  color:#e2e8f0;
+  min-height:100vh;
+}
 
-      .category-card {
-        background: var(--bg-glass-panel);
-        border: 1px solid var(--glass-border);
-        border-radius: var(--radius-lg);
-        padding: 1.5rem;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s;
-      }
+/* ================= NAV ================= */
 
-      .category-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--accent-core);
-      }
+nav{
+  padding:25px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
 
-      .category-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-      }
+.nav-container{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 20px;
+}
 
-      .faq-section {
-        background: var(--bg-glass-panel);
-        border: 1px solid var(--glass-border);
-        border-radius: var(--radius-lg);
-        padding: 2rem;
-        margin-bottom: 2rem;
-      }
+.nav-logo{
+  font-size:22px;
+  font-weight:700;
+}
 
-      .section-title {
-        font-size: 1.5rem;
-        color: var(--text-primary);
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
+.nav-logo span{
+  color:#38bdf8;
+}
 
-      .faq-item {
-        border-bottom: 1px solid var(--glass-border);
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-      }
+.nav-links{
+  display:flex;
+  gap:30px;
+}
 
-      .faq-item:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-      }
+.nav-links a{
+  color:#94a3b8;
+  transition:0.3s;
+}
 
-      .faq-question {
-        font-weight: 600;
-        color: var(--text-primary);
-        cursor: pointer;
-        padding: 1rem;
-        background: var(--bg-void);
-        border-radius: var(--radius-md);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: all 0.3s;
-      }
+.nav-links a:hover{
+  color:#38bdf8;
+}
 
-      .faq-question:hover {
-        background: var(--bg-glass-panel);
-      }
+/* ================= MAIN ================= */
 
-      .faq-answer {
-        padding: 1rem;
-        color: var(--text-secondary);
-        line-height: 1.6;
-        display: none;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 0 0 var(--radius-md) var(--radius-md);
-      }
+.help-container{
+  max-width:1100px;
+  margin:auto;
+  padding:80px 20px 120px;
+}
 
-      .faq-answer.show {
-        display: block;
-        animation: fadeIn 0.3s ease;
-      }
+.help-header{
+  text-align:center;
+  margin-bottom:40px;
+}
 
-      .expand-icon {
-        transition: transform 0.3s;
-      }
+.help-header h1{
+  font-size:3rem;
+  margin-bottom:10px;
+}
 
-      .faq-item.active .expand-icon {
-        transform: rotate(180deg);
-      }
+.help-header p{
+  color:#94a3b8;
+}
 
-      .contact-section {
-        background: linear-gradient(
-          135deg,
-          var(--accent-core),
-          var(--accent-glow)
-        );
-        border-radius: var(--radius-lg);
-        padding: 2rem;
-        text-align: center;
-        color: white;
-      }
+/* ================= SEARCH ================= */
 
-      .contact-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-top: 1.5rem;
-        flex-wrap: wrap;
-      }
+.search-box{
+  width:100%;
+  max-width:500px;
+  margin:30px auto 60px;
+  display:block;
+  padding:14px 18px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:#1e293b;
+  color:white;
+  font-size:1rem;
+}
 
-      .contact-btn {
-        padding: 0.75rem 1.5rem;
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: var(--radius-md);
-        text-decoration: none;
-        transition: all 0.3s;
-      }
+/* ================= CATEGORY CARDS ================= */
 
-      .contact-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-      }
+.help-categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:30px;
+  margin-bottom:70px;
+}
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+.category-card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:35px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-      @media (max-width: 768px) {
-        .help-container {
-          padding: 1rem;
-        }
+.category-card:hover{
+  transform:translateY(-6px);
+  border-color:#38bdf8;
+  box-shadow:0 20px 40px rgba(56,189,248,0.15);
+}
 
-        .help-categories {
-          grid-template-columns: 1fr;
-        }
+.category-icon{
+  font-size:2rem;
+  margin-bottom:15px;
+}
 
-        .contact-buttons {
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Header -->
-    <header class="site-header">
-      <div
-        class="nav-container"
-        style="
-          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
-            drop-shadow(
-              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
-            )
-            drop-shadow(
-              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
-            );
-        "
-      >
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
+.category-card p{
+  color:#94a3b8;
+}
 
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="contributors.html" class="nav-link">Contributors</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
+/* ================= FAQ ================= */
 
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
+.faq-section{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:40px;
+  margin-bottom:40px;
+}
 
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
+.section-title{
+  color:#38bdf8;
+  margin-bottom:25px;
+}
 
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%"
-              />
-            </button>
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+.faq-item{
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:15px 0;
+}
 
-    <main class="container section">
-      <div class="help-container">
-        <div class="help-header">
-          <h1>❓ Help & FAQ</h1>
-          <p class="text-secondary">
-            Find answers to common questions and get help with your journey
-          </p>
-        </div>
+.faq-item:last-child{
+  border-bottom:none;
+}
 
-        <!-- Search -->
-        <input
-          type="text"
-          class="search-box"
-          placeholder="Search for help..."
-          id="searchInput"
-          onkeyup="searchFAQ()"
-        />
+.faq-question{
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+  font-weight:600;
+}
 
-        <!-- Help Categories -->
-        <div class="help-categories">
-          <div
-            class="category-card"
-            onclick="scrollToSection('getting-started')"
-          >
-            <div class="category-icon">🚀</div>
-            <h3>Getting Started</h3>
-            <p>Learn the basics and begin your journey</p>
-          </div>
-          <div
-            class="category-card"
-            onclick="scrollToSection('progress-tracking')"
-          >
-            <div class="category-icon">📊</div>
-            <h3>Progress Tracking</h3>
-            <p>Understanding your dashboard and stats</p>
-          </div>
-          <div
-            class="category-card"
-            onclick="scrollToSection('technical-issues')"
-          >
-            <div class="category-icon">🔧</div>
-            <h3>Technical Issues</h3>
-            <p>Troubleshooting common problems</p>
-          </div>
-          <div
-            class="category-card"
-            onclick="scrollToSection('account-settings')"
-          >
-            <div class="category-icon">⚙️</div>
-            <h3>Account & Settings</h3>
-            <p>Managing your profile and preferences</p>
-          </div>
-        </div>
+.faq-answer{
+  display:none;
+  margin-top:10px;
+  color:#94a3b8;
+}
 
-        <!-- Getting Started FAQ -->
-        <div class="faq-section" id="getting-started">
-          <h2 class="section-title">🚀 Getting Started</h2>
+.faq-item.active .faq-answer{
+  display:block;
+}
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>What is the 100 Days of Web Development Challenge?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              The 100 Days of Web Development Challenge is a structured learning
-              program designed to help you master web development through daily
-              practice. Each day focuses on building projects, learning new
-              concepts, and improving your coding skills.
-            </div>
-          </div>
+/* ================= CONTACT ================= */
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>How do I start the challenge?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              Simply create an account, explore the dashboard, and start with
-              Day 1. Each project includes instructions, code examples, and
-              learning objectives to guide you through the process.
-            </div>
-          </div>
+.contact-section{
+  margin-top:80px;
+  background:linear-gradient(135deg,#38bdf8,#6366f1);
+  padding:50px;
+  border-radius:20px;
+  text-align:center;
+}
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>Do I need prior coding experience?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              No! The challenge is designed for all skill levels. We start with
-              basic HTML, CSS, and JavaScript concepts and gradually progress to
-              more advanced topics.
-            </div>
-          </div>
-        </div>
+.contact-section p{
+  margin:15px 0 25px;
+}
 
-        <!-- Progress Tracking FAQ -->
-        <div class="faq-section" id="progress-tracking">
-          <h2 class="section-title">📊 Progress Tracking</h2>
+.contact-btn{
+  padding:12px 25px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.3);
+  color:white;
+  margin:5px;
+  display:inline-block;
+}
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>How does the progress tracker work?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              The progress tracker uses a GitHub-style heatmap to visualize your
-              daily activity. Green squares indicate completed days, with darker
-              colors showing higher activity levels. Click on any day to mark it
-              as complete.
-            </div>
-          </div>
+/* ================= FOOTER ================= */
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>What counts as completing a day?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              A day is considered complete when you finish the assigned project,
-              understand the concepts, and can demonstrate the functionality.
-              You can mark days as complete using the "Mark Today Complete"
-              button.
-            </div>
-          </div>
+footer{
+  margin-top:100px;
+  padding:60px 20px;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>How are streaks calculated?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              Streaks count consecutive days of activity. Your current streak
-              shows how many days in a row you've been active, while your best
-              streak shows your longest achievement.
-            </div>
-          </div>
-        </div>
+.footer-container{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:40px;
+}
 
-        <!-- Technical Issues FAQ -->
-        <div class="faq-section" id="technical-issues">
-          <h2 class="section-title">🔧 Technical Issues</h2>
+.footer-col a{
+  display:block;
+  margin-bottom:8px;
+  color:#94a3b8;
+}
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>The website is not loading properly</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              Try refreshing the page, clearing your browser cache, or using a
-              different browser. Make sure JavaScript is enabled in your browser
-              settings.
-            </div>
-          </div>
+.footer-col a:hover{
+  color:#38bdf8;
+}
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>My progress is not saving</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              Progress is saved locally in your browser. Make sure you're not in
-              incognito/private mode and that your browser allows local storage.
-              You can export your progress from Settings as a backup.
-            </div>
-          </div>
+.footer-bottom{
+  text-align:center;
+  margin-top:40px;
+  color:#94a3b8;
+  font-size:14px;
+}
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>Projects are not working on mobile</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              Most projects are optimized for mobile, but some advanced features
-              may work better on desktop. Try using a modern mobile browser like
-              Chrome or Safari for the best experience.
-            </div>
-          </div>
-        </div>
+/* ================= RESPONSIVE ================= */
 
-        <!-- Account Settings FAQ -->
-        <div class="faq-section" id="account-settings">
-          <h2 class="section-title">⚙️ Account & Settings</h2>
+@media(max-width:768px){
+  .footer-container{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>How do I change my profile information?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              Go to Settings from the user menu, update your display name,
-              email, and bio, then click "Save Changes" to update your profile.
-            </div>
-          </div>
+<body>
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>Can I export my progress data?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              Yes! In Settings > Data Management, you can export all your
-              progress data as a JSON file. This includes your completed days,
-              settings, and statistics.
-            </div>
-          </div>
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="nav-logo">100 Days of <span>Web Dev</span></div>
+    <div class="nav-links">
+      <a href="../../index.html">Home</a>
+      <a href="../../website/pages/projects.html">Projects</a>
+      <a href="../forum.html">Forum</a>
+      <a href="../leaderboard.html">Leaderboard</a>
+    </div>
+  </div>
+</nav>
 
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-              <span>How do I reset my progress?</span>
-              <span class="expand-icon">▼</span>
-            </div>
-            <div class="faq-answer">
-              In Settings > Data Management, click "Reset All Progress". You'll
-              need to type "RESET" to confirm. This action cannot be undone, so
-              make sure to export your data first if needed.
-            </div>
-          </div>
-        </div>
+<!-- MAIN -->
+<main class="help-container">
 
-        <!-- Contact Section -->
-        <div class="contact-section">
-          <h2>Still Need Help?</h2>
-          <p>
-            Can't find what you're looking for? Get in touch with our community!
-          </p>
-          <div class="contact-buttons">
-            <a
-              href="https://discord.gg/SW7puwEm"
-              class="contact-btn"
-              target="_blank"
-              >💬 Join Discord</a
-            >
-            <a
-              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/issues"
-              class="contact-btn"
-              target="_blank"
-              >🐛 Report Issue</a
-            >
-            <a href="mailto:support@100daysofwebdev.com" class="contact-btn"
-              >📧 Email Support</a
-            >
-          </div>
-        </div>
-      </div>
-    </main>
+<div class="help-header">
+  <h1>❓ Help & FAQ</h1>
+  <p>Find answers to common questions and get help with your journey</p>
+</div>
 
-    <!-- Scripts -->
-    <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
-    <script>
-      function toggleFAQ(element) {
-        const faqItem = element.parentElement;
-        const answer = faqItem.querySelector(".faq-answer");
+<input type="text" class="search-box" placeholder="Search for help..." id="searchInput">
 
-        faqItem.classList.toggle("active");
-        answer.classList.toggle("show");
-      }
+<!-- CATEGORY CARDS -->
+<div class="help-categories">
 
-      function scrollToSection(sectionId) {
-        document.getElementById(sectionId).scrollIntoView({
-          behavior: "smooth",
-        });
-      }
+  <div class="category-card" onclick="scrollToSection('getting-started')">
+    <div class="category-icon">🚀</div>
+    <h3>Getting Started</h3>
+    <p>Learn the basics and begin your journey</p>
+  </div>
 
-      function searchFAQ() {
-        const searchTerm = document
-          .getElementById("searchInput")
-          .value.toLowerCase();
-        const faqItems = document.querySelectorAll(".faq-item");
+  <div class="category-card" onclick="scrollToSection('progress-tracking')">
+    <div class="category-icon">📊</div>
+    <h3>Progress Tracking</h3>
+    <p>Understanding your dashboard</p>
+  </div>
 
-        faqItems.forEach((item) => {
-          const question = item
-            .querySelector(".faq-question span")
-            .textContent.toLowerCase();
-          const answer = item
-            .querySelector(".faq-answer")
-            .textContent.toLowerCase();
+  <div class="category-card" onclick="scrollToSection('technical-issues')">
+    <div class="category-icon">🔧</div>
+    <h3>Technical Issues</h3>
+    <p>Troubleshooting problems</p>
+  </div>
 
-          if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-            item.style.display = "block";
-          } else {
-            item.style.display = searchTerm === "" ? "block" : "none";
-          }
-        });
-      }
-    </script>
+  <div class="category-card" onclick="scrollToSection('account-settings')">
+    <div class="category-icon">⚙️</div>
+    <h3>Account & Settings</h3>
+    <p>Manage preferences</p>
+  </div>
 
-    <script src="../scripts/pages/help.js"></script>
-  </body>
+</div>
+
+<!-- FAQ SECTIONS -->
+
+<div class="faq-section" id="getting-started">
+<h2 class="section-title">🚀 Getting Started</h2>
+
+<div class="faq-item">
+  <div class="faq-question">What is the 100 Days Challenge? <span>▼</span></div>
+  <div class="faq-answer">A structured program to master web development through daily practice.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How do I start? <span>▼</span></div>
+  <div class="faq-answer">Create an account and begin from Day 1.</div>
+</div>
+
+</div>
+
+<div class="faq-section" id="progress-tracking">
+<h2 class="section-title">📊 Progress Tracking</h2>
+
+<div class="faq-item">
+  <div class="faq-question">How does tracking work? <span>▼</span></div>
+  <div class="faq-answer">It tracks daily submissions and visualizes your learning progress.</div>
+</div>
+
+</div>
+
+<div class="faq-section" id="technical-issues">
+<h2 class="section-title">🔧 Technical Issues</h2>
+
+<div class="faq-item">
+  <div class="faq-question">Site not loading? <span>▼</span></div>
+  <div class="faq-answer">Try refreshing and clearing cache.</div>
+</div>
+
+</div>
+
+<div class="faq-section" id="account-settings">
+<h2 class="section-title">⚙️ Account & Settings</h2>
+
+<div class="faq-item">
+  <div class="faq-question">How to edit profile? <span>▼</span></div>
+  <div class="faq-answer">Go to settings and update profile.</div>
+</div>
+
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <h2>Still Need Help?</h2>
+  <p>Get in touch with our community</p>
+  <a href="#" class="contact-btn">💬 Join Discord</a>
+  <a href="#" class="contact-btn">🐛 Report Issue</a>
+  <a href="#" class="contact-btn">📧 Email Support</a>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div>
+      <h2>100 Days of <span style="color:#38bdf8;">Web Dev</span></h2>
+      <p style="margin-top:10px;color:#94a3b8;">
+        A hyper-intensive protocol designed to forge elite web engineers.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="../../index.html">Home</a>
+      <a href="../forum.html">Forum</a>
+      <a href="../leaderboard.html">Leaderboard</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="#">GitHub</a>
+      <a href="#">Twitter</a>
+      <a href="#">Discord</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 100 Days of Web Dev. Built with ❤️
+  </div>
+</footer>
+
+<script>
+
+document.querySelectorAll(".faq-question").forEach(q=>{
+  q.addEventListener("click",()=>{
+    q.parentElement.classList.toggle("active");
+  });
+});
+
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("searchInput").addEventListener("input", function(){
+  const value = this.value.toLowerCase();
+  const items = document.querySelectorAll(".faq-item");
+
+  items.forEach(item=>{
+    const text = item.innerText.toLowerCase();
+    item.style.display = text.includes(value) ? "block" : "none";
+  });
+});
+
+</script>
+
+</body>
 </html>

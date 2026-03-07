@@ -1,0 +1,247 @@
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --accent-bio: #10b981;
+    --accent-at: #3b82f6;
+    --accent-cg: #f59e0b;
+    --text-main: #f1f5f9;
+    --text-dim: #94a3b8;
+    --border: #334155;
+    --font-mono: 'Fira Code', monospace;
+    --font-sans: 'Public Sans', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.lab-container {
+    display: grid;
+    grid-template-columns: 280px 1fr 340px;
+    height: 100vh;
+}
+
+/* Sidebar: Genome Navigator */
+.genome-nav {
+    background: #020617;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent-bio);
+}
+
+.logo .v {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+}
+
+.panel-section {
+    padding: 24px;
+}
+
+.panel-section h3 {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.params-block label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+}
+
+.params-block input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+}
+
+/* Main Workspace */
+.workspace {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    gap: 24px;
+    overflow-y: auto;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.search-bar {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    max-width: 600px;
+}
+
+.search-bar input {
+    flex: 1;
+    background: #0f172a;
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 8px;
+    color: white;
+    font-family: var(--font-mono);
+}
+
+.quick-stats {
+    display: flex;
+    gap: 24px;
+}
+
+.q-stat {
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+}
+
+.q-stat span {
+    color: var(--accent-bio);
+    font-weight: 700;
+}
+
+/* Analysis Grid */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.card-header h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.heatmap-container {
+    height: 200px;
+    background: #0f172a;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sequence-view {
+    height: 300px;
+    font-family: var(--font-mono);
+    line-height: 1.6;
+    word-break: break-all;
+    padding: 12px;
+    background: #020617;
+    border-radius: 8px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+}
+
+/* Footer Panels */
+.footer-panels {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 24px;
+}
+
+/* Inspector */
+.inspector {
+    background: #020617;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+    padding: 16px;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    color: var(--accent-bio);
+    border-bottom: 2px solid var(--accent-bio);
+}
+
+.canvas-3d {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #0f172a;
+    margin-top: 20px;
+    border-radius: 12px;
+}
+
+/* Nucleotide colors */
+.base-a {
+    color: #f87171;
+}
+
+.base-t {
+    color: #60a5fa;
+}
+
+.base-c {
+    color: #fbbf24;
+}
+
+.base-g {
+    color: #a78bfa;
+}
+
+.scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}

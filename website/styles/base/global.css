@@ -2,9 +2,7 @@
 
 body {
     background-color: var(--bg-void);
-    background-image:
-        radial-gradient(circle at 15% 50%, rgba(255, 159, 28, 0.08) 0%, transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(78, 205, 196, 0.05) 0%, transparent 25%);
+    background-image: none;
     background-attachment: fixed;
     color: var(--text-primary);
     font-family: var(--font-body);
@@ -12,6 +10,14 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Add gradient only for light theme */
+[data-theme="light"] body {
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(255, 159, 28, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(78, 205, 196, 0.02) 0%, transparent 25%);
 }
 
 h1,
@@ -42,6 +48,7 @@ h6 {
 /* Custom Scrollbar for the Void */
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -51,13 +58,68 @@ h6 {
 ::-webkit-scrollbar-thumb {
     background: var(--glass-border);
     border-radius: 4px;
+    transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-tertiary);
 }
 
+/* Text Selection */
+::selection {
+    background: var(--accent-alpha);
+    color: var(--text-primary);
+}
+
+::-moz-selection {
+    background: var(--accent-alpha);
+    color: var(--text-primary);
+}
+
+/* Focus Outline */
+:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
 html[data-theme="light"] body {
-    background: #f9fafb;
-    color: #111;
+    background: var(--bg-void);
+    background-attachment: fixed;
+    color: var(--text-primary);
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+    background: var(--border-medium);
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-tertiary);
+}
+
+html[data-theme="light"] ::selection {
+    background: var(--accent-alpha);
+    color: var(--text-primary);
+}
+
+html[data-theme="light"] ::-moz-selection {
+    background: var(--accent-alpha);
+    color: var(--text-primary);
+}
+
+
+/* Dark theme specific overrides */
+html[data-theme="dark"] {
+    --bg-main: #0b0b0f;
+    --bg-card: rgba(255, 255, 255, 0.06);
+    --bg-card-solid: #121218;
+    --text-primary: #eaeaf0;
+    --text-secondary: #a1a1b3;
+    --border-glass: rgba(255, 255, 255, 0.1);
 }

@@ -18,19 +18,41 @@ input.addEventListener("keydown", (e) => {
 
 sendBtn.addEventListener("click", sendMessage);
 
+/* Add message with avatar */
 function addMessage(text, role) {
-  const div = document.createElement("div");
-  div.className = `message ${role}`;
-  div.textContent = text;
-  chat.appendChild(div);
+  const message = document.createElement("div");
+  message.className = `message ${role}`;
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = text;
+
+  const avatar = document.createElement("img");
+  avatar.className = "avatar";
+
+  if (role === "assistant") {
+    avatar.src = "bot.jpg";
+    avatar.alt = "Bot";
+    message.appendChild(avatar);
+    message.appendChild(bubble);
+  } else {
+    avatar.src = "user.jpg";
+    avatar.alt = "User";
+    message.appendChild(bubble);
+    message.appendChild(avatar);
+  }
+
+  chat.appendChild(message);
   chat.scrollTop = chat.scrollHeight;
-  return div;
+
+  return bubble;
 }
 
 /* Simulated streaming */
 function streamResponse(element, text) {
   let i = 0;
   sendBtn.disabled = true;
+  element.textContent = "";
 
   const interval = setInterval(() => {
     element.textContent += text[i];
@@ -49,14 +71,20 @@ function sendMessage() {
   if (!text) return;
 
   addMessage(text, "user");
+
   input.value = "";
   input.style.height = "auto";
 
   const assistantBubble = addMessage("", "assistant");
 
   const fakeResponse =
-    "Hello \n"+
-    "Welcome to 100 days of Web devlopment";
+    "Hello\n" +
+    "Welcome to 100 days of Web development";
 
   streamResponse(assistantBubble, fakeResponse);
+}
+
+/* Back navigation */
+function goBack() {
+  window.location.href = "../../index.html";
 }

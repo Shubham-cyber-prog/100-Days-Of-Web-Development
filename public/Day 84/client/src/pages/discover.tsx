@@ -71,7 +71,28 @@ const useGeolocation = () => {
     try {
       // NOTE: In production, move this API call to your backend to hide the API key
       const apiKey = import.meta.env?.VITE_OPENCAGE_KEY || 'demo'; 
-      const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}&limit=1`);
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+      const response = await fetch(
+        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}&limit=1`,
+        { signal: controller.signal }
+      );
+
+      clearTimeout(timeoutId);
+
+      // Check response status
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      // Validate content type
+      const contentType = response.headers.get('content-type');
+      if (!contentType?.includes('application/json')) {
+        throw new Error('Invalid response format');
+      }
+
       const data = await response.json();
 
       let city = 'Unknown City';
@@ -85,8 +106,11 @@ const useGeolocation = () => {
 
       return { city, country };
     } catch (err) {
-      console.error("Geocoding error", err);
-      return { city: 'Unknown City', country: 'Unknown Country' };
+      const error = err instanceof Error ? err : new Error(String(err));
+      console.error("Geocoding error:", error.message);
+      
+      // Return default values on error
+      return { city: 'Local Area', country: 'Determining...' };
     }
   };
 
@@ -94,25 +118,46 @@ const useGeolocation = () => {
     setStatus(prev => ({ ...prev, loading: true, error: null }));
 
     if (!('geolocation' in navigator)) {
-      setStatus({ loading: false, error: "Geolocation not supported", location: null, permission: 'denied' });
+      setStatus({ 
+        loading: false, 
+        error: "Geolocation not supported on this browser", 
+        location: null, 
+        permission: 'denied' 
+      });
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-        const { latitude, longitude } = position.coords;
-        const place = await fetchCityData(latitude, longitude);
-        
-        setStatus({
-          loading: false,
-          error: null,
-          location: { lat: latitude, lng: longitude, ...place },
-          permission: 'granted'
-        });
+        try {
+          const { latitude, longitude } = position.coords;
+          const place = await fetchCityData(latitude, longitude);
+          
+          setStatus({
+            loading: false,
+            error: null,
+            location: { lat: latitude, lng: longitude, ...place },
+            permission: 'granted'
+          });
+        } catch (err) {
+          console.error("Error processing location:", err);
+          setStatus({
+            loading: false,
+            error: "Failed to process location data",
+            location: null,
+            permission: 'granted'
+          });
+        }
       },
       (error) => {
         let errorMsg = "Unable to retrieve location";
-        if (error.code === error.PERMISSION_DENIED) errorMsg = "Location access denied";
+        if (error.code === error.PERMISSION_DENIED) {
+          errorMsg = "Location permission denied. Please enable location access in settings.";
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          errorMsg = "Location information unavailable.";
+        } else if (error.code === error.TIMEOUT) {
+          errorMsg = "Location request timed out. Please try again.";
+        }
         
         setStatus({
           loading: false,

@@ -44,6 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeChart();
     setupEventListeners();
     updateDataTable();
+
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", document.body.classList.contains("dark-mode"));
+});
+
+if (localStorage.getItem("theme") === "true") {
+    document.body.classList.add("dark-mode");
+}
 });
 
 
@@ -52,6 +61,22 @@ function initializeChart() {
     let chartType = document.getElementById('chart-type').value;
     const datasetKey = document.getElementById('dataset').value;
     const scheme = document.getElementById('color-scheme').value;
+
+
+    const sort = document.getElementById("sort-data")?.value;
+
+    if (sort !== "none") {
+    const combined = labels.map((l, i) => ({ l, v: data[i] }));
+    combined.sort((a, b) => sort === "asc" ? a.v - b.v : b.v - a.v);
+
+    labels.length = 0;
+    data.length = 0;
+
+    combined.forEach(x => {
+        labels.push(x.l);
+        data.push(x.v);
+    });
+}
 
     const currentData = datasets[datasetKey];
 
@@ -69,6 +94,7 @@ function initializeChart() {
 
     if (dataChart) dataChart.destroy();
 
+
     dataChart = new Chart(ctx, {
         type: chartType,
         data: {
@@ -81,10 +107,22 @@ function initializeChart() {
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        title: {
+            display: true,
+            text: document.getElementById("chart-title").value
         }
+    }
+}
+        
+
     });
+
+
+    generateInsights();
+        
 }
 
 
@@ -124,6 +162,35 @@ function setupEventListeners() {
     });
 
     document.getElementById('file-upload').addEventListener('change', handleUpload);
+
+    document.querySelectorAll("select, input").forEach(el => {
+    el.addEventListener("change", () => {
+        initializeChart();
+        updateDataTable();
+    });
+
+
+    document.getElementById("reset-data").addEventListener("click", () => {
+    location.reload();
+    });
+});
+
+
+document.getElementById("export-csv").addEventListener("click", () => {
+    const key = document.getElementById("dataset").value;
+    const data = datasets[key];
+
+    let csv = "Label,Value\n";
+    data.labels.forEach((l, i) => {
+        csv += `${l},${data.data[i]}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "data.csv";
+    link.click();
+});
 }
 
 
@@ -215,4 +282,18 @@ function updateDataTable() {
         `;
         tbody.appendChild(row);
     });
+}
+
+
+
+function generateInsights() {
+    const key = document.getElementById("dataset").value;
+    const data = datasets[key].data;
+
+    const max = Math.max(...data);
+    const min = Math.min(...data);
+    const avg = (data.reduce((a, b) => a + b, 0) / data.length).toFixed(2);
+
+    document.getElementById("insights").innerHTML =
+        `📊 Max: ${max} | Min: ${min} | Avg: ${avg}`;
 }

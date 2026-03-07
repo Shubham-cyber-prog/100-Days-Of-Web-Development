@@ -1,0 +1,116 @@
+:root {
+    --bg-dark: rgba(10, 10, 15, 0.8);
+    --accent: #38bdf8;
+    --text: #f8fafc;
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #020617;
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+#ui-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+#hud {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.hud-panel {
+    background: var(--bg-dark);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    padding: 1rem;
+    border-radius: 8px;
+    pointer-events: auto;
+}
+
+.stats-group {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+}
+
+.stats-group div {
+    margin-bottom: 0.2rem;
+}
+
+.stats-group span {
+    color: var(--accent);
+}
+
+/* Controls */
+#controls {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+button {
+    background: var(--bg-dark);
+    color: white;
+    border: 1px solid var(--border);
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    pointer-events: auto;
+}
+
+button:hover {
+    border-color: var(--accent);
+    background: rgba(56, 189, 248, 0.1);
+}
+
+/* Sidebar */
+#sidebar {
+    position: fixed;
+    top: 5rem;
+    right: 1.5rem;
+    width: 250px;
+}
+
+.bookmark-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.bookmark-item .actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.bookmark-item button {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+}
+
+canvas {
+    display: block;
+}

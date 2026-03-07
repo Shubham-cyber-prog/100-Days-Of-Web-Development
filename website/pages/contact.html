@@ -1,276 +1,704 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
-    <title>Contact | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <style>
-      .contact-wrapper {
-        padding-top: 120px;
-        max-width: 600px;
-        margin: 0 auto;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="https://github.com/Shubham-cyber-prog.png" /> <!-- placeholder logo -->
+  <title>Contact | dimensional · glass + webgl</title>
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../styles/index.css" />
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+  <style>
+/* ============================================================
+   1. CORE SETUP & ANIMATIONS
+============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem 4rem; /* ⬅ reduced top padding */
+  animation: slideIn 0.8s ease-out;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-      .form-glass {
-        background: var(--bg-surface);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--glass-border);
-        border-radius: 24px;
-        padding: 40px;
-        box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
-      }
-    </style>
-  </head>
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 5px rgba(0, 229, 255, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+  100% { box-shadow: 0 0 5px rgba(0, 229, 255, 0.2); }
+}
 
-  <body>
-    <header class="site-header">
-      <div class="nav-container" style="filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)) drop-shadow(0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent));">
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="contributors.html" class="nav-link">Contributors</a>
-          <a href="contact.html" class="nav-link active">Contact</a>
-        </nav>
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
+:root {
+  --bg-dark: #070a11;
+  --glass-bg: rgba(18, 28, 45, 0.4);
+  --glass-strong: rgba(20, 35, 60, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --accent-primary: #00e5ff;
+  --accent-secondary: #0066ff;
+  --text-light: #f5faff;
+  --text-dim: #9db2cc;
+  --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
 
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
-              margin-right: 15px;
-              background: none;
-              border: none;
-              cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  overflow-x: hidden;
+  min-height: 100vh;
+  perspective: 1200px; /* Critical for 3D hovers */
+  line-height: 1.6;
+}
+.contact-header {
+  margin-top: -2rem !important;
+}
+/* ============================================================
+   2. LAYOUT & CONTAINER
+============================================================ */
+.container {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: slideIn 0.8s ease-out;
+}
+.container {
+  padding: 2rem rem 4rem; /* top reduced from 4rem → 2rem */
+}
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  align-items: start;
+}
 
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%; border-radius: 50%"
-              />
-            </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
+/* ============================================================
+   3. HEADER SECTION
+============================================================ */
+.contact-header {
+  text-align: center;
+  max-width: 850px;
+  margin: 0 auto 4rem;
+  padding: 3.5rem 2rem;
+  border-radius: 40px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.header-badge {
+  display: inline-block;
+  background: rgba(0, 229, 255, 0.1);
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  animation: glowPulse 3s infinite;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.title-line.accent {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   4. INFO CARDS (HOVERS & ICONS)
+============================================================ */
+.contact-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-card {
+  background: var(--glass-strong);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  transition: var(--transition-smooth);
+}
+
+.info-card:hover {
+  transform: translateY(-8px) scale(1.025) rotateX(2deg);
+  border-color: var(--accent-primary);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 255, 0.15);
+}
+
+/* Perfect Center Icon Alignment */
+.card-icon {
+  width: 65px;
+  height: 65px;
+  min-width: 65px;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.info-card:hover .card-icon {
+  background: var(--accent-primary);
+  transform: rotateY(180deg);
+}
+
+.card-icon i {
+  font-size: 1.5rem;
+  color: var(--accent-primary);
+  transform: translateY(-1px); /* Optical fix for FontAwesome */
+  transition: var(--transition-smooth);
+}
+
+.info-card:hover .card-icon i {
+  color: #000;
+}
+
+/* ============================================================
+   5. SOCIAL LINKS (8-DEGREE ANIMATION)
+============================================================ */
+.social-links {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.4rem;
+  transition: var(--transition-smooth);
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background: var(--accent-primary);
+  color: black;
+  transform: scale(1.15) rotate(8deg); /* Specific rotation request */
+  box-shadow: 0 0 30px var(--accent-primary);
+}
+
+/* ============================================================
+   6. CONTACT FORM
+============================================================ */
+.contact-form-col {
+  background: var(--glass-bg);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--glass-border);
+  border-radius: 32px;
+  padding: 3rem;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.input-wrapper {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.form-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 1.2rem 1.5rem;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  font-family: inherit;
+}
+
+textarea.form-input {
+  min-height: 160px;
+  resize: vertical;
+}
+
+/* ============================================================
+   7. BUTTONS
+============================================================ */
+.btn-submit {
+  width: 100%;
+  padding: 1.2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+}
+
+.btn-submit:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 229, 255, 0.5);
+  filter: brightness(1.1);
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+   8. RESPONSIVE DESIGN
+============================================================ */
+@media (max-width: 1100px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 2rem 1rem; }
+  .contact-header { padding: 2rem 1.5rem; }
+  .hero-title { font-size: 2.8rem; }
+  .contact-form-col { padding: 2rem 1.5rem; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Three.js canvas injected here -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <main class="container">
+    <div class="contact-wrapper">
+      <!-- header with glass effect -->
+      <div class="contact-header animate-header">
+        <div class="header-badge">
+          <span class="badge-text"><i class="fas fa-bolt"></i> neural link</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="title-line">Get In</span>
+          <span class="title-line accent">Touch</span>
+        </h1>
+        <p class="hero-subtitle">
+          Reach out across dimensions. Our collective replies within light-hours.
+        </p>
+        <div class="header-decoration" style="margin-top: 2rem;">
+          <i class="fas fa-asterisk" style="color: #00e5ff; opacity:0.6;"></i>
+        </div>
+      </div>
+
+      <!-- left + right columns -->
+      <div class="contact-content">
+        <!-- LEFT INFO CARDS (glass) -->
+        <div class="contact-info-col">
+          <h2 class="column-title">// connect nodes</h2>
+          <div class="info-card" data-delay="0">
+            <div class="card-icon"><i class="fas fa-envelope"></i><div class="icon-glow"></div></div>
+            <div class="card-content">
+              <h3>Email</h3>
+              <p><a href="mailto:hello@dimensional.dev" class="contact-link">hello@dimensional.dev</a></p>
+              <span class="card-action">send wave →</span>
             </div>
           </div>
-        </div>
-      </div>
-    </header>
-
-    <main class="container">
-      <div class="contact-wrapper animate-enter">
-        <div class="text-center mb-10">
-          <h1 style="font-size: var(--text-4xl); margin-bottom: 8px">
-            Establish Contact
-          </h1>
-          <p class="text-secondary">Send a transmission to the core team.</p>
-        </div>
-
-        <form class="form-glass flex flex-col gap-5">
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px">Identity</label>
-            <input
-              type="text"
-              class="form-input"
-              placeholder="Commander Name"
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px"
-              >Coordinates (Email)</label
-            >
-            <input
-              type="email"
-              class="form-input"
-              placeholder="user@domain.com"
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" style="margin-left: 4px"
-              >Transmission</label
-            >
-            <textarea
-              class="form-input"
-              rows="5"
-              placeholder="Message content..."
-              style="
-                background: rgba(0, 0, 0, 0.3);
-                border-color: var(--glass-border);
-              "
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            class="btn btn-primary"
-            style="margin-top: 10px"
-          >
-            Send Transmission
-          </button>
-        </form>
-      </div>
-    </main>
-
-    <!-- Professional Footer -->
-    <footer class="site-footer">
-      <div class="container footer-content">
-        <!-- Brand -->
-        <div class="footer-brand animate-enter">
-          <a href="dashboard.html" class="footer-logo">
-            <img src="../assets/images/logo.png" alt="Logo" />
-            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-          </a>
-          <p class="footer-desc">
-            A hyper-intensive protocol designed to forge elite web engineers
-            through daily deployment cycles.
-          </p>
-        </div>
-
-            <!-- Resources -->
-            <div class="footer-col animate-enter delay-200">
-                <h3>Resources</h3>
-                <nav class="footer-links">
-                    <a href="documentation.html" class="footer-link">Documentation</a>
-                    <a href="api-status.html" class="footer-link">API Status</a>
-                    <a href="contact.html" class="footer-link">Contact Comms</a>
-                    <a href="system-logic.html" class="footer-link">System Logic</a>
-            <!-- Connect -->
-            <div class="footer-col animate-enter delay-300">
-                <h3>Connect</h3>
-                <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-                <div class="footer-socials">
-                    <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" target="_blank"
-                        rel="noopener noreferrer" class="social-btn" aria-label="Github">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                            </path>
-                        </svg>
-                    </a>
-                    <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="social-btn"
-                        aria-label="Twitter" title="Coming soon">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                            </path>
-                        </svg>
-                    </a>
-                    <a href="https://discord.gg/SW7puwEm" target="_blank" rel="noopener noreferrer" class="social-btn"
-                        aria-label="Discord">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z">
-                            </path>
-                        </svg>
-                    </a>
-                </div>
+          <div class="info-card" data-delay="0.1">
+            <div class="card-icon"><i class="fas fa-map-marker-alt"></i><div class="icon-glow"></div></div>
+            <div class="card-content">
+              <h3>Location</h3>
+              <p>orbital • everywhere</p>
+              <span class="card-action">zero latency →</span>
             </div>
+          </div>
+          <div class="info-card" data-delay="0.2">
+            <div class="card-icon"><i class="fas fa-clock"></i><div class="icon-glow"></div></div>
+            <div class="card-content">
+              <h3>Response</h3>
+              <p>typically 0.5 cycles</p>
+              <span class="card-action">quantum reply →</span>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="social-links">
+            <a href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26" target="_blank" class="social-link" title="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a
+  href="https://twitter.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="social-btn"
+  aria-label="X (Twitter)"
+  title="Coming soon"
+>
+  <i class="fa-brands fa-x-twitter"></i>
+</a>
+            <a href="https://discord.gg/SW7puwEm" target="_blank" class="social-link" title="Discord">
+              <i class="fab fa-discord"></i>
+            </a>
+            <a href="#" class="social-link" title="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
         </div>
 
-        <!-- Connect -->
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Github"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Twitter"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Discord"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
-                ></path></svg
-            ></a>
+        <!-- RIGHT FORM (glass + working validation) -->
+        <div class="contact-form-col">
+          <div class="form-header">
+            <h2 class="form-title">transmit message</h2>
+            <div class="form-status"><span class="status-dot"></span><span class="status-text">online</span></div>
+          </div>
+
+          <div id="messageBox" class="message-box"><i class="fas fa-check-circle"></i> <span id="messageText"></span></div>
+
+          <form id="contactForm" class="premium-form">
+            <div class="form-group">
+              <label class="form-label">your name <span class="required">*</span></label>
+              <div class="input-wrapper"><i class="fas fa-user input-icon"></i><input type="text" name="name" class="form-input" placeholder="e.g. Neo" required minlength="2"><div class="validation-icons"><i class="fas fa-check-circle valid-icon"></i><i class="fas fa-exclamation-circle invalid-icon"></i></div></div>
+              <span class="error-message">min 2 characters</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">email <span class="required">*</span></label>
+              <div class="input-wrapper"><i class="fas fa-envelope input-icon"></i><input type="email" name="email" class="form-input" placeholder="neo@matrix.net" required><div class="validation-icons"><i class="fas fa-check-circle valid-icon"></i><i class="fas fa-exclamation-circle invalid-icon"></i></div></div>
+              <span class="error-message">valid email required</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">subject <span class="required">*</span></label>
+              <div class="input-wrapper"><i class="fas fa-tag input-icon"></i><input type="text" name="subject" class="form-input" placeholder="quantum collaboration" required minlength="3"><div class="validation-icons"><i class="fas fa-check-circle valid-icon"></i><i class="fas fa-exclamation-circle invalid-icon"></i></div></div>
+              <span class="error-message">min 3 characters</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">message <span class="required">*</span></label>
+              <div class="input-wrapper textarea-wrapper"><i class="fas fa-comment-dots input-icon"></i><textarea name="message" class="form-input" rows="4" placeholder="your thoughts..." required minlength="10"></textarea><div class="validation-icons"><i class="fas fa-check-circle valid-icon"></i><i class="fas fa-exclamation-circle invalid-icon"></i></div></div>
+              <span class="error-message">at least 10 characters</span>
+              <div class="char-counter">0/500</div>
+            </div>
+
+            <button type="submit" class="btn-submit"><div class="spinner"></div><span class="btn-text"><i class="fas fa-paper-plane"></i> <span>launch message</span></span><div class="btn-glow"></div></button>
+          </form>
+
+          <div class="form-footer">
+            <span><i class="fas fa-shield-alt"></i> encrypted</span>
+            <span><i class="fas fa-bolt"></i> avg response 2h</span>
           </div>
         </div>
       </div>
+    </div>
+  </main>
 
-      <div class="container footer-bottom">
-        <p class="copyright">
-          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
-        </p>
-        <p class="made-by">
-          Maintained by <span class="text-flame font-bold">Subham</span>
-          <svg
-            class="icon icon-sm heart-pulse"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            ></path>
-          </svg>
-        </p>
-      </div>
-    </footer>
+  <div class="footer-placeholder">⚡ 100 Days of Web Dev · 2026</div>
 
-    <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/auth/guard.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
-  </body>
+  <!-- three.js script -->
+  <script type="module">
+    import * as THREE from 'three';
+
+    // --- setup scene, camera, renderer ---
+    const canvas = document.getElementById('webgl-canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0a0c12); // deep dark base
+    
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 15);
+    
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    // --- lights ---
+    const ambient = new THREE.AmbientLight(0x404060);
+    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(1, 2, 4);
+    scene.add(dirLight);
+    const pointLight = new THREE.PointLight(0x00e5ff, 1, 20);
+    pointLight.position.set(-2, 1, 3);
+    scene.add(pointLight);
+    
+    // --- floating glass shapes + particles for that "khatarnak" feel ---
+    
+    // central glass torus knot (premium)
+    const geometry1 = new THREE.TorusKnotGeometry(1.2, 0.35, 128, 16);
+    const material1 = new THREE.MeshPhongMaterial({
+      color: 0x00e5ff,
+      emissive: 0x112233,
+      transparent: true,
+      opacity: 0.25,
+      wireframe: true,
+      shininess: 60
+    });
+    const knot = new THREE.Mesh(geometry1, material1);
+    knot.position.set(1, -1, -3);
+    scene.add(knot);
+    
+    // floating spheres (glass)
+    const sphereGeom = new THREE.SphereGeometry(0.6, 32, 32);
+    const sphereMat = new THREE.MeshStandardMaterial({
+      color: 0x88ccff,
+      emissive: 0x114466,
+      transparent: true,
+      opacity: 0.2,
+      roughness: 0.1,
+      metalness: 0.3
+    });
+    const sphere1 = new THREE.Mesh(sphereGeom, sphereMat);
+    sphere1.position.set(-2.5, 1.2, -2);
+    scene.add(sphere1);
+    
+    const sphere2 = new THREE.Mesh(sphereGeom, sphereMat);
+    sphere2.position.set(3, 1.8, -4);
+    sphere2.scale.set(0.8,0.8,0.8);
+    scene.add(sphere2);
+    
+    // many tiny particles (stars)
+    const particlesGeo = new THREE.BufferGeometry();
+    const particlesCount = 2000;
+    const posArray = new Float32Array(particlesCount * 3);
+    for(let i = 0; i < particlesCount * 3; i += 3) {
+      posArray[i] = (Math.random() - 0.5) * 40;
+      posArray[i+1] = (Math.random() - 0.5) * 30;
+      posArray[i+2] = (Math.random() - 0.5) * 40 - 10; // spread in z
+    }
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMat = new THREE.PointsMaterial({
+      size: 0.08,
+      color: 0xaaccff,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending
+    });
+    const particles = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particles);
+    
+    // subtle grid floor (invisible but adds depth)
+    const gridHelper = new THREE.GridHelper(30, 40, 0x00e5ff, 0x336688);
+    gridHelper.position.y = -2.5;
+    gridHelper.material.opacity = 0.12;
+    gridHelper.material.transparent = true;
+    scene.add(gridHelper);
+    
+    // animation loop
+    let clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      const delta = clock.getDelta();
+      const elapsed = performance.now() * 0.001; // seconds
+      
+      // rotate objects gently
+      knot.rotation.x += 0.001;
+      knot.rotation.y += 0.003;
+      
+      sphere1.rotation.x += 0.002;
+      sphere1.rotation.y += 0.001;
+      sphere2.rotation.y += 0.004;
+      
+      particles.rotation.y += 0.0002;
+      
+      // slight camera movement for dynamism
+      camera.position.x = Math.sin(elapsed * 0.1) * 1.5;
+      camera.position.y = Math.cos(elapsed * 0.15) * 0.8 + 1;
+      camera.lookAt(0, 0, -2);
+      
+      renderer.render(scene, camera);
+    }
+    animate();
+    
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+
+  <!-- gsap + form validation (same as before but enhanced) -->
+  <script>
+    (function() {
+      // register scrolltrigger
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // dom ready animations
+      document.addEventListener('DOMContentLoaded', () => {
+        // header animation
+        gsap.from('.contact-header', { y: 80, opacity: 0, duration: 1.2, ease: 'power3.out' });
+        gsap.from('.header-badge', { scale: 0, rotation: -20, duration: 1, delay: 0.2, ease: 'back.out(1.5)' });
+        gsap.from('.title-line', { y: 60, opacity: 0, duration: 1, stagger: 0.2, delay: 0.3 });
+        gsap.from('.hero-subtitle', { y: 30, opacity: 0, duration: 1, delay: 0.8 });
+        
+        // cards stagger with scroll
+        gsap.from('.info-card', {
+          scrollTrigger: { trigger: '.contact-info-col', start: 'top 75%' },
+          x: -80,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.2,
+          ease: 'back.out(1.2)'
+        });
+        
+        gsap.from('.social-link', {
+          scrollTrigger: { trigger: '.social-grid', start: 'top 85%' },
+          scale: 0,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'back.out(2)'
+        });
+        
+        gsap.from('.contact-form-col', {
+          scrollTrigger: { trigger: '.contact-form-col', start: 'top 70%' },
+          x: 100,
+          opacity: 0,
+          duration: 1.2,
+          ease: 'power4.out'
+        });
+        
+        // infinite subtle pulse on status dot
+        gsap.to('.status-dot', { scale: 1.4, opacity: 0.6, duration: 1.2, repeat: -1, yoyo: true });
+      });
+      
+      // ----- FORM VALIDATION & SIMULATION (fully working) -----
+      const form = document.getElementById('contactForm');
+      const inputs = form.querySelectorAll('.form-input');
+      const messageBox = document.getElementById('messageBox');
+      const messageText = document.getElementById('messageText');
+      const submitBtn = document.querySelector('.btn-submit');
+      const charCounter = document.querySelector('.char-counter');
+      const textarea = document.querySelector('textarea[name="message"]');
+      
+      // char counter
+      if (textarea && charCounter) {
+        textarea.addEventListener('input', function() {
+          let len = this.value.length;
+          charCounter.textContent = len + '/500';
+          if (len > 450) charCounter.style.color = '#ffb86b';
+          else charCounter.style.color = '#a0b5d0';
+        });
+      }
+      
+      // validation functions
+      function validateField(field) {
+        const wrapper = field.closest('.input-wrapper');
+        if (!wrapper) return false;
+        const val = field.value.trim();
+        let valid = false;
+        if (field.type === 'email') {
+          valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        } else if (field.tagName === 'TEXTAREA') {
+          valid = val.length >= 10 && val.length <= 500;
+        } else if (field.name === 'name') {
+          valid = val.length >= 2;
+        } else if (field.name === 'subject') {
+          valid = val.length >= 3;
+        } else {
+          valid = val.length > 0;
+        }
+        
+        if (valid) {
+          field.classList.add('valid');
+          field.classList.remove('invalid');
+          wrapper.classList.add('valid');
+          wrapper.classList.remove('invalid');
+        } else {
+          field.classList.add('invalid');
+          field.classList.remove('valid');
+          wrapper.classList.add('invalid');
+          wrapper.classList.remove('valid');
+          if (val.length > 0) {
+            gsap.to(field, { x: [-4,4,-4,4,0], duration: 0.3 });
+          }
+        }
+        return valid;
+      }
+      
+      inputs.forEach(inp => {
+        inp.addEventListener('input', function() { validateField(this); });
+        inp.addEventListener('blur', function() { validateField(this); });
+        inp.addEventListener('focus', function() {
+          this.closest('.input-wrapper').classList.add('focused');
+        });
+        inp.addEventListener('blur', function() {
+          this.closest('.input-wrapper').classList.remove('focused');
+        });
+      });
+      
+      function showMessage(type, text) {
+        messageBox.style.display = 'flex';
+        messageBox.className = 'message-box ' + type;
+        messageText.textContent = text;
+        gsap.fromTo(messageBox, {scale:0.8, opacity:0}, {scale:1, opacity:1, duration:0.4});
+      }
+      
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let allValid = true;
+        inputs.forEach(i => { if (!validateField(i)) allValid = false; });
+        if (!allValid) {
+          showMessage('error', 'correct all fields');
+          return;
+        }
+        
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+        
+        setTimeout(() => {
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+          showMessage('success', '🚀 message transmitted! we will reply soon.');
+          form.reset();
+          inputs.forEach(i => {
+            i.classList.remove('valid','invalid');
+            i.closest('.input-wrapper').classList.remove('valid','invalid','focused');
+          });
+          if (charCounter) charCounter.textContent = '0/500';
+          
+          setTimeout(() => { messageBox.style.display = 'none'; }, 4000);
+        }, 1800);
+      });
+    })();
+  </script>
+</body>
 </html>

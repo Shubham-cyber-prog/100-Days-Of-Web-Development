@@ -75,7 +75,54 @@ async function syncProgressData() {
   // but can be partially handled here if we had a dedicated API endpoint.
 }
 
-// Fallback for offline (Simple version)
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', () => self.clients.claim());
+const OFFLINE_PAGE = '/offline.html';
+const OFFLINE_IMAGE = '/website/assets/images/logo.png';
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open('offline-cache').then((cache) => {
+      return cache.addAll([
+        OFFLINE_PAGE,
+        '/website/style.css',
+        '/website/script.js',
+        '/index.html',
+        '/manifest.webmanifest'
+      ]);
+    }).then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((name) => !name.includes('workbox') && !name.includes('offline-cache') && !name.includes('static-resources') && !name.includes('pages-cache') && !name.includes('project-files'))
+          .map((name) => caches.delete(name))
+      );
+    }).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => caches.match(OFFLINE_PAGE))
+    );
+  }
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+
+  if (event.data && event.data.type === 'CACHE_PROJECT') {
+    const projectUrls = event.data.urls || [];
+    event.waitUntil(
+      caches.open('project-files').then((cache) => cache.addAll(projectUrls))
+    );
+  }
+});
 

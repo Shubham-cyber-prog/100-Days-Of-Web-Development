@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Professional Career Launchpad | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/styles/main.css" />
+    <link rel="stylesheet" href="../assets/styles/career.css" />
+</head>
+<body class="career-page">
+    <nav id="navbar-container"></nav>
+
+    <main class="career-container">
+        <header class="career-header">
+            <div class="header-content">
+                <h1>Professional <span class="accent">Career Launchpad</span></h1>
+                <p>Bridge the gap between learning and employment. Automate your portfolio, optimize your social presence, and track your market readiness.</p>
+            </div>
+            <div class="career-summary-cards">
+                <div class="summary-card readiness">
+                    <div class="card-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="card-info">
+                        <span class="label">Readiness Score</span>
+                        <h2 id="readiness-score">--</h2>
+                    </div>
+                </div>
+                <div class="summary-card projects">
+                    <div class="card-icon"><i class="fas fa-folder-open"></i></div>
+                    <div class="card-info">
+                        <span class="label">Portfolio Projects</span>
+                        <h2 id="project-count">0</h2>
+                    </div>
+                </div>
+                <div class="summary-card market">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="card-info">
+                        <span class="label">Market Alignment</span>
+                        <h2 id="market-alignment">High</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="career-grid">
+            <div class="grid-left">
+                <!-- AI Coach Widget -->
+                <div class="widget-container" id="career-coach-widget"></div>
+
+                <!-- Skill Radar -->
+                <div class="widget-container skill-stats">
+                    <div class="widget-header">
+                        <h3><i class="fas fa-dharmachakra"></i> Skill Distribution</h3>
+                        <p>Your technical spread across key market domains.</p>
+                    </div>
+                    <div id="skill-radar-container"></div>
+                </div>
+            </div>
+
+            <div class="grid-right">
+                <!-- Resume/Portfolio Builder -->
+                <div class="widget-container portfolio-builder">
+                    <div class="widget-header">
+                        <h3><i class="fas fa-briefcase"></i> Portfolio & Resume Hub</h3>
+                        <div class="builder-actions">
+                            <button id="btn-export-json" class="btn-outline">JSON</button>
+                            <button id="btn-export-pdf" class="btn-primary">Generate CV</button>
+                        </div>
+                    </div>
+                    
+                    <div class="template-selector">
+                        <span>Select Template:</span>
+                        <div class="template-options">
+                            <label class="template-radio">
+                                <input type="radio" name="template" value="minimal" checked />
+                                <span class="radio-label">Minimal</span>
+                            </label>
+                            <label class="template-radio">
+                                <input type="radio" name="template" value="dark-cyber" />
+                                <span class="radio-label">Cyber</span>
+                            </label>
+                            <label class="template-radio">
+                                <input type="radio" name="template" value="creative-grid" />
+                                <span class="radio-label">Creative</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="resume-preview-container" class="preview-mini">
+                        <!-- Preview injected by JS -->
+                        <div class="skeleton-preview"></div>
+                    </div>
+                </div>
+
+                <!-- LinkedIn Insights -->
+                <div class="widget-container linkedin-optimizer">
+                    <div class="widget-header">
+                        <h3><i class="fab fa-linkedin"></i> Social Presence Optimizer</h3>
+                    </div>
+                    <div id="linkedin-optimization-list">
+                        <!-- Items injected by JS -->
+                    </div>
+                    <button class="btn-secondary w-100 mt-1">Run Profile Health Check</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Trends Section -->
+        <section class="market-trends">
+            <div class="section-header">
+                <h2>Local Job Market <span class="accent">Insights</span></h2>
+                <p>Live demand indicators based on your project stack.</p>
+            </div>
+            <div id="market-trends-container" class="trends-grid">
+                <!-- Trend cards injected by JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Full Preview -->
+    <div id="portfolio-modal" class="modal">
+        <div class="modal-content large">
+            <span class="close-modal">&times;</span>
+            <div id="full-portfolio-preview"></div>
+        </div>
+    </div>
+
+    <script type="module" src="../scripts/pages/career.js"></script>
+</body>
+</html>

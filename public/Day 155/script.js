@@ -1,3 +1,24 @@
+// 🌈 THEME SYSTEM
+
+function setTheme(theme){
+  document.body.className = theme;
+  localStorage.setItem("tetris_theme", theme);
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem("tetris_theme") || "ocean";
+setTheme(savedTheme);
+
+// Theme buttons
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".theme-switcher button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const theme = btn.dataset.theme;
+      setTheme(theme);
+    });
+  });
+});
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');

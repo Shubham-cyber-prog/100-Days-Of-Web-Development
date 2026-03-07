@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioSynth | Advanced Genomic Analysis Suite</title>
+    <meta name="description"
+        content="Professional bioinformatics platform for DNA sequence alignment, genomic heatmapping, and secondary structure analysis. Built with Smith-Waterman algorithms." />
+    <link rel="stylesheet" href="styles/bio.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Public+Sans:wght@300;400;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="lab-container">
+        <!-- Sidebar: Genome Navigator -->
+        <aside class="genome-nav">
+            <header class="nav-header">
+                <div class="logo">BIOSYNTH <span class="v">v4.2.0</span></div>
+            </header>
+
+            <div class="panel-section">
+                <h3>PROJECT SEQUENCES</h3>
+                <ul id="sequence-list" class="seq-list">
+                    <!-- Loaded dynamically -->
+                </ul>
+                <button id="btn-import" class="btn-ghost">+ IMPORT FASTA</button>
+            </div>
+
+            <div class="panel-section">
+                <h3>ALGORITHM PARAMS</h3>
+                <div class="params-block">
+                    <label>Mismatch Penalty
+                        <input type="number" id="param-mismatch" value="-1">
+                    </label>
+                    <label>Gap Penalty
+                        <input type="number" id="param-gap" value="-2">
+                    </label>
+                    <label>Match Bonus
+                        <input type="number" id="param-match" value="2">
+                    </label>
+                </div>
+            </div>
+
+            <div class="nav-footer">
+                <div class="system-status">
+                    <span class="dot pulse"></span> SEQUENCER READY
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <header class="workspace-header">
+                <div class="search-bar">
+                    <input type="text" id="seq-input" placeholder="Paste DNA String (A, T, C, G)...">
+                    <button id="btn-submit" class="btn-primary">ANALYZE</button>
+                </div>
+                <div class="quick-stats">
+                    <div class="q-stat">GC: <span id="stat-gc">--</span></div>
+                    <div class="q-stat">Tm: <span id="stat-tm">--</span></div>
+                    <div class="q-stat">Size: <span id="stat-len">--</span></div>
+                </div>
+            </header>
+
+            <section class="analysis-grid">
+                <!-- Genomic Heatmap -->
+                <div class="card heatmap-card">
+                    <header class="card-header">
+                        <h4>GENOMIC DENSITY MAP</h4>
+                        <div class="card-actions">
+                            <span class="badge">GC CONTENT</span>
+                        </div>
+                    </header>
+                    <div class="heatmap-container" id="gc-heatmap">
+                        <canvas id="heatmap-canvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Sequence Viewer -->
+                <div class="card viewer-card">
+                    <header class="card-header">
+                        <h4>SEQUENCE VIEWER</h4>
+                    </header>
+                    <div class="scroll-area sequence-view" id="seq-display">
+                        <div class="placeholder-text">Enter sequence to begin clinical analysis...</div>
+                    </div>
+            </section>
+
+            <!-- Footer Summary Blocks -->
+            <section class="footer-panels">
+                <div class="panel metrics-panel">
+                    <h4>CODON FREQUENCY</h4>
+                    <div id="codon-chart" class="chart-area"></div>
+                </div>
+                <div class="panel alignment-panel">
+                    <h4>LOCAL ALIGNMENT (SMITH-WATERMAN)</h4>
+                    <div id="alignment-results" class="alignment-display">
+                        <p class="hint">Select's target for alignment</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Inspector Sidebar -->
+        <aside class="inspector">
+            <div class="tabs">
+                <button class="tab-btn active">METRICS</button>
+                <button class="tab-btn">MUTATIONS</button>
+            </div>
+            <div class="inspector-content">
+                <section class="mutation-log">
+                    <h4>DETECTION LOG</h4>
+                    <div id="mutation-feed" class="feed">
+                        <p class="empty-feed">No mutations identified in current batch.</p>
+                    </div>
+                </section>
+
+                <section class="structure-sim">
+                    <h4>FOLDING PREVIEW</h4>
+                    <div class="canvas-3d" id="folding-view">
+                        <canvas id="3d-canvas"></canvas>
+                    </div>
+                </section>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Core Engine -->
+    <script src="scripts/state/genome.js" type="module"></script>
+    <script src="scripts/core/aligner.js" type="module"></script>
+    <script src="scripts/core/sequencer.js" type="module"></script>
+    <script src="scripts/analysis/metrics.js" type="module"></script>
+
+    <!-- UI Controllers -->
+    <script src="scripts/ui/viz.js" type="module"></script>
+    <script src="scripts/ui/structure.js" type="module"></script>
+
+    <script type="module">
+        import { sequencer } from './scripts/core/sequencer.js';
+
+        document.getElementById('btn-submit').addEventListener('click', () => {
+            const raw = document.getElementById('seq-input').value;
+            if (raw) sequencer.process(raw);
+        });
+    </script>
+</body>
+
+</html>
