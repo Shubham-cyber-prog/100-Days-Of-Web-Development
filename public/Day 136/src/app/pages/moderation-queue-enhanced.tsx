@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { useState, useEffect, useRef } from "react";
+import { Card, CardContent } from "../components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import {
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { Input } from "../components/ui/input";
+import { Checkbox } from "../components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -35,6 +36,7 @@ import {
   ThumbsUp,
   ThumbsDown,
   Flag,
+  Keyboard,
 } from "lucide-react";
 import { mockFlaggedContent, type FlaggedContent } from "../data/mock-data";
 import { Avatar, AvatarFallback } from "../components/ui/avatar";
@@ -42,28 +44,145 @@ import { Separator } from "../components/ui/separator";
 import { Progress } from "../components/ui/progress";
 import { motion } from "motion/react";
 import { toast } from "sonner";
+import { BulkActionsBar } from "../components/bulk-actions-bar";
+import { FilterPresets, type FilterPreset } from "../components/filter-presets";
+import { KeyboardShortcutsDialog } from "../components/keyboard-shortcuts-dialog";
+import { ExportDialog } from "../components/export-dialog";
 
-export default function ModerationQueue() {
+export default function ModerationQueueEnhanced() {
   const [selectedContent, setSelectedContent] = useState<FlaggedContent | null>(
     null
   );
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterSeverity, setFilterSeverity] = useState("all");
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [filterConfidence, setFilterConfidence] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const filteredContent = mockFlaggedContent.filter((item) => {
     const matchesStatus =
       filterStatus === "all" || item.status === filterStatus;
     const matchesSeverity =
       filterSeverity === "all" || item.severity === filterSeverity;
+    const matchesCategory =
+      filterCategory === "all" || item.category === filterCategory;
+    
+    let matchesConfidence = true;
+    if (filterConfidence === "high") {
+      matchesConfidence = item.confidence >= 90;
+    } else if (filterConfidence === "medium") {
+      matchesConfidence = item.confidence >= 70 && item.confidence < 90;
+    } else if (filterConfidence === "low") {
+      matchesConfidence = item.confidence < 70;
+    }
+
     const matchesSearch =
       searchQuery === "" ||
       item.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.flagType.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesStatus && matchesSeverity && matchesSearch;
+    return matchesStatus && matchesSeverity && matchesCategory && matchesConfidence && matchesSearch;
   });
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if typing in input fields
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      ) {
+        return;
+      }
+
+      switch (e.key) {
+        case "?":
+          setShowShortcuts(true);
+          break;
+        case "a":
+          if (selectedIds.size === 1) {
+            handleBulkAction("approved");
+          }
+          break;
+        case "r":
+          if (selectedIds.size === 1) {
+            handleBulkAction("rejected");
+          }
+          break;
+        case "e":
+          if (selectedIds.size === 1) {
+            handleBulkAction("escalated");
+          }
+          break;
+        case "Escape":
+          if (selectedContent) {
+            setSelectedContent(null);
+          } else if (selectedIds.size > 0) {
+            setSelectedIds(new Set());
+          }
+          break;
+        case "1":
+          setFilterSeverity("critical");
+          break;
+        case "2":
+          setFilterSeverity("high");
+          break;
+        case "3":
+          setFilterSeverity("medium");
+          break;
+        case "p":
+          setFilterStatus("pending");
+          break;
+      }
+
+      // Ctrl+K for search
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+
+      // Ctrl+A for select all
+      if ((e.ctrlKey || e.metaKey) && e.key === "a") {
+        e.preventDefault();
+        const allIds = new Set(filteredContent.map((item) => item.id));
+        setSelectedIds(allIds);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedIds, selectedContent, filteredContent]);
+
+  const toggleSelection = (id: string) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedIds(newSelected);
+  };
+
+  const handleBulkAction = (action: string) => {
+    toast.success(`Bulk ${action}`, {
+      description: `${selectedIds.size} items have been ${action}.`,
+    });
+    setSelectedIds(new Set());
+  };
+
+  const applyFilterPreset = (preset: FilterPreset) => {
+    setFilterStatus(preset.filters.status);
+    setFilterSeverity(preset.filters.severity);
+    setFilterCategory(preset.filters.category);
+    setFilterConfidence(preset.filters.confidence);
+    toast.success("Filter preset applied", {
+      description: `"${preset.name}" filters have been applied.`,
+    });
+  };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -144,20 +263,33 @@ export default function ModerationQueue() {
             Review and take action on flagged content
           </p>
         </div>
-        <Badge variant="secondary" className="h-8 px-4">
-          {filteredContent.length} items
-        </Badge>
+        <div className="flex items-center gap-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowShortcuts(true)}
+          >
+            <Keyboard className="w-4 h-4 mr-2" />
+            Shortcuts
+          </Button>
+          <ExportDialog totalItems={filteredContent.length} />
+          <Badge variant="secondary" className="h-8 px-4">
+            {filteredContent.length} items
+          </Badge>
+        </div>
       </div>
 
-      {/* Filters */}
+      {/* Advanced Filters */}
       <Card>
-        <CardContent className="p-6">
+        <CardContent className="p-6 space-y-4">
+          {/* Search and Basic Filters */}
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search by user, content, or flag type..."
+                  ref={searchInputRef}
+                  placeholder="Search by user, content, or flag type... (Ctrl+K)"
                   className="pl-9"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -191,15 +323,71 @@ export default function ModerationQueue() {
               </SelectContent>
             </Select>
           </div>
+
+          {/* Advanced Filters Row */}
+          <div className="flex flex-col md:flex-row gap-4">
+            <Select value={filterCategory} onValueChange={setFilterCategory}>
+              <SelectTrigger className="w-full md:w-[200px]">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="Comment">Comment</SelectItem>
+                <SelectItem value="Post">Post</SelectItem>
+                <SelectItem value="Message">Message</SelectItem>
+                <SelectItem value="Review">Review</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={filterConfidence} onValueChange={setFilterConfidence}>
+              <SelectTrigger className="w-full md:w-[200px]">
+                <SelectValue placeholder="Confidence" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Confidence</SelectItem>
+                <SelectItem value="high">High (90%+)</SelectItem>
+                <SelectItem value="medium">Medium (70-89%)</SelectItem>
+                <SelectItem value="low">Low (&lt;70%)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Filter Presets */}
+          <Separator className="my-4" />
+          <FilterPresets
+            currentFilters={{
+              status: filterStatus,
+              severity: filterSeverity,
+              category: filterCategory,
+              confidence: filterConfidence,
+            }}
+            onApplyPreset={applyFilterPreset}
+          />
         </CardContent>
       </Card>
 
-      {/* Content Table */}
+      {/* Content Table with Bulk Selection */}
       <Card>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-12">
+                  <Checkbox
+                    checked={
+                      selectedIds.size === filteredContent.length &&
+                      filteredContent.length > 0
+                    }
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedIds(
+                          new Set(filteredContent.map((item) => item.id))
+                        );
+                      } else {
+                        setSelectedIds(new Set());
+                      }
+                    }}
+                  />
+                </TableHead>
                 <TableHead>User</TableHead>
                 <TableHead>Content Preview</TableHead>
                 <TableHead>Flag Type</TableHead>
@@ -212,7 +400,7 @@ export default function ModerationQueue() {
             <TableBody>
               {filteredContent.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-12">
+                  <TableCell colSpan={8} className="text-center py-12">
                     <div className="flex flex-col items-center gap-2">
                       <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
                         <Search className="w-6 h-6 text-muted-foreground" />
@@ -226,7 +414,18 @@ export default function ModerationQueue() {
                 </TableRow>
               ) : (
                 filteredContent.map((item) => (
-                  <TableRow key={item.id}>
+                  <TableRow
+                    key={item.id}
+                    className={
+                      selectedIds.has(item.id) ? "bg-accent/50" : ""
+                    }
+                  >
+                    <TableCell>
+                      <Checkbox
+                        checked={selectedIds.has(item.id)}
+                        onCheckedChange={() => toggleSelection(item.id)}
+                      />
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <Avatar className="w-8 h-8">
@@ -306,6 +505,21 @@ export default function ModerationQueue() {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Bulk Actions Bar */}
+      <BulkActionsBar
+        selectedCount={selectedIds.size}
+        onApprove={() => handleBulkAction("approved")}
+        onReject={() => handleBulkAction("rejected")}
+        onEscalate={() => handleBulkAction("escalated")}
+        onClear={() => setSelectedIds(new Set())}
+      />
+
+      {/* Keyboard Shortcuts Dialog */}
+      <KeyboardShortcutsDialog
+        open={showShortcuts}
+        onOpenChange={setShowShortcuts}
+      />
 
       {/* Review Modal */}
       <Dialog
