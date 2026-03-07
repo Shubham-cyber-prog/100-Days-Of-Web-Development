@@ -1,12 +1,52 @@
 <!DOCTYPE html>
-<html lang='en'>
-<head><title>Example Form</title></head>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Example Form</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="example.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+</head>
+
 <body>
+
+<header>
+<a href="index.html">← Back to Builder</a>
+</header>
+
+<div class="container">
+
 <h2>Example Form</h2>
-<input placeholder="Name" /><br /><br />
-<input placeholder="Email" /><br /><br />
-<input placeholder="Name"><br /><br />
-<input placeholder="Email"><br /><br />
-<button>Submit</button>
+
+<form id="exampleForm">
+
+<label>Name</label>
+<input placeholder="Enter your name" required>
+
+<label>Email</label>
+<input type="email" placeholder="Enter your email" required>
+
+<label>City</label>
+<input placeholder="Enter your city">
+
+<label>Company</label>
+<input placeholder="Enter company name">
+
+<button type="submit">Submit</button>
+
+</form>
+
+<p id="success" class="success hidden">
+Form submitted successfully!
+</p>
+
+</div>
+
+<script src="example.js"></script>
+
 </body>
 </html>

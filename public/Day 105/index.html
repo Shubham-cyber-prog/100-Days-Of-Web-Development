@@ -1,323 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Advanced Form Builder</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Build complex forms visually with drag-and-drop interface and real-time previews." />
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="FormBuilder Pro | Visual Logic Engine" />
-  <meta property="og:description"
-    content="Create, export, and manage web forms with our intuitive drag-and-drop builder." />
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FormBuilder Pro | Visual Logic Engine" />
-  <meta name="twitter:description"
-    content="Create, export, and manage web forms with our intuitive drag-and-drop builder." />
-  <style>
-    :root {
-      --fb-primary: #2563eb;
-      --fb-bg: #8b5cf6;
-      --fb-blur: 12px;
-    }
+<meta charset="UTF-8">
+<title>Advanced Form Builder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    html {
-      scroll-behavior: smooth;
-    }
+<link rel="stylesheet" href="style.css">
 
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    body {
-      margin: 0;
-      background: #f1f5f9;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Quicksand:wght@600&display=swap" rel="stylesheet">
 
-    /* HEADER */
-    header {
-      background: #fff;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.3rem;
-    }
-
-    header a {
-      margin-left: 1rem;
-      text-decoration: none;
-      color: #2563eb;
-      font-size: 0.9rem;
-    }
-
-    /* LAYOUT */
-    .layout {
-      max-width: 1100px;
-      margin: 2.5rem auto;
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 2rem;
-    }
-
-    /* LEFT PANEL */
-    .palette {
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 16px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .palette h3 {
-      margin-top: 0;
-    }
-
-    .palette-item {
-      padding: 0.65rem;
-      margin-bottom: 0.6rem;
-      border-radius: 10px;
-      background: #f8fafc;
-      border: 1px dashed #cbd5f5;
-      cursor: grab;
-    }
-
-    /* RIGHT PANEL */
-    .canvas {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 18px;
-      border: 1px solid #e2e8f0;
-      min-height: 420px;
-    }
-
-    .empty {
-      color: #64748b;
-      text-align: center;
-      margin-top: 3rem;
-    }
-
-    /* FIELD CARD */
-    .field {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 1.2rem;
-      margin-bottom: 1rem;
-    }
-
-    /* FIELD LABEL */
-    .field-label {
-      width: 100%;
-      padding: 0.45rem 0.6rem;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      font-weight: 500;
-      margin-bottom: 0.6rem;
-    }
-
-    /* INPUT PREVIEW */
-    .field input[type="text"],
-    .field input[type="email"],
-    .field input[type="number"],
-    .field textarea,
-    .field select {
-      width: 100%;
-      padding: 0.6rem;
-      border-radius: 10px;
-      border: 1px solid #e2e8f0;
-    }
-
-    /* OPTIONS */
-    .option {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .option input[type="radio"],
-    .option input[type="checkbox"] {
-      accent-color: #2563eb;
-    }
-
-    .option input[type="text"] {
-      flex: 1;
-      padding: 4px 6px;
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-    }
-
-    .add-option {
-      margin-top: 8px;
-      background: none;
-      border: none;
-      color: #2563eb;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-  </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>Advanced Form Builder</h1>
-    <nav>
-      <a href="preview.html">Preview</a>
-      <a href="responses.html">Responses</a>
-      <a href="example.html">Example</a>
-    </nav>
-  </header>
+<!-- NAVBAR -->
 
-  <main class="layout">
+<div class="navbar">
 
-    <!-- LEFT -->
-    <aside class="palette">
-      <h3>Field Types</h3>
+<div class="logo">FormBuilder Pro</div>
 
-      <div class="palette-item" draggable="true" data-type="text">Text</div>
-      <div class="palette-item" draggable="true" data-type="email">Email</div>
-      <div class="palette-item" draggable="true" data-type="number">Number</div>
-      <div class="palette-item" draggable="true" data-type="textarea">Textarea</div>
-      <div class="palette-item" draggable="true" data-type="radio">Radio Group</div>
-      <div class="palette-item" draggable="true" data-type="checkbox">Checkbox Group</div>
-      <div class="palette-item" draggable="true" data-type="select">Dropdown</div>
-    </aside>
+<div class="nav-links">
+<a href="builder.html">Builder</a>
+<a href="preview.html">Preview</a>
+<a href="responses.html">Responses</a>
+<a href="example.html">Example</a>
+</div>
 
-    <!-- RIGHT -->
-    <section class="canvas" id="dropZone">
-      <div id="fields">
-        <p class="empty">Drag fields from the left to build your form</p>
-      </div>
-    </section>
+</div>
 
-  </main>
 
-  <script>
-    let form = { fields: [] };
+<!-- HERO -->
 
-    const fieldsEl = document.getElementById("fields");
-    const dropZone = document.getElementById("dropZone");
+<section class="hero">
 
-    /* LOAD SAVED */
-    const saved = localStorage.getItem("form");
-    if (saved) {
-      form = JSON.parse(saved);
-      render();
-    }
+<h1>Advanced Form Builder</h1>
+<p>Create powerful forms using drag & drop</p>
 
-    /* DRAG START */
-    document.querySelectorAll(".palette-item").forEach(item => {
-      item.addEventListener("dragstart", e => {
-        e.dataTransfer.setData("type", item.dataset.type);
-      });
-    });
+</section>
 
-    /* DROP */
-    dropZone.addEventListener("dragover", e => e.preventDefault());
-    dropZone.addEventListener("drop", e => {
-      e.preventDefault();
-      addField(e.dataTransfer.getData("type"));
-    });
 
-    /* ADD FIELD */
-    function addField(type) {
-      fieldsEl.querySelector(".empty")?.remove();
+<!-- MAIN LAYOUT -->
 
-      const field = {
-        id: Date.now(),
-        type,
-        label: "New Field",
-        options: ["Option 1", "Option 2"]
-      };
+<main class="layout">
 
-      form.fields.push(field);
-      save();
-      render();
-    }
+<!-- LEFT SIDEBAR -->
 
-    /* RENDER */
-    function render() {
-      fieldsEl.innerHTML = "";
+<aside class="palette">
 
-      if (!form.fields.length) {
-        fieldsEl.innerHTML = `<p class="empty">Drag fields from the left to build your form</p>`;
-        return;
-      }
+<h3>Field Types</h3>
 
-      form.fields.forEach((f, index) => {
-        const div = document.createElement("div");
-        div.className = "field";
+<div class="palette-item" draggable="true" data-type="text">
+<i class="fa fa-font"></i> Text
+</div>
 
-        div.innerHTML = `
-      <input class="field-label" value="${f.label}"
-        oninput="updateLabel(${index},this.value)" />
-    `;
+<div class="palette-item" draggable="true" data-type="email">
+<i class="fa fa-envelope"></i> Email
+</div>
 
-        if (f.type === "radio" || f.type === "checkbox") {
-          f.options.forEach((opt, i) => {
-            div.innerHTML += `
-          <div class="option">
-            <input type="${f.type}" disabled />
-            <input type="text" value="${opt}"
-              oninput="updateOption(${index},${i},this.value)" />
-          </div>
-        `;
-          });
+<div class="palette-item" draggable="true" data-type="number">
+<i class="fa fa-hashtag"></i> Number
+</div>
 
-          div.innerHTML += `
-        <button class="add-option"
-          onclick="addOption(${index})">+ Add option</button>
-      `;
-        }
-        else if (f.type === "select") {
-          div.innerHTML += `
-        <select disabled>
-          ${f.options.map(o => `<option>${o}</option>`).join("")}
-        </select>
-      `;
-        }
-        else if (f.type === "textarea") {
-          div.innerHTML += `<textarea disabled></textarea>`;
-        }
-        else {
-          div.innerHTML += `<input type="${f.type}" disabled />`;
-        }
+<div class="palette-item" draggable="true" data-type="textarea">
+<i class="fa fa-align-left"></i> Textarea
+</div>
 
-        fieldsEl.appendChild(div);
-      });
-    }
+<div class="palette-item" draggable="true" data-type="radio">
+<i class="fa fa-dot-circle"></i> Radio Group
+</div>
 
-    /* UPDATE FUNCTIONS */
-    function updateLabel(i, val) {
-      form.fields[i].label = val;
-      save();
-    }
+<div class="palette-item" draggable="true" data-type="checkbox">
+<i class="fa fa-check-square"></i> Checkbox Group
+</div>
 
-    function updateOption(fieldIndex, optIndex, val) {
-      form.fields[fieldIndex].options[optIndex] = val;
-      save();
-    }
+<div class="palette-item" draggable="true" data-type="select">
+<i class="fa fa-list"></i> Dropdown
+</div>
 
-    function addOption(index) {
-      form.fields[index].options.push("New Option");
-      save();
-      render();
-    }
+</aside>
 
-    function save() {
-      localStorage.setItem("form", JSON.stringify(form));
-    }
-  </script>
+
+<!-- FORM BUILDER -->
+
+<section class="canvas" id="dropZone">
+
+<div id="fields">
+
+<p class="empty">
+Drag fields from the left to build your form
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+<script src="script.js"></script>
 
 </body>
-
 </html>
