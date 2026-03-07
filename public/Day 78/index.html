@@ -2,230 +2,183 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Open-Source Learning Games</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    :root {
-      --game-accent: #f59e0b;
-      --game-bg: #f8fafc;
-    }
+<title>Open-Source Learning Games</title>
 
-    html {
-      scroll-behavior: smooth;
-    }
+<link rel="stylesheet" href="style.css">
 
-    .game-card {
-      border-radius: 20px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: 2px solid transparent;
-    }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    .game-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      border-color: var(--game-accent);
-    }
-  </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Quicksand:wght@600&display=swap" rel="stylesheet">
+
 </head>
-
-
 
 <body>
 
-  <!-- Animated Background -->
-<div class="animated-bg">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">🎮 Learning Games</div>
+
+<div class="nav-links">
+
+<a onclick="showPage('home')">Home</a>
+<a onclick="showPage('games')">Games</a>
+<a onclick="showPage('leaderboardPage')">Leaderboard</a>
+<a onclick="showPage('about')">About</a>
+<a onclick="showPage('contact')">Contact</a>
+
 </div>
 
-<nav>
-  <h1><span>Learning</span> Games</h1>
-  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
-</nav>
+<button id="themeBtn">🌙</button>
 
-<!-- 🌙 Dark Mode Toggle -->
-<div class="theme-toggle">
-  <button id="themeBtn">🌙</button>
 </div>
 
-<div class="container">
+<!-- HOME -->
 
-<h2>🎮 Open-Source Learning Games</h2>
+<div id="home" class="page active">
+
+<section class="hero">
+
+<h1>Open Source Learning Games</h1>
+
 <p>Interactive educational games with real logic & scoring.</p>
 
-<div class="cards">
-  <div class="game-card" onclick="openGame('math')"><i class="fa-solid fa-calculator"></i><h3>Math Quiz</h3></div>
-  <div class="game-card" onclick="openGame('memory')"><i class="fa-solid fa-brain"></i><h3>Memory Match</h3></div>
-  <div class="game-card" onclick="openGame('word')"><i class="fa-solid fa-code"></i><h3>Word Scramble</h3></div>
-  <div class="game-card" onclick="openGame('quiz')"><i class="fa-solid fa-circle-question"></i><h3>MCQ Quiz</h3></div>
-  <div class="game-card" onclick="openGame('reaction')"><i class="fa-solid fa-bolt"></i><h3>Reaction Time</h3></div>
-  <div class="game-card" onclick="openGame('guess')"><i class="fa-solid fa-hashtag"></i><h3>Number Guess</h3></div>
-  <div class="game-card" onclick="openGame('typing')"><i class="fa-solid fa-keyboard"></i><h3>Typing Speed</h3></div>
+<button onclick="showPage('games')">Start Playing</button>
+
+</section>
+
 </div>
-
-<h3>🏆 Leaderboard</h3>
-<div id="leaderboard"></div>
-
-<div class="game-box"></div>
 
 <!-- GAMES -->
 
-<div id="math" class="game">
-  <h3>Math Quiz</h3>
-  <p id="mathQ"></p>
-  <input id="mathAns">
-  <button onclick="checkMath()">Submit</button>
-  <div class="score" id="mathScore"></div>
+<div id="games" class="page">
+
+<section class="section">
+
+<h2 class="section-title">Available Games</h2>
+
+<div class="cards">
+
+<div class="game-card" onclick="openGame('math')">
+<i class="fa-solid fa-calculator"></i>
+<h3>Math Quiz</h3>
 </div>
 
-<div id="memory" class="game">
-  <h3>Memory Match</h3>
-  <div class="memory" id="memoryGrid"></div>
-  <div class="score" id="memScore"></div>
+<div class="game-card" onclick="openGame('memory')">
+<i class="fa-solid fa-brain"></i>
+<h3>Memory Match</h3>
 </div>
 
-<div id="word" class="game">
-  <h3>Word Scramble</h3>
-  <p id="scrambled"></p>
-  <input id="wordAns">
-  <button onclick="checkWord()">Submit</button>
-  <div class="score" id="wordScore"></div>
+<div class="game-card" onclick="openGame('word')">
+<i class="fa-solid fa-code"></i>
+<h3>Word Scramble</h3>
 </div>
 
-<div id="quiz" class="game">
-  <h3 id="quizQ"></h3>
-  <div id="quizOpts"></div>
-  <button id="nextBtn" style="display:none">Next</button>
-  <div class="score" id="quizScore"></div>
+<div class="game-card" onclick="openGame('quiz')">
+<i class="fa-solid fa-circle-question"></i>
+<h3>MCQ Quiz</h3>
 </div>
 
-<div id="reaction" class="game">
-  <h3>Reaction Time</h3>
-  <button id="reactBtn" onclick="startReaction()">Start</button>
-  <div class="score" id="reactScore"></div>
+<div class="game-card" onclick="openGame('reaction')">
+<i class="fa-solid fa-bolt"></i>
+<h3>Reaction Time</h3>
 </div>
 
-<div id="guess" class="game">
-  <h3>Number Guess (1-10)</h3>
-  <input id="guessInp">
-  <button onclick="checkGuess()">Guess</button>
-  <div class="score" id="guessScore"></div>
+<div class="game-card" onclick="openGame('guess')">
+<i class="fa-solid fa-hashtag"></i>
+<h3>Number Guess</h3>
 </div>
 
-<div id="typing" class="game">
-  <h3>Typing Speed</h3>
-  <p id="typingText">javascript makes web interactive</p>
-  <input id="typingInp" oninput="checkTyping()">
-  <div class="score" id="typingScore"></div>
+<div class="game-card" onclick="openGame('typing')">
+<i class="fa-solid fa-keyboard"></i>
+<h3>Typing Speed</h3>
 </div>
 
 </div>
 
-<footer>© 2026 Open-Source Learning Games – Day 78</footer>
+<div class="game-box">
+
+<!-- games appear here -->
+
+<div id="math" class="game"></div>
+<div id="memory" class="game"></div>
+<div id="word" class="game"></div>
+<div id="quiz" class="game"></div>
+<div id="reaction" class="game"></div>
+<div id="guess" class="game"></div>
+<div id="typing" class="game"></div>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- LEADERBOARD -->
+
+<div id="leaderboardPage" class="page">
+
+<section class="section">
+
+<h2 class="section-title">🏆 Leaderboard</h2>
+
+<div id="leaderboard"></div>
+
+</section>
+
+</div>
+
+<!-- ABOUT -->
+
+<div id="about" class="page">
+
+<section class="section">
+
+<div class="info">
+
+<h2>About</h2>
+
+<p>
+Open-Source Learning Games is a collection of interactive games
+designed to help users learn programming and logic in a fun way.
+</p>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- CONTACT -->
+
+<div id="contact" class="page">
+
+<section class="section">
+
+<div class="info">
+
+<h2>Contact</h2>
+
+<p>Email: support@learninggames.com</p>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+
+© 2026 Open-Source Learning Games – Day 78
+
+</footer>
 
 <script src="script.js"></script>
 
-
-<!-- 🎯 Popup -->
-<div id="popup" class="popup">Great Job 🎉</div>
-
-  <nav>
-    <h1><span>Learning</span> Games</h1>
-    <button id="themeToggle" aria-label="Toggle dark and light mode"><i class="fa-solid fa-moon"></i></button>
-  </nav>
-
-  <div class="container">
-
-    <h2>🎮 Open-Source Learning Games</h2>
-    <p>Interactive educational games with real logic & scoring.</p>
-
-    <div class="cards">
-      <div class="game-card" onclick="openGame('math')"><i class="fa-solid fa-calculator"></i>
-        <h3>Math Quiz</h3>
-      </div>
-      <div class="game-card" onclick="openGame('memory')"><i class="fa-solid fa-brain"></i>
-        <h3>Memory Match</h3>
-      </div>
-      <div class="game-card" onclick="openGame('word')"><i class="fa-solid fa-code"></i>
-        <h3>Word Scramble</h3>
-      </div>
-      <div class="game-card" onclick="openGame('quiz')"><i class="fa-solid fa-circle-question"></i>
-        <h3>MCQ Quiz</h3>
-      </div>
-      <div class="game-card" onclick="openGame('reaction')"><i class="fa-solid fa-bolt"></i>
-        <h3>Reaction Time</h3>
-      </div>
-      <div class="game-card" onclick="openGame('guess')"><i class="fa-solid fa-hashtag"></i>
-        <h3>Number Guess</h3>
-      </div>
-      <div class="game-card" onclick="openGame('typing')"><i class="fa-solid fa-keyboard"></i>
-        <h3>Typing Speed</h3>
-      </div>
-    </div>
-
-    <!-- GAMES -->
-
-    <div id="math" class="game">
-      <h3>Math Quiz</h3>
-      <p id="mathQ"></p>
-      <input id="mathAns">
-      <button onclick="checkMath()">Submit</button>
-      <div class="score" id="mathScore"></div>
-    </div>
-
-    <div id="memory" class="game">
-      <h3>Memory Match</h3>
-      <div class="memory" id="memoryGrid"></div>
-      <div class="score" id="memScore"></div>
-    </div>
-
-    <div id="word" class="game">
-      <h3>Word Scramble</h3>
-      <p id="scrambled"></p>
-      <input id="wordAns">
-      <button onclick="checkWord()">Submit</button>
-      <div class="score" id="wordScore"></div>
-    </div>
-
-    <div id="quiz" class="game">
-      <h3 id="quizQ"></h3>
-      <div id="quizOpts"></div>
-      <button id="nextBtn" style="display:none">Next</button>
-      <div class="score" id="quizScore"></div>
-    </div>
-
-    <div id="reaction" class="game">
-      <h3>Reaction Time</h3>
-      <button id="reactBtn" onclick="startReaction()">Start</button>
-      <div class="score" id="reactScore"></div>
-    </div>
-
-    <div id="guess" class="game">
-      <h3>Number Guess (1-10)</h3>
-      <input id="guessInp">
-      <button onclick="checkGuess()">Guess</button>
-      <div class="score" id="guessScore"></div>
-    </div>
-
-    <div id="typing" class="game">
-      <h3>Typing Speed</h3>
-      <p id="typingText">javascript makes web interactive</p>
-      <input id="typingInp" oninput="checkTyping()">
-      <div class="score" id="typingScore"></div>
-    </div>
-
-  </div>
-
-  <footer>© 2026 Open-Source Learning Games – Day 78</footer>
-
-  <script src="script.js"></script>
 </body>
-
 </html>
