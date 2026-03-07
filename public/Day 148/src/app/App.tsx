@@ -8,6 +8,7 @@ import { SummarizationWorkspace } from './components/SummarizationWorkspace';
 import { SummaryResult } from './components/SummaryResult';
 import { History } from './components/History';
 import { Settings } from './components/Settings';
+import { AdvancedAnalytics } from './components/AdvancedAnalytics';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,6 +25,7 @@ export default function App() {
   // Page titles for the top bar
   const pageTitles: { [key: string]: string } = {
     dashboard: 'Dashboard',
+    analytics: 'Advanced Analytics',
     upload: 'Upload Document',
     workspace: 'Summarization Workspace',
     result: 'Summary Result',
@@ -44,6 +46,7 @@ export default function App() {
         
         <main className="flex-1 overflow-y-auto">
           {currentPage === 'dashboard' && <Dashboard onNavigate={handleNavigate} />}
+          {currentPage === 'analytics' && <AdvancedAnalytics />}
           {currentPage === 'upload' && <UploadDocument onNavigate={handleNavigate} />}
           {currentPage === 'workspace' && <SummarizationWorkspace onNavigate={handleNavigate} />}
           {currentPage === 'result' && <SummaryResult />}
