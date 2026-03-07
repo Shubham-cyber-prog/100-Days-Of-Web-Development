@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { AlertTriangle, CheckCircle, Clock, TrendingUp, Upload, GitBranch, Play } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Clock, TrendingUp, Upload, GitBranch, Play, Sparkles, FolderOpen, GitCompare } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
@@ -216,7 +216,7 @@ export function Dashboard() {
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>Get started with code analysis</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-3">
+          <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link to="/upload" className="block">
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -234,20 +234,73 @@ export function Dashboard() {
               </motion.div>
             </Link>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Button variant="outline" className="h-auto w-full flex-col gap-3 py-6 hover:border-primary hover:bg-primary/5">
-                <GitBranch className="h-8 w-8 text-primary" />
-                <div>
-                  <div className="font-semibold">Connect Repo</div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    Link GitHub/GitLab
+            <Link to="/batch" className="block">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button variant="outline" className="h-auto w-full flex-col gap-3 py-6 hover:border-primary hover:bg-primary/5">
+                  <FolderOpen className="h-8 w-8 text-primary" />
+                  <div>
+                    <div className="font-semibold">Batch Analysis</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      Analyze multiple files
+                    </div>
                   </div>
-                </div>
-              </Button>
-            </motion.div>
+                </Button>
+              </motion.div>
+            </Link>
+
+            <Link to="/comparison" className="block">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button variant="outline" className="h-auto w-full flex-col gap-3 py-6 hover:border-primary hover:bg-primary/5">
+                  <GitCompare className="h-8 w-8 text-primary" />
+                  <div>
+                    <div className="font-semibold">Code Comparison</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      View before/after fixes
+                    </div>
+                  </div>
+                </Button>
+              </motion.div>
+            </Link>
+
+            <Link to="/ai-chat" className="block">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button variant="outline" className="h-auto w-full flex-col gap-3 py-6 hover:border-primary hover:bg-primary/5">
+                  <Sparkles className="h-8 w-8 text-primary" />
+                  <div>
+                    <div className="font-semibold">AI Assistant</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      Ask AI about code
+                    </div>
+                  </div>
+                </Button>
+              </motion.div>
+            </Link>
+
+            <Link to="/upload" className="block">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button variant="outline" className="h-auto w-full flex-col gap-3 py-6 hover:border-primary hover:bg-primary/5">
+                  <GitBranch className="h-8 w-8 text-primary" />
+                  <div>
+                    <div className="font-semibold">Connect Repo</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      Link GitHub/GitLab
+                    </div>
+                  </div>
+                </Button>
+              </motion.div>
+            </Link>
 
             <Link to="/review/1" className="block">
               <motion.div
