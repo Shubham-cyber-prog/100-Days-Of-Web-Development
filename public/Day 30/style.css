@@ -1,126 +1,113 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
 }
 
-body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #020617);
-  font-family: "Segoe UI", system-ui, sans-serif;
-  color: #e5e7eb;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+body{
+  background: linear-gradient(135deg,#1f4037,#99f2c8);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-h1 {
-  font-size: 2.6rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 3px;
-  color: #38bdf8;
+/* BLUR WHEN MODAL */
+body.blur > .game-wrapper{
+  filter: blur(6px);
+  pointer-events:none;
 }
 
-/* TURN */
-#turn {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+/* GAME WRAPPER */
+.game-wrapper{
+  background:white;
+  padding:20px 25px 30px;
+  border-radius:16px;
+  width:320px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
 }
 
-/* SCOREBOARD */
-#scoreboard {
-  margin-bottom: 0.6rem;
-  text-align: center;
+h1{
+  margin-bottom:10px;
 }
 
-#scoreboard p {
-  font-size: 0.95rem;
-}
-
-/* MESSAGE */
-.msg-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  margin-bottom: 0.6rem;
-}
-
-#msg {
-  font-size: 1.8rem;
-  color: #22c55e;
-  font-weight: bold;
-}
-
-.hide {
-  display: none;
+#turn{
+  font-weight:bold;
+  margin:10px 0;
 }
 
 /* BOARD */
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0;
+.board{
+  display:grid;
+  grid-template-columns: repeat(3, 90px);
+  gap:10px;
+  justify-content:center;
+  margin:15px 0;
 }
 
-.game {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  padding: 1.5rem;
-  background: rgba(30, 41, 59, 0.8);
-  border-radius: 1.5rem;
+.box{
+  height:90px;
+  width:90px;
+  font-size:40px;
+  border:none;
+  border-radius:12px;
+  background:#f1f1f1;
+  cursor:pointer;
 }
 
-.box {
-  width: 110px;
-  height: 110px;
-  border-radius: 1rem;
-  border: none;
-  font-size: 3.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  background: #020617;
-  color: #38bdf8;
+.box:hover{
+  background:#e1e1e1;
 }
 
-.box:disabled {
-  cursor: not-allowed;
-  color: #f43f5e;
+/* CONTROLS */
+.controls button{
+  margin:5px;
+  padding:8px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#1f4037;
+  color:white;
 }
 
-/* BUTTONS */
-.controls {
-  display: flex;
-  gap: 1rem;
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
 }
 
-#reset,
-#new,
-#resetHistory {
-  margin-top: 0.8rem;
-  padding: 0.7rem 1.6rem;
-  font-size: 0.95rem;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
+.modal-box{
+  background:white;
+  padding:25px;
+  width:300px;
+  text-align:center;
+  border-radius:14px;
+  animation: pop 0.3s ease;
 }
 
-#reset {
-  background: #f97316;
-  color: #fff;
+@keyframes pop{
+  from{transform:scale(0.8);opacity:0;}
+  to{transform:scale(1);opacity:1;}
 }
 
-#new {
-  background: #22c55e;
-  color: #022c22;
+.modal-box button{
+  margin:10px;
+  padding:8px 16px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#1f4037;
+  color:white;
 }
 
-#resetHistory {
-  background: #ef4444;
-  color: #fff;
+/* HIDE */
+.hidden{
+  display:none;
 }

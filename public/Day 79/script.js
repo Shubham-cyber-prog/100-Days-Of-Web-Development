@@ -1,3 +1,10 @@
+
+// Load from local storage
+const savedEmails = localStorage.getItem("emails");
+if (savedEmails) {
+   Object.assign(emailData, JSON.parse(savedEmails));
+}
+
 // Email Client Application
 
 // Sample email data
@@ -136,7 +143,8 @@ const emailData = {
             avatarText: "SM"
         }
     ],
-    trash: []
+    trash: [],
+    applications: []
 };
 
 // Application state
@@ -229,6 +237,12 @@ function renderEmailList() {
         return;
     }
     
+const sortType = document.getElementById("sortEmails")?.value;
+
+if (sortType === "old") {
+   emails = [...emails].reverse();
+}
+
     // Render each email
     emails.forEach(email => {
         const emailItem = document.createElement('div');
@@ -292,6 +306,8 @@ function renderEmailList() {
             updateDeleteButtonState();
         });
     });
+
+    
 }
 
 // Show email in view panel
@@ -322,6 +338,11 @@ function showEmail(email) {
     
     // Set reply input placeholder
     replyInput.placeholder = `Reply to ${email.sender}...`;
+
+    if (email.attachment) {
+   document.getElementById("emailViewBody").innerHTML += 
+      `<p><b>Attachment:</b> ${email.attachment}</p>`;
+}
 }
 
 // Compose new email
@@ -340,6 +361,7 @@ function sendEmail() {
     const to = document.getElementById('composeTo').value.trim();
     const subject = document.getElementById('composeSubject').value.trim();
     const body = document.getElementById('composeBody').value.trim();
+    const file = document.getElementById("attachment").files[0];
     
     if (!to || !subject || !body) {
         alert('Please fill in all fields');
@@ -355,12 +377,14 @@ function sendEmail() {
         subject: subject,
         preview: body.substring(0, 60) + '...',
         body: `<p>${body.replace(/\n/g, '</p><p>')}</p>`,
+        attachment: file ? file.name : null,
         time: "Just now",
         date: "Today",
         read: true,
         starred: false,
         avatarColor: "#4285f4",
         avatarText: "JD"
+        
     };
     
     // Add to sent folder
@@ -376,6 +400,10 @@ function sendEmail() {
     if (state.currentFolder === 'sent') {
         renderEmailList();
     }
+
+    localStorage.setItem("emails", JSON.stringify(emailData));
+
+    emailData.applications.push(newEmail);
 }
 
 // Save draft
@@ -421,6 +449,8 @@ function saveDraft() {
     }
     
     alert('Draft saved!');
+
+    localStorage.setItem("emails", JSON.stringify(emailData));
 }
 
 // Delete selected emails
@@ -463,6 +493,8 @@ function deleteSelectedEmails() {
     
     // Show confirmation
     alert(`${state.selectedEmails.length} email(s) moved to trash`);
+
+    localStorage.setItem("emails", JSON.stringify(emailData));
 }
 
 // Toggle email star
@@ -678,6 +710,15 @@ function setupEventListeners() {
             emailListContainer.classList.remove('hidden');
         }
     });
+
+
+    document.getElementById("themeToggle").addEventListener("click", () => {
+   document.body.classList.toggle("dark");
+});
+
+document.getElementById("sortEmails").addEventListener("change", () => {
+   renderEmailList();
+});
 }
 
 // Initialize the app when DOM is loaded

@@ -1,0 +1,198 @@
+:root {
+    --bg-tech: #030712;
+    --panel-tech: #0f172a;
+    --accent: #10b981;
+    --accent-glow: rgba(16, 185, 129, 0.3);
+    --text-primary: #f8fafc;
+    --text-dim: #94a3b8;
+    --border: #1e293b;
+    --font-mono: 'Fira Code', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-tech);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+}
+
+#laboratory {
+    display: flex;
+    height: 100vh;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+/* Sidebar Dashboard */
+#dashboard {
+    width: 320px;
+    background: var(--panel-tech);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 2rem;
+    backdrop-filter: blur(8px);
+}
+
+.brand {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.brand span {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.sec-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+}
+
+/* Simulated Viewport */
+#viewport-container {
+    flex: 1;
+    position: relative;
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+canvas#world-canvas {
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+/* UI Modules */
+.stat-card {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.stat-row span:last-child {
+    color: var(--accent);
+}
+
+#graph-canvas {
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+/* Controls */
+.control-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+}
+
+button {
+    background: var(--border);
+    color: var(--text-primary);
+    border: 1px solid transparent;
+    padding: 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background: #334155;
+    border-color: var(--accent);
+}
+
+button.primary {
+    background: var(--accent);
+    color: var(--bg-tech);
+    font-weight: 700;
+}
+
+button.toggle-active {
+    box-shadow: 0 0 15px var(--accent-glow);
+    border-color: var(--accent);
+}
+
+/* Overlay HUD */
+#hud-overlay {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    pointer-events: none;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+}
+
+.selection-info {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid var(--accent);
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 240px;
+    display: none;
+}
+
+.selection-info h4 {
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.gene-strip {
+    height: 8px;
+    width: 100%;
+    background: var(--bg-tech);
+    margin-top: 1rem;
+    display: flex;
+}
+
+.gene-bit {
+    flex: 1;
+    height: 100%;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+}

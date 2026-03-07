@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Blueprint Modeler | 100 Days of Web Dev</title>
+
+  <link rel="icon" href="/website/assets/images/logo.png">
+
+  <!-- Base Style -->
+  <link rel="stylesheet" href="../styles/index.css">
+
+  <style>
+    /* =============== GLOBAL =============== */
+
+    body {
+      margin: 0;
+      background: #0f172a;
+      color: #f1f5f9;
+      font-family: Arial, sans-serif;
+    }
+
+    /* =============== LAYOUT =============== */
+
+    .blueprint-container {
+      display: flex;
+      height: calc(100vh - 70px);
+    }
+
+    /* =============== TOOLBAR =============== */
+
+    .blueprint-sidebar {
+      width: 220px;
+      background: #020617;
+      border-right: 1px solid #1e293b;
+      padding: 20px;
+    }
+
+    .tool-btn {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 10px;
+      background: #020617;
+      color: white;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .tool-btn:hover {
+      background: #0ea5e9;
+      border-color: #0ea5e9;
+    }
+
+    /* =============== MAIN AREA =============== */
+
+    .blueprint-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #020617;
+    }
+
+    /* Header */
+
+    .blueprint-header {
+      padding: 15px 25px;
+      background: #020617;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .blueprint-title {
+      font-size: 22px;
+    }
+
+    .blueprint-info {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .btn {
+      background: #0ea5e9;
+      border: none;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    /* =============== CANVAS =============== */
+
+    .canvas-wrapper {
+      flex: 1;
+      position: relative;
+      background: #020617;
+    }
+
+    canvas {
+      background: #020617;
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+
+    /* =============== ZOOM =============== */
+
+    .zoom-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .zoom-btn {
+      padding: 6px 10px;
+      background: transparent;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .zoom-btn:hover {
+      background: #0ea5e9;
+    }
+
+    .zoom-level {
+      padding: 6px 10px;
+      font-size: 14px;
+    }
+
+    /* =============== STATUS =============== */
+
+    .connection-status {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: orange;
+      border-radius: 50%;
+    }
+
+    .connected {
+      background: #22c55e;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="nav-container">
+
+      <a href="dashboard.html" class="nav-logo">
+        <img src="../assets/images/logo.png" width="40">
+      </a>
+
+      <nav class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="projects.html">Projects</a>
+        <a href="blueprint.html" class="active">Blueprint</a>
+        <a href="achievements.html">Achievements</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- STATUS -->
+  <div id="connectionStatus" class="connection-status">
+    <div class="status-dot"></div>
+    <span id="statusText">Connecting...</span>
+  </div>
+
+  <!-- MAIN -->
+  <main class="blueprint-container">
+
+    <!-- TOOLBAR -->
+    <aside class="blueprint-sidebar">
+
+      <h3>Tools</h3>
+
+      <button class="tool-btn" id="penTool">✏ Pen</button>
+      <button class="tool-btn" id="eraseTool">🧽 Erase</button>
+      <button class="tool-btn" id="clearBtn">🗑 Clear</button>
+      <button class="tool-btn" id="saveBtn">💾 Save</button>
+
+    </aside>
+
+    <!-- MAIN WORKSPACE -->
+    <div class="blueprint-main">
+
+      <!-- TOP BAR -->
+      <div class="blueprint-header">
+
+        <h1 class="blueprint-title">Collaborative Blueprint</h1>
+
+        <div class="blueprint-info">
+          <span id="roomId">Room: Loading...</span>
+          <button class="btn" id="shareBtn">Share</button>
+        </div>
+
+      </div>
+
+      <!-- CANVAS -->
+      <div class="canvas-wrapper">
+
+        <canvas id="blueprintCanvas"></canvas>
+
+        <!-- Zoom -->
+        <div class="zoom-controls">
+
+          <button class="zoom-btn" id="zoomIn">+</button>
+          <span class="zoom-level" id="zoomLevel">100%</span>
+          <button class="zoom-btn" id="zoomOut">−</button>
+          <button class="zoom-btn" id="resetZoom">⊙</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= JS ================= -->
+
+  <script>
+
+    /* =============== ROOM SIMULATION =============== */
+
+    const roomId = "ROOM-" + Math.floor(Math.random() * 99999);
+    document.getElementById("roomId").innerText = "Room: " + roomId;
+
+    setTimeout(() => {
+      document.querySelector(".status-dot").classList.add("connected");
+      document.getElementById("statusText").innerText = "Connected";
+    }, 1500);
+
+
+    /* =============== CANVAS SETUP =============== */
+
+    const canvas = document.getElementById("blueprintCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+
+    /* =============== DRAWING =============== */
+
+    let drawing = false;
+    let eraseMode = false;
+
+    canvas.addEventListener("mousedown", () => drawing = true);
+    canvas.addEventListener("mouseup", () => drawing = false);
+    canvas.addEventListener("mouseleave", () => drawing = false);
+
+    canvas.addEventListener("mousemove", draw);
+
+    function draw(e) {
+
+      if (!drawing) return;
+
+      ctx.lineWidth = eraseMode ? 20 : 2;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = eraseMode ? "#020617" : "#0ea5e9";
+
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    }
+
+
+    /* =============== TOOLS =============== */
+
+    document.getElementById("penTool").onclick = () => {
+      eraseMode = false;
+    };
+
+    document.getElementById("eraseTool").onclick = () => {
+      eraseMode = true;
+    };
+
+    document.getElementById("clearBtn").onclick = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+    document.getElementById("saveBtn").onclick = () => {
+
+      const link = document.createElement("a");
+      link.download = "blueprint.png";
+      link.href = canvas.toDataURL();
+
+      link.click();
+    };
+
+
+    /* =============== ZOOM =============== */
+
+    let zoom = 1;
+
+    const zoomLevel = document.getElementById("zoomLevel");
+
+    function updateZoom() {
+      canvas.style.transform = `scale(${zoom})`;
+      zoomLevel.innerText = Math.round(zoom * 100) + "%";
+    }
+
+    document.getElementById("zoomIn").onclick = () => {
+      zoom += 0.1;
+      updateZoom();
+    };
+
+    document.getElementById("zoomOut").onclick = () => {
+      zoom = Math.max(0.3, zoom - 0.1);
+      updateZoom();
+    };
+
+    document.getElementById("resetZoom").onclick = () => {
+      zoom = 1;
+      updateZoom();
+    };
+
+
+    /* =============== SHARE =============== */
+
+    document.getElementById("shareBtn").onclick = () => {
+
+      const url = window.location.href + "?room=" + roomId;
+
+      navigator.clipboard.writeText(url);
+
+      alert("Room link copied!");
+    };
+
+  </script>
+
+</body>
+
+</html>

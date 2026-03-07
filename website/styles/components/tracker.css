@@ -192,3 +192,37 @@
 .day-cell:hover::after {
     opacity: 1;
 }
+
+/* ========================================
+   LIGHT MODE OVERRIDES
+   ======================================== */
+
+[data-theme="light"] .tracker-container {
+    background: white;
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .progress-stat-pill {
+    background: white;
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .day-cell {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-tertiary);
+}
+
+[data-theme="light"] .day-cell.completed {
+    background: var(--accent-success);
+    border-color: var(--accent-success);
+    color: white;
+}
+
+[data-theme="light"] .day-cell:hover {
+    background: var(--accent-core);
+    border-color: var(--accent-core);
+    color: white;
+}

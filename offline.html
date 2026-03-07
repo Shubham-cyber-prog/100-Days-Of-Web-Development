@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline | 100 Days of Web Development</title>
+
+<style>
+/* ===============================
+   GLOBAL RESET
+================================ */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: radial-gradient(circle at top left,#0f172a,#020617 60%);
+    color:#e2e8f0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* ===============================
+   ANIMATED GRID BACKGROUND
+================================ */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation: moveGrid 25s linear infinite;
+}
+
+@keyframes moveGrid{
+    from{ background-position:0 0; }
+    to{ background-position:40px 40px; }
+}
+
+/* ===============================
+   MAIN CONTAINER
+================================ */
+.container{
+    position:relative;
+    z-index:10;
+    width:90%;
+    max-width:700px;
+    padding:50px 40px;
+    background:rgba(15,23,42,0.85);
+    border:1px solid rgba(56,189,248,0.3);
+    border-radius:20px;
+    backdrop-filter: blur(20px);
+    text-align:center;
+    box-shadow:0 0 60px rgba(56,189,248,0.15);
+}
+
+/* ===============================
+   ICON
+================================ */
+.icon{
+    font-size:80px;
+    margin-bottom:25px;
+    color:#38bdf8;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse{
+    0%,100%{ transform:scale(1); opacity:0.8;}
+    50%{ transform:scale(1.1); opacity:1;}
+}
+
+/* ===============================
+   TEXT
+================================ */
+h1{
+    font-size:42px;
+    margin-bottom:15px;
+    background:linear-gradient(90deg,#38bdf8,#818cf8);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+p{
+    font-size:18px;
+    color:#94a3b8;
+    margin-bottom:35px;
+    line-height:1.6;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.buttons{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+}
+
+.btn{
+    padding:12px 28px;
+    font-size:15px;
+    font-weight:600;
+    border-radius:30px;
+    cursor:pointer;
+    transition:0.3s;
+    border:none;
+}
+
+/* Primary */
+.btn-primary{
+    background:#38bdf8;
+    color:#0f172a;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(56,189,248,0.4);
+}
+
+/* Outline */
+.btn-outline{
+    background:transparent;
+    border:1px solid #38bdf8;
+    color:#38bdf8;
+}
+
+.btn-outline:hover{
+    background:#38bdf8;
+    color:#0f172a;
+}
+
+/* ===============================
+   OFFLINE LINKS
+================================ */
+.offline-links{
+    margin-top:10px;
+}
+
+.offline-links h3{
+    margin-bottom:20px;
+    font-size:18px;
+    color:#cbd5e1;
+}
+
+.links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.links a{
+    text-decoration:none;
+    color:#38bdf8;
+    padding:8px 18px;
+    border-radius:20px;
+    border:1px solid rgba(56,189,248,0.4);
+    transition:0.3s;
+}
+
+.links a:hover{
+    background:#38bdf8;
+    color:#0f172a;
+}
+
+/* ===============================
+   STATUS MESSAGE
+================================ */
+.status{
+    margin-top:25px;
+    font-size:14px;
+    color:#94a3b8;
+}
+.online{
+    color:#22c55e;
+}
+.offline{
+    color:#ef4444;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="icon">📡</div>
+
+    <h1>You're Offline</h1>
+
+    <p>
+        It looks like you've lost your internet connection.
+        Don’t worry — you can still explore available cached pages.
+    </p>
+
+    <div class="buttons">
+        <button class="btn btn-primary" onclick="retryConnection()">Try Again</button>
+        <button class="btn btn-outline" onclick="goBack()">Go Back</button>
+    </div>
+
+    <div class="offline-links">
+        <h3>Available Offline Pages</h3>
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="public/">Projects</a>
+            <a href="masthead.html">Contributors</a>
+        </div>
+    </div>
+
+    <div class="status">
+        Status: <span id="connectionStatus" class="offline">Offline</span>
+    </div>
+
+</div>
+
+<script>
+
+/* ===============================
+   RETRY CONNECTION
+================================ */
+function retryConnection(){
+    window.location.reload();
+}
+
+/* ===============================
+   GO BACK FUNCTION
+================================ */
+function goBack(){
+    if(document.referrer !== ""){
+        window.history.back();
+    }else{
+        window.location.href = "/index.html";
+    }
+}
+
+/* ===============================
+   DETECT ONLINE STATUS
+================================ */
+const statusElement = document.getElementById("connectionStatus");
+
+function updateStatus(){
+    if(navigator.onLine){
+        statusElement.textContent = "Online";
+        statusElement.className = "online";
+    }else{
+        statusElement.textContent = "Offline";
+        statusElement.className = "offline";
+    }
+}
+
+window.addEventListener("online", updateStatus);
+window.addEventListener("offline", updateStatus);
+
+updateStatus();
+
+</script>
+
+</body>
+</html>

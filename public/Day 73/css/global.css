@@ -79,3 +79,27 @@
   font-weight: 500;
 }
 
+/* ===============================
+   STATIC PAGES – CENTERED LAYOUT
+   (Feedback & Legal Pages)
+   =============================== */
+
+.static-page {
+  min-height: calc(100vh - 160px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4rem 1.5rem 3rem;
+}
+
+/* Inner content wrapper */
+.static-page-content {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* Ensure sidebar margin does not affect static pages */
+.static-page {
+  margin-left: 0 !important;
+}

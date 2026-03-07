@@ -1,3 +1,8 @@
+const comingSoon = [
+  "templates",
+  "export"
+];
+
 async function importFromGitHub() {
   const user = document.getElementById("githubUser").value.trim();
   const repo = document.getElementById("githubRepo").value.trim();
@@ -29,3 +34,37 @@ async function importFromGitHub() {
     console.error(err);
   }
 }
+
+
+document.querySelectorAll(".nav-item").forEach(btn => {
+  btn.addEventListener("click", () => {
+    // active state
+    document.querySelectorAll(".nav-item")
+      .forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const label = btn.textContent.trim().toLowerCase();
+
+    const map = {
+      "generator": "#title",
+      "github import": "#github-section",
+      "badges": "#badges-section"
+    };
+
+    // Scroll if mapped
+    if (map[label]) {
+      document
+        .querySelector(map[label])
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    // Show alert ONLY for known unimplemented features
+    if (comingSoon.includes(label)) {
+      alert("This section is coming soon 🚧");
+    }
+
+    // Otherwise: do nothing (important!)
+  });
+});
+

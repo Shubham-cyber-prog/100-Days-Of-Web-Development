@@ -5,35 +5,62 @@
   font-family: Arial, sans-serif;
 }
 
+/* Light Mode */
 body {
   background: #f4f6f8;
-  color: #333;
+  color: #222;
+  transition: 0.3s;
 }
+
+/* Dark Mode */
+body.dark {
+  background: #0f172a;
+  color: #eee;
+}
+
+/* Header */
 
 .header {
   background: #1f2937;
-  color: #fff;
-  padding: 20px;
+  color: white;
+  padding: 15px;
   text-align: center;
+  position: relative;
 }
 
-.editor-container {
-  padding: 20px;
-  max-width: 1100px;
-  margin: auto;
+.header button {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
+
+/* Container */
+
+.editor-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Toolbar */
 
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
 }
 
 .toolbar select,
 .toolbar button {
-  padding: 8px 12px;
+  padding: 7px 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -46,15 +73,23 @@ body {
   background: #1d4ed8;
 }
 
-.editor-area textarea {
-  width: 100%;
-  height: 250px;
-  padding: 10px;
-  border-radius: 6px;
+
+/* Editor */
+
+.editor-area {
+  border-radius: 8px;
+  overflow: hidden;
   border: 1px solid #ccc;
-  font-family: monospace;
+}
+
+/* CodeMirror */
+
+.CodeMirror {
+  height: 300px;
   font-size: 14px;
 }
+
+/* Output */
 
 .output-area {
   margin-top: 20px;
@@ -66,15 +101,100 @@ body {
 
 .output-area iframe {
   width: 100%;
-  height: 200px;
+  height: 220px;
   border: 1px solid #ccc;
   border-radius: 6px;
   background: white;
 }
 
-/* Responsive */
+
+/* Dark Mode Adjustments */
+
+body.dark .header {
+  background: #020617;
+}
+
+body.dark .editor-area {
+  border-color: #334155;
+}
+
+body.dark iframe {
+  background: #020617;
+}
+
+
+/* Fullscreen */
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  z-index: 9999;
+  padding: 20px;
+}
+
+
+/* Mobile */
+
 @media (max-width: 768px) {
+
   .toolbar {
     flex-direction: column;
   }
+
+  .CodeMirror {
+    height: 250px;
+  }
+}
+
+
+
+/* 🌙 Dark Mode */
+.dark {
+  background: #111;
+  color: white;
+}
+
+.dark .header {
+  background: #000;
+}
+
+.dark textarea {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+.dark iframe {
+  background: #1e1e1e;
+}
+
+.console {
+  margin-top: 15px;
+  background: black;
+  color: #0f0;
+  padding: 10px;
+  height: 120px;
+  overflow-y: auto;
+  border-radius: 6px;
+}
+
+/* Fullscreen */
+.fullscreen textarea {
+  height: 80vh;
+}
+
+
+/* Light mode output */
+#output {
+  color: black;
+  background: white;
+}
+
+/* Dark mode output */
+.dark #output {
+  color: white;
+  background: #1e1e1e;
 }

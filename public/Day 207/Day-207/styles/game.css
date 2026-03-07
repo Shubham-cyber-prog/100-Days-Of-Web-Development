@@ -1,0 +1,292 @@
+:root {
+    --bg-dark: #1a1a2e;
+    --bg-darker: #0f0f1e;
+    --primary: #16213e;
+    --accent: #e94560;
+    --health: #4ecca3;
+    --xp: #ffd700;
+    --text: #eee;
+    --border: #444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'VT323', monospace;
+    background: var(--bg-darker);
+    color: var(--text);
+    overflow: hidden;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.game-header {
+    background: var(--bg-dark);
+    padding: 1rem;
+    border-bottom: 3px solid var(--accent);
+}
+
+.game-header h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    text-shadow: 2px 2px 0 #000;
+}
+
+.stats-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.bar {
+    position: relative;
+    width: 150px;
+    height: 24px;
+    background: var(--bg-darker);
+    border: 2px solid var(--border);
+    overflow: hidden;
+}
+
+.bar .fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.health-bar .fill {
+    background: linear-gradient(to right, var(--health), #2d9e7a);
+}
+
+.xp-bar .fill {
+    background: linear-gradient(to right, var(--xp), #cc9900);
+}
+
+.bar .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 0 #000;
+    z-index: 1;
+}
+
+.stat-item {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.stat-item .value {
+    font-weight: bold;
+    color: var(--xp);
+}
+
+.game-main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.game-view {
+    flex: 1;
+    position: relative;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#gameCanvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    border: 2px solid var(--border);
+}
+
+#damage-numbers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.damage-number {
+    position: absolute;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    font-weight: bold;
+    animation: float-up 1s ease-out forwards;
+    pointer-events: none;
+}
+
+.damage-number.damage {
+    color: #ff4444;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.damage-number.heal {
+    color: #44ff44;
+    text-shadow: 2px 2px 0 #000;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+}
+
+.game-footer {
+    background: var(--bg-dark);
+    padding: 1rem;
+    border-top: 3px solid var(--accent);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: #ff5577;
+    transform: scale(1.05);
+}
+
+.message-log {
+    flex: 1;
+    background: var(--bg-darker);
+    padding: 0.5rem;
+    border: 2px solid var(--border);
+    font-size: 1rem;
+    max-height: 60px;
+    overflow-y: auto;
+}
+
+.message-log p {
+    margin: 0.2rem 0;
+    color: #aaa;
+}
+
+.message-log p:last-child {
+    color: var(--text);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-dark);
+    border: 4px solid var(--accent);
+    padding: 2rem;
+    text-align: center;
+    max-width: 400px;
+}
+
+.modal-content h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.modal-content p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.stat-increases {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--bg-darker);
+    border: 2px solid var(--border);
+}
+
+.stat-increases p {
+    color: var(--health);
+    margin: 0.3rem 0;
+}
+
+kbd {
+    background: var(--bg-darker);
+    padding: 2px 6px;
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .game-main {
+        flex-direction: column;
+    }
+
+    .stats-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .bar {
+        width: 100%;
+    }
+}

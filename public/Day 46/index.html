@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>ShopEase Pro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>ShopEase Pro | Curated Shopping Experience</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --shop-accent: #f59e0b;
+      --shop-dark: #111827;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .header {
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .cart-btn {
+      transition: transform 0.2s;
+    }
+  </style>
 </head>
+
 <body>
 
   <!-- HEADER -->
   <header class="header">
     <h1 class="logo">🛒 ShopEase</h1>
 
-    <input 
-      type="text" 
-      id="searchInput" 
-      placeholder="Search products..."
-      onkeyup="searchProducts()"
-    >
+    <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()"
+      aria-label="Search for products">
 
-    <button class="cart-btn" onclick="toggleCart()">
+    <button class="cart-btn" onclick="toggleCart()" aria-label="Open shopping cart">
       Cart (<span id="cart-count">0</span>)
     </button>
   </header>
@@ -52,4 +71,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

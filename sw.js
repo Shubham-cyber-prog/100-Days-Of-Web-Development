@@ -1,123 +1,128 @@
-/* PWA service worker for 100 Days of Web */
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
 
-const VERSION = 'v1';
-const CORE_CACHE = `core-${VERSION}`;
-const RUNTIME_CACHE = `runtime-${VERSION}`;
+if (workbox) {
+  console.log(`Workbox is loaded 🎉`);
 
-const CORE_ASSETS = [
-  'index.html',
+  const { registerRoute } = workbox.routing;
+  const { CacheFirst, NetworkFirst, StaleWhileRevalidate } = workbox.strategies;
+  const { ExpirationPlugin } = workbox.expiration;
+  const { backgroundSync } = workbox;
 
-  'website/style.css',
-  'website/theme.js',
-  'website/script.js',
-  'website/tracker.js',
+  // Cache core application assets (Styles, Scripts, Manifest)
+  registerRoute(
+    ({ request }) => request.destination === 'style' ||
+      request.destination === 'script' ||
+      request.destination === 'image' ||
+      request.url.includes('manifest.webmanifest'),
+    new StaleWhileRevalidate({
+      cacheName: 'static-resources',
+    })
+  );
 
-  'website/projects.html',
-  'website/about.html',
-  'website/contributors.html',
-  'website/contact.html',
-  'website/login.html',
-  'website/contribute.html',
+  // Cache HTML pages (Navigation) - Network First
+  registerRoute(
+    ({ request }) => request.mode === 'navigate' ||
+      request.headers.get('accept').includes('text/html'),
+    new NetworkFirst({
+      cacheName: 'pages-cache',
+      plugins: [
+        new ExpirationPlugin({
+          maxEntries: 50,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+        }),
+      ],
+    })
+  );
 
+  // Cache project files from /public/ directory
+  registerRoute(
+    ({ url }) => url.pathname.startsWith('/public/'),
+    new CacheFirst({
+      cacheName: 'project-files',
+      plugins: [
+        new ExpirationPlugin({
+          maxEntries: 100,
+          maxAgeSeconds: 60 * 24 * 60 * 60, // 60 Days
+        }),
+      ],
+    })
+  );
 
-  'website/community.json',
+  // Background Sync for progress updates
+  const syncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin('sync-progress', {
+    maxRetentionTime: 24 * 60 // Retry for max 24 Hours
+  });
 
-  'manifest.webmanifest',
-  'pwa-icon.svg'
-];
+  // Since we are using Firestore directly in the frontend, 
+  // background sync here would typically intercept a POST request to a custom API.
+  // However, for this project, we'll handle the actual DB sync via offlineService + indexedDB
+  // which is triggered by the SW 'sync' event or when the app comes back online.
+
+} else {
+  console.log(`Workbox didn't load 😬`);
+}
+
+// Manual Background Sync Listener (if needed for custom logic)
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'sync-progress') {
+    event.waitUntil(syncProgressData());
+  }
+});
+
+async function syncProgressData() {
+  console.log('Background Sync: Processing queued progress data...');
+  // This logic is usually handled by the main thread when it comes back online,
+  // but can be partially handled here if we had a dedicated API endpoint.
+}
+
+const OFFLINE_PAGE = '/offline.html';
+const OFFLINE_IMAGE = '/website/assets/images/logo.png';
 
 self.addEventListener('install', (event) => {
-  self.skipWaiting();
   event.waitUntil(
-    caches.open(CORE_CACHE).then((cache) =>
-      cache.addAll(CORE_ASSETS.map((url) => new Request(url, { cache: 'reload' })))
-    )
+    caches.open('offline-cache').then((cache) => {
+      return cache.addAll([
+        OFFLINE_PAGE,
+        '/website/style.css',
+        '/website/script.js',
+        '/index.html',
+        '/manifest.webmanifest'
+      ]);
+    }).then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    (async () => {
-      const keys = await caches.keys();
-      await Promise.all(
-        keys
-          .filter((key) => key.startsWith('core-') || key.startsWith('runtime-'))
-          .filter((key) => key !== CORE_CACHE && key !== RUNTIME_CACHE)
-          .map((key) => caches.delete(key))
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((name) => !name.includes('workbox') && !name.includes('offline-cache') && !name.includes('static-resources') && !name.includes('pages-cache') && !name.includes('project-files'))
+          .map((name) => caches.delete(name))
       );
-
-      await self.clients.claim();
-    })()
+    }).then(() => self.clients.claim())
   );
 });
 
-function isHtmlNavigationRequest(request) {
-  if (request.mode === 'navigate') return true;
-  const accept = request.headers.get('accept') || '';
-  return accept.includes('text/html');
-}
-
-function shouldCacheStaticAsset(pathname) {
-  if (pathname === '/manifest.webmanifest' || pathname === '/pwa-icon.svg') return true;
-  if (pathname === '/' || pathname === '/index.html') return true;
-  return pathname.startsWith('/website/');
-}
-
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
-
-  if (request.method !== 'GET') return;
-
-  const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-
-  const scopePath = new URL(self.registration.scope).pathname;
-  const normalizedPathname = url.pathname.startsWith(scopePath)
-    ? url.pathname.slice(scopePath.length - 1)
-    : url.pathname;
-
-  // HTML: network-first, cache for offline access later.
-  if (isHtmlNavigationRequest(request)) {
+  if (event.request.mode === 'navigate') {
     event.respondWith(
-      (async () => {
-        try {
-          const response = await fetch(request);
-          const cache = await caches.open(RUNTIME_CACHE);
-          cache.put(request, response.clone());
-          return response;
-        } catch {
-          const cached = await caches.match(request);
-          if (cached) return cached;
-
-          const cachedHome = await caches.match(new URL('index.html', self.registration.scope).toString());
-          if (cachedHome) return cachedHome;
-
-          return new Response('Offline: content not available yet.', {
-            status: 503,
-            headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-          });
-        }
-      })()
-    );
-    return;
-  }
-
-  // Assets: cache-first for known core/static paths.
-  if (shouldCacheStaticAsset(normalizedPathname)) {
-    event.respondWith(
-      (async () => {
-        const cached = await caches.match(request);
-        if (cached) return cached;
-
-        try {
-          const response = await fetch(request);
-          const cache = await caches.open(RUNTIME_CACHE);
-          cache.put(request, response.clone());
-          return response;
-        } catch {
-          return new Response('', { status: 504 });
-        }
-      })()
+      fetch(event.request)
+        .catch(() => caches.match(OFFLINE_PAGE))
     );
   }
 });
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+
+  if (event.data && event.data.type === 'CACHE_PROJECT') {
+    const projectUrls = event.data.urls || [];
+    event.waitUntil(
+      caches.open('project-files').then((cache) => cache.addAll(projectUrls))
+    );
+  }
+});
+

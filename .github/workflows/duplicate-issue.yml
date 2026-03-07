@@ -1,4 +1,4 @@
-name: 🔁 ECWoC'26 Duplicate Issue Detector
+name: "🔁 ECWoC'26 Duplicate Issue Detector"
 
 on:
   issues:
@@ -6,76 +6,80 @@ on:
 
 permissions:
   issues: write
+  contents: read
 
 jobs:
   detect-duplicate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check for Duplicate Issues (ECWoC'26)
+      - name: "Check for Duplicate Issues (ECWoC'26)"
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const newIssue = context.payload.issue;
-            const newTitle = newIssue.title.toLowerCase();
-            const newBody = (newIssue.body || '').toLowerCase();
+            async function run() {
+              const newIssue = context.payload.issue;
+              const newTitle = (newIssue.title || '').toLowerCase();
+              const newBody = (newIssue.body || '').toLowerCase();
 
-            const { owner, repo } = context.repo;
+              const { owner, repo } = context.repo;
 
-            const issues = await github.rest.issues.listForRepo({
-              owner,
-              repo,
-              state: 'open',
-              per_page: 50
-            });
+              const issues = await github.rest.issues.listForRepo({
+                owner,
+                repo,
+                state: 'open',
+                per_page: 100
+              });
 
-            for (const issue of issues.data) {
-              if (issue.number === newIssue.number) continue;
+              for (const issue of issues.data) {
+                if (issue.number === newIssue.number) continue;
 
-              const oldTitle = issue.title.toLowerCase();
-              const oldBody = (issue.body || '').toLowerCase();
+                const oldTitle = (issue.title || '').toLowerCase();
+                const oldBody = (issue.body || '').toLowerCase();
 
-              // Simple similarity check
-              if (
-                oldTitle.includes(newTitle) ||
-                newTitle.includes(oldTitle) ||
-                (newBody && oldBody && oldBody.includes(newBody))
-              ) {
-                const comment = `
-                ## 🔁 Possible Duplicate Issue (ECWoC'26)
+                if (
+                  oldTitle.includes(newTitle) ||
+                  newTitle.includes(oldTitle) ||
+                  (newBody && oldBody && oldBody.includes(newBody))
+                ) {
 
-                Hi @${newIssue.user.login} 👋,
+                  const comment = `
+## 🔁 Possible Duplicate Issue (ECWoC'26)
 
-                This issue appears to be **similar to an existing one**:
+Hi @${newIssue.user.login} 👋
 
-                👉 **#${issue.number} – ${issue.title}**
+This issue looks similar to an existing one:
 
-                ### ✅ What should you do?
-                - If this is the same problem, please continue the discussion on the existing issue.
-                - If it's different, kindly explain **how this issue is unique** so maintainers can review it.
+👉 **#${issue.number} – ${issue.title}**
 
-                Keeping issues clean helps everyone contribute better during **ECWoC'26** 🚀  
-                Thanks for your understanding! 🙌
+### What should you do?
+- If this is the same issue, please continue the discussion there.
+- If it’s different, explain how this issue is unique.
 
-                ---
-                🤖 *Automated duplicate detection for ECWoC'26*
-                `;
+Thank you for helping keep the repository organized during **ECWoC'26** 🚀
 
-                await github.rest.issues.createComment({
-                  owner,
-                  repo,
-                  issue_number: newIssue.number,
-                  body: comment
-                });
+---
+🤖 Automated duplicate detection
+`;
 
-                await github.rest.issues.addLabels({
-                  owner,
-                  repo,
-                  issue_number: newIssue.number,
-                  labels: ['ECWoC26', 'possible-duplicate', 'automated']
-                });
+                  await github.rest.issues.createComment({
+                    owner,
+                    repo,
+                    issue_number: newIssue.number,
+                    body: comment
+                  });
 
-                break;
+                  await github.rest.issues.addLabels({
+                    owner,
+                    repo,
+                    issue_number: newIssue.number,
+                    labels: ["ECWoC26", "possible-duplicate", "automated"]
+                  });
+
+                  break;
+                }
               }
             }
+
+            run();

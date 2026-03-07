@@ -1,140 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/website/assets/images/logo.png">
-    <title>Structure | Mission Control</title>
-    <link rel="stylesheet" href="../styles/index.css">
-    <style>
-        .tree-container {
-            border-left: 2px solid var(--border-light);
-            padding-left: var(--space-6);
-            margin-left: var(--space-4);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Structure | 100 Days of Web Dev</title>
 
-        .tree-item {
-            position: relative;
-            margin-bottom: var(--space-4);
-        }
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-        .tree-item::before {
-            content: '';
-            position: absolute;
-            left: -26px;
-            /* -24px padding + -2px border */
-            top: 12px;
-            width: 20px;
-            height: 2px;
-            background: var(--border-light);
-        }
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-        .folder-name {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-            font-family: var(--font-mono);
-            color: var(--accent-orbit);
-            margin-bottom: var(--space-2);
-        }
+    /* BODY */
+    body {
+      background: #0f172a;
+      color: #ffffff;
+      min-height: 100vh;
+    }
 
-        .file-list {
-            padding-left: var(--space-6);
-            border-left: 2px solid rgba(255, 255, 255, 0.05);
-        }
+    /* HEADER */
+    header {
+      background: #020617;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e293b;
+    }
 
-        .file-item {
-            color: var(--text-secondary);
-            font-family: var(--font-mono);
-            font-size: var(--text-sm);
-            margin-bottom: var(--space-2);
-        }
-    </style>
+    header h2 {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    nav a {
+      color: #cbd5e1;
+      margin-left: 20px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    /* MAIN */
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    /* PAGE TITLE */
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .page-header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    .page-header p {
+      color: #94a3b8;
+      font-size: 16px;
+    }
+
+    /* CARD */
+    .card {
+      background: #020617;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+      border: 1px solid #1e293b;
+    }
+
+    /* TREE */
+    .tree {
+      font-family: monospace;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .folder {
+      color: #38bdf8;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .file {
+      color: #cbd5e1;
+      margin-left: 25px;
+    }
+
+    .sub-folder {
+      margin-left: 25px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #020617;
+      border-top: 1px solid #1e293b;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      nav a {
+        margin: 0 10px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <header class="site-header">
-        <div class="container nav-container">
-            <a href="dashboard.html" class="nav-logo">
-                <span class="logo-icon">🚀</span>
-                100 Days
-            </a>
-            <nav class="nav-links">
-                <a href="dashboard.html" class="nav-link">Mission Control</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contributors.html" class="nav-link">Team</a>
-                <a href="structure.html" class="nav-link active">Structure</a>
-            </nav>
-            <div class="nav-user">
-                <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
-                <div class="user-avatar">👨‍🚀</div>
+  <!-- HEADER -->
+  <header>
+    <h2>100 Days of Web Dev</h2>
+
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="projects.html">Projects</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="structure.html">Structure</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="container">
+
+      <!-- TITLE -->
+      <div class="page-header">
+        <h1>📁 System Structure</h1>
+        <p>Project Folder Architecture Overview</p>
+      </div>
+
+      <!-- CARD -->
+      <div class="card">
+
+        <div class="tree">
+
+          <div class="folder">📁 100-Days-Of-Web-Development/</div>
+
+          <div class="file">📄 README.md</div>
+          <div class="file">📄 index.html</div>
+
+          <div class="sub-folder">
+
+            <div class="folder">📁 website/</div>
+
+            <div class="sub-folder">
+
+              <div class="folder">📁 pages/</div>
+
+              <div class="file">📄 login.html</div>
+              <div class="file">📄 dashboard.html</div>
+              <div class="file">📄 projects.html</div>
+              <div class="file">📄 favorites.html</div>
+              <div class="file">📄 structure.html</div>
+
             </div>
-        </div>
-    </header>
 
-    <main class="container section">
-        <div class="text-center" style="margin-bottom: var(--space-8);">
-            <h1>System Architecture</h1>
-            <p>Blueprints of the station.</p>
-        </div>
+            <div class="sub-folder">
 
-        <div class="card animate-enter" style="max-width: 800px; margin: 0 auto;">
-            <div class="tree-container">
-                <!-- Root -->
-                <div class="tree-item">
-                    <div class="folder-name">📁 100-Days-Of-Web-Development/</div>
+              <div class="folder">📁 styles/</div>
 
-                    <div class="file-list">
-                        <div class="file-item">📄 README.md</div>
-                        <div class="file-item">📄 index.html (Redirector)</div>
+              <div class="file">📁 base/</div>
+              <div class="file">📁 components/</div>
+              <div class="file">📁 pages/</div>
 
-                        <!-- Website -->
-                        <div class="tree-item" style="margin-top: var(--space-4);">
-                            <div class="folder-name">📁 website/</div>
-                            <div class="file-list">
-
-                                <div class="tree-item">
-                                    <div class="folder-name">📁 pages/</div>
-                                    <div class="file-list">
-                                        <div class="file-item">📄 login.html</div>
-                                        <div class="file-item">📄 dashboard.html</div>
-                                        <div class="file-item">📄 projects.html</div>
-                                    </div>
-                                </div>
-
-                                <div class="tree-item">
-                                    <div class="folder-name">📁 styles/</div>
-                                    <div class="file-list">
-                                        <div class="file-item">📁 tokens/ (colors, type)</div>
-                                        <div class="file-item">📁 base/</div>
-                                        <div class="file-item">📁 components/</div>
-                                    </div>
-                                </div>
-
-                                <div class="tree-item">
-                                    <div class="folder-name">📁 scripts/</div>
-                                    <div class="file-list">
-                                        <div class="file-item">📁 auth/ (guard.js)</div>
-                                        <div class="file-item">📁 core/</div>
-                                        <div class="file-item">📁 pages/</div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
+
+            <div class="sub-folder">
+
+              <div class="folder">📁 scripts/</div>
+
+              <div class="file">📁 auth/</div>
+              <div class="file">📁 core/</div>
+              <div class="file">📁 pages/</div>
+
+            </div>
+
+            <div class="sub-folder">
+
+              <div class="folder">📁 assets/</div>
+
+              <div class="file">📁 images/</div>
+              <div class="file">📁 icons/</div>
+
+            </div>
+
+          </div>
+
         </div>
 
-    </main>
+      </div>
 
-    <script src="../scripts/auth/guard.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 100 Days of Web Dev | All Rights Reserved
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Small animation on load
+    window.onload = () => {
+      document.querySelector(".card").style.opacity = "0";
+      document.querySelector(".card").style.transform = "translateY(30px)";
+
+      setTimeout(() => {
+        document.querySelector(".card").style.transition = "0.6s";
+        document.querySelector(".card").style.opacity = "1";
+        document.querySelector(".card").style.transform = "translateY(0)";
+      }, 200);
+    };
+  </script>
+
 </body>
-
 </html>

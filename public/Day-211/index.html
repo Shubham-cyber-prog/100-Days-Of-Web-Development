@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logic Circuit Simulator | ECWoC-26</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/components.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <header id="main-header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    <path d="M12 7v5l3 3" />
+                </svg>
+                <span>LogicSim <span>v2.0</span></span>
+            </div>
+            <div class="toolbar">
+                <button id="btn-save" title="Save Circuit">Save</button>
+                <button id="btn-load" title="Load Circuit">Load</button>
+                <div class="divider"></div>
+                <button id="btn-truth-table" title="Generate Truth Table">Truth Table</button>
+                <button id="btn-export-pdf" title="Export as PDF">Export PDF</button>
+                <button id="btn-clear" title="Clear Canvas">Clear</button>
+            </div>
+            <div class="simulation-controls">
+                <button id="btn-play-pause" class="active" title="Toggle Simulation">
+                    <span class="pause-icon">||</span>
+                    <span class="play-icon">▶</span>
+                </button>
+                <div class="tick-info">Tick: <span id="tick-count">0</span></div>
+            </div>
+        </header>
+
+        <main id="workspace">
+            <aside id="sidebar">
+                <div class="section">
+                    <h3>Input Components</h3>
+                    <div class="component-list" id="input-components">
+                        <div class="draggable-component" data-type="switch">
+                            <div class="component-icon">⏻</div>
+                            <span>Switch</span>
+                        </div>
+                        <div class="draggable-component" data-type="clock">
+                            <div class="component-icon">⏲</div>
+                            <span>Clock</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>Logic Gates</h3>
+                    <div class="component-list" id="logic-gates">
+                        <div class="draggable-component" data-type="and" title="AND Gate">
+                            <div class="component-icon">AND</div>
+                            <span>AND</span>
+                        </div>
+                        <div class="draggable-component" data-type="or" title="OR Gate">
+                            <div class="component-icon">OR</div>
+                            <span>OR</span>
+                        </div>
+                        <div class="draggable-component" data-type="not" title="NOT Gate">
+                            <div class="component-icon">NOT</div>
+                            <span>NOT</span>
+                        </div>
+                        <div class="draggable-component" data-type="xor" title="XOR Gate">
+                            <div class="component-icon">XOR</div>
+                            <span>XOR</span>
+                        </div>
+                        <div class="draggable-component" data-type="nand" title="NAND Gate">
+                            <div class="component-icon">NAND</div>
+                            <span>NAND</span>
+                        </div>
+                        <div class="draggable-component" data-type="nor" title="NOR Gate">
+                            <div class="component-icon">NOR</div>
+                            <span>NOR</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>Output Components</h3>
+                    <div class="component-list" id="output-components">
+                        <div class="draggable-component" data-type="bulb" title="Bulb / LED">
+                            <div class="component-icon">💡</div>
+                            <span>Light</span>
+                        </div>
+                        <div class="draggable-component" data-type="osc" title="Oscilloscope">
+                            <div class="component-icon">〰</div>
+                            <span>Scope</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <div id="canvas-container">
+                <div id="grid-background"></div>
+                <svg id="wires-layer"></svg>
+                <div id="components-layer"></div>
+
+                <div id="viewport-stats">
+                    <span>X: 0 Y: 0</span>
+                    <span>Zoom: 100%</span>
+                </div>
+            </div>
+
+            <div id="properties-panel" class="hidden">
+                <header>
+                    <h3>Properties</h3>
+                    <button id="close-props">×</button>
+                </header>
+                <div class="props-content">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </main>
+
+        <div id="oscilloscope-panel" class="hidden">
+            <header>
+                <h3>Live Signal Scope</h3>
+                <button id="close-osc">×</button>
+            </header>
+            <canvas id="osc-canvas"></canvas>
+        </div>
+
+        <div id="modal-container" class="hidden">
+            <div class="modal">
+                <header>
+                    <h2 id="modal-title">Circuit Truth Table</h2>
+                    <button id="close-modal">×</button>
+                </header>
+                <div class="modal-body" id="modal-body">
+                    <!-- Truth table content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/gates.js"></script>
+    <script src="scripts/wires.js"></script>
+    <script src="scripts/engine.js"></script>
+    <script src="scripts/interaction.js"></script>
+    <script src="scripts/storage.js"></script>
+    <script src="scripts/truthTable.js"></script>
+    <script src="scripts/oscilloscope.js"></script>
+    <script src="scripts/export.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Basic init code will go here or in interaction.js
+        });
+    </script>
+</body>
+
+</html>

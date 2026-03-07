@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume Builder & Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>Resume Builder & Analyzer</h1>
+  <p>Create and analyze your resume instantly</p>
+</header>
+
+<main class="container">
+
+  <!-- Form -->
+  <section class="form-section">
+    <h2>Resume Details</h2>
+
+    <input id="name" placeholder="Full Name" />
+    <input id="role" placeholder="Job Role (e.g. Frontend Developer)" />
+    <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+    <textarea id="experience" placeholder="Experience"></textarea>
+    <textarea id="projects" placeholder="Projects"></textarea>
+
+    <button class="btn" onclick="generateResume()">Generate Resume</button>
+    <button class="btn secondary" onclick="analyzeResume()">Analyze Resume</button>
+  </section>
+
+  <!-- Resume Preview -->
+  <section class="preview-section">
+    <h2>Resume Preview</h2>
+    <div id="resume" class="resume">
+      <h1 id="r-name">Your Name</h1>
+      <h3 id="r-role">Your Role</h3>
+
+      <div class="block">
+        <h4>Skills</h4>
+        <p id="r-skills"></p>
+      </div>
+
+      <div class="block">
+        <h4>Experience</h4>
+        <p id="r-exp"></p>
+      </div>
+
+      <div class="block">
+        <h4>Projects</h4>
+        <p id="r-proj"></p>
+      </div>
+    </div>
+
+    <div id="analysis" class="analysis"></div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

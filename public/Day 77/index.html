@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Real-Time Analytics Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --analytics-up: #10b981;
+            --analytics-primary: #3b82f6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .metric-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+
 <body>
     <div class="dashboard">
         <!-- Header -->
@@ -16,7 +39,7 @@
                 <p class="last-updated">Last updated: <span id="update-time">Just now</span></p>
             </div>
             <div class="header-right">
-                <button id="pause-btn" class="btn btn-primary">
+                <button id="pause-btn" class="btn btn-primary" aria-label="Pause real-time updates">
                     <i class="fas fa-pause"></i> Pause Updates
                 </button>
                 <div class="time-range">
@@ -85,7 +108,8 @@
                     <div class="chart-header">
                         <h3><i class="fas fa-chart-bar"></i> Traffic Overview</h3>
                         <div class="chart-legend">
-                            <span class="legend-item"><i class="fas fa-square" style="color: #4A90E2"></i> Organic</span>
+                            <span class="legend-item"><i class="fas fa-square" style="color: #4A90E2"></i>
+                                Organic</span>
                             <span class="legend-item"><i class="fas fa-square" style="color: #50E3C2"></i> Direct</span>
                             <span class="legend-item"><i class="fas fa-square" style="color: #F5A623"></i> Social</span>
                         </div>
@@ -123,7 +147,7 @@
                         <div class="gauge-value">87</div>
                     </div>
                 </div>
-                
+
                 <div class="indicator-card">
                     <h4><i class="fas fa-mobile-alt"></i> Device Breakdown</h4>
                     <div class="device-breakdown">
@@ -184,4 +208,5 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
