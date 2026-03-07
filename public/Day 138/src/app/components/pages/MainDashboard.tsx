@@ -5,11 +5,15 @@ import {
   DollarSign,
   Activity,
   AlertCircle,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import { KPICard } from "../common/KPICard";
 import { InsightCard } from "../common/InsightCard";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import { Link } from "react-router";
 import {
   LineChart,
   Line,
@@ -92,6 +96,35 @@ const competitorActivities = [
 export function MainDashboard() {
   return (
     <div className="p-6 space-y-6">
+      {/* New Features Banner */}
+      <Card className="p-6 rounded-2xl border-2 border-blue-200 bg-gradient-to-r from-blue-50 via-purple-50 to-teal-50 shadow-lg overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl" />
+        <div className="relative flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-gradient-to-br from-blue-600 to-teal-600 rounded-xl shadow-lg">
+              <Sparkles className="h-8 w-8 text-white" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="text-xl font-bold text-gray-900">5 New Features Available!</h3>
+                <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white border-0 animate-pulse">
+                  NEW
+                </Badge>
+              </div>
+              <p className="text-gray-700">
+                AI Chat Assistant, Smart Alerts, Export Tools, Saved Reports & Collaborative Annotations
+              </p>
+            </div>
+          </div>
+          <Link to="/app/features">
+            <Button className="bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 gap-2 shadow-lg">
+              Explore Features
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+      </Card>
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
