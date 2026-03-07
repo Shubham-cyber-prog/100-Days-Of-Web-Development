@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Outlet } from "react-router";
+import { Toaster } from "sonner";
 import { Sidebar } from "./Sidebar";
 import { TopNav } from "./TopNav";
+import { CommandPalette } from "../ui/CommandPalette";
 
 export function MainLayout() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -18,6 +20,8 @@ export function MainLayout() {
           <Outlet />
         </main>
       </div>
+      <CommandPalette />
+      <Toaster position="top-right" richColors />
     </div>
   );
 }

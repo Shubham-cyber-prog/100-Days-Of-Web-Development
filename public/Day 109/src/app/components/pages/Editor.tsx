@@ -1,21 +1,35 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Save, Eye, Upload, ChevronDown, ChevronUp } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "../ui/Button";
 import { Input } from "../ui/Input";
 import { Card } from "../ui/Card";
+import { Modal } from "../ui/Modal";
 
 export function Editor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState(id ? "Getting Started with React 19" : "");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(id ? "This is a comprehensive guide to React 19 features and improvements. React 19 introduces several new hooks and optimizations that make building web applications even more efficient.\n\nKey features include improved server components, better streaming support, and enhanced developer tools." : "");
   const [seoOpen, setSeoOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   const handlePublish = () => {
-    // Handle publish logic
-    alert("Content published!");
+    if (!title.trim()) {
+      toast.error("Please add a title before publishing");
+      return;
+    }
+    toast.success("Content published successfully!");
     navigate("/content");
+  };
+
+  const handleSaveDraft = () => {
+    toast.success("Draft saved!");
+  };
+
+  const handlePreview = () => {
+    setPreviewOpen(true);
   };
 
   return (
@@ -27,11 +41,11 @@ export function Editor() {
           <p className="text-muted-foreground">Create and publish your content.</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="secondary" size="md">
+          <Button variant="secondary" size="md" onClick={handlePreview}>
             <Eye className="size-4" />
             Preview
           </Button>
-          <Button variant="secondary" size="md">
+          <Button variant="secondary" size="md" onClick={handleSaveDraft}>
             <Save className="size-4" />
             Save Draft
           </Button>
@@ -68,7 +82,7 @@ export function Editor() {
         <Card>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-foreground">Featured Image</h3>
-            <Button variant="secondary" size="sm">
+            <Button variant="secondary" size="sm" onClick={() => toast.success("Image uploaded!")}>
               <Upload className="size-4" />
               Upload Image
             </Button>
@@ -136,6 +150,26 @@ export function Editor() {
           </div>
         </Card>
       </div>
+
+      {/* Preview Modal */}
+      <Modal
+        isOpen={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+        title="Content Preview"
+        size="lg"
+      >
+        <div className="space-y-4">
+          <div>
+            <h1 className="text-3xl text-foreground mb-2">{title || "Untitled Post"}</h1>
+            <p className="text-sm text-muted-foreground">by John Doe • {new Date().toLocaleDateString()}</p>
+          </div>
+          <div className="border-t border-border pt-4">
+            <div className="prose prose-sm max-w-none text-foreground whitespace-pre-wrap">
+              {content || "No content yet..."}
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

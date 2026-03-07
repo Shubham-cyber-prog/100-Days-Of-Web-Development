@@ -1,28 +1,51 @@
-import { useState } from "react";
-import { Search, Bell, Moon, Sun, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search, Bell, Moon, Sun, ChevronDown, Command } from "lucide-react";
 import { Input } from "../ui/Input";
 import { clsx } from "clsx";
 
 export function TopNav() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  });
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
 
   const toggleTheme = () => {
     setIsDark(!isDark);
-    document.documentElement.classList.toggle("dark");
   };
 
   return (
     <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
-      {/* Search Bar */}
+      {/* Search Bar with Command Palette Hint */}
       <div className="flex-1 max-w-xl">
-        <div className="relative">
+        <div className="relative group">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
           <Input
             type="search"
             placeholder="Search..."
-            className="pl-10 w-full"
+            className="pl-10 pr-20 w-full"
+            readOnly
+            onClick={() => {
+              const event = new KeyboardEvent("keydown", { key: "k", metaKey: true, ctrlKey: true });
+              document.dispatchEvent(event);
+            }}
           />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-xs text-muted-foreground pointer-events-none">
+            <kbd className="px-1.5 py-0.5 bg-muted rounded border border-border">
+              <Command className="size-3" />
+            </kbd>
+            <kbd className="px-1.5 py-0.5 bg-muted rounded border border-border">K</kbd>
+          </div>
         </div>
       </div>
 
