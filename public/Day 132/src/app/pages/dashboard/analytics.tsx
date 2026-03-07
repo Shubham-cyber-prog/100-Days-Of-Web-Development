@@ -1,7 +1,16 @@
 import { motion } from "motion/react";
-import { TrendingUp, TrendingDown, Activity, Users, MessageSquare, Zap } from "lucide-react";
+import { TrendingUp, TrendingDown, Activity, Users, MessageSquare, Zap, Download, FileText, FileSpreadsheet } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
 import {
   LineChart,
   Line,
@@ -39,9 +48,9 @@ export default function AnalyticsPage() {
   ];
 
   const categoryData = [
-    { name: "Tasks", value: 45, color: "#4f46e5" },
-    { name: "Chats", value: 30, color: "#06b6d4" },
-    { name: "Automations", value: 25, color: "#8b5cf6" },
+    { name: "Tasks", value: 45, color: "#4f46e5", id: "task-cat" },
+    { name: "Chats", value: 30, color: "#06b6d4", id: "chat-cat" },
+    { name: "Automations", value: 25, color: "#8b5cf6", id: "auto-cat" },
   ];
 
   const stats = [
@@ -82,44 +91,73 @@ export default function AnalyticsPage() {
   return (
     <div className="space-y-6 max-w-7xl">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] bg-clip-text text-transparent">
-          Analytics Dashboard
-        </h1>
-        <p className="text-gray-600">Insights and performance metrics</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] bg-clip-text text-transparent">
+            Analytics Dashboard
+          </h1>
+          <p className="text-gray-600">Insights and performance metrics</p>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="rounded-2xl bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] hover:opacity-90 shadow-lg shadow-indigo-500/30">
+              <Download className="w-4 h-4 mr-2" />
+              Export Report
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="rounded-2xl">
+            <DropdownMenuLabel>Download as</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="rounded-xl">
+              <FileText className="w-4 h-4 mr-2" />
+              PDF Document
+            </DropdownMenuItem>
+            <DropdownMenuItem className="rounded-xl">
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              Excel Spreadsheet
+            </DropdownMenuItem>
+            <DropdownMenuItem className="rounded-xl">
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              CSV File
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <Card className="backdrop-blur-xl bg-white/80 border-white/40 rounded-3xl hover:shadow-xl transition-all">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
-                  <Badge
-                    variant={stat.trending === "up" ? "default" : "destructive"}
-                    className="rounded-full"
-                  >
-                    {stat.trending === "up" ? (
-                      <TrendingUp className="w-3 h-3 mr-1" />
-                    ) : (
-                      <TrendingDown className="w-3 h-3 mr-1" />
-                    )}
-                    {stat.change}
-                  </Badge>
-                </div>
-                <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                <div className="text-sm text-gray-600">{stat.label}</div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+        {stats.map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Card className="backdrop-blur-xl bg-white/80 border-white/40 rounded-3xl hover:shadow-xl transition-all">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <Icon className={`w-5 h-5 ${stat.color}`} />
+                    <Badge
+                      variant={stat.trending === "up" ? "default" : "destructive"}
+                      className="rounded-full"
+                    >
+                      {stat.trending === "up" ? (
+                        <TrendingUp className="w-3 h-3 mr-1" />
+                      ) : (
+                        <TrendingDown className="w-3 h-3 mr-1" />
+                      )}
+                      {stat.change}
+                    </Badge>
+                  </div>
+                  <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                  <div className="text-sm text-gray-600">{stat.label}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Charts Grid */}
@@ -134,15 +172,15 @@ export default function AnalyticsPage() {
             <ResponsiveContainer width="100%" height={300}>
               <AreaChart data={activityData}>
                 <defs>
-                  <linearGradient id="colorTasks" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id="analytics-colorTasks" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
                   </linearGradient>
-                  <linearGradient id="colorChats" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id="analytics-colorChats" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
                   </linearGradient>
-                  <linearGradient id="colorAutomations" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id="analytics-colorAutomations" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
                   </linearGradient>
@@ -163,21 +201,21 @@ export default function AnalyticsPage() {
                   type="monotone"
                   dataKey="tasks"
                   stroke="#4f46e5"
-                  fill="url(#colorTasks)"
+                  fill="url(#analytics-colorTasks)"
                   strokeWidth={2}
                 />
                 <Area
                   type="monotone"
                   dataKey="chats"
                   stroke="#06b6d4"
-                  fill="url(#colorChats)"
+                  fill="url(#analytics-colorChats)"
                   strokeWidth={2}
                 />
                 <Area
                   type="monotone"
                   dataKey="automations"
                   stroke="#8b5cf6"
-                  fill="url(#colorAutomations)"
+                  fill="url(#analytics-colorAutomations)"
                   strokeWidth={2}
                 />
               </AreaChart>
@@ -238,8 +276,8 @@ export default function AnalyticsPage() {
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {categoryData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  {categoryData.map((entry) => (
+                    <Cell key={entry.id} fill={entry.color} />
                   ))}
                 </Pie>
                 <Tooltip
