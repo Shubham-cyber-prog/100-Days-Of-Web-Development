@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { motion } from "motion/react";
-import { Bot, Mail, Lock, Chrome, Github, Sparkles } from "lucide-react";
+import { Bot, Mail, Lock, Chrome, Github, Sparkles, Moon, Sun } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Separator } from "../components/ui/separator";
+import { useTheme } from "../contexts/theme-context";
 
 export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,14 +20,30 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fb] via-[#f0f1f9] to-[#e8eaf6] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fb] via-[#f0f1f9] to-[#e8eaf6] dark:from-[#0f111a] dark:via-[#13151f] dark:to-[#1a1d2e] flex items-center justify-center p-4">
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#4f46e5]/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#06b6d4]/20 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#4f46e5]/20 dark:bg-[#7c3aed]/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#06b6d4]/20 dark:bg-[#06b6d4]/10 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
 
       <div className="w-full max-w-md relative z-10">
+        {/* Theme Toggle */}
+        <div className="absolute top-0 right-0">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="rounded-xl"
+          >
+            {theme === "light" ? (
+              <Moon className="w-5 h-5" />
+            ) : (
+              <Sun className="w-5 h-5" />
+            )}
+          </Button>
+        </div>
+        
         {/* Logo */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -45,7 +63,7 @@ export default function LoginPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <Card className="backdrop-blur-xl bg-white/80 border-white/40 shadow-2xl rounded-3xl">
+          <Card className="backdrop-blur-xl bg-white/80 dark:bg-card/80 border-white/40 dark:border-border shadow-2xl rounded-3xl">
             <CardHeader className="text-center pb-4">
               <CardTitle className="text-2xl">
                 {isSignUp ? "Create Account" : "Welcome Back"}
@@ -61,7 +79,7 @@ export default function LoginPage() {
               <div className="space-y-3">
                 <Button
                   variant="outline"
-                  className="w-full rounded-2xl py-6 border-2 hover:bg-white/50 transition-all"
+                  className="w-full rounded-2xl py-6 border-2 hover:bg-white/50 dark:hover:bg-card/50 transition-all"
                   type="button"
                 >
                   <Chrome className="w-5 h-5 mr-2" />
@@ -69,7 +87,7 @@ export default function LoginPage() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full rounded-2xl py-6 border-2 hover:bg-white/50 transition-all"
+                  className="w-full rounded-2xl py-6 border-2 hover:bg-white/50 dark:hover:bg-card/50 transition-all"
                   type="button"
                 >
                   <Github className="w-5 h-5 mr-2" />
@@ -77,7 +95,7 @@ export default function LoginPage() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full rounded-2xl py-6 border-2 hover:bg-white/50 transition-all hover:border-[#4f46e5] hover:text-[#4f46e5]"
+                  className="w-full rounded-2xl py-6 border-2 hover:bg-white/50 dark:hover:bg-card/50 transition-all hover:border-[#4f46e5] dark:hover:border-[#7c3aed] hover:text-[#4f46e5] dark:hover:text-[#7c3aed]"
                   type="button"
                   onClick={() => navigate("/dashboard")}
                 >
@@ -88,7 +106,7 @@ export default function LoginPage() {
 
               <div className="relative">
                 <Separator />
-                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-gray-500">
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-card px-2 text-sm text-gray-500 dark:text-gray-400">
                   or
                 </span>
               </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Plus, MapPin, Upload, Filter, Search, MoreHorizontal } from "lucide-react";
+import { Link } from "react-router";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
@@ -17,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { toast } from "sonner";
+import { AdvancedFilters } from "../components/advanced-filters";
 
 const issues = [
   {
@@ -111,6 +113,9 @@ const getStatusColor = (status: string) => {
 export function IssuesPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState("all");
+  const [filters, setFilters] = useState<Record<string, string[]>>({});
+  const [sortBy, setSortBy] = useState("date");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const handleSubmitIssue = (e: React.FormEvent) => {
     e.preventDefault();
@@ -247,9 +252,13 @@ export function IssuesPage() {
                   className="pl-9 bg-input-background w-full sm:w-64"
                 />
               </div>
-              <Button variant="outline" size="icon">
-                <Filter className="size-4" />
-              </Button>
+              <AdvancedFilters 
+                onFiltersChange={setFilters}
+                onSortChange={(sortBy, order) => {
+                  setSortBy(sortBy);
+                  setSortOrder(order);
+                }}
+              />
             </div>
           </div>
         </CardHeader>
@@ -266,62 +275,69 @@ export function IssuesPage() {
               {filteredIssues.map((issue) => (
                 <Card key={issue.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="p-6">
-                    <div className="flex flex-col md:flex-row gap-4">
-                      {issue.image && (
-                        <img
-                          src={issue.image}
-                          alt={issue.title}
-                          className="w-full md:w-32 h-32 rounded-lg object-cover"
-                        />
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-4 mb-2">
-                          <h3 className="font-semibold">{issue.title}</h3>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="icon" className="shrink-0">
-                                <MoreHorizontal className="size-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem>Edit</DropdownMenuItem>
-                              <DropdownMenuItem>Mark as Resolved</DropdownMenuItem>
-                              <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                        <p className="text-muted-foreground mb-4">{issue.description}</p>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          <Badge className={getStatusColor(issue.status)} variant="secondary">
-                            {issue.status}
-                          </Badge>
-                          <Badge className={getPriorityColor(issue.priority)} variant="secondary">
-                            {issue.priority}
-                          </Badge>
-                          <Badge variant="outline">{issue.category}</Badge>
-                        </div>
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="size-6">
-                              <AvatarImage src="" alt={issue.reporter.name} />
-                              <AvatarFallback className="text-xs">{issue.reporter.avatar}</AvatarFallback>
-                            </Avatar>
-                            <span>{issue.reporter.name}</span>
+                    <Link to={`/app/issues/${issue.id}`} className="block">
+                      <div className="flex flex-col md:flex-row gap-4">
+                        {issue.image && (
+                          <img
+                            src={issue.image}
+                            alt={issue.title}
+                            className="w-full md:w-32 h-32 rounded-lg object-cover"
+                          />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-4 mb-2">
+                            <h3 className="font-semibold hover:text-primary transition-colors">{issue.title}</h3>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon" 
+                                  className="shrink-0"
+                                  onClick={(e) => e.preventDefault()}
+                                >
+                                  <MoreHorizontal className="size-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem>Edit</DropdownMenuItem>
+                                <DropdownMenuItem>Mark as Resolved</DropdownMenuItem>
+                                <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <MapPin className="size-4" />
-                            {issue.location}
-                          </div>
-                          <span>{issue.reportedAt}</span>
-                          <span>{issue.comments} comments</span>
-                          {issue.assignedTo && (
-                            <Badge variant="secondary" className="bg-secondary/20">
-                              Assigned: {issue.assignedTo}
+                          <p className="text-muted-foreground mb-4">{issue.description}</p>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            <Badge className={getStatusColor(issue.status)} variant="secondary">
+                              {issue.status}
                             </Badge>
-                          )}
+                            <Badge className={getPriorityColor(issue.priority)} variant="secondary">
+                              {issue.priority}
+                            </Badge>
+                            <Badge variant="outline">{issue.category}</Badge>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Avatar className="size-6">
+                                <AvatarImage src="" alt={issue.reporter.name} />
+                                <AvatarFallback className="text-xs">{issue.reporter.avatar}</AvatarFallback>
+                              </Avatar>
+                              <span>{issue.reporter.name}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <MapPin className="size-4" />
+                              {issue.location}
+                            </div>
+                            <span>{issue.reportedAt}</span>
+                            <span>{issue.comments} comments</span>
+                            {issue.assignedTo && (
+                              <Badge variant="secondary" className="bg-secondary/20">
+                                Assigned: {issue.assignedTo}
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </CardContent>
                 </Card>
               ))}

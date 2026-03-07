@@ -1,8 +1,10 @@
 import { Slider } from '@radix-ui/react-slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@radix-ui/react-select';
-import { Sparkles, Download, Copy, Share2, ChevronDown } from 'lucide-react';
+import { Sparkles, Download, Copy, Share2, ChevronDown, MessageCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { TemplateSelector } from './TemplateSelector';
+import { DocumentChat } from './DocumentChat';
 
 interface SummarizationWorkspaceProps {
   onNavigate: (page: string) => void;
@@ -13,6 +15,7 @@ export function SummarizationWorkspace({ onNavigate }: SummarizationWorkspacePro
   const [tone, setTone] = useState('formal');
   const [language, setLanguage] = useState('english');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showChat, setShowChat] = useState(false);
 
   const handleGenerate = () => {
     setIsGenerating(true);
@@ -20,6 +23,11 @@ export function SummarizationWorkspace({ onNavigate }: SummarizationWorkspacePro
       setIsGenerating(false);
       onNavigate('result');
     }, 2000);
+  };
+
+  const handleTemplateSelect = (template: any) => {
+    setSummaryLength([template.settings.length]);
+    setTone(template.settings.tone);
   };
 
   return (
@@ -163,6 +171,9 @@ export function SummarizationWorkspace({ onNavigate }: SummarizationWorkspacePro
           </div>
         </div>
 
+        {/* Template Selector */}
+        <TemplateSelector onTemplateSelect={handleTemplateSelect} />
+
         {/* Generate Button */}
         <motion.button
           onClick={handleGenerate}
@@ -224,7 +235,19 @@ export function SummarizationWorkspace({ onNavigate }: SummarizationWorkspacePro
             ))}
           </div>
         </div>
+
+        {/* Document Chat Button */}
+        <button
+          onClick={() => setShowChat(!showChat)}
+          className="w-full h-12 rounded-xl border border-border hover:bg-accent transition-colors flex items-center justify-center gap-2 mt-6"
+        >
+          <MessageCircle className="w-5 h-5" />
+          <span>Ask AI about Document</span>
+        </button>
       </div>
+
+      {/* Document Chat Panel */}
+      <DocumentChat isOpen={showChat} onClose={() => setShowChat(false)} />
     </div>
   );
 }

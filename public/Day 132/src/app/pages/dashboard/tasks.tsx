@@ -204,25 +204,28 @@ export default function TasksPage() {
           { label: "Completed", value: stats.completed, icon: CheckCircle2, color: "text-green-600" },
           { label: "In Progress", value: stats.inProgress, icon: Clock, color: "text-orange-600" },
           { label: "Automated", value: stats.automated, icon: Zap, color: "text-purple-600" },
-        ].map((stat, index) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <Card className="backdrop-blur-xl bg-white/80 border-white/40 rounded-3xl">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
-                  <TrendingUp className="w-4 h-4 text-gray-400" />
-                </div>
-                <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                <div className="text-sm text-gray-600">{stat.label}</div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+        ].map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Card className="backdrop-blur-xl bg-white/80 border-white/40 rounded-3xl">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <Icon className={`w-5 h-5 ${stat.color}`} />
+                    <TrendingUp className="w-4 h-4 text-gray-400" />
+                  </div>
+                  <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                  <div className="text-sm text-gray-600">{stat.label}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Filters */}
