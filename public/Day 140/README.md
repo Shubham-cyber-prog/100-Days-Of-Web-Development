@@ -13,6 +13,16 @@ A modern SaaS web dashboard for AI-powered email marketing, featuring email gene
 - 🔐 **Authentication** - Secure user authentication with Supabase
 - 🌓 **Dark Mode** - Built-in dark mode support
 
+### 🚀 Advanced Features (NEW!)
+
+- 🧪 **A/B Testing Manager** - Test multiple email variations to optimize performance
+- 👁️ **Email Preview Tool** - Preview emails across different devices and email clients
+- ⏰ **Send Time Optimizer** - AI-powered optimal send time recommendations
+- 🛡️ **Deliverability Checker** - Spam score analysis and email health monitoring
+- 👥 **Contact Manager** - Full subscriber management with engagement tracking
+
+> 📖 See [FEATURES.md](FEATURES.md) for detailed documentation on all advanced features.
+
 ## Tech Stack
 
 - **Frontend**: React 18 + TypeScript + Vite

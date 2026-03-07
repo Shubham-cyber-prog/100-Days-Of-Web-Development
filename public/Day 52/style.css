@@ -1,177 +1,169 @@
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Segoe UI, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter;
 }
 
 body{
-  background:#eef2ff;
-  padding:20px;
+background:linear-gradient(180deg,#1e4fa8,#9fb7d1);
+min-height:100vh;
+color:#1b2b44;
 }
 
-.container{
-  max-width:1200px;
-  margin:auto;
+/* NAVBAR */
+
+.navbar{
+background:white;
+padding:15px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 5px 10px rgba(0,0,0,0.1);
 }
 
-header{
-  background:#fff;
-  padding:20px;
-  text-align:center;
-  border-radius:10px;
-  margin-bottom:20px;
+nav button{
+border:none;
+background:none;
+margin-left:20px;
+font-weight:600;
+cursor:pointer;
 }
+
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding:70px 20px;
+background:linear-gradient(135deg,#0f4fa3,#1d5fbf);
+color:white;
+}
+
+.hero h1{
+font-size:70px;
+text-shadow:4px 4px 0 #0b2e5a;
+}
+
+.hero-tags span{
+background:#d6e3f3;
+padding:8px 15px;
+border-radius:20px;
+margin:5px;
+display:inline-block;
+color:#1b2b44;
+}
+
+
+/* MAIN */
+
+main{
+max-width:1200px;
+margin:40px auto;
+}
+
+
+/* PAGE SYSTEM */
+
+.page{
+display:none;
+}
+
+.page.active{
+display:block;
+}
+
+
+/* CARD */
+
+.card{
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
 
 /* STATS */
 
-.board-controls{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
 .stats{
-  display:flex;
-  gap:25px;
-  background:#fff;
-  padding:15px;
-  border-radius:8px;
+display:flex;
+gap:20px;
 }
 
-.danger{
-  background:#ef4444;
-  color:#fff;
-  border:none;
-  padding:10px 15px;
-  border-radius:6px;
-  cursor:pointer;
+.statCard{
+background:white;
+flex:1;
+padding:25px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
 }
-.stats div b{
-    display:block;
-    font-size:1.2rem;
-    margin-left: 50px;
-}
+
 
 /* BOARD */
 
 .board{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-top:30px;
 }
 
 .column{
-  background:#fff;
-  padding:15px;
-  border-radius:10px;
-  display:flex;
-  flex-direction:column;
+background:#e2e8f0;
+padding:20px;
+border-radius:15px;
 }
 
-.column h3{
-  margin-bottom:10px;
-  display:flex;
-  justify-content:space-between;
+.column button{
+width:100%;
+margin-top:10px;
+background:#3b82f6;
+color:white;
+border:none;
+padding:8px;
+border-radius:8px;
+cursor:pointer;
 }
 
-.taskBox{
-  flex:1;
-  min-height:100px;
-}
 
 /* TASK */
 
 .task{
-  background:#f9fafb;
-  padding:10px;
-  border-radius:6px;
-  margin-bottom:10px;
-  cursor:grab;
+background:white;
+padding:12px;
+border-radius:10px;
+margin-bottom:10px;
+box-shadow:0 5px 10px rgba(0,0,0,0.1);
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.task b{
-  display:block;
+.task-buttons button{
+border:none;
+background:none;
+cursor:pointer;
+margin-left:5px;
 }
 
-.task small{
-  color:#555;
+
+/* SEARCH */
+
+#searchInput{
+padding:10px;
+margin-top:10px;
+width:300px;
+border-radius:8px;
+border:1px solid #ccc;
 }
 
-.taskBtns{
-  margin-top:5px;
-  display:flex;
-  gap:8px;
-}
 
-.taskBtns button{
-  border:none;
-  padding:5px 8px;
-  border-radius:4px;
-  cursor:pointer;
-}
+/* FOOTER */
 
-.edit{background:#facc15}
-.del{background:#ef4444;color:#fff}
-
-/* ADD */
-
-.addBtn{
-  margin-top:10px;
-  background:#4f46e5;
-  color:#fff;
-  border:none;
-  padding:8px;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-/* MODAL */
-
-.modal{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.5);
-  display:none;
-  justify-content:center;
-  align-items:center;
-}
-
-.modalBox{
-  background:#fff;
-  padding:25px;
-  width:90%;
-  max-width:400px;
-  border-radius:10px;
-}
-
-.modalBox input,
-.modalBox textarea,
-.modalBox select{
-  width:100%;
-  padding:10px;
-  margin-bottom:15px;
-  border:1px solid #ddd;
-  border-radius:6px;
-}
-
-.actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
-}
-
-.actions button{
-  padding:8px 15px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-#cancel{
-  background:#e5e7eb;
+footer{
+text-align:center;
+margin-top:40px;
+color:#333;
 }

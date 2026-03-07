@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation } from "react-router";
 import { useState } from "react";
-import { Bell, Users, FileText, Calendar, BarChart3, Settings, Menu, X, Moon, Sun, LogOut, Shield } from "lucide-react";
+import { Bell, Users, FileText, Calendar, BarChart3, Settings, Menu, X, Moon, Sun, LogOut, Shield, Search, User } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Badge } from "../components/ui/badge";
@@ -13,6 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
+import { GlobalSearch } from "../components/global-search";
+import { NotificationsCenter } from "../components/notifications-center";
 
 const navigation = [
   { name: "Dashboard", href: "/app", icon: BarChart3 },
@@ -26,6 +28,7 @@ const navigation = [
 export function DashboardLayout() {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
   const isActive = (href: string) => {
@@ -132,12 +135,19 @@ export function DashboardLayout() {
               >
                 {theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />}
               </Button>
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="size-5" />
-                <Badge className="absolute -top-1 -right-1 size-5 flex items-center justify-center p-0 bg-accent">
-                  3
-                </Badge>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSearchOpen(true)}
+                className="hidden sm:flex relative"
+                title="Search (Ctrl+K)"
+              >
+                <Search className="size-5" />
+                <kbd className="absolute -bottom-1 -right-1 hidden xl:flex pointer-events-none h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                  ⌘K
+                </kbd>
               </Button>
+              <NotificationsCenter />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative size-9 rounded-full">
@@ -155,6 +165,12 @@ export function DashboardLayout() {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/app/profile" className="cursor-pointer">
+                      <User className="size-4 mr-2" />
+                      Profile
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Settings className="size-4 mr-2" />
                     Settings
@@ -174,6 +190,8 @@ export function DashboardLayout() {
           <Outlet />
         </main>
       </div>
+      
+      <GlobalSearch open={searchOpen} setOpen={setSearchOpen} />
     </div>
   );
 }
