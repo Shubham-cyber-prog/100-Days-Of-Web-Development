@@ -1,0 +1,182 @@
+:root{
+  --bg:#0f172a;
+  --sidebar:#0b1324;
+  --card:#1e293b;
+  --primary:#38bdf8;
+  --text:#ffffff;
+  --muted:#94a3b8;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  display:flex;
+  background:linear-gradient(to right,#0f172a,#0b1324);
+  color:var(--text);
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:230px;
+  background:var(--sidebar);
+  padding:30px 20px;
+  min-height:100vh;
+}
+
+.sidebar h2{
+  margin-bottom:30px;
+}
+
+.sidebar ul{
+  list-style:none;
+}
+
+.sidebar li{
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.sidebar li:hover,
+.sidebar li.active{
+  background:var(--primary);
+  color:black;
+}
+
+/* MAIN */
+.main{
+  flex:1;
+  padding:40px;
+}
+
+.section{
+  display:none;
+}
+
+.active-section{
+  display:block;
+}
+
+.card{
+  background:var(--card);
+  padding:25px;
+  border-radius:16px;
+  margin-bottom:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.card h3{
+  margin-bottom:15px;
+}
+
+.card p{
+  color:var(--muted);
+}
+
+/* COUNTRIES */
+.country-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.country-card{
+  background:#243046;
+  padding:20px;
+  text-align:center;
+  border-radius:12px;
+  transition:0.3s;
+}
+
+.country-card:hover{
+  transform:translateY(-5px);
+  background:var(--primary);
+  color:black;
+}
+
+.country-card img{
+  width:60px;
+  margin-bottom:10px;
+  border-radius:6px;
+}
+
+/* CONVERTER */
+.conversion-row{
+  display:flex;
+  gap:20px;
+  align-items:end;
+  margin-bottom:20px;
+}
+
+.field{
+  flex:1;
+}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+select,input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  background:#334155;
+  color:white;
+}
+
+.swap-btn{
+  padding:10px 14px;
+  background:var(--primary);
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.amount-row{
+  display:flex;
+  gap:15px;
+}
+
+button{
+  padding:10px 15px;
+  border:none;
+  border-radius:8px;
+  background:var(--primary);
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.result-box{
+  margin-top:15px;
+  padding:15px;
+  background:#334155;
+  border-radius:8px;
+}
+
+/* Responsive */
+@media(max-width:900px){
+  body{
+    flex-direction:column;
+  }
+  .sidebar{
+    width:100%;
+    min-height:auto;
+  }
+  .country-grid{
+    grid-template-columns:1fr;
+  }
+  .conversion-row{
+    flex-direction:column;
+  }
+}

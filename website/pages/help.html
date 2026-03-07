@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help & FAQ | 100 Days of Web Dev</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+a{
+  text-decoration:none;
+}
+
+body{
+  background: radial-gradient(circle at 20% 20%, #1e3a8a 0%, #0f172a 40%);
+  color:#e2e8f0;
+  min-height:100vh;
+}
+
+/* ================= NAV ================= */
+
+nav{
+  padding:25px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.nav-container{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 20px;
+}
+
+.nav-logo{
+  font-size:22px;
+  font-weight:700;
+}
+
+.nav-logo span{
+  color:#38bdf8;
+}
+
+.nav-links{
+  display:flex;
+  gap:30px;
+}
+
+.nav-links a{
+  color:#94a3b8;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  color:#38bdf8;
+}
+
+/* ================= MAIN ================= */
+
+.help-container{
+  max-width:1100px;
+  margin:auto;
+  padding:80px 20px 120px;
+}
+
+.help-header{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.help-header h1{
+  font-size:3rem;
+  margin-bottom:10px;
+}
+
+.help-header p{
+  color:#94a3b8;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+  width:100%;
+  max-width:500px;
+  margin:30px auto 60px;
+  display:block;
+  padding:14px 18px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:#1e293b;
+  color:white;
+  font-size:1rem;
+}
+
+/* ================= CATEGORY CARDS ================= */
+
+.help-categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:30px;
+  margin-bottom:70px;
+}
+
+.category-card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:35px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.category-card:hover{
+  transform:translateY(-6px);
+  border-color:#38bdf8;
+  box-shadow:0 20px 40px rgba(56,189,248,0.15);
+}
+
+.category-icon{
+  font-size:2rem;
+  margin-bottom:15px;
+}
+
+.category-card p{
+  color:#94a3b8;
+}
+
+/* ================= FAQ ================= */
+
+.faq-section{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:40px;
+  margin-bottom:40px;
+}
+
+.section-title{
+  color:#38bdf8;
+  margin-bottom:25px;
+}
+
+.faq-item{
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:15px 0;
+}
+
+.faq-item:last-child{
+  border-bottom:none;
+}
+
+.faq-question{
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.faq-answer{
+  display:none;
+  margin-top:10px;
+  color:#94a3b8;
+}
+
+.faq-item.active .faq-answer{
+  display:block;
+}
+
+/* ================= CONTACT ================= */
+
+.contact-section{
+  margin-top:80px;
+  background:linear-gradient(135deg,#38bdf8,#6366f1);
+  padding:50px;
+  border-radius:20px;
+  text-align:center;
+}
+
+.contact-section p{
+  margin:15px 0 25px;
+}
+
+.contact-btn{
+  padding:12px 25px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.3);
+  color:white;
+  margin:5px;
+  display:inline-block;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  margin-top:100px;
+  padding:60px 20px;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+
+.footer-container{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:40px;
+}
+
+.footer-col a{
+  display:block;
+  margin-bottom:8px;
+  color:#94a3b8;
+}
+
+.footer-col a:hover{
+  color:#38bdf8;
+}
+
+.footer-bottom{
+  text-align:center;
+  margin-top:40px;
+  color:#94a3b8;
+  font-size:14px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+  .footer-container{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="nav-logo">100 Days of <span>Web Dev</span></div>
+    <div class="nav-links">
+      <a href="../../index.html">Home</a>
+      <a href="../../website/pages/projects.html">Projects</a>
+      <a href="../forum.html">Forum</a>
+      <a href="../leaderboard.html">Leaderboard</a>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="help-container">
+
+<div class="help-header">
+  <h1>❓ Help & FAQ</h1>
+  <p>Find answers to common questions and get help with your journey</p>
+</div>
+
+<input type="text" class="search-box" placeholder="Search for help..." id="searchInput">
+
+<!-- CATEGORY CARDS -->
+<div class="help-categories">
+
+  <div class="category-card" onclick="scrollToSection('getting-started')">
+    <div class="category-icon">🚀</div>
+    <h3>Getting Started</h3>
+    <p>Learn the basics and begin your journey</p>
+  </div>
+
+  <div class="category-card" onclick="scrollToSection('progress-tracking')">
+    <div class="category-icon">📊</div>
+    <h3>Progress Tracking</h3>
+    <p>Understanding your dashboard</p>
+  </div>
+
+  <div class="category-card" onclick="scrollToSection('technical-issues')">
+    <div class="category-icon">🔧</div>
+    <h3>Technical Issues</h3>
+    <p>Troubleshooting problems</p>
+  </div>
+
+  <div class="category-card" onclick="scrollToSection('account-settings')">
+    <div class="category-icon">⚙️</div>
+    <h3>Account & Settings</h3>
+    <p>Manage preferences</p>
+  </div>
+
+</div>
+
+<!-- FAQ SECTIONS -->
+
+<div class="faq-section" id="getting-started">
+<h2 class="section-title">🚀 Getting Started</h2>
+
+<div class="faq-item">
+  <div class="faq-question">What is the 100 Days Challenge? <span>▼</span></div>
+  <div class="faq-answer">A structured program to master web development through daily practice.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How do I start? <span>▼</span></div>
+  <div class="faq-answer">Create an account and begin from Day 1.</div>
+</div>
+
+</div>
+
+<div class="faq-section" id="progress-tracking">
+<h2 class="section-title">📊 Progress Tracking</h2>
+
+<div class="faq-item">
+  <div class="faq-question">How does tracking work? <span>▼</span></div>
+  <div class="faq-answer">It tracks daily submissions and visualizes your learning progress.</div>
+</div>
+
+</div>
+
+<div class="faq-section" id="technical-issues">
+<h2 class="section-title">🔧 Technical Issues</h2>
+
+<div class="faq-item">
+  <div class="faq-question">Site not loading? <span>▼</span></div>
+  <div class="faq-answer">Try refreshing and clearing cache.</div>
+</div>
+
+</div>
+
+<div class="faq-section" id="account-settings">
+<h2 class="section-title">⚙️ Account & Settings</h2>
+
+<div class="faq-item">
+  <div class="faq-question">How to edit profile? <span>▼</span></div>
+  <div class="faq-answer">Go to settings and update profile.</div>
+</div>
+
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <h2>Still Need Help?</h2>
+  <p>Get in touch with our community</p>
+  <a href="#" class="contact-btn">💬 Join Discord</a>
+  <a href="#" class="contact-btn">🐛 Report Issue</a>
+  <a href="#" class="contact-btn">📧 Email Support</a>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div>
+      <h2>100 Days of <span style="color:#38bdf8;">Web Dev</span></h2>
+      <p style="margin-top:10px;color:#94a3b8;">
+        A hyper-intensive protocol designed to forge elite web engineers.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="../../index.html">Home</a>
+      <a href="../forum.html">Forum</a>
+      <a href="../leaderboard.html">Leaderboard</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="#">GitHub</a>
+      <a href="#">Twitter</a>
+      <a href="#">Discord</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 100 Days of Web Dev. Built with ❤️
+  </div>
+</footer>
+
+<script>
+
+document.querySelectorAll(".faq-question").forEach(q=>{
+  q.addEventListener("click",()=>{
+    q.parentElement.classList.toggle("active");
+  });
+});
+
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("searchInput").addEventListener("input", function(){
+  const value = this.value.toLowerCase();
+  const items = document.querySelectorAll(".faq-item");
+
+  items.forEach(item=>{
+    const text = item.innerText.toLowerCase();
+    item.style.display = text.includes(value) ? "block" : "none";
+  });
+});
+
+</script>
+
+</body>
+</html>

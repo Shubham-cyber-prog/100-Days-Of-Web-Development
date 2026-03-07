@@ -611,7 +611,7 @@ class MealPlanner {
     printShoppingList() {
         const printWindow = window.open('', '_blank');
         printWindow.document.write(`
-            <html>
+            <html lang='en'>
                 <head>
                     <title>Shopping List - Meal Planner Pro</title>
                     <style>

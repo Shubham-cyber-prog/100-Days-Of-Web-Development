@@ -27,3 +27,39 @@ MIT
   localStorage.setItem("readme", template);
   renderPreview(template);
 }
+
+function loadSampleREADME() {
+  const sample = `# Awesome Project 🚀
+
+A clean and simple README generated using **README Toolkit**.
+
+## ✨ Features
+- Easy setup
+- Live preview
+- GitHub badge support
+- Export as Markdown
+
+## 🛠 Tech Stack
+- HTML
+- CSS
+- JavaScript
+
+## 📦 Installation
+\`\`\`bash
+npm install
+npm start
+\`\`\`
+
+## 🚀 Usage
+Open the app and start generating README files instantly.
+
+## 📄 License
+MIT
+
+## 👤 Author
+@your-github-username
+`;
+
+  document.getElementById("preview").classList.remove("preview-empty");
+  document.getElementById("preview").innerHTML = marked.parse(sample);
+}

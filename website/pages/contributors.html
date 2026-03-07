@@ -1,119 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
+    <link
+      rel="icon"
+      href="/website/assets/images/logo.png"
+      height="70px"
+      width="100px"
+    />
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contributors | 100 Days of Web Dev</title>
     <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../style.css" />
     <style>
+      header nav img {
+        width: 100px;
+        height: 70px;
+        border: 2px groove #cc2a01;
+        border-radius: 25%;
+      }
+
+      header nav img:hover {
+        box-shadow:
+          0 0 15px #ff5733,
+          0 0 30px #ff5733,
+          0 0 45px #ff5733;
+        transition: box-shadow 0.3s ease-in-out;
+      }
+
+      .search-wrapper {
+        max-width: 600px;
+        margin: 0 auto 40px;
+      }
+
+      .search-input-field {
+        background: var(--bg-surface);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 100px;
+        padding: 16px 24px;
+        font-size: var(--text-base);
+        width: 100%;
+        transition: all 0.2s;
+        text-align: center;
+        color: var(--text-primary);
+      }
+
+      .search-input-field:focus {
+        outline: none;
+        border-color: var(--accent-core);
+        box-shadow: 0 0 20px -5px var(--accent-alpha);
+      }
+
       .crew-header {
         text-align: center;
         padding: 120px 0 60px;
       }
+/* Card base */
+#contributorsGrid .card {
+  position: relative;
+  border-radius: 14px;
+  background-color: black; /* solid background */
+  padding: 20px;
+  overflow: visible; /* pseudo-element outside visible */
+  z-index: 0;
+}
 
-      /* Contributors cards base: ensure smooth hover animation */
-      #contributorsGrid .card {
-        transition: transform var(--duration-normal, 300ms)
-            var(--ease-out-quad, ease-out),
-          box-shadow var(--duration-normal, 300ms)
-            var(--ease-out-quad, ease-out),
-          border-color var(--duration-fast, 150ms) var(--ease-out, ease-out);
-      }
+/* Neon border behind card, outside the border */
+#contributorsGrid .card::before {
+  content: "";
+  position: absolute;
+  top: -7px; /* border thickness */
+  left: -7px;
+  width: calc(100% + 14px); /* card + border*2 */
+  height: calc(100% + 14px);
+  border-radius: 16px;
+  background: conic-gradient(
+    #00f5ff,
+    #0099ff,
+    #0066ff,
+    #00f5ff
+  );
+  filter: blur(6px); /* soft glow */
+  animation: neonRotate 3s linear infinite;
+  z-index: -1; /* behind card */
+}
 
-      /* Orange-themed hover border for contributor cards with pop-out effect */
-      #contributorsGrid .card:hover {
-        transform: translateY(-12px) scale(1.05);
-        border-color: var(--accent-core);
-        box-shadow: 0 18px 40px -12px var(--accent-alpha),
-          0 0 0 1px var(--accent-core) inset;
-      }
+/* Inner content stays on top */
+#contributorsGrid .card > * {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
 
-      /* Orange-themed hover for "View Profile" buttons inside contributor cards */
-      #contributorsGrid .btn-social:hover {
-        border-color: var(--accent-core);
-        box-shadow: 0 8px 20px -5px var(--accent-alpha),
-          0 0 0 1px var(--accent-core) inset;
-      }
-    </style>
-  </head>
+/* Rotation animation */
+@keyframes neonRotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
+    <script src="../scripts/components/sidebar-loader.js"></script>
+</head>
 
   <body>
-    <header class="site-header">
-      <div class="nav-container">
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="projects.html" class="nav-link">Projects</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="contributors.html" class="nav-link active">Contributors</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
-              margin-right: 15px;
-              background: none;
-              border: none;
-              cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
-
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%; border-radius: 50%"
-              />
-            </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a>
-              <a href="#" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <!-- Dynamic header will be loaded here -->
 
     <main class="container section">
       <div class="crew-header animate-enter">
@@ -123,6 +118,16 @@
         <p class="text-secondary">
           Engineers of the 100 Days of Web Dev Initiative.
         </p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-wrapper animate-enter delay-50">
+        <input
+          type="text"
+          id="contributorSearch"
+          class="search-input-field"
+          placeholder="Search contributors..."
+        />
       </div>
 
       <div id="contributorsGrid" class="grid grid-4 animate-enter delay-100">
@@ -146,7 +151,10 @@
     </main>
 
     <!-- Professional Footer -->
-    <footer class="site-footer">
+    <div id="footer-placeholder"></div>
+
+    <script src="../scripts/components/navigation.js"></script>    <script src="../scripts/components/footer-loader.js"></script>
+    <footer class="site-footer" style="display: none">
       <div class="container footer-content">
         <!-- Brand -->
         <div class="footer-brand animate-enter">
@@ -175,10 +183,10 @@
         <div class="footer-col animate-enter delay-200">
           <h3>Resources</h3>
           <nav class="footer-links">
-            <a href="#" class="footer-link">Documentation</a>
-            <a href="#" class="footer-link">API Status</a>
+            <a href="documentation.html" class="footer-link">Documentation</a>
+            <a href="api-status.html" class="footer-link">API Status</a>
             <a href="contact.html" class="footer-link">Contact Comms</a>
-            <a href="#" class="footer-link">System Logic</a>
+            <a href="system-logic.html" class="footer-link">System Logic</a>
           </nav>
         </div>
 
@@ -187,24 +195,42 @@
           <h3>Connect</h3>
           <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
           <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Github"
-              ><svg class="icon" viewBox="0 0 24 24">
+            <a
+              href="https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Github"
+            >
+              <svg class="icon" viewBox="0 0 24 24">
                 <path
                   d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Twitter"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Discord"
-              ><svg class="icon" viewBox="0 0 24 24">
+                ></path>
+              </svg>
+            </a>
+            <a
+  href="https://twitter.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="social-btn"
+  aria-label="X (Twitter)"
+  title="Coming soon"
+>
+  <i class="fa-brands fa-x-twitter"></i>
+</a>
+            <a
+              href="https://discord.gg/SW7puwEm"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-btn"
+              aria-label="Discord"
+            >
+              <svg class="icon" viewBox="0 0 24 24">
                 <path
                   d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
-                ></path></svg
-            ></a>
+                ></path>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -230,6 +256,30 @@
 
     <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/pages/contributors.js"></script>
-    <script src="../scripts/components/navigation.js"></script>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top-btn" aria-label="Scroll to top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // Scroll to Top Functionality
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.add('show');
+        } else {
+          scrollToTopBtn.classList.remove('show');
+        }
+      });
+
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    </script>
   </body>
 </html>

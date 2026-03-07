@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarkWrite - Markdown Editor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="./styles/editor.css">
+    <link rel="stylesheet" href="./styles/print.css" media="print">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Toolbar -->
+        <header class="editor-header">
+            <div class="brand">
+                <i class="fa-brands fa-markdown"></i>
+                <h1>MarkWrite</h1>
+                <span class="auto-save-status" id="save-status">All changes saved</span>
+            </div>
+
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="tool-btn" data-action="bold" title="Bold (Ctrl+B)">
+                        <i class="fa-solid fa-bold"></i>
+                    </button>
+                    <button class="tool-btn" data-action="italic" title="Italic (Ctrl+I)">
+                        <i class="fa-solid fa-italic"></i>
+                    </button>
+                    <button class="tool-btn" data-action="strikethrough" title="Strikethrough">
+                        <i class="fa-solid fa-strikethrough"></i>
+                    </button>
+                </div>
+
+                <div class="toolbar-divider"></div>
+
+                <div class="toolbar-group">
+                    <button class="tool-btn" data-action="heading" title="Heading">
+                        <i class="fa-solid fa-heading"></i>
+                    </button>
+                    <button class="tool-btn" data-action="link" title="Insert Link (Ctrl+K)">
+                        <i class="fa-solid fa-link"></i>
+                    </button>
+                    <button class="tool-btn" data-action="image" title="Insert Image">
+                        <i class="fa-solid fa-image"></i>
+                    </button>
+                    <button class="tool-btn" data-action="code" title="Code Block">
+                        <i class="fa-solid fa-code"></i>
+                    </button>
+                </div>
+
+                <div class="toolbar-divider"></div>
+
+                <div class="toolbar-group">
+                    <button class="tool-btn" data-action="ul" title="Bullet List">
+                        <i class="fa-solid fa-list-ul"></i>
+                    </button>
+                    <button class="tool-btn" data-action="ol" title="Numbered List">
+                        <i class="fa-solid fa-list-ol"></i>
+                    </button>
+                    <button class="tool-btn" data-action="quote" title="Quote">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </button>
+                </div>
+
+                <div class="toolbar-divider"></div>
+
+                <div class="toolbar-group">
+                    <button class="btn-action" id="btn-download" title="Download Markdown">
+                        <i class="fa-solid fa-download"></i> Download
+                    </button>
+                    <button class="btn-action" id="btn-export-html" title="Export as HTML">
+                        <i class="fa-solid fa-file-code"></i> HTML
+                    </button>
+                    <button class="btn-primary" id="btn-print" title="Print / Save as PDF">
+                        <i class="fa-solid fa-print"></i> Print PDF
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Split View -->
+        <main class="editor-workspace">
+            <div class="editor-pane">
+                <div class="pane-header">
+                    <span>Markdown</span>
+                    <div class="editor-stats">
+                        <span id="word-count">0 words</span>
+                        <span id="char-count">0 characters</span>
+                    </div>
+                </div>
+                <textarea id="markdown-input" placeholder="# Start writing your markdown here...
+
+**Bold** and *italic* text
+- List items
+1. Numbered items
+[Links](https://example.com)
+`inline code`
+
+```
+code blocks
+```
+" spellcheck="false"></textarea>
+            </div>
+
+            <div class="resize-divider" id="resize-divider"></div>
+
+            <div class="preview-pane">
+                <div class="pane-header">
+                    <span>Preview</span>
+                    <label class="sync-toggle">
+                        <input type="checkbox" id="sync-scroll" checked>
+                        <span>Sync Scroll</span>
+                    </label>
+                </div>
+                <div id="preview-content" class="markdown-body">
+                    <p class="placeholder">Preview will appear here...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>

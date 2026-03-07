@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Playground - Master Your Queries</title>
+    <!-- Dependencies -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="./styles/layout.css">
+    <link rel="stylesheet" href="./styles/table.css">
+
+    <!-- sql.js WebAssembly build -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar: Database Metadata -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-database"></i>
+                <h2>Database Explorer</h2>
+            </div>
+            <div class="schema-explorer" id="schema-explorer">
+                <div class="loading-schema">Initialising database...</div>
+                <!-- Table metadata go here -->
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <!-- Header/Toolbar -->
+            <header class="app-header">
+                <div class="brand">
+                    <span class="logo-text">SQL</span><span>Playground</span>
+                </div>
+                <div class="toolbar">
+                    <button class="btn-action" id="btn-run" title="Run Query (Ctrl+Enter)">
+                        <i class="fa-solid fa-play"></i> Run
+                    </button>
+                    <button class="btn-action" id="btn-clear" title="Clear Editor">
+                        <i class="fa-solid fa-trash-can"></i> Clear
+                    </button>
+                    <button class="btn-action" id="btn-export-csv" title="Export Results to CSV">
+                        <i class="fa-solid fa-file-csv"></i> Export CSV
+                    </button>
+                    <button class="btn-primary" id="btn-reset-db" title="Reset Database to Default">
+                        <i class="fa-solid fa-rotate"></i> Reset DB
+                    </button>
+                </div>
+            </header>
+
+            <!-- Editor Pane -->
+            <div class="editor-pane">
+                <div class="pane-label">SQL Editor</div>
+                <div id="editor-container" class="code-editor">
+                    <div class="line-numbers" id="line-numbers"></div>
+                    <textarea id="sql-input" spellcheck="false" placeholder="-- Write your SQL query here
+SELECT * FROM users;"></textarea>
+                </div>
+            </div>
+
+            <div class="resize-handle" id="workspace-resizer"></div>
+
+            <!-- Results Pane -->
+            <div class="results-pane">
+                <div class="pane-header">
+                    <span>Query Results</span>
+                    <div id="query-meta" class="query-meta"></div>
+                </div>
+                <div class="results-content" id="results-view">
+                    <div class="placeholder-content">
+                        <i class="fa-solid fa-table-list"></i>
+                        <p>Run a query to see results here</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Error/Notice Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="./scripts/app.js"></script>
+</body>
+
+</html>

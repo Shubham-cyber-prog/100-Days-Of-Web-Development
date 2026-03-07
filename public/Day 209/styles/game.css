@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #0a0e27;
+    --bg-light: #1a1e37;
+    --primary: #00d9ff;
+    --secondary: #ff006e;
+    --success: #06ffa5;
+    --warning: #ffbe0b;
+    --text: #ffffff;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+    color: var(--text);
+    overflow: hidden;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.game-header {
+    background: rgba(26, 30, 55, 0.9);
+    padding: 1rem;
+    border-bottom: 3px solid var(--primary);
+    backdrop-filter: blur(10px);
+}
+
+.game-header h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+    text-shadow: 0 0 20px var(--primary);
+}
+
+.hud {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.hud-item {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    align-items: center;
+}
+
+.hud-item .label {
+    color: #aaa;
+}
+
+.hud-item .value {
+    font-weight: bold;
+    color: var(--success);
+    min-width: 50px;
+}
+
+.game-viewport {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+#gameCanvas {
+    border: 3px solid var(--primary);
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+#particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.game-footer {
+    background: rgba(26, 30, 55, 0.9);
+    padding: 1rem;
+    border-top: 3px solid var(--primary);
+    backdrop-filter: blur(10px);
+}
+
+.controls-hint {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 1rem;
+    flex-wrap: wrap;
+}
+
+.controls-hint span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+kbd {
+    background: var(--bg-dark);
+    padding: 0.3rem 0.6rem;
+    border: 2px solid var(--primary);
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 0 var(--primary);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, var(--bg-light), var(--bg-dark));
+    border: 3px solid var(--primary);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 0 50px rgba(0, 217, 255, 0.5);
+}
+
+.modal-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    text-shadow: 0 0 20px var(--primary);
+}
+
+.modal-content p {
+    font-size: 1.2rem;
+    margin: 0.75rem 0;
+}
+
+.modal-content span {
+    color: var(--success);
+    font-weight: bold;
+}
+
+.btn {
+    margin-top: 1.5rem;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), #0099cc);
+    color: var(--bg-dark);
+    box-shadow: 0 4px 15px rgba(0, 217, 255, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 217, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+    .game-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .hud {
+        gap: 1rem;
+    }
+
+    .hud-item {
+        font-size: 1rem;
+    }
+
+    .controls-hint {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+}

@@ -1,22 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/website/assets/images/logo.png" />
-    <title>Projects | 100 Days of Web Dev</title>
-    <link rel="stylesheet" href="../styles/index.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/website/assets/images/logo.png" height="70px" width="100px">
+    <title>Projects Archive | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/pages/projects.css">
+    <link rel="stylesheet" href="../styles/components/project-modal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Monaco Editor CDN -->
+    <!-- <script src="https://unpkg.com/monaco-editor@0.45.0/min/vs/loader.min.js"></script> -->
     <style>
+      /* Search Highlight */
+      mark {
+        background: #ff7a18;
+        color: #000;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-weight: bold;
+        box-shadow: 0 0 8px rgba(255,122,24,0.8);
+        border: 2px solid #fff;
+      }
+
+      body.light-theme mark {
+        background: #00c6ff;
+        color: #fff;
+        border: 2px solid #000;
+        box-shadow: 0 0 8px rgba(0,198,255,0.8);
+      }
       .page-header {
         text-align: center;
         padding: 120px 0 60px;
-        /* Space for floating header */
       }
-
+.sidebar-open-btn{
+    color: white;
+  }
       .search-wrapper {
         max-width: 600px;
         margin: 0 auto 40px;
@@ -48,6 +67,7 @@
         gap: 12px;
         margin-bottom: 60px;
         flex-wrap: wrap;
+        padding: 0 20px;
       }
 
       .tab-btn {
@@ -71,32 +91,36 @@
 
       .tab-btn.active {
         background: var(--accent-core);
-        color: #000;
         border-color: var(--accent-core);
         font-weight: var(--weight-bold);
         box-shadow: 0 0 20px var(--accent-alpha);
       }
 
-      /* ----------------------------------------------------
-           PROJECT CARD COSMIC ANIMATION (Hover Effect) 
-           ---------------------------------------------------- */
-      /* ----------------------------------------------------
-           PROJECT CARD COSMIC ANIMATION (Hover Effect) 
-           ---------------------------------------------------- */
-      /* ----------------------------------------------------
-           PROJECT CARD COSMIC ANIMATION (Permanent & Tilt) 
-           ---------------------------------------------------- */
+      body.light-mode .tab-btn.active {
+        background: var(--accent-core);
+      }
+
+      body.light-mode .tab-btn {
+        background: #e4eaf5;
+      }
+
+      /* Project Card Styling */
       .project-card {
         position: relative;
-        /* Hard containment for effects */
         overflow: hidden;
-        border: none;
-        background: transparent;
         cursor: pointer;
         padding: 1rem;
-        min-height: 220px;
+        min-height: 280px;
         display: flex;
         flex-direction: column;
+
+        /* Glassmorphism Effect */
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 
         /* 3D Context */
         perspective: 1000px;
@@ -108,16 +132,10 @@
         --tx: 0px;
         --ty: 0px;
 
-        /* 
-               CRITICAL: Transform transition must be VERY fast or instant 
-               for cursor tracking to feel responsive. 0.1s is a good balance.
-               Box-shadow can be slower.
-            */
-        transition:
-          transform 0.05s ease-out,
-          box-shadow 0.4s ease;
-        transform: rotateX(var(--rx)) rotateY(var(--ry))
-          translate3d(var(--tx), var(--ty), 0);
+        /* Smooth transitions */
+        transition: transform 0.05s ease-out, box-shadow 0.4s ease, background 0.3s ease,
+          backdrop-filter 0.3s ease, border-color 0.3s ease;
+        transform: rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0);
 
         /* Clean hardware acceleration */
         will-change: transform;
@@ -146,11 +164,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(
-          135deg,
-          var(--accent-core) 60%,
-          var(--accent-glow) 100%
-        );
+        background: linear-gradient(135deg, var(--accent-core) 60%, var(--accent-glow) 100%);
         border: 1.5px solid var(--accent-core);
         color: #fff;
         font-weight: 700;
@@ -173,13 +187,6 @@
         box-shadow: 0 6px 18px -6px var(--accent-glow);
       }
 
-      .code-chip:hover {
-        background: var(--accent-core);
-        color: #000;
-        border-color: var(--accent-core);
-        transform: translateY(-2px);
-      }
-
       .card-hint {
         margin-top: auto;
         font-size: var(--text-sm);
@@ -193,9 +200,27 @@
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2;
         -webkit-box-orient: vertical;
         line-height: 1.3;
         word-wrap: break-word;
+      }
+
+      .project-description {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+      }
+
+      body.light-mode .project-description {
+        color: var(--text-secondary);
+        opacity: 0.85;
       }
 
       .tech-stack {
@@ -228,73 +253,33 @@
         opacity: 0.6;
       }
 
-      /* Hover Lift + Tilt */
+      /* Hover Effects */
       .project-card:hover {
-        /* 
-               We add a scale to "lift" it up, but rely on JS for rotation.
-               The Z-index ensures it pops above neighbors. 
-            */
-        transform: rotateX(var(--rx)) rotateY(var(--ry))
-          translate3d(var(--tx), var(--ty), 0) scale(1.02);
-        box-shadow:
-          0 15px 35px -5px rgba(0, 0, 0, 0.6),
-          0 0 10px rgba(255, 159, 28, 0.2);
-        /* Stronger accent glow on hover */
+        transform: rotateX(var(--rx)) rotateY(var(--ry)) translate3d(var(--tx), var(--ty), 0)
+          scale(1.02);
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
         z-index: 10;
       }
 
-      /* Layer 1: The Cosmic Source (Always Active) */
-      .project-card::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        z-index: -2;
-
-        /* The Cosmic Gradient */
-        background: conic-gradient(
-          from 0deg,
-          transparent 0%,
-          var(--accent-core) 25%,
-          var(--accent-glow) 50%,
-          var(--accent-core) 75%,
-          transparent 100%
-        );
-
-        /* PERMANENT STATE: Always Awake */
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0px);
-
-        /* Always rotating */
-        animation: rotateCosmos 8s linear infinite;
+      body.light-mode .project-card {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
       }
 
-      /* Removed :hover::before as it's now always active */
-
-      /* Layer 2: The Card Body (Mask) 
-           - Creates the 1px border effect by obscuring the center
-        */
-      .project-card::after {
-        content: "";
-        position: absolute;
-        inset: 1px;
-        /* Border width */
-        border-radius: inherit;
-        z-index: -1;
-        background: var(--bg-nebula);
-        /* Card Base Color */
-        transition: background 0.3s;
+      body.light-mode .project-card:hover {
+        background: rgba(255, 255, 255, 0.4);
+        border-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 255, 255, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5);
       }
 
-      /* Lighten body slightly on hover for depth */
-      .project-card:hover::after {
-        background: var(--bg-surface);
-      }
-
-      /* Layer 3: Ensure Content is Above */
+      /* Ensure Content is Above */
       .project-card > * {
         position: relative;
         z-index: 2;
@@ -304,244 +289,64 @@
         from {
           transform: rotate(0deg);
         }
-
         to {
           transform: rotate(360deg);
         }
       }
     </style>
-  </head>
-  <script>
-    // 1. Intercept all clicks on the project grid
-    document
-      .getElementById("projectsGrid")
-      .addEventListener("click", async (e) => {
-        // Find if the clicked element (or its parent) is a link or a project card
-        const card = e.target.closest(".project-card");
-        if (!card) return;
+    <script src="../scripts/components/sidebar-loader.js"></script>
+</head>
 
-        // Get the destination URL from your data (adjust if your property name is different)
-        const targetUrl =
-          card.getAttribute("data-url") ||
-          card.querySelector("a")?.getAttribute("href");
+<body>
+  <!-- Progress Widget -->
+  <div id="progress-widget-container" class="progress-widget-container"></div>
 
-        if (targetUrl) {
-          e.preventDefault(); // Stop the browser from trying to "GET" the page immediately
+  <!-- Main Content -->
+     <button id="sidebar-open-btn" class="sidebar-open-btn" title="Open sidebar">
+    ☰
+  </button>
+  <main class="container section">
 
-          try {
-            // 2. Perform a "Health Check" on the URL
-            const response = await fetch(targetUrl, { method: "HEAD" });
+    <div class="page-header animate-enter">
+      <h1 class="heading" style="font-size: var(--text-4xl); margin-bottom: var(--space-4); color: #ffffff; font-weight: 900; text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px rgba(0, 0, 0, 0.4), 0px 9px 10px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.15);">
+        Projects Archive
+      </h1>
+      <p class="text-secondary">Access all mission logs and deployment records.</p>
+    </div>
 
-            if (response.ok) {
-              // Milestone exists! Proceed to the project.
-              window.location.href = targetUrl;
-            } else {
-              // milestone folder missing (404), show your custom 404 page
-              window.location.href = "./404.html";
-            }
-          } catch (error) {
-            // Network error or folder completely missing
-            window.location.href = "./404.html";
-          }
-        }
-      });
-  </script>
-  <body>
-    <!-- Header -->
-    <header class="site-header">
-      <div class="nav-container">
-        <a href="dashboard.html" class="nav-logo">
-          <img
-            src="../assets/images/logo.png"
-            alt="100 Days of Web Dev"
-            class="brand-logo-img"
-          />
-        </a>
-        <nav class="nav-links">
-          <a href="dashboard.html" class="nav-link">Dashboard</a
-          ><a href="projects.html" class="nav-link active">Projects</a
-          ><a href="about.html" class="nav-link">About</a
-          ><a href="contributors.html" class="nav-link">Contributors</a
-          ><a href="contact.html" class="nav-link">Contact</a>
-        </nav>
-        <div class="nav-user">
-          <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <svg class="icon icon-lg" viewBox="0 0 24 24">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
+    <!-- Search Bar - Centered with proper spacing -->
+    <div class="search-wrapper animate-enter delay-100">
+      <input
+        type="text"
+        id="projectSearch"
+        placeholder="Search mission name or day..."
+      />
+    </div>
 
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle-btn"
-            class="icon-btn"
-            onclick="toggleTheme()"
-            style="
-              margin-right: 15px;
-              background: none;
-              border: none;
-              cursor: pointer;
-            "
-          >
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--text-secondary)"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
+    <!-- Filter Tabs - Centered -->
+    <div class="filter-tabs animate-enter delay-200">
+      <button class="tab-btn active normal" data-category="All">All Systems</button>
+      <button class="tab-btn normal" data-category="Beginner">Beginner</button>
+      <button class="tab-btn normal" data-category="Intermediate">Intermediate</button>
+      <button class="tab-btn normal" data-category="Advanced">Advanced</button>
+      <button class="tab-btn normal" data-category="Capstone">Capstone</button>
+    </div>
 
-          <div class="user-avatar-wrapper">
-            <button class="user-avatar" onclick="toggleUserMenu()">
-              <img
-                src="https://github.com/ntbnaren7.png"
-                alt="User"
-                style="width: 100%; height: 100%; border-radius: 50%"
-              />
-            </button>
-            <!-- Dropdown -->
-            <div class="user-dropdown">
-              <a href="profile.html" class="dropdown-item">View Profile</a
-              ><a href="#" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <button
-                class="dropdown-item text-danger"
-                onclick="handleLogout()"
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- Main Content -->
-    <main class="container section">
-      <div class="page-header animate-enter">
-        <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">
-          Projects Archive
-        </h1>
-        <p class="text-secondary">
-          Access all mission logs and deployment records.
-        </p>
-      </div>
-      <!-- Controls -->
-      <div class="search-wrapper animate-enter delay-100">
-        <input
-          type="text"
-          id="projectSearch"
-          placeholder="Search mission name or day..."
-        />
-      </div>
-      <div class="filter-tabs animate-enter delay-200">
-        <button class="tab-btn active" data-category="All">All Systems</button
-        ><button class="tab-btn" data-category="Beginner">Beginner</button
-        ><button class="tab-btn" data-category="Intermediate">
-          Intermediate</button
-        ><button class="tab-btn" data-category="Advanced">Advanced</button
-        ><button class="tab-btn" data-category="Capstone">Capstone</button>
-      </div>
-      <!-- Grid -->
-      <div id="projectsGrid" class="grid grid-4 animate-enter delay-300">
-        <!-- Injected by scripts/pages/projects.js -->
-      </div>
-    </main>
+    <!-- Project Grid -->
+    <div id="projectsGrid" class="grid grid-4 animate-enter delay-300">
+      <!-- Injected by scripts/pages/projects.js -->
+       <script src="../scripts/pages/projects.js"></script>
+    </div>
+    
 
-    <!-- Professional Footer -->
-    <footer class="site-footer">
-      <div class="container footer-content">
-        <!-- Brand -->
-        <div class="footer-brand animate-enter">
-          <a href="dashboard.html" class="footer-logo">
-            <img src="../assets/images/logo.png" alt="Logo" />
-            <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
-          </a>
-          <p class="footer-desc">
-            A hyper-intensive protocol designed to forge elite web engineers
-            through daily deployment cycles.
-          </p>
-        </div>
+  <!-- Professional Footer -->
+  <div id="footer-placeholder"></div>
 
-        <!-- Quick Links -->
-        <div class="footer-col animate-enter delay-100">
-          <h3>Navigation</h3>
-          <nav class="footer-links">
-            <a href="dashboard.html" class="footer-link">Home Base</a>
-            <a href="projects.html" class="footer-link">Archive</a>
-            <a href="about.html" class="footer-link">Leaderboard</a>
-            <a href="contributors.html" class="footer-link">Crew</a>
-          </nav>
-        </div>
-
-        <!-- Resources -->
-        <div class="footer-col animate-enter delay-200">
-          <h3>Resources</h3>
-          <nav class="footer-links">
-            <a href="#" class="footer-link">Documentation</a>
-            <a href="#" class="footer-link">API Status</a>
-            <a href="contact.html" class="footer-link">Contact Comms</a>
-            <a href="#" class="footer-link">System Logic</a>
-          </nav>
-        </div>
-
-        <!-- Connect -->
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Github"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Twitter"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Discord"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 14l-2 2v-5l2-2v5zm11 0l-2 2v-5l2-2v5z"
-                ></path></svg
-            ></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="container footer-bottom">
-        <p class="copyright">
-          &copy; 2026 100 Days of Web Dev. All Systems Nominal.
-        </p>
-        <p class="made-by">
-          Maintained by <span class="text-flame font-bold">Subham</span>
-          <svg
-            class="icon icon-sm heart-pulse"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            ></path>
-          </svg>
-        </p>
-      </div>
-    </footer>
     <button id="scrollToTopBtn" aria-label="Scroll to top">
       <i class="fa-solid fa-arrow-up"></i>
-    </button>
+    </button>    <script src="../scripts/components/footer-loader.js"></script>
     <script src="../scripts/components/cursor.js"></script>
-    <script src="../scripts/pages/projects.js"></script>
+    <script type="module" src="../scripts/pages/projects.js"></script>
     <script src="../scripts/components/navigation.js"></script>
   </body>
 </html>

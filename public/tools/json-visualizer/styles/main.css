@@ -1,0 +1,326 @@
+:root {
+    /* Light Theme */
+    --bg-app: #f8fafc;
+    --bg-panel: #ffffff;
+    --bg-sidebar: #f1f5f9;
+    --border: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --accent: #0f172a;
+    --danger: #ef4444;
+    --success: #10b981;
+    --code-bg: #f8fafc;
+}
+
+[data-theme="dark"] {
+    --bg-app: #0f172a;
+    --bg-panel: #1e293b;
+    --bg-sidebar: #334155;
+    --border: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --accent: #ffffff;
+    --danger: #ef4444;
+    --success: #10b981;
+    --code-bg: #0f172a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Header */
+.app-header {
+    height: 60px;
+    background-color: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+}
+
+.brand i {
+    color: var(--primary);
+    font-size: 1.25rem;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.divider {
+    height: 24px;
+    width: 1px;
+    background-color: var(--border);
+    margin: 0 0.5rem;
+}
+
+/* Buttons */
+button,
+.btn-primary {
+    cursor: pointer;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    color: var(--text-secondary);
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+}
+
+.btn-text {
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+}
+
+.btn-text:hover {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-primary-outline {
+    background-color: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 0.4rem 0.9rem;
+    font-weight: 500;
+}
+
+.btn-primary-outline:hover {
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.btn-small {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--bg-app);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.btn-small:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
+
+/* Workspace */
+.workspace {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    background-color: var(--bg-panel);
+}
+
+.pane-header {
+    height: 48px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background-color: var(--bg-app);
+}
+
+.pane-header h2 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.pane-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Editor */
+.editor-container {
+    flex: 1;
+    position: relative;
+}
+
+#json-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    resize: none;
+    padding: 1rem;
+    background-color: var(--code-bg);
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+#json-input:focus {
+    outline: none;
+}
+
+/* Visual Tree Container */
+.tree-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: var(--bg-panel);
+}
+
+.placeholder-text {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    gap: 1rem;
+}
+
+.placeholder-text i {
+    font-size: 3rem;
+    opacity: 0.2;
+}
+
+/* Footer */
+.app-footer {
+    height: 32px;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    font-size: 0.8rem;
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dot {
+    opacity: 0.5;
+}
+
+.validation-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.validation-status i {
+    font-size: 0.9rem;
+}
+
+.validation-status.error {
+    background-color: var(--danger);
+    padding: 0 0.5rem;
+    height: 100%;
+}
+
+.validation-status.valid {
+    /* Default */
+}
+
+/* Search Box */
+.search-box {
+    position: relative;
+    width: 150px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.3rem 0.5rem 0.3rem 1.8rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--bg-panel);
+    color: var(--text-primary);
+    font-size: 0.8rem;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Status Indicator */
+.status-indicator {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.status-indicator.error {
+    color: var(--danger);
+}

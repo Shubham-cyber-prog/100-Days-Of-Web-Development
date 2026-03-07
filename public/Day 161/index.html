@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drone Swarm Commander - Day 161</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>🚁 Drone Swarm Commander</h1>
+    <div class="hud">
+      <div>Selected: <span id="hudSelected">0</span></div>
+      <div>Enemies: <span id="hudEnemies">0</span></div>
+      <div>Mode: <span id="hudMode">Idle</span></div>
+    </div>
+  </header>
+
+  <main class="main">
+    <canvas id="scene"></canvas>
+
+    <aside class="panel">
+      <h2>Commands</h2>
+      <div class="btns">
+        <button id="formLine">Formation: Line</button>
+        <button id="formCircle">Formation: Circle</button>
+        <button id="holdBtn">Hold</button>
+        <button id="attackBtn">Attack</button>
+        <button id="spawnEnemy">Spawn Enemy</button>
+      </div>
+
+      <h3>Instructions</h3>
+      <ul>
+        <li>Click to select single drone</li>
+        <li>Drag to box-select multiple drones</li>
+        <li>Right-click on ground to Move/Attack (depending on mode)</li>
+        <li>Keys: <strong>M</strong>=Move, <strong>A</strong>=Attack, <strong>F</strong>=Toggle Formation</li>
+      </ul>
+
+      <div class="info">
+        <h3>Selected Units</h3>
+        <div id="unitList">None</div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <small>Day 161 — RTS-lite drone control prototype</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

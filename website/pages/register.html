@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form with Lamp Toggle</title>
+<!-- Design System -->
+  <link rel="stylesheet" href="website/styles/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="website/style.css">
+  <link rel="stylesheet" href="website/styles/tracker.css" />
+  <link rel="icon" type="image/png" href="website/assets/images/logo.png" />
+
+  <!-- Navbar Loader -->
+  <script src="scripts/components/sidebar-loader.js"></script>
+  <script src="scripts/components/navbar-loader.js"></script>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#ff7a18" />
+  <!-- FIXED: deprecated meta tag replaced -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Zenith" />
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .lamp-container {
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  form {
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    display: none; /* form hidden initially */
+  }
+
+  form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+  }
+
+  form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgb(1, 42, 77);
+    color: #222222be;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .success {
+    color: #0f0;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+</style>
+</head>
+<body>
+ <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+ <script src="website/scripts/components/cursor.js"></script>
+<div class="lamp-container">
+  <img id="lamp" src="assets/lamp/lampoff.png" alt="Lamp Off" width="100">
+</div>
+
+<form id="regForm">
+  <h2 style="text-align:center;">Register</h2>
+  <input type="text" id="name" placeholder="Full Name" required>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <button type="submit">Submit</button>
+  <div class="success" id="successMsg"></div>
+</form>
+
+<script>
+  const lamp = document.getElementById('lamp');
+  const form = document.getElementById('regForm');
+  let isLampOn = false;
+
+  // Lamp toggle
+  lamp.addEventListener('click', () => {
+    if(isLampOn){
+      lamp.src = 'assets/lamp/lampoff.png'; // Lamp off
+      form.style.display = 'none';
+    } else {
+      lamp.src = 'assets/lamp/lampon.png'; // Lamp on
+      form.style.display = 'block';
+    }
+    isLampOn = !isLampOn;
+  });
+
+  // Form submission
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if(!name || !email || !password){
+      alert("All fields are required!");
+      return;
+    }
+
+    // Simple email validation
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if(!email.match(emailPattern)){
+      alert("Invalid email!");
+      return;
+    }
+
+    document.getElementById('successMsg').textContent = `Welcome, ${name}! Registration successful.`;
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
