@@ -7,7 +7,7 @@ interface TopNavProps {
 }
 
 export function TopNav({ activeTab, onTabChange, onMenuToggle }: TopNavProps) {
-  const menuItems = ['Home', 'Upload', 'Live Camera', 'History', 'Settings'];
+  const menuItems = ['Home', 'Upload', 'Live Camera', 'History', 'Analytics', 'Settings'];
 
   return (
     <nav className="h-16 bg-black/40 backdrop-blur-xl border-b border-purple-500/20 flex items-center px-6 relative z-50">

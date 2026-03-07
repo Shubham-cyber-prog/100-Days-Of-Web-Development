@@ -6,6 +6,7 @@ import {
   Settings,
   TrendingUp,
   Zap,
+  BarChart3,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -20,6 +21,7 @@ export function Sidebar({ activeTab, onTabChange, isOpen }: SidebarProps) {
     { id: 'Upload', icon: Upload, label: 'Upload' },
     { id: 'Live Camera', icon: Camera, label: 'Live Camera' },
     { id: 'History', icon: History, label: 'History' },
+    { id: 'Analytics', icon: BarChart3, label: 'Analytics' },
     { id: 'Settings', icon: Settings, label: 'Settings' },
   ];
 
