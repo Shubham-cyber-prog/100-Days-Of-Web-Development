@@ -1,0 +1,108 @@
+@import "tailwindcss";
+@import "nprogress/nprogress.css";
+
+:root {
+  /* Color Theme */
+  --color-primary: #6366f1;
+  /* Olive Green */
+  --color-secondary: #d2b48c;
+  /* Tan */
+  --color-accent: #8f9779;
+  /* Artichoke */
+  --color-background: #f8f8f8dd;
+  --color-text: #2e2e2e;
+
+  /* Aliases for convenience */
+  --primary: var(--color-primary);
+  --secondary: var(--color-secondary);
+  --background: var(--color-background);
+  --foreground: var(--color-text);
+
+  /* Font */
+  --font-poppins: "Poppins", sans-serif;
+
+  /* Text contrast helpers */
+  --lightText: #f5f3f3;
+  --darkText: #283618;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-poppins);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.th {
+  @apply p-3 text-left font-semibold text-[16px] capitalize;
+}
+
+.td {
+  @apply p-3 text-[13.5px] font-medium capitalize;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+/* NProgress styles */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: var(--primary); /* #6366f1 */
+  position: fixed;
+  z-index: 10000; /* Higher than Navbar's z-index: 50 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px var(--primary), 0 0 5px var(--primary);
+  opacity: 1;
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Remove spinner */
+#nprogress .spinner {
+  display: none;
+}

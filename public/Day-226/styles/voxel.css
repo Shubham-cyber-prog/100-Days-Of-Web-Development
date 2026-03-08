@@ -1,0 +1,263 @@
+:root {
+    --bg-cad: #1a1a1a;
+    --bg-panel: #242424;
+    --accent-cad: #3b82f6;
+    --text-main: #e5e5e5;
+    --text-dim: #888888;
+    --border: #333333;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-cad);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.viewport-layout {
+    display: grid;
+    grid-template-columns: 80px 1fr 340px;
+    height: 100vh;
+}
+
+/* Sidebar Tool Tab */
+.tool-sidebar {
+    background: #0f0f0f;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 30px;
+}
+
+.logo {
+    font-weight: 800;
+    color: var(--accent-cad);
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+}
+
+.tool-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tool-btn {
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tool-btn.active {
+    background: var(--accent-cad);
+    color: white;
+    border-color: var(--accent-cad);
+}
+
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.swatch {
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.swatch.active {
+    border-color: white;
+}
+
+/* Main Workspace */
+.workspace {
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    position: relative;
+}
+
+.workspace-header {
+    height: 60px;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    padding: 0 24px;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+.view-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.view-btn.active {
+    color: var(--accent-cad);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.canvas-wrapper {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+#voxel-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    font-size: 2rem;
+}
+
+.workspace-footer {
+    height: 48px;
+    background: var(--bg-panel);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+}
+
+/* Inspector Sidebar */
+.inspector-sidebar {
+    background: var(--bg-panel);
+    border-left: 1px solid var(--border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+}
+
+.panel h3 {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+}
+
+.param-row {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.param-row input[type="range"] {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.tree-viz {
+    height: 120px;
+    background: #111;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.btn-action {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent-cad);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    padding: 10px;
+    background: #333;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.cad-stats {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    padding: 10px;
+    text-align: center;
+}
+
+.stat-line {
+    margin-bottom: 5px;
+}
+
+.stat-line span {
+    color: var(--accent-cad);
+}
+
+/* Animation */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.pulse {
+    animation: pulse 1s infinite;
+}

@@ -1,0 +1,28 @@
+# Supabase Configuration File
+# This file is used for local development and deployment
+
+[project]
+# Replace with your project ref when deploying
+# project_ref = "your-project-ref-here"
+
+[api]
+enabled = true
+port = 54321
+# schemas = ["public", "storage", "graphql_public"]
+
+[db]
+port = 54322
+# The database schema to use for development
+# shadow_port = 54320
+# migration_schema = "extensions"
+
+[functions.server]
+# verify_jwt = false
+
+[auth]
+enabled = true
+# site_url = "http://localhost:3000"
+# additional_redirect_urls = ["https://localhost:3000"]
+
+[storage]
+enabled = true

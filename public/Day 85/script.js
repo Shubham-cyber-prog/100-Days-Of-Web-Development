@@ -659,3 +659,52 @@ scrollToTopBtn.addEventListener("click", () => {
     behavior: "smooth",
   });
 });
+
+// 🌙 Dark Mode Toggle
+const themeToggle = document.getElementById("theme-toggle");
+
+themeToggle.addEventListener("click", () => {
+   document.body.classList.toggle("dark");
+
+   // Save user preference
+   if(document.body.classList.contains("dark")){
+      localStorage.setItem("theme", "dark");
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+   } else {
+      localStorage.setItem("theme", "light");
+      themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+   }
+});
+
+// Load saved theme
+window.addEventListener("DOMContentLoaded", () => {
+   const savedTheme = localStorage.getItem("theme");
+   if(savedTheme === "dark"){
+      document.body.classList.add("dark");
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+   }
+});
+
+// 🔔 Toast Notification Function
+function showToast(message, type = "success") {
+   const container = document.getElementById("toast-container");
+
+   const toast = document.createElement("div");
+   toast.classList.add("toast");
+
+   if(type === "error"){
+      toast.classList.add("error");
+   }
+
+   toast.innerText = message;
+   container.appendChild(toast);
+
+   // Auto remove after 3 seconds
+   setTimeout(() => {
+      toast.style.animation = "fadeOut 0.5s forwards";
+      setTimeout(() => {
+         toast.remove();
+      }, 500);
+   }, 3000);
+}
+

@@ -1,0 +1,275 @@
+:root {
+    --bg-dark: #02040a;
+    --panel-bg: #0d1117;
+    --accent-fluid: #58a6ff;
+    --accent-surface: #3fb950;
+    --text-main: #c9d1d9;
+    --text-dim: #8b949e;
+    --border: #30363d;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Space Grotesk', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header */
+.lab-header {
+    height: 70px;
+    background: var(--panel-bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.liquid-logo {
+    font-size: 2rem;
+    color: var(--accent-fluid);
+    font-weight: 700;
+}
+
+.brand h1 {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.version {
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+}
+
+.live-metrics {
+    display: flex;
+    gap: 30px;
+}
+
+.metric {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.metric span {
+    color: var(--accent-fluid);
+    font-weight: 700;
+}
+
+.main-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: var(--accent-fluid);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #000;
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Main Workspace */
+.viewport-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 280px 1fr 340px;
+    overflow: hidden;
+}
+
+.sidebar {
+    background: var(--panel-bg);
+    border-right: 1px solid var(--border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.stats-sidebar {
+    border-right: none;
+    border-left: 1px solid var(--border);
+}
+
+.panel h3 {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+}
+
+.ctrl-group label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+    color: var(--text-dim);
+}
+
+.ctrl-group input[type="range"] {
+    width: 100%;
+    margin-top: 5px;
+    accent-color: var(--accent-fluid);
+}
+
+.toggle-group label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.scene-btn {
+    width: 100%;
+    padding: 10px;
+    background: #161b22;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+.scene-btn:hover {
+    border-color: var(--accent-fluid);
+}
+
+/* Simulation Stage */
+.sim-stage {
+    position: relative;
+    background: #000;
+}
+
+#sim-canvas,
+#overlay-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.interaction-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    cursor: crosshair;
+}
+
+/* Inspector Items */
+.chart-box {
+    height: 150px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#chart-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.data-table {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.data-row {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.data-row span {
+    color: var(--accent-fluid);
+}
+
+.mono-text {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #58a6ff;
+    line-height: 1.6;
+}
+
+.lab-footer {
+    height: 40px;
+    background: var(--panel-bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+}
+
+/* Custom Checkbox */
+.check-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+}
+
+.check-container input:checked+.checkmark {
+    background: var(--accent-fluid);
+    border-color: var(--accent-fluid);
+}
+
+.check-container input:checked+.checkmark:after {
+    content: '✓';
+    position: absolute;
+    font-size: 10px;
+    color: #000;
+    left: 3px;
+    top: 1px;
+}

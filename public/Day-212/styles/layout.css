@@ -1,0 +1,135 @@
+:root {
+    --bg-dark: rgba(10, 14, 20, 0.85);
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --accent: #38bdf8;
+    --text: #f8fafc;
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #000;
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+#viewport {
+    width: 100vw;
+    height: 100vh;
+}
+
+#fractal-canvas {
+    display: block;
+}
+
+/* Controls Overlay */
+#controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    background: var(--bg-dark);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    z-index: 100;
+}
+
+.control-group {
+    margin-bottom: 20px;
+}
+
+.control-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+select,
+input[type="range"] {
+    width: 100%;
+}
+
+select {
+    background: #1e293b;
+    border: 1px solid var(--border);
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    outline: none;
+}
+
+.hud-info {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.hud-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+}
+
+.btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+button {
+    background: var(--accent);
+    color: #0f172a;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* Bookmarks */
+#bookmarks {
+    margin-top: 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+}
+
+#bookmark-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.bookmark-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+}
+
+.bookmark-item button {
+    padding: 2px 8px;
+    font-size: 0.75rem;
+}

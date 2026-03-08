@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Leaderboard | 100 Days of Web Dev</title>
+
+<link rel="icon" href="../assets/images/logo.png" />
+<link rel="stylesheet" href="../styles/index.css" />
+
+<style>
+
+/* ============================= */
+/* GLOBAL */
+/* ============================= */
+
+body{
+  background:#000;
+  color:#fff;
+  font-family:'Inter',sans-serif;
+}
+
+/* CENTER WRAPPER (LIKE DISCLAIMER PAGE) */
+
+.leaderboard-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
+.leaderboard-container{
+  width:100%;
+  max-width:1100px;
+  padding:80px 20px 120px;
+}
+
+/* ============================= */
+/* HEADER */
+/* ============================= */
+
+.page-header{
+  text-align:center;
+  margin-bottom:50px;
+}
+
+.page-header h1{
+  font-size:3rem;
+  margin-bottom:10px;
+}
+
+.page-header p{
+  color:#aaa;
+}
+
+/* ============================= */
+/* CONTROLS */
+/* ============================= */
+
+.leaderboard-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  margin-bottom:40px;
+  flex-wrap:wrap;
+}
+
+.search-wrapper{
+  flex:1;
+  max-width:350px;
+}
+
+#searchInput{
+  width:100%;
+  padding:14px 22px;
+  border-radius:50px;
+  border:1px solid rgba(0,150,255,0.4);
+  background:#0b0b0b;
+  color:#fff;
+  font-size:1rem;
+}
+
+#searchInput:focus{
+  outline:none;
+  border-color:#4aa3ff;
+  box-shadow:0 0 20px rgba(0,150,255,0.3);
+}
+
+.filter-tabs{
+  display:flex;
+  gap:10px;
+}
+
+.filter-btn{
+  padding:8px 22px;
+  border-radius:50px;
+  border:1px solid rgba(0,150,255,0.4);
+  background:transparent;
+  color:#aaa;
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+.filter-btn:hover{
+  background:#4aa3ff;
+  color:#000;
+}
+
+.filter-btn.active{
+  background:#4aa3ff;
+  color:#000;
+  font-weight:bold;
+}
+
+/* ============================= */
+/* TABLE */
+/* ============================= */
+
+.leaderboard-table{
+  border:1px solid rgba(0,150,255,0.4);
+  border-radius:16px;
+  overflow:hidden;
+  background:linear-gradient(145deg,#050505,#0b0b0b);
+}
+
+.table-header,
+.leaderboard-row{
+  display:grid;
+  grid-template-columns:80px 1fr 150px 120px;
+  padding:18px 25px;
+  align-items:center;
+}
+
+.table-header{
+  background:#0f0f0f;
+  font-weight:bold;
+  color:#4aa3ff;
+}
+
+.leaderboard-row{
+  border-top:1px solid #111;
+  transition:0.2s ease;
+}
+
+.leaderboard-row:hover{
+  background:#111;
+}
+
+.user-cell{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.user-avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:2px solid rgba(0,150,255,0.4);
+}
+
+/* ============================= */
+/* YOUR RANK */
+/* ============================= */
+
+.your-rank-card{
+  margin-top:50px;
+  border:1px solid rgba(0,150,255,0.4);
+  border-radius:16px;
+  padding:30px;
+  text-align:center;
+  background:linear-gradient(145deg,#050505,#0b0b0b);
+}
+
+.your-rank-card h3{
+  margin-bottom:15px;
+  color:#4aa3ff;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media(max-width:768px){
+
+  .leaderboard-controls{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .table-header,
+  .leaderboard-row{
+    grid-template-columns:60px 1fr 120px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="leaderboard-wrapper">
+<main class="leaderboard-container">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <h1>🏆 Leaderboard</h1>
+    <p>Top contributors based on GitHub activity</p>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="leaderboard-controls">
+
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" placeholder="Search user..." />
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-btn active">All Time</button>
+      <button class="filter-btn">Monthly</button>
+      <button class="filter-btn">Weekly</button>
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+  <div class="leaderboard-table">
+
+    <div class="table-header">
+      <div>Rank</div>
+      <div>User</div>
+      <div>Contributions</div>
+      <div>Profile</div>
+    </div>
+
+    <div id="leaderboardBody"></div>
+
+  </div>
+
+  <!-- YOUR RANK -->
+  <div class="your-rank-card">
+    <h3>Your Ranking</h3>
+    <p id="yourRank">Connect GitHub to see your rank</p>
+  </div>
+
+</main>
+</div>
+
+<script>
+
+/* ============================= */
+/* CONFIG */
+/* ============================= */
+
+const OWNER = "Shubham-cyber-prog";
+const REPO = "100-Days-Of-Web-Development-ECWoC26";
+
+const API_URL =
+  `https://api.github.com/repos/${OWNER}/${REPO}/contributors`;
+
+let contributors = [];
+
+/* ============================= */
+/* FETCH DATA */
+/* ============================= */
+
+async function loadLeaderboard(){
+
+  try{
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    contributors = data;
+    renderLeaderboard(data);
+  }
+  catch(err){
+    document.getElementById("leaderboardBody").innerHTML =
+      "<div style='padding:20px;text-align:center'>Failed to load data</div>";
+  }
+
+}
+
+/* ============================= */
+/* RENDER */
+/* ============================= */
+
+function renderLeaderboard(users){
+
+  const body = document.getElementById("leaderboardBody");
+  body.innerHTML = "";
+
+  users.forEach((user,index)=>{
+
+    const row = document.createElement("div");
+    row.className = "leaderboard-row";
+
+    row.innerHTML = `
+      <div>#${index+1}</div>
+
+      <div class="user-cell">
+        <img src="${user.avatar_url}" class="user-avatar"/>
+        <span>${user.login}</span>
+      </div>
+
+      <div>${user.contributions}</div>
+
+      <div>
+        <a href="${user.html_url}" target="_blank" style="color:#4aa3ff;">
+          View
+        </a>
+      </div>
+    `;
+
+    body.appendChild(row);
+
+  });
+
+}
+
+/* ============================= */
+/* SEARCH */
+/* ============================= */
+
+document.getElementById("searchInput")
+.addEventListener("input",function(){
+
+  const val = this.value.toLowerCase();
+
+  const filtered = contributors.filter(u =>
+    u.login.toLowerCase().includes(val)
+  );
+
+  renderLeaderboard(filtered);
+
+});
+
+/* ============================= */
+/* INIT */
+/* ============================= */
+
+loadLeaderboard();
+
+</script>
+
+</body>
+</html>

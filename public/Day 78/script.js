@@ -1,3 +1,7 @@
+// ⭐ Sounds
+const correctSound = new Audio("sounds/correct.mp3");
+const wrongSound = new Audio("sounds/wrong.mp3");
+
 /* DARK MODE */
 themeToggle.onclick=()=>document.body.classList.toggle("dark");
 
@@ -17,13 +21,37 @@ function genMath(){
   mathQ.textContent=`${a}+${b}=?`;
 }
 genMath();
+// function checkMath(){
+//   if(+mathAns.value===a+b){
+//     ms++;
+//     mathScore.textContent="Score: "+ms;
+//   }
+//   mathAns.value="";
+//   genMath();
+// }
+
+
+
 function checkMath(){
   if(+mathAns.value===a+b){
     ms++;
     mathScore.textContent="Score: "+ms;
+
+    if(+mathAns.value===a+b){
+  ms++;
+  correctSound.play();
+}else{
+  wrongSound.play();
+}
+
+    // ⭐ ADD THIS LINE
+    updateLeaderboard("Math Quiz", ms);
   }
   mathAns.value="";
   genMath();
+
+  correctSound.play();
+showPopup("Correct 🎉");
 }
 
 /* MEMORY */
@@ -98,9 +126,23 @@ function loadQ(){
     quizOpts.appendChild(b);
   });
 }
+// nextBtn.onclick=()=>{
+//   qi++;
+//   qi<quizSet.length?loadQ():quizScore.textContent=`Score: ${score}/${quizSet.length}`;
+// };
+
+
 nextBtn.onclick=()=>{
   qi++;
-  qi<quizSet.length?loadQ():quizScore.textContent=`Score: ${score}/${quizSet.length}`;
+
+  if(qi<quizSet.length){
+    loadQ();
+  }else{
+    quizScore.textContent=`Score: ${score}/${quizSet.length}`;
+
+    // ⭐ ADD THIS LINE
+    updateLeaderboard("MCQ Quiz", score);
+  }
 };
 
 /* REACTION */
@@ -110,11 +152,25 @@ function startReaction(){
   setTimeout(()=>{
     start=Date.now();
     reactBtn.textContent="CLICK!";
+    // reactBtn.onclick=()=>{
+    //   reactScore.textContent=`${Date.now()-start} ms`;
+    //   reactBtn.onclick=startReaction;
+    //   reactBtn.textContent="Start";
+    // };
+
+
     reactBtn.onclick=()=>{
-      reactScore.textContent=`${Date.now()-start} ms`;
-      reactBtn.onclick=startReaction;
-      reactBtn.textContent="Start";
-    };
+  let reactionTime = Date.now()-start;
+  reactScore.textContent=`${reactionTime} ms`;
+
+  // ⭐ Convert to score (lower time = better)
+  let reactionPoints = Math.max(500 - reactionTime, 0);
+  updateLeaderboard("Reaction Time", reactionPoints);
+
+  reactBtn.onclick=startReaction;
+  reactBtn.textContent="Start";
+};
+
   },Math.random()*2000+1000);
 }
 
@@ -135,9 +191,81 @@ function checkGuess(){
 let t0;
 function checkTyping(){
   if(!t0) t0=Date.now();
+  // if(typingInp.value===typingText.textContent){
+  //   typingScore.textContent=`Time: ${(Date.now()-t0)/1000}s`;
+  //   typingInp.value="";
+  //   t0=null;
+  // }
+
   if(typingInp.value===typingText.textContent){
-    typingScore.textContent=`Time: ${(Date.now()-t0)/1000}s`;
-    typingInp.value="";
-    t0=null;
+  let timeTaken = (Date.now()-t0)/1000;
+  typingScore.textContent=`Time: ${timeTaken}s`;
+
+  // ⭐ Leaderboard score (lower time = better, so convert to points)
+  let typingPoints = Math.max(100 - timeTaken, 0);
+  updateLeaderboard("Typing Speed", typingPoints);
+
+  typingInp.value="";
+  t0=null;
+}
+}
+
+
+
+// ⭐ Leaderboard
+function updateLeaderboard(game, score){
+  let data = JSON.parse(localStorage.getItem("leaderboard") || "{}");
+
+  if(!data[game] || score > data[game]){
+    data[game] = score;
   }
+
+  localStorage.setItem("leaderboard", JSON.stringify(data));
+  showLeaderboard();
+}
+
+function showLeaderboard(){
+  const data = JSON.parse(localStorage.getItem("leaderboard") || "{}");
+  leaderboard.innerHTML = "";
+
+  for(let g in data){
+    leaderboard.innerHTML += `
+      <div class="lead-item">
+        <span>${g}</span>
+        <span>${data[g]}</span>
+      </div>`;
+  }
+}
+
+showLeaderboard();
+
+
+// 🌙 Theme toggle
+const themeBtn = document.getElementById("themeBtn");
+
+themeBtn.onclick = () => {
+  document.body.classList.toggle("dark");
+  themeBtn.textContent =
+    document.body.classList.contains("dark") ? "☀️" : "🌙";
+};
+
+
+
+function showPopup(msg="Good Job!"){
+  const p = document.getElementById("popup");
+  p.textContent = msg;
+  p.classList.add("show");
+
+  setTimeout(()=>{
+    p.classList.remove("show");
+  },2000);
+}
+
+
+function popEffect(el){
+  el.style.transform="scale(1.2)";
+  el.style.transition="0.2s";
+  setTimeout(()=>{
+    el.style.transform="scale(1)";
+  },200);
 }

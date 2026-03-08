@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuroFlow | Neural Architecture & Weight Dynamics Lab</title>
+    <meta name="description"
+        content="Visual neural network laboratory for training custom architectures. Implements backpropagation and gradient descent from scratch for classification tasks." />
+    <link rel="stylesheet" href="styles/neuro.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="neuro-lab">
+    <div class="dashboard">
+        <!-- Control Header -->
+        <header class="lab-header">
+            <div class="brand">
+                <div class="neuro-icon">≋</div>
+                <div class="brand-text">
+                    <h1>NeuroFlow</h1>
+                    <span class="sub">Dynamic Architecture Lab</span>
+                </div>
+            </div>
+
+            <div class="training-controls">
+                <div class="control-group">
+                    <label>Learning Rate
+                        <input type="number" id="lr-input" value="0.03" step="0.01" min="0.001">
+                    </label>
+                    <label>Epochs
+                        <span id="epoch-count">0</span>
+                    </label>
+                </div>
+                <div class="main-actions">
+                    <button id="btn-play" class="btn-primary">▶ TRAIN</button>
+                    <button id="btn-reset" class="btn-ghost">⟲ RESET</button>
+                </div>
+            </div>
+
+            <div class="live-metrics">
+                <div class="metric">Loss: <span id="val-loss">0.000</span></div>
+                <div class="metric">Acc: <span id="val-acc">0%</span></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Sidebar: Features & Data -->
+            <aside class="sidebar tools-sidebar">
+                <section class="panel feature-panel">
+                    <h3>DATASET</h3>
+                    <div class="dataset-grid">
+                        <button class="data-btn active" data-set="xor">XOR</button>
+                        <button class="data-btn" data-set="circle">CIRCLES</button>
+                        <button class="data-btn" data-set="spiral">SPIRALS</button>
+                        <button class="data-btn" data-set="gaussian">GAUSSIAN</button>
+                    </div>
+                </section>
+
+                <section class="panel architecture-panel">
+                    <h3>ARCHITECTURE</h3>
+                    <div class="layer-controls">
+                        <button id="btn-add-layer" class="btn-small">+ Add Layer</button>
+                        <div id="layers-list" class="layers-config">
+                            <!-- Layer items here -->
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel activation-panel">
+                    <h3>HYPERPARAMS</h3>
+                    <div class="param-list">
+                        <label>Activation
+                            <select id="select-activation">
+                                <option value="relu">ReLU</option>
+                                <option value="tanh">Tanh</option>
+                                <option value="sigmoid">Sigmoid</option>
+                            </select>
+                        </label>
+                        <label>Regularization
+                            <select id="select-reg">
+                                <option value="none">None</option>
+                                <option value="l2">L2</option>
+                            </select>
+                        </label>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- Visualizer Workspace -->
+            <section class="workspace">
+                <!-- Architecture Graph -->
+                <div class="viz-card network-viz">
+                    <header class="viz-header">
+                        <h4>WEIGHT DYNAMICS</h4>
+                        <span class="viz-tag">LIVE GRADIENTS</span>
+                    </header>
+                    <div class="canvas-container" id="network-container">
+                        <canvas id="network-canvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Decision Boundary -->
+                <div class="viz-card boundary-viz">
+                    <header class="viz-header">
+                        <h4>DECISION BOUNDARY</h4>
+                    </header>
+                    <div class="canvas-container" id="boundary-container">
+                        <canvas id="boundary-canvas"></canvas>
+                        <canvas id="data-canvas"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom: Training Analysis -->
+            <aside class="sidebar analysis-sidebar">
+                <section class="panel chart-panel">
+                    <h3>TOTAL LOSS</h3>
+                    <div class="chart-area" id="loss-chart">
+                        <canvas id="loss-canvas"></canvas>
+                    </div>
+                </section>
+
+                <section class="panel activation-heat">
+                    <h3>LAYER ACTIVATIONS</h3>
+                    <div id="activation-viz" class="heat-grid"></div>
+                </section>
+
+                <section class="panel weights-log">
+                    <h3>WEIGHT HISTOGRAM</h3>
+                    <div id="weights-viz" class="histogram-area"></div>
+                </section>
+            </aside>
+        </main>
+
+        <footer class="lab-footer">
+            <p>System State: <span id="system-status">IDLE</span> | Backend: Vanilla Matrix Math |
+                ecwoc26-l3-validator-safe</p>
+        </footer>
+    </div>
+
+    <!-- Core Engine -->
+    <script src="scripts/core/layers.js" type="module"></script>
+    <script src="scripts/core/engine.js" type="module"></script>
+    <script src="scripts/data/sets.js" type="module"></script>
+
+    <!-- UI Controllers -->
+    <script src="scripts/ui/network.js" type="module"></script>
+    <script src="scripts/ui/decision.js" type="module"></script>
+    <script src="scripts/ui/loss.js" type="module"></script>
+    <script src="scripts/state/model.js" type="module"></script>
+
+    <script type="module">
+        import { engine } from './scripts/core/engine.js';
+        engine.init();
+    </script>
+</body>
+
+</html>

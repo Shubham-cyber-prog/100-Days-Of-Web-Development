@@ -1,0 +1,68 @@
+/**
+ * Career.css
+ * Styles for the Career Launchpad and Portfolio Automator.
+ */
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #6d28d9, #9333ea);
+    --secondary-gradient: linear-gradient(135deg, #06b6d4, #3b82f6);
+    --dark-bg: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --accent-color: #06b6d4;
+    --text-muted: #94a3b8;
+}
+
+.career-page { background: var(--dark-bg); color: #f1f5f9; }
+.career-container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+.career-header { margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+.header-content { flex: 1; }
+.header-content h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.1; }
+.accent { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.career-summary-cards { display: grid; grid-template-columns: repeat(3, minmax(200px, 1fr)); gap: 1.5rem; }
+.summary-card { background: var(--card-bg); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: 1rem; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: transform 0.3s; }
+.summary-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+.card-icon { width: 48px; height: 48px; border-radius: 50%; background: rgba(109, 40, 217, 0.2); display: flex; align-items: center; justify-content: center; color: #6d28d9; font-size: 1.5rem; }
+.card-info .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.card-info h2 { margin: 0; font-size: 1.5rem; }
+
+.career-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; }
+.widget-container { background: var(--card-bg); border-radius: 1rem; border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; margin-bottom: 2rem; }
+.widget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
+.widget-header h3 { margin: 0; font-size: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+.widget-header p { margin: 0.5rem 0 0; color: var(--text-muted); font-size: 0.875rem; }
+
+.template-selector { margin-bottom: 1.5rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.5rem; display: flex; align-items: center; gap: 1rem; }
+.template-options { display: flex; gap: 1rem; }
+.template-radio { position: relative; cursor: pointer; }
+.template-radio input { position: absolute; opacity: 0; }
+.radio-label { padding: 0.5rem 1rem; background: #334155; border-radius: 0.25rem; font-size: 0.8rem; transition: background 0.3s; }
+.template-radio input:checked + .radio-label { background: #6d28d9; border: 1px solid rgba(255,255,255,0.2); }
+
+.preview-mini { height: 400px; background: white; border-radius: 0.5rem; overflow-y: auto; color: #334155; transform: scale(0.95); transform-origin: top center; border: 10px solid #1e293b; }
+.resume-root { padding: 2rem; font-family: 'Inter', sans-serif; }
+.resume-root h1 { font-size: 2rem; margin: 0; color: var(--primary-color); }
+.resume-root section { margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1rem; }
+.resume-root h2 { font-size: 1.25rem; color: #1e293b; margin-bottom: 0.75rem; }
+
+.market-trends { margin-top: 4rem; }
+.trends-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.trend-card { background: #1e293b; border-radius: 1rem; padding: 1.5rem; border: 1px solid transparent; transition: 0.3s; }
+.trend-card:hover { border-color: var(--accent-color); background: #334155; }
+.trend-stat { margin-bottom: 1rem; }
+.trend-stat span { color: var(--text-muted); font-size: 0.875rem; }
+.trend-stat h3 { margin: 0.5rem 0; font-size: 1.5rem; }
+.trend-bar { height: 4px; border-radius: 2px; background: var(--secondary-gradient); }
+.trend-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.trend-skills span { padding: 0.25rem 0.75rem; background: #0f172a; border-radius: 20px; font-size: 0.75rem; color: #94a3b8; border: 1px solid rgba(255,255,255,0.05); }
+
+/* Modal */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+.modal-content.large { background: white; margin: 2% auto; width: 900px; max-width: 95%; height: 90vh; overflow-y: auto; position: relative; border-radius: 0.5rem; }
+.close-modal { position: absolute; right: 2rem; top: 1rem; font-size: 2.5rem; cursor: pointer; color: #334155; }
+
+@media (max-width: 1024px) {
+    .career-grid { grid-template-columns: 1fr; }
+    .career-header { flex-direction: column; text-align: center; }
+}

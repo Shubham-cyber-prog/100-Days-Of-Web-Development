@@ -8,33 +8,71 @@
 
 .stat-box {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-core);
 }
 
 /* Conflict on .stat-value being used in tracker as well, but scoped usually */
 /* Defining here for generic stat boxes */
 .stat-box .stat-value {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 2.25rem;
+    font-weight: var(--weight-bold);
     color: var(--text-primary);
     margin-bottom: 0.25rem;
-    font-family: var(--font-main);
-    /* Ensure non-mono here unless specified */
+    font-family: var(--font-display);
+    line-height: 1.1;
 }
 
 /* Conflict on .stat-label */
 .stat-box .stat-label {
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     color: var(--text-secondary);
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    text-transform: none;
-    letter-spacing: normal;
-    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: var(--weight-semibold);
+}
+
+.stat-icon {
+    color: var(--accent-core);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* --- LIGHT MODE OVERRIDES --- */
+[data-theme="light"] .stat-box {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .stat-box:hover {
+    border-color: var(--accent-core);
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.1);
+}
+
+[data-theme="light"] .stat-box .stat-value {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .stat-box .stat-label {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .stat-icon {
+    color: var(--accent-core);
 }

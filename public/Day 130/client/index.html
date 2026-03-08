@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Language Pro | Premium Neural Translation</title>
+  <!-- Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header role="banner" class="flex justify-between items-center">
+    <h1 class="text-2xl font-bold">AI-Powered Language Translation</h1>
+    <button id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+  </header>
+
+  <main class="translator" role="main">
+    <div class="panel" role="region" aria-label="Input portion">
+      <h3>Input</h3>
+      <textarea id="inputText" placeholder="Enter text to translate..."
+        aria-label="Source text to translate"></textarea>
+    </div>
+
+    <div class="panel" role="region" aria-label="Output portion">
+      <h3>Output</h3>
+      <textarea id="outputText" placeholder="Translated text will appear here..." readonly
+        aria-label="Translated result"></textarea>
+    </div>
+  </main>
+
+  <div class="controls" role="group" aria-label="Translation controls">
+    <select id="fromLang" aria-label="Select source language">
+      <option>English</option>
+      <option>Hindi</option>
+      <option>French</option>
+    </select>
+
+    <i class="fas fa-exchange-alt exchange-icon" aria-hidden="true"></i>
+
+    <select id="toLang" aria-label="Select target language">
+      <option>Hindi</option>
+      <option>English</option>
+      <option>French</option>
+    </select>
+
+    <button id="translateBtn" aria-label="Command translation">Translate</button>
+    <button id="copyBtn" aria-label="Copy result to clipboard">Copy</button>
+    <button id="clearBtn" aria-label="Clear all text">Clear</button>
+  </div>
+
+  <footer role="contentinfo" class="text-center p-6 text-slate-400 text-xs">
+    &copy; 2026 AI Language Pro • Powered by NeuralCloud
+  </footer>
+  <script src="script.js"></script>
+</body>
+
+</html>

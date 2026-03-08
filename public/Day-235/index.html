@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rogue-Script // Strategy Battler</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/battler.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Syncopate:wght@400;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="rogue-os">
+    <div id="rogue-container">
+        <!-- Battle Arena -->
+        <section id="arena-view" class="glass">
+            <div id="player-unit" class="unit player">
+                <div class="hp-pips" id="player-hp"></div>
+                <div class="sprite">◤ PLAYER ◢</div>
+            </div>
+
+            <div id="battle-log" class="mini-console">
+                <div class="line sys">SYSTEM_READY // Awaiting directive...</div>
+            </div>
+
+            <div id="enemy-unit" class="unit enemy">
+                <div class="hp-pips" id="enemy-hp"></div>
+                <div class="sprite">◣ ENEMY_X ◢</div>
+            </div>
+        </section>
+
+        <!-- Script Workspace -->
+        <main id="script-editor" class="glass">
+            <header class="editor-header">
+                <h2>SCRIPT_COMPILER v2.0</h2>
+                <div class="logic-pips">
+                    <span class="pip active"></span>
+                    <span class="pip"></span>
+                    <span class="pip"></span>
+                </div>
+            </header>
+
+            <div id="script-steps" class="step-container">
+                <!-- Populated via JS -->
+            </div>
+
+            <footer class="editor-footer">
+                <button class="btn run" id="btn-compile">COMPILE_AND_EXECUTE</button>
+                <button class="btn" id="btn-clear-script">RESET_STACK</button>
+            </footer>
+        </main>
+
+        <!-- Command Deck -->
+        <aside id="command-deck" class="glass">
+            <h3>LOGIC_BLOCKS</h3>
+            <div class="block-group">
+                <div class="block" data-action="ATTACK">EXEC::ATTACK</div>
+                <div class="block" data-action="DEFEND">EXEC::DEFEND</div>
+                <div class="block" data-action="HEAL">EXEC::HEAL</div>
+                <div class="block" data-action="SCAN">EXEC::SCAN</div>
+            </div>
+
+            <div class="block-desc">
+                <h4 id="block-name">ATTACK</h4>
+                <p id="block-info">Deals damage to the enemy based on offensive protocols.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- UI Overlays -->
+    <div id="victory-screen" class="overlay hidden">
+        <h1 class="glitch">MISSION_COMPLETE</h1>
+        <button onclick="location.reload()">RE-INITIALIZE</button>
+    </div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mario Game</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <body tabindex="0">
+  <wall p="3"></wall>
+  <coin p="4"></coin>
+  <wall p="5"></wall>
+  <coin p="10"></coin>
+  <wall p="11"></wall>
+  <wall p="12"></wall>
+  <wall p="13"></wall>
+  <coin p="14"></coin>
+  <coin p="17"></coin>
+  <coin p="21"></coin>
+  <wall p="25"></wall>
+  <coin p="26"></coin>
+  <wall p="27"></wall>
+  <wall p="28"></wall>
+  <wall p="29"></wall>
+  <wall p="30"></wall>
+  <wall p="31"></wall>
+</body>
+</body>
+</html>
