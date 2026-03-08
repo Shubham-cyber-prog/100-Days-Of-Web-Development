@@ -1,0 +1,143 @@
+:root {
+  --bg: #0f172a;
+  --card: #0b1220;
+  --card-alt: #020617;
+  --text: #e5e7eb;
+  --text-muted: #94a3b8;
+  --primary: #6c63ff;
+  --shadow: rgba(0,0,0,0.35);
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --card-alt: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --primary: #6c63ff;
+  --shadow: rgba(0,0,0,0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* NAVBAR */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: var(--card);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+/* BOARD */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 32px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* COLUMN */
+
+.column {
+  background: linear-gradient(180deg, var(--card), var(--card-alt));
+  box-shadow: 0 10px 30px var(--shadow);
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+}
+
+.column:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px var(--shadow);
+}
+
+/* TASK */
+
+.task {
+  background: var(--card-alt);
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  cursor: grab;
+}
+
+.task:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* ADD BUTTON */
+
+.add-btn {
+  background: linear-gradient(135deg, var(--primary), #7c72ff);
+  border: none;
+  padding: 12px;
+  border-radius: 14px;
+  color: white;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 16px;
+  min-width: 300px;
+}
+
+/* FOOTER */
+
+.footer {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 32px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}

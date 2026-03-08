@@ -283,25 +283,34 @@ export default function AIInsights() {
                   }}
                 />
                 <Line
+                  key="line-flagged"
+                  id="line-flagged"
                   type="monotone"
                   dataKey="flagged"
                   stroke="#6366f1"
                   strokeWidth={2}
                   dot={{ fill: "#6366f1", r: 4 }}
+                  activeDot={{ r: 6 }}
                 />
                 <Line
+                  key="line-approved"
+                  id="line-approved"
                   type="monotone"
                   dataKey="approved"
                   stroke="#10b981"
                   strokeWidth={2}
                   dot={{ fill: "#10b981", r: 4 }}
+                  activeDot={{ r: 6 }}
                 />
                 <Line
+                  key="line-rejected"
+                  id="line-rejected"
                   type="monotone"
                   dataKey="rejected"
                   stroke="#ef4444"
                   strokeWidth={2}
                   dot={{ fill: "#ef4444", r: 4 }}
+                  activeDot={{ r: 6 }}
                 />
               </LineChart>
             </ResponsiveContainer>

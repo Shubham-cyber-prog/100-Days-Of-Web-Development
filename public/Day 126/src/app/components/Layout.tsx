@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router';
-import { Code2, LayoutDashboard, History, Settings, Search, User, Upload, Moon, Menu, X } from 'lucide-react';
+import { Code2, LayoutDashboard, History, Settings, Search, User, Upload, Moon, Menu, X, Sparkles, FolderOpen, GitCompare } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -15,6 +15,9 @@ export function Layout() {
   const navItems = [
     { path: '/', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/upload', label: 'Upload Code', icon: Upload },
+    { path: '/batch', label: 'Batch Analysis', icon: FolderOpen },
+    { path: '/comparison', label: 'Code Comparison', icon: GitCompare },
+    { path: '/ai-chat', label: 'AI Assistant', icon: Sparkles },
     { path: '/history', label: 'History', icon: History },
     { path: '/settings', label: 'Settings', icon: Settings }
   ];

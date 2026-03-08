@@ -2,8 +2,10 @@ import { createBrowserRouter } from "react-router";
 import LoginPage from "./pages/login";
 import DashboardLayout from "./layouts/dashboard-layout";
 import Dashboard from "./pages/dashboard";
-import ModerationQueue from "./pages/moderation-queue";
+import ModerationQueueEnhanced from "./pages/moderation-queue-enhanced";
 import AIInsights from "./pages/ai-insights";
+import ActivityFeedPage from "./pages/activity-feed-page";
+import FeaturesShowcase from "./pages/features-showcase";
 import Settings from "./pages/settings";
 import EmptyStates from "./pages/empty-states";
 import Components from "./pages/components";
@@ -19,8 +21,10 @@ export const router = createBrowserRouter([
     Component: DashboardLayout,
     children: [
       { index: true, Component: Dashboard },
-      { path: "queue", Component: ModerationQueue },
+      { path: "queue", Component: ModerationQueueEnhanced },
       { path: "insights", Component: AIInsights },
+      { path: "activity", Component: ActivityFeedPage },
+      { path: "features", Component: FeaturesShowcase },
       { path: "settings", Component: Settings },
       { path: "guide", Component: Guide },
       { path: "components", Component: Components },

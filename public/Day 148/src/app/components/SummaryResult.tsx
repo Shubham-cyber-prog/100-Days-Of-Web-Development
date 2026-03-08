@@ -2,10 +2,14 @@ import { Copy, Download, Share2, Sparkles, TrendingUp, Tag, CheckCircle2 } from 
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
+import { ExportModal } from './ExportModal';
+import { ShareModal } from './ShareModal';
 
 export function SummaryResult() {
   const [activeTab, setActiveTab] = useState('summary');
   const [copied, setCopied] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const handleCopy = () => {
     setCopied(true);
@@ -75,11 +79,17 @@ Total operating expenses of $36.9M represent an 18% increase from the prior year
             </>
           )}
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border hover:bg-accent transition-colors">
+        <button
+          onClick={() => setShowExportModal(true)}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border hover:bg-accent transition-colors"
+        >
           <Download className="w-4 h-4" />
           <span>Download</span>
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border hover:bg-accent transition-colors">
+        <button
+          onClick={() => setShowShareModal(true)}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border hover:bg-accent transition-colors"
+        >
           <Share2 className="w-4 h-4" />
           <span>Share</span>
         </button>
@@ -255,6 +265,16 @@ Total operating expenses of $36.9M represent an 18% increase from the prior year
           </div>
         </div>
       </motion.div>
+
+      {/* Modals */}
+      <ExportModal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+      />
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+      />
     </div>
   );
 }

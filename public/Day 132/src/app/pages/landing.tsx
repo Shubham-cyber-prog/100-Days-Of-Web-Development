@@ -12,12 +12,16 @@ import {
   Github,
   Linkedin,
   Star,
-  Sparkles
+  Sparkles,
+  Moon,
+  Sun
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
+import { useTheme } from "../contexts/theme-context";
 
 export default function LandingPage() {
+  const { theme, toggleTheme } = useTheme();
   const features = [
     {
       icon: MessageSquare,
@@ -73,13 +77,13 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fb] via-[#f0f1f9] to-[#e8eaf6]">
+    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fb] via-[#f0f1f9] to-[#e8eaf6] dark:from-[#0f111a] dark:via-[#13151f] dark:to-[#1a1d2e]">
       {/* Header */}
-      <header className="border-b border-white/20 backdrop-blur-md bg-white/40 sticky top-0 z-50">
+      <header className="border-b border-white/20 dark:border-border backdrop-blur-md bg-white/40 dark:bg-card/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#7c3aed] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#7c3aed] flex items-center justify-center shadow-lg shadow-indigo-500/30">
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <span className="text-xl font-semibold bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] bg-clip-text text-transparent">
@@ -87,6 +91,18 @@ export default function LandingPage() {
               </span>
             </div>
             <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                className="rounded-xl"
+              >
+                {theme === "light" ? (
+                  <Moon className="w-5 h-5" />
+                ) : (
+                  <Sun className="w-5 h-5" />
+                )}
+              </Button>
               <Link to="/login">
                 <Button variant="ghost" className="rounded-2xl">
                   Sign In
@@ -110,14 +126,14 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-white/20 mb-6 shadow-sm">
-              <Sparkles className="w-4 h-4 text-[#4f46e5]" />
-              <span className="text-sm text-gray-600">Powered by Advanced AI</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 dark:bg-card/60 backdrop-blur-sm border border-white/20 dark:border-border mb-6 shadow-sm">
+              <Sparkles className="w-4 h-4 text-[#4f46e5] dark:text-[#7c3aed]" />
+              <span className="text-sm text-gray-600 dark:text-gray-300">Powered by Advanced AI</span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-[#4f46e5] via-[#7c3aed] to-[#06b6d4] bg-clip-text text-transparent leading-tight">
               Your Intelligent AI Assistant for Everything
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
               Automate tasks, have natural conversations, get instant insights, and boost your productivity with our cutting-edge AI-powered virtual assistant.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -144,10 +160,10 @@ export default function LandingPage() {
           >
             <div className="relative max-w-3xl mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-[#4f46e5]/20 to-[#06b6d4]/20 blur-3xl rounded-full" />
-              <Card className="relative backdrop-blur-xl bg-white/70 border-white/40 shadow-2xl rounded-3xl overflow-hidden">
+              <Card className="relative backdrop-blur-xl bg-white/70 dark:bg-card/70 border-white/40 dark:border-border shadow-2xl rounded-3xl overflow-hidden">
                 <CardContent className="p-8">
                   <div className="aspect-video rounded-2xl bg-gradient-to-br from-[#4f46e5]/10 to-[#7c3aed]/10 flex items-center justify-center">
-                    <Bot className="w-32 h-32 text-[#4f46e5] opacity-50" />
+                    <Bot className="w-32 h-32 text-[#4f46e5] dark:text-[#7c3aed] opacity-50" />
                   </div>
                 </CardContent>
               </Card>
@@ -162,7 +178,7 @@ export default function LandingPage() {
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] bg-clip-text text-transparent">
             Powerful Features
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Everything you need to supercharge your workflow
           </p>
         </div>
@@ -175,13 +191,13 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="h-full backdrop-blur-xl bg-white/70 border-white/40 rounded-3xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <Card className="h-full backdrop-blur-xl bg-white/70 dark:bg-card/70 border-white/40 dark:border-border rounded-3xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <CardContent className="p-8">
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#7c3aed] flex items-center justify-center mb-4 shadow-lg shadow-indigo-500/30">
                     <feature.icon className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{feature.description}</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -195,7 +211,7 @@ export default function LandingPage() {
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] bg-clip-text text-transparent">
             Loved by Teams Worldwide
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             See what our users have to say
           </p>
         </div>
@@ -208,17 +224,17 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="h-full backdrop-blur-xl bg-white/70 border-white/40 rounded-3xl">
+              <Card className="h-full backdrop-blur-xl bg-white/70 dark:bg-card/70 border-white/40 dark:border-border rounded-3xl">
                 <CardContent className="p-8">
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 fill-[#06b6d4] text-[#06b6d4]" />
                     ))}
                   </div>
-                  <p className="text-gray-700 mb-6 leading-relaxed">"{testimonial.content}"</p>
+                  <p className="text-gray-700 dark:text-gray-200 mb-6 leading-relaxed">"{testimonial.content}"</p>
                   <div>
                     <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -228,7 +244,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/20 backdrop-blur-md bg-white/40 mt-20">
+      <footer className="border-t border-white/20 dark:border-border backdrop-blur-md bg-white/40 dark:bg-card/50 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -240,13 +256,13 @@ export default function LandingPage() {
                   AI Assistant
                 </span>
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-300">
                 Your intelligent companion for a smarter workflow.
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                 <li><a href="#" className="hover:text-[#4f46e5] transition-colors">Features</a></li>
                 <li><a href="#" className="hover:text-[#4f46e5] transition-colors">Pricing</a></li>
                 <li><a href="#" className="hover:text-[#4f46e5] transition-colors">Use Cases</a></li>
@@ -254,7 +270,7 @@ export default function LandingPage() {
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                 <li><a href="#" className="hover:text-[#4f46e5] transition-colors">About</a></li>
                 <li><a href="#" className="hover:text-[#4f46e5] transition-colors">Blog</a></li>
                 <li><a href="#" className="hover:text-[#4f46e5] transition-colors">Careers</a></li>
@@ -263,19 +279,19 @@ export default function LandingPage() {
             <div>
               <h4 className="font-semibold mb-4">Connect</h4>
               <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 rounded-xl bg-white/80 flex items-center justify-center hover:bg-[#4f46e5] hover:text-white transition-all">
+                <a href="#" className="w-10 h-10 rounded-xl bg-white/80 dark:bg-card/80 flex items-center justify-center hover:bg-[#4f46e5] dark:hover:bg-[#7c3aed] hover:text-white transition-all">
                   <Twitter className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-xl bg-white/80 flex items-center justify-center hover:bg-[#4f46e5] hover:text-white transition-all">
+                <a href="#" className="w-10 h-10 rounded-xl bg-white/80 dark:bg-card/80 flex items-center justify-center hover:bg-[#4f46e5] dark:hover:bg-[#7c3aed] hover:text-white transition-all">
                   <Github className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-xl bg-white/80 flex items-center justify-center hover:bg-[#4f46e5] hover:text-white transition-all">
+                <a href="#" className="w-10 h-10 rounded-xl bg-white/80 dark:bg-card/80 flex items-center justify-center hover:bg-[#4f46e5] dark:hover:bg-[#7c3aed] hover:text-white transition-all">
                   <Linkedin className="w-5 h-5" />
                 </a>
               </div>
             </div>
           </div>
-          <div className="border-t border-white/20 pt-8 text-center text-sm text-gray-600">
+          <div className="border-t border-white/20 dark:border-border pt-8 text-center text-sm text-gray-600 dark:text-gray-300">
             <p>&copy; 2026 AI Assistant. All rights reserved.</p>
           </div>
         </div>
