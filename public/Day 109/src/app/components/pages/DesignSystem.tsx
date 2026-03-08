@@ -1,6 +1,9 @@
+import { toast } from "sonner";
+import { Command, Keyboard } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Input } from "../ui/Input";
 import { Badge } from "../ui/Badge";
+import { Checkbox } from "../ui/Checkbox";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/Card";
 
 export function DesignSystem() {
@@ -13,6 +16,92 @@ export function DesignSystem() {
           Components, styles, and guidelines for building consistent UIs.
         </p>
       </div>
+
+      {/* New Features */}
+      <section>
+        <h2 className="text-foreground mb-6">Enhanced Features</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Toast Notifications</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <p className="text-sm text-muted-foreground mb-4">
+                Real-time feedback for user actions using Sonner.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <Button size="sm" onClick={() => toast.success("Success message!")}>
+                  Success Toast
+                </Button>
+                <Button size="sm" onClick={() => toast.error("Error message!")}>
+                  Error Toast
+                </Button>
+                <Button size="sm" onClick={() => toast.info("Info message!")}>
+                  Info Toast
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Command Palette</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                Quick navigation with keyboard shortcuts.
+              </p>
+              <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
+                <Keyboard className="size-5 text-muted-foreground" />
+                <span className="text-sm text-foreground">Press</span>
+                <kbd className="px-2 py-1 bg-background rounded border border-border text-sm">
+                  <Command className="size-3 inline" /> K
+                </kbd>
+                <span className="text-sm text-foreground">to open</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Checkboxes & Multi-Select</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <p className="text-sm text-muted-foreground mb-4">
+                Select multiple items for bulk actions.
+              </p>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox />
+                  <span className="text-sm text-foreground">Option 1</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox />
+                  <span className="text-sm text-foreground">Option 2</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox defaultChecked />
+                  <span className="text-sm text-foreground">Option 3 (checked)</span>
+                </label>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Persistent Theme</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                Dark/Light mode preference saved to localStorage. Toggle using the theme button in the top navigation.
+              </p>
+              <div className="p-3 bg-muted rounded-lg text-sm text-muted-foreground">
+                Theme persists across sessions
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       {/* Typography */}
       <section>

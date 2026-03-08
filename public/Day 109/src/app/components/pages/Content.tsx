@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { Plus, Search, Filter, MoreVertical, Edit, Trash2 } from "lucide-react";
+import { Plus, Search, Filter, MoreVertical, Edit, Trash2, Archive, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "../ui/Button";
 import { Input } from "../ui/Input";
 import { Badge } from "../ui/Badge";
+import { Checkbox } from "../ui/Checkbox";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../ui/Table";
 
 const contentData = [
@@ -20,6 +22,7 @@ const contentData = [
 export function Content() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
   const filteredContent = contentData.filter((item) => {
     const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -27,6 +30,37 @@ export function Content() {
     const matchesFilter = filterStatus === "all" || item.status === filterStatus;
     return matchesSearch && matchesFilter;
   });
+
+  const toggleSelectAll = () => {
+    if (selectedItems.length === filteredContent.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(filteredContent.map(item => item.id));
+    }
+  };
+
+  const toggleSelectItem = (id: number) => {
+    if (selectedItems.includes(id)) {
+      setSelectedItems(selectedItems.filter(itemId => itemId !== id));
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
+  };
+
+  const handleBulkPublish = () => {
+    toast.success(`Published ${selectedItems.length} items`);
+    setSelectedItems([]);
+  };
+
+  const handleBulkArchive = () => {
+    toast.success(`Archived ${selectedItems.length} items`);
+    setSelectedItems([]);
+  };
+
+  const handleBulkDelete = () => {
+    toast.error(`Deleted ${selectedItems.length} items`);
+    setSelectedItems([]);
+  };
 
   return (
     <div className="max-w-[1400px] mx-auto space-y-6">
@@ -43,6 +77,30 @@ export function Content() {
           </Button>
         </Link>
       </div>
+
+      {/* Bulk Actions Bar */}
+      {selectedItems.length > 0 && (
+        <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="size-5 text-primary" />
+            <span className="text-foreground">{selectedItems.length} items selected</span>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="secondary" size="sm" onClick={handleBulkPublish}>
+              <CheckCircle className="size-4" />
+              Publish
+            </Button>
+            <Button variant="secondary" size="sm" onClick={handleBulkArchive}>
+              <Archive className="size-4" />
+              Archive
+            </Button>
+            <Button variant="destructive" size="sm" onClick={handleBulkDelete}>
+              <Trash2 className="size-4" />
+              Delete
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
@@ -79,6 +137,12 @@ export function Content() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-12">
+                <Checkbox
+                  checked={selectedItems.length === filteredContent.length && filteredContent.length > 0}
+                  onChange={toggleSelectAll}
+                />
+              </TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Author</TableHead>
               <TableHead>Status</TableHead>
@@ -89,6 +153,12 @@ export function Content() {
           <TableBody>
             {filteredContent.map((item) => (
               <TableRow key={item.id}>
+                <TableCell>
+                  <Checkbox
+                    checked={selectedItems.includes(item.id)}
+                    onChange={() => toggleSelectItem(item.id)}
+                  />
+                </TableCell>
                 <TableCell>
                   <div className="text-foreground">{item.title}</div>
                 </TableCell>
@@ -110,7 +180,7 @@ export function Content() {
                         <Edit className="size-4" />
                       </Button>
                     </Link>
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" onClick={() => toast.error("Item deleted")}>
                       <Trash2 className="size-4 text-destructive" />
                     </Button>
                     <Button variant="ghost" size="sm">
