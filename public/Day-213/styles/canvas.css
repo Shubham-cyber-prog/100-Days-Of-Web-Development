@@ -1,0 +1,80 @@
+#viewport {
+    flex: 1;
+    position: relative;
+    background: #020617;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#map-canvas {
+    cursor: grab;
+}
+
+#map-canvas:active {
+    cursor: grabbing;
+}
+
+#toolbar {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.tool-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: all 0.2s;
+    font-size: 1.25rem;
+    color: var(--text-main);
+    user-select: none;
+}
+
+.tool-btn:hover {
+    background: var(--accent);
+    color: var(--bg-dark);
+}
+
+#stats {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* Biome specific highlights/animations if needed */
+.biome-info {
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* Grid overlay if we wanted to implement one */
+.grid-overlay {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+}

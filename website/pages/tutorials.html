@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>Video Tutorials - 100 Days Web Dev</title>
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/pages/tutorials.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      /* Fix navbar text visibility in light theme */
+      [data-theme="light"] .nav-links .nav-link {
+        color: #1a1a2e !important;
+      }
+
+      [data-theme="light"] .nav-links .nav-link:hover,
+      [data-theme="light"] .nav-links .nav-link.active {
+        color: #667eea !important;
+      }
+
+      [data-theme="light"] .site-header {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+
+      [data-theme="light"] .nav-container {
+        background: transparent !important;
+      }
+
+      [data-theme="light"] .nav-user .icon-btn svg {
+        color: #4a5568 !important;
+      }
+
+      [data-theme="light"] .user-avatar {
+        border: 2px solid rgba(102, 126, 234, 0.3) !important;
+      }
+
+      /* Fix dropdown menu in light theme */
+      [data-theme="light"] .user-dropdown {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-item {
+        color: #1a1a2e !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-item:hover {
+        background: rgba(102, 126, 234, 0.1) !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-divider {
+        border-color: rgba(102, 126, 234, 0.1) !important;
+      }
+
+      [data-theme="light"] .text-danger {
+        color: #e53e3e !important;
+      }
+
+      /* Mobile menu fix for light theme */
+      [data-theme="light"] .nav-links.open {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+    </style>
+
+    <style>
+      /* Navbar styling from first file */
+      header nav img {
+        width: 100px;
+        height: 70px;
+        border: 2px groove #cc2a01;
+        border-radius: 25%;
+      }
+
+      header nav img:hover {
+        box-shadow:
+          0 0 15px #ff5733,
+          0 0 30px #ff5733,
+          0 0 45px #ff5733;
+        transition: box-shadow 0.3s ease-in-out;
+      }
+
+      .nav-container {
+        height: 120px;
+        margin-top: 25px;
+      }
+
+      /* Fix navbar text visibility in light theme */
+      [data-theme="light"] .nav-links .nav-link {
+        color: #1a1a2e !important;
+      }
+
+      [data-theme="light"] .nav-links .nav-link:hover,
+      [data-theme="light"] .nav-links .nav-link.active {
+        color: #667eea !important;
+      }
+
+      [data-theme="light"] .site-header {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+
+      [data-theme="light"] .nav-container {
+        background: transparent !important;
+      }
+
+      [data-theme="light"] .nav-user .icon-btn svg {
+        color: #4a5568 !important;
+      }
+
+      [data-theme="light"] .user-avatar {
+        border: 2px solid rgba(102, 126, 234, 0.3) !important;
+      }
+
+      /* Fix dropdown menu in light theme */
+      [data-theme="light"] .user-dropdown {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-item {
+        color: #1a1a2e !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-item:hover {
+        background: rgba(102, 126, 234, 0.1) !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-divider {
+        border-color: rgba(102, 126, 234, 0.1) !important;
+      }
+
+      [data-theme="light"] .text-danger {
+        color: #e53e3e !important;
+      }
+
+      /* Mobile menu fix for light theme */
+      [data-theme="light"] .nav-links.open {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+    </style>
+
+    <style>
+      /* Navbar styling from first file */
+      header nav img {
+        width: 100px;
+        height: 70px;
+        border: 2px groove #cc2a01;
+        border-radius: 25%;
+      }
+
+      header nav img:hover {
+        box-shadow:
+          0 0 15px #ff5733,
+          0 0 30px #ff5733,
+          0 0 45px #ff5733;
+        transition: box-shadow 0.3s ease-in-out;
+      }
+
+      .nav-container {
+        height: 120px;
+        margin-top: 25px;
+      }
+
+      /* Fix navbar text visibility in light theme */
+      [data-theme="light"] .nav-links .nav-link {
+        color: #1a1a2e !important;
+      }
+
+      [data-theme="light"] .nav-links .nav-link:hover,
+      [data-theme="light"] .nav-links .nav-link.active {
+        color: #667eea !important;
+      }
+
+      [data-theme="light"] .site-header {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+
+      [data-theme="light"] .nav-container {
+        background: transparent !important;
+      }
+
+      [data-theme="light"] .nav-user .icon-btn svg {
+        color: #4a5568 !important;
+      }
+
+      [data-theme="light"] .user-avatar {
+        border: 2px solid rgba(102, 126, 234, 0.3) !important;
+      }
+
+      /* Fix dropdown menu in light theme */
+      [data-theme="light"] .user-dropdown {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-item {
+        color: #1a1a2e !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-item:hover {
+        background: rgba(102, 126, 234, 0.1) !important;
+      }
+
+      [data-theme="light"] .user-dropdown .dropdown-divider {
+        border-color: rgba(102, 126, 234, 0.1) !important;
+      }
+
+      [data-theme="light"] .text-danger {
+        color: #e53e3e !important;
+      }
+
+      /* Mobile menu fix for light theme */
+      [data-theme="light"] .nav-links.open {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+      }
+    </style>
+    <script src="../scripts/components/sidebar-loader.js"></script>
+</head>
+  <body>
+    <!-- Dynamic header will be loaded here -->
+
+    <main class="tutorials-main">
+      <div class="container">
+        <header class="page-header">
+          <h1><i class="fas fa-play-circle"></i> Video Tutorials</h1>
+          <p>Master web development with our comprehensive video library</p>
+        </header>
+
+        <div class="tutorials-controls">
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search tutorials..."
+            />
+          </div>
+          <div class="filter-tabs">
+            <button class="filter-btn active" data-level="all">All</button>
+            <button class="filter-btn" data-level="beginner">Beginner</button>
+            <button class="filter-btn" data-level="intermediate">
+              Intermediate
+            </button>
+            <button class="filter-btn" data-level="advanced">Advanced</button>
+          </div>
+        </div>
+
+        <div class="progress-overview">
+          <div class="progress-card">
+            <i class="fas fa-chart-line"></i>
+            <div>
+              <h3 id="watchedCount">0</h3>
+              <p>Videos Watched</p>
+            </div>
+          </div>
+          <div class="progress-card">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h3 id="totalTime">0h 0m</h3>
+              <p>Total Watch Time</p>
+            </div>
+          </div>
+          <div class="progress-card">
+            <i class="fas fa-trophy"></i>
+            <div>
+              <h3 id="completionRate">0%</h3>
+              <p>Completion Rate</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorials-grid" id="tutorialsGrid">
+          <!-- Videos will be loaded here -->
+        </div>
+
+        <div class="resources-section">
+          <h2><i class="fas fa-download"></i> Downloadable Resources</h2>
+          <div class="resources-grid">
+            <div class="resource-card">
+              <i class="fas fa-file-pdf"></i>
+              <h3>HTML Cheat Sheet</h3>
+              <button class="download-btn">Download PDF</button>
+            </div>
+            <div class="resource-card">
+              <i class="fas fa-file-code"></i>
+              <h3>CSS Reference Guide</h3>
+              <button class="download-btn">Download PDF</button>
+            </div>
+            <div class="resource-card">
+              <i class="fas fa-file-alt"></i>
+              <h3>JavaScript Snippets</h3>
+              <button class="download-btn">Download ZIP</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle"></h3>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="video-container">
+            <iframe
+              id="videoFrame"
+              src=""
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="video-info">
+            <div class="video-meta">
+              <span class="duration" id="modalDuration"></span>
+              <span class="difficulty" id="modalDifficulty"></span>
+            </div>
+            <p id="modalDescription"></p>
+            <div class="video-notes">
+              <h4>Your Notes</h4>
+              <textarea
+                id="videoNotes"
+                placeholder="Add your notes here..."
+              ></textarea>
+              <button id="saveNotes">Save Notes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../scripts/components/navigation.js"></script>
+    <script src="../scripts/pages/tutorials.js"></script>
+
+    <script>
+      // Function to fix navbar colors based on theme
+      function fixNavbarTheme() {
+        const isLightTheme =
+          document.documentElement.getAttribute("data-theme") === "light";
+
+        if (isLightTheme) {
+          // Add light theme class to header
+          document.querySelector(".site-header").classList.add("light-theme");
+
+          // Update all nav links
+          const navLinks = document.querySelectorAll(".nav-link");
+          navLinks.forEach((link) => {
+            link.style.color = "#1a1a2e";
+          });
+        } else {
+          // Remove light theme class
+          document
+            .querySelector(".site-header")
+            .classList.remove("light-theme");
+
+          // Reset nav links (they'll use CSS variables)
+          const navLinks = document.querySelectorAll(".nav-link");
+          navLinks.forEach((link) => {
+            link.style.color = "";
+          });
+        }
+      }
+
+      // Run on page load
+      document.addEventListener("DOMContentLoaded", fixNavbarTheme);
+
+      // Override theme toggle to update navbar
+      const originalToggleTheme = window.toggleTheme;
+      if (originalToggleTheme) {
+        window.toggleTheme = function () {
+          originalToggleTheme();
+          setTimeout(fixNavbarTheme, 100);
+        };
+      }
+
+      // Also listen for theme attribute changes
+      const observer = new MutationObserver(fixNavbarTheme);
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
+      });
+    </script>    <script src="../scripts/components/footer-loader.js"></script>
+    <script src="../scripts/components/navigation.js"></script>
+  </body>
+</html>

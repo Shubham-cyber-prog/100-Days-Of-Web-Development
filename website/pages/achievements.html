@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hall of Valor | 100 Days</title>
+
+<style>
+
+:root{
+  --bg:#05070d;
+  --card:#0c111a;
+  --border:#1f2a3a;
+  --accent:#22d3ee;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* ================= WRAPPER ================= */
+
+.wrapper{
+  max-width:1400px;
+  margin:auto;
+  padding:60px 30px;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+  text-align:center;
+  margin-bottom:50px;
+}
+
+.header h1{
+  font-size:clamp(2.5rem,5vw,3.5rem);
+  color:var(--accent);
+  margin-bottom:10px;
+}
+
+.header p{
+  color:var(--muted);
+  font-size:1rem;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+  margin-bottom:60px;
+}
+
+.stat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:30px;
+  text-align:center;
+  transition:.3s;
+}
+
+.stat-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-4px);
+}
+
+.stat-card h2{
+  font-size:2.2rem;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+
+/* ================= GRID ================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:35px;
+}
+
+/* ================= CARD ================= */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:35px 28px;
+  min-height:420px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  border-color:var(--accent);
+  box-shadow:0 0 30px rgba(34,211,238,.15);
+}
+
+/* UNLOCKED */
+
+.card.unlocked{
+  border-color:var(--accent);
+  background:linear-gradient(
+    135deg,
+    rgba(34,211,238,.05),
+    rgba(139,92,246,.05)
+  );
+}
+
+/* ICON */
+
+.icon{
+  font-size:3rem;
+  margin-bottom:18px;
+}
+
+/* TEXT */
+
+.card h3{
+  font-size:1.3rem;
+  margin-bottom:10px;
+}
+
+.card p{
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+/* PROGRESS */
+
+.progress{
+  height:7px;
+  background:#1e293b;
+  border-radius:4px;
+  overflow:hidden;
+  margin:10px 0;
+}
+
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),#6366f1);
+}
+
+/* BUTTON */
+
+.btn{
+  margin-top:15px;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.btn:hover{
+  background:var(--accent);
+  color:#000;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+  .wrapper{
+    padding:40px 20px;
+  }
+
+  .grid{
+    gap:25px;
+  }
+
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 35px 28px;
+
+  /* REMOVE fixed height */
+  min-height: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;   /* Adds clean spacing instead */
+
+  transition: .3s;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Hall of Valor</h1>
+    <p>Your mission milestones and earned badges. Complete challenges to unlock more!</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+
+    <div class="stat-card">
+      <h2>5</h2>
+      <p>Badges Earned</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>750</h2>
+      <p>Reputation Points</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>71%</h2>
+      <p>Collection Progress</p>
+    </div>
+
+  </div>
+
+  <!-- GRID -->
+  <div class="grid">
+
+    <div class="card unlocked">
+      <div>
+        <div class="icon">👣</div>
+        <h3>First Steps</h3>
+        <p>Complete your first day of the 100 Days challenge</p>
+      </div>
+      <div>
+        <p>Unlocked on Jan 15 2024</p>
+        <button class="btn">Share</button>
+      </div>
+    </div>
+
+    <div class="card unlocked">
+      <div>
+        <div class="icon">📄</div>
+        <h3>HTML Master</h3>
+        <p>Complete all HTML related projects</p>
+      </div>
+      <div>
+        <p>Unlocked on Jan 20 2024</p>
+        <button class="btn">Share</button>
+      </div>
+    </div>
+
+    <div class="card unlocked">
+      <div>
+        <div class="icon">🎨</div>
+        <h3>CSS Wizard</h3>
+        <p>Master advanced CSS concepts</p>
+      </div>
+      <div>
+        <p>Unlocked on Jan 28 2024</p>
+        <button class="btn">Share</button>
+      </div>
+    </div>
+
+    <div class="card unlocked">
+      <div>
+        <div class="icon">⚡</div>
+        <h3>JavaScript Ninja</h3>
+        <p>Build interactive JavaScript projects</p>
+      </div>
+      <div>
+        <p>Unlocked on Feb 05 2024</p>
+        <button class="btn">Share</button>
+      </div>
+    </div>
+
+    <div class="card unlocked">
+      <div>
+        <div class="icon">🚀</div>
+        <h3>Framework Explorer</h3>
+        <p>Complete a modern framework project</p>
+      </div>
+      <div>
+        <p>Unlocked on Feb 12 2024</p>
+        <button class="btn">Share</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="icon">🔌</div>
+        <h3>API Integrator</h3>
+        <p>Integrate 3 APIs</p>
+        <p>Progress: 2/3</p>
+        <div class="progress">
+          <div class="progress-fill" style="width:66%"></div>
+        </div>
+        <p>150 points</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="icon">📱</div>
+        <h3>Responsive Guru</h3>
+        <p>Create 10 responsive sites</p>
+        <p>Progress: 7/10</p>
+        <div class="progress">
+          <div class="progress-fill" style="width:70%"></div>
+        </div>
+        <p>200 points</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

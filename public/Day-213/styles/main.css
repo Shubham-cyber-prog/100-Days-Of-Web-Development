@@ -1,0 +1,157 @@
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --border: #334155;
+    --sidebar-width: 280px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden;
+}
+
+#app {
+    display: flex;
+    height: 100%;
+}
+
+#toolbar {
+    width: var(--sidebar-width);
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 2rem;
+    z-index: 10;
+    box-shadow: 10px 0 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.05em;
+}
+
+header p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.tool-section h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.tool-btn {
+    aspect-ratio: 1;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tool-btn:hover {
+    border-color: var(--accent);
+    color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+.tool-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.control-row {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-row label {
+    font-size: 0.875rem;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+}
+
+.actions {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+.actions button {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.actions button:hover {
+    background: var(--border);
+}
+
+#pause-btn {
+    background: var(--bg-dark);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+#viewport {
+    flex: 1;
+    position: relative;
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    overflow: hidden;
+}
+
+#physics-canvas {
+    width: 100%;
+    height: 100%;
+}

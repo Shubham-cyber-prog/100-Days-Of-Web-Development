@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voxel Architect // Lite Sandbox</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/ui.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&family=JetBrains+Mono&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="architect-os">
+    <div id="sandbox-wrapper">
+        <!-- Dashboard Header -->
+        <header class="studio-bar glass">
+            <div class="project-info">
+                <h1>VOXEL_ARCHITECT</h1>
+                <span class="version">BUILD_v0.2.1</span>
+            </div>
+
+            <div class="view-controls">
+                <button class="btn-ctrl" id="btn-rotate-l" aria-label="Rotate Left">↺</button>
+                <button class="btn-ctrl" id="btn-rotate-r" aria-label="Rotate Right">↻</button>
+                <button class="btn-ctrl" id="btn-screenshot" aria-label="Export Image">⎙</button>
+            </div>
+
+            <div class="file-ops">
+                <button class="btn primary" id="btn-save">STORE_DATA</button>
+                <button class="btn secondary" id="btn-clear">FLUSH_GRID</button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main id="viewport-container">
+            <canvas id="voxel-canvas"></canvas>
+
+            <!-- Contextual Indicators -->
+            <div id="grid-stats">X: 0 | Y: 0 | Z: 0</div>
+        </main>
+
+        <!-- Builder Toolbox -->
+        <aside class="toolbox glass">
+            <div class="tool-section">
+                <h3>PALETTE</h3>
+                <div class="color-grid" id="color-palette">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <h3>CONSTRUCT_TOOLS</h3>
+                <div class="tool-grid">
+                    <button class="tool active" data-tool="place">PLACE</button>
+                    <button class="tool" data-tool="erase">ERASE</button>
+                    <button class="tool" data-tool="pick">PICK</button>
+                    <button class="tool" data-tool="fill">FLOOD</button>
+                </div>
+            </div>
+
+            <div class="tool-section layer-info">
+                <h3>GRID_INFO</h3>
+                <div class="info-row"><span>VOXELS:</span> <span id="voxel-count">0</span></div>
+                <div class="info-row"><span>LEVEL:</span> <span id="current-layer">0</span></div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Feedback Toasts -->
+    <div id="toast-notif" class="toast hidden"></div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>

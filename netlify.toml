@@ -1,5 +1,7 @@
+# Trigger Netlify build check
 [build]
-  publish = "."
+  command = "mkdir -p dist && rsync -av --exclude=dist --exclude=.git --exclude=.github --exclude=netlify.toml . dist/"
+  publish = "dist"
 
 [[headers]]
   for = "/*"

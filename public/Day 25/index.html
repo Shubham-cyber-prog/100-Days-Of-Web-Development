@@ -1,20 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Quote Generator</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Random Quote Generator | Daily Inspiration</title>
+
+<meta name="description" content="Generate motivational, life and success quotes instantly. A beautiful random quote generator built with HTML, CSS and JavaScript.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>✨ Random Quote Generator</h1>
-        <p id="quote">Click the button to get a quote</p>
-        <p id="author"></p>
-        <button id="btn">New Quote</button>
-    </div>
+<div class="container">
 
-    <script src="app.js"></script>
+<header class="header">
+<h1>✨ Random Quote Generator</h1>
+<p>Generate inspiring quotes based on your mood and share them with the world.</p>
+</header>
+
+
+<div class="controls">
+
+<h3>Select Mood</h3>
+
+<div class="moods">
+
+<button class="mood-btn active" data-mood="hustle">🔥 Hustle</button>
+<button class="mood-btn" data-mood="calm">🌊 Calm</button>
+<button class="mood-btn" data-mood="creative">🎨 Creative</button>
+<button class="mood-btn" data-mood="stoic">🏛 Stoic</button>
+
+</div>
+
+<button id="generateBtn" class="generate">Generate Quote</button>
+
+</div>
+
+
+
+<div class="quote-card">
+
+<div class="quote-icon">❝</div>
+
+<p id="quote">Click generate to see a quote</p>
+
+<p id="author"></p>
+
+
+<div class="actions">
+
+<button id="copyBtn">Copy</button>
+
+<button id="twitterBtn">Share</button>
+
+</div>
+
+</div>
+
+
+<footer>
+
+<p>Built for ECWOC • Frontend UI Improvement</p>
+
+</footer>
+
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>

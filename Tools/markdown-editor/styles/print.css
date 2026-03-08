@@ -1,0 +1,71 @@
+/* Print / PDF Export Styles */
+
+@media print {
+
+    /* Hide UI elements */
+    .editor-header,
+    .pane-header,
+    .editor-pane,
+    .resize-divider {
+        display: none !important;
+    }
+
+    /* Make preview full width */
+    .preview-pane {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    #preview-content {
+        padding: 0.5in !important;
+    }
+
+    /* Reset colors for print */
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    .markdown-body {
+        color: black !important;
+    }
+
+    /* Page breaks */
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3 {
+        page-break-after: avoid;
+    }
+
+    .markdown-body pre,
+    .markdown-body blockquote {
+        page-break-inside: avoid;
+    }
+
+    /* Links */
+    .markdown-body a {
+        text-decoration: underline;
+        color: black !important;
+    }
+
+    .markdown-body a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        font-style: italic;
+    }
+
+    /* Code blocks */
+    .markdown-body pre {
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+    }
+
+    /* Images */
+    .markdown-body img {
+        max-width: 100%;
+        page-break-inside: avoid;
+    }
+}

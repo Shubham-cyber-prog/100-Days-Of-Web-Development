@@ -1,0 +1,420 @@
+:root {
+    --bg-space: #000000;
+    --bg-panel: #0a0a0f;
+    --bg-panel-light: #12121a;
+    --accent-primary: #00d9ff;
+    --accent-secondary: #ff6b35;
+    --accent-glow: #4a9eff;
+    --text-primary: #e8e8e8;
+    --text-secondary: #8a8a9f;
+    --text-dim: #4a4a5f;
+    --border-color: #1a1a2e;
+    --success: #00ff88;
+    --danger: #ff4757;
+
+    --font-display: 'Orbitron', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-mono);
+    background: var(--bg-space);
+    color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
+}
+
+.cosmos-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header Control Panel */
+.control-panel {
+    background: var(--bg-panel);
+    border-bottom: 2px solid var(--border-color);
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 4px 20px rgba(0, 217, 255, 0.1);
+}
+
+.logo-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    margin-top: -5px;
+}
+
+.status-indicators {
+    display: flex;
+    gap: 25px;
+    flex: 1;
+}
+
+.indicator {
+    display: flex;
+    gap: 8px;
+    font-size: 0.75rem;
+}
+
+.indicator .label {
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.indicator .value {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+.indicator .value.highlight {
+    color: var(--success);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn {
+    background: transparent;
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 2px;
+}
+
+.btn:hover:not(:disabled) {
+    background: var(--accent-primary);
+    color: var(--bg-space);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+}
+
+.btn.primary {
+    background: var(--accent-primary);
+    color: var(--bg-space);
+}
+
+.btn.secondary {
+    border-color: var(--accent-glow);
+    color: var(--accent-glow);
+}
+
+.btn.secondary:hover {
+    background: var(--accent-glow);
+}
+
+.btn.danger {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn.danger:hover {
+    background: var(--danger);
+}
+
+.btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Workspace Layout */
+.workspace {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background: var(--bg-panel);
+    overflow-y: auto;
+    padding: 20px;
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar.right-panel {
+    border-right: none;
+    border-left: 1px solid var(--border-color);
+}
+
+.panel-section {
+    margin-bottom: 30px;
+}
+
+.panel-section h3 {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    color: var(--accent-primary);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+    letter-spacing: 2px;
+}
+
+/* Preset Buttons */
+.preset-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preset-btn {
+    background: var(--bg-panel-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.preset-btn:hover {
+    border-color: var(--accent-primary);
+    background: rgba(0, 217, 255, 0.1);
+}
+
+/* Form Controls */
+.add-body-controls,
+.time-controls,
+.physics-params {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+input[type="number"],
+input[type="color"] {
+    background: var(--bg-panel-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent-primary);
+}
+
+input[type="color"] {
+    height: 35px;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-primary);
+}
+
+/* Viewport */
+.viewport-container {
+    flex: 1;
+    position: relative;
+    background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 100%);
+    overflow: hidden;
+}
+
+#main-canvas,
+#trail-canvas,
+#glow-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#trail-canvas {
+    pointer-events: none;
+}
+
+#glow-canvas {
+    pointer-events: none;
+    filter: blur(8px);
+    opacity: 0.7;
+}
+
+.viewport-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.info-tooltip {
+    position: absolute;
+    background: rgba(10, 10, 15, 0.95);
+    border: 1px solid var(--accent-primary);
+    padding: 10px;
+    font-size: 0.7rem;
+    border-radius: 4px;
+    pointer-events: none;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+}
+
+/* Inspector */
+.inspector-content {
+    font-size: 0.7rem;
+    line-height: 1.6;
+}
+
+.inspector-content .placeholder {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+.inspector-content dt {
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+.inspector-content dd {
+    color: var(--text-primary);
+    margin-left: 0;
+    font-weight: 700;
+}
+
+/* Energy Display */
+.energy-display {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.7rem;
+}
+
+.energy-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.energy-item span:first-child {
+    color: var(--text-secondary);
+}
+
+.energy-item span:last-child {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+.energy-item.total {
+    border-bottom: none;
+    border-top: 2px solid var(--accent-primary);
+    padding-top: 10px;
+    margin-top: 5px;
+}
+
+.energy-item.total span:last-child {
+    color: var(--success);
+    font-size: 0.85rem;
+}
+
+/* Footer */
+.info-bar {
+    background: var(--bg-panel);
+    border-top: 2px solid var(--border-color);
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+}
+
+.info-text {
+    color: var(--text-secondary);
+}
+
+.credits {
+    color: var(--text-dim);
+}
+
+/* Scrollbar Styling */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-primary);
+}
+
+/* Animations */
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.glow-active {
+    animation: pulse-glow 2s ease-in-out infinite;
+}

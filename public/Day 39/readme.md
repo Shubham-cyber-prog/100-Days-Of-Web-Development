@@ -11,16 +11,6 @@ A modern **Online Learning Platform** built using **HTML, CSS, and JavaScript** 
 - Enroll in courses with instant feedback (toast notification)
 - Search courses by name
 
-### ⭐ Wishlist
-- Save favorite courses using a star icon
-- Separate **Saved Courses (Wishlist)** section
-- Wishlist data stored using `localStorage`
-
-### 🧾 Certificate Generation
-- Mark a course as completed
-- Generate a **Certificate of Completion**
-- Download certificate as **PDF** (using browser print)
-- Clean, professional certificate layout
 
 ### 🌙 Dark / Light Mode
 - Toggle between dark and light themes

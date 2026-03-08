@@ -1,0 +1,144 @@
+/* Tower and Enemy Visual Styles */
+
+.tower {
+    position: absolute;
+    pointer-events: none;
+}
+
+.tower-base {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.tower-archer .tower-base {
+    background: linear-gradient(135deg, #8b4513, #a0522d);
+    border: 2px solid #654321;
+}
+
+.tower-cannon .tower-base {
+    background: linear-gradient(135deg, #708090, #2f4f4f);
+    border: 2px solid #1c1c1c;
+}
+
+.tower-freeze .tower-base {
+    background: linear-gradient(135deg, #87ceeb, #4682b4);
+    border: 2px solid #1e90ff;
+}
+
+.tower-laser .tower-base {
+    background: linear-gradient(135deg, #ff1493, #8b008b);
+    border: 2px solid #4b0082;
+}
+
+.range-circle {
+    position: absolute;
+    border: 2px dashed rgba(78, 204, 163, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse-range 2s infinite;
+}
+
+@keyframes pulse-range {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.projectile {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: all 0.1s linear;
+}
+
+.projectile-arrow {
+    background: #8b4513;
+    box-shadow: 0 0 4px #654321;
+}
+
+.projectile-cannonball {
+    background: #2f4f4f;
+    box-shadow: 0 0 6px #000;
+    width: 12px;
+    height: 12px;
+}
+
+.projectile-freeze {
+    background: #87ceeb;
+    box-shadow: 0 0 8px #4682b4;
+}
+
+.projectile-laser {
+    width: 3px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ff1493, #8b008b);
+    box-shadow: 0 0 10px #ff1493;
+    border-radius: 2px;
+}
+
+.explosion {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff6600, #ff0000);
+    animation: explode 0.5s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.enemy-health-bar {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: #333;
+    top: -8px;
+    left: 0;
+}
+
+.enemy-health-fill {
+    height: 100%;
+    background: linear-gradient(to right, #ff4444, #ff6666);
+    transition: width 0.2s;
+}
+
+.upgrade-indicator {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--warning);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000;
+}

@@ -1,0 +1,117 @@
+#viewport-container {
+    position: relative;
+    background: radial-gradient(circle at center, #1a1a24 0%, #0e0e12 100%);
+    overflow: hidden;
+}
+
+#voxel-canvas {
+    display: block;
+}
+
+#grid-stats {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent-blue);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+/* TOOLBOX */
+.toolbox {
+    border-left: 1px solid var(--border);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.tool-section h3 {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+}
+
+/* PALETTE */
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.color-swatch {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s;
+}
+
+.color-swatch:hover {
+    transform: scale(1.1);
+}
+
+.color-swatch.active {
+    border-color: white;
+}
+
+/* TOOLS */
+.tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.tool {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.tool:hover,
+.tool.active {
+    background: white;
+    color: black;
+}
+
+/* INFO */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+#voxel-count,
+#current-layer {
+    color: white;
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: white;
+    color: black;
+    padding: 1rem 2rem;
+    font-weight: 800;
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.toast.hidden {
+    display: none;
+}

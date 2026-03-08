@@ -81,32 +81,92 @@ function viewProduct(id){
 }
 function closeModal(){ modal.style.display="none"; }
 
+// function addToCart(){
+//   cart.push(currentProduct);
+//   localStorage.setItem("cart", JSON.stringify(cart));
+//   cartCount.innerText = cart.length;
+//   closeModal();
+// }
+
+
 function addToCart(){
-  cart.push(currentProduct);
+  const existing = cart.find(i => i.id === currentProduct.id);
+
+  if(existing){
+    existing.qty += 1;
+  } else {
+    cart.push({...currentProduct, qty: 1});
+  }
+
   localStorage.setItem("cart", JSON.stringify(cart));
   cartCount.innerText = cart.length;
   closeModal();
 }
 
+// function openCart(){
+//   productList.style.display="none";
+//   cartPage.style.display="block";
+//   cartItems.innerHTML="";
+//   cart.forEach(i=>{
+//     cartItems.innerHTML += `<div class="cart-item">${i.name}<span>₹${i.price}</span></div>`;
+//   });
+// }
+
 function openCart(){
   productList.style.display="none";
   cartPage.style.display="block";
   cartItems.innerHTML="";
+
+  let total = 0;
+
   cart.forEach(i=>{
-    cartItems.innerHTML += `<div class="cart-item">${i.name}<span>₹${i.price}</span></div>`;
+    total += i.price * i.qty;
+
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        ${i.name} (x${i.qty})
+        <span>₹${i.price * i.qty}</span>
+      </div>`;
+
+      cartItems.innerHTML += `
+  <div class="cart-item">
+    ${i.name} (x${i.qty})
+    <span>₹${i.price * i.qty}</span>
+    <button onclick="removeItem(${i.id})">❌</button>
+  </div>`;
   });
+
+  cartItems.innerHTML += `<h3>Total: ₹${total}</h3>`;
 }
+
 
 function openCheckout(){
   cartPage.style.display="none";
   checkoutPage.style.display="block";
 }
 
+// function placeOrder(){
+//   alert("🎉 Order placed successfully!");
+//   localStorage.clear();
+//   location.reload();
+// }
+
+
 function placeOrder(){
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  orders.push({
+    items: cart,
+    date: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("orders", JSON.stringify(orders));
+
   alert("🎉 Order placed successfully!");
-  localStorage.clear();
+  localStorage.removeItem("cart");
   location.reload();
 }
+
 
 function searchProducts(val){
   renderProducts(products.filter(p=>p.name.toLowerCase().includes(val.toLowerCase())));
@@ -118,3 +178,27 @@ function filterByCategory(cat){
 }
 
 cartCount.innerText = cart.length;
+
+
+function removeItem(id){
+  cart = cart.filter(i => i.id !== id);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  openCart();
+  cartCount.innerText = cart.length;
+}
+
+
+// function toggleTheme(){
+//   document.body.classList.toggle("dark");
+// }
+
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme", document.body.classList.contains("dark"));
+}
+
+window.addEventListener("load", ()=>{
+  if(localStorage.getItem("theme") === "true"){
+    document.body.classList.add("dark");
+  }
+});

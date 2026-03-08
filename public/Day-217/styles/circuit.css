@@ -1,0 +1,201 @@
+:root {
+    --bg-dark: #05070a;
+    --blueprint-blue: #0b1e3b;
+    --accent: #00d2ff;
+    --accent-glow: rgba(0, 210, 255, 0.4);
+    --border: #1e293b;
+    --text-main: #e2e8f0;
+    --gate-bg: #1e293b;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background-image:
+        linear-gradient(rgba(0, 210, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 210, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+#quantum-studio {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    height: 60px;
+    background: var(--blueprint-blue);
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+}
+
+main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 280px 1fr 300px;
+    gap: 1px;
+    background: var(--border);
+}
+
+/* Sidebar Toolboxes */
+.panel {
+    background: var(--bg-dark);
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.gate-palette {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.gate {
+    background: var(--gate-bg);
+    border: 1px solid var(--accent);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: grab;
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.gate:hover {
+    background: var(--accent);
+    color: var(--bg-dark);
+    box-shadow: 0 0 10px var(--accent);
+}
+
+/* Circuit Workspace */
+#circuit-workspace {
+    background: rgba(11, 30, 59, 0.5);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-x: auto;
+}
+
+.qubit-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.qubit-row::after {
+    content: '';
+    position: absolute;
+    left: 4rem;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: rgba(0, 210, 255, 0.2);
+    z-index: 0;
+}
+
+.qubit-label {
+    width: 3rem;
+    font-family: 'Fira Code', monospace;
+    color: var(--accent);
+}
+
+.circuit-cell {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(0, 210, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transition: background 0.2s;
+}
+
+.circuit-cell:hover {
+    background: rgba(0, 210, 255, 0.05);
+}
+
+/* Probability Bars */
+#analysis-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.prob-container {
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.prob-bar {
+    flex: 1;
+    background: var(--accent);
+    transition: height 0.3s ease;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+}
+
+.prob-bar:hover::after {
+    content: attr(data-val);
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+}
+
+canvas#bloch-canvas {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: var(--bg-dark);
+    border: none;
+    padding: 0.8rem;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+}
