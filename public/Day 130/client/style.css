@@ -1,0 +1,131 @@
+:root {
+  --bg: #0b0b0b;
+  --panel: #111;
+  --text: #ffffff;
+  --border: #2a2a2a;
+  --btn: #ffffff;
+  --btn-text: #000;
+}
+
+body.light {
+  --bg: #f4f4f5;
+  --panel: #ffffff;
+  --text: #111111;
+  --border: #d4d4d8;
+  --btn: #111;
+  --btn-text: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* ---------- HEADER ---------- */
+header {
+  max-width: 1200px;
+  margin: 0 auto 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+#themeToggle {
+  font-size: 1.2rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ---------- MAIN LAYOUT ---------- */
+.translator {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* ---------- PANELS ---------- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 380px; /* 🔥 makes cards BIG */
+}
+
+.panel h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  opacity: 0.85;
+}
+
+textarea {
+  flex: 1;
+  resize: none;
+  padding: 1.2rem;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  outline: none;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* ---------- CONTROLS ---------- */
+.controls {
+  max-width: 1200px;
+  margin: 2.5rem auto 0;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+select,
+button {
+  padding: 0.7rem 1.2rem;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--btn);
+  color: var(--btn-text);
+  cursor: pointer;
+}
+
+button {
+  font-weight: 500;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .translator {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    min-height: 260px;
+  }
+}

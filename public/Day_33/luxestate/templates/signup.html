@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sign Up – LuxEstate</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <script src="{% static 'script.js' %}"></script>
+  </head>
+
+  <body>
+    <header class="navbar">
+      <div class="logo">LuxEstate</div>
+      <nav>
+        <a href="{% url 'home' %}">Home</a>
+      </nav>
+    </header>
+
+    <section
+      class="contact"
+      style="
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <form
+        method="POST"
+        action="{% url 'signup' %}"
+        style="
+          background: #020617;
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        "
+      >
+        {% csrf_token %}
+
+        <h2 style="margin-bottom: 20px">Create Account</h2>
+
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+
+        <button type="submit">Sign Up</button>
+
+        <p style="margin-top: 15px; font-size: 14px">
+          Already have an account?
+          <a href="{% url 'login' %}" style="color: #38bdf8">Login</a>
+        </p>
+      </form>
+    </section>
+  </body>
+</html>

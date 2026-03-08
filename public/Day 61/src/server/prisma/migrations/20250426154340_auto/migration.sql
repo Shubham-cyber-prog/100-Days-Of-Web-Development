@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Chat" ALTER COLUMN "userId" DROP DEFAULT;

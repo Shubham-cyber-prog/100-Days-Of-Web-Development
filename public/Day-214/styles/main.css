@@ -1,0 +1,248 @@
+:root {
+    --bg-deep: #05070a;
+    --bg-dark: #0f131a;
+    --accent: #00d2ff;
+    --accent-glow: rgba(0, 210, 255, 0.3);
+    --text-main: #e6edf3;
+    --text-dim: #8b949e;
+    --border: #30363d;
+    --panel-width: 300px;
+    --header-height: 60px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header / HUD */
+#hud-header {
+    height: var(--header-height);
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.brand span span {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.stats {
+    display: flex;
+    gap: 2rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+}
+
+.stat-item span {
+    color: var(--accent);
+}
+
+.controls-top {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: white;
+    padding: 0.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    background: var(--border);
+    border-color: var(--accent);
+}
+
+/* Main Viewport */
+#viewport-container {
+    flex: 1;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+#sim-canvas {
+    flex: 1;
+    background: radial-gradient(circle at center, #111e2d 0%, #05070a 100%);
+    cursor: crosshair;
+}
+
+/* Sidebar Toolbox */
+#toolbox {
+    width: var(--panel-width);
+    background: var(--bg-dark);
+    border-left: 1px solid var(--border);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+}
+
+.tool-group h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+.tool-btn {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.tool-btn:hover {
+    border-color: var(--accent);
+}
+
+.tool-btn.active {
+    border-color: var(--accent);
+    background: rgba(0, 210, 255, 0.1);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+select,
+input[type="range"] {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+select {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 0.6rem;
+    border-radius: 4px;
+    outline: none;
+}
+
+.param-row {
+    margin-bottom: 1rem;
+}
+
+.param-row label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+.toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.toggle-row label {
+    font-size: 0.85rem;
+}
+
+.primary-btn {
+    width: 100%;
+    background: var(--accent);
+    color: var(--bg-deep);
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.primary-btn:hover {
+    opacity: 0.9;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Tooltips/Overlays */
+#selection-overlay {
+    position: absolute;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.info-bubble {
+    background: rgba(15, 19, 26, 0.9);
+    border: 1px solid var(--accent);
+    padding: 1rem;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    font-size: 0.8rem;
+}
+
+.info-bubble p {
+    margin-bottom: 0.4rem;
+}
+
+.info-bubble span {
+    color: var(--accent);
+    font-family: var(--font-mono);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-dim);
+}

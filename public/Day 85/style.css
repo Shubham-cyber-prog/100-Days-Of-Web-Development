@@ -531,3 +531,82 @@ footer {
   background-color: #d41717;
   transform: scale(1.1);
 }
+
+
+/* 🌙 Dark Mode Theme */
+body.dark {
+   background: #121212;
+   color: #f1f1f1;
+}
+
+body.dark .navbar,
+body.dark .auction-item,
+body.dark .featured-auction,
+body.dark .modal-content,
+body.dark footer {
+   background: #1e1e1e;
+   color: #fff;
+}
+
+body.dark .section-header h2,
+body.dark .auction-info h3,
+body.dark .featured-details h3 {
+   color: #fff;
+}
+
+body.dark .auction-description,
+body.dark .featured-description {
+   color: #ccc;
+}
+
+body.dark .filters select {
+   background: #2a2a2a;
+   color: #fff;
+   border: none;
+}
+
+body.dark .time-left {
+   background: #333;
+   color: #fff;
+}
+
+/* 🔔 Toast Notification Style */
+#toast-container {
+   position: fixed;
+   top: 20px;
+   right: 20px;
+   z-index: 9999;
+}
+
+.toast {
+   background: linear-gradient(135deg, #4CAF50, #2e7d32);
+   color: white;
+   padding: 15px 20px;
+   margin-bottom: 10px;
+   border-radius: 10px;
+   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+   opacity: 0;
+   transform: translateX(100%);
+   animation: slideIn 0.5s forwards;
+   font-weight: 500;
+}
+
+.toast.error {
+   background: linear-gradient(135deg, #ff4b2b, #c62828);
+}
+
+@keyframes slideIn {
+   to {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+
+@keyframes fadeOut {
+   to {
+      opacity: 0;
+      transform: translateX(100%);
+   }
+}
+
+

@@ -1,14 +1,16 @@
+import { byId, create } from "../../shared/utils.js";
+
 const API = "https://www.themealdb.com/api/json/v1/1/";
 
-const recipesGrid = document.getElementById("recipes-grid");
-const searchInput = document.getElementById("searchInput");
-const categorySelect = document.getElementById("categorySelect");
-const themeToggle = document.getElementById("themeToggle");
+const recipesGrid = byId("recipes-grid");
+const searchInput = byId("searchInput");
+const categorySelect = byId("categorySelect");
+const themeToggle = byId("themeToggle");
 
-const recipeTitle = document.getElementById("recipe-title");
-const recipeImg = document.getElementById("recipe-img");
-const ingredientsList = document.getElementById("ingredients-list");
-const stepsList = document.getElementById("steps-list");
+const recipeTitle = byId("recipe-title");
+const recipeImg = byId("recipe-img");
+const ingredientsList = byId("ingredients-list");
+const stepsList = byId("steps-list");
 
 /* ---------- Favorites ---------- */
 function getFavorites() {
@@ -35,7 +37,7 @@ function renderRecipes(meals) {
   const favs = getFavorites();
 
   meals.forEach(meal => {
-    const card = document.createElement("article");
+    const card = create("article");
     card.className = "recipe-card";
 
     card.innerHTML = `
@@ -62,7 +64,7 @@ function renderRecipes(meals) {
 }
 
 /* ---------- Fetch ---------- */
-async function fetchRecipes(q="") {
+async function fetchRecipes(q = "") {
   if (!recipesGrid) return;
   const res = await fetch(`${API}search.php?s=${q}`);
   const data = await res.json();
@@ -74,7 +76,7 @@ async function fetchCategories() {
   const res = await fetch(`${API}categories.php`);
   const data = await res.json();
   data.categories.forEach(c => {
-    const o = document.createElement("option");
+    const o = create("option");
     o.value = c.strCategory;
     o.textContent = c.strCategory;
     categorySelect.appendChild(o);
@@ -102,7 +104,7 @@ async function loadRecipeDetails() {
     if (s.trim()) stepsList.innerHTML += `<li>${s}</li>`;
   });
 
-  for (let i=1;i<=20;i++) {
+  for (let i = 1; i <= 20; i++) {
     const ing = r[`strIngredient${i}`];
     if (ing) ingredientsList.innerHTML += `<li>${ing}</li>`;
   }
@@ -117,15 +119,15 @@ async function loadFavoritesPage() {
     return;
   }
   const meals = await Promise.all(
-    favs.map(id => fetch(`${API}lookup.php?i=${id}`).then(r=>r.json()).then(d=>d.meals[0]))
+    favs.map(id => fetch(`${API}lookup.php?i=${id}`).then(r => r.json()).then(d => d.meals[0]))
   );
   renderRecipes(meals);
 }
 
 /* ---------- Dark Mode ---------- */
 function applyTheme(t) {
-  document.body.classList.toggle("dark", t==="dark");
-  if (themeToggle) themeToggle.textContent = t==="dark" ? "☀️" : "🌙";
+  document.body.classList.toggle("dark", t === "dark");
+  if (themeToggle) themeToggle.textContent = t === "dark" ? "☀️" : "🌙";
 }
 const savedTheme = localStorage.getItem("theme") || "light";
 applyTheme(savedTheme);

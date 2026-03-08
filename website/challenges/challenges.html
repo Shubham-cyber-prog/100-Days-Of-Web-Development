@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Challenges - Zenith</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .challenges-hero {
+      text-align: center;
+      padding: 4rem 1rem;
+      background: radial-gradient(circle at center, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+    }
+
+    .challenges-hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .challenges-hero p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .challenges-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .challenges-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 2rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      background: var(--accent-primary);
+      color: white;
+      border-color: var(--accent-primary);
+    }
+
+    .challenge-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .challenge-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-3px);
+    }
+
+    .challenge-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .challenge-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .challenge-theme {
+      font-size: 0.875rem;
+      color: var(--accent-primary);
+      font-weight: 500;
+    }
+
+    .challenge-status {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-active {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+    }
+
+    .status-upcoming {
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+
+    .status-completed {
+      background: rgba(148, 163, 184, 0.2);
+      color: #94a3b8;
+    }
+
+    .challenge-description {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .challenge-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .meta-item i {
+      color: var(--accent-primary);
+    }
+
+    .challenge-constraints {
+      background: var(--bg-secondary);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .challenge-constraints h4 {
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .challenge-constraints ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .challenge-constraints li {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      padding: 0.25rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .challenge-constraints li::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: var(--accent-primary);
+    }
+
+    .challenge-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-challenge {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #0ea5e9;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent-primary);
+      border: 1px solid var(--accent-primary);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .leaderboard-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .leaderboard-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .leaderboard-title i {
+      color: #fbbf24;
+    }
+
+    .leaderboard-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.2s ease;
+    }
+
+    .leaderboard-item:hover {
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    .leaderboard-item:last-child {
+      border-bottom: none;
+    }
+
+    .rank {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 700;
+      margin-right: 1rem;
+    }
+
+    .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; }
+    .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #fff; }
+    .rank-3 { background: linear-gradient(135deg, #cd7f32, #a0522d); color: #fff; }
+    .rank-other { background: var(--bg-secondary); color: var(--text-secondary); }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .user-stats {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .user-badges {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .badge-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      font-size: 0.75rem;
+    }
+
+    .submission-card {
+      background: var(--bg-secondary);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .submission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .submission-user {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .submission-votes {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-primary);
+    }
+
+    .vote-btn {
+      background: none;
+      border: none;
+      color: var(--accent-primary);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .vote-btn:hover {
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+      .challenge-header {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .challenges-tabs {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Zenith Challenges</div>
+    <ul class="nav-links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="challenges.html" class="active">Challenges</a></li>
+      <li><a href="../contribute.html">Contribute</a></li>
+    </ul>
+  </nav>
+
+  <header class="challenges-hero">
+    <h1>Weekly Coding Challenges</h1>
+    <p>Push your skills to the next level with our weekly challenges. Compete, learn, and earn badges!</p>
+  </header>
+
+  <main class="challenges-container">
+    <div class="challenges-tabs">
+      <button class="tab-btn active" data-tab="active">Active Challenges</button>
+      <button class="tab-btn" data-tab="upcoming">Upcoming</button>
+      <button class="tab-btn" data-tab="completed">Completed</button>
+      <button class="tab-btn" data-tab="leaderboard">Leaderboard</button>
+    </div>
+
+    <div id="challenges-content">
+      <!-- Challenges loaded dynamically -->
+    </div>
+
+    <section class="leaderboard-section">
+      <h2 class="leaderboard-title">
+        <i class="fas fa-trophy"></i>
+        Weekly Leaderboard
+      </h2>
+      <ul class="leaderboard-list" id="leaderboard-list">
+        <!-- Leaderboard items loaded dynamically -->
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Maintained by the Zenith Community</p>
+  </footer>
+
+  <script src="sample-data.js"></script>
+  <script src="challenge-system.js"></script>
+  <script>
+    const challengesContent = document.getElementById('challenges-content');
+    const leaderboardList = document.getElementById('leaderboard-list');
+
+    function renderChallenges(status) {
+      const filtered = sampleChallengeData.challenges.filter(c => c.status === status);
+      
+      if (filtered.length === 0) {
+        challengesContent.innerHTML = `
+          <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+            <p>No ${status} challenges at the moment.</p>
+          </div>
+        `;
+        return;
+      }
+
+      challengesContent.innerHTML = filtered.map(challenge => `
+        <div class="challenge-card">
+          <div class="challenge-header">
+            <div>
+              <h3 class="challenge-title">${challenge.title}</h3>
+              <span class="challenge-theme">${challenge.theme}</span>
+            </div>
+            <span class="challenge-status status-${challenge.status}">${challenge.status}</span>
+          </div>
+          <p class="challenge-description">${challenge.description}</p>
+          <div class="challenge-meta">
+            <div class="meta-item">
+              <i class="fas fa-signal"></i>
+              <span>${challenge.difficulty}</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-calendar"></i>
+              <span>Ends: ${new Date(challenge.endDate).toLocaleDateString()}</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-users"></i>
+              <span>${challenge.submissions.length} submissions</span>
+            </div>
+          </div>
+          <div class="challenge-constraints">
+            <h4>Constraints</h4>
+            <ul>
+              ${challenge.constraints.map(c => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="challenge-actions">
+            <button class="btn-challenge btn-primary" onclick="showSubmitModal('${challenge.id}')">
+              Submit Entry
+            </button>
+            <a href="#" class="btn-challenge btn-secondary">View Submissions</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderLeaderboard() {
+      leaderboardList.innerHTML = sampleChallengeData.leaderboard.map((user, index) => `
+        <li class="leaderboard-item">
+          <span class="rank ${index < 3 ? 'rank-' + (index + 1) : 'rank-other'}">${index + 1}</span>
+          <div class="user-info">
+            <div class="user-name">${user.userName}</div>
+            <div class="user-stats">${user.totalVotes} votes | ${user.challengesCompleted} challenges</div>
+          </div>
+          <div class="user-badges">
+            ${user.badges.slice(0, 3).map(b => `<span class="badge-icon"><i class="fas fa-award"></i></span>`).join('')}
+          </div>
+        </li>
+      `).join('');
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderChallenges(btn.dataset.tab);
+      });
+    });
+
+    function showSubmitModal(challengeId) {
+      const modal = document.createElement('div');
+      modal.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+          <div style="background: var(--bg-secondary); border-radius: 1rem; padding: 2rem; max-width: 500px; width: 90%;">
+            <h3 style="margin-bottom: 1rem;">Submit Your Entry</h3>
+            <form id="submit-form">
+              <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem;">Your Name</label>
+                <input type="text" required style="width: 100%; padding: 0.5rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 0.25rem; color: var(--text-primary);">
+              </div>
+              <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem;">Project URL</label>
+                <input type="url" required placeholder="https://..." style="width: 100%; padding: 0.5rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 0.25rem; color: var(--text-primary);">
+              </div>
+              <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem;">Description</label>
+                <textarea rows="3" required style="width: 100%; padding: 0.5rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 0.25rem; color: var(--text-primary);"></textarea>
+              </div>
+              <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn-challenge btn-primary">Submit</button>
+                <button type="button" class="btn-challenge btn-secondary" onclick="this.closest('div').parentElement.remove()">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    renderChallenges('active');
+    renderLeaderboard();
+  </script>
+</body>
+</html>

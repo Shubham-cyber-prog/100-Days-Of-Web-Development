@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>File Uploader - Real Working</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --upload-blue: #3b82f6;
+        }
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .upload-area.dragover {
+            border-color: var(--upload-blue);
+            background: rgba(59, 130, 246, 0.05);
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
@@ -35,12 +52,12 @@
                         <h3>Drop files here or click to upload</h3>
                         <p>Supports images, documents, PDFs, and more</p>
                         <p class="file-limit">Maximum file size: 5MB</p>
-                        <button class="btn btn-primary" id="browseBtn">
+                        <button class="btn btn-primary" id="browseBtn" aria-label="Open file browser to select files">
                             <i class="fas fa-folder-open"></i> Select Files
                         </button>
-                        <input type="file" id="fileInput" multiple>
+                        <input type="file" id="fileInput" multiple aria-label="Hidden file input">
                     </div>
-                    
+
                     <div class="upload-options">
                         <div class="option">
                             <input type="checkbox" id="autoCompress" checked>
@@ -152,4 +169,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

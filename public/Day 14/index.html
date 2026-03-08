@@ -1,75 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Music Player</title>
+  <meta name="description" content="Interactive music player to search and listen to your favorite tracks and artists." />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<h1 class="app-title">Music Player</h1>
+  <header class="header">
+    <h1 class="app-title">🎵 Music Player</h1>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
+  </header>
 
-<main class="container">
+  <main class="container">
 
-  <!-- PLAYER CARD -->
-  <section class="player-card">
+    <!-- PLAYER -->
+    <section class="player-card">
+      <input id="search" type="text" placeholder="Search song or artist (Enter)">
 
-    <input
-      type="text"
-      id="search"
-      placeholder="Search song or artist (press Enter)"
-    />
+      <div class="recommended">
+        <h4>Recommended</h4>
+        <ul id="recommendedList"></ul>
+      </div>
 
-    <div class="recommended">
-      <h4>Recommended</h4>
-      <ul id="recommendedList"></ul>
-    </div>
+      <div class="current placeholder" id="current">
+        <img id="cover" />
+        <h3 id="title">Nothing Playing</h3>
+        <p id="artist">Search a song</p>
+      </div>
 
-    <div class="current placeholder" id="current">
-      <img id="cover" alt="Album Art" />
-      <h3 id="title">Nothing playing</h3>
-      <p id="artist">Search or select a recommendation</p>
-    </div>
+      <div class="controls">
+        <button id="prev" disabled aria-label="Previous track">⏮</button>
+        <button id="play" disabled aria-label="Play or pause">▶</button>
+        <button id="next" disabled aria-label="Next track">⏭</button>
+        <button id="shuffle" disabled aria-label="Shuffle" title="Toggle shuffle mode">🔀</button>
+        <button id="loop" disabled aria-label="Loop" title="Toggle loop mode">🔁</button>
+      </div>
 
-    <!-- CONTROLS -->
-    <div class="controls">
-      <button id="prev" disabled>⏮</button>
-      <button id="play" disabled>▶</button>
-      <button id="next" disabled>⏭</button>
-    </div>
+      <div class="time">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
 
-    <!-- TIME -->
-    <div class="time">
-      <span id="currentTime">0:00</span>
-      <span id="duration">0:00</span>
-    </div>
+      <input type="range" id="progress" value="0">
 
-    <!-- PROGRESS -->
-    <input type="range" id="progress" value="0">
+      <div class="volume">
+        🔊 <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+      </div>
 
-    <!-- VOLUME -->
-    <div class="volume">
-      🔊
-      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
-    </div>
+      <audio id="audio"></audio>
+    </section>
 
-    <audio id="audio"></audio>
-  </section>
+    <!-- PLAYLIST -->
+    <section class="playlist-card">
+      <h3>Search Results</h3>
 
-  <!-- RESULTS CARD -->
-  <section class="playlist-card">
-    <h3>Search Results</h3>
+      <div id="resultsPlaceholder" class="results-placeholder">
+        🎶 Search to load songs
+      </div>
 
-    <div class="results-placeholder" id="resultsPlaceholder">
-      <p>🎵 Search for a song to see results here</p>
-    </div>
+      <ul id="playlist"></ul>
+    </section>
 
-    <ul id="playlist"></ul>
-  </section>
+  </main>
 
-</main>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

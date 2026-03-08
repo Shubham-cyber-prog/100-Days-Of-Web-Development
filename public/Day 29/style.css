@@ -1,60 +1,184 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: "Schoolbell";
-    text-align: center;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Schoolbell";
 }
 
-body {
-    background-color: rgb(38, 38, 38);
-    color: white;
-    transition: background-color 0.4s ease;
+body{
+    background: radial-gradient(circle at top,#2f2f2f,#121212);
+    color:white;
 }
 
-h3 {
-    margin-top: 1rem;
+/* HEADER */
+.header{
+    width:100%;
+    padding:45px 20px;
+    background: linear-gradient(135deg,#1e1e1e,#2c2c2c);
+    text-align:center;
+    box-shadow:0 12px 35px rgba(0,0,0,0.7);
 }
 
-span {
-    color: greenyellow;
+.header h1{
+    font-size:40px;
 }
 
-.btn-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2rem;
+.brain-icon{
+    color:white;
+    margin-right:10px;
+    text-shadow:0 0 12px rgba(255,255,255,0.8);
 }
 
-.btn {
-    width: 150px;
-    height: 150px;
-    border: 10px solid rgba(0, 0, 0, 0.113);
-    margin: 1rem;
-    border-radius: 20%;
+/* SECTIONS */
+.section{
+    width:90%;
+    max-width:1200px;
+    margin:70px auto;
 }
 
-.red {
-    background-color: #DD4B3E;
+.section h2{
+    text-align:center;
+    margin-bottom:30px;
+    font-size:26px;
 }
 
-.blue {
-    background-color: #4B3EDD;
+/* WEBSITE BOX */
+.website-box{
+    border:1.5px solid rgba(255,255,255,0.2);
+    border-radius:24px;
+    padding:40px;
+    background: rgba(255,255,255,0.05);
+    box-shadow: inset 0 0 25px rgba(255,255,255,0.04),
+                0 25px 45px rgba(0,0,0,0.55);
 }
 
-.yellow {
-    background-color: #ffd037ef;
+/* INFO CARDS */
+.info-cards{
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    flex-wrap:wrap;
 }
 
-.green {
-    background-color: #3EDD4B;
+.info-card{
+    background: rgba(255,255,255,0.14);
+    backdrop-filter: blur(12px);
+    padding:28px;
+    width:340px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.18);
+    transition:0.35s;
 }
 
-.flash {
-    background-color: white;
+.info-card:hover{
+    transform: translateY(-8px);
+    box-shadow:0 18px 35px rgba(0,0,0,0.45);
 }
 
-.userFlash {
-    background-color: rgb(255, 28, 217);
-    transition: background-color 0.1s ease;
+.info-card a{
+    color:#ffd037;
+    text-decoration:none;
+}
+
+/* GAME CARDS */
+.games-row{
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    flex-wrap:wrap;
+}
+
+.game-card{
+    width:320px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.18);
+    transition:0.4s;
+}
+
+.game-card:hover{
+    transform: translateY(-12px) scale(1.03);
+    box-shadow:0 25px 45px rgba(0,0,0,0.55);
+}
+
+.game-card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.game-content{
+    padding:20px;
+    text-align:center;
+}
+
+/* BUTTONS */
+.start-btn,
+.read-btn{
+    margin:6px;
+    padding:9px 18px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
+    font-size:14px;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.start-btn{
+    background:#3EDD4B;
+    color:black;
+}
+
+.start-btn:hover{
+    box-shadow:0 0 12px #3EDD4B;
+    transform:scale(1.05);
+}
+
+.read-btn{
+    background:#ffd037;
+    color:black;
+}
+
+.read-btn:hover{
+    box-shadow:0 0 12px #ffd037;
+    transform:scale(1.05);
+}
+
+/* MODAL */
+.modal-bg{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:500;
+}
+
+.modal{
+    background:#1c1c1c;
+    padding:30px;
+    width:90%;
+    max-width:480px;
+    border-radius:20px;
+}
+
+.close-btn{
+    background:crimson;
+    color:white;
+    padding:8px 18px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    margin:70px 0 30px;
+    opacity:0.75;
 }

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volcanic Run - Day 162</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="game-container">
+        <header class="hud">
+            <div class="hud-left">
+                <h1>🌋 VOLCANIC RUN</h1>
+                <div class="status">
+                    <span class="danger-level">DANGER: <span id="dangerLevel">MODERATE</span></span>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="stats">
+                    <div class="stat">
+                        <span class="label">Distance:</span>
+                        <span class="value" id="distance">0m</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Health:</span>
+                        <div class="health-bar">
+                            <div class="health-fill" id="healthBar"></div>
+                        </div>
+                        <span class="value" id="healthValue">100%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Speed:</span>
+                        <span class="value" id="speed">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-area">
+            <canvas id="gameCanvas"></canvas>
+            
+            <div class="game-overlay">
+                <div class="warning-system" id="warningSystem">
+                    <div class="warning active" id="debrisWarning">
+                        ⚠️ INCOMING DEBRIS ⚠️
+                    </div>
+                    <div class="warning" id="lavaWarning">
+                        🔥 LAVA WAVE APPROACHING 🔥
+                    </div>
+                    <div class="warning" id="pathWarning">
+                        🔀 CHOOSE PATH QUICKLY 🔀
+                    </div>
+                </div>
+
+                <div class="instructions" id="instructions">
+                    <h2>🎮 CONTROLS</h2>
+                    <div class="controls-grid">
+                        <div class="control">
+                            <kbd>W</kbd> or <kbd>↑</kbd>
+                            <span>Move Up</span>
+                        </div>
+                        <div class="control">
+                            <kbd>S</kbd> or <kbd>↓</kbd>
+                            <span>Move Down</span>
+                        </div>
+                        <div class="control">
+                            <kbd>A</kbd> or <kbd>←</kbd>
+                            <span>Move Left</span>
+                        </div>
+                        <div class="control">
+                            <kbd>D</kbd> or <kbd>→</kbd>
+                            <span>Move Right</span>
+                        </div>
+                        <div class="control">
+                            <kbd>SHIFT</kbd>
+                            <span>Sprint</span>
+                        </div>
+                        <div class="control">
+                            <kbd>SPACE</kbd>
+                            <span>Jump</span>
+                        </div>
+                    </div>
+                    <button class="start-btn" id="startGame">🏃‍♂️ START ESCAPE</button>
+                </div>
+
+                <div class="game-over" id="gameOver" style="display: none;">
+                    <h2 id="gameOverTitle">💀 CAUGHT BY LAVA</h2>
+                    <p id="gameOverMessage">You traveled <span id="finalDistance">0</span> meters before the volcano claimed you!</p>
+                    <div class="game-over-stats">
+                        <div class="stat">
+                            <span class="label">Debris Dodged:</span>
+                            <span class="value" id="debrisDodged">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Paths Chosen:</span>
+                            <span class="value" id="pathsChosen">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Max Speed:</span>
+                            <span class="value" id="maxSpeed">0</span>
+                        </div>
+                    </div>
+                    <button class="restart-btn" id="restartGame">🔄 TRY AGAIN</button>
+                </div>
+
+                <div class="path-choice" id="pathChoice" style="display: none;">
+                    <h3>🔀 CHOOSE YOUR PATH!</h3>
+                    <div class="path-options">
+                        <button class="path-option high-risk" data-path="high">
+                            <span class="path-title">🔥 HIGH RISK</span>
+                            <span class="path-desc">Narrow passage through lava tubes</span>
+                            <span class="path-reward">+Speed Boost</span>
+                        </button>
+                        <button class="path-option medium-risk" data-path="medium">
+                            <span class="path-title">⚠️ MEDIUM RISK</span>
+                            <span class="path-desc">Rocky terrain with debris</span>
+                            <span class="path-reward">+Health Pack</span>
+                        </button>
+                        <button class="path-option low-risk" data-path="low">
+                            <span class="path-title">💨 LOW RISK</span>
+                            <span class="path-desc">Open valley - longer route</span>
+                            <span class="path-reward">+Safe Distance</span>
+                        </button>
+                    </div>
+                    <div class="path-timer">
+                        <span>Choose in: <span id="pathTimer">5</span>s</span>
+                    </div>
+                </div>
+
+                <div class="mini-map" id="miniMap">
+                    <div class="mini-map-title">ESCAPE ROUTE</div>
+                    <div class="mini-map-content">
+                        <div class="lava-wave" id="miniLavaWave"></div>
+                        <div class="player-dot" id="miniPlayer"></div>
+                        <div class="safe-zone" id="miniSafeZone">SAFE ZONE</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

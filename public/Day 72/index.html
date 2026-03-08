@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Real-Time IoT Event Monitoring Dashboard</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <style>
+        :root {
+            --iot-primary: #3b82f6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--iot-primary);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar">
@@ -18,7 +39,7 @@
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="login.html">Login</a></li>
             </ul>
-            <div class="hamburger">
+            <div class="hamburger" aria-label="Toggle navigation menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -41,7 +62,8 @@
             <div class="grid grid-3">
                 <div class="card">
                     <h3>⚡ Real-Time Monitoring</h3>
-                    <p>Live sensor data visualization with instant updates for temperature, sound, and crowd density.</p>
+                    <p>Live sensor data visualization with instant updates for temperature, sound, and crowd density.
+                    </p>
                 </div>
                 <div class="card">
                     <h3>🚨 Smart Alerts</h3>
@@ -79,7 +101,8 @@
         <!-- CTA SECTION -->
         <section class="container mt-4 text-center">
             <h2 class="section-title mb-3">Ready to Transform Your Event Management?</h2>
-            <p class="section-subtitle">Join hundreds of event organizers using our platform for safer, smarter events.</p>
+            <p class="section-subtitle">Join hundreds of event organizers using our platform for safer, smarter events.
+            </p>
             <a href="login.html" class="btn btn-primary">Start Free Trial</a>
         </section>
     </main>
@@ -103,4 +126,5 @@
 
     <script src="js/main.js"></script>
 </body>
+
 </html>

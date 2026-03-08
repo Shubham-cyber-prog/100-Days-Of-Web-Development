@@ -1,0 +1,129 @@
+/* Character and Particle Animations */
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle-float 0.8s ease-out forwards;
+}
+
+.particle.jump {
+    background: radial-gradient(circle, #00d9ff, #0099cc);
+    box-shadow: 0 0 10px #00d9ff;
+}
+
+.particle.land {
+    background: radial-gradient(circle, #06ffa5, #04cc84);
+    box-shadow: 0 0 10px #06ffa5;
+}
+
+.particle.coin {
+    background: radial-gradient(circle, #ffbe0b, #ff9500);
+    box-shadow: 0 0 10px #ffbe0b;
+}
+
+.particle.death {
+    background: radial-gradient(circle, #ff006e, #cc0058);
+    box-shadow: 0 0 10px #ff006e;
+}
+
+@keyframes particle-float {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Coin spin animation */
+@keyframes coin-spin {
+
+    0%,
+    100% {
+        transform: scaleX(1);
+    }
+
+    50% {
+        transform: scaleX(0.3);
+    }
+}
+
+/* Platform pulse */
+@keyframes platform-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Spike danger pulse */
+@keyframes spike-pulse {
+
+    0%,
+    100% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.5);
+    }
+}
+
+/* Checkpoint glow */
+@keyframes checkpoint-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(6, 255, 165, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(6, 255, 165, 1);
+    }
+}
+
+/* Modal entrance */
+@keyframes modal-entrance {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal.active .modal-content {
+    animation: modal-entrance 0.3s ease-out;
+}
+
+/* HUD value update flash */
+@keyframes value-flash {
+
+    0%,
+    100% {
+        color: var(--success);
+    }
+
+    50% {
+        color: var(--warning);
+        transform: scale(1.2);
+    }
+}
+
+.hud-item .value.flash {
+    animation: value-flash 0.3s ease-out;
+}

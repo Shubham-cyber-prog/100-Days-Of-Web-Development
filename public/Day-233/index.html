@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neural-Link // Logic Engine</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/editor.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="neural-deck">
+    <div id="interface-wrapper">
+        <!-- Dashboard Overlay -->
+        <header class="top-bar glass">
+            <div class="mission-info">
+                <span class="label">NEURAL_LINK</span>
+                <span class="value" id="level-title">LEVEL_01: SYNAPSE_INIT</span>
+            </div>
+            <div class="objectives">
+                <div class="target">TARGET: <span id="target-value">1</span></div>
+                <div class="current">CURRENT: <span id="current-value">0</span></div>
+            </div>
+            <div class="session-tools">
+                <button class="btn primary" id="btn-simulate">INIT_SEQUENCE</button>
+                <button class="btn secondary" id="btn-reset">FLUSH_DATA</button>
+            </div>
+        </header>
+
+        <!-- Main Drawing Surface -->
+        <main id="canvas-container">
+            <canvas id="neural-canvas"></canvas>
+
+            <!-- Context UI (Populated via JS) -->
+            <div id="node-overlay"></div>
+        </main>
+
+        <!-- Component Tray -->
+        <aside class="component-tray glass">
+            <h3>LOGIC_MODULES</h3>
+            <div class="module-grid">
+                <div class="module active" data-type="AND">AND</div>
+                <div class="module" data-type="OR">OR</div>
+                <div class="module" data-type="NOT">NOT</div>
+                <div class="module" data-type="XOR">XOR</div>
+            </div>
+            <div class="module-info">
+                <h4 id="module-name">AND Gate</h4>
+                <p id="module-desc">Outputs 1 only if both inputs are 1.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Toast / Alerts -->
+    <div id="notif-system" class="toast hidden"></div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>
