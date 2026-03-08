@@ -13,6 +13,8 @@ import {
   XCircle,
   TrendingUp,
   Activity,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import {
   LineChart,
@@ -100,6 +102,41 @@ export default function Dashboard() {
         </p>
       </div>
 
+      {/* New Features Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <Card className="bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-pink-500/10 border-violet-200">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-semibold">New Features Available!</h3>
+                    <Badge variant="secondary" className="bg-violet-100 text-violet-700 border-violet-300">
+                      5 Updates
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Bulk actions, advanced filters, keyboard shortcuts, data export, and real-time activity feed
+                  </p>
+                </div>
+              </div>
+              <Link to="/features">
+                <Button className="gap-2 flex-shrink-0">
+                  Explore Features
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((stat, index) => (
@@ -153,25 +190,34 @@ export default function Dashboard() {
                   }}
                 />
                 <Line
+                  key="line-flagged"
+                  id="line-flagged"
                   type="monotone"
                   dataKey="flagged"
                   stroke="#6366f1"
                   strokeWidth={2}
                   dot={{ fill: "#6366f1" }}
+                  activeDot={{ r: 6 }}
                 />
                 <Line
+                  key="line-approved"
+                  id="line-approved"
                   type="monotone"
                   dataKey="approved"
                   stroke="#10b981"
                   strokeWidth={2}
                   dot={{ fill: "#10b981" }}
+                  activeDot={{ r: 6 }}
                 />
                 <Line
+                  key="line-rejected"
+                  id="line-rejected"
                   type="monotone"
                   dataKey="rejected"
                   stroke="#ef4444"
                   strokeWidth={2}
                   dot={{ fill: "#ef4444" }}
+                  activeDot={{ r: 6 }}
                 />
               </LineChart>
             </ResponsiveContainer>

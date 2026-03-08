@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Send, Mic, Paperclip, Bot, User, Sparkles } from "lucide-react";
+import { Send, Mic, Paperclip, Bot, User, Sparkles, MicOff } from "lucide-react";
 import { Card, CardContent } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -25,6 +25,7 @@ export default function ChatPage() {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const suggestedPrompts = [
@@ -81,21 +82,32 @@ export default function ChatPage() {
     }
   };
 
+  const toggleRecording = () => {
+    setIsRecording(!isRecording);
+    if (!isRecording) {
+      // Start recording simulation
+      setTimeout(() => {
+        setIsRecording(false);
+        setInput("This is a voice transcription demo");
+      }, 3000);
+    }
+  };
+
   return (
     <div className="h-[calc(100vh-180px)] max-w-7xl grid grid-cols-1 lg:grid-cols-4 gap-6">
       {/* Conversation History Sidebar */}
       <div className="hidden lg:block">
-        <Card className="h-full backdrop-blur-xl bg-white/80 border-white/40 rounded-3xl">
+        <Card className="h-full backdrop-blur-xl bg-card/95 dark:bg-card/80 border border-border rounded-3xl shadow-xl">
           <CardContent className="p-6">
             <h3 className="font-semibold mb-4">Conversation History</h3>
             <div className="space-y-2">
               {conversationHistory.map((conv, index) => (
                 <button
                   key={index}
-                  className="w-full text-left p-3 rounded-2xl hover:bg-white/60 transition-all"
+                  className="w-full text-left p-3 rounded-2xl hover:bg-accent/50 dark:hover:bg-accent/20 transition-all"
                 >
                   <p className="text-sm font-medium truncate">{conv.title}</p>
-                  <p className="text-xs text-gray-500 mt-1">{conv.time}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{conv.time}</p>
                 </button>
               ))}
             </div>
@@ -105,16 +117,16 @@ export default function ChatPage() {
 
       {/* Main Chat Area */}
       <div className="lg:col-span-3 flex flex-col">
-        <Card className="flex-1 backdrop-blur-xl bg-white/80 border-white/40 rounded-3xl flex flex-col overflow-hidden">
+        <Card className="flex-1 backdrop-blur-xl bg-card/95 dark:bg-card/80 border border-border rounded-3xl flex flex-col overflow-hidden shadow-xl">
           {/* Chat Header */}
-          <div className="px-6 py-4 border-b border-white/40">
+          <div className="px-6 py-4 border-b border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#7c3aed] flex items-center justify-center shadow-lg shadow-indigo-500/30">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[var(--gradient-primary-from)] to-[var(--gradient-primary-to)] flex items-center justify-center shadow-lg shadow-primary/30">
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h2 className="font-semibold">AI Assistant</h2>
-                <p className="text-sm text-gray-500">Always here to help</p>
+                <p className="text-sm text-muted-foreground">Always here to help</p>
               </div>
             </div>
           </div>
@@ -135,8 +147,8 @@ export default function ChatPage() {
                       <AvatarFallback
                         className={
                           message.role === "assistant"
-                            ? "bg-gradient-to-br from-[#4f46e5] to-[#7c3aed] text-white"
-                            : "bg-gray-200"
+                            ? "bg-gradient-to-br from-[var(--gradient-primary-from)] to-[var(--gradient-primary-to)] text-white"
+                            : "bg-secondary"
                         }
                       >
                         {message.role === "assistant" ? (
@@ -152,13 +164,13 @@ export default function ChatPage() {
                       <div
                         className={`px-4 py-3 rounded-2xl ${
                           message.role === "user"
-                            ? "bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] text-white"
-                            : "bg-white/60 backdrop-blur-sm"
+                            ? "bg-gradient-to-r from-[var(--gradient-primary-from)] to-[var(--gradient-primary-to)] text-white"
+                            : "bg-secondary/50 dark:bg-secondary/30 backdrop-blur-sm"
                         }`}
                       >
                         <p className="text-sm leading-relaxed">{message.content}</p>
                       </div>
-                      <p className="text-xs text-gray-400 mt-1 px-1">
+                      <p className="text-xs text-muted-foreground mt-1 px-1">
                         {message.timestamp.toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -177,15 +189,15 @@ export default function ChatPage() {
                   className="flex gap-3"
                 >
                   <Avatar className="w-9 h-9">
-                    <AvatarFallback className="bg-gradient-to-br from-[#4f46e5] to-[#7c3aed] text-white">
+                    <AvatarFallback className="bg-gradient-to-br from-[var(--gradient-primary-from)] to-[var(--gradient-primary-to)] text-white">
                       <Bot className="w-5 h-5" />
                     </AvatarFallback>
                   </Avatar>
-                  <div className="px-4 py-3 rounded-2xl bg-white/60 backdrop-blur-sm">
+                  <div className="px-4 py-3 rounded-2xl bg-secondary/50 dark:bg-secondary/30 backdrop-blur-sm">
                     <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100" />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200" />
+                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" />
+                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce delay-100" />
+                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce delay-200" />
                     </div>
                   </div>
                 </motion.div>
@@ -194,13 +206,13 @@ export default function ChatPage() {
               {/* Suggested Prompts */}
               {messages.length === 1 && (
                 <div className="pt-4">
-                  <p className="text-sm text-gray-500 mb-3 text-center">Try asking:</p>
+                  <p className="text-sm text-muted-foreground mb-3 text-center">Try asking:</p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     {suggestedPrompts.map((prompt, index) => (
                       <button
                         key={index}
                         onClick={() => setInput(prompt)}
-                        className="px-4 py-2 rounded-full bg-white/60 hover:bg-white/80 text-sm transition-all border border-white/40"
+                        className="px-4 py-2 rounded-full bg-secondary/60 dark:bg-secondary/40 hover:bg-secondary dark:hover:bg-secondary/60 text-sm transition-all border border-border"
                       >
                         {prompt}
                       </button>
@@ -212,7 +224,31 @@ export default function ChatPage() {
           </ScrollArea>
 
           {/* Input Area */}
-          <div className="p-6 border-t border-white/40">
+          <div className="p-6 border-t border-border">
+            {isRecording && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-red-500/10 dark:bg-red-500/20 border border-red-500/30"
+              >
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ repeat: Infinity, duration: 1 }}
+                  className="w-3 h-3 bg-red-500 rounded-full"
+                />
+                <span className="text-sm font-medium text-red-600 dark:text-red-400">Recording... Speak now</span>
+                <div className="flex-1 flex gap-1 justify-end">
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{ height: ["8px", "20px", "8px"] }}
+                      transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.1 }}
+                      className="w-1 bg-red-400 rounded-full"
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            )}
             <div className="flex gap-2">
               <Button
                 variant="ghost"
@@ -227,20 +263,24 @@ export default function ChatPage() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Type your message..."
-                  className="rounded-2xl pr-12 bg-white/50 border-2 focus:border-[#4f46e5] transition-all"
+                  className="rounded-2xl pr-12 bg-background/50 dark:bg-input-background border-2 focus:border-primary transition-all"
+                  disabled={isRecording}
                 />
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 rounded-xl"
+                  className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-xl ${
+                    isRecording ? "text-red-500" : ""
+                  }`}
+                  onClick={toggleRecording}
                 >
-                  <Mic className="w-5 h-5" />
+                  {isRecording ? <MicOff className="w-5 h-5 animate-pulse" /> : <Mic className="w-5 h-5" />}
                 </Button>
               </div>
               <Button
                 onClick={handleSend}
                 disabled={!input.trim()}
-                className="rounded-2xl bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] hover:opacity-90 flex-shrink-0 shadow-lg shadow-indigo-500/30"
+                className="rounded-2xl bg-gradient-to-r from-[var(--gradient-primary-from)] to-[var(--gradient-primary-to)] hover:opacity-90 flex-shrink-0 shadow-lg shadow-primary/30"
               >
                 <Send className="w-5 h-5" />
               </Button>

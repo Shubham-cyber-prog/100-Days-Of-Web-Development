@@ -2,98 +2,70 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>GitHub Stats Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --github-blur: 10px;
-      --accent: #2563eb;
-    }
+<title>GitHub Profile Dashboard</title>
 
-    html {
-      scroll-behavior: smooth;
-    }
+<link rel="stylesheet" href="style.css">
 
-    header {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(var(--github-blur));
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    .repo-card {
-      transition: all 0.2s;
-    }
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    .repo-card:hover {
-      border-color: var(--accent);
-      transform: scale(1.02);
-    }
-  </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>📊 GitHub Dashboard</h1>
+<header>
 
-    <div class="searchBox">
-      <input type="text" id="username" placeholder="Enter GitHub Username" aria-label="GitHub username to search">
-      <button id="searchBtn" aria-label="Search profiles">Search</button>
-    </div>
+<h1>📊 GitHub Profile Dashboard</h1>
 
-    <button id="themeToggle">🌙</button>
-  </header>
+<div class="searchBox">
+<input type="text" id="username" placeholder="Search GitHub users">
+<button id="searchBtn">Search</button>
+</div>
+
+<button id="themeToggle">🌙</button>
+
+</header>
 
 
-  <main>
 <main>
-  <aside class="profile">
-    <img src="https://i.pravatar.cc/150?img=32" />
-    <h2>Sheetal</h2>
-    <p>Web Developer 💻</p>
-  </aside>
 
-  <aside class="profile" id="profileSection"></aside>
-
-  <section class="feed">
-    <div class="create-post">
-      <textarea id="postText" placeholder="What's on your mind?"></textarea>
-      <button onclick="addPost()">Post</button>
-    </div>
-
-    <div id="posts"></div>
-  </section>
-
-    <!-- PROFILE -->
-    <section class="profile" id="profile">
-      <p class="hint">Search any GitHub username</p>
-    </section>
+<!-- SEARCH RESULTS -->
+<section id="userResults" class="users"></section>
 
 
-    <!-- STATS -->
-    <section class="stats" id="stats"></section>
+<!-- PROFILE -->
+<section class="profile" id="profile"></section>
 
 
-    <!-- REPOS -->
-    <section class="repos">
-      <h2>Top Repositories</h2>
-      <div id="repoList"></div>
-    </section>
-
-  </main>
+<!-- STATS -->
+<section class="stats" id="stats"></section>
 
 
-  <!-- LOADER -->
-  <div id="loader">Loading...</div>
+<!-- CHART -->
+<section class="charts">
+<h2>Languages Used</h2>
+<canvas id="languageChart"></canvas>
+</section>
 
 
-  <script src="script.js"></script>
+<!-- REPOSITORIES -->
+<section class="repos">
+
+<h2>Top Repositories</h2>
+
+<div id="repoList"></div>
+
+</section>
+
+</main>
+
+<div id="loader">Loading...</div>
+
+<script src="script.js"></script>
+
 </body>
-
 </html>

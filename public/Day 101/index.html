@@ -5,20 +5,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Image-Particle Converter | OpenPlayground</title>
+
   <meta name="description"
     content="Transform images into interactive particle systems with customizable physics and resolution." />
-  <!-- Open Graph / Facebook -->
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Particle Studio | Image to Atom Converter" />
   <meta property="og:description"
     content="Experience the magic of turning your photos into dynamic particle systems." />
+
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Particle Studio | Image to Atom Converter" />
   <meta name="twitter:description"
     content="Experience the magic of turning your photos into dynamic particle systems." />
+
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+
   <style>
     :root {
       --ps-primary: #8b5cf6;
@@ -32,9 +37,12 @@
 </head>
 
 <body>
+
   <div class="app-container">
+
     <!-- Sidebar Controls -->
     <aside class="sidebar">
+
       <div class="sidebar-header">
         <i class="ri-image-circle-line logo-icon"></i>
         <h1>Particle <span class="gradient-text">Studio</span></h1>
@@ -79,9 +87,7 @@
       <div class="control-group">
         <label>Physics Preset</label>
         <div class="preset-buttons">
-          <button class="preset-btn active" data-preset="liquid">
-            Liquid
-          </button>
+          <button class="preset-btn active" data-preset="liquid">Liquid</button>
           <button class="preset-btn" data-preset="stiff">Stiff</button>
           <button class="preset-btn" data-preset="magnetic">Magnetic</button>
         </div>
@@ -90,13 +96,15 @@
       <div class="divider"></div>
 
       <div class="action-buttons">
-        <button id="explodeBtn" class="btn secondary" aria-label="Explode particles">
+        <button id="explodeBtn" class="btn secondary">
           <i class="ri-fire-line"></i> Explode
         </button>
-        <button id="resetBtn" class="btn outline" aria-label="Reset simulation">
+
+        <button id="resetBtn" class="btn outline">
           <i class="ri-restart-line"></i> Reset
         </button>
-        <button id="saveBtn" class="btn primary" aria-label="Save current frame">
+
+        <button id="saveBtn" class="btn primary">
           <i class="ri-download-2-line"></i> Save Frame
         </button>
       </div>
@@ -106,21 +114,23 @@
           <i class="ri-arrow-left-line"></i> Back to Hub
         </a>
       </div>
+
     </aside>
 
     <!-- Main Canvas Area -->
     <main class="viewport">
+
       <button id="menuToggle" class="menu-toggle">
         <i class="ri-menu-line"></i>
       </button>
+
       <canvas id="canvas1"></canvas>
-      <!-- Performance Warning Toast -->
+
       <div id="toast" class="toast">
         <i class="ri-speed-mini-line"></i>
         <span>Image resized for optimal performance</span>
       </div>
 
-      <!-- Initial State Overlay -->
       <div id="overlay" class="overlay">
         <div class="overlay-content">
           <i class="ri-image-add-line"></i>
@@ -131,13 +141,14 @@
           </button>
         </div>
       </div>
+
     </main>
+
   </div>
 
-  <!-- Processing Canvas -->
-  <canvas id="hiddenCanvas" style="display: none"></canvas>
+  <canvas id="hiddenCanvas" style="display:none"></canvas>
 
   <script src="script.js"></script>
-</body>
 
+</body>
 </html>

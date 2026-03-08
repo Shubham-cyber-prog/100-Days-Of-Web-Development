@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, Link, useLocation } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import {
   LayoutDashboard,
   TrendingUp,
@@ -7,31 +7,35 @@ import {
   MessageSquare,
   FileText,
   Database,
+  Zap,
   Settings,
   Search,
-  Bell,
+  Sparkles,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Badge } from "../ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
+import { SmartAlerts } from "../common/SmartAlerts";
+import { ExportButton } from "../common/ExportButton";
+import { SavedReports } from "../common/SavedReports";
+import { AnnotationTool } from "../common/AnnotationTool";
+import { AIChatAssistant } from "../common/AIChatAssistant";
 
-const navItems = [
+const navItems: Array<{
+  path: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
+}> = [
   { path: "/app", label: "Dashboard", icon: LayoutDashboard },
   { path: "/app/trends", label: "Market Trends", icon: TrendingUp },
   { path: "/app/competitors", label: "Competitors", icon: Users },
   { path: "/app/insights", label: "Customer Insights", icon: MessageSquare },
   { path: "/app/reports", label: "Report Generator", icon: FileText },
   { path: "/app/sources", label: "Data Sources", icon: Database },
+  { path: "/app/features", label: "New Features", icon: Zap, badge: "NEW" },
 ];
 
 export function DashboardLayout() {
@@ -86,7 +90,14 @@ export function DashboardLayout() {
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
                   {!sidebarCollapsed && (
-                    <span className="text-sm font-medium">{item.label}</span>
+                    <>
+                      <span className="text-sm font-medium flex-1">{item.label}</span>
+                      {item.badge && (
+                        <span className="text-[10px] font-bold bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-0.5 rounded-full animate-pulse">
+                          {item.badge}
+                        </span>
+                      )}
+                    </>
                   )}
                 </div>
               </Link>
@@ -124,17 +135,23 @@ export function DashboardLayout() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 md:gap-4">
-            {/* Notifications */}
-            <Button variant="ghost" size="sm" className="relative">
-              <Bell className="w-5 h-5" />
-              <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-gradient-to-r from-blue-500 to-teal-500 border-2 border-white text-xs">
-                3
-              </Badge>
-            </Button>
+          <div className="flex items-center gap-2 md:gap-3">
+            {/* Annotation Tool */}
+            <div className="hidden lg:block">
+              <AnnotationTool />
+            </div>
+
+            {/* Export Button */}
+            <ExportButton />
+
+            {/* Saved Reports */}
+            <SavedReports />
+
+            {/* Smart Alerts */}
+            <SmartAlerts />
 
             {/* User Profile */}
-            <div className="flex items-center gap-2 md:gap-3">
+            <div className="flex items-center gap-2 md:gap-3 ml-2 pl-2 border-l border-gray-200">
               <Avatar className="h-8 w-8 md:h-10 md:w-10">
                 <AvatarFallback className="bg-gradient-to-br from-blue-500 to-teal-500 text-white text-sm">
                   JD
@@ -151,26 +168,13 @@ export function DashboardLayout() {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto" id="export-content">
           <Outlet />
         </main>
       </div>
 
-      {/* Floating AI Assistant */}
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 hover:scale-110 transition-transform duration-200"
-            size="icon"
-          >
-            <Sparkles className="w-6 h-6" />
-            <span className="absolute inset-0 rounded-full bg-blue-400 opacity-20 animate-ping" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side="left">
-          <p>Ask AI Analyst</p>
-        </TooltipContent>
-      </Tooltip>
+      {/* AI Chat Assistant */}
+      <AIChatAssistant />
     </div>
   );
 }

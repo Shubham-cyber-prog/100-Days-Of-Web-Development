@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   List,
   TrendingUp,
+  Activity,
   Settings,
   Shield,
   Search,
@@ -35,6 +36,7 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "Moderation Queue", href: "/queue", icon: List, badge: 43 },
   { name: "AI Insights", href: "/insights", icon: TrendingUp },
+  { name: "Team Activity", href: "/activity", icon: Activity },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 

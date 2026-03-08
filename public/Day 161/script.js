@@ -7,6 +7,8 @@
   const unitListEl = document.getElementById('unitList');
   const hudSelected = document.getElementById('hudSelected');
   const hudEnemies = document.getElementById('hudEnemies');
+  const radar = document.getElementById("radar");
+  const rctx = radar.getContext("2d");
   const hudMode = document.getElementById('hudMode');
 
   // Basic Three.js scene
@@ -59,13 +61,72 @@
     const g = new THREE.ConeGeometry(1.2,2.6,6); const m = new THREE.MeshLambertMaterial({color:0x66d2ff});
     const mesh = new THREE.Mesh(g,m); mesh.position.set(x,y,z); mesh.rotation.x = Math.PI; mesh.castShadow = true;
     mesh.userData.type = 'drone'; mesh.userData.id = drones.length+1; mesh.userData.unit = {health:100, target:null, state:'idle', selected:false};
-    scene.add(mesh); drones.push(mesh);
+    // scene.add(mesh); drones.push(mesh);
+    createHealthBar(mesh,0x00ff88);
+    scene.add(mesh);
+    drones.push(mesh);
   }
   function spawnEnemy(x,y,z){
     const g = new THREE.BoxGeometry(3,3,3); const m = new THREE.MeshLambertMaterial({color:0xff6a6a});
     const mesh = new THREE.Mesh(g,m); mesh.position.set(x,y,z); mesh.castShadow = true; mesh.userData.type='enemy'; mesh.userData.id = enemies.length+1; mesh.userData.unit = {health:200};
-    scene.add(mesh); enemies.push(mesh); updateHUD(); return mesh;
+    createHealthBar(mesh,0xff3333);
+    scene.add(mesh);
+    enemies.push(mesh); updateHUD(); return mesh;
   }
+
+
+  function drawRadar(){
+
+  rctx.clearRect(0,0,200,200);
+
+  rctx.fillStyle="#021018";
+  rctx.fillRect(0,0,200,200);
+
+  const scale = 0.4;
+
+  drones.forEach(d=>{
+    const x = 100 + d.position.x * scale;
+    const y = 100 + d.position.z * scale;
+
+    rctx.fillStyle = d.userData.unit.selected ? "#00ffdd" : "#66d2ff";
+    rctx.beginPath();
+    rctx.arc(x,y,3,0,Math.PI*2);
+    rctx.fill();
+  });
+
+  enemies.forEach(e=>{
+    const x = 100 + e.position.x * scale;
+    const y = 100 + e.position.z * scale;
+
+    rctx.fillStyle = "#ff4444";
+    rctx.beginPath();
+    rctx.arc(x,y,4,0,Math.PI*2);
+    rctx.fill();
+  });
+
+}
+
+  // Create health bar for unit
+function createHealthBar(mesh, color = 0x00ff00){
+  const group = new THREE.Group();
+
+  const bgGeo = new THREE.PlaneGeometry(3,0.4);
+  const bgMat = new THREE.MeshBasicMaterial({color:0x000000});
+  const bg = new THREE.Mesh(bgGeo,bgMat);
+
+  const barGeo = new THREE.PlaneGeometry(3,0.4);
+  const barMat = new THREE.MeshBasicMaterial({color:color});
+  const bar = new THREE.Mesh(barGeo,barMat);
+
+  bar.position.z = 0.01;
+
+  group.add(bg);
+  group.add(bar);
+  group.position.y = 3;
+
+  mesh.add(group);
+  mesh.userData.healthBar = bar;
+}
 
   // Spawn initial drones
   for (let i=0;i<14;i++){ const x = (Math.random()-0.5)*40; const z = (Math.random()-0.5)*40; spawnDrone(x,1.5,z); }
@@ -155,6 +216,10 @@
   // Update loop: simple movement & attacks
   function update(dt){ // drones movement
     drones.forEach(d=>{
+      if(d.userData.healthBar){
+      const hp = d.userData.unit.health/100;
+      d.userData.healthBar.scale.x = hp;
+    }
       const u = d.userData.unit;
       // highlight selection
       d.material.color.set(u.selected?0x00ffdd:0x66d2ff);
@@ -169,14 +234,17 @@
     });
 
     // enemies: simple wandering
-    enemies.forEach(e=>{ e.position.x += (Math.random()-0.5)*4*dt; e.position.z += (Math.random()-0.5)*4*dt; });
+    enemies.forEach(e=>{ if(e.userData.healthBar){
+    const hp = e.userData.unit.health/200;
+    e.userData.healthBar.scale.x = hp;
+    } e.position.x += (Math.random()-0.5)*4*dt; e.position.z += (Math.random()-0.5)*4*dt; });
     updateHUD();
   }
 
   function updateHUD(){ hudSelected.textContent = selectedUnits.length; hudEnemies.textContent = enemies.length; hudMode.textContent = commandMode; }
 
   // Animation
-  let last = performance.now(); function animate(now){ const dt = Math.min(0.05,(now-last)/1000); last = now; update(dt); renderer.render(scene,camera); requestAnimationFrame(animate); }
+  let last = performance.now(); function animate(now){ const dt = Math.min(0.05,(now-last)/1000); last = now; update(dt);  drawRadar();  renderer.render(scene,camera); requestAnimationFrame(animate); }
   requestAnimationFrame(animate);
 
   // Resize
