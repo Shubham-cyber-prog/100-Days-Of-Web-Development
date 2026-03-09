@@ -11,6 +11,7 @@ import {
   Search,
   Bell,
   ChevronDown,
+  UserCircle,
 } from 'lucide-react';
 
 const navItems = [
@@ -20,6 +21,7 @@ const navItems = [
   { path: '/attendance', label: 'Attendance', icon: ClipboardCheck },
   { path: '/reports', label: 'Reports', icon: FileText },
   { path: '/analytics', label: 'Analytics', icon: BarChart3 },
+  { path: '/parent-portal', label: 'Parent Portal', icon: UserCircle },
   { path: '/settings', label: 'Settings', icon: Settings },
 ];
 

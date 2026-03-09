@@ -1,14 +1,22 @@
 import { useState } from 'react';
-import { Users, UserCheck, UserX, TrendingUp } from 'lucide-react';
+import { Users, UserCheck, UserX, TrendingUp, QrCode, Bell, GitCompare, FileSpreadsheet } from 'lucide-react';
 import { StatCard } from '../components/StatCard';
 import { AttendanceCalendar } from '../components/AttendanceCalendar';
 import { AttendanceTable } from '../components/AttendanceTable';
 import { StudentDetailPanel } from '../components/StudentDetailPanel';
+import { QRScanner } from '../components/QRScanner';
+import { SmartAlertsModal } from '../components/SmartAlerts';
+import { ComparisonTool } from '../components/ComparisonTool';
+import { BulkImportExport } from '../components/BulkImportExport';
 import { students, attendanceRecords } from '../data/mockData';
 
 export default function Dashboard() {
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showQRScanner, setShowQRScanner] = useState(false);
+  const [showAlerts, setShowAlerts] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
+  const [showImportExport, setShowImportExport] = useState(false);
 
   const today = '2026-03-04';
   const todayRecords = attendanceRecords.filter((r) => r.date === today);
@@ -31,6 +39,53 @@ export default function Dashboard() {
       <div>
         <h2 className="text-2xl font-semibold text-slate-900 mb-1">Dashboard Overview</h2>
         <p className="text-slate-600">Welcome back! Here's what's happening today.</p>
+      </div>
+
+      {/* Quick Action Buttons */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <button
+          onClick={() => setShowQRScanner(true)}
+          className="flex items-center gap-3 p-4 bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-xl hover:shadow-lg transition-all"
+        >
+          <QrCode className="w-6 h-6 text-purple-600" />
+          <div className="text-left">
+            <p className="font-semibold text-slate-900">QR Scanner</p>
+            <p className="text-xs text-slate-600">Quick attendance</p>
+          </div>
+        </button>
+
+        <button
+          onClick={() => setShowAlerts(true)}
+          className="flex items-center gap-3 p-4 bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-xl hover:shadow-lg transition-all"
+        >
+          <Bell className="w-6 h-6 text-orange-600" />
+          <div className="text-left">
+            <p className="font-semibold text-slate-900">Smart Alerts</p>
+            <p className="text-xs text-slate-600">4 new alerts</p>
+          </div>
+        </button>
+
+        <button
+          onClick={() => setShowComparison(true)}
+          className="flex items-center gap-3 p-4 bg-gradient-to-br from-indigo-50 to-indigo-100 border border-indigo-200 rounded-xl hover:shadow-lg transition-all"
+        >
+          <GitCompare className="w-6 h-6 text-indigo-600" />
+          <div className="text-left">
+            <p className="font-semibold text-slate-900">Compare</p>
+            <p className="text-xs text-slate-600">Analyze trends</p>
+          </div>
+        </button>
+
+        <button
+          onClick={() => setShowImportExport(true)}
+          className="flex items-center gap-3 p-4 bg-gradient-to-br from-pink-50 to-pink-100 border border-pink-200 rounded-xl hover:shadow-lg transition-all"
+        >
+          <FileSpreadsheet className="w-6 h-6 text-pink-600" />
+          <div className="text-left">
+            <p className="font-semibold text-slate-900">Import/Export</p>
+            <p className="text-xs text-slate-600">Bulk operations</p>
+          </div>
+        </button>
       </div>
 
       {/* Overview Cards */}
@@ -107,6 +162,12 @@ export default function Dashboard() {
           onClose={() => setSelectedStudentId(null)}
         />
       )}
+
+      {/* Feature Modals */}
+      {showQRScanner && <QRScanner onClose={() => setShowQRScanner(false)} />}
+      {showAlerts && <SmartAlertsModal onClose={() => setShowAlerts(false)} />}
+      {showComparison && <ComparisonTool onClose={() => setShowComparison(false)} />}
+      {showImportExport && <BulkImportExport onClose={() => setShowImportExport(false)} />}
     </div>
   );
 }

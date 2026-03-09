@@ -8,6 +8,7 @@ import Reports from './pages/Reports';
 import Analytics from './pages/Analytics';
 import Settings from './pages/Settings';
 import MarkAttendance from './pages/MarkAttendance';
+import ParentPortal from './pages/ParentPortal';
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
       { path: 'analytics', Component: Analytics },
       { path: 'settings', Component: Settings },
       { path: 'mark-attendance', Component: MarkAttendance },
+      { path: 'parent-portal', Component: ParentPortal },
     ],
   },
 ]);
