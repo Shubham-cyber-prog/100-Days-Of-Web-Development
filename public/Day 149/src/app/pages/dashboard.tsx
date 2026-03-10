@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import { ActivityFeed } from "../components/activity-feed";
 
 const stats = [
   {
@@ -289,30 +290,8 @@ export function DashboardPage() {
             <CardHeader className="pb-3">
               <CardTitle className="text-[18px]">Recent Activity</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {activities.map((activity) => (
-                <div key={activity.id} className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <div className="w-2 h-2 rounded-full bg-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[13px] mb-1">
-                      <span className="font-medium">{activity.user}</span>
-                      <span className="text-muted-foreground">
-                        {" "}
-                        {activity.action}{" "}
-                      </span>
-                      <span className="font-medium">{activity.target}</span>
-                    </p>
-                    <p className="text-[12px] text-muted-foreground">
-                      {activity.time}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              <Button variant="outline" size="sm" className="w-full text-[13px]">
-                View All Activity
-              </Button>
+            <CardContent>
+              <ActivityFeed />
             </CardContent>
           </Card>
         </div>

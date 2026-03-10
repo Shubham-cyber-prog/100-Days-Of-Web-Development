@@ -10,6 +10,7 @@ import { TeamPage } from "./pages/team";
 import { SettingsPage } from "./pages/settings";
 import { StyleGuide } from "./pages/style-guide";
 import { DocumentationPage } from "./pages/documentation";
+import BookmarksPage from "./pages/bookmarks";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
       { path: "editor/:id", Component: EditorPage },
       { path: "categories", Component: CategoriesPage },
       { path: "tags", Component: TagsPage },
+      { path: "bookmarks", Component: BookmarksPage },
       { path: "analytics", Component: AnalyticsPage },
       { path: "team", Component: TeamPage },
       { path: "settings", Component: SettingsPage },

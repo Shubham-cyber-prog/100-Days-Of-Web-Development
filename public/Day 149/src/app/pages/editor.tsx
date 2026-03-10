@@ -14,6 +14,10 @@ import {
   Eye,
   Save,
   X,
+  Clock,
+  Download,
+  FileText,
+  Star,
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -28,6 +32,9 @@ import {
 } from "../components/ui/select";
 import { Separator } from "../components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { VersionHistory } from "../components/version-history";
+import { ExportDialog } from "../components/export-dialog";
+import { ArticleTemplates } from "../components/article-templates";
 
 const toolbarButtons = [
   { icon: Heading1, label: "Heading 1" },
@@ -62,6 +69,10 @@ export function EditorPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [showVersionHistory, setShowVersionHistory] = useState(false);
+  const [showExportDialog, setShowExportDialog] = useState(false);
+  const [showTemplates, setShowTemplates] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const addTag = (tag: string) => {
     if (!selectedTags.includes(tag)) {
@@ -71,6 +82,15 @@ export function EditorPage() {
 
   const removeTag = (tag: string) => {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
+  };
+
+  const handleRestoreVersion = (versionId: string) => {
+    console.log("Restoring version:", versionId);
+    setShowVersionHistory(false);
+  };
+
+  const handleSelectTemplate = (templateContent: string) => {
+    setContent(templateContent);
   };
 
   return (
@@ -84,6 +104,34 @@ export function EditorPage() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            className="gap-2"
+            onClick={() => setIsBookmarked(!isBookmarked)}
+          >
+            <Star
+              className={`w-4 h-4 ${
+                isBookmarked ? "fill-current text-yellow-500" : ""
+              }`}
+            />
+            {isBookmarked ? "Bookmarked" : "Bookmark"}
+          </Button>
+          <Button
+            variant="outline"
+            className="gap-2"
+            onClick={() => setShowVersionHistory(true)}
+          >
+            <Clock className="w-4 h-4" />
+            History
+          </Button>
+          <Button
+            variant="outline"
+            className="gap-2"
+            onClick={() => setShowExportDialog(true)}
+          >
+            <Download className="w-4 h-4" />
+            Export
+          </Button>
           <Button variant="outline" className="gap-2">
             <X className="w-4 h-4" />
             Cancel
@@ -102,6 +150,24 @@ export function EditorPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Editor */}
         <div className="lg:col-span-2 space-y-4">
+          {/* Template Selector */}
+          <div className="bg-card border border-border rounded-xl p-4">
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-muted-foreground">
+                Start with a template or write from scratch
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={() => setShowTemplates(true)}
+              >
+                <FileText className="w-4 h-4" />
+                Use Template
+              </Button>
+            </div>
+          </div>
+
           {/* Title Input */}
           <div className="bg-card border border-border rounded-xl p-6">
             <Input
@@ -309,6 +375,32 @@ export function EditorPage() {
           </div>
         </div>
       </div>
+
+      {/* Version History */}
+      {showVersionHistory && (
+        <VersionHistory
+          articleId="current"
+          onClose={() => setShowVersionHistory(false)}
+          onRestore={handleRestoreVersion}
+        />
+      )}
+
+      {/* Export Dialog */}
+      {showExportDialog && (
+        <ExportDialog
+          articleTitle={title || "Untitled Article"}
+          articleContent={content}
+          onClose={() => setShowExportDialog(false)}
+        />
+      )}
+
+      {/* Article Templates */}
+      {showTemplates && (
+        <ArticleTemplates
+          onClose={() => setShowTemplates(false)}
+          onSelect={handleSelectTemplate}
+        />
+      )}
     </div>
   );
 }

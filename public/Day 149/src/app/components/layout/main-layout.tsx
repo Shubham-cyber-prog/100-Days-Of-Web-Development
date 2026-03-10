@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   Moon,
   Sun,
+  Star,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -35,6 +36,7 @@ const navigation = [
   { name: "Articles", href: "/articles", icon: FileText },
   { name: "Categories", href: "/categories", icon: FolderOpen },
   { name: "Tags", href: "/tags", icon: Tag },
+  { name: "Bookmarks", href: "/bookmarks", icon: Star },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
   { name: "Team", href: "/team", icon: Users },
   { name: "Settings", href: "/settings", icon: Settings },
